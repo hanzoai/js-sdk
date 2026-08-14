@@ -33,7 +33,7 @@ export const GenerateTextToSpeechAudioApiAxiosParamCreator = function (configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GenerateTextToSpeechAudio: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGenerateTextToSpeechAudio: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/generate-text-to-speech-audio`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const GenerateTextToSpeechAudioApiFp = function(configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GenerateTextToSpeechAudio(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GenerateTextToSpeechAudio(options);
+        async postGenerateTextToSpeechAudio(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGenerateTextToSpeechAudio(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GenerateTextToSpeechAudioApi.postV1GenerateTextToSpeechAudio']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GenerateTextToSpeechAudioApi.postGenerateTextToSpeechAudio']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const GenerateTextToSpeechAudioApiFactory = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GenerateTextToSpeechAudio(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1GenerateTextToSpeechAudio(options).then((request) => request(axios, basePath));
+        postGenerateTextToSpeechAudio(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postGenerateTextToSpeechAudio(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class GenerateTextToSpeechAudioApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GenerateTextToSpeechAudioApi
      */
-    public postV1GenerateTextToSpeechAudio(options?: RawAxiosRequestConfig) {
-        return GenerateTextToSpeechAudioApiFp(this.configuration).postV1GenerateTextToSpeechAudio(options).then((request) => request(this.axios, this.basePath));
+    public postGenerateTextToSpeechAudio(options?: RawAxiosRequestConfig) {
+        return GenerateTextToSpeechAudioApiFp(this.configuration).postGenerateTextToSpeechAudio(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

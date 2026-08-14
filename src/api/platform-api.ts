@@ -46,7 +46,11 @@ import type { ProjectView } from '../models';
 // @ts-ignore
 import type { ProjectsBoundDomains } from '../models';
 // @ts-ignore
+import type { ProjectsComplete } from '../models';
+// @ts-ignore
 import type { ProjectsCreate } from '../models';
+// @ts-ignore
+import type { ProjectsDeployStart } from '../models';
 // @ts-ignore
 import type { ProjectsDeployment } from '../models';
 // @ts-ignore
@@ -89,11 +93,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PlatformProjectsByProjectAppsByApp: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePlatformProjectsByProjectAppsByApp: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('deleteV1PlatformProjectsByProjectAppsByApp', 'project', project)
+            assertParamExists('deletePlatformProjectsByProjectAppsByApp', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('deleteV1PlatformProjectsByProjectAppsByApp', 'app', app)
+            assertParamExists('deletePlatformProjectsByProjectAppsByApp', 'app', app)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -128,13 +132,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost: async (project: string, app: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePlatformProjectsByProjectAppsByAppDomainsByHost: async (project: string, app: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost', 'project', project)
+            assertParamExists('deletePlatformProjectsByProjectAppsByAppDomainsByHost', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost', 'app', app)
+            assertParamExists('deletePlatformProjectsByProjectAppsByAppDomainsByHost', 'app', app)
             // verify required parameter 'host' is not null or undefined
-            assertParamExists('deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost', 'host', host)
+            assertParamExists('deletePlatformProjectsByProjectAppsByAppDomainsByHost', 'host', host)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/domains/{host}`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)))
@@ -162,15 +166,15 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
+         * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the git source is retired on every copy it has so a reclaimed slug never adopts a repository left behind (visibility.go), the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
          * @summary Deletes a project and takes its site off the internet.
          * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PlatformSitesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePlatformSitesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('deleteV1PlatformSitesBySlug', 'slug', slug)
+            assertParamExists('deletePlatformSitesBySlug', 'slug', slug)
             const localVarPath = `/v1/platform/sites/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -203,11 +207,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PlatformSitesBySlugDomainsByHost: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePlatformSitesBySlugDomainsByHost: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('deleteV1PlatformSitesBySlugDomainsByHost', 'slug', slug)
+            assertParamExists('deletePlatformSitesBySlugDomainsByHost', 'slug', slug)
             // verify required parameter 'host' is not null or undefined
-            assertParamExists('deleteV1PlatformSitesBySlugDomainsByHost', 'host', host)
+            assertParamExists('deletePlatformSitesBySlugDomainsByHost', 'host', host)
             const localVarPath = `/v1/platform/sites/{slug}/domains/{host}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"host"}}`, encodeURIComponent(String(host)));
@@ -239,7 +243,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformApps: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformApps: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/apps`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -270,9 +274,9 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformAppsByApp: async (app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformAppsByApp: async (app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('getV1PlatformAppsByApp', 'app', app)
+            assertParamExists('getPlatformAppsByApp', 'app', app)
             const localVarPath = `/v1/platform/apps/{app}`
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -304,9 +308,9 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformAppsByAppCd: async (app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformAppsByAppCd: async (app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('getV1PlatformAppsByAppCd', 'app', app)
+            assertParamExists('getPlatformAppsByAppCd', 'app', app)
             const localVarPath = `/v1/platform/apps/{app}/cd`
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -337,7 +341,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformCd: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformCd: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/cd`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -367,7 +371,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformCi: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformCi: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/ci`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -401,7 +405,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformFleet: async (env?: string, health?: string, org?: string, drift?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformFleet: async (env?: string, health?: string, org?: string, drift?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/fleet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -449,9 +453,9 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformFleetByApp: async (app: string, env?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformFleetByApp: async (app: string, env?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('getV1PlatformFleetByApp', 'app', app)
+            assertParamExists('getPlatformFleetByApp', 'app', app)
             const localVarPath = `/v1/platform/fleet/{app}`
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -486,7 +490,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -516,7 +520,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -547,9 +551,9 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProject: async (project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformProjectsByProject: async (project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProject', 'project', project)
+            assertParamExists('getPlatformProjectsByProject', 'project', project)
             const localVarPath = `/v1/platform/projects/{project}`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -581,9 +585,9 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectApps: async (project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformProjectsByProjectApps: async (project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectApps', 'project', project)
+            assertParamExists('getPlatformProjectsByProjectApps', 'project', project)
             const localVarPath = `/v1/platform/projects/{project}/apps`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -616,11 +620,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectAppsByApp: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformProjectsByProjectAppsByApp: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByApp', 'project', project)
+            assertParamExists('getPlatformProjectsByProjectAppsByApp', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByApp', 'app', app)
+            assertParamExists('getPlatformProjectsByProjectAppsByApp', 'app', app)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -654,11 +658,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectAppsByAppDeployments: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformProjectsByProjectAppsByAppDeployments: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByAppDeployments', 'project', project)
+            assertParamExists('getPlatformProjectsByProjectAppsByAppDeployments', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByAppDeployments', 'app', app)
+            assertParamExists('getPlatformProjectsByProjectAppsByAppDeployments', 'app', app)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/deployments`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -693,13 +697,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectAppsByAppDeploymentsById: async (project: string, app: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformProjectsByProjectAppsByAppDeploymentsById: async (project: string, app: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByAppDeploymentsById', 'project', project)
+            assertParamExists('getPlatformProjectsByProjectAppsByAppDeploymentsById', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByAppDeploymentsById', 'app', app)
+            assertParamExists('getPlatformProjectsByProjectAppsByAppDeploymentsById', 'app', app)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByAppDeploymentsById', 'id', id)
+            assertParamExists('getPlatformProjectsByProjectAppsByAppDeploymentsById', 'id', id)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/deployments/{id}`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)))
@@ -735,13 +739,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs: async (project: string, app: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs: async (project: string, app: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs', 'project', project)
+            assertParamExists('getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs', 'app', app)
+            assertParamExists('getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs', 'app', app)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs', 'id', id)
+            assertParamExists('getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs', 'id', id)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/deployments/{id}/logs`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)))
@@ -776,11 +780,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectAppsByAppDomains: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformProjectsByProjectAppsByAppDomains: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByAppDomains', 'project', project)
+            assertParamExists('getPlatformProjectsByProjectAppsByAppDomains', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('getV1PlatformProjectsByProjectAppsByAppDomains', 'app', app)
+            assertParamExists('getPlatformProjectsByProjectAppsByAppDomains', 'app', app)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/domains`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -812,7 +816,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSites: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformSites: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/sites`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -843,9 +847,9 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSitesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformSitesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getV1PlatformSitesBySlug', 'slug', slug)
+            assertParamExists('getPlatformSitesBySlug', 'slug', slug)
             const localVarPath = `/v1/platform/sites/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -877,9 +881,9 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSitesBySlugDeployments: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformSitesBySlugDeployments: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getV1PlatformSitesBySlugDeployments', 'slug', slug)
+            assertParamExists('getPlatformSitesBySlugDeployments', 'slug', slug)
             const localVarPath = `/v1/platform/sites/{slug}/deployments`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -912,11 +916,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSitesBySlugDeploymentsById: async (slug: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformSitesBySlugDeploymentsById: async (slug: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getV1PlatformSitesBySlugDeploymentsById', 'slug', slug)
+            assertParamExists('getPlatformSitesBySlugDeploymentsById', 'slug', slug)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1PlatformSitesBySlugDeploymentsById', 'id', id)
+            assertParamExists('getPlatformSitesBySlugDeploymentsById', 'id', id)
             const localVarPath = `/v1/platform/sites/{slug}/deployments/{id}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -949,9 +953,9 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSitesBySlugDomains: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformSitesBySlugDomains: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getV1PlatformSitesBySlugDomains', 'slug', slug)
+            assertParamExists('getPlatformSitesBySlugDomains', 'slug', slug)
             const localVarPath = `/v1/platform/sites/{slug}/domains`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -983,9 +987,9 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSitesBySlugReleases: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformSitesBySlugReleases: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getV1PlatformSitesBySlugReleases', 'slug', slug)
+            assertParamExists('getPlatformSitesBySlugReleases', 'slug', slug)
             const localVarPath = `/v1/platform/sites/{slug}/releases`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1018,11 +1022,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1PlatformSitesBySlug: async (slug: string, projectsUpdate: ProjectsUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchPlatformSitesBySlug: async (slug: string, projectsUpdate: ProjectsUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('patchV1PlatformSitesBySlug', 'slug', slug)
+            assertParamExists('patchPlatformSitesBySlug', 'slug', slug)
             // verify required parameter 'projectsUpdate' is not null or undefined
-            assertParamExists('patchV1PlatformSitesBySlug', 'projectsUpdate', projectsUpdate)
+            assertParamExists('patchPlatformSitesBySlug', 'projectsUpdate', projectsUpdate)
             const localVarPath = `/v1/platform/sites/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1056,7 +1060,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformApps: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformApps: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/apps`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1088,11 +1092,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformFleetByAppDeploy: async (app: string, restartRef: RestartRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformFleetByAppDeploy: async (app: string, restartRef: RestartRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('postV1PlatformFleetByAppDeploy', 'app', app)
+            assertParamExists('postPlatformFleetByAppDeploy', 'app', app)
             // verify required parameter 'restartRef' is not null or undefined
-            assertParamExists('postV1PlatformFleetByAppDeploy', 'restartRef', restartRef)
+            assertParamExists('postPlatformFleetByAppDeploy', 'restartRef', restartRef)
             const localVarPath = `/v1/platform/fleet/{app}/deploy`
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1128,11 +1132,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectApps: async (project: string, createAppReq: CreateAppReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectApps: async (project: string, createAppReq: CreateAppReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectApps', 'project', project)
+            assertParamExists('postPlatformProjectsByProjectApps', 'project', project)
             // verify required parameter 'createAppReq' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectApps', 'createAppReq', createAppReq)
+            assertParamExists('postPlatformProjectsByProjectApps', 'createAppReq', createAppReq)
             const localVarPath = `/v1/platform/projects/{project}/apps`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1169,13 +1173,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppDeploy: async (project: string, app: string, deployReq: DeployReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppDeploy: async (project: string, app: string, deployReq: DeployReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppDeploy', 'project', project)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppDeploy', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppDeploy', 'app', app)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppDeploy', 'app', app)
             // verify required parameter 'deployReq' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppDeploy', 'deployReq', deployReq)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppDeploy', 'deployReq', deployReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/deploy`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1213,13 +1217,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppDomains: async (project: string, app: string, addDomainReq: AddDomainReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppDomains: async (project: string, app: string, addDomainReq: AddDomainReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppDomains', 'project', project)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppDomains', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppDomains', 'app', app)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppDomains', 'app', app)
             // verify required parameter 'addDomainReq' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppDomains', 'addDomainReq', addDomainReq)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppDomains', 'addDomainReq', addDomainReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/domains`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1257,13 +1261,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify: async (project: string, app: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppDomainsByHostVerify: async (project: string, app: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify', 'project', project)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppDomainsByHostVerify', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify', 'app', app)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppDomainsByHostVerify', 'app', app)
             // verify required parameter 'host' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify', 'host', host)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppDomainsByHostVerify', 'host', host)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/domains/{host}/verify`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)))
@@ -1299,13 +1303,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppPreview: async (project: string, app: string, previewReq: PreviewReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppPreview: async (project: string, app: string, previewReq: PreviewReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppPreview', 'project', project)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppPreview', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppPreview', 'app', app)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppPreview', 'app', app)
             // verify required parameter 'previewReq' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppPreview', 'previewReq', previewReq)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppPreview', 'previewReq', previewReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/preview`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1343,13 +1347,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppPromote: async (project: string, app: string, promoteReq: PromoteReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppPromote: async (project: string, app: string, promoteReq: PromoteReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppPromote', 'project', project)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppPromote', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppPromote', 'app', app)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppPromote', 'app', app)
             // verify required parameter 'promoteReq' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppPromote', 'promoteReq', promoteReq)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppPromote', 'promoteReq', promoteReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/promote`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1387,13 +1391,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppRollback: async (project: string, app: string, rollbackReq: RollbackReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppRollback: async (project: string, app: string, rollbackReq: RollbackReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppRollback', 'project', project)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppRollback', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppRollback', 'app', app)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppRollback', 'app', app)
             // verify required parameter 'rollbackReq' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppRollback', 'rollbackReq', rollbackReq)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppRollback', 'rollbackReq', rollbackReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/rollback`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1430,11 +1434,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppStart: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppStart: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppStart', 'project', project)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppStart', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppStart', 'app', app)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppStart', 'app', app)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/start`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1468,11 +1472,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppStop: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformProjectsByProjectAppsByAppStop: async (project: string, app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppStop', 'project', project)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppStop', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('postV1PlatformProjectsByProjectAppsByAppStop', 'app', app)
+            assertParamExists('postPlatformProjectsByProjectAppsByAppStop', 'app', app)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/stop`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1505,9 +1509,9 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSites: async (projectsCreate: ProjectsCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformSites: async (projectsCreate: ProjectsCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'projectsCreate' is not null or undefined
-            assertParamExists('postV1PlatformSites', 'projectsCreate', projectsCreate)
+            assertParamExists('postPlatformSites', 'projectsCreate', projectsCreate)
             const localVarPath = `/v1/platform/sites`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1535,15 +1539,16 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Takes a built site live at `https://<slug>.hanzo.app`. The content type decides the shape: a `zip` or `tar.gz` — raw in the body or as a multipart file part, which is what the platform\'s upload UI posts — is stored and served immediately, answering 200 with the finished deployment; a JSON body instead queues a build from the site\'s linked repo and answers 202 with a queued deployment plus, where one could be minted, a scoped upload grant for CI. The git path requires a linked repo (400 without one).  The hosting gate is fail-closed and runs first, before anything is parsed or uploaded: 402 for an unfunded org, 503 for unreachable commerce, nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
-         * @summary Upload a built site — this is where a zip goes live
+         * Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site\'s own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/sites/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
+         * @summary Upload a built site as one archive and serve it
          * @param {string} slug 
+         * @param {File} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugDeploy: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformSitesBySlugDeploy: async (slug: string, body?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugDeploy', 'slug', slug)
+            assertParamExists('postPlatformSitesBySlugDeploy', 'slug', slug)
             const localVarPath = `/v1/platform/sites/{slug}/deploy`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1559,9 +1564,96 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/octet-stream';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage. Answers 202.  This is the path for a site too large to send as one archive: a real export is hundreds of megabytes against a 16 MiB body limit, so the bytes deliberately do NOT pass through the API. The answer carries `bucket`, `prefix` and `upload` — a presigned POST policy that S3 itself confines to this site\'s prefix (starts-with `<org>/<slug>/`), expires in 30 minutes and bounds each object. So a build writes its own files and holds no standing bucket credential; there is nothing to rotate and nothing that leaks between tenants. Never guess the prefix — it is server-derived, and a guessed one lands where nothing is served.  The deployment is `queued` until POST .../deployments/{id}/complete flips it live (or error). That completion is also where DELETION happens: the grant authorizes writes only, so a build cannot remove a file, and cloud reconciles the prefix against the `keys` manifest the completion carries. A build that dies before completing leaves the deployment queued rather than a half-live site.  The grant is on the 202 and NOWHERE else — it is never stored and never replayed on a later read, so it cannot outlive the build it was minted for. A deployment whose grant could not be minted is still created and still completable; it simply carries no `upload`, and a caller with no other way to write should treat that as the failure it is.  Billing: the hosting gate runs BEFORE anything is created (402 unfunded, 503 commerce unreachable), and the debit lands on the completion that goes live — never on a queued or failed build.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage.
+         * @param {string} slug Slug is the site to deploy, from the path.
+         * @param {ProjectsDeployStart} projectsDeployStart 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPlatformSitesBySlugDeployments: async (slug: string, projectsDeployStart: ProjectsDeployStart, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('postPlatformSitesBySlugDeployments', 'slug', slug)
+            // verify required parameter 'projectsDeployStart' is not null or undefined
+            assertParamExists('postPlatformSitesBySlugDeployments', 'projectsDeployStart', projectsDeployStart)
+            const localVarPath = `/v1/platform/sites/{slug}/deployments`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(projectsDeployStart, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+         * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
+         * @param {string} slug Slug is the project the deployment belongs to, from the path.
+         * @param {string} id ID is the queued deployment to complete, from the path.
+         * @param {ProjectsComplete} projectsComplete 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPlatformSitesBySlugDeploymentsByIdComplete: async (slug: string, id: string, projectsComplete: ProjectsComplete, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('postPlatformSitesBySlugDeploymentsByIdComplete', 'slug', slug)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postPlatformSitesBySlugDeploymentsByIdComplete', 'id', id)
+            // verify required parameter 'projectsComplete' is not null or undefined
+            assertParamExists('postPlatformSitesBySlugDeploymentsByIdComplete', 'projectsComplete', projectsComplete)
+            const localVarPath = `/v1/platform/sites/{slug}/deployments/{id}/complete`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(projectsComplete, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1576,11 +1668,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugDomains: async (slug: string, projectsDomainsBind: ProjectsDomainsBind, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformSitesBySlugDomains: async (slug: string, projectsDomainsBind: ProjectsDomainsBind, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugDomains', 'slug', slug)
+            assertParamExists('postPlatformSitesBySlugDomains', 'slug', slug)
             // verify required parameter 'projectsDomainsBind' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugDomains', 'projectsDomainsBind', projectsDomainsBind)
+            assertParamExists('postPlatformSitesBySlugDomains', 'projectsDomainsBind', projectsDomainsBind)
             const localVarPath = `/v1/platform/sites/{slug}/domains`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1616,11 +1708,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugDomainsByHostVerify: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformSitesBySlugDomainsByHostVerify: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugDomainsByHostVerify', 'slug', slug)
+            assertParamExists('postPlatformSitesBySlugDomainsByHostVerify', 'slug', slug)
             // verify required parameter 'host' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugDomainsByHostVerify', 'host', host)
+            assertParamExists('postPlatformSitesBySlugDomainsByHostVerify', 'host', host)
             const localVarPath = `/v1/platform/sites/{slug}/domains/{host}/verify`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"host"}}`, encodeURIComponent(String(host)));
@@ -1654,11 +1746,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugPublish: async (slug: string, projectsPublish: ProjectsPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformSitesBySlugPublish: async (slug: string, projectsPublish: ProjectsPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugPublish', 'slug', slug)
+            assertParamExists('postPlatformSitesBySlugPublish', 'slug', slug)
             // verify required parameter 'projectsPublish' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugPublish', 'projectsPublish', projectsPublish)
+            assertParamExists('postPlatformSitesBySlugPublish', 'projectsPublish', projectsPublish)
             const localVarPath = `/v1/platform/sites/{slug}/publish`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1693,9 +1785,9 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugPurge: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformSitesBySlugPurge: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugPurge', 'slug', slug)
+            assertParamExists('postPlatformSitesBySlugPurge', 'slug', slug)
             const localVarPath = `/v1/platform/sites/{slug}/purge`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1728,11 +1820,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugReleases: async (slug: string, projectsPublish: ProjectsPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformSitesBySlugReleases: async (slug: string, projectsPublish: ProjectsPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugReleases', 'slug', slug)
+            assertParamExists('postPlatformSitesBySlugReleases', 'slug', slug)
             // verify required parameter 'projectsPublish' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugReleases', 'projectsPublish', projectsPublish)
+            assertParamExists('postPlatformSitesBySlugReleases', 'projectsPublish', projectsPublish)
             const localVarPath = `/v1/platform/sites/{slug}/releases`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1768,11 +1860,11 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugReleasesByReleaseActivate: async (slug: string, release: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPlatformSitesBySlugReleasesByReleaseActivate: async (slug: string, release: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugReleasesByReleaseActivate', 'slug', slug)
+            assertParamExists('postPlatformSitesBySlugReleasesByReleaseActivate', 'slug', slug)
             // verify required parameter 'release' is not null or undefined
-            assertParamExists('postV1PlatformSitesBySlugReleasesByReleaseActivate', 'release', release)
+            assertParamExists('postPlatformSitesBySlugReleasesByReleaseActivate', 'release', release)
             const localVarPath = `/v1/platform/sites/{slug}/releases/{release}/activate`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"release"}}`, encodeURIComponent(String(release)));
@@ -1807,13 +1899,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1PlatformProjectsByProjectAppsByAppEnv: async (project: string, app: string, setEnvReq: SetEnvReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putPlatformProjectsByProjectAppsByAppEnv: async (project: string, app: string, setEnvReq: SetEnvReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('putV1PlatformProjectsByProjectAppsByAppEnv', 'project', project)
+            assertParamExists('putPlatformProjectsByProjectAppsByAppEnv', 'project', project)
             // verify required parameter 'app' is not null or undefined
-            assertParamExists('putV1PlatformProjectsByProjectAppsByAppEnv', 'app', app)
+            assertParamExists('putPlatformProjectsByProjectAppsByAppEnv', 'app', app)
             // verify required parameter 'setEnvReq' is not null or undefined
-            assertParamExists('putV1PlatformProjectsByProjectAppsByAppEnv', 'setEnvReq', setEnvReq)
+            assertParamExists('putPlatformProjectsByProjectAppsByAppEnv', 'setEnvReq', setEnvReq)
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/env`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)));
@@ -1860,10 +1952,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1PlatformProjectsByProjectAppsByApp(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PlatformProjectsByProjectAppsByApp(project, app, options);
+        async deletePlatformProjectsByProjectAppsByApp(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePlatformProjectsByProjectAppsByApp(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.deleteV1PlatformProjectsByProjectAppsByApp']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.deletePlatformProjectsByProjectAppsByApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1875,23 +1967,23 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(project: string, app: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(project, app, host, options);
+        async deletePlatformProjectsByProjectAppsByAppDomainsByHost(project: string, app: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePlatformProjectsByProjectAppsByAppDomainsByHost(project, app, host, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.deletePlatformProjectsByProjectAppsByAppDomainsByHost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
+         * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the git source is retired on every copy it has so a reclaimed slug never adopts a repository left behind (visibility.go), the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
          * @summary Deletes a project and takes its site off the internet.
          * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1PlatformSitesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PlatformSitesBySlug(slug, options);
+        async deletePlatformSitesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePlatformSitesBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.deleteV1PlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.deletePlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1902,10 +1994,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1PlatformSitesBySlugDomainsByHost(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PlatformSitesBySlugDomainsByHost(slug, host, options);
+        async deletePlatformSitesBySlugDomainsByHost(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePlatformSitesBySlugDomainsByHost(slug, host, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.deleteV1PlatformSitesBySlugDomainsByHost']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.deletePlatformSitesBySlugDomainsByHost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1914,10 +2006,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformApps(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformApps(options);
+        async getPlatformApps(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformApps(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformApps']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformApps']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1927,10 +2019,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformAppsByApp(app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformAppsByApp(app, options);
+        async getPlatformAppsByApp(app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformAppsByApp(app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformAppsByApp']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformAppsByApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1940,10 +2032,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformAppsByAppCd(app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformAppsByAppCd(app, options);
+        async getPlatformAppsByAppCd(app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformAppsByAppCd(app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformAppsByAppCd']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformAppsByAppCd']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1952,10 +2044,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformCd(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformCd(options);
+        async getPlatformCd(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformCd(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformCd']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformCd']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1964,10 +2056,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformCi(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformCi(options);
+        async getPlatformCi(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformCi(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformCi']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformCi']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1980,10 +2072,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformFleet(env?: string, health?: string, org?: string, drift?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DriftBoard>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformFleet(env, health, org, drift, options);
+        async getPlatformFleet(env?: string, health?: string, org?: string, drift?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DriftBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformFleet(env, health, org, drift, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformFleet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformFleet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1994,10 +2086,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformFleetByApp(app: string, env?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformFleetByApp(app, env, options);
+        async getPlatformFleetByApp(app: string, env?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformFleetByApp(app, env, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformFleetByApp']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformFleetByApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2006,10 +2098,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Readiness>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformHealth(options);
+        async getPlatformHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Readiness>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2018,10 +2110,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectView>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformProjects(options);
+        async getPlatformProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjects(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformProjects']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2031,10 +2123,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformProjectsByProject(project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformProjectsByProject(project, options);
+        async getPlatformProjectsByProject(project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProject(project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformProjectsByProject']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProject']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2044,10 +2136,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformProjectsByProjectApps(project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AppView>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformProjectsByProjectApps(project, options);
+        async getPlatformProjectsByProjectApps(project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AppView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectApps(project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformProjectsByProjectApps']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectApps']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2058,10 +2150,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformProjectsByProjectAppsByApp(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformProjectsByProjectAppsByApp(project, app, options);
+        async getPlatformProjectsByProjectAppsByApp(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectAppsByApp(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformProjectsByProjectAppsByApp']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectAppsByApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2072,10 +2164,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformProjectsByProjectAppsByAppDeployments(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DeploymentView>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformProjectsByProjectAppsByAppDeployments(project, app, options);
+        async getPlatformProjectsByProjectAppsByAppDeployments(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DeploymentView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectAppsByAppDeployments(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformProjectsByProjectAppsByAppDeployments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectAppsByAppDeployments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2087,10 +2179,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformProjectsByProjectAppsByAppDeploymentsById(project: string, app: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformProjectsByProjectAppsByAppDeploymentsById(project, app, id, options);
+        async getPlatformProjectsByProjectAppsByAppDeploymentsById(project: string, app: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectAppsByAppDeploymentsById(project, app, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformProjectsByProjectAppsByAppDeploymentsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectAppsByAppDeploymentsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2102,10 +2194,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(project: string, app: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployLogs>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(project, app, id, options);
+        async getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(project: string, app: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployLogs>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(project, app, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2116,10 +2208,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformProjectsByProjectAppsByAppDomains(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DomainView>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformProjectsByProjectAppsByAppDomains(project, app, options);
+        async getPlatformProjectsByProjectAppsByAppDomains(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DomainView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformProjectsByProjectAppsByAppDomains(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformProjectsByProjectAppsByAppDomains']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformProjectsByProjectAppsByAppDomains']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2128,10 +2220,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformSites(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectsProject>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformSites(options);
+        async getPlatformSites(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectsProject>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSites(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformSites']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSites']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2141,10 +2233,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformSitesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformSitesBySlug(slug, options);
+        async getPlatformSitesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSitesBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2154,10 +2246,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformSitesBySlugDeployments(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectsDeployment>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformSitesBySlugDeployments(slug, options);
+        async getPlatformSitesBySlugDeployments(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectsDeployment>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSitesBySlugDeployments(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformSitesBySlugDeployments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSitesBySlugDeployments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2168,10 +2260,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformSitesBySlugDeploymentsById(slug: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDeployment>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformSitesBySlugDeploymentsById(slug, id, options);
+        async getPlatformSitesBySlugDeploymentsById(slug: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDeployment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSitesBySlugDeploymentsById(slug, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformSitesBySlugDeploymentsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSitesBySlugDeploymentsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2181,10 +2273,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformSitesBySlugDomains(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDomains>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformSitesBySlugDomains(slug, options);
+        async getPlatformSitesBySlugDomains(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDomains>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSitesBySlugDomains(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformSitesBySlugDomains']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSitesBySlugDomains']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2194,10 +2286,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PlatformSitesBySlugReleases(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectsRelease>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PlatformSitesBySlugReleases(slug, options);
+        async getPlatformSitesBySlugReleases(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectsRelease>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSitesBySlugReleases(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getV1PlatformSitesBySlugReleases']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSitesBySlugReleases']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2208,10 +2300,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1PlatformSitesBySlug(slug: string, projectsUpdate: ProjectsUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1PlatformSitesBySlug(slug, projectsUpdate, options);
+        async patchPlatformSitesBySlug(slug: string, projectsUpdate: ProjectsUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPlatformSitesBySlug(slug, projectsUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.patchV1PlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.patchPlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2220,10 +2312,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformApps(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformApps(options);
+        async postPlatformApps(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformApps(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformApps']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformApps']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2234,10 +2326,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformFleetByAppDeploy(app: string, restartRef: RestartRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Restarted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformFleetByAppDeploy(app, restartRef, options);
+        async postPlatformFleetByAppDeploy(app: string, restartRef: RestartRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Restarted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformFleetByAppDeploy(app, restartRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformFleetByAppDeploy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformFleetByAppDeploy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2248,10 +2340,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformProjectsByProjectApps(project: string, createAppReq: CreateAppReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformProjectsByProjectApps(project, createAppReq, options);
+        async postPlatformProjectsByProjectApps(project: string, createAppReq: CreateAppReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectApps(project, createAppReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformProjectsByProjectApps']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectApps']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2263,10 +2355,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformProjectsByProjectAppsByAppDeploy(project: string, app: string, deployReq: DeployReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformProjectsByProjectAppsByAppDeploy(project, app, deployReq, options);
+        async postPlatformProjectsByProjectAppsByAppDeploy(project: string, app: string, deployReq: DeployReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppDeploy(project, app, deployReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformProjectsByProjectAppsByAppDeploy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppDeploy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2278,10 +2370,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformProjectsByProjectAppsByAppDomains(project: string, app: string, addDomainReq: AddDomainReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformProjectsByProjectAppsByAppDomains(project, app, addDomainReq, options);
+        async postPlatformProjectsByProjectAppsByAppDomains(project: string, app: string, addDomainReq: AddDomainReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppDomains(project, app, addDomainReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformProjectsByProjectAppsByAppDomains']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppDomains']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2293,10 +2385,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(project: string, app: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(project, app, host, options);
+        async postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(project: string, app: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DomainView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(project, app, host, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppDomainsByHostVerify']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2308,10 +2400,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformProjectsByProjectAppsByAppPreview(project: string, app: string, previewReq: PreviewReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PreviewView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformProjectsByProjectAppsByAppPreview(project, app, previewReq, options);
+        async postPlatformProjectsByProjectAppsByAppPreview(project: string, app: string, previewReq: PreviewReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PreviewView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppPreview(project, app, previewReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformProjectsByProjectAppsByAppPreview']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppPreview']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2323,10 +2415,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformProjectsByProjectAppsByAppPromote(project: string, app: string, promoteReq: PromoteReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformProjectsByProjectAppsByAppPromote(project, app, promoteReq, options);
+        async postPlatformProjectsByProjectAppsByAppPromote(project: string, app: string, promoteReq: PromoteReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppPromote(project, app, promoteReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformProjectsByProjectAppsByAppPromote']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppPromote']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2338,10 +2430,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformProjectsByProjectAppsByAppRollback(project: string, app: string, rollbackReq: RollbackReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformProjectsByProjectAppsByAppRollback(project, app, rollbackReq, options);
+        async postPlatformProjectsByProjectAppsByAppRollback(project: string, app: string, rollbackReq: RollbackReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeploymentView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppRollback(project, app, rollbackReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformProjectsByProjectAppsByAppRollback']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppRollback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2352,10 +2444,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformProjectsByProjectAppsByAppStart(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformProjectsByProjectAppsByAppStart(project, app, options);
+        async postPlatformProjectsByProjectAppsByAppStart(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppStart(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformProjectsByProjectAppsByAppStart']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppStart']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2366,10 +2458,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformProjectsByProjectAppsByAppStop(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformProjectsByProjectAppsByAppStop(project, app, options);
+        async postPlatformProjectsByProjectAppsByAppStop(project: string, app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformProjectsByProjectAppsByAppStop(project, app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformProjectsByProjectAppsByAppStop']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformProjectsByProjectAppsByAppStop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2379,23 +2471,53 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformSites(projectsCreate: ProjectsCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformSites(projectsCreate, options);
+        async postPlatformSites(projectsCreate: ProjectsCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSites(projectsCreate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformSites']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSites']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Takes a built site live at `https://<slug>.hanzo.app`. The content type decides the shape: a `zip` or `tar.gz` — raw in the body or as a multipart file part, which is what the platform\'s upload UI posts — is stored and served immediately, answering 200 with the finished deployment; a JSON body instead queues a build from the site\'s linked repo and answers 202 with a queued deployment plus, where one could be minted, a scoped upload grant for CI. The git path requires a linked repo (400 without one).  The hosting gate is fail-closed and runs first, before anything is parsed or uploaded: 402 for an unfunded org, 503 for unreachable commerce, nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
-         * @summary Upload a built site — this is where a zip goes live
+         * Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site\'s own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/sites/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
+         * @summary Upload a built site as one archive and serve it
          * @param {string} slug 
+         * @param {File} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformSitesBySlugDeploy(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformSitesBySlugDeploy(slug, options);
+        async postPlatformSitesBySlugDeploy(slug: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDeployment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugDeploy(slug, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformSitesBySlugDeploy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugDeploy']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage. Answers 202.  This is the path for a site too large to send as one archive: a real export is hundreds of megabytes against a 16 MiB body limit, so the bytes deliberately do NOT pass through the API. The answer carries `bucket`, `prefix` and `upload` — a presigned POST policy that S3 itself confines to this site\'s prefix (starts-with `<org>/<slug>/`), expires in 30 minutes and bounds each object. So a build writes its own files and holds no standing bucket credential; there is nothing to rotate and nothing that leaks between tenants. Never guess the prefix — it is server-derived, and a guessed one lands where nothing is served.  The deployment is `queued` until POST .../deployments/{id}/complete flips it live (or error). That completion is also where DELETION happens: the grant authorizes writes only, so a build cannot remove a file, and cloud reconciles the prefix against the `keys` manifest the completion carries. A build that dies before completing leaves the deployment queued rather than a half-live site.  The grant is on the 202 and NOWHERE else — it is never stored and never replayed on a later read, so it cannot outlive the build it was minted for. A deployment whose grant could not be minted is still created and still completable; it simply carries no `upload`, and a caller with no other way to write should treat that as the failure it is.  Billing: the hosting gate runs BEFORE anything is created (402 unfunded, 503 commerce unreachable), and the debit lands on the completion that goes live — never on a queued or failed build.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage.
+         * @param {string} slug Slug is the site to deploy, from the path.
+         * @param {ProjectsDeployStart} projectsDeployStart 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postPlatformSitesBySlugDeployments(slug: string, projectsDeployStart: ProjectsDeployStart, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDeployment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugDeployments(slug, projectsDeployStart, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugDeployments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+         * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
+         * @param {string} slug Slug is the project the deployment belongs to, from the path.
+         * @param {string} id ID is the queued deployment to complete, from the path.
+         * @param {ProjectsComplete} projectsComplete 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postPlatformSitesBySlugDeploymentsByIdComplete(slug: string, id: string, projectsComplete: ProjectsComplete, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDeployment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugDeploymentsByIdComplete(slug, id, projectsComplete, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugDeploymentsByIdComplete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2406,10 +2528,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformSitesBySlugDomains(slug: string, projectsDomainsBind: ProjectsDomainsBind, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsBoundDomains>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformSitesBySlugDomains(slug, projectsDomainsBind, options);
+        async postPlatformSitesBySlugDomains(slug: string, projectsDomainsBind: ProjectsDomainsBind, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsBoundDomains>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugDomains(slug, projectsDomainsBind, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformSitesBySlugDomains']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugDomains']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2420,10 +2542,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformSitesBySlugDomainsByHostVerify(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDomain>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformSitesBySlugDomainsByHostVerify(slug, host, options);
+        async postPlatformSitesBySlugDomainsByHostVerify(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDomain>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugDomainsByHostVerify(slug, host, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformSitesBySlugDomainsByHostVerify']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugDomainsByHostVerify']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2434,10 +2556,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformSitesBySlugPublish(slug: string, projectsPublish: ProjectsPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformSitesBySlugPublish(slug, projectsPublish, options);
+        async postPlatformSitesBySlugPublish(slug: string, projectsPublish: ProjectsPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugPublish(slug, projectsPublish, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformSitesBySlugPublish']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugPublish']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2447,10 +2569,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformSitesBySlugPurge(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformSitesBySlugPurge(slug, options);
+        async postPlatformSitesBySlugPurge(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugPurge(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformSitesBySlugPurge']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugPurge']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2461,10 +2583,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformSitesBySlugReleases(slug: string, projectsPublish: ProjectsPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformSitesBySlugReleases(slug, projectsPublish, options);
+        async postPlatformSitesBySlugReleases(slug: string, projectsPublish: ProjectsPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugReleases(slug, projectsPublish, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformSitesBySlugReleases']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugReleases']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2475,10 +2597,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PlatformSitesBySlugReleasesByReleaseActivate(slug: string, release: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PlatformSitesBySlugReleasesByReleaseActivate(slug, release, options);
+        async postPlatformSitesBySlugReleasesByReleaseActivate(slug: string, release: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugReleasesByReleaseActivate(slug, release, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postV1PlatformSitesBySlugReleasesByReleaseActivate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugReleasesByReleaseActivate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2490,10 +2612,10 @@ export const PlatformApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1PlatformProjectsByProjectAppsByAppEnv(project: string, app: string, setEnvReq: SetEnvReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1PlatformProjectsByProjectAppsByAppEnv(project, app, setEnvReq, options);
+        async putPlatformProjectsByProjectAppsByAppEnv(project: string, app: string, setEnvReq: SetEnvReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AppView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putPlatformProjectsByProjectAppsByAppEnv(project, app, setEnvReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.putV1PlatformProjectsByProjectAppsByAppEnv']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.putPlatformProjectsByProjectAppsByAppEnv']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -2509,42 +2631,42 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
         /**
          * Deletes an application and tears down what it runs.  It removes the application record and tears down what it owns in the org\'s tenant namespace — its operator Service CR and its KMSSecret — then answers 204. An app this org and project do not have is 404, never a silent success.  Teardown is best-effort by design: a cluster that refuses or is unreachable does not block the delete, so the record cannot be left orphaned behind a broken cluster; the failure is logged for operators and the orphan reaper reconciles it. Requires a validated principal; 403 without one.
          * @summary Deletes an application and tears down what it runs.
-         * @param {PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
+         * @param {PlatformApiDeletePlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1PlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        deletePlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiDeletePlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
          * Detaches a hostname and releases the claim.  It drops the host from the app\'s ingress and releases any custom claim on it, so the name becomes claimable again — by this org or any other. Answers 204.  The default host is permanent and cannot be removed: that is 400, not 404. A host that is neither attached nor claimed here is 404. Requires a validated principal; 403 without one.
          * @summary Detaches a hostname and releases the claim.
-         * @param {PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest} requestParameters Request parameters.
+         * @param {PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters: PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(axios, basePath));
+        deletePlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters: PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
-         * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
+         * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the git source is retired on every copy it has so a reclaimed slug never adopts a repository left behind (visibility.go), the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
          * @summary Deletes a project and takes its site off the internet.
-         * @param {PlatformApiDeleteV1PlatformSitesBySlugRequest} requestParameters Request parameters.
+         * @param {PlatformApiDeletePlatformSitesBySlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PlatformSitesBySlug(requestParameters: PlatformApiDeleteV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1PlatformSitesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        deletePlatformSitesBySlug(requestParameters: PlatformApiDeletePlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePlatformSitesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Gives a custom hostname back, so the name is free to reuse.  A claim is FIRST-COME and global, so an add-only surface was not ownership but a leak: a customer who mistyped a domain, or claimed one they later moved elsewhere, could neither reuse it nor let anyone else. This is the third writer that closes it. The release is scoped to (host, org, slug), so it can only ever drop THIS tenant\'s own claim, and it is IDEMPOTENT: releasing a host we do not hold is a clean 204, never a 404 that would let a caller probe which hosts other tenants hold. The edge cache-tag is flushed, since the host stops routing here.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Gives a custom hostname back, so the name is free to reuse.
-         * @param {PlatformApiDeleteV1PlatformSitesBySlugDomainsByHostRequest} requestParameters Request parameters.
+         * @param {PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PlatformSitesBySlugDomainsByHost(requestParameters: PlatformApiDeleteV1PlatformSitesBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1PlatformSitesBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
+        deletePlatformSitesBySlugDomainsByHost(requestParameters: PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePlatformSitesBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the declarations in the caller\'s own org directory, each joined with the Hanzo CD Application reconciling it — sync verdict, health, the universe commit last applied. `cd` is null for a declaration the delivery plane has no Application for, which is the normal state of one that exists only on a branch.  If the delivery plane cannot be read, the declarations are still returned and `cdUnavailable` says why. An unreadable plane never renders as \"nothing has been reconciled\".
@@ -2552,28 +2674,28 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformApps(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1PlatformApps(options).then((request) => request(axios, basePath));
+        getPlatformApps(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getPlatformApps(options).then((request) => request(axios, basePath));
         },
         /**
          * The values file for one app as git declares it: image repository and tag, hosts, replicas, and whether CD is automated on it. 404 when this organization declares no such app.
          * @summary One declaration
-         * @param {PlatformApiGetV1PlatformAppsByAppRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformAppsByAppRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformAppsByApp(requestParameters: PlatformApiGetV1PlatformAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1PlatformAppsByApp(requestParameters.app, options).then((request) => request(axios, basePath));
+        getPlatformAppsByApp(requestParameters: PlatformApiGetPlatformAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getPlatformAppsByApp(requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
          * The Hanzo CD Application for one declaration, on its own — the poll a deploy view makes while it waits, without re-reading the whole inventory. 404 while the declaration exists only on a branch, because the generator reads main.
          * @summary One app\'s reconciliation
-         * @param {PlatformApiGetV1PlatformAppsByAppCdRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformAppsByAppCdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformAppsByAppCd(requestParameters: PlatformApiGetV1PlatformAppsByAppCdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1PlatformAppsByAppCd(requestParameters.app, options).then((request) => request(axios, basePath));
+        getPlatformAppsByAppCd(requestParameters: PlatformApiGetPlatformAppsByAppCdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getPlatformAppsByAppCd(requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
          * Every Hanzo CD Application this caller may observe, with its sync verdict, health, the universe revision last applied, and whether automation and self-heal are on. A SuperAdmin sees the fleet; an org admin sees only Applications whose destination namespace IS its own organization, and never a reserved one.  A cluster with no CD installed answers an empty plane. A plane that cannot be READ answers 503 and says why — the two are opposite facts and never share a shape.
@@ -2581,8 +2703,8 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformCd(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1PlatformCd(options).then((request) => request(axios, basePath));
+        getPlatformCd(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getPlatformCd(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers 501. The forge\'s Actions runs need a Forgejo API client and this deployment has none; an empty run list would be indistinguishable from a forge with no runs.
@@ -2590,28 +2712,28 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformCi(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1PlatformCi(options).then((request) => request(axios, basePath));
+        getPlatformCi(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getPlatformCi(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the platform\'s own service tier, and where it has drifted.  It returns the board for the services the PLATFORM itself runs — iam, kms, gateway and the rest — as `{apps, summary}`: per service its environment, health, phase, the image tag its CR DECLARES, the tag actually running, and the drift between them, plus a summary counting the board green, yellow and red.  This is not a customer surface. `/v1/platform/projects/:project/apps` is a tenant\'s apps; this is the tier those tenants run ON, which is why the two are named differently rather than sharing a prefix.  Admission is scoped at the SCAN, before any CR is read: a platform SuperAdmin observes the whole fleet, an org admin observes only their own org\'s namespaces, and an org that owns none gets an empty board — a non-super caller never even lists another org\'s services. Narrow further with `env`, `health`, `org`, or `drift=1` for only what has drifted.  It degrades honestly rather than failing whole: a namespace that does not exist is skipped, and a running-state read the caller cannot make leaves the running tag empty — an unknown, never a guess — while the declared, health and phase columns still render.
          * @summary Returns the platform\'s own service tier, and where it has drifted.
-         * @param {PlatformApiGetV1PlatformFleetRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformFleetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformFleet(requestParameters: PlatformApiGetV1PlatformFleetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DriftBoard> {
-            return localVarFp.getV1PlatformFleet(requestParameters.env, requestParameters.health, requestParameters.org, requestParameters.drift, options).then((request) => request(axios, basePath));
+        getPlatformFleet(requestParameters: PlatformApiGetPlatformFleetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DriftBoard> {
+            return localVarFp.getPlatformFleet(requestParameters.env, requestParameters.health, requestParameters.org, requestParameters.drift, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one platform service, resolved to production by default.  It returns a single platform service by its CR name, with the same declared-versus-running and drift facts the board carries. The name must be a DNS-1123 label; anything else is 400.  Namespaces are scanned in lifecycle order — main, then test, then dev — and the first match wins, so a bare name resolves to PRODUCTION. The scan covers only the namespaces the caller is authorized for, so an org admin can never read a service outside their own org, and a name found in none of them is 404 rather than a leak.
          * @summary Returns one platform service, resolved to production by default.
-         * @param {PlatformApiGetV1PlatformFleetByAppRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformFleetByAppRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformFleetByApp(requestParameters: PlatformApiGetV1PlatformFleetByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
-            return localVarFp.getV1PlatformFleetByApp(requestParameters.app, requestParameters.env, options).then((request) => request(axios, basePath));
+        getPlatformFleetByApp(requestParameters: PlatformApiGetPlatformFleetByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
+            return localVarFp.getPlatformFleetByApp(requestParameters.app, requestParameters.env, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports whether this control plane can actually deploy anything.  A real probe, not a status page. It answers 200 only when the metadata store is open AND the cluster is genuinely reachable — proved by LISTING the operator App CRD, which settles reachability and CRD presence in one bounded call, and which is the exact question every deploy depends on. Anything else is 503 carrying the real reason and whether the CRD was found.  A constructed cluster client proves nothing — it is built from a kubeconfig, not from a reachable apiserver — so this deliberately spends a round trip rather than reporting `ok` while every deploy fails. Not admin-gated: liveness has to be probe-able without a credential.
@@ -2619,8 +2741,8 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformHealth(options?: RawAxiosRequestConfig): AxiosPromise<Readiness> {
-            return localVarFp.getV1PlatformHealth(options).then((request) => request(axios, basePath));
+        getPlatformHealth(options?: RawAxiosRequestConfig): AxiosPromise<Readiness> {
+            return localVarFp.getPlatformHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns your org\'s projects, each with how many apps live under it.  It lists the caller org\'s projects with the number of platform applications in each. A project is IAM\'s resource — it is created and deleted at /v1/iam/projects, never here — so this is the ONE projection IAM cannot serve: the project plus what the platform has put under it.  Requires a validated principal; 403 without one, and the org comes from that validated identity rather than a request header. This is the console\'s first authenticated read, so a project store that is not yet initialised degrades to an EMPTY list rather than a 500 — a new org genuinely has zero projects — and the real cause is surfaced to operators instead of to the caller.
@@ -2628,78 +2750,78 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjects(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectView>> {
-            return localVarFp.getV1PlatformProjects(options).then((request) => request(axios, basePath));
+        getPlatformProjects(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectView>> {
+            return localVarFp.getPlatformProjects(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one project and its app count.  It returns a single project of the caller\'s org with the number of platform applications under it. A project this org does not have is 404, which is also what another tenant\'s project looks like from here. Requires a validated principal; 403 without one.
          * @summary Returns one project and its app count.
-         * @param {PlatformApiGetV1PlatformProjectsByProjectRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformProjectsByProjectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProject(requestParameters: PlatformApiGetV1PlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectView> {
-            return localVarFp.getV1PlatformProjectsByProject(requestParameters.project, options).then((request) => request(axios, basePath));
+        getPlatformProjectsByProject(requestParameters: PlatformApiGetPlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectView> {
+            return localVarFp.getPlatformProjectsByProject(requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the applications in one project, with what the cluster says about them.  It lists the caller org\'s applications under one project. Each row carries the stored record and, for an app that is live or deploying, the LIVE phase and health read from its operator Service CR; an app with sealed env also carries its secret-sync state. Those cluster reads are best-effort — an unreachable cluster leaves those fields empty and never blocks the listing.  The project must exist in IAM for this org, or the answer is 404; the `default` project is implicit and always accepted, because it is part of what an org IS. Requires a validated principal; 403 without one.
          * @summary Returns the applications in one project, with what the cluster says about them.
-         * @param {PlatformApiGetV1PlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectApps(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<AppView>> {
-            return localVarFp.getV1PlatformProjectsByProjectApps(requestParameters.project, options).then((request) => request(axios, basePath));
+        getPlatformProjectsByProjectApps(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<AppView>> {
+            return localVarFp.getPlatformProjectsByProjectApps(requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one application, with its live phase, health and secret sync.  It returns a single application of the caller\'s org together with what the cluster currently reports for it: the operator Service CR\'s phase and health, and whether its sealed env has synced. An app this org and project do not have is 404. Requires a validated principal; 403 without one.
          * @summary Returns one application, with its live phase, health and secret sync.
-         * @param {PlatformApiGetV1PlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
-            return localVarFp.getV1PlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        getPlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
+            return localVarFp.getPlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns an app\'s deployment history.  It lists every deployment recorded for one of the caller org\'s applications, newest version first, each with its version, status, source, commit and image. Failed and superseded attempts are included — that is the point of a history. Requires a validated principal; 403 without one.
          * @summary Returns an app\'s deployment history.
-         * @param {PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectAppsByAppDeployments(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<DeploymentView>> {
-            return localVarFp.getV1PlatformProjectsByProjectAppsByAppDeployments(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        getPlatformProjectsByProjectAppsByAppDeployments(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<DeploymentView>> {
+            return localVarFp.getPlatformProjectsByProjectAppsByAppDeployments(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one deployment of one app.  It returns a single deployment by id, scoped to the named application of the caller\'s org — so an id belonging to another app or another tenant is 404, not a read. Requires a validated principal; 403 without one.
          * @summary Returns one deployment of one app.
-         * @param {PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
-            return localVarFp.getV1PlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(axios, basePath));
+        getPlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
+            return localVarFp.getPlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns real logs for a deployment — the build\'s, then the app\'s.  It returns the deployment\'s recorded status timeline together with LIVE pod logs pulled from the cluster: the build pod\'s output while a git build is running, and the running app\'s output once it is deployed. The `source` field says which of the two the body is — `build`, `app` or `none` — so a console can label the pane honestly.  It never fabricates log content. When no pod exists yet, or the cluster is unreachable, it degrades to the recorded timeline and says so. Every cluster read is confined to the caller org\'s own namespaces and time-boxed. Requires a validated principal; 403 without one.
          * @summary Returns real logs for a deployment — the build\'s, then the app\'s.
-         * @param {PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeployLogs> {
-            return localVarFp.getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(axios, basePath));
+        getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeployLogs> {
+            return localVarFp.getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every hostname this app answers on.  It lists the app\'s hosts: the permanent default host it was born with, any org-subtree hosts attached to it, and every custom host claimed for it with its verification state and, while pending, the DNS challenge records to publish. Live endpoint status for each host is observed from the cluster. Requires a validated principal; 403 without one.
          * @summary Returns every hostname this app answers on.
-         * @param {PlatformApiGetV1PlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<DomainView>> {
-            return localVarFp.getV1PlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        getPlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<DomainView>> {
+            return localVarFp.getPlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal\'s org, so it never contains another tenant\'s project.
@@ -2707,68 +2829,68 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSites(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectsProject>> {
-            return localVarFp.getV1PlatformSites(options).then((request) => request(axios, basePath));
+        getPlatformSites(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectsProject>> {
+            return localVarFp.getPlatformSites(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.  Scope: a validated principal is required (403 without one) and the lookup is keyed by (org, slug), so another tenant\'s slug is a 404 exactly like a nonexistent one.
          * @summary Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.
-         * @param {PlatformApiGetV1PlatformSitesBySlugRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformSitesBySlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSitesBySlug(requestParameters: PlatformApiGetV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
-            return localVarFp.getV1PlatformSitesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        getPlatformSitesBySlug(requestParameters: PlatformApiGetPlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
+            return localVarFp.getPlatformSitesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a project\'s deploy history, newest version first.  Every deploy of the project is a row — uploads, generated sites, and git/CI builds alike — carrying its version, status, source, commit, live URL, file count and byte count. The short-lived upload grant a queued git deployment was handed is NOT replayed here: it exists only on the 202 that minted it, so a grant cannot outlive its build by being fetched again.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Returns a project\'s deploy history, newest version first.
-         * @param {PlatformApiGetV1PlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSitesBySlugDeployments(requestParameters: PlatformApiGetV1PlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectsDeployment>> {
-            return localVarFp.getV1PlatformSitesBySlugDeployments(requestParameters.slug, options).then((request) => request(axios, basePath));
+        getPlatformSitesBySlugDeployments(requestParameters: PlatformApiGetPlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectsDeployment>> {
+            return localVarFp.getPlatformSitesBySlugDeployments(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one deployment of a project by id.  It is how a console follows a build: the status (`queued`, `uploading`, `live`, `error`), the message a failure left, and the URL and prefix it went live at. Like the history, it never replays the upload grant.  Scope: a validated principal is required (403 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
          * @summary Returns one deployment of a project by id.
-         * @param {PlatformApiGetV1PlatformSitesBySlugDeploymentsByIdRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSitesBySlugDeploymentsById(requestParameters: PlatformApiGetV1PlatformSitesBySlugDeploymentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDeployment> {
-            return localVarFp.getV1PlatformSitesBySlugDeploymentsById(requestParameters.slug, requestParameters.id, options).then((request) => request(axios, basePath));
+        getPlatformSitesBySlugDeploymentsById(requestParameters: PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDeployment> {
+            return localVarFp.getPlatformSitesBySlugDeploymentsById(requestParameters.slug, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
-         * @param {PlatformApiGetV1PlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSitesBySlugDomains(requestParameters: PlatformApiGetV1PlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDomains> {
-            return localVarFp.getV1PlatformSitesBySlugDomains(requestParameters.slug, options).then((request) => request(axios, basePath));
+        getPlatformSitesBySlugDomains(requestParameters: PlatformApiGetPlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDomains> {
+            return localVarFp.getPlatformSitesBySlugDomains(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a site\'s releases newest-first, marking the active one — the rollback menu.  Each row carries the release id to activate, the source it was promoted from, its object and byte counts, and the URL if it is the one serving. Retention bounds the list, so it is the set that can actually still be rolled back to, not a full history.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Returns a site\'s releases newest-first, marking the active one — the rollback menu.
-         * @param {PlatformApiGetV1PlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
+         * @param {PlatformApiGetPlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PlatformSitesBySlugReleases(requestParameters: PlatformApiGetV1PlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectsRelease>> {
-            return localVarFp.getV1PlatformSitesBySlugReleases(requestParameters.slug, options).then((request) => request(axios, basePath));
+        getPlatformSitesBySlugReleases(requestParameters: PlatformApiGetPlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectsRelease>> {
+            return localVarFp.getPlatformSitesBySlugReleases(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes a project\'s settings, and only the settings you send.  Every field is optional and absent means \"leave it\": `name` may not be blanked, `framework` must stay a known build hint, and `cacheControl` is capped at 256 characters with no newlines (it becomes a response header). `visibility` flips public/private under the same rule as create — public is free, private needs a funded org. `upstream` and `license` are free-text credit for third-party work, and sending \"\" clears one. Changing anything reconciles the project\'s canonical git repo, so a visibility change reaches the source and not just the listing.  `hidden`/`hiddenReason` are platform MODERATION and are ignored unless the caller is a platform admin; they remove a project from the public catalogue without touching the publisher\'s own visibility choice, so un-hiding restores exactly what they asked for.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Changes a project\'s settings, and only the settings you send.
-         * @param {PlatformApiPatchV1PlatformSitesBySlugRequest} requestParameters Request parameters.
+         * @param {PlatformApiPatchPlatformSitesBySlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1PlatformSitesBySlug(requestParameters: PlatformApiPatchV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
-            return localVarFp.patchV1PlatformSitesBySlug(requestParameters.slug, requestParameters.projectsUpdate, options).then((request) => request(axios, basePath));
+        patchPlatformSitesBySlug(requestParameters: PlatformApiPatchPlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
+            return localVarFp.patchPlatformSitesBySlug(requestParameters.slug, requestParameters.projectsUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * Builds a git repository into an image and writes the declaration that names it — a values file in `hanzoai/universe` under `charts/app/values/<namespace>/<name>.yaml`, which the `fleet` ApplicationSet renders as one Application. That file IS the deployment: nothing else has to be applied.  `mode` decides whether anything can go live. The default, `branch`, pushes to `deploy/<namespace>/<name>/<tag>` and returns a review URL; the generator reads main, so a branch declaration deploys NOTHING and merging the review is the deliberate act. `commit` writes main, and proves the image is pullable first — a declaration naming an image the registry cannot serve is an ImagePullBackOff with no rollback path.  Omit `tag` to build; give it to declare an image an earlier call already built, which is how a green build is released without rebuilding it.  An org is its name: the values DIRECTORY, the destination NAMESPACE and the AppProject FENCE are all `<org>`, and the image is `<registry>/<org>/<app>`. None of them is a request field — the directory decides what CD admits the sync under and the repository decides what the cluster pulls, so a caller who could name either could reach outside its own org.  `org` is an ACT-AS, not a placement field: it defaults to the caller\'s own, and naming another requires SuperAdmin. So does naming a RESERVED org — the platform\'s own namespace family (the brands and their environments, the control and delivery planes, `admin`) — even when it is the caller\'s own, because an IAM org named `kube-system` does not own Kubernetes. Both refuse rather than downgrade, so an escape attempt is never indistinguishable from a normal request.  A host outside the caller\'s org subtree is refused: claim and verify a custom domain first.
@@ -2776,1038 +2898,1114 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformApps(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1PlatformApps(options).then((request) => request(axios, basePath));
+        postPlatformApps(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postPlatformApps(options).then((request) => request(axios, basePath));
         },
         /**
          * Rolls a platform service\'s pods, in a named environment.  It triggers a rolling restart of one platform service\'s Deployment by stamping a fresh restart annotation, and answers 202 with the app, the namespace, the environment and the timestamp. It restarts pods; it does NOT change the image — a version change is the release path, not this.  SuperAdmin ONLY, and deliberately narrower than the read gate beside it. The only namespaces this board touches are the platform\'s own tier, so a restart here recycles a SHARED service every tenant depends on. A brand-org admin is a customer-org admin, not a platform operator: observing the board is bounded and audited, and restarting production identity is not.  `?env=main|test|dev` is REQUIRED — a bare call does not default to production, which is what closes the fat-finger and confused-deputy hazard — and any other value is 400. A service with no Deployment to restart in that environment is 404.
          * @summary Rolls a platform service\'s pods, in a named environment.
-         * @param {PlatformApiPostV1PlatformFleetByAppDeployRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformFleetByAppDeployRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformFleetByAppDeploy(requestParameters: PlatformApiPostV1PlatformFleetByAppDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<Restarted> {
-            return localVarFp.postV1PlatformFleetByAppDeploy(requestParameters.app, requestParameters.restartRef, options).then((request) => request(axios, basePath));
+        postPlatformFleetByAppDeploy(requestParameters: PlatformApiPostPlatformFleetByAppDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<Restarted> {
+            return localVarFp.postPlatformFleetByAppDeploy(requestParameters.app, requestParameters.restartRef, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an application from a git repo or a container image.  It registers a new application under one of the caller org\'s projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app\'s identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment\'s limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 403 without one, and every cluster object it will later create lands in that org\'s own `tenant-<org>` namespace.
          * @summary Creates an application from a git repo or a container image.
-         * @param {PlatformApiPostV1PlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectApps(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
-            return localVarFp.postV1PlatformProjectsByProjectApps(requestParameters.project, requestParameters.createAppReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectApps(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
+            return localVarFp.postPlatformProjectsByProjectApps(requestParameters.project, requestParameters.createAppReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Deploys the app — building it first if it comes from git.  It starts a new, monotonically versioned deployment of the app and answers 202 with the deployment record. A 202 is an ACCEPTED deployment, not a live one.  An IMAGE app deploys the tag you name (falling back to the app\'s tag, then `latest`) by writing its operator Service CR; the operator reconciles it to running. A GIT app launches an in-cluster BuildKit Job at `commit` — or the app\'s branch — and comes back in `building`; the Service CR is applied later, by the reconciler, once the Job succeeds. The reconciler is restart-safe, so a build in flight survives a cloud restart.  Deploys are bounded per org: over the concurrent-deploy cap is 429 and NOTHING is recorded, so a rejected deploy leaves no phantom in the history. An unreachable cluster is 503 but still records an honest `error` deployment, because a deploy that was attempted and failed must not be indistinguishable from one never made. Every other failure is likewise recorded in its real terminal state.  This is metered work: a git build is billed to the org\'s ledger in wall-clock build minutes once the Job finishes, and the running deployment is billed for its compute per tick for as long as it stays live. Requires a validated principal; 403 without one, and everything is written into that org\'s own `tenant-<org>` namespace.
          * @summary Deploys the app — building it first if it comes from git.
-         * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppDeployRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppDeploy(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
-            return localVarFp.postV1PlatformProjectsByProjectAppsByAppDeploy(requestParameters.project, requestParameters.app, requestParameters.deployReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppDeploy(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppDeploy(requestParameters.project, requestParameters.app, requestParameters.deployReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.  It attaches `host` to the app, and which of two things happens depends on who owns the name. A host inside the caller org\'s own subtree is structurally owned, so it goes ACTIVE immediately and answers 201. A bring-your-own host is claimed as PENDING and answers the DNS challenge records to publish; it is NOT rendered into the app\'s ingress until /verify passes.  Claims are globally unique. A host already claimed by another organization is 409, and so is one claimed by a different app in your own; re-adding this app\'s OWN claim is idempotent and answers its current state at 200. The default host is always attached and re-adding it is 409. A host under the platform\'s shared apex that is not the caller\'s own subtree is 403 — it belongs to whoever owns that subtree and can never be grabbed through the custom path.  `host` must be a valid DNS hostname; anything else is 400. Requires a validated principal; 403 without one.
          * @summary Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.
-         * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<DomainView> {
-            return localVarFp.postV1PlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, requestParameters.addDomainReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<DomainView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, requestParameters.addDomainReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Checks a custom domain\'s DNS and turns it on if it passes.  It runs the DNS challenge check for a pending custom host and, when it passes, marks the host verified and renders it into the app\'s ingress so it starts serving.  A check that RAN and did not pass is not an error: it answers 200 with the host still pending and the reason in `detail`, so a console can show the operator what DNS is actually returning. An already-verified host answers as-is without re-checking. A host not claimed by this app is 404. Requires a validated principal; 403 without one.
          * @summary Checks a custom domain\'s DNS and turns it on if it passes.
-         * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DomainView> {
-            return localVarFp.postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<DomainView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
          * Puts a branch on its own URL.  It deploys an already-built `image` to a per-branch preview and answers its URL, the branch, the preview\'s slug and the deployment. The preview is a FIRST-CLASS application named `<app>-<branch>` in the same project and tenant namespace, with its own default host — so it is completely isolated from production while reusing the same deploy mechanic. Re-previewing a branch converges that same target in place rather than stacking another one.  It carries NO environment variables, deliberately: a preview never inherits production\'s secrets. It also does not build — `image` is required and must already exist, and `branch` defaults to the parent app\'s. A branch that does not resolve to a valid slug distinct from the parent\'s is 400. Requires a validated principal; 403 without one.
          * @summary Puts a branch on its own URL.
-         * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppPreviewRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppPreview(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<PreviewView> {
-            return localVarFp.postV1PlatformProjectsByProjectAppsByAppPreview(requestParameters.project, requestParameters.app, requestParameters.previewReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppPreview(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<PreviewView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppPreview(requestParameters.project, requestParameters.app, requestParameters.previewReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Promotes an already-built release to the app.  It redeploys an image that already exists — named either by `deploymentId`, which promotes that deployment\'s exact built image, or by `tag`, resolved the same way a deploy resolves one. One of the two is required; neither is 400.  Promotion never builds. A deployment that carries no built image cannot be promoted and is 400, and a deployment id outside this app is 404. It runs through the same deploy core as everything else, so it takes a NEW version number and is subject to the same per-org concurrency cap. Requires a validated principal; 403 without one.
          * @summary Promotes an already-built release to the app.
-         * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppPromoteRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppPromote(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppPromoteRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
-            return localVarFp.postV1PlatformProjectsByProjectAppsByAppPromote(requestParameters.project, requestParameters.app, requestParameters.promoteReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppPromote(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppPromote(requestParameters.project, requestParameters.app, requestParameters.promoteReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Goes back to the previous release.  It redeploys a prior image: the one named by `deploymentId`, or — with no body — the newest earlier deployment that carries a real built image and did not error, skipping the release currently live. An app with nothing earlier to return to is 400.  A rollback is a deploy of an old image, not a rewind: it takes a NEW version number and appends to the history rather than erasing what came after. Both lookups are scoped to this app and org, so another tenant\'s image can never be rolled in. Requires a validated principal; 403 without one.
          * @summary Goes back to the previous release.
-         * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppRollbackRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppRollback(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
-            return localVarFp.postV1PlatformProjectsByProjectAppsByAppRollback(requestParameters.project, requestParameters.app, requestParameters.rollbackReq, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppRollback(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeploymentView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppRollback(requestParameters.project, requestParameters.app, requestParameters.rollbackReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Starts a stopped app back up.  It scales the app\'s Service back to its configured replica count and marks it live, answering the updated application. It does not redeploy: the image already on the Service CR is what comes back.  The billing watermark is reset to now as part of starting, so the org is charged for THIS live span and never for the gap the app spent stopped. An app with no Service CR is 404, an unreachable cluster is 503, and a cluster that refuses the scale is 502. Requires a validated principal; 403 without one.
          * @summary Starts a stopped app back up.
-         * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppStartRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppStartRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppStart(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
-            return localVarFp.postV1PlatformProjectsByProjectAppsByAppStart(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppStart(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppStart(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
          * Stops an app without deleting it.  It scales the app\'s Service to zero replicas and marks it stopped, answering the updated application. Nothing else is removed — the record, its env, its domains and its deployment history all survive, and /start brings it back at the same replica count.  An app that is not deployed has no Service CR to scale and is 404. An unreachable cluster is 503 and a cluster that refuses the scale is 502. Because the pods stop, so does the compute metering. Requires a validated principal; 403 without one.
          * @summary Stops an app without deleting it.
-         * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppStopRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformProjectsByProjectAppsByAppStop(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
-            return localVarFp.postV1PlatformProjectsByProjectAppsByAppStop(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
+        postPlatformProjectsByProjectAppsByAppStop(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
+            return localVarFp.postPlatformProjectsByProjectAppsByAppStop(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.  `name` is required; `slug` is derived from the name when omitted and is the identifier that matters — it becomes the S3 key segment, the public host `<slug>.hanzo.app`, and the handle every later call addresses, so it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$` and may not be a reserved label such as `api` or `admin`. `framework` is a build hint from a closed set, defaulting to `static`; it never gates a deploy, it only tells CI how to build a linked repo.  Two defaults are worth knowing: the analytics beacon is ON unless `analytics` is explicitly false, and `visibility` is `public` unless asked otherwise. Publishing publicly is free; PRIVATE is the paid feature, and an unfunded org asking for it is refused rather than quietly published as public. Creation also provisions the project\'s data space and a canonical git repo, both best-effort — neither can fail the create.  Scope: a validated principal is required (403 without one) and the project is created in THAT principal\'s org. The slug is unique per org, so a slug already used in the caller\'s own org is a 409 while the same slug in another org is irrelevant.
          * @summary Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.
-         * @param {PlatformApiPostV1PlatformSitesRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformSitesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSites(requestParameters: PlatformApiPostV1PlatformSitesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
-            return localVarFp.postV1PlatformSites(requestParameters.projectsCreate, options).then((request) => request(axios, basePath));
+        postPlatformSites(requestParameters: PlatformApiPostPlatformSitesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
+            return localVarFp.postPlatformSites(requestParameters.projectsCreate, options).then((request) => request(axios, basePath));
         },
         /**
-         * Takes a built site live at `https://<slug>.hanzo.app`. The content type decides the shape: a `zip` or `tar.gz` — raw in the body or as a multipart file part, which is what the platform\'s upload UI posts — is stored and served immediately, answering 200 with the finished deployment; a JSON body instead queues a build from the site\'s linked repo and answers 202 with a queued deployment plus, where one could be minted, a scoped upload grant for CI. The git path requires a linked repo (400 without one).  The hosting gate is fail-closed and runs first, before anything is parsed or uploaded: 402 for an unfunded org, 503 for unreachable commerce, nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
-         * @summary Upload a built site — this is where a zip goes live
-         * @param {PlatformApiPostV1PlatformSitesBySlugDeployRequest} requestParameters Request parameters.
+         * Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site\'s own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/sites/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
+         * @summary Upload a built site as one archive and serve it
+         * @param {PlatformApiPostPlatformSitesBySlugDeployRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugDeploy(requestParameters: PlatformApiPostV1PlatformSitesBySlugDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1PlatformSitesBySlugDeploy(requestParameters.slug, options).then((request) => request(axios, basePath));
+        postPlatformSitesBySlugDeploy(requestParameters: PlatformApiPostPlatformSitesBySlugDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDeployment> {
+            return localVarFp.postPlatformSitesBySlugDeploy(requestParameters.slug, requestParameters.body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage. Answers 202.  This is the path for a site too large to send as one archive: a real export is hundreds of megabytes against a 16 MiB body limit, so the bytes deliberately do NOT pass through the API. The answer carries `bucket`, `prefix` and `upload` — a presigned POST policy that S3 itself confines to this site\'s prefix (starts-with `<org>/<slug>/`), expires in 30 minutes and bounds each object. So a build writes its own files and holds no standing bucket credential; there is nothing to rotate and nothing that leaks between tenants. Never guess the prefix — it is server-derived, and a guessed one lands where nothing is served.  The deployment is `queued` until POST .../deployments/{id}/complete flips it live (or error). That completion is also where DELETION happens: the grant authorizes writes only, so a build cannot remove a file, and cloud reconciles the prefix against the `keys` manifest the completion carries. A build that dies before completing leaves the deployment queued rather than a half-live site.  The grant is on the 202 and NOWHERE else — it is never stored and never replayed on a later read, so it cannot outlive the build it was minted for. A deployment whose grant could not be minted is still created and still completable; it simply carries no `upload`, and a caller with no other way to write should treat that as the failure it is.  Billing: the hosting gate runs BEFORE anything is created (402 unfunded, 503 commerce unreachable), and the debit lands on the completion that goes live — never on a queued or failed build.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+         * @summary Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage.
+         * @param {PlatformApiPostPlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPlatformSitesBySlugDeployments(requestParameters: PlatformApiPostPlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDeployment> {
+            return localVarFp.postPlatformSitesBySlugDeployments(requestParameters.slug, requestParameters.projectsDeployStart, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+         * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
+         * @param {PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPlatformSitesBySlugDeploymentsByIdComplete(requestParameters: PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDeployment> {
+            return localVarFp.postPlatformSitesBySlugDeploymentsByIdComplete(requestParameters.slug, requestParameters.id, requestParameters.projectsComplete, options).then((request) => request(axios, basePath));
         },
         /**
          * Attaches one or more CUSTOM public hostnames to this org\'s site.  Binding a host you do not own would let you shadow it at the edge, so which outcome you get depends on whether ownership is already established: a SuperAdmin vouches (the operator manages the customer\'s DNS, so its bind IS the proof) and binds VERIFIED immediately; every other caller, INCLUDING an admin of the deployment\'s own brand org, has the host CLAIMED as pending and gets the DNS challenge back in `bound[].records`. A pending claim HOLDS the name so nobody else can take it, but it does not route until POST .../domains/{host}/verify proves control.  A hostname we operate is refused to a non-vouched caller (those are assigned by the platform, never claimed), a host another site already holds is a 409, and a name the platform holds is a 400 for EVERY caller — a vouch skips the ownership proof, never the host table\'s own invariant. Claims and binds are idempotent for the same (org, slug), and re-claiming returns the SAME token rather than invalidating a record the customer has already published. The edge cache-tag is flushed afterwards so a newly-verified host serves the current build immediately.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Attaches one or more CUSTOM public hostnames to this org\'s site.
-         * @param {PlatformApiPostV1PlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugDomains(requestParameters: PlatformApiPostV1PlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsBoundDomains> {
-            return localVarFp.postV1PlatformSitesBySlugDomains(requestParameters.slug, requestParameters.projectsDomainsBind, options).then((request) => request(axios, basePath));
+        postPlatformSitesBySlugDomains(requestParameters: PlatformApiPostPlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsBoundDomains> {
+            return localVarFp.postPlatformSitesBySlugDomains(requestParameters.slug, requestParameters.projectsDomainsBind, options).then((request) => request(axios, basePath));
         },
         /**
          * Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.  It answers 200 either way, with the host\'s honest current state: verified once the TXT record is found, still pending — with the records to publish and the resolver\'s own explanation in `detail` — when it is not. A not-yet is not an error: the check ran, DNS simply has not propagated, and the customer retries. An already-verified host is returned unchanged without re-resolving. On a successful promotion the edge cache-tag is flushed, since the host routes as of that moment.  Scope: a validated principal is required (403 without one). Both the site and the claim are resolved within that principal\'s org, so a host claimed by another tenant is \"not claimed by this site\".
          * @summary Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.
-         * @param {PlatformApiPostV1PlatformSitesBySlugDomainsByHostVerifyRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugDomainsByHostVerify(requestParameters: PlatformApiPostV1PlatformSitesBySlugDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDomain> {
-            return localVarFp.postV1PlatformSitesBySlugDomainsByHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
+        postPlatformSitesBySlugDomainsByHostVerify(requestParameters: PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDomain> {
+            return localVarFp.postPlatformSitesBySlugDomainsByHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
          * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
-         * @param {PlatformApiPostV1PlatformSitesBySlugPublishRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformSitesBySlugPublishRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugPublish(requestParameters: PlatformApiPostV1PlatformSitesBySlugPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
-            return localVarFp.postV1PlatformSitesBySlugPublish(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(axios, basePath));
+        postPlatformSitesBySlugPublish(requestParameters: PlatformApiPostPlatformSitesBySlugPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
+            return localVarFp.postPlatformSitesBySlugPublish(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(axios, basePath));
         },
         /**
          * Flushes the site\'s edge cache without redeploying anything.  It invalidates the edge cache-tag `site-<org>-<slug>` and stamps `lastPurgeAt` (unix seconds), and it NEVER writes or deletes the S3 origin — the live build keeps serving; only stale copies held at the edge drop, so the next request re-fetches the current artifact from origin. Idempotent, and an edge that is unconfigured or failing is not fatal: `lastPurgeAt` is still stamped and the answer is still the updated project.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Flushes the site\'s edge cache without redeploying anything.
-         * @param {PlatformApiPostV1PlatformSitesBySlugPurgeRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformSitesBySlugPurgeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugPurge(requestParameters: PlatformApiPostV1PlatformSitesBySlugPurgeRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
-            return localVarFp.postV1PlatformSitesBySlugPurge(requestParameters.slug, options).then((request) => request(axios, basePath));
+        postPlatformSitesBySlugPurge(requestParameters: PlatformApiPostPlatformSitesBySlugPurgeRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
+            return localVarFp.postPlatformSitesBySlugPurge(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live. Answers 201.  `source` is a path RELATIVE to your org\'s own storage space: the org segment is prepended server-side from the validated principal and the bucket is never in the request at all, so a server-side copy can only ever reach bytes your org already owns. The prefix is listed, content-addressed (SHA-256 over the sorted manifest of key/size/etag), and copied into an immutable `<org>/.releases/<slug>/<id>/` prefix; the row is written LAST, so a partial copy is unreachable rather than merely unlikely. Re-publishing an unchanged source is idempotent BY CONSTRUCTION — same bytes, same id, no copy at all.  The source must contain index.html at its root and stay under the same file and byte caps an artifact deploy does (413 past them); a source that changes mid-copy is a 409 and the release is abandoned. Each publish also reclaims releases past the retention depth, so a site\'s release space stays bounded. This is the billable half — the hosting gate runs before any copy, and the debit lands once the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live.
-         * @param {PlatformApiPostV1PlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugReleases(requestParameters: PlatformApiPostV1PlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
-            return localVarFp.postV1PlatformSitesBySlugReleases(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(axios, basePath));
+        postPlatformSitesBySlugReleases(requestParameters: PlatformApiPostPlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
+            return localVarFp.postPlatformSitesBySlugReleases(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(axios, basePath));
         },
         /**
          * Points the site at an existing release — the go-live, and equally the ROLLBACK.  Aim it at an older release and the site serves that one again: releases are immutable and retained to the retention depth, so nothing is rebuilt or re-copied and the flip is one atomic statement. Before the flip, two conditions run in the order that gives each its own honest answer — the ROW says whether this release exists for this tenant at all (404, with no signal about a foreign id), and only then do the BYTES say whether it can still serve (410 GONE when retention has reclaimed them; that rollback target is not coming back, so publish again). Going live also claims the public host and purges the edge, so the release is reachable and no cached predecessor is served. NOT billed: no new content is produced, only a pointer moved.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
          * @summary Points the site at an existing release — the go-live, and equally the ROLLBACK.
-         * @param {PlatformApiPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest} requestParameters Request parameters.
+         * @param {PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PlatformSitesBySlugReleasesByReleaseActivate(requestParameters: PlatformApiPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
-            return localVarFp.postV1PlatformSitesBySlugReleasesByReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(axios, basePath));
+        postPlatformSitesBySlugReleasesByReleaseActivate(requestParameters: PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
+            return localVarFp.postPlatformSitesBySlugReleasesByReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces an app\'s environment variables.  It writes the app\'s whole environment set and answers the updated application. This is the one post-create write path for env, and it REPLACES rather than merges: a variable absent from the body is gone, and a secret dropped from the set leaves the app\'s Secret on its next deploy.  Keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A value marked `secret: true` is sealed into KMS and blanked in the database, so plaintext is never persisted — and the write fails 503 if KMS is unavailable rather than storing one in the clear.  The rule worth knowing: this does not restart anything. Once the app has been deployed the secret sync is re-declared immediately so the operator re-materialises the Secret, but RUNNING pods keep the environment they started with until their next deploy or restart. Requires a validated principal; 403 without one.
          * @summary Replaces an app\'s environment variables.
-         * @param {PlatformApiPutV1PlatformProjectsByProjectAppsByAppEnvRequest} requestParameters Request parameters.
+         * @param {PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1PlatformProjectsByProjectAppsByAppEnv(requestParameters: PlatformApiPutV1PlatformProjectsByProjectAppsByAppEnvRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
-            return localVarFp.putV1PlatformProjectsByProjectAppsByAppEnv(requestParameters.project, requestParameters.app, requestParameters.setEnvReq, options).then((request) => request(axios, basePath));
+        putPlatformProjectsByProjectAppsByAppEnv(requestParameters: PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest, options?: RawAxiosRequestConfig): AxiosPromise<AppView> {
+            return localVarFp.putPlatformProjectsByProjectAppsByAppEnv(requestParameters.project, requestParameters.app, requestParameters.setEnvReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1PlatformProjectsByProjectAppsByApp operation in PlatformApi.
+ * Request parameters for deletePlatformProjectsByProjectAppsByApp operation in PlatformApi.
  * @export
- * @interface PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppRequest
+ * @interface PlatformApiDeletePlatformProjectsByProjectAppsByAppRequest
  */
-export interface PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppRequest {
+export interface PlatformApiDeletePlatformProjectsByProjectAppsByAppRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiDeleteV1PlatformProjectsByProjectAppsByApp
+     * @memberof PlatformApiDeletePlatformProjectsByProjectAppsByApp
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiDeleteV1PlatformProjectsByProjectAppsByApp
+     * @memberof PlatformApiDeletePlatformProjectsByProjectAppsByApp
      */
     readonly app: string
 }
 
 /**
- * Request parameters for deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost operation in PlatformApi.
+ * Request parameters for deletePlatformProjectsByProjectAppsByAppDomainsByHost operation in PlatformApi.
  * @export
- * @interface PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest
+ * @interface PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHostRequest
  */
-export interface PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest {
+export interface PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHostRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost
+     * @memberof PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHost
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost
+     * @memberof PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHost
      */
     readonly app: string
 
     /**
      * Host is the hostname, from the path.
      * @type {string}
-     * @memberof PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHost
+     * @memberof PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHost
      */
     readonly host: string
 }
 
 /**
- * Request parameters for deleteV1PlatformSitesBySlug operation in PlatformApi.
+ * Request parameters for deletePlatformSitesBySlug operation in PlatformApi.
  * @export
- * @interface PlatformApiDeleteV1PlatformSitesBySlugRequest
+ * @interface PlatformApiDeletePlatformSitesBySlugRequest
  */
-export interface PlatformApiDeleteV1PlatformSitesBySlugRequest {
+export interface PlatformApiDeletePlatformSitesBySlugRequest {
     /**
      * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
      * @type {string}
-     * @memberof PlatformApiDeleteV1PlatformSitesBySlug
+     * @memberof PlatformApiDeletePlatformSitesBySlug
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for deleteV1PlatformSitesBySlugDomainsByHost operation in PlatformApi.
+ * Request parameters for deletePlatformSitesBySlugDomainsByHost operation in PlatformApi.
  * @export
- * @interface PlatformApiDeleteV1PlatformSitesBySlugDomainsByHostRequest
+ * @interface PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest
  */
-export interface PlatformApiDeleteV1PlatformSitesBySlugDomainsByHostRequest {
+export interface PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest {
     /**
      * Slug is the project the host is attached to, from the path.
      * @type {string}
-     * @memberof PlatformApiDeleteV1PlatformSitesBySlugDomainsByHost
+     * @memberof PlatformApiDeletePlatformSitesBySlugDomainsByHost
      */
     readonly slug: string
 
     /**
      * Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
      * @type {string}
-     * @memberof PlatformApiDeleteV1PlatformSitesBySlugDomainsByHost
+     * @memberof PlatformApiDeletePlatformSitesBySlugDomainsByHost
      */
     readonly host: string
 }
 
 /**
- * Request parameters for getV1PlatformAppsByApp operation in PlatformApi.
+ * Request parameters for getPlatformAppsByApp operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformAppsByAppRequest
+ * @interface PlatformApiGetPlatformAppsByAppRequest
  */
-export interface PlatformApiGetV1PlatformAppsByAppRequest {
+export interface PlatformApiGetPlatformAppsByAppRequest {
     /**
      * 
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformAppsByApp
+     * @memberof PlatformApiGetPlatformAppsByApp
      */
     readonly app: string
 }
 
 /**
- * Request parameters for getV1PlatformAppsByAppCd operation in PlatformApi.
+ * Request parameters for getPlatformAppsByAppCd operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformAppsByAppCdRequest
+ * @interface PlatformApiGetPlatformAppsByAppCdRequest
  */
-export interface PlatformApiGetV1PlatformAppsByAppCdRequest {
+export interface PlatformApiGetPlatformAppsByAppCdRequest {
     /**
      * 
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformAppsByAppCd
+     * @memberof PlatformApiGetPlatformAppsByAppCd
      */
     readonly app: string
 }
 
 /**
- * Request parameters for getV1PlatformFleet operation in PlatformApi.
+ * Request parameters for getPlatformFleet operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformFleetRequest
+ * @interface PlatformApiGetPlatformFleetRequest
  */
-export interface PlatformApiGetV1PlatformFleetRequest {
+export interface PlatformApiGetPlatformFleetRequest {
     /**
      * Env narrows to one lifecycle env: main, test or dev.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformFleet
+     * @memberof PlatformApiGetPlatformFleet
      */
     readonly env?: string
 
     /**
      * Health narrows to one health colour: green, yellow or red.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformFleet
+     * @memberof PlatformApiGetPlatformFleet
      */
     readonly health?: string
 
     /**
      * Org narrows to one image namespace.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformFleet
+     * @memberof PlatformApiGetPlatformFleet
      */
     readonly org?: string
 
     /**
      * Drift is &#x60;1&#x60; or &#x60;true&#x60; to show only rows that have actually drifted. It is a STRING and not a bool because those two spellings are exactly what the board has always accepted, and a bool would silently widen that to &#x60;?drift&#x60; alone and to &#x60;TRUE&#x60; — a behaviour change wearing a type change\&#39;s clothes.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformFleet
+     * @memberof PlatformApiGetPlatformFleet
      */
     readonly drift?: string
 }
 
 /**
- * Request parameters for getV1PlatformFleetByApp operation in PlatformApi.
+ * Request parameters for getPlatformFleetByApp operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformFleetByAppRequest
+ * @interface PlatformApiGetPlatformFleetByAppRequest
  */
-export interface PlatformApiGetV1PlatformFleetByAppRequest {
+export interface PlatformApiGetPlatformFleetByAppRequest {
     /**
      * App is the service\&#39;s CR name, from the path. It must be a DNS-1123 label.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformFleetByApp
+     * @memberof PlatformApiGetPlatformFleetByApp
      */
     readonly app: string
 
     /**
      * Env narrows the scan to one lifecycle env: main, test or dev. Omitted, the namespaces are scanned in lifecycle order and the first match wins, so a bare name resolves to PRODUCTION.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformFleetByApp
+     * @memberof PlatformApiGetPlatformFleetByApp
      */
     readonly env?: string
 }
 
 /**
- * Request parameters for getV1PlatformProjectsByProject operation in PlatformApi.
+ * Request parameters for getPlatformProjectsByProject operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformProjectsByProjectRequest
+ * @interface PlatformApiGetPlatformProjectsByProjectRequest
  */
-export interface PlatformApiGetV1PlatformProjectsByProjectRequest {
+export interface PlatformApiGetPlatformProjectsByProjectRequest {
     /**
      * Project is the project\&#39;s name, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProject
+     * @memberof PlatformApiGetPlatformProjectsByProject
      */
     readonly project: string
 }
 
 /**
- * Request parameters for getV1PlatformProjectsByProjectApps operation in PlatformApi.
+ * Request parameters for getPlatformProjectsByProjectApps operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformProjectsByProjectAppsRequest
+ * @interface PlatformApiGetPlatformProjectsByProjectAppsRequest
  */
-export interface PlatformApiGetV1PlatformProjectsByProjectAppsRequest {
+export interface PlatformApiGetPlatformProjectsByProjectAppsRequest {
     /**
      * Project is the project\&#39;s name, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectApps
+     * @memberof PlatformApiGetPlatformProjectsByProjectApps
      */
     readonly project: string
 }
 
 /**
- * Request parameters for getV1PlatformProjectsByProjectAppsByApp operation in PlatformApi.
+ * Request parameters for getPlatformProjectsByProjectAppsByApp operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformProjectsByProjectAppsByAppRequest
+ * @interface PlatformApiGetPlatformProjectsByProjectAppsByAppRequest
  */
-export interface PlatformApiGetV1PlatformProjectsByProjectAppsByAppRequest {
+export interface PlatformApiGetPlatformProjectsByProjectAppsByAppRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByApp
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByApp
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByApp
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByApp
      */
     readonly app: string
 }
 
 /**
- * Request parameters for getV1PlatformProjectsByProjectAppsByAppDeployments operation in PlatformApi.
+ * Request parameters for getPlatformProjectsByProjectAppsByAppDeployments operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest
+ * @interface PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsRequest
  */
-export interface PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest {
+export interface PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeployments
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByAppDeployments
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeployments
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByAppDeployments
      */
     readonly app: string
 }
 
 /**
- * Request parameters for getV1PlatformProjectsByProjectAppsByAppDeploymentsById operation in PlatformApi.
+ * Request parameters for getPlatformProjectsByProjectAppsByAppDeploymentsById operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest
+ * @interface PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdRequest
  */
-export interface PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest {
+export interface PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsById
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsById
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsById
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsById
      */
     readonly app: string
 
     /**
      * ID is the deployment\&#39;s id, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsById
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs operation in PlatformApi.
+ * Request parameters for getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest
+ * @interface PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest
  */
-export interface PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest {
+export interface PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs
      */
     readonly app: string
 
     /**
      * ID is the deployment\&#39;s id, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1PlatformProjectsByProjectAppsByAppDomains operation in PlatformApi.
+ * Request parameters for getPlatformProjectsByProjectAppsByAppDomains operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformProjectsByProjectAppsByAppDomainsRequest
+ * @interface PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest
  */
-export interface PlatformApiGetV1PlatformProjectsByProjectAppsByAppDomainsRequest {
+export interface PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByAppDomains
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByAppDomains
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformProjectsByProjectAppsByAppDomains
+     * @memberof PlatformApiGetPlatformProjectsByProjectAppsByAppDomains
      */
     readonly app: string
 }
 
 /**
- * Request parameters for getV1PlatformSitesBySlug operation in PlatformApi.
+ * Request parameters for getPlatformSitesBySlug operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformSitesBySlugRequest
+ * @interface PlatformApiGetPlatformSitesBySlugRequest
  */
-export interface PlatformApiGetV1PlatformSitesBySlugRequest {
+export interface PlatformApiGetPlatformSitesBySlugRequest {
     /**
      * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformSitesBySlug
+     * @memberof PlatformApiGetPlatformSitesBySlug
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for getV1PlatformSitesBySlugDeployments operation in PlatformApi.
+ * Request parameters for getPlatformSitesBySlugDeployments operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformSitesBySlugDeploymentsRequest
+ * @interface PlatformApiGetPlatformSitesBySlugDeploymentsRequest
  */
-export interface PlatformApiGetV1PlatformSitesBySlugDeploymentsRequest {
+export interface PlatformApiGetPlatformSitesBySlugDeploymentsRequest {
     /**
      * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformSitesBySlugDeployments
+     * @memberof PlatformApiGetPlatformSitesBySlugDeployments
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for getV1PlatformSitesBySlugDeploymentsById operation in PlatformApi.
+ * Request parameters for getPlatformSitesBySlugDeploymentsById operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformSitesBySlugDeploymentsByIdRequest
+ * @interface PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest
  */
-export interface PlatformApiGetV1PlatformSitesBySlugDeploymentsByIdRequest {
+export interface PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest {
     /**
      * Slug is the project the deployment belongs to, from the path.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformSitesBySlugDeploymentsById
+     * @memberof PlatformApiGetPlatformSitesBySlugDeploymentsById
      */
     readonly slug: string
 
     /**
      * ID is the deployment id, from the path. A deployment of another project — or of another tenant\&#39;s project — is not found.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformSitesBySlugDeploymentsById
+     * @memberof PlatformApiGetPlatformSitesBySlugDeploymentsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1PlatformSitesBySlugDomains operation in PlatformApi.
+ * Request parameters for getPlatformSitesBySlugDomains operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformSitesBySlugDomainsRequest
+ * @interface PlatformApiGetPlatformSitesBySlugDomainsRequest
  */
-export interface PlatformApiGetV1PlatformSitesBySlugDomainsRequest {
+export interface PlatformApiGetPlatformSitesBySlugDomainsRequest {
     /**
      * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformSitesBySlugDomains
+     * @memberof PlatformApiGetPlatformSitesBySlugDomains
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for getV1PlatformSitesBySlugReleases operation in PlatformApi.
+ * Request parameters for getPlatformSitesBySlugReleases operation in PlatformApi.
  * @export
- * @interface PlatformApiGetV1PlatformSitesBySlugReleasesRequest
+ * @interface PlatformApiGetPlatformSitesBySlugReleasesRequest
  */
-export interface PlatformApiGetV1PlatformSitesBySlugReleasesRequest {
+export interface PlatformApiGetPlatformSitesBySlugReleasesRequest {
     /**
      * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
      * @type {string}
-     * @memberof PlatformApiGetV1PlatformSitesBySlugReleases
+     * @memberof PlatformApiGetPlatformSitesBySlugReleases
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for patchV1PlatformSitesBySlug operation in PlatformApi.
+ * Request parameters for patchPlatformSitesBySlug operation in PlatformApi.
  * @export
- * @interface PlatformApiPatchV1PlatformSitesBySlugRequest
+ * @interface PlatformApiPatchPlatformSitesBySlugRequest
  */
-export interface PlatformApiPatchV1PlatformSitesBySlugRequest {
+export interface PlatformApiPatchPlatformSitesBySlugRequest {
     /**
      * Slug is the project to update, from the path. The URL is the addressing authority — a &#x60;slug&#x60; in the body cannot move the write to another project.
      * @type {string}
-     * @memberof PlatformApiPatchV1PlatformSitesBySlug
+     * @memberof PlatformApiPatchPlatformSitesBySlug
      */
     readonly slug: string
 
     /**
      * 
      * @type {ProjectsUpdate}
-     * @memberof PlatformApiPatchV1PlatformSitesBySlug
+     * @memberof PlatformApiPatchPlatformSitesBySlug
      */
     readonly projectsUpdate: ProjectsUpdate
 }
 
 /**
- * Request parameters for postV1PlatformFleetByAppDeploy operation in PlatformApi.
+ * Request parameters for postPlatformFleetByAppDeploy operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformFleetByAppDeployRequest
+ * @interface PlatformApiPostPlatformFleetByAppDeployRequest
  */
-export interface PlatformApiPostV1PlatformFleetByAppDeployRequest {
+export interface PlatformApiPostPlatformFleetByAppDeployRequest {
     /**
      * App is the service\&#39;s CR name, from the path. It must be a DNS-1123 label.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformFleetByAppDeploy
+     * @memberof PlatformApiPostPlatformFleetByAppDeploy
      */
     readonly app: string
 
     /**
      * 
      * @type {RestartRef}
-     * @memberof PlatformApiPostV1PlatformFleetByAppDeploy
+     * @memberof PlatformApiPostPlatformFleetByAppDeploy
      */
     readonly restartRef: RestartRef
 }
 
 /**
- * Request parameters for postV1PlatformProjectsByProjectApps operation in PlatformApi.
+ * Request parameters for postPlatformProjectsByProjectApps operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformProjectsByProjectAppsRequest
+ * @interface PlatformApiPostPlatformProjectsByProjectAppsRequest
  */
-export interface PlatformApiPostV1PlatformProjectsByProjectAppsRequest {
+export interface PlatformApiPostPlatformProjectsByProjectAppsRequest {
     /**
      * Project is the project to create the application under, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectApps
+     * @memberof PlatformApiPostPlatformProjectsByProjectApps
      */
     readonly project: string
 
     /**
      * 
      * @type {CreateAppReq}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectApps
+     * @memberof PlatformApiPostPlatformProjectsByProjectApps
      */
     readonly createAppReq: CreateAppReq
 }
 
 /**
- * Request parameters for postV1PlatformProjectsByProjectAppsByAppDeploy operation in PlatformApi.
+ * Request parameters for postPlatformProjectsByProjectAppsByAppDeploy operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppDeployRequest
+ * @interface PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest
  */
-export interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppDeployRequest {
+export interface PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppDeploy
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppDeploy
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppDeploy
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppDeploy
      */
     readonly app: string
 
     /**
      * 
      * @type {DeployReq}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppDeploy
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppDeploy
      */
     readonly deployReq: DeployReq
 }
 
 /**
- * Request parameters for postV1PlatformProjectsByProjectAppsByAppDomains operation in PlatformApi.
+ * Request parameters for postPlatformProjectsByProjectAppsByAppDomains operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsRequest
+ * @interface PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest
  */
-export interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsRequest {
+export interface PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomains
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppDomains
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomains
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppDomains
      */
     readonly app: string
 
     /**
      * 
      * @type {AddDomainReq}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomains
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppDomains
      */
     readonly addDomainReq: AddDomainReq
 }
 
 /**
- * Request parameters for postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify operation in PlatformApi.
+ * Request parameters for postPlatformProjectsByProjectAppsByAppDomainsByHostVerify operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest
+ * @interface PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest
  */
-export interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest {
+export interface PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerify
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerify
      */
     readonly app: string
 
     /**
      * Host is the hostname, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerify
      */
     readonly host: string
 }
 
 /**
- * Request parameters for postV1PlatformProjectsByProjectAppsByAppPreview operation in PlatformApi.
+ * Request parameters for postPlatformProjectsByProjectAppsByAppPreview operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppPreviewRequest
+ * @interface PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest
  */
-export interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppPreviewRequest {
+export interface PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest {
     /**
      * Project is the project the parent application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppPreview
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppPreview
      */
     readonly project: string
 
     /**
      * App is the parent application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppPreview
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppPreview
      */
     readonly app: string
 
     /**
      * 
      * @type {PreviewReq}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppPreview
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppPreview
      */
     readonly previewReq: PreviewReq
 }
 
 /**
- * Request parameters for postV1PlatformProjectsByProjectAppsByAppPromote operation in PlatformApi.
+ * Request parameters for postPlatformProjectsByProjectAppsByAppPromote operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppPromoteRequest
+ * @interface PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest
  */
-export interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppPromoteRequest {
+export interface PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppPromote
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppPromote
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppPromote
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppPromote
      */
     readonly app: string
 
     /**
      * 
      * @type {PromoteReq}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppPromote
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppPromote
      */
     readonly promoteReq: PromoteReq
 }
 
 /**
- * Request parameters for postV1PlatformProjectsByProjectAppsByAppRollback operation in PlatformApi.
+ * Request parameters for postPlatformProjectsByProjectAppsByAppRollback operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppRollbackRequest
+ * @interface PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackRequest
  */
-export interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppRollbackRequest {
+export interface PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppRollback
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppRollback
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppRollback
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppRollback
      */
     readonly app: string
 
     /**
      * 
      * @type {RollbackReq}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppRollback
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppRollback
      */
     readonly rollbackReq: RollbackReq
 }
 
 /**
- * Request parameters for postV1PlatformProjectsByProjectAppsByAppStart operation in PlatformApi.
+ * Request parameters for postPlatformProjectsByProjectAppsByAppStart operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppStartRequest
+ * @interface PlatformApiPostPlatformProjectsByProjectAppsByAppStartRequest
  */
-export interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppStartRequest {
+export interface PlatformApiPostPlatformProjectsByProjectAppsByAppStartRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppStart
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppStart
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppStart
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppStart
      */
     readonly app: string
 }
 
 /**
- * Request parameters for postV1PlatformProjectsByProjectAppsByAppStop operation in PlatformApi.
+ * Request parameters for postPlatformProjectsByProjectAppsByAppStop operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppStopRequest
+ * @interface PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest
  */
-export interface PlatformApiPostV1PlatformProjectsByProjectAppsByAppStopRequest {
+export interface PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppStop
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppStop
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformProjectsByProjectAppsByAppStop
+     * @memberof PlatformApiPostPlatformProjectsByProjectAppsByAppStop
      */
     readonly app: string
 }
 
 /**
- * Request parameters for postV1PlatformSites operation in PlatformApi.
+ * Request parameters for postPlatformSites operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformSitesRequest
+ * @interface PlatformApiPostPlatformSitesRequest
  */
-export interface PlatformApiPostV1PlatformSitesRequest {
+export interface PlatformApiPostPlatformSitesRequest {
     /**
      * 
      * @type {ProjectsCreate}
-     * @memberof PlatformApiPostV1PlatformSites
+     * @memberof PlatformApiPostPlatformSites
      */
     readonly projectsCreate: ProjectsCreate
 }
 
 /**
- * Request parameters for postV1PlatformSitesBySlugDeploy operation in PlatformApi.
+ * Request parameters for postPlatformSitesBySlugDeploy operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformSitesBySlugDeployRequest
+ * @interface PlatformApiPostPlatformSitesBySlugDeployRequest
  */
-export interface PlatformApiPostV1PlatformSitesBySlugDeployRequest {
+export interface PlatformApiPostPlatformSitesBySlugDeployRequest {
     /**
      * 
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugDeploy
+     * @memberof PlatformApiPostPlatformSitesBySlugDeploy
      */
     readonly slug: string
+
+    /**
+     * 
+     * @type {File}
+     * @memberof PlatformApiPostPlatformSitesBySlugDeploy
+     */
+    readonly body?: File
 }
 
 /**
- * Request parameters for postV1PlatformSitesBySlugDomains operation in PlatformApi.
+ * Request parameters for postPlatformSitesBySlugDeployments operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformSitesBySlugDomainsRequest
+ * @interface PlatformApiPostPlatformSitesBySlugDeploymentsRequest
  */
-export interface PlatformApiPostV1PlatformSitesBySlugDomainsRequest {
+export interface PlatformApiPostPlatformSitesBySlugDeploymentsRequest {
+    /**
+     * Slug is the site to deploy, from the path.
+     * @type {string}
+     * @memberof PlatformApiPostPlatformSitesBySlugDeployments
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {ProjectsDeployStart}
+     * @memberof PlatformApiPostPlatformSitesBySlugDeployments
+     */
+    readonly projectsDeployStart: ProjectsDeployStart
+}
+
+/**
+ * Request parameters for postPlatformSitesBySlugDeploymentsByIdComplete operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest
+ */
+export interface PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest {
+    /**
+     * Slug is the project the deployment belongs to, from the path.
+     * @type {string}
+     * @memberof PlatformApiPostPlatformSitesBySlugDeploymentsByIdComplete
+     */
+    readonly slug: string
+
+    /**
+     * ID is the queued deployment to complete, from the path.
+     * @type {string}
+     * @memberof PlatformApiPostPlatformSitesBySlugDeploymentsByIdComplete
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {ProjectsComplete}
+     * @memberof PlatformApiPostPlatformSitesBySlugDeploymentsByIdComplete
+     */
+    readonly projectsComplete: ProjectsComplete
+}
+
+/**
+ * Request parameters for postPlatformSitesBySlugDomains operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPostPlatformSitesBySlugDomainsRequest
+ */
+export interface PlatformApiPostPlatformSitesBySlugDomainsRequest {
     /**
      * Slug is the site the hosts attach to, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugDomains
+     * @memberof PlatformApiPostPlatformSitesBySlugDomains
      */
     readonly slug: string
 
     /**
      * 
      * @type {ProjectsDomainsBind}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugDomains
+     * @memberof PlatformApiPostPlatformSitesBySlugDomains
      */
     readonly projectsDomainsBind: ProjectsDomainsBind
 }
 
 /**
- * Request parameters for postV1PlatformSitesBySlugDomainsByHostVerify operation in PlatformApi.
+ * Request parameters for postPlatformSitesBySlugDomainsByHostVerify operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformSitesBySlugDomainsByHostVerifyRequest
+ * @interface PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest
  */
-export interface PlatformApiPostV1PlatformSitesBySlugDomainsByHostVerifyRequest {
+export interface PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest {
     /**
      * Slug is the project the host is attached to, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugDomainsByHostVerify
+     * @memberof PlatformApiPostPlatformSitesBySlugDomainsByHostVerify
      */
     readonly slug: string
 
     /**
      * Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugDomainsByHostVerify
+     * @memberof PlatformApiPostPlatformSitesBySlugDomainsByHostVerify
      */
     readonly host: string
 }
 
 /**
- * Request parameters for postV1PlatformSitesBySlugPublish operation in PlatformApi.
+ * Request parameters for postPlatformSitesBySlugPublish operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformSitesBySlugPublishRequest
+ * @interface PlatformApiPostPlatformSitesBySlugPublishRequest
  */
-export interface PlatformApiPostV1PlatformSitesBySlugPublishRequest {
+export interface PlatformApiPostPlatformSitesBySlugPublishRequest {
     /**
      * Slug is the site to publish, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugPublish
+     * @memberof PlatformApiPostPlatformSitesBySlugPublish
      */
     readonly slug: string
 
     /**
      * 
      * @type {ProjectsPublish}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugPublish
+     * @memberof PlatformApiPostPlatformSitesBySlugPublish
      */
     readonly projectsPublish: ProjectsPublish
 }
 
 /**
- * Request parameters for postV1PlatformSitesBySlugPurge operation in PlatformApi.
+ * Request parameters for postPlatformSitesBySlugPurge operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformSitesBySlugPurgeRequest
+ * @interface PlatformApiPostPlatformSitesBySlugPurgeRequest
  */
-export interface PlatformApiPostV1PlatformSitesBySlugPurgeRequest {
+export interface PlatformApiPostPlatformSitesBySlugPurgeRequest {
     /**
      * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugPurge
+     * @memberof PlatformApiPostPlatformSitesBySlugPurge
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for postV1PlatformSitesBySlugReleases operation in PlatformApi.
+ * Request parameters for postPlatformSitesBySlugReleases operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformSitesBySlugReleasesRequest
+ * @interface PlatformApiPostPlatformSitesBySlugReleasesRequest
  */
-export interface PlatformApiPostV1PlatformSitesBySlugReleasesRequest {
+export interface PlatformApiPostPlatformSitesBySlugReleasesRequest {
     /**
      * Slug is the site to publish, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugReleases
+     * @memberof PlatformApiPostPlatformSitesBySlugReleases
      */
     readonly slug: string
 
     /**
      * 
      * @type {ProjectsPublish}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugReleases
+     * @memberof PlatformApiPostPlatformSitesBySlugReleases
      */
     readonly projectsPublish: ProjectsPublish
 }
 
 /**
- * Request parameters for postV1PlatformSitesBySlugReleasesByReleaseActivate operation in PlatformApi.
+ * Request parameters for postPlatformSitesBySlugReleasesByReleaseActivate operation in PlatformApi.
  * @export
- * @interface PlatformApiPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest
+ * @interface PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest
  */
-export interface PlatformApiPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest {
+export interface PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest {
     /**
      * Slug is the site the release belongs to, from the path.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugReleasesByReleaseActivate
+     * @memberof PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivate
      */
     readonly slug: string
 
     /**
      * Release is the content-addressed release id (\&quot;rel_\&quot; + 32 hex chars), from the path. Anything that is not that shape is not found, rather than being interpolated into a storage prefix.
      * @type {string}
-     * @memberof PlatformApiPostV1PlatformSitesBySlugReleasesByReleaseActivate
+     * @memberof PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivate
      */
     readonly release: string
 }
 
 /**
- * Request parameters for putV1PlatformProjectsByProjectAppsByAppEnv operation in PlatformApi.
+ * Request parameters for putPlatformProjectsByProjectAppsByAppEnv operation in PlatformApi.
  * @export
- * @interface PlatformApiPutV1PlatformProjectsByProjectAppsByAppEnvRequest
+ * @interface PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest
  */
-export interface PlatformApiPutV1PlatformProjectsByProjectAppsByAppEnvRequest {
+export interface PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest {
     /**
      * Project is the project the application lives under, from the path.
      * @type {string}
-     * @memberof PlatformApiPutV1PlatformProjectsByProjectAppsByAppEnv
+     * @memberof PlatformApiPutPlatformProjectsByProjectAppsByAppEnv
      */
     readonly project: string
 
     /**
      * App is the application\&#39;s slug, from the path.
      * @type {string}
-     * @memberof PlatformApiPutV1PlatformProjectsByProjectAppsByAppEnv
+     * @memberof PlatformApiPutPlatformProjectsByProjectAppsByAppEnv
      */
     readonly app: string
 
     /**
      * 
      * @type {SetEnvReq}
-     * @memberof PlatformApiPutV1PlatformProjectsByProjectAppsByAppEnv
+     * @memberof PlatformApiPutPlatformProjectsByProjectAppsByAppEnv
      */
     readonly setEnvReq: SetEnvReq
 }
@@ -3822,49 +4020,49 @@ export class PlatformApi extends BaseAPI {
     /**
      * Deletes an application and tears down what it runs.  It removes the application record and tears down what it owns in the org\'s tenant namespace — its operator Service CR and its KMSSecret — then answers 204. An app this org and project do not have is 404, never a silent success.  Teardown is best-effort by design: a cluster that refuses or is unreachable does not block the delete, so the record cannot be left orphaned behind a broken cluster; the failure is logged for operators and the orphan reaper reconciles it. Requires a validated principal; 403 without one.
      * @summary Deletes an application and tears down what it runs.
-     * @param {PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
+     * @param {PlatformApiDeletePlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public deleteV1PlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).deleteV1PlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    public deletePlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiDeletePlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).deletePlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Detaches a hostname and releases the claim.  It drops the host from the app\'s ingress and releases any custom claim on it, so the name becomes claimable again — by this org or any other. Answers 204.  The default host is permanent and cannot be removed: that is 400, not 404. A host that is neither attached nor claimed here is 404. Requires a validated principal; 403 without one.
      * @summary Detaches a hostname and releases the claim.
-     * @param {PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest} requestParameters Request parameters.
+     * @param {PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters: PlatformApiDeleteV1PlatformProjectsByProjectAppsByAppDomainsByHostRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).deleteV1PlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
+    public deletePlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters: PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHostRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).deletePlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
+     * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the git source is retired on every copy it has so a reclaimed slug never adopts a repository left behind (visibility.go), the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
      * @summary Deletes a project and takes its site off the internet.
-     * @param {PlatformApiDeleteV1PlatformSitesBySlugRequest} requestParameters Request parameters.
+     * @param {PlatformApiDeletePlatformSitesBySlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public deleteV1PlatformSitesBySlug(requestParameters: PlatformApiDeleteV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).deleteV1PlatformSitesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public deletePlatformSitesBySlug(requestParameters: PlatformApiDeletePlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).deletePlatformSitesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gives a custom hostname back, so the name is free to reuse.  A claim is FIRST-COME and global, so an add-only surface was not ownership but a leak: a customer who mistyped a domain, or claimed one they later moved elsewhere, could neither reuse it nor let anyone else. This is the third writer that closes it. The release is scoped to (host, org, slug), so it can only ever drop THIS tenant\'s own claim, and it is IDEMPOTENT: releasing a host we do not hold is a clean 204, never a 404 that would let a caller probe which hosts other tenants hold. The edge cache-tag is flushed, since the host stops routing here.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Gives a custom hostname back, so the name is free to reuse.
-     * @param {PlatformApiDeleteV1PlatformSitesBySlugDomainsByHostRequest} requestParameters Request parameters.
+     * @param {PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public deleteV1PlatformSitesBySlugDomainsByHost(requestParameters: PlatformApiDeleteV1PlatformSitesBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).deleteV1PlatformSitesBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
+    public deletePlatformSitesBySlugDomainsByHost(requestParameters: PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).deletePlatformSitesBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3874,32 +4072,32 @@ export class PlatformApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformApps(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformApps(options).then((request) => request(this.axios, this.basePath));
+    public getPlatformApps(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformApps(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * The values file for one app as git declares it: image repository and tag, hosts, replicas, and whether CD is automated on it. 404 when this organization declares no such app.
      * @summary One declaration
-     * @param {PlatformApiGetV1PlatformAppsByAppRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformAppsByAppRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformAppsByApp(requestParameters: PlatformApiGetV1PlatformAppsByAppRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformAppsByApp(requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformAppsByApp(requestParameters: PlatformApiGetPlatformAppsByAppRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformAppsByApp(requestParameters.app, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * The Hanzo CD Application for one declaration, on its own — the poll a deploy view makes while it waits, without re-reading the whole inventory. 404 while the declaration exists only on a branch, because the generator reads main.
      * @summary One app\'s reconciliation
-     * @param {PlatformApiGetV1PlatformAppsByAppCdRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformAppsByAppCdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformAppsByAppCd(requestParameters: PlatformApiGetV1PlatformAppsByAppCdRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformAppsByAppCd(requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformAppsByAppCd(requestParameters: PlatformApiGetPlatformAppsByAppCdRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformAppsByAppCd(requestParameters.app, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3909,8 +4107,8 @@ export class PlatformApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformCd(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformCd(options).then((request) => request(this.axios, this.basePath));
+    public getPlatformCd(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformCd(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3920,32 +4118,32 @@ export class PlatformApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformCi(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformCi(options).then((request) => request(this.axios, this.basePath));
+    public getPlatformCi(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformCi(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the platform\'s own service tier, and where it has drifted.  It returns the board for the services the PLATFORM itself runs — iam, kms, gateway and the rest — as `{apps, summary}`: per service its environment, health, phase, the image tag its CR DECLARES, the tag actually running, and the drift between them, plus a summary counting the board green, yellow and red.  This is not a customer surface. `/v1/platform/projects/:project/apps` is a tenant\'s apps; this is the tier those tenants run ON, which is why the two are named differently rather than sharing a prefix.  Admission is scoped at the SCAN, before any CR is read: a platform SuperAdmin observes the whole fleet, an org admin observes only their own org\'s namespaces, and an org that owns none gets an empty board — a non-super caller never even lists another org\'s services. Narrow further with `env`, `health`, `org`, or `drift=1` for only what has drifted.  It degrades honestly rather than failing whole: a namespace that does not exist is skipped, and a running-state read the caller cannot make leaves the running tag empty — an unknown, never a guess — while the declared, health and phase columns still render.
      * @summary Returns the platform\'s own service tier, and where it has drifted.
-     * @param {PlatformApiGetV1PlatformFleetRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformFleetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformFleet(requestParameters: PlatformApiGetV1PlatformFleetRequest = {}, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformFleet(requestParameters.env, requestParameters.health, requestParameters.org, requestParameters.drift, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformFleet(requestParameters: PlatformApiGetPlatformFleetRequest = {}, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformFleet(requestParameters.env, requestParameters.health, requestParameters.org, requestParameters.drift, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one platform service, resolved to production by default.  It returns a single platform service by its CR name, with the same declared-versus-running and drift facts the board carries. The name must be a DNS-1123 label; anything else is 400.  Namespaces are scanned in lifecycle order — main, then test, then dev — and the first match wins, so a bare name resolves to PRODUCTION. The scan covers only the namespaces the caller is authorized for, so an org admin can never read a service outside their own org, and a name found in none of them is 404 rather than a leak.
      * @summary Returns one platform service, resolved to production by default.
-     * @param {PlatformApiGetV1PlatformFleetByAppRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformFleetByAppRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformFleetByApp(requestParameters: PlatformApiGetV1PlatformFleetByAppRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformFleetByApp(requestParameters.app, requestParameters.env, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformFleetByApp(requestParameters: PlatformApiGetPlatformFleetByAppRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformFleetByApp(requestParameters.app, requestParameters.env, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3955,8 +4153,8 @@ export class PlatformApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformHealth(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformHealth(options).then((request) => request(this.axios, this.basePath));
+    public getPlatformHealth(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3966,92 +4164,92 @@ export class PlatformApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformProjects(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformProjects(options).then((request) => request(this.axios, this.basePath));
+    public getPlatformProjects(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformProjects(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one project and its app count.  It returns a single project of the caller\'s org with the number of platform applications under it. A project this org does not have is 404, which is also what another tenant\'s project looks like from here. Requires a validated principal; 403 without one.
      * @summary Returns one project and its app count.
-     * @param {PlatformApiGetV1PlatformProjectsByProjectRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformProjectsByProjectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformProjectsByProject(requestParameters: PlatformApiGetV1PlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformProjectsByProject(requestParameters.project, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformProjectsByProject(requestParameters: PlatformApiGetPlatformProjectsByProjectRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformProjectsByProject(requestParameters.project, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the applications in one project, with what the cluster says about them.  It lists the caller org\'s applications under one project. Each row carries the stored record and, for an app that is live or deploying, the LIVE phase and health read from its operator Service CR; an app with sealed env also carries its secret-sync state. Those cluster reads are best-effort — an unreachable cluster leaves those fields empty and never blocks the listing.  The project must exist in IAM for this org, or the answer is 404; the `default` project is implicit and always accepted, because it is part of what an org IS. Requires a validated principal; 403 without one.
      * @summary Returns the applications in one project, with what the cluster says about them.
-     * @param {PlatformApiGetV1PlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformProjectsByProjectApps(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformProjectsByProjectApps(requestParameters.project, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformProjectsByProjectApps(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformProjectsByProjectApps(requestParameters.project, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one application, with its live phase, health and secret sync.  It returns a single application of the caller\'s org together with what the cluster currently reports for it: the operator Service CR\'s phase and health, and whether its sealed env has synced. An app this org and project do not have is 404. Requires a validated principal; 403 without one.
      * @summary Returns one application, with its live phase, health and secret sync.
-     * @param {PlatformApiGetV1PlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformProjectsByProjectAppsByApp(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformProjectsByProjectAppsByApp(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns an app\'s deployment history.  It lists every deployment recorded for one of the caller org\'s applications, newest version first, each with its version, status, source, commit and image. Failed and superseded attempts are included — that is the point of a history. Requires a validated principal; 403 without one.
      * @summary Returns an app\'s deployment history.
-     * @param {PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformProjectsByProjectAppsByAppDeployments(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformProjectsByProjectAppsByAppDeployments(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformProjectsByProjectAppsByAppDeployments(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformProjectsByProjectAppsByAppDeployments(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one deployment of one app.  It returns a single deployment by id, scoped to the named application of the caller\'s org — so an id belonging to another app or another tenant is 404, not a read. Requires a validated principal; 403 without one.
      * @summary Returns one deployment of one app.
-     * @param {PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformProjectsByProjectAppsByAppDeploymentsById(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns real logs for a deployment — the build\'s, then the app\'s.  It returns the deployment\'s recorded status timeline together with LIVE pod logs pulled from the cluster: the build pod\'s output while a git build is running, and the running app\'s output once it is deployed. The `source` field says which of the two the body is — `build`, `app` or `none` — so a console can label the pane honestly.  It never fabricates log content. When no pod exists yet, or the cluster is unreachable, it degrades to the recorded timeline and says so. Every cluster read is confined to the caller org\'s own namespaces and time-boxed. Requires a validated principal; 403 without one.
      * @summary Returns real logs for a deployment — the build\'s, then the app\'s.
-     * @param {PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDeploymentsByIdLogsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformProjectsByProjectAppsByAppDeploymentsByIdLogs(requestParameters.project, requestParameters.app, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns every hostname this app answers on.  It lists the app\'s hosts: the permanent default host it was born with, any org-subtree hosts attached to it, and every custom host claimed for it with its verification state and, while pending, the DNS challenge records to publish. Live endpoint status for each host is observed from the cluster. Requires a validated principal; 403 without one.
      * @summary Returns every hostname this app answers on.
-     * @param {PlatformApiGetV1PlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiGetV1PlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4061,80 +4259,80 @@ export class PlatformApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformSites(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformSites(options).then((request) => request(this.axios, this.basePath));
+    public getPlatformSites(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformSites(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.  Scope: a validated principal is required (403 without one) and the lookup is keyed by (org, slug), so another tenant\'s slug is a 404 exactly like a nonexistent one.
      * @summary Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.
-     * @param {PlatformApiGetV1PlatformSitesBySlugRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformSitesBySlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformSitesBySlug(requestParameters: PlatformApiGetV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformSitesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformSitesBySlug(requestParameters: PlatformApiGetPlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformSitesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns a project\'s deploy history, newest version first.  Every deploy of the project is a row — uploads, generated sites, and git/CI builds alike — carrying its version, status, source, commit, live URL, file count and byte count. The short-lived upload grant a queued git deployment was handed is NOT replayed here: it exists only on the 202 that minted it, so a grant cannot outlive its build by being fetched again.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Returns a project\'s deploy history, newest version first.
-     * @param {PlatformApiGetV1PlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformSitesBySlugDeployments(requestParameters: PlatformApiGetV1PlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformSitesBySlugDeployments(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformSitesBySlugDeployments(requestParameters: PlatformApiGetPlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformSitesBySlugDeployments(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one deployment of a project by id.  It is how a console follows a build: the status (`queued`, `uploading`, `live`, `error`), the message a failure left, and the URL and prefix it went live at. Like the history, it never replays the upload grant.  Scope: a validated principal is required (403 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
      * @summary Returns one deployment of a project by id.
-     * @param {PlatformApiGetV1PlatformSitesBySlugDeploymentsByIdRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformSitesBySlugDeploymentsById(requestParameters: PlatformApiGetV1PlatformSitesBySlugDeploymentsByIdRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformSitesBySlugDeploymentsById(requestParameters.slug, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformSitesBySlugDeploymentsById(requestParameters: PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformSitesBySlugDeploymentsById(requestParameters.slug, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
-     * @param {PlatformApiGetV1PlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformSitesBySlugDomains(requestParameters: PlatformApiGetV1PlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformSitesBySlugDomains(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformSitesBySlugDomains(requestParameters: PlatformApiGetPlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformSitesBySlugDomains(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns a site\'s releases newest-first, marking the active one — the rollback menu.  Each row carries the release id to activate, the source it was promoted from, its object and byte counts, and the URL if it is the one serving. Retention bounds the list, so it is the set that can actually still be rolled back to, not a full history.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Returns a site\'s releases newest-first, marking the active one — the rollback menu.
-     * @param {PlatformApiGetV1PlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
+     * @param {PlatformApiGetPlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getV1PlatformSitesBySlugReleases(requestParameters: PlatformApiGetV1PlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getV1PlatformSitesBySlugReleases(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformSitesBySlugReleases(requestParameters: PlatformApiGetPlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformSitesBySlugReleases(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Changes a project\'s settings, and only the settings you send.  Every field is optional and absent means \"leave it\": `name` may not be blanked, `framework` must stay a known build hint, and `cacheControl` is capped at 256 characters with no newlines (it becomes a response header). `visibility` flips public/private under the same rule as create — public is free, private needs a funded org. `upstream` and `license` are free-text credit for third-party work, and sending \"\" clears one. Changing anything reconciles the project\'s canonical git repo, so a visibility change reaches the source and not just the listing.  `hidden`/`hiddenReason` are platform MODERATION and are ignored unless the caller is a platform admin; they remove a project from the public catalogue without touching the publisher\'s own visibility choice, so un-hiding restores exactly what they asked for.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Changes a project\'s settings, and only the settings you send.
-     * @param {PlatformApiPatchV1PlatformSitesBySlugRequest} requestParameters Request parameters.
+     * @param {PlatformApiPatchPlatformSitesBySlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public patchV1PlatformSitesBySlug(requestParameters: PlatformApiPatchV1PlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).patchV1PlatformSitesBySlug(requestParameters.slug, requestParameters.projectsUpdate, options).then((request) => request(this.axios, this.basePath));
+    public patchPlatformSitesBySlug(requestParameters: PlatformApiPatchPlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).patchPlatformSitesBySlug(requestParameters.slug, requestParameters.projectsUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4144,236 +4342,260 @@ export class PlatformApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformApps(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformApps(options).then((request) => request(this.axios, this.basePath));
+    public postPlatformApps(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformApps(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Rolls a platform service\'s pods, in a named environment.  It triggers a rolling restart of one platform service\'s Deployment by stamping a fresh restart annotation, and answers 202 with the app, the namespace, the environment and the timestamp. It restarts pods; it does NOT change the image — a version change is the release path, not this.  SuperAdmin ONLY, and deliberately narrower than the read gate beside it. The only namespaces this board touches are the platform\'s own tier, so a restart here recycles a SHARED service every tenant depends on. A brand-org admin is a customer-org admin, not a platform operator: observing the board is bounded and audited, and restarting production identity is not.  `?env=main|test|dev` is REQUIRED — a bare call does not default to production, which is what closes the fat-finger and confused-deputy hazard — and any other value is 400. A service with no Deployment to restart in that environment is 404.
      * @summary Rolls a platform service\'s pods, in a named environment.
-     * @param {PlatformApiPostV1PlatformFleetByAppDeployRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformFleetByAppDeployRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformFleetByAppDeploy(requestParameters: PlatformApiPostV1PlatformFleetByAppDeployRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformFleetByAppDeploy(requestParameters.app, requestParameters.restartRef, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformFleetByAppDeploy(requestParameters: PlatformApiPostPlatformFleetByAppDeployRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformFleetByAppDeploy(requestParameters.app, requestParameters.restartRef, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates an application from a git repo or a container image.  It registers a new application under one of the caller org\'s projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app\'s identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment\'s limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 403 without one, and every cluster object it will later create lands in that org\'s own `tenant-<org>` namespace.
      * @summary Creates an application from a git repo or a container image.
-     * @param {PlatformApiPostV1PlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformProjectsByProjectAppsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformProjectsByProjectApps(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformProjectsByProjectApps(requestParameters.project, requestParameters.createAppReq, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformProjectsByProjectApps(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectApps(requestParameters.project, requestParameters.createAppReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Deploys the app — building it first if it comes from git.  It starts a new, monotonically versioned deployment of the app and answers 202 with the deployment record. A 202 is an ACCEPTED deployment, not a live one.  An IMAGE app deploys the tag you name (falling back to the app\'s tag, then `latest`) by writing its operator Service CR; the operator reconciles it to running. A GIT app launches an in-cluster BuildKit Job at `commit` — or the app\'s branch — and comes back in `building`; the Service CR is applied later, by the reconciler, once the Job succeeds. The reconciler is restart-safe, so a build in flight survives a cloud restart.  Deploys are bounded per org: over the concurrent-deploy cap is 429 and NOTHING is recorded, so a rejected deploy leaves no phantom in the history. An unreachable cluster is 503 but still records an honest `error` deployment, because a deploy that was attempted and failed must not be indistinguishable from one never made. Every other failure is likewise recorded in its real terminal state.  This is metered work: a git build is billed to the org\'s ledger in wall-clock build minutes once the Job finishes, and the running deployment is billed for its compute per tick for as long as it stays live. Requires a validated principal; 403 without one, and everything is written into that org\'s own `tenant-<org>` namespace.
      * @summary Deploys the app — building it first if it comes from git.
-     * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppDeployRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformProjectsByProjectAppsByAppDeploy(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppDeployRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformProjectsByProjectAppsByAppDeploy(requestParameters.project, requestParameters.app, requestParameters.deployReq, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformProjectsByProjectAppsByAppDeploy(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDeployRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppDeploy(requestParameters.project, requestParameters.app, requestParameters.deployReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.  It attaches `host` to the app, and which of two things happens depends on who owns the name. A host inside the caller org\'s own subtree is structurally owned, so it goes ACTIVE immediately and answers 201. A bring-your-own host is claimed as PENDING and answers the DNS challenge records to publish; it is NOT rendered into the app\'s ingress until /verify passes.  Claims are globally unique. A host already claimed by another organization is 409, and so is one claimed by a different app in your own; re-adding this app\'s OWN claim is idempotent and answers its current state at 200. The default host is always attached and re-adding it is 409. A host under the platform\'s shared apex that is not the caller\'s own subtree is 403 — it belongs to whoever owns that subtree and can never be grabbed through the custom path.  `host` must be a valid DNS hostname; anything else is 400. Requires a validated principal; 403 without one.
      * @summary Attaches a hostname — instantly if you already own it, otherwise with a DNS challenge.
-     * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, requestParameters.addDomainReq, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformProjectsByProjectAppsByAppDomains(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, requestParameters.addDomainReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Checks a custom domain\'s DNS and turns it on if it passes.  It runs the DNS challenge check for a pending custom host and, when it passes, marks the host verified and renders it into the app\'s ingress so it starts serving.  A check that RAN and did not pass is not an error: it answers 200 with the host still pending and the reason in `detail`, so a console can show the operator what DNS is actually returning. An already-verified host answers as-is without re-checking. A host not claimed by this app is 404. Requires a validated principal; 403 without one.
      * @summary Checks a custom domain\'s DNS and turns it on if it passes.
-     * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppDomainsByHostVerify(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Puts a branch on its own URL.  It deploys an already-built `image` to a per-branch preview and answers its URL, the branch, the preview\'s slug and the deployment. The preview is a FIRST-CLASS application named `<app>-<branch>` in the same project and tenant namespace, with its own default host — so it is completely isolated from production while reusing the same deploy mechanic. Re-previewing a branch converges that same target in place rather than stacking another one.  It carries NO environment variables, deliberately: a preview never inherits production\'s secrets. It also does not build — `image` is required and must already exist, and `branch` defaults to the parent app\'s. A branch that does not resolve to a valid slug distinct from the parent\'s is 400. Requires a validated principal; 403 without one.
      * @summary Puts a branch on its own URL.
-     * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppPreviewRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformProjectsByProjectAppsByAppPreview(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppPreviewRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformProjectsByProjectAppsByAppPreview(requestParameters.project, requestParameters.app, requestParameters.previewReq, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformProjectsByProjectAppsByAppPreview(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppPreviewRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppPreview(requestParameters.project, requestParameters.app, requestParameters.previewReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Promotes an already-built release to the app.  It redeploys an image that already exists — named either by `deploymentId`, which promotes that deployment\'s exact built image, or by `tag`, resolved the same way a deploy resolves one. One of the two is required; neither is 400.  Promotion never builds. A deployment that carries no built image cannot be promoted and is 400, and a deployment id outside this app is 404. It runs through the same deploy core as everything else, so it takes a NEW version number and is subject to the same per-org concurrency cap. Requires a validated principal; 403 without one.
      * @summary Promotes an already-built release to the app.
-     * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppPromoteRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformProjectsByProjectAppsByAppPromote(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppPromoteRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformProjectsByProjectAppsByAppPromote(requestParameters.project, requestParameters.app, requestParameters.promoteReq, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformProjectsByProjectAppsByAppPromote(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppPromoteRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppPromote(requestParameters.project, requestParameters.app, requestParameters.promoteReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Goes back to the previous release.  It redeploys a prior image: the one named by `deploymentId`, or — with no body — the newest earlier deployment that carries a real built image and did not error, skipping the release currently live. An app with nothing earlier to return to is 400.  A rollback is a deploy of an old image, not a rewind: it takes a NEW version number and appends to the history rather than erasing what came after. Both lookups are scoped to this app and org, so another tenant\'s image can never be rolled in. Requires a validated principal; 403 without one.
      * @summary Goes back to the previous release.
-     * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppRollbackRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformProjectsByProjectAppsByAppRollback(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppRollbackRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformProjectsByProjectAppsByAppRollback(requestParameters.project, requestParameters.app, requestParameters.rollbackReq, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformProjectsByProjectAppsByAppRollback(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppRollbackRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppRollback(requestParameters.project, requestParameters.app, requestParameters.rollbackReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Starts a stopped app back up.  It scales the app\'s Service back to its configured replica count and marks it live, answering the updated application. It does not redeploy: the image already on the Service CR is what comes back.  The billing watermark is reset to now as part of starting, so the org is charged for THIS live span and never for the gap the app spent stopped. An app with no Service CR is 404, an unreachable cluster is 503, and a cluster that refuses the scale is 502. Requires a validated principal; 403 without one.
      * @summary Starts a stopped app back up.
-     * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppStartRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppStartRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformProjectsByProjectAppsByAppStart(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppStartRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformProjectsByProjectAppsByAppStart(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformProjectsByProjectAppsByAppStart(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppStartRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppStart(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Stops an app without deleting it.  It scales the app\'s Service to zero replicas and marks it stopped, answering the updated application. Nothing else is removed — the record, its env, its domains and its deployment history all survive, and /start brings it back at the same replica count.  An app that is not deployed has no Service CR to scale and is 404. An unreachable cluster is 503 and a cluster that refuses the scale is 502. Because the pods stop, so does the compute metering. Requires a validated principal; 403 without one.
      * @summary Stops an app without deleting it.
-     * @param {PlatformApiPostV1PlatformProjectsByProjectAppsByAppStopRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformProjectsByProjectAppsByAppStop(requestParameters: PlatformApiPostV1PlatformProjectsByProjectAppsByAppStopRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformProjectsByProjectAppsByAppStop(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformProjectsByProjectAppsByAppStop(requestParameters: PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformProjectsByProjectAppsByAppStop(requestParameters.project, requestParameters.app, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.  `name` is required; `slug` is derived from the name when omitted and is the identifier that matters — it becomes the S3 key segment, the public host `<slug>.hanzo.app`, and the handle every later call addresses, so it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$` and may not be a reserved label such as `api` or `admin`. `framework` is a build hint from a closed set, defaulting to `static`; it never gates a deploy, it only tells CI how to build a linked repo.  Two defaults are worth knowing: the analytics beacon is ON unless `analytics` is explicitly false, and `visibility` is `public` unless asked otherwise. Publishing publicly is free; PRIVATE is the paid feature, and an unfunded org asking for it is refused rather than quietly published as public. Creation also provisions the project\'s data space and a canonical git repo, both best-effort — neither can fail the create.  Scope: a validated principal is required (403 without one) and the project is created in THAT principal\'s org. The slug is unique per org, so a slug already used in the caller\'s own org is a 409 while the same slug in another org is irrelevant.
      * @summary Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.
-     * @param {PlatformApiPostV1PlatformSitesRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformSitesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformSites(requestParameters: PlatformApiPostV1PlatformSitesRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformSites(requestParameters.projectsCreate, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformSites(requestParameters: PlatformApiPostPlatformSitesRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformSites(requestParameters.projectsCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Takes a built site live at `https://<slug>.hanzo.app`. The content type decides the shape: a `zip` or `tar.gz` — raw in the body or as a multipart file part, which is what the platform\'s upload UI posts — is stored and served immediately, answering 200 with the finished deployment; a JSON body instead queues a build from the site\'s linked repo and answers 202 with a queued deployment plus, where one could be minted, a scoped upload grant for CI. The git path requires a linked repo (400 without one).  The hosting gate is fail-closed and runs first, before anything is parsed or uploaded: 402 for an unfunded org, 503 for unreachable commerce, nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
-     * @summary Upload a built site — this is where a zip goes live
-     * @param {PlatformApiPostV1PlatformSitesBySlugDeployRequest} requestParameters Request parameters.
+     * Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site\'s own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/sites/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
+     * @summary Upload a built site as one archive and serve it
+     * @param {PlatformApiPostPlatformSitesBySlugDeployRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformSitesBySlugDeploy(requestParameters: PlatformApiPostV1PlatformSitesBySlugDeployRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformSitesBySlugDeploy(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformSitesBySlugDeploy(requestParameters: PlatformApiPostPlatformSitesBySlugDeployRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformSitesBySlugDeploy(requestParameters.slug, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage. Answers 202.  This is the path for a site too large to send as one archive: a real export is hundreds of megabytes against a 16 MiB body limit, so the bytes deliberately do NOT pass through the API. The answer carries `bucket`, `prefix` and `upload` — a presigned POST policy that S3 itself confines to this site\'s prefix (starts-with `<org>/<slug>/`), expires in 30 minutes and bounds each object. So a build writes its own files and holds no standing bucket credential; there is nothing to rotate and nothing that leaks between tenants. Never guess the prefix — it is server-derived, and a guessed one lands where nothing is served.  The deployment is `queued` until POST .../deployments/{id}/complete flips it live (or error). That completion is also where DELETION happens: the grant authorizes writes only, so a build cannot remove a file, and cloud reconciles the prefix against the `keys` manifest the completion carries. A build that dies before completing leaves the deployment queued rather than a half-live site.  The grant is on the 202 and NOWHERE else — it is never stored and never replayed on a later read, so it cannot outlive the build it was minted for. A deployment whose grant could not be minted is still created and still completable; it simply carries no `upload`, and a caller with no other way to write should treat that as the failure it is.  Billing: the hosting gate runs BEFORE anything is created (402 unfunded, 503 commerce unreachable), and the debit lands on the completion that goes live — never on a queued or failed build.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
+     * @summary Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage.
+     * @param {PlatformApiPostPlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public postPlatformSitesBySlugDeployments(requestParameters: PlatformApiPostPlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformSitesBySlugDeployments(requestParameters.slug, requestParameters.projectsDeployStart, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
+     * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
+     * @param {PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public postPlatformSitesBySlugDeploymentsByIdComplete(requestParameters: PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformSitesBySlugDeploymentsByIdComplete(requestParameters.slug, requestParameters.id, requestParameters.projectsComplete, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Attaches one or more CUSTOM public hostnames to this org\'s site.  Binding a host you do not own would let you shadow it at the edge, so which outcome you get depends on whether ownership is already established: a SuperAdmin vouches (the operator manages the customer\'s DNS, so its bind IS the proof) and binds VERIFIED immediately; every other caller, INCLUDING an admin of the deployment\'s own brand org, has the host CLAIMED as pending and gets the DNS challenge back in `bound[].records`. A pending claim HOLDS the name so nobody else can take it, but it does not route until POST .../domains/{host}/verify proves control.  A hostname we operate is refused to a non-vouched caller (those are assigned by the platform, never claimed), a host another site already holds is a 409, and a name the platform holds is a 400 for EVERY caller — a vouch skips the ownership proof, never the host table\'s own invariant. Claims and binds are idempotent for the same (org, slug), and re-claiming returns the SAME token rather than invalidating a record the customer has already published. The edge cache-tag is flushed afterwards so a newly-verified host serves the current build immediately.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Attaches one or more CUSTOM public hostnames to this org\'s site.
-     * @param {PlatformApiPostV1PlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformSitesBySlugDomains(requestParameters: PlatformApiPostV1PlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformSitesBySlugDomains(requestParameters.slug, requestParameters.projectsDomainsBind, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformSitesBySlugDomains(requestParameters: PlatformApiPostPlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformSitesBySlugDomains(requestParameters.slug, requestParameters.projectsDomainsBind, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.  It answers 200 either way, with the host\'s honest current state: verified once the TXT record is found, still pending — with the records to publish and the resolver\'s own explanation in `detail` — when it is not. A not-yet is not an error: the check ran, DNS simply has not propagated, and the customer retries. An already-verified host is returned unchanged without re-resolving. On a successful promotion the edge cache-tag is flushed, since the host routes as of that moment.  Scope: a validated principal is required (403 without one). Both the site and the claim are resolved within that principal\'s org, so a host claimed by another tenant is \"not claimed by this site\".
      * @summary Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.
-     * @param {PlatformApiPostV1PlatformSitesBySlugDomainsByHostVerifyRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformSitesBySlugDomainsByHostVerify(requestParameters: PlatformApiPostV1PlatformSitesBySlugDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformSitesBySlugDomainsByHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformSitesBySlugDomainsByHostVerify(requestParameters: PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformSitesBySlugDomainsByHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
-     * @param {PlatformApiPostV1PlatformSitesBySlugPublishRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformSitesBySlugPublishRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformSitesBySlugPublish(requestParameters: PlatformApiPostV1PlatformSitesBySlugPublishRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformSitesBySlugPublish(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformSitesBySlugPublish(requestParameters: PlatformApiPostPlatformSitesBySlugPublishRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformSitesBySlugPublish(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Flushes the site\'s edge cache without redeploying anything.  It invalidates the edge cache-tag `site-<org>-<slug>` and stamps `lastPurgeAt` (unix seconds), and it NEVER writes or deletes the S3 origin — the live build keeps serving; only stale copies held at the edge drop, so the next request re-fetches the current artifact from origin. Idempotent, and an edge that is unconfigured or failing is not fatal: `lastPurgeAt` is still stamped and the answer is still the updated project.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Flushes the site\'s edge cache without redeploying anything.
-     * @param {PlatformApiPostV1PlatformSitesBySlugPurgeRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformSitesBySlugPurgeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformSitesBySlugPurge(requestParameters: PlatformApiPostV1PlatformSitesBySlugPurgeRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformSitesBySlugPurge(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformSitesBySlugPurge(requestParameters: PlatformApiPostPlatformSitesBySlugPurgeRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformSitesBySlugPurge(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live. Answers 201.  `source` is a path RELATIVE to your org\'s own storage space: the org segment is prepended server-side from the validated principal and the bucket is never in the request at all, so a server-side copy can only ever reach bytes your org already owns. The prefix is listed, content-addressed (SHA-256 over the sorted manifest of key/size/etag), and copied into an immutable `<org>/.releases/<slug>/<id>/` prefix; the row is written LAST, so a partial copy is unreachable rather than merely unlikely. Re-publishing an unchanged source is idempotent BY CONSTRUCTION — same bytes, same id, no copy at all.  The source must contain index.html at its root and stay under the same file and byte caps an artifact deploy does (413 past them); a source that changes mid-copy is a 409 and the release is abandoned. Each publish also reclaims releases past the retention depth, so a site\'s release space stays bounded. This is the billable half — the hosting gate runs before any copy, and the debit lands once the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live.
-     * @param {PlatformApiPostV1PlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformSitesBySlugReleases(requestParameters: PlatformApiPostV1PlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformSitesBySlugReleases(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformSitesBySlugReleases(requestParameters: PlatformApiPostPlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformSitesBySlugReleases(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Points the site at an existing release — the go-live, and equally the ROLLBACK.  Aim it at an older release and the site serves that one again: releases are immutable and retained to the retention depth, so nothing is rebuilt or re-copied and the flip is one atomic statement. Before the flip, two conditions run in the order that gives each its own honest answer — the ROW says whether this release exists for this tenant at all (404, with no signal about a foreign id), and only then do the BYTES say whether it can still serve (410 GONE when retention has reclaimed them; that rollback target is not coming back, so publish again). Going live also claims the public host and purges the edge, so the release is reachable and no cached predecessor is served. NOT billed: no new content is produced, only a pointer moved.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
      * @summary Points the site at an existing release — the go-live, and equally the ROLLBACK.
-     * @param {PlatformApiPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest} requestParameters Request parameters.
+     * @param {PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postV1PlatformSitesBySlugReleasesByReleaseActivate(requestParameters: PlatformApiPostV1PlatformSitesBySlugReleasesByReleaseActivateRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postV1PlatformSitesBySlugReleasesByReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformSitesBySlugReleasesByReleaseActivate(requestParameters: PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformSitesBySlugReleasesByReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces an app\'s environment variables.  It writes the app\'s whole environment set and answers the updated application. This is the one post-create write path for env, and it REPLACES rather than merges: a variable absent from the body is gone, and a secret dropped from the set leaves the app\'s Secret on its next deploy.  Keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A value marked `secret: true` is sealed into KMS and blanked in the database, so plaintext is never persisted — and the write fails 503 if KMS is unavailable rather than storing one in the clear.  The rule worth knowing: this does not restart anything. Once the app has been deployed the secret sync is re-declared immediately so the operator re-materialises the Secret, but RUNNING pods keep the environment they started with until their next deploy or restart. Requires a validated principal; 403 without one.
      * @summary Replaces an app\'s environment variables.
-     * @param {PlatformApiPutV1PlatformProjectsByProjectAppsByAppEnvRequest} requestParameters Request parameters.
+     * @param {PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public putV1PlatformProjectsByProjectAppsByAppEnv(requestParameters: PlatformApiPutV1PlatformProjectsByProjectAppsByAppEnvRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).putV1PlatformProjectsByProjectAppsByAppEnv(requestParameters.project, requestParameters.app, requestParameters.setEnvReq, options).then((request) => request(this.axios, this.basePath));
+    public putPlatformProjectsByProjectAppsByAppEnv(requestParameters: PlatformApiPutPlatformProjectsByProjectAppsByAppEnvRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).putPlatformProjectsByProjectAppsByAppEnv(requestParameters.project, requestParameters.app, requestParameters.setEnvReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

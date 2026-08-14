@@ -33,6 +33,12 @@ export interface MintedKey {
      */
     'key'?: string;
     /**
+     * Limit is what the minted key may reach, echoed back so the caller can see the narrowing took. Absent means unrestricted.
+     * @type {Array<string>}
+     * @memberof MintedKey
+     */
+    'limit'?: Array<string>;
+    /**
      * Type is the class of key that was minted.
      * @type {string}
      * @memberof MintedKey

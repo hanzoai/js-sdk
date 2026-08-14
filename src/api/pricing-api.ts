@@ -51,7 +51,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Pricing: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricing: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -81,7 +81,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingBase: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingBase: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/base`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -111,7 +111,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingBlockchain: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingBlockchain: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/blockchain`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -141,7 +141,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingCloud: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingCloud: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/cloud`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -171,7 +171,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingCloudPlans: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingCloudPlans: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/cloud/plans`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -201,7 +201,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingCloudRegions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingCloudRegions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/cloud/regions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -231,7 +231,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingCloudStorage: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingCloudStorage: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/cloud/storage`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -261,7 +261,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingCompute: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingCompute: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/compute`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -291,7 +291,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingComputePresets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingComputePresets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/compute/presets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -321,7 +321,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingDatastore: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingDatastore: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/datastore`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -351,7 +351,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingFeatured: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingFeatured: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/featured`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -381,7 +381,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingFree: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingFree: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/free`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -411,7 +411,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingGpu: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingGpu: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/gpu`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -441,7 +441,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -471,7 +471,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingIam: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingIam: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/iam`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -502,9 +502,9 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingModelByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingModelByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1PricingModelByName', 'name', name)
+            assertParamExists('getPricingModelByName', 'name', name)
             const localVarPath = `/v1/pricing/model/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -530,12 +530,12 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the whole model catalog — Hanzo\'s own Zen models and every third-party model — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
-         * @summary Returns the whole model catalog — Hanzo\'s own Zen models and every third-party model — filtered to what the caller\'s org may see.
+         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
+         * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -565,7 +565,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingPaas: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingPaas: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/paas`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -595,7 +595,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/policy`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -625,7 +625,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/providers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -655,7 +655,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingServices: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingServices: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/services`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -685,7 +685,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingSubscriptions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingSubscriptions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/subscriptions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -715,7 +715,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/summary`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -745,7 +745,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingTools: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPricingTools: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/tools`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -775,7 +775,7 @@ export const PricingApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PricingSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPricingSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pricing/sync`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -815,10 +815,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Pricing(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Pricing(options);
+        async getPricing(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricing(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1Pricing']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricing']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -827,10 +827,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingBase(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingBase(options);
+        async getPricingBase(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingBase(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingBase']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingBase']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -839,10 +839,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingBlockchain(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingBlockchain(options);
+        async getPricingBlockchain(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingBlockchain(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingBlockchain']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingBlockchain']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -851,10 +851,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingCloud(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingCloud(options);
+        async getPricingCloud(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingCloud(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingCloud']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingCloud']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -863,10 +863,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingCloudPlans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingCloudPlans(options);
+        async getPricingCloudPlans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingCloudPlans(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingCloudPlans']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingCloudPlans']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -875,10 +875,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingCloudRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingRegionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingCloudRegions(options);
+        async getPricingCloudRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingRegionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingCloudRegions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingCloudRegions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingCloudRegions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -887,10 +887,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingCloudStorage(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingCloudStorage(options);
+        async getPricingCloudStorage(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingCloudStorage(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingCloudStorage']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingCloudStorage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -899,10 +899,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingCompute(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingCompute(options);
+        async getPricingCompute(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingCompute(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingCompute']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingCompute']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -911,10 +911,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingComputePresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPresetList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingComputePresets(options);
+        async getPricingComputePresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPresetList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingComputePresets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingComputePresets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingComputePresets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -923,10 +923,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingDatastore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingDatastore(options);
+        async getPricingDatastore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingDatastore(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingDatastore']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingDatastore']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -935,10 +935,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingFeatured(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingModelList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingFeatured(options);
+        async getPricingFeatured(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingModelList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingFeatured(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingFeatured']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingFeatured']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -947,10 +947,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingFree(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingModelList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingFree(options);
+        async getPricingFree(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingModelList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingFree(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingFree']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingFree']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -959,10 +959,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingGpu(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingTierList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingGpu(options);
+        async getPricingGpu(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingTierList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingGpu(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingGpu']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingGpu']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -971,10 +971,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingHealth>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingHealth(options);
+        async getPricingHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingHealth>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -983,10 +983,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingIam(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingIam(options);
+        async getPricingIam(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingIam(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingIam']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingIam']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -996,22 +996,22 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingModelByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingModelByName(name, options);
+        async getPricingModelByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingModelByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingModelByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingModelByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the whole model catalog — Hanzo\'s own Zen models and every third-party model — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
-         * @summary Returns the whole model catalog — Hanzo\'s own Zen models and every third-party model — filtered to what the caller\'s org may see.
+         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
+         * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingModelList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingModels(options);
+        async getPricingModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingModelList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingModels(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingModels']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1020,10 +1020,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingPaas(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingPaas(options);
+        async getPricingPaas(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingPaas(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingPaas']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingPaas']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1032,10 +1032,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingPolicy(options);
+        async getPricingPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingPolicy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingPolicy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1044,10 +1044,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingProviderList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingProviders(options);
+        async getPricingProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingProviderList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingProviders']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingProviders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1056,10 +1056,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingServices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingServices(options);
+        async getPricingServices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingServices(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingServices']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingServices']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1068,10 +1068,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingSubscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingSubscriptions(options);
+        async getPricingSubscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingPlanList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingSubscriptions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingSubscriptions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingSubscriptions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1080,10 +1080,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingSummary(options);
+        async getPricingSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingSummary']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingSummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1092,10 +1092,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PricingTools(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingToolList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PricingTools(options);
+        async getPricingTools(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingToolList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPricingTools(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.getV1PricingTools']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.getPricingTools']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1104,10 +1104,10 @@ export const PricingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PricingSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingSyncOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PricingSync(options);
+        async postPricingSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PricingSyncOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPricingSync(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PricingApi.postV1PricingSync']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PricingApi.postPricingSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1126,8 +1126,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Pricing(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.getV1Pricing(options).then((request) => request(axios, basePath));
+        getPricing(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.getPricing(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the Hanzo Base plans — the managed-instance tiers, each with its monthly and annual price, storage and request allowances and feature list.
@@ -1135,8 +1135,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingBase(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
-            return localVarFp.getV1PricingBase(options).then((request) => request(axios, basePath));
+        getPricingBase(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+            return localVarFp.getPricingBase(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the blockchain access plans — the RPC and node tiers, each with its monthly price, compute-unit allowance and feature list.
@@ -1144,8 +1144,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingBlockchain(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
-            return localVarFp.getV1PricingBlockchain(options).then((request) => request(axios, basePath));
+        getPricingBlockchain(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+            return localVarFp.getPricingBlockchain(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the public cloud section of the catalog in one document: its instance plans, its regions and its block-storage prices. The section\'s internal half — the provider costs Hanzo pays and the plan-to- provider routing table — is stripped before it is served, so this is what a customer may see and nothing more.
@@ -1153,8 +1153,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingCloud(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.getV1PricingCloud(options).then((request) => request(axios, basePath));
+        getPricingCloud(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.getPricingCloud(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns just the cloud instance plans — each with its vCPU, memory, disk, CPU type, VM allowance, feature list and monthly and hourly price. It is the plans of the cloud section on their own.
@@ -1162,8 +1162,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingCloudPlans(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
-            return localVarFp.getV1PricingCloudPlans(options).then((request) => request(axios, basePath));
+        getPricingCloudPlans(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+            return localVarFp.getPricingCloudPlans(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the regions a cloud instance can be placed in, each with its id, display name and physical location. It is the regions of the cloud section on their own.
@@ -1171,8 +1171,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingCloudRegions(options?: RawAxiosRequestConfig): AxiosPromise<PricingRegionList> {
-            return localVarFp.getV1PricingCloudRegions(options).then((request) => request(axios, basePath));
+        getPricingCloudRegions(options?: RawAxiosRequestConfig): AxiosPromise<PricingRegionList> {
+            return localVarFp.getPricingCloudRegions(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the block-storage prices of the cloud section: the per-GB monthly rate and the volume size bounds a caller may ask for.
@@ -1180,8 +1180,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingCloudStorage(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.getV1PricingCloudStorage(options).then((request) => request(axios, basePath));
+        getPricingCloudStorage(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.getPricingCloudStorage(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the compute section of the catalog: the cloud provider and region the prices are quoted for, the monthly markup applied to them, the full instance-size tier list and the named presets. It is the whole section as the pricing source records it, un-gated — no model or provider identity appears in it.
@@ -1189,8 +1189,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingCompute(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.getV1PricingCompute(options).then((request) => request(axios, basePath));
+        getPricingCompute(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.getPricingCompute(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns just the named compute sizes — the short, human-labelled list (\"Starter\", \"Pro\") a size picker renders, each carrying its provider slug, vCPU, memory, disk and price. It is the presets of the compute section on their own, for a caller that does not need the full tier table.
@@ -1198,8 +1198,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingComputePresets(options?: RawAxiosRequestConfig): AxiosPromise<PricingPresetList> {
-            return localVarFp.getV1PricingComputePresets(options).then((request) => request(axios, basePath));
+        getPricingComputePresets(options?: RawAxiosRequestConfig): AxiosPromise<PricingPresetList> {
+            return localVarFp.getPricingComputePresets(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the Hanzo Datastore rate card: the tier list, the per-GB storage and egress usage rates, the annual discount and the trial. It is the section as authored, un-gated — no provider identity appears in it.  The route was missing while the data existed, so this 404d and every visitor to hanzo.ai\'s Infrastructure tab was told pricing was \"temporarily unavailable\".
@@ -1207,8 +1207,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingDatastore(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.getV1PricingDatastore(options).then((request) => request(axios, basePath));
+        getPricingDatastore(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.getPricingDatastore(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the models the catalog highlights, filtered to what the caller\'s org may see. It is the same catalog as ListModels narrowed to entries the pricing source marks featured.
@@ -1216,8 +1216,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingFeatured(options?: RawAxiosRequestConfig): AxiosPromise<PricingModelList> {
-            return localVarFp.getV1PricingFeatured(options).then((request) => request(axios, basePath));
+        getPricingFeatured(options?: RawAxiosRequestConfig): AxiosPromise<PricingModelList> {
+            return localVarFp.getPricingFeatured(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the models that cost nothing to call, filtered to what the caller\'s org may see. It is the same catalog as ListModels narrowed to entries the pricing source marks free.
@@ -1225,8 +1225,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingFree(options?: RawAxiosRequestConfig): AxiosPromise<PricingModelList> {
-            return localVarFp.getV1PricingFree(options).then((request) => request(axios, basePath));
+        getPricingFree(options?: RawAxiosRequestConfig): AxiosPromise<PricingModelList> {
+            return localVarFp.getPricingFree(options).then((request) => request(axios, basePath));
         },
         /**
          * ListGPUTiers returns the rentable GPU configurations, each with its accelerator count and model, VRAM, vCPU, host memory and hourly price.
@@ -1234,8 +1234,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingGpu(options?: RawAxiosRequestConfig): AxiosPromise<PricingTierList> {
-            return localVarFp.getV1PricingGpu(options).then((request) => request(axios, basePath));
+        getPricingGpu(options?: RawAxiosRequestConfig): AxiosPromise<PricingTierList> {
+            return localVarFp.getPricingGpu(options).then((request) => request(axios, basePath));
         },
         /**
          * Health reports that the pricing subsystem is mounted and serving. It answers from the process itself and consults neither the catalog bundle nor the enablement store, so it stays \"ok\" while either is degraded.
@@ -1243,8 +1243,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingHealth(options?: RawAxiosRequestConfig): AxiosPromise<PricingHealth> {
-            return localVarFp.getV1PricingHealth(options).then((request) => request(axios, basePath));
+        getPricingHealth(options?: RawAxiosRequestConfig): AxiosPromise<PricingHealth> {
+            return localVarFp.getPricingHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * ListIAMPlans returns the identity plans — the Hanzo IAM tiers, each with its monthly and annual price, monthly-active-user allowance and feature list.
@@ -1252,27 +1252,27 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingIam(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
-            return localVarFp.getV1PricingIam(options).then((request) => request(axios, basePath));
+        getPricingIam(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+            return localVarFp.getPricingIam(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one model\'s catalog entry — its pricing, context window and capabilities as the pricing source records them. A model hidden for the caller\'s org answers the same 404 an unknown name does, so a disabled model gets no existence oracle.
          * @summary Returns one model\'s catalog entry — its pricing, context window and capabilities as the pricing source records them.
-         * @param {PricingApiGetV1PricingModelByNameRequest} requestParameters Request parameters.
+         * @param {PricingApiGetPricingModelByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingModelByName(requestParameters: PricingApiGetV1PricingModelByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.getV1PricingModelByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getPricingModelByName(requestParameters: PricingApiGetPricingModelByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.getPricingModelByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the whole model catalog — Hanzo\'s own Zen models and every third-party model — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
-         * @summary Returns the whole model catalog — Hanzo\'s own Zen models and every third-party model — filtered to what the caller\'s org may see.
+         * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
+         * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingModels(options?: RawAxiosRequestConfig): AxiosPromise<PricingModelList> {
-            return localVarFp.getV1PricingModels(options).then((request) => request(axios, basePath));
+        getPricingModels(options?: RawAxiosRequestConfig): AxiosPromise<PricingModelList> {
+            return localVarFp.getPricingModels(options).then((request) => request(axios, basePath));
         },
         /**
          * ListPaaSPlans returns the application-hosting plans — the deploy-and-host tiers, each with its monthly and annual price, app and memory allowances and feature list.
@@ -1280,8 +1280,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingPaas(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
-            return localVarFp.getV1PricingPaas(options).then((request) => request(axios, basePath));
+        getPricingPaas(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+            return localVarFp.getPricingPaas(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the pricing policy document: the revenue-sharing terms (the idle-resale share and the open-source share, each with its percentage and who is eligible) and the commitments Hanzo makes about how it bills — no hidden fees, no egress charges, no surprise bills.
@@ -1289,8 +1289,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingPolicy(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.getV1PricingPolicy(options).then((request) => request(axios, basePath));
+        getPricingPolicy(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.getPricingPolicy(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the model providers the catalog knows, each with its info object, filtered to what the caller\'s org may see. A provider an admin has disabled is absent — and so are its models everywhere else on this surface, because a provider\'s state cascades to what it serves.
@@ -1298,8 +1298,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingProviders(options?: RawAxiosRequestConfig): AxiosPromise<PricingProviderList> {
-            return localVarFp.getV1PricingProviders(options).then((request) => request(axios, basePath));
+        getPricingProviders(options?: RawAxiosRequestConfig): AxiosPromise<PricingProviderList> {
+            return localVarFp.getPricingProviders(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the managed-service rate cards — Search, Crawl, Vector, Console and Managed Services — each with its own tiers, and some with usage rates or a comparison table. It is the section as authored, un-gated.  These are DISPLAY rate cards: what a product costs, not what a plan grants. No entitlement or limit fields ride here, so nothing can bill off them.
@@ -1307,8 +1307,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingServices(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.getV1PricingServices(options).then((request) => request(axios, basePath));
+        getPricingServices(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.getPricingServices(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the API subscription plans — the account-level tiers a customer subscribes to, each with its monthly and annual price, included credit, rate limits and feature list.
@@ -1316,8 +1316,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingSubscriptions(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
-            return localVarFp.getV1PricingSubscriptions(options).then((request) => request(axios, basePath));
+        getPricingSubscriptions(options?: RawAxiosRequestConfig): AxiosPromise<PricingPlanList> {
+            return localVarFp.getPricingSubscriptions(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the catalog\'s headline statistics — model counts by family and the provider directory. The provider sub-object is filtered to what the caller\'s org may see, so a disabled provider\'s name never leaks; the aggregate counts are the catalog\'s own, over everything it holds.
@@ -1325,8 +1325,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingSummary(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.getV1PricingSummary(options).then((request) => request(axios, basePath));
+        getPricingSummary(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.getPricingSummary(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the per-use tool prices — web search, code interpreter, file storage, image generation, speech-to-text and text-to-speech — each with the unit it is billed by and its price in that unit.
@@ -1334,8 +1334,8 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PricingTools(options?: RawAxiosRequestConfig): AxiosPromise<PricingToolList> {
-            return localVarFp.getV1PricingTools(options).then((request) => request(axios, basePath));
+        getPricingTools(options?: RawAxiosRequestConfig): AxiosPromise<PricingToolList> {
+            return localVarFp.getPricingTools(options).then((request) => request(axios, basePath));
         },
         /**
          * Refreshes the third-party section of the catalog from its upstream listings and returns the time the refreshed catalog was stamped with. The fetch runs in Go and the markup transform in the pricing bundle. SuperAdmin only; every other caller is refused.
@@ -1343,22 +1343,22 @@ export const PricingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PricingSync(options?: RawAxiosRequestConfig): AxiosPromise<PricingSyncOut> {
-            return localVarFp.postV1PricingSync(options).then((request) => request(axios, basePath));
+        postPricingSync(options?: RawAxiosRequestConfig): AxiosPromise<PricingSyncOut> {
+            return localVarFp.postPricingSync(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1PricingModelByName operation in PricingApi.
+ * Request parameters for getPricingModelByName operation in PricingApi.
  * @export
- * @interface PricingApiGetV1PricingModelByNameRequest
+ * @interface PricingApiGetPricingModelByNameRequest
  */
-export interface PricingApiGetV1PricingModelByNameRequest {
+export interface PricingApiGetPricingModelByNameRequest {
     /**
      * Name is the model\&#39;s name or its slugged id (\&quot;zen4\&quot;, \&quot;acme/some-model-1\&quot;), matched case-insensitively. It comes from the path: the URL is the addressing authority.
      * @type {string}
-     * @memberof PricingApiGetV1PricingModelByName
+     * @memberof PricingApiGetPricingModelByName
      */
     readonly name: string
 }
@@ -1377,8 +1377,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1Pricing(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1Pricing(options).then((request) => request(this.axios, this.basePath));
+    public getPricing(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricing(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1388,8 +1388,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingBase(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingBase(options).then((request) => request(this.axios, this.basePath));
+    public getPricingBase(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingBase(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1399,8 +1399,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingBlockchain(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingBlockchain(options).then((request) => request(this.axios, this.basePath));
+    public getPricingBlockchain(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingBlockchain(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1410,8 +1410,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingCloud(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingCloud(options).then((request) => request(this.axios, this.basePath));
+    public getPricingCloud(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingCloud(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1421,8 +1421,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingCloudPlans(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingCloudPlans(options).then((request) => request(this.axios, this.basePath));
+    public getPricingCloudPlans(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingCloudPlans(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1432,8 +1432,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingCloudRegions(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingCloudRegions(options).then((request) => request(this.axios, this.basePath));
+    public getPricingCloudRegions(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingCloudRegions(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1443,8 +1443,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingCloudStorage(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingCloudStorage(options).then((request) => request(this.axios, this.basePath));
+    public getPricingCloudStorage(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingCloudStorage(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1454,8 +1454,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingCompute(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingCompute(options).then((request) => request(this.axios, this.basePath));
+    public getPricingCompute(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingCompute(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1465,8 +1465,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingComputePresets(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingComputePresets(options).then((request) => request(this.axios, this.basePath));
+    public getPricingComputePresets(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingComputePresets(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1476,8 +1476,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingDatastore(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingDatastore(options).then((request) => request(this.axios, this.basePath));
+    public getPricingDatastore(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingDatastore(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1487,8 +1487,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingFeatured(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingFeatured(options).then((request) => request(this.axios, this.basePath));
+    public getPricingFeatured(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingFeatured(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1498,8 +1498,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingFree(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingFree(options).then((request) => request(this.axios, this.basePath));
+    public getPricingFree(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingFree(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1509,8 +1509,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingGpu(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingGpu(options).then((request) => request(this.axios, this.basePath));
+    public getPricingGpu(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingGpu(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1520,8 +1520,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingHealth(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingHealth(options).then((request) => request(this.axios, this.basePath));
+    public getPricingHealth(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1531,31 +1531,31 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingIam(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingIam(options).then((request) => request(this.axios, this.basePath));
+    public getPricingIam(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingIam(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one model\'s catalog entry — its pricing, context window and capabilities as the pricing source records them. A model hidden for the caller\'s org answers the same 404 an unknown name does, so a disabled model gets no existence oracle.
      * @summary Returns one model\'s catalog entry — its pricing, context window and capabilities as the pricing source records them.
-     * @param {PricingApiGetV1PricingModelByNameRequest} requestParameters Request parameters.
+     * @param {PricingApiGetPricingModelByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingModelByName(requestParameters: PricingApiGetV1PricingModelByNameRequest, options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingModelByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getPricingModelByName(requestParameters: PricingApiGetPricingModelByNameRequest, options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingModelByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns the whole model catalog — Hanzo\'s own Zen models and every third-party model — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
-     * @summary Returns the whole model catalog — Hanzo\'s own Zen models and every third-party model — filtered to what the caller\'s org may see.
+     * Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see. A model an admin has disabled is absent; one in beta appears only for an org granted it. A SuperAdmin sees every model, each annotated with its enablement state.
+     * @summary Returns the whole model catalog — every model the gateway serves, Zen and third-party alike — filtered to what the caller\'s org may see.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingModels(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingModels(options).then((request) => request(this.axios, this.basePath));
+    public getPricingModels(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingModels(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1565,8 +1565,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingPaas(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingPaas(options).then((request) => request(this.axios, this.basePath));
+    public getPricingPaas(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingPaas(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1576,8 +1576,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingPolicy(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingPolicy(options).then((request) => request(this.axios, this.basePath));
+    public getPricingPolicy(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingPolicy(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1587,8 +1587,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingProviders(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingProviders(options).then((request) => request(this.axios, this.basePath));
+    public getPricingProviders(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingProviders(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1598,8 +1598,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingServices(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingServices(options).then((request) => request(this.axios, this.basePath));
+    public getPricingServices(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingServices(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1609,8 +1609,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingSubscriptions(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingSubscriptions(options).then((request) => request(this.axios, this.basePath));
+    public getPricingSubscriptions(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingSubscriptions(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1620,8 +1620,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingSummary(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingSummary(options).then((request) => request(this.axios, this.basePath));
+    public getPricingSummary(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingSummary(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1631,8 +1631,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public getV1PricingTools(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).getV1PricingTools(options).then((request) => request(this.axios, this.basePath));
+    public getPricingTools(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).getPricingTools(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1642,8 +1642,8 @@ export class PricingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PricingApi
      */
-    public postV1PricingSync(options?: RawAxiosRequestConfig) {
-        return PricingApiFp(this.configuration).postV1PricingSync(options).then((request) => request(this.axios, this.basePath));
+    public postPricingSync(options?: RawAxiosRequestConfig) {
+        return PricingApiFp(this.configuration).postPricingSync(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -25,7 +25,7 @@ const name = `example-greeter-${Date.now()}`;
 async function main() {
   const agents = new AgentsApi(config());
 
-  const { data: created } = await agents.postV1Agents({
+  const { data: created } = await agents.postAgents({
     createAgentIn: {
       name,
       model,
@@ -35,10 +35,10 @@ async function main() {
   });
   console.log(`created ${created.name} (${created.id}) on ${created.model}`);
 
-  await agents.postV1AgentsByRefRun({ ref: name });
+  await agents.postAgentsByRefRun({ ref: name });
   console.log('run started');
 
-  const { data: runs } = await agents.getV1AgentsByRefRuns({ ref: name, limit: 5 });
+  const { data: runs } = await agents.getAgentsByRefRuns({ ref: name, limit: 5 });
   console.log(`${runs.runs?.length ?? 0} run(s):`);
   for (const r of runs.runs ?? []) {
     console.log(`  ${JSON.stringify(r)}`);

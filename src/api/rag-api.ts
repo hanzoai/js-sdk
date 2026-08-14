@@ -33,7 +33,7 @@ export const RagApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RagContext: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRagContext: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/rag/context`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const RagApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RagDelete: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRagDelete: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/rag/delete`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -93,7 +93,7 @@ export const RagApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RagEmbed: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRagEmbed: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/rag/embed`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -123,7 +123,7 @@ export const RagApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RagQuery: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRagQuery: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/rag/query`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -153,7 +153,7 @@ export const RagApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RagQueryMultiple: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRagQueryMultiple: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/rag/query-multiple`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -193,10 +193,10 @@ export const RagApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RagContext(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RagContext(options);
+        async getRagContext(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRagContext(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RagApi.getV1RagContext']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RagApi.getRagContext']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -205,10 +205,10 @@ export const RagApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1RagDelete(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1RagDelete(options);
+        async postRagDelete(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRagDelete(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RagApi.postV1RagDelete']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RagApi.postRagDelete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -217,10 +217,10 @@ export const RagApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1RagEmbed(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1RagEmbed(options);
+        async postRagEmbed(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRagEmbed(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RagApi.postV1RagEmbed']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RagApi.postRagEmbed']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -229,10 +229,10 @@ export const RagApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1RagQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1RagQuery(options);
+        async postRagQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRagQuery(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RagApi.postV1RagQuery']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RagApi.postRagQuery']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -241,10 +241,10 @@ export const RagApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1RagQueryMultiple(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1RagQueryMultiple(options);
+        async postRagQueryMultiple(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRagQueryMultiple(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RagApi.postV1RagQueryMultiple']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RagApi.postRagQueryMultiple']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -263,8 +263,8 @@ export const RagApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RagContext(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1RagContext(options).then((request) => request(axios, basePath));
+        getRagContext(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getRagContext(options).then((request) => request(axios, basePath));
         },
         /**
          * Delete all chunks of one or more uploaded files (by file_id) from the owner\'s Search+Vector index. Consolidates the retired chat-rag-api DELETE /documents.
@@ -272,8 +272,8 @@ export const RagApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RagDelete(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1RagDelete(options).then((request) => request(axios, basePath));
+        postRagDelete(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postRagDelete(options).then((request) => request(axios, basePath));
         },
         /**
          * Parse, chunk, and embed one uploaded file under its file_id into the unified Search+Vector index, scoped to the authenticated owner. Provide inline `content` or a `url` to fetch+parse (PDF/CSV/XLSX/PPTX/…). Re-embedding the same file_id replaces its chunks. Consolidates the retired chat-rag-api POST /embed and /local/embed.
@@ -281,8 +281,8 @@ export const RagApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RagEmbed(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1RagEmbed(options).then((request) => request(axios, basePath));
+        postRagEmbed(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postRagEmbed(options).then((request) => request(axios, basePath));
         },
         /**
          * Retrieve the top-K chunks relevant to a query, scoped to a single uploaded file (`file_id`). Hybrid keyword+vector retrieval over the same index. Consolidates the retired chat-rag-api POST /query.
@@ -290,8 +290,8 @@ export const RagApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RagQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1RagQuery(options).then((request) => request(axios, basePath));
+        postRagQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postRagQuery(options).then((request) => request(axios, basePath));
         },
         /**
          * Retrieve the top-K chunks relevant to a query, scoped to a SET of uploaded files (`file_ids`). Consolidates the retired chat-rag-api POST /query_multiple. Shares one retrieval path with /rag/query.
@@ -299,8 +299,8 @@ export const RagApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RagQueryMultiple(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1RagQueryMultiple(options).then((request) => request(axios, basePath));
+        postRagQueryMultiple(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postRagQueryMultiple(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -319,8 +319,8 @@ export class RagApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RagApi
      */
-    public getV1RagContext(options?: RawAxiosRequestConfig) {
-        return RagApiFp(this.configuration).getV1RagContext(options).then((request) => request(this.axios, this.basePath));
+    public getRagContext(options?: RawAxiosRequestConfig) {
+        return RagApiFp(this.configuration).getRagContext(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -330,8 +330,8 @@ export class RagApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RagApi
      */
-    public postV1RagDelete(options?: RawAxiosRequestConfig) {
-        return RagApiFp(this.configuration).postV1RagDelete(options).then((request) => request(this.axios, this.basePath));
+    public postRagDelete(options?: RawAxiosRequestConfig) {
+        return RagApiFp(this.configuration).postRagDelete(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -341,8 +341,8 @@ export class RagApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RagApi
      */
-    public postV1RagEmbed(options?: RawAxiosRequestConfig) {
-        return RagApiFp(this.configuration).postV1RagEmbed(options).then((request) => request(this.axios, this.basePath));
+    public postRagEmbed(options?: RawAxiosRequestConfig) {
+        return RagApiFp(this.configuration).postRagEmbed(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -352,8 +352,8 @@ export class RagApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RagApi
      */
-    public postV1RagQuery(options?: RawAxiosRequestConfig) {
-        return RagApiFp(this.configuration).postV1RagQuery(options).then((request) => request(this.axios, this.basePath));
+    public postRagQuery(options?: RawAxiosRequestConfig) {
+        return RagApiFp(this.configuration).postRagQuery(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -363,8 +363,8 @@ export class RagApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RagApi
      */
-    public postV1RagQueryMultiple(options?: RawAxiosRequestConfig) {
-        return RagApiFp(this.configuration).postV1RagQueryMultiple(options).then((request) => request(this.axios, this.basePath));
+    public postRagQueryMultiple(options?: RawAxiosRequestConfig) {
+        return RagApiFp(this.configuration).postRagQueryMultiple(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

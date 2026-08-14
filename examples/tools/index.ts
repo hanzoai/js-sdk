@@ -27,7 +27,7 @@ import { config, fail } from '../client';
 
 async function main() {
   const mcp = new McpApi(config());
-  const { data } = await mcp.getV1McpServers();
+  const { data } = await mcp.getMcpServers();
 
   const servers = data.servers ?? [];
   console.log(`${servers.length} MCP server(s) enabled for this org`);

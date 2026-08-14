@@ -33,7 +33,7 @@ export const ScrapeApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Scrape: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postScrape: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/scrape`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const ScrapeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Scrape(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Scrape(options);
+        async postScrape(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postScrape(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ScrapeApi.postV1Scrape']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ScrapeApi.postScrape']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const ScrapeApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Scrape(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Scrape(options).then((request) => request(axios, basePath));
+        postScrape(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postScrape(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class ScrapeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ScrapeApi
      */
-    public postV1Scrape(options?: RawAxiosRequestConfig) {
-        return ScrapeApiFp(this.configuration).postV1Scrape(options).then((request) => request(this.axios, this.basePath));
+    public postScrape(options?: RawAxiosRequestConfig) {
+        return ScrapeApiFp(this.configuration).postScrape(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

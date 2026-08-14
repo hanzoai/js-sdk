@@ -105,7 +105,7 @@ export const ComputeApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ComputeRegions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getComputeRegions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/compute/regions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -135,7 +135,7 @@ export const ComputeApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ComputeSizes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getComputeSizes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/compute/sizes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -197,11 +197,11 @@ export const ComputeApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ComputeBotsByIdByAction: async (id: string, action: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postComputeBotsByIdByAction: async (id: string, action: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1ComputeBotsByIdByAction', 'id', id)
+            assertParamExists('postComputeBotsByIdByAction', 'id', id)
             // verify required parameter 'action' is not null or undefined
-            assertParamExists('postV1ComputeBotsByIdByAction', 'action', action)
+            assertParamExists('postComputeBotsByIdByAction', 'action', action)
             const localVarPath = `/v1/compute/bots/{id}/{action}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)))
                 .replace(`{${"action"}}`, encodeURIComponent(String(action)));
@@ -233,7 +233,7 @@ export const ComputeApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ComputeBotsLaunch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postComputeBotsLaunch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/compute/bots/launch`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -299,10 +299,10 @@ export const ComputeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ComputeRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ComputeRegions(options);
+        async getComputeRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getComputeRegions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ComputeApi.getV1ComputeRegions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.getComputeRegions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -311,10 +311,10 @@ export const ComputeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ComputeSizes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ComputeSizes(options);
+        async getComputeSizes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getComputeSizes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ComputeApi.getV1ComputeSizes']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.getComputeSizes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -337,10 +337,10 @@ export const ComputeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ComputeBotsByIdByAction(id: string, action: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ComputeBotsByIdByAction(id, action, options);
+        async postComputeBotsByIdByAction(id: string, action: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postComputeBotsByIdByAction(id, action, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ComputeApi.postV1ComputeBotsByIdByAction']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.postComputeBotsByIdByAction']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -349,10 +349,10 @@ export const ComputeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ComputeBotsLaunch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ComputeBotsLaunch(options);
+        async postComputeBotsLaunch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postComputeBotsLaunch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ComputeApi.postV1ComputeBotsLaunch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ComputeApi.postComputeBotsLaunch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -391,8 +391,8 @@ export const ComputeApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ComputeRegions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1ComputeRegions(options).then((request) => request(axios, basePath));
+        getComputeRegions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getComputeRegions(options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the instance sizes the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. These are the values `size` accepts on a launch. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one.
@@ -400,8 +400,8 @@ export const ComputeApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ComputeSizes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1ComputeSizes(options).then((request) => request(axios, basePath));
+        getComputeSizes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getComputeSizes(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s bot machines — the kind=bot machines — each joined with the agent binding that says which cloud Agent it runs.  The bindings are read ONCE and joined by machine id, so the list is O(1) upstream calls, not N+1. A bindings read that fails only costs the reconciled status: a bot still lists without it.
@@ -415,12 +415,12 @@ export const ComputeApiFactory = function (configuration?: Configuration, basePa
         /**
          * Dispatches one verb against a bot the caller\'s org owns. `message` runs the bot\'s bound agent with the request body as the message and streams the agent\'s answer back VERBATIM — the upstream body, its content type and its status — so a message is a real agent run, recorded, billed and traced exactly like any other, under the caller\'s own identity rather than a fabricated one. `stop` and `pause` are the same single honest capability: they halt the runtime by unbinding the agent while LEAVING THE MACHINE UP, so the bot stops answering but keeps costing — rebind to resume, or delete the bot to tear it down. Stopping is idempotent; a bot with no binding still reports stopped.  Org-scoped and fails closed: a validated principal is required (403 without one) and the bot is addressed under the caller\'s OWN org, so another tenant\'s id is not reachable. An unknown action is a clean 400 naming the three it accepts, never a silent no-op, and messaging a bot with no bound agent is a 400.
          * @summary Message a bot, or stop it, by naming the action in the path
-         * @param {ComputeApiPostV1ComputeBotsByIdByActionRequest} requestParameters Request parameters.
+         * @param {ComputeApiPostComputeBotsByIdByActionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ComputeBotsByIdByAction(requestParameters: ComputeApiPostV1ComputeBotsByIdByActionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1ComputeBotsByIdByAction(requestParameters.id, requestParameters.action, options).then((request) => request(axios, basePath));
+        postComputeBotsByIdByAction(requestParameters: ComputeApiPostComputeBotsByIdByActionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postComputeBotsByIdByAction(requestParameters.id, requestParameters.action, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates BOTH halves of a bot in one call and answers 201 with the bot: the cloud agent it runs, then a bot-kind machine bootstrapped with the bot runtime, then the binding between them, so a launched bot is immediately messageable. Send `dryRun: true` for a price quote instead — 200 with the upstream quote verbatim, no agent created, no machine launched, nothing spent.  The agent is created FIRST and on purpose: it is create-if-absent (an agent that already exists is reused, so a relaunch is fine and several bots may share one explicit `agent`), and doing it before the machine means a bad request — a model that is not in the catalog, say — fails with the real reason BEFORE any metered machine is provisioned. `agent` defaults to the bot\'s name and an empty `model` takes the deployment default.  Org-scoped and fails closed: a validated principal is required (403 without one), the owning org is that principal\'s and never a body field, `size` is required (400), and `name` is required for a real launch though not for a quote.
@@ -428,8 +428,8 @@ export const ComputeApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ComputeBotsLaunch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1ComputeBotsLaunch(options).then((request) => request(axios, basePath));
+        postComputeBotsLaunch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postComputeBotsLaunch(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -463,22 +463,22 @@ export interface ComputeApiGetBotRequest {
 }
 
 /**
- * Request parameters for postV1ComputeBotsByIdByAction operation in ComputeApi.
+ * Request parameters for postComputeBotsByIdByAction operation in ComputeApi.
  * @export
- * @interface ComputeApiPostV1ComputeBotsByIdByActionRequest
+ * @interface ComputeApiPostComputeBotsByIdByActionRequest
  */
-export interface ComputeApiPostV1ComputeBotsByIdByActionRequest {
+export interface ComputeApiPostComputeBotsByIdByActionRequest {
     /**
      * 
      * @type {string}
-     * @memberof ComputeApiPostV1ComputeBotsByIdByAction
+     * @memberof ComputeApiPostComputeBotsByIdByAction
      */
     readonly id: string
 
     /**
      * 
      * @type {string}
-     * @memberof ComputeApiPostV1ComputeBotsByIdByAction
+     * @memberof ComputeApiPostComputeBotsByIdByAction
      */
     readonly action: string
 }
@@ -521,8 +521,8 @@ export class ComputeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ComputeApi
      */
-    public getV1ComputeRegions(options?: RawAxiosRequestConfig) {
-        return ComputeApiFp(this.configuration).getV1ComputeRegions(options).then((request) => request(this.axios, this.basePath));
+    public getComputeRegions(options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).getComputeRegions(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -532,8 +532,8 @@ export class ComputeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ComputeApi
      */
-    public getV1ComputeSizes(options?: RawAxiosRequestConfig) {
-        return ComputeApiFp(this.configuration).getV1ComputeSizes(options).then((request) => request(this.axios, this.basePath));
+    public getComputeSizes(options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).getComputeSizes(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -550,13 +550,13 @@ export class ComputeApi extends BaseAPI {
     /**
      * Dispatches one verb against a bot the caller\'s org owns. `message` runs the bot\'s bound agent with the request body as the message and streams the agent\'s answer back VERBATIM — the upstream body, its content type and its status — so a message is a real agent run, recorded, billed and traced exactly like any other, under the caller\'s own identity rather than a fabricated one. `stop` and `pause` are the same single honest capability: they halt the runtime by unbinding the agent while LEAVING THE MACHINE UP, so the bot stops answering but keeps costing — rebind to resume, or delete the bot to tear it down. Stopping is idempotent; a bot with no binding still reports stopped.  Org-scoped and fails closed: a validated principal is required (403 without one) and the bot is addressed under the caller\'s OWN org, so another tenant\'s id is not reachable. An unknown action is a clean 400 naming the three it accepts, never a silent no-op, and messaging a bot with no bound agent is a 400.
      * @summary Message a bot, or stop it, by naming the action in the path
-     * @param {ComputeApiPostV1ComputeBotsByIdByActionRequest} requestParameters Request parameters.
+     * @param {ComputeApiPostComputeBotsByIdByActionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ComputeApi
      */
-    public postV1ComputeBotsByIdByAction(requestParameters: ComputeApiPostV1ComputeBotsByIdByActionRequest, options?: RawAxiosRequestConfig) {
-        return ComputeApiFp(this.configuration).postV1ComputeBotsByIdByAction(requestParameters.id, requestParameters.action, options).then((request) => request(this.axios, this.basePath));
+    public postComputeBotsByIdByAction(requestParameters: ComputeApiPostComputeBotsByIdByActionRequest, options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).postComputeBotsByIdByAction(requestParameters.id, requestParameters.action, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -566,8 +566,8 @@ export class ComputeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ComputeApi
      */
-    public postV1ComputeBotsLaunch(options?: RawAxiosRequestConfig) {
-        return ComputeApiFp(this.configuration).postV1ComputeBotsLaunch(options).then((request) => request(this.axios, this.basePath));
+    public postComputeBotsLaunch(options?: RawAxiosRequestConfig) {
+        return ComputeApiFp(this.configuration).postComputeBotsLaunch(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

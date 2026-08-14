@@ -50,9 +50,9 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DomainAvailability: async (domain: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDomainAvailability: async (domain: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'domain' is not null or undefined
-            assertParamExists('getV1DomainAvailability', 'domain', domain)
+            assertParamExists('getDomainAvailability', 'domain', domain)
             const localVarPath = `/v1/domain/availability`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -86,7 +86,7 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DomainDomains: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDomainDomains: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/domain/domains`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -116,7 +116,7 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DomainHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDomainHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/domain/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -148,9 +148,9 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DomainSearch: async (q: string, tld?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDomainSearch: async (q: string, tld?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'q' is not null or undefined
-            assertParamExists('getV1DomainSearch', 'q', q)
+            assertParamExists('getDomainSearch', 'q', q)
             const localVarPath = `/v1/domain/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -189,9 +189,9 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DomainRegister: async (order: Order, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postDomainRegister: async (order: Order, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'order' is not null or undefined
-            assertParamExists('postV1DomainRegister', 'order', order)
+            assertParamExists('postDomainRegister', 'order', order)
             const localVarPath = `/v1/domain/register`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -225,9 +225,9 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DomainRenew: async (renewReq: RenewReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postDomainRenew: async (renewReq: RenewReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'renewReq' is not null or undefined
-            assertParamExists('postV1DomainRenew', 'renewReq', renewReq)
+            assertParamExists('postDomainRenew', 'renewReq', renewReq)
             const localVarPath = `/v1/domain/renew`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -261,9 +261,9 @@ export const DomainApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DomainTransfer: async (transferReq: TransferReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postDomainTransfer: async (transferReq: TransferReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'transferReq' is not null or undefined
-            assertParamExists('postV1DomainTransfer', 'transferReq', transferReq)
+            assertParamExists('postDomainTransfer', 'transferReq', transferReq)
             const localVarPath = `/v1/domain/transfer`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -307,10 +307,10 @@ export const DomainApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DomainAvailability(domain: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QuoteList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DomainAvailability(domain, options);
+        async getDomainAvailability(domain: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QuoteList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDomainAvailability(domain, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DomainApi.getV1DomainAvailability']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DomainApi.getDomainAvailability']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -319,10 +319,10 @@ export const DomainApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DomainDomains(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Holdings>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DomainDomains(options);
+        async getDomainDomains(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Holdings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDomainDomains(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DomainApi.getV1DomainDomains']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DomainApi.getDomainDomains']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -331,10 +331,10 @@ export const DomainApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DomainHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Reachability>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DomainHealth(options);
+        async getDomainHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Reachability>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDomainHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DomainApi.getV1DomainHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DomainApi.getDomainHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -345,10 +345,10 @@ export const DomainApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DomainSearch(q: string, tld?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QuoteList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DomainSearch(q, tld, options);
+        async getDomainSearch(q: string, tld?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QuoteList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDomainSearch(q, tld, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DomainApi.getV1DomainSearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DomainApi.getDomainSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -358,10 +358,10 @@ export const DomainApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DomainRegister(order: Order, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DomainRegister(order, options);
+        async postDomainRegister(order: Order, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDomainRegister(order, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DomainApi.postV1DomainRegister']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DomainApi.postDomainRegister']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -371,10 +371,10 @@ export const DomainApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DomainRenew(renewReq: RenewReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RenewResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DomainRenew(renewReq, options);
+        async postDomainRenew(renewReq: RenewReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RenewResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDomainRenew(renewReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DomainApi.postV1DomainRenew']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DomainApi.postDomainRenew']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -384,10 +384,10 @@ export const DomainApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DomainTransfer(transferReq: TransferReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DomainTransfer(transferReq, options);
+        async postDomainTransfer(transferReq: TransferReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDomainTransfer(transferReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DomainApi.postV1DomainTransfer']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DomainApi.postDomainTransfer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -403,12 +403,12 @@ export const DomainApiFactory = function (configuration?: Configuration, basePat
         /**
          * Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held. A deployment with no registrar credentials answers 503.
          * @summary Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.
-         * @param {DomainApiGetV1DomainAvailabilityRequest} requestParameters Request parameters.
+         * @param {DomainApiGetDomainAvailabilityRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DomainAvailability(requestParameters: DomainApiGetV1DomainAvailabilityRequest, options?: RawAxiosRequestConfig): AxiosPromise<QuoteList> {
-            return localVarFp.getV1DomainAvailability(requestParameters.domain, options).then((request) => request(axios, basePath));
+        getDomainAvailability(requestParameters: DomainApiGetDomainAvailabilityRequest, options?: RawAxiosRequestConfig): AxiosPromise<QuoteList> {
+            return localVarFp.getDomainAvailability(requestParameters.domain, options).then((request) => request(axios, basePath));
         },
         /**
          * Is the domains your org has bought here, newest registration first, each carrying the name, when it was registered, when it expires, what the org paid, the registrar order id and the nameservers it points at.  Scoped to the validated principal\'s org — 403 without one, and there is no parameter that reaches another org\'s holdings.  This is the deployment\'s OWN ownership record, not a query to the registrar: it lists what was bought THROUGH this surface, so a domain the org holds elsewhere is not here. The default store is in-process, so a deployment that has not swapped in a durable store answers from what this process registered.
@@ -416,8 +416,8 @@ export const DomainApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DomainDomains(options?: RawAxiosRequestConfig): AxiosPromise<Holdings> {
-            return localVarFp.getV1DomainDomains(options).then((request) => request(axios, basePath));
+        getDomainDomains(options?: RawAxiosRequestConfig): AxiosPromise<Holdings> {
+            return localVarFp.getDomainDomains(options).then((request) => request(axios, basePath));
         },
         /**
          * Reports registrar reachability honestly: ok only when the wholesale credentials are present AND name.com accepted them on a live call made while you waited.  Missing credentials or an unreachable registrar is 503 carrying configured, reachable and the reason, so an operator reads the blocker instead of guessing at it. It takes no principal, like every subsystem health probe.
@@ -425,125 +425,125 @@ export const DomainApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DomainHealth(options?: RawAxiosRequestConfig): AxiosPromise<Reachability> {
-            return localVarFp.getV1DomainHealth(options).then((request) => request(axios, basePath));
+        getDomainHealth(options?: RawAxiosRequestConfig): AxiosPromise<Reachability> {
+            return localVarFp.getDomainHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.  Prices are RETAIL — this deployment\'s markup is already applied and the wholesale cost is never on the wire.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held — a quote is not a reservation, and the price is re-quoted at purchase, so a name quoted here can be gone or dearer by the time you buy it. A deployment with no registrar credentials answers 503.
          * @summary Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.
-         * @param {DomainApiGetV1DomainSearchRequest} requestParameters Request parameters.
+         * @param {DomainApiGetDomainSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DomainSearch(requestParameters: DomainApiGetV1DomainSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<QuoteList> {
-            return localVarFp.getV1DomainSearch(requestParameters.q, requestParameters.tld, options).then((request) => request(axios, basePath));
+        getDomainSearch(requestParameters: DomainApiGetDomainSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<QuoteList> {
+            return localVarFp.getDomainSearch(requestParameters.q, requestParameters.tld, options).then((request) => request(axios, basePath));
         },
         /**
          * Buys a domain for your org and answers the ownership record together with the quote it was bought at.  The order of operations is the product guarantee: quote, refuse anything unpurchasable or unpriced, AUTHORIZE the org\'s prepaid balance, provision the authoritative zone in Hanzo DNS, register at the registrar already pointing at Hanzo\'s nameservers, and only then CAPTURE the charge and record ownership. A registrar failure therefore leaves the balance untouched — the org is never billed for a domain it did not get.  It requires a validated principal; that principal\'s org owns the domain and is the ledger the charge lands on. Re-buying a name the org already holds is 409, not a second purchase.  Refusals are distinct on purpose: 402 when the prepaid balance cannot cover the quoted price, 409 when the name is not available, 503 when the deployment has no registrar credentials, and the registrar\'s own message with its own 4xx — or 502 for its 5xx — when it rejects the purchase. Zone provisioning is best-effort: if the zone service is down the domain is still registered against Hanzo\'s nameservers and the zone reconciles afterwards, rather than the purchase failing.
          * @summary Buys a domain for your org and answers the ownership record together with the quote it was bought at.
-         * @param {DomainApiPostV1DomainRegisterRequest} requestParameters Request parameters.
+         * @param {DomainApiPostDomainRegisterRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DomainRegister(requestParameters: DomainApiPostV1DomainRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterResult> {
-            return localVarFp.postV1DomainRegister(requestParameters.order, options).then((request) => request(axios, basePath));
+        postDomainRegister(requestParameters: DomainApiPostDomainRegisterRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterResult> {
+            return localVarFp.postDomainRegister(requestParameters.order, options).then((request) => request(axios, basePath));
         },
         /**
          * Extends a domain your org already owns and answers the updated record with its new expiry alongside what was paid.  Ownership is the gate: a name the caller\'s org does not hold is 404, so a renewal can never reach another tenant\'s domain.  The price is re-quoted at the CURRENT renewal rate rather than the one paid at purchase. If the registrar returns no renewal price the org\'s original price is charged instead, so a renewal is never accidentally free. The balance is authorized before the registrar is called and captured after it confirms — 402 when the prepaid balance cannot cover it, 503 when the deployment has no registrar credentials. Requires a validated principal.
          * @summary Extends a domain your org already owns and answers the updated record with its new expiry alongside what was paid.
-         * @param {DomainApiPostV1DomainRenewRequest} requestParameters Request parameters.
+         * @param {DomainApiPostDomainRenewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DomainRenew(requestParameters: DomainApiPostV1DomainRenewRequest, options?: RawAxiosRequestConfig): AxiosPromise<RenewResult> {
-            return localVarFp.postV1DomainRenew(requestParameters.renewReq, options).then((request) => request(axios, basePath));
+        postDomainRenew(requestParameters: DomainApiPostDomainRenewRequest, options?: RawAxiosRequestConfig): AxiosPromise<RenewResult> {
+            return localVarFp.postDomainRenew(requestParameters.renewReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Moves a domain you own at another registrar onto your org here, using its authCode, and answers the same record-plus-quote a purchase does.  It is priced and charged exactly like a registration: authorize the org\'s prepaid balance, ask the registrar for the transfer, capture only after the registrar accepts. A name the registrar will not price is 409, an insufficient balance is 402, and a deployment with no registrar credentials is 503.  It requires a validated principal; the ownership record is written under that org as soon as the registrar ACCEPTS the request, which is not the same instant the transfer completes at the losing registrar. Unlike a registration this does not provision a zone, so the record carries this deployment\'s configured nameservers.
          * @summary Moves a domain you own at another registrar onto your org here, using its authCode, and answers the same record-plus-quote a purchase does.
-         * @param {DomainApiPostV1DomainTransferRequest} requestParameters Request parameters.
+         * @param {DomainApiPostDomainTransferRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DomainTransfer(requestParameters: DomainApiPostV1DomainTransferRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterResult> {
-            return localVarFp.postV1DomainTransfer(requestParameters.transferReq, options).then((request) => request(axios, basePath));
+        postDomainTransfer(requestParameters: DomainApiPostDomainTransferRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterResult> {
+            return localVarFp.postDomainTransfer(requestParameters.transferReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1DomainAvailability operation in DomainApi.
+ * Request parameters for getDomainAvailability operation in DomainApi.
  * @export
- * @interface DomainApiGetV1DomainAvailabilityRequest
+ * @interface DomainApiGetDomainAvailabilityRequest
  */
-export interface DomainApiGetV1DomainAvailabilityRequest {
+export interface DomainApiGetDomainAvailabilityRequest {
     /**
      * Domain is one name, or several comma-separated, to check in one call. Names are lowercased. It is required.
      * @type {string}
-     * @memberof DomainApiGetV1DomainAvailability
+     * @memberof DomainApiGetDomainAvailability
      */
     readonly domain: string
 }
 
 /**
- * Request parameters for getV1DomainSearch operation in DomainApi.
+ * Request parameters for getDomainSearch operation in DomainApi.
  * @export
- * @interface DomainApiGetV1DomainSearchRequest
+ * @interface DomainApiGetDomainSearchRequest
  */
-export interface DomainApiGetV1DomainSearchRequest {
+export interface DomainApiGetDomainSearchRequest {
     /**
      * Q is the keyword to build names from. It is required.
      * @type {string}
-     * @memberof DomainApiGetV1DomainSearch
+     * @memberof DomainApiGetDomainSearch
      */
     readonly q: string
 
     /**
      * TLD narrows the search to a comma-separated set of top-level domains.
      * @type {string}
-     * @memberof DomainApiGetV1DomainSearch
+     * @memberof DomainApiGetDomainSearch
      */
     readonly tld?: string
 }
 
 /**
- * Request parameters for postV1DomainRegister operation in DomainApi.
+ * Request parameters for postDomainRegister operation in DomainApi.
  * @export
- * @interface DomainApiPostV1DomainRegisterRequest
+ * @interface DomainApiPostDomainRegisterRequest
  */
-export interface DomainApiPostV1DomainRegisterRequest {
+export interface DomainApiPostDomainRegisterRequest {
     /**
      * 
      * @type {Order}
-     * @memberof DomainApiPostV1DomainRegister
+     * @memberof DomainApiPostDomainRegister
      */
     readonly order: Order
 }
 
 /**
- * Request parameters for postV1DomainRenew operation in DomainApi.
+ * Request parameters for postDomainRenew operation in DomainApi.
  * @export
- * @interface DomainApiPostV1DomainRenewRequest
+ * @interface DomainApiPostDomainRenewRequest
  */
-export interface DomainApiPostV1DomainRenewRequest {
+export interface DomainApiPostDomainRenewRequest {
     /**
      * 
      * @type {RenewReq}
-     * @memberof DomainApiPostV1DomainRenew
+     * @memberof DomainApiPostDomainRenew
      */
     readonly renewReq: RenewReq
 }
 
 /**
- * Request parameters for postV1DomainTransfer operation in DomainApi.
+ * Request parameters for postDomainTransfer operation in DomainApi.
  * @export
- * @interface DomainApiPostV1DomainTransferRequest
+ * @interface DomainApiPostDomainTransferRequest
  */
-export interface DomainApiPostV1DomainTransferRequest {
+export interface DomainApiPostDomainTransferRequest {
     /**
      * 
      * @type {TransferReq}
-     * @memberof DomainApiPostV1DomainTransfer
+     * @memberof DomainApiPostDomainTransfer
      */
     readonly transferReq: TransferReq
 }
@@ -558,13 +558,13 @@ export class DomainApi extends BaseAPI {
     /**
      * Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held. A deployment with no registrar credentials answers 503.
      * @summary Checks exact names rather than searching for them, and answers the same quote shape search does — purchasable, premium, first-term and renewal price in cents.
-     * @param {DomainApiGetV1DomainAvailabilityRequest} requestParameters Request parameters.
+     * @param {DomainApiGetDomainAvailabilityRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DomainApi
      */
-    public getV1DomainAvailability(requestParameters: DomainApiGetV1DomainAvailabilityRequest, options?: RawAxiosRequestConfig) {
-        return DomainApiFp(this.configuration).getV1DomainAvailability(requestParameters.domain, options).then((request) => request(this.axios, this.basePath));
+    public getDomainAvailability(requestParameters: DomainApiGetDomainAvailabilityRequest, options?: RawAxiosRequestConfig) {
+        return DomainApiFp(this.configuration).getDomainAvailability(requestParameters.domain, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -574,8 +574,8 @@ export class DomainApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DomainApi
      */
-    public getV1DomainDomains(options?: RawAxiosRequestConfig) {
-        return DomainApiFp(this.configuration).getV1DomainDomains(options).then((request) => request(this.axios, this.basePath));
+    public getDomainDomains(options?: RawAxiosRequestConfig) {
+        return DomainApiFp(this.configuration).getDomainDomains(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -585,56 +585,56 @@ export class DomainApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DomainApi
      */
-    public getV1DomainHealth(options?: RawAxiosRequestConfig) {
-        return DomainApiFp(this.configuration).getV1DomainHealth(options).then((request) => request(this.axios, this.basePath));
+    public getDomainHealth(options?: RawAxiosRequestConfig) {
+        return DomainApiFp(this.configuration).getDomainHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.  Prices are RETAIL — this deployment\'s markup is already applied and the wholesale cost is never on the wire.  It requires a validated principal; 403 without one. Nothing is charged and nothing is held — a quote is not a reservation, and the price is re-quoted at purchase, so a name quoted here can be gone or dearer by the time you buy it. A deployment with no registrar credentials answers 503.
      * @summary Finds names built from the keyword q, plus the registrar\'s alternate-TLD suggestions, and answers a quote for each: the name, whether it is purchasable, whether it is premium, the first-term and renewal price in cents, and the TLD.
-     * @param {DomainApiGetV1DomainSearchRequest} requestParameters Request parameters.
+     * @param {DomainApiGetDomainSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DomainApi
      */
-    public getV1DomainSearch(requestParameters: DomainApiGetV1DomainSearchRequest, options?: RawAxiosRequestConfig) {
-        return DomainApiFp(this.configuration).getV1DomainSearch(requestParameters.q, requestParameters.tld, options).then((request) => request(this.axios, this.basePath));
+    public getDomainSearch(requestParameters: DomainApiGetDomainSearchRequest, options?: RawAxiosRequestConfig) {
+        return DomainApiFp(this.configuration).getDomainSearch(requestParameters.q, requestParameters.tld, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Buys a domain for your org and answers the ownership record together with the quote it was bought at.  The order of operations is the product guarantee: quote, refuse anything unpurchasable or unpriced, AUTHORIZE the org\'s prepaid balance, provision the authoritative zone in Hanzo DNS, register at the registrar already pointing at Hanzo\'s nameservers, and only then CAPTURE the charge and record ownership. A registrar failure therefore leaves the balance untouched — the org is never billed for a domain it did not get.  It requires a validated principal; that principal\'s org owns the domain and is the ledger the charge lands on. Re-buying a name the org already holds is 409, not a second purchase.  Refusals are distinct on purpose: 402 when the prepaid balance cannot cover the quoted price, 409 when the name is not available, 503 when the deployment has no registrar credentials, and the registrar\'s own message with its own 4xx — or 502 for its 5xx — when it rejects the purchase. Zone provisioning is best-effort: if the zone service is down the domain is still registered against Hanzo\'s nameservers and the zone reconciles afterwards, rather than the purchase failing.
      * @summary Buys a domain for your org and answers the ownership record together with the quote it was bought at.
-     * @param {DomainApiPostV1DomainRegisterRequest} requestParameters Request parameters.
+     * @param {DomainApiPostDomainRegisterRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DomainApi
      */
-    public postV1DomainRegister(requestParameters: DomainApiPostV1DomainRegisterRequest, options?: RawAxiosRequestConfig) {
-        return DomainApiFp(this.configuration).postV1DomainRegister(requestParameters.order, options).then((request) => request(this.axios, this.basePath));
+    public postDomainRegister(requestParameters: DomainApiPostDomainRegisterRequest, options?: RawAxiosRequestConfig) {
+        return DomainApiFp(this.configuration).postDomainRegister(requestParameters.order, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Extends a domain your org already owns and answers the updated record with its new expiry alongside what was paid.  Ownership is the gate: a name the caller\'s org does not hold is 404, so a renewal can never reach another tenant\'s domain.  The price is re-quoted at the CURRENT renewal rate rather than the one paid at purchase. If the registrar returns no renewal price the org\'s original price is charged instead, so a renewal is never accidentally free. The balance is authorized before the registrar is called and captured after it confirms — 402 when the prepaid balance cannot cover it, 503 when the deployment has no registrar credentials. Requires a validated principal.
      * @summary Extends a domain your org already owns and answers the updated record with its new expiry alongside what was paid.
-     * @param {DomainApiPostV1DomainRenewRequest} requestParameters Request parameters.
+     * @param {DomainApiPostDomainRenewRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DomainApi
      */
-    public postV1DomainRenew(requestParameters: DomainApiPostV1DomainRenewRequest, options?: RawAxiosRequestConfig) {
-        return DomainApiFp(this.configuration).postV1DomainRenew(requestParameters.renewReq, options).then((request) => request(this.axios, this.basePath));
+    public postDomainRenew(requestParameters: DomainApiPostDomainRenewRequest, options?: RawAxiosRequestConfig) {
+        return DomainApiFp(this.configuration).postDomainRenew(requestParameters.renewReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Moves a domain you own at another registrar onto your org here, using its authCode, and answers the same record-plus-quote a purchase does.  It is priced and charged exactly like a registration: authorize the org\'s prepaid balance, ask the registrar for the transfer, capture only after the registrar accepts. A name the registrar will not price is 409, an insufficient balance is 402, and a deployment with no registrar credentials is 503.  It requires a validated principal; the ownership record is written under that org as soon as the registrar ACCEPTS the request, which is not the same instant the transfer completes at the losing registrar. Unlike a registration this does not provision a zone, so the record carries this deployment\'s configured nameservers.
      * @summary Moves a domain you own at another registrar onto your org here, using its authCode, and answers the same record-plus-quote a purchase does.
-     * @param {DomainApiPostV1DomainTransferRequest} requestParameters Request parameters.
+     * @param {DomainApiPostDomainTransferRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DomainApi
      */
-    public postV1DomainTransfer(requestParameters: DomainApiPostV1DomainTransferRequest, options?: RawAxiosRequestConfig) {
-        return DomainApiFp(this.configuration).postV1DomainTransfer(requestParameters.transferReq, options).then((request) => request(this.axios, this.basePath));
+    public postDomainTransfer(requestParameters: DomainApiPostDomainTransferRequest, options?: RawAxiosRequestConfig) {
+        return DomainApiFp(this.configuration).postDomainTransfer(requestParameters.transferReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

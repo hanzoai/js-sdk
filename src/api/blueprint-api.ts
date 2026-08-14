@@ -37,7 +37,7 @@ export const BlueprintApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Blueprint: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBlueprint: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/blueprint`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -67,7 +67,7 @@ export const BlueprintApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BlueprintHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBlueprintHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/blueprint/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -97,7 +97,7 @@ export const BlueprintApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BlueprintSbom: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBlueprintSbom: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/blueprint/sbom`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -137,10 +137,10 @@ export const BlueprintApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Blueprint(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintIndex>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Blueprint(options);
+        async getBlueprint(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintIndex>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprint(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BlueprintApi.getV1Blueprint']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintApi.getBlueprint']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -149,10 +149,10 @@ export const BlueprintApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1BlueprintHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintHealth>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BlueprintHealth(options);
+        async getBlueprintHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintHealth>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BlueprintApi.getV1BlueprintHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintApi.getBlueprintHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -161,10 +161,10 @@ export const BlueprintApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1BlueprintSbom(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BlueprintSbom(options);
+        async getBlueprintSbom(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBlueprintSbom(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BlueprintApi.getV1BlueprintSbom']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BlueprintApi.getBlueprintSbom']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -183,8 +183,8 @@ export const BlueprintApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Blueprint(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintIndex> {
-            return localVarFp.getV1Blueprint(options).then((request) => request(axios, basePath));
+        getBlueprint(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintIndex> {
+            return localVarFp.getBlueprint(options).then((request) => request(axios, basePath));
         },
         /**
          * Reports blueprint liveness and echoes the compute rate card in force.  The rate card is the one the estimator actually applies after the operator env overlay, so an operator can confirm a tuned knob took effect rather than inferring it from a price. Not JWT-gated — a liveness probe must be reachable — and it always answers 200 while the subsystem is mounted.
@@ -192,8 +192,8 @@ export const BlueprintApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BlueprintHealth(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintHealth> {
-            return localVarFp.getV1BlueprintHealth(options).then((request) => request(axios, basePath));
+        getBlueprintHealth(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintHealth> {
+            return localVarFp.getBlueprintHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers a blueprint\'s SBOM — the container images its compose stack runs, each with the CPU/memory footprint that was applied to it — together with the compute cost that footprint prices out to on the active rate card.  ONE address, TWO shapes at 200: `?template=<id>` returns that blueprint\'s Estimate alone (404 on an id no embedded blueprint carries), and no `template` returns `{data:[Estimate]}` for every blueprint — the batch the console\'s template gallery reads in one round-trip.  The blueprints are reference content embedded in the binary and validated at mount, so this read is the same for every caller and is scoped to no tenant. The per-hour figure it returns is the one the deploy path meters the deploying org on and the 20% author royalty is taken from; GET /v1/blueprint/health echoes the rate card it was priced from.
@@ -201,8 +201,8 @@ export const BlueprintApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BlueprintSbom(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1BlueprintSbom(options).then((request) => request(axios, basePath));
+        getBlueprintSbom(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getBlueprintSbom(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -221,8 +221,8 @@ export class BlueprintApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BlueprintApi
      */
-    public getV1Blueprint(options?: RawAxiosRequestConfig) {
-        return BlueprintApiFp(this.configuration).getV1Blueprint(options).then((request) => request(this.axios, this.basePath));
+    public getBlueprint(options?: RawAxiosRequestConfig) {
+        return BlueprintApiFp(this.configuration).getBlueprint(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -232,8 +232,8 @@ export class BlueprintApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BlueprintApi
      */
-    public getV1BlueprintHealth(options?: RawAxiosRequestConfig) {
-        return BlueprintApiFp(this.configuration).getV1BlueprintHealth(options).then((request) => request(this.axios, this.basePath));
+    public getBlueprintHealth(options?: RawAxiosRequestConfig) {
+        return BlueprintApiFp(this.configuration).getBlueprintHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -243,8 +243,8 @@ export class BlueprintApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BlueprintApi
      */
-    public getV1BlueprintSbom(options?: RawAxiosRequestConfig) {
-        return BlueprintApiFp(this.configuration).getV1BlueprintSbom(options).then((request) => request(this.axios, this.basePath));
+    public getBlueprintSbom(options?: RawAxiosRequestConfig) {
+        return BlueprintApiFp(this.configuration).getBlueprintSbom(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

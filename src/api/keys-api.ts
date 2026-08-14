@@ -42,7 +42,7 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1Keys: async (type?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteKeys: async (type?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/keys`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -76,7 +76,7 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Keys: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getKeys: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/keys`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -107,9 +107,9 @@ export const KeysApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Keys: async (keyTypeIn: KeyTypeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postKeys: async (keyTypeIn: KeyTypeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'keyTypeIn' is not null or undefined
-            assertParamExists('postV1Keys', 'keyTypeIn', keyTypeIn)
+            assertParamExists('postKeys', 'keyTypeIn', keyTypeIn)
             const localVarPath = `/v1/keys`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -153,10 +153,10 @@ export const KeysApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1Keys(type?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokedKey>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1Keys(type, options);
+        async deleteKeys(type?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokedKey>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteKeys(type, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KeysApi.deleteV1Keys']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KeysApi.deleteKeys']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -165,10 +165,10 @@ export const KeysApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Keys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiKeyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Keys(options);
+        async getKeys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiKeyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKeys(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KeysApi.getV1Keys']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KeysApi.getKeys']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -178,10 +178,10 @@ export const KeysApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Keys(keyTypeIn: KeyTypeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MintedKey>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Keys(keyTypeIn, options);
+        async postKeys(keyTypeIn: KeyTypeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MintedKey>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKeys(keyTypeIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KeysApi.postV1Keys']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KeysApi.postKeys']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -197,12 +197,12 @@ export const KeysApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
          * @summary Revokes the caller\'s own API key of the requested class.
-         * @param {KeysApiDeleteV1KeysRequest} requestParameters Request parameters.
+         * @param {KeysApiDeleteKeysRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1Keys(requestParameters: KeysApiDeleteV1KeysRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RevokedKey> {
-            return localVarFp.deleteV1Keys(requestParameters.type, options).then((request) => request(axios, basePath));
+        deleteKeys(requestParameters: KeysApiDeleteKeysRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RevokedKey> {
+            return localVarFp.deleteKeys(requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller\'s own API keys — every type they hold, read AUTHORITATIVELY from IAM rather than from the session claim, which lags a key minted moments ago. No secret material comes back: a secret key is represented by its prefix, and only a publishable key (public by construction) carries its full value.  A transient IAM read failure reports an empty set rather than a 5xx, so the page shows the honest empty state and never a fabricated key.
@@ -210,46 +210,46 @@ export const KeysApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Keys(options?: RawAxiosRequestConfig): AxiosPromise<ApiKeyList> {
-            return localVarFp.getV1Keys(options).then((request) => request(axios, basePath));
+        getKeys(options?: RawAxiosRequestConfig): AxiosPromise<ApiKeyList> {
+            return localVarFp.getKeys(options).then((request) => request(axios, basePath));
         },
         /**
          * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
          * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
-         * @param {KeysApiPostV1KeysRequest} requestParameters Request parameters.
+         * @param {KeysApiPostKeysRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Keys(requestParameters: KeysApiPostV1KeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<MintedKey> {
-            return localVarFp.postV1Keys(requestParameters.keyTypeIn, options).then((request) => request(axios, basePath));
+        postKeys(requestParameters: KeysApiPostKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<MintedKey> {
+            return localVarFp.postKeys(requestParameters.keyTypeIn, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1Keys operation in KeysApi.
+ * Request parameters for deleteKeys operation in KeysApi.
  * @export
- * @interface KeysApiDeleteV1KeysRequest
+ * @interface KeysApiDeleteKeysRequest
  */
-export interface KeysApiDeleteV1KeysRequest {
+export interface KeysApiDeleteKeysRequest {
     /**
      * Type is the key class to act on: \&quot;secret\&quot; (sk-, session-equivalent, belongs on a server) or \&quot;publishable\&quot; (pk-, org-identifying, safe in a browser bundle). Omitted means secret, which is what every existing caller means.
      * @type {string}
-     * @memberof KeysApiDeleteV1Keys
+     * @memberof KeysApiDeleteKeys
      */
     readonly type?: string
 }
 
 /**
- * Request parameters for postV1Keys operation in KeysApi.
+ * Request parameters for postKeys operation in KeysApi.
  * @export
- * @interface KeysApiPostV1KeysRequest
+ * @interface KeysApiPostKeysRequest
  */
-export interface KeysApiPostV1KeysRequest {
+export interface KeysApiPostKeysRequest {
     /**
      * 
      * @type {KeyTypeIn}
-     * @memberof KeysApiPostV1Keys
+     * @memberof KeysApiPostKeys
      */
     readonly keyTypeIn: KeyTypeIn
 }
@@ -264,13 +264,13 @@ export class KeysApi extends BaseAPI {
     /**
      * Revokes the caller\'s own API key of the requested class. The class is the same field mint takes — `?type=publishable`, defaulting to secret — so revoking the key that ships in a browser bundle does not sign its holder out of their own API: the other key keeps working.  Revoking is how a key is replaced when it does not need replacing; minting the same class again rotates it in one step. IAM drops the credential immediately, but the gateway caches keys for a few minutes, so a request that beat the cache expiry may still be served.  For callers written against the older shape, the class is also accepted in a JSON request body, read only when `?type=` is absent.
      * @summary Revokes the caller\'s own API key of the requested class.
-     * @param {KeysApiDeleteV1KeysRequest} requestParameters Request parameters.
+     * @param {KeysApiDeleteKeysRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KeysApi
      */
-    public deleteV1Keys(requestParameters: KeysApiDeleteV1KeysRequest = {}, options?: RawAxiosRequestConfig) {
-        return KeysApiFp(this.configuration).deleteV1Keys(requestParameters.type, options).then((request) => request(this.axios, this.basePath));
+    public deleteKeys(requestParameters: KeysApiDeleteKeysRequest = {}, options?: RawAxiosRequestConfig) {
+        return KeysApiFp(this.configuration).deleteKeys(requestParameters.type, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -280,20 +280,20 @@ export class KeysApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KeysApi
      */
-    public getV1Keys(options?: RawAxiosRequestConfig) {
-        return KeysApiFp(this.configuration).getV1Keys(options).then((request) => request(this.axios, this.basePath));
+    public getKeys(options?: RawAxiosRequestConfig) {
+        return KeysApiFp(this.configuration).getKeys(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE. A real IAM failure surfaces as 502, never a fabricated key.  Rotating is what creating means here: a user holds one key per type, so the endpoint is idempotent by (caller, type) and the superseded credential stops working. Two live secrets for one user would make \"revoke my key\" a lie.
      * @summary Creates — or rotates — the caller\'s API key of the requested type and returns it ONCE.
-     * @param {KeysApiPostV1KeysRequest} requestParameters Request parameters.
+     * @param {KeysApiPostKeysRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KeysApi
      */
-    public postV1Keys(requestParameters: KeysApiPostV1KeysRequest, options?: RawAxiosRequestConfig) {
-        return KeysApiFp(this.configuration).postV1Keys(requestParameters.keyTypeIn, options).then((request) => request(this.axios, this.basePath));
+    public postKeys(requestParameters: KeysApiPostKeysRequest, options?: RawAxiosRequestConfig) {
+        return KeysApiFp(this.configuration).postKeys(requestParameters.keyTypeIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

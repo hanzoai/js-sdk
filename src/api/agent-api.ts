@@ -33,7 +33,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentConversations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentConversations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agent/conversations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -64,9 +64,9 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentConversationsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentConversationsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1AgentConversationsById', 'id', id)
+            assertParamExists('getAgentConversationsById', 'id', id)
             const localVarPath = `/v1/agent/conversations/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -97,7 +97,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentPresets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentPresets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agent/presets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -127,7 +127,7 @@ export const AgentApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Agent: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgent: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agent`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -167,10 +167,10 @@ export const AgentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentConversations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentConversations(options);
+        async getAgentConversations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentConversations(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentApi.getV1AgentConversations']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentConversations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -180,10 +180,10 @@ export const AgentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentConversationsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentConversationsById(id, options);
+        async getAgentConversationsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentConversationsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentApi.getV1AgentConversationsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentConversationsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -192,10 +192,10 @@ export const AgentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentPresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentPresets(options);
+        async getAgentPresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentPresets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentApi.getV1AgentPresets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.getAgentPresets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -204,10 +204,10 @@ export const AgentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Agent(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Agent(options);
+        async postAgent(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgent(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentApi.postV1Agent']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentApi.postAgent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -226,18 +226,18 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentConversations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1AgentConversations(options).then((request) => request(axios, basePath));
+        getAgentConversations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getAgentConversations(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every message of one conversation in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  The lookup happens inside the caller\'s OWN per-org store, so an id belonging to another tenant is not refused, it is simply absent: the answer is 200 with an empty message list. Read it as \"no such conversation for you\" rather than as an empty thread. A validated principal with a non-empty org is required; 403 without one.
          * @summary Read one agent thread in full
-         * @param {AgentApiGetV1AgentConversationsByIdRequest} requestParameters Request parameters.
+         * @param {AgentApiGetAgentConversationsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentConversationsById(requestParameters: AgentApiGetV1AgentConversationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1AgentConversationsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getAgentConversationsById(requestParameters: AgentApiGetAgentConversationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getAgentConversationsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the preset catalog: each entry\'s id, its description and whether it is server-executing — the flag that decides if a preset\'s tool calls run here or come back for the client to apply. The ids are what POST /v1/agent accepts in `preset`.  The catalog is compiled into the build, identical for every caller, and this is the one read in the group that needs no principal.
@@ -245,8 +245,8 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentPresets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1AgentPresets(options).then((request) => request(axios, basePath));
+        getAgentPresets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getAgentPresets(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers one turn of a conversation with four things: the model\'s `reply`, the `actions` the server executed on the caller\'s behalf, the `ops` the client must apply itself, and the `conversationId` the turn was recorded under.  The split between actions and ops is the rule most easily got wrong. A tool call is executed HERE only when the chosen preset is server-executing AND the tool resolves in the caller\'s own scope; every other call is handed back as an op for the client to apply to its own graph or UI. A tool that fails still comes back as an action, carrying its error rather than failing the round.  `preset` selects the system prompt and the tool set (`capability` is a legacy alias for it); an unknown one is refused. `conversationId` continues an existing thread, and its absence starts one. A validated principal with a non-empty org is required — the org is the sole authority for both persistence and tool scope, and is NEVER read from the body.  A completion refused for the caller\'s own reason — 402 insufficient balance, 429, 403 — is relayed with its own status and body verbatim, so the real billing message reaches the client instead of an opaque gateway error. Only a genuine upstream fault becomes a 502.
@@ -254,22 +254,22 @@ export const AgentApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Agent(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Agent(options).then((request) => request(axios, basePath));
+        postAgent(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAgent(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1AgentConversationsById operation in AgentApi.
+ * Request parameters for getAgentConversationsById operation in AgentApi.
  * @export
- * @interface AgentApiGetV1AgentConversationsByIdRequest
+ * @interface AgentApiGetAgentConversationsByIdRequest
  */
-export interface AgentApiGetV1AgentConversationsByIdRequest {
+export interface AgentApiGetAgentConversationsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof AgentApiGetV1AgentConversationsById
+     * @memberof AgentApiGetAgentConversationsById
      */
     readonly id: string
 }
@@ -288,20 +288,20 @@ export class AgentApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AgentApi
      */
-    public getV1AgentConversations(options?: RawAxiosRequestConfig) {
-        return AgentApiFp(this.configuration).getV1AgentConversations(options).then((request) => request(this.axios, this.basePath));
+    public getAgentConversations(options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).getAgentConversations(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns every message of one conversation in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  The lookup happens inside the caller\'s OWN per-org store, so an id belonging to another tenant is not refused, it is simply absent: the answer is 200 with an empty message list. Read it as \"no such conversation for you\" rather than as an empty thread. A validated principal with a non-empty org is required; 403 without one.
      * @summary Read one agent thread in full
-     * @param {AgentApiGetV1AgentConversationsByIdRequest} requestParameters Request parameters.
+     * @param {AgentApiGetAgentConversationsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentApi
      */
-    public getV1AgentConversationsById(requestParameters: AgentApiGetV1AgentConversationsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AgentApiFp(this.configuration).getV1AgentConversationsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getAgentConversationsById(requestParameters: AgentApiGetAgentConversationsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).getAgentConversationsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -311,8 +311,8 @@ export class AgentApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AgentApi
      */
-    public getV1AgentPresets(options?: RawAxiosRequestConfig) {
-        return AgentApiFp(this.configuration).getV1AgentPresets(options).then((request) => request(this.axios, this.basePath));
+    public getAgentPresets(options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).getAgentPresets(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -322,8 +322,8 @@ export class AgentApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AgentApi
      */
-    public postV1Agent(options?: RawAxiosRequestConfig) {
-        return AgentApiFp(this.configuration).postV1Agent(options).then((request) => request(this.axios, this.basePath));
+    public postAgent(options?: RawAxiosRequestConfig) {
+        return AgentApiFp(this.configuration).postAgent(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

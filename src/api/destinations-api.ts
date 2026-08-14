@@ -42,9 +42,9 @@ export const DestinationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1DestinationsByPlatform: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteDestinationsByPlatform: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'platform' is not null or undefined
-            assertParamExists('deleteV1DestinationsByPlatform', 'platform', platform)
+            assertParamExists('deleteDestinationsByPlatform', 'platform', platform)
             const localVarPath = `/v1/destinations/{platform}`
                 .replace(`{${"platform"}}`, encodeURIComponent(String(platform)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -75,7 +75,7 @@ export const DestinationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Destinations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDestinations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/destinations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -106,9 +106,9 @@ export const DestinationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DestinationsByPlatform: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDestinationsByPlatform: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'platform' is not null or undefined
-            assertParamExists('getV1DestinationsByPlatform', 'platform', platform)
+            assertParamExists('getDestinationsByPlatform', 'platform', platform)
             const localVarPath = `/v1/destinations/{platform}`
                 .replace(`{${"platform"}}`, encodeURIComponent(String(platform)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -141,9 +141,9 @@ export const DestinationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DestinationsByPlatform: async (platform: string, requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postDestinationsByPlatform: async (platform: string, requestBody?: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'platform' is not null or undefined
-            assertParamExists('postV1DestinationsByPlatform', 'platform', platform)
+            assertParamExists('postDestinationsByPlatform', 'platform', platform)
             const localVarPath = `/v1/destinations/{platform}`
                 .replace(`{${"platform"}}`, encodeURIComponent(String(platform)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -178,9 +178,9 @@ export const DestinationsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DestinationsByPlatformTest: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postDestinationsByPlatformTest: async (platform: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'platform' is not null or undefined
-            assertParamExists('postV1DestinationsByPlatformTest', 'platform', platform)
+            assertParamExists('postDestinationsByPlatformTest', 'platform', platform)
             const localVarPath = `/v1/destinations/{platform}/test`
                 .replace(`{${"platform"}}`, encodeURIComponent(String(platform)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -222,10 +222,10 @@ export const DestinationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1DestinationsByPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationDisconnected>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1DestinationsByPlatform(platform, options);
+        async deleteDestinationsByPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationDisconnected>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDestinationsByPlatform(platform, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.deleteV1DestinationsByPlatform']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.deleteDestinationsByPlatform']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -234,10 +234,10 @@ export const DestinationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Destinations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Destinations(options);
+        async getDestinations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDestinations(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.getV1Destinations']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.getDestinations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -247,10 +247,10 @@ export const DestinationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DestinationsByPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationStatus>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DestinationsByPlatform(platform, options);
+        async getDestinationsByPlatform(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDestinationsByPlatform(platform, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.getV1DestinationsByPlatform']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.getDestinationsByPlatform']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -261,10 +261,10 @@ export const DestinationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DestinationsByPlatform(platform: string, requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationStatus>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DestinationsByPlatform(platform, requestBody, options);
+        async postDestinationsByPlatform(platform: string, requestBody?: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDestinationsByPlatform(platform, requestBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.postV1DestinationsByPlatform']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.postDestinationsByPlatform']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -274,10 +274,10 @@ export const DestinationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DestinationsByPlatformTest(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationTest>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DestinationsByPlatformTest(platform, options);
+        async postDestinationsByPlatformTest(platform: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DestinationTest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDestinationsByPlatformTest(platform, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.postV1DestinationsByPlatformTest']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DestinationsApi.postDestinationsByPlatformTest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -293,12 +293,12 @@ export const DestinationsApiFactory = function (configuration?: Configuration, b
         /**
          * Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config. Idempotent, and it requires org admin.
          * @summary Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config.
-         * @param {DestinationsApiDeleteV1DestinationsByPlatformRequest} requestParameters Request parameters.
+         * @param {DestinationsApiDeleteDestinationsByPlatformRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1DestinationsByPlatform(requestParameters: DestinationsApiDeleteV1DestinationsByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationDisconnected> {
-            return localVarFp.deleteV1DestinationsByPlatform(requestParameters.platform, options).then((request) => request(axios, basePath));
+        deleteDestinationsByPlatform(requestParameters: DestinationsApiDeleteDestinationsByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationDisconnected> {
+            return localVarFp.deleteDestinationsByPlatform(requestParameters.platform, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports every destination this deployment can forward to, each with the caller org\'s connection state: whether it is connected, whether it is enabled, whether a credential resolves right now, and the config fields the console renders for it.
@@ -306,101 +306,101 @@ export const DestinationsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Destinations(options?: RawAxiosRequestConfig): AxiosPromise<DestinationList> {
-            return localVarFp.getV1Destinations(options).then((request) => request(axios, basePath));
+        getDestinations(options?: RawAxiosRequestConfig): AxiosPromise<DestinationList> {
+            return localVarFp.getDestinations(options).then((request) => request(axios, basePath));
         },
         /**
          * Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now. A platform this deployment does not carry is not found.
          * @summary Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now.
-         * @param {DestinationsApiGetV1DestinationsByPlatformRequest} requestParameters Request parameters.
+         * @param {DestinationsApiGetDestinationsByPlatformRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DestinationsByPlatform(requestParameters: DestinationsApiGetV1DestinationsByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationStatus> {
-            return localVarFp.getV1DestinationsByPlatform(requestParameters.platform, options).then((request) => request(axios, basePath));
+        getDestinationsByPlatform(requestParameters: DestinationsApiGetDestinationsByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationStatus> {
+            return localVarFp.getDestinationsByPlatform(requestParameters.platform, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused. Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
          * @summary Connect one conversion destination for your org, or update the one you have
-         * @param {DestinationsApiPostV1DestinationsByPlatformRequest} requestParameters Request parameters.
+         * @param {DestinationsApiPostDestinationsByPlatformRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DestinationsByPlatform(requestParameters: DestinationsApiPostV1DestinationsByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationStatus> {
-            return localVarFp.postV1DestinationsByPlatform(requestParameters.platform, requestParameters.requestBody, options).then((request) => request(axios, basePath));
+        postDestinationsByPlatform(requestParameters: DestinationsApiPostDestinationsByPlatformRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationStatus> {
+            return localVarFp.postDestinationsByPlatform(requestParameters.platform, requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
          * @summary Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said.
-         * @param {DestinationsApiPostV1DestinationsByPlatformTestRequest} requestParameters Request parameters.
+         * @param {DestinationsApiPostDestinationsByPlatformTestRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DestinationsByPlatformTest(requestParameters: DestinationsApiPostV1DestinationsByPlatformTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationTest> {
-            return localVarFp.postV1DestinationsByPlatformTest(requestParameters.platform, options).then((request) => request(axios, basePath));
+        postDestinationsByPlatformTest(requestParameters: DestinationsApiPostDestinationsByPlatformTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<DestinationTest> {
+            return localVarFp.postDestinationsByPlatformTest(requestParameters.platform, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1DestinationsByPlatform operation in DestinationsApi.
+ * Request parameters for deleteDestinationsByPlatform operation in DestinationsApi.
  * @export
- * @interface DestinationsApiDeleteV1DestinationsByPlatformRequest
+ * @interface DestinationsApiDeleteDestinationsByPlatformRequest
  */
-export interface DestinationsApiDeleteV1DestinationsByPlatformRequest {
+export interface DestinationsApiDeleteDestinationsByPlatformRequest {
     /**
      * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | posthog | umami.
      * @type {string}
-     * @memberof DestinationsApiDeleteV1DestinationsByPlatform
+     * @memberof DestinationsApiDeleteDestinationsByPlatform
      */
     readonly platform: string
 }
 
 /**
- * Request parameters for getV1DestinationsByPlatform operation in DestinationsApi.
+ * Request parameters for getDestinationsByPlatform operation in DestinationsApi.
  * @export
- * @interface DestinationsApiGetV1DestinationsByPlatformRequest
+ * @interface DestinationsApiGetDestinationsByPlatformRequest
  */
-export interface DestinationsApiGetV1DestinationsByPlatformRequest {
+export interface DestinationsApiGetDestinationsByPlatformRequest {
     /**
      * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | posthog | umami.
      * @type {string}
-     * @memberof DestinationsApiGetV1DestinationsByPlatform
+     * @memberof DestinationsApiGetDestinationsByPlatform
      */
     readonly platform: string
 }
 
 /**
- * Request parameters for postV1DestinationsByPlatform operation in DestinationsApi.
+ * Request parameters for postDestinationsByPlatform operation in DestinationsApi.
  * @export
- * @interface DestinationsApiPostV1DestinationsByPlatformRequest
+ * @interface DestinationsApiPostDestinationsByPlatformRequest
  */
-export interface DestinationsApiPostV1DestinationsByPlatformRequest {
+export interface DestinationsApiPostDestinationsByPlatformRequest {
     /**
      * 
      * @type {string}
-     * @memberof DestinationsApiPostV1DestinationsByPlatform
+     * @memberof DestinationsApiPostDestinationsByPlatform
      */
     readonly platform: string
 
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof DestinationsApiPostV1DestinationsByPlatform
+     * @memberof DestinationsApiPostDestinationsByPlatform
      */
     readonly requestBody?: { [key: string]: any; }
 }
 
 /**
- * Request parameters for postV1DestinationsByPlatformTest operation in DestinationsApi.
+ * Request parameters for postDestinationsByPlatformTest operation in DestinationsApi.
  * @export
- * @interface DestinationsApiPostV1DestinationsByPlatformTestRequest
+ * @interface DestinationsApiPostDestinationsByPlatformTestRequest
  */
-export interface DestinationsApiPostV1DestinationsByPlatformTestRequest {
+export interface DestinationsApiPostDestinationsByPlatformTestRequest {
     /**
      * Platform is the destination to act on, from the path: ga4 | meta | tiktok | linkedin | x | reddit | posthog | umami.
      * @type {string}
-     * @memberof DestinationsApiPostV1DestinationsByPlatformTest
+     * @memberof DestinationsApiPostDestinationsByPlatformTest
      */
     readonly platform: string
 }
@@ -415,13 +415,13 @@ export class DestinationsApi extends BaseAPI {
     /**
      * Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config. Idempotent, and it requires org admin.
      * @summary Forgets a destination for the caller\'s org: every credential held in KMS, then the stored config.
-     * @param {DestinationsApiDeleteV1DestinationsByPlatformRequest} requestParameters Request parameters.
+     * @param {DestinationsApiDeleteDestinationsByPlatformRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DestinationsApi
      */
-    public deleteV1DestinationsByPlatform(requestParameters: DestinationsApiDeleteV1DestinationsByPlatformRequest, options?: RawAxiosRequestConfig) {
-        return DestinationsApiFp(this.configuration).deleteV1DestinationsByPlatform(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
+    public deleteDestinationsByPlatform(requestParameters: DestinationsApiDeleteDestinationsByPlatformRequest, options?: RawAxiosRequestConfig) {
+        return DestinationsApiFp(this.configuration).deleteDestinationsByPlatform(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -431,44 +431,44 @@ export class DestinationsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DestinationsApi
      */
-    public getV1Destinations(options?: RawAxiosRequestConfig) {
-        return DestinationsApiFp(this.configuration).getV1Destinations(options).then((request) => request(this.axios, this.basePath));
+    public getDestinations(options?: RawAxiosRequestConfig) {
+        return DestinationsApiFp(this.configuration).getDestinations(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now. A platform this deployment does not carry is not found.
      * @summary Reports one destination\'s card for the caller\'s org — its config fields, its connection state, and whether a credential resolves right now.
-     * @param {DestinationsApiGetV1DestinationsByPlatformRequest} requestParameters Request parameters.
+     * @param {DestinationsApiGetDestinationsByPlatformRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DestinationsApi
      */
-    public getV1DestinationsByPlatform(requestParameters: DestinationsApiGetV1DestinationsByPlatformRequest, options?: RawAxiosRequestConfig) {
-        return DestinationsApiFp(this.configuration).getV1DestinationsByPlatform(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
+    public getDestinationsByPlatform(requestParameters: DestinationsApiGetDestinationsByPlatformRequest, options?: RawAxiosRequestConfig) {
+        return DestinationsApiFp(this.configuration).getDestinationsByPlatform(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Stores the addressed platform\'s non-secret ids (its measurement, pixel or dataset ids) and seals its API credential into KMS under a path scoped to the caller\'s own org, then answers the same status card the read routes do — with live telling you whether the credential actually resolves right now. The body\'s property NAMES are the platform\'s own: each field the platform declares, plus each secret under its camelCase name, so the accepted keys differ per platform and a missing REQUIRED field is refused. Connecting is an ORG ADMIN action — a validated member without the admin bit gets 403 — and it fails closed with 503 when the KMS master key is unavailable rather than persisting a destination whose secret was never sealed. The secret itself never appears in the response, in the store, or in a log line; only its NAME is ever published. Set enabled to false to keep the connection but stop the analytics fan-out to it.
      * @summary Connect one conversion destination for your org, or update the one you have
-     * @param {DestinationsApiPostV1DestinationsByPlatformRequest} requestParameters Request parameters.
+     * @param {DestinationsApiPostDestinationsByPlatformRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DestinationsApi
      */
-    public postV1DestinationsByPlatform(requestParameters: DestinationsApiPostV1DestinationsByPlatformRequest, options?: RawAxiosRequestConfig) {
-        return DestinationsApiFp(this.configuration).postV1DestinationsByPlatform(requestParameters.platform, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    public postDestinationsByPlatform(requestParameters: DestinationsApiPostDestinationsByPlatformRequest, options?: RawAxiosRequestConfig) {
+        return DestinationsApiFp(this.configuration).postDestinationsByPlatform(requestParameters.platform, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said. A send the platform refuses is reported as data — {\"ok\": false, \"error\": …} at 200 — so the console shows the platform\'s own words rather than an error about Hanzo. It requires org admin.
      * @summary Sends ONE synthetic pageview through the connected destination end to end and reports what the platform said.
-     * @param {DestinationsApiPostV1DestinationsByPlatformTestRequest} requestParameters Request parameters.
+     * @param {DestinationsApiPostDestinationsByPlatformTestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DestinationsApi
      */
-    public postV1DestinationsByPlatformTest(requestParameters: DestinationsApiPostV1DestinationsByPlatformTestRequest, options?: RawAxiosRequestConfig) {
-        return DestinationsApiFp(this.configuration).postV1DestinationsByPlatformTest(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
+    public postDestinationsByPlatformTest(requestParameters: DestinationsApiPostDestinationsByPlatformTestRequest, options?: RawAxiosRequestConfig) {
+        return DestinationsApiFp(this.configuration).postDestinationsByPlatformTest(requestParameters.platform, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

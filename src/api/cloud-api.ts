@@ -45,11 +45,11 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CloudByProviderAccountsByLabel: async (provider: string, label: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCloudByProviderAccountsByLabel: async (provider: string, label: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('deleteV1CloudByProviderAccountsByLabel', 'provider', provider)
+            assertParamExists('deleteCloudByProviderAccountsByLabel', 'provider', provider)
             // verify required parameter 'label' is not null or undefined
-            assertParamExists('deleteV1CloudByProviderAccountsByLabel', 'label', label)
+            assertParamExists('deleteCloudByProviderAccountsByLabel', 'label', label)
             const localVarPath = `/v1/cloud/{provider}/accounts/{label}`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)))
                 .replace(`{${"label"}}`, encodeURIComponent(String(label)));
@@ -81,7 +81,7 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Cloud: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCloud: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/cloud`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -111,7 +111,7 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CloudAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCloudAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/cloud/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -143,11 +143,11 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CloudByProviderAccounts: async (provider: string, venueLinkRequest: VenueLinkRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCloudByProviderAccounts: async (provider: string, venueLinkRequest: VenueLinkRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postV1CloudByProviderAccounts', 'provider', provider)
+            assertParamExists('postCloudByProviderAccounts', 'provider', provider)
             // verify required parameter 'venueLinkRequest' is not null or undefined
-            assertParamExists('postV1CloudByProviderAccounts', 'venueLinkRequest', venueLinkRequest)
+            assertParamExists('postCloudByProviderAccounts', 'venueLinkRequest', venueLinkRequest)
             const localVarPath = `/v1/cloud/{provider}/accounts`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -183,11 +183,11 @@ export const CloudApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CloudByProviderAccountsByLabelSync: async (provider: string, label: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCloudByProviderAccountsByLabelSync: async (provider: string, label: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postV1CloudByProviderAccountsByLabelSync', 'provider', provider)
+            assertParamExists('postCloudByProviderAccountsByLabelSync', 'provider', provider)
             // verify required parameter 'label' is not null or undefined
-            assertParamExists('postV1CloudByProviderAccountsByLabelSync', 'label', label)
+            assertParamExists('postCloudByProviderAccountsByLabelSync', 'label', label)
             const localVarPath = `/v1/cloud/{provider}/accounts/{label}/sync`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)))
                 .replace(`{${"label"}}`, encodeURIComponent(String(label)));
@@ -231,10 +231,10 @@ export const CloudApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CloudByProviderAccountsByLabel(provider: string, label: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UnlinkedView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CloudByProviderAccountsByLabel(provider, label, options);
+        async deleteCloudByProviderAccountsByLabel(provider: string, label: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UnlinkedView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCloudByProviderAccountsByLabel(provider, label, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudApi.deleteV1CloudByProviderAccountsByLabel']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CloudApi.deleteCloudByProviderAccountsByLabel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -243,10 +243,10 @@ export const CloudApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Cloud(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvidersView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Cloud(options);
+        async getCloud(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvidersView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCloud(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudApi.getV1Cloud']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CloudApi.getCloud']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -255,10 +255,10 @@ export const CloudApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CloudAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAccountsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CloudAccounts(options);
+        async getCloudAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CloudAccountsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCloudAccounts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudApi.getV1CloudAccounts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CloudApi.getCloudAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -269,10 +269,10 @@ export const CloudApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CloudByProviderAccounts(provider: string, venueLinkRequest: VenueLinkRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountFoldView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CloudByProviderAccounts(provider, venueLinkRequest, options);
+        async postCloudByProviderAccounts(provider: string, venueLinkRequest: VenueLinkRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountFoldView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudByProviderAccounts(provider, venueLinkRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudApi.postV1CloudByProviderAccounts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CloudApi.postCloudByProviderAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -283,10 +283,10 @@ export const CloudApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CloudByProviderAccountsByLabelSync(provider: string, label: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountFoldView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CloudByProviderAccountsByLabelSync(provider, label, options);
+        async postCloudByProviderAccountsByLabelSync(provider: string, label: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountFoldView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudByProviderAccountsByLabelSync(provider, label, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudApi.postV1CloudByProviderAccountsByLabelSync']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CloudApi.postCloudByProviderAccountsByLabelSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -302,12 +302,12 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
         /**
          * Forgets one linked cloud account: it detaches every fleet cluster THIS account folded (its own names, in its own shard — a neighbour\'s cluster of the same name is untouched), deletes the sealed credential, and drops the index row.  It is idempotent and deliberately not an existence oracle: an account this org does not hold answers exactly the same as one it just removed. A cluster that fails to detach is logged and the unlink continues, so a dead provider cannot strand a credential. Requires org admin.
          * @summary Forgets one linked cloud account: it detaches every fleet cluster THIS account folded (its own names, in its own shard — a neighbour\'s cluster of the same name is untouched), deletes the sealed credential, and drops the index row.
-         * @param {CloudApiDeleteV1CloudByProviderAccountsByLabelRequest} requestParameters Request parameters.
+         * @param {CloudApiDeleteCloudByProviderAccountsByLabelRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CloudByProviderAccountsByLabel(requestParameters: CloudApiDeleteV1CloudByProviderAccountsByLabelRequest, options?: RawAxiosRequestConfig): AxiosPromise<UnlinkedView> {
-            return localVarFp.deleteV1CloudByProviderAccountsByLabel(requestParameters.provider, requestParameters.label, options).then((request) => request(axios, basePath));
+        deleteCloudByProviderAccountsByLabel(requestParameters: CloudApiDeleteCloudByProviderAccountsByLabelRequest, options?: RawAxiosRequestConfig): AxiosPromise<UnlinkedView> {
+            return localVarFp.deleteCloudByProviderAccountsByLabel(requestParameters.provider, requestParameters.label, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the clouds this deployment can link and what linking each one needs — the DigitalOcean token, the AWS role and external id, the GCP credential JSON, the Azure app — plus whether the provider can be linked without storing any long-lived secret. It is the catalog a \"connect a cloud\" screen renders; it reports no account and no credential.
@@ -315,8 +315,8 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Cloud(options?: RawAxiosRequestConfig): AxiosPromise<ProvidersView> {
-            return localVarFp.getV1Cloud(options).then((request) => request(axios, basePath));
+        getCloud(options?: RawAxiosRequestConfig): AxiosPromise<ProvidersView> {
+            return localVarFp.getCloud(options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller org\'s linked cloud accounts across every provider: which account each one is at the provider, which fleet clusters it folded, and when it was last discovered. Metadata only — a sealed credential never appears in a response. Another org\'s accounts are not visible and not countable.
@@ -324,91 +324,91 @@ export const CloudApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CloudAccounts(options?: RawAxiosRequestConfig): AxiosPromise<CloudAccountsView> {
-            return localVarFp.getV1CloudAccounts(options).then((request) => request(axios, basePath));
+        getCloudAccounts(options?: RawAxiosRequestConfig): AxiosPromise<CloudAccountsView> {
+            return localVarFp.getCloudAccounts(options).then((request) => request(axios, basePath));
         },
         /**
          * Links one of the caller org\'s cloud accounts and folds the Kubernetes clusters it finds there into the ONE Hanzo fleet, so they appear at /v1/clusters and can run work like any managed or bring-your-own cluster. Answers 201.  The credential is verified LIVE against the provider BEFORE anything is stored, so a bad one is refused and nothing is written; it is then sealed in the org\'s own KMS namespace and never appears in a response, the account index, or a log line. Discovery follows, and a cluster that fails to fold is reported as DATA in the clusters list rather than failing the link.  Re-linking a label that already exists re-seals its credential and re-folds it, so this is how a rotated token is replaced. Requires org admin.
          * @summary Links one of the caller org\'s cloud accounts and folds the Kubernetes clusters it finds there into the ONE Hanzo fleet, so they appear at /v1/clusters and can run work like any managed or bring-your-own cluster.
-         * @param {CloudApiPostV1CloudByProviderAccountsRequest} requestParameters Request parameters.
+         * @param {CloudApiPostCloudByProviderAccountsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CloudByProviderAccounts(requestParameters: CloudApiPostV1CloudByProviderAccountsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountFoldView> {
-            return localVarFp.postV1CloudByProviderAccounts(requestParameters.provider, requestParameters.venueLinkRequest, options).then((request) => request(axios, basePath));
+        postCloudByProviderAccounts(requestParameters: CloudApiPostCloudByProviderAccountsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountFoldView> {
+            return localVarFp.postCloudByProviderAccounts(requestParameters.provider, requestParameters.venueLinkRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Re-discovers one already-linked cloud account and reconciles what it folded: kubeconfigs are refreshed, clusters that appeared since the last sync are folded, and clusters this account folded that the provider no longer returns are detached — only this account\'s own, in the fleet shard it was linked into.  It is idempotent, it reads the credential already sealed at link time, and a discovery failure leaves the existing fold set alone rather than mass-detaching it. An account this org has not linked is not found. Requires org admin.
          * @summary Re-discovers one already-linked cloud account and reconciles what it folded: kubeconfigs are refreshed, clusters that appeared since the last sync are folded, and clusters this account folded that the provider no longer returns are detached — only this account\'s own, in the fleet shard it was linked into.
-         * @param {CloudApiPostV1CloudByProviderAccountsByLabelSyncRequest} requestParameters Request parameters.
+         * @param {CloudApiPostCloudByProviderAccountsByLabelSyncRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CloudByProviderAccountsByLabelSync(requestParameters: CloudApiPostV1CloudByProviderAccountsByLabelSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountFoldView> {
-            return localVarFp.postV1CloudByProviderAccountsByLabelSync(requestParameters.provider, requestParameters.label, options).then((request) => request(axios, basePath));
+        postCloudByProviderAccountsByLabelSync(requestParameters: CloudApiPostCloudByProviderAccountsByLabelSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<AccountFoldView> {
+            return localVarFp.postCloudByProviderAccountsByLabelSync(requestParameters.provider, requestParameters.label, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1CloudByProviderAccountsByLabel operation in CloudApi.
+ * Request parameters for deleteCloudByProviderAccountsByLabel operation in CloudApi.
  * @export
- * @interface CloudApiDeleteV1CloudByProviderAccountsByLabelRequest
+ * @interface CloudApiDeleteCloudByProviderAccountsByLabelRequest
  */
-export interface CloudApiDeleteV1CloudByProviderAccountsByLabelRequest {
+export interface CloudApiDeleteCloudByProviderAccountsByLabelRequest {
     /**
      * Provider is the cloud the account belongs to: digitalocean, aws, gcp or azure. An unknown provider is not found.
      * @type {string}
-     * @memberof CloudApiDeleteV1CloudByProviderAccountsByLabel
+     * @memberof CloudApiDeleteCloudByProviderAccountsByLabel
      */
     readonly provider: string
 
     /**
      * Label is the org-chosen name of the account within that provider. Empty means \&quot;default\&quot;; anything outside 1–64 of [A-Za-z0-9._-] is refused.
      * @type {string}
-     * @memberof CloudApiDeleteV1CloudByProviderAccountsByLabel
+     * @memberof CloudApiDeleteCloudByProviderAccountsByLabel
      */
     readonly label: string
 }
 
 /**
- * Request parameters for postV1CloudByProviderAccounts operation in CloudApi.
+ * Request parameters for postCloudByProviderAccounts operation in CloudApi.
  * @export
- * @interface CloudApiPostV1CloudByProviderAccountsRequest
+ * @interface CloudApiPostCloudByProviderAccountsRequest
  */
-export interface CloudApiPostV1CloudByProviderAccountsRequest {
+export interface CloudApiPostCloudByProviderAccountsRequest {
     /**
      * Provider is the cloud being linked, from the path: digitalocean, aws, gcp or azure.
      * @type {string}
-     * @memberof CloudApiPostV1CloudByProviderAccounts
+     * @memberof CloudApiPostCloudByProviderAccounts
      */
     readonly provider: string
 
     /**
      * 
      * @type {VenueLinkRequest}
-     * @memberof CloudApiPostV1CloudByProviderAccounts
+     * @memberof CloudApiPostCloudByProviderAccounts
      */
     readonly venueLinkRequest: VenueLinkRequest
 }
 
 /**
- * Request parameters for postV1CloudByProviderAccountsByLabelSync operation in CloudApi.
+ * Request parameters for postCloudByProviderAccountsByLabelSync operation in CloudApi.
  * @export
- * @interface CloudApiPostV1CloudByProviderAccountsByLabelSyncRequest
+ * @interface CloudApiPostCloudByProviderAccountsByLabelSyncRequest
  */
-export interface CloudApiPostV1CloudByProviderAccountsByLabelSyncRequest {
+export interface CloudApiPostCloudByProviderAccountsByLabelSyncRequest {
     /**
      * Provider is the cloud the account belongs to: digitalocean, aws, gcp or azure. An unknown provider is not found.
      * @type {string}
-     * @memberof CloudApiPostV1CloudByProviderAccountsByLabelSync
+     * @memberof CloudApiPostCloudByProviderAccountsByLabelSync
      */
     readonly provider: string
 
     /**
      * Label is the org-chosen name of the account within that provider. Empty means \&quot;default\&quot;; anything outside 1–64 of [A-Za-z0-9._-] is refused.
      * @type {string}
-     * @memberof CloudApiPostV1CloudByProviderAccountsByLabelSync
+     * @memberof CloudApiPostCloudByProviderAccountsByLabelSync
      */
     readonly label: string
 }
@@ -423,13 +423,13 @@ export class CloudApi extends BaseAPI {
     /**
      * Forgets one linked cloud account: it detaches every fleet cluster THIS account folded (its own names, in its own shard — a neighbour\'s cluster of the same name is untouched), deletes the sealed credential, and drops the index row.  It is idempotent and deliberately not an existence oracle: an account this org does not hold answers exactly the same as one it just removed. A cluster that fails to detach is logged and the unlink continues, so a dead provider cannot strand a credential. Requires org admin.
      * @summary Forgets one linked cloud account: it detaches every fleet cluster THIS account folded (its own names, in its own shard — a neighbour\'s cluster of the same name is untouched), deletes the sealed credential, and drops the index row.
-     * @param {CloudApiDeleteV1CloudByProviderAccountsByLabelRequest} requestParameters Request parameters.
+     * @param {CloudApiDeleteCloudByProviderAccountsByLabelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
      */
-    public deleteV1CloudByProviderAccountsByLabel(requestParameters: CloudApiDeleteV1CloudByProviderAccountsByLabelRequest, options?: RawAxiosRequestConfig) {
-        return CloudApiFp(this.configuration).deleteV1CloudByProviderAccountsByLabel(requestParameters.provider, requestParameters.label, options).then((request) => request(this.axios, this.basePath));
+    public deleteCloudByProviderAccountsByLabel(requestParameters: CloudApiDeleteCloudByProviderAccountsByLabelRequest, options?: RawAxiosRequestConfig) {
+        return CloudApiFp(this.configuration).deleteCloudByProviderAccountsByLabel(requestParameters.provider, requestParameters.label, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -439,8 +439,8 @@ export class CloudApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CloudApi
      */
-    public getV1Cloud(options?: RawAxiosRequestConfig) {
-        return CloudApiFp(this.configuration).getV1Cloud(options).then((request) => request(this.axios, this.basePath));
+    public getCloud(options?: RawAxiosRequestConfig) {
+        return CloudApiFp(this.configuration).getCloud(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -450,32 +450,32 @@ export class CloudApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CloudApi
      */
-    public getV1CloudAccounts(options?: RawAxiosRequestConfig) {
-        return CloudApiFp(this.configuration).getV1CloudAccounts(options).then((request) => request(this.axios, this.basePath));
+    public getCloudAccounts(options?: RawAxiosRequestConfig) {
+        return CloudApiFp(this.configuration).getCloudAccounts(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Links one of the caller org\'s cloud accounts and folds the Kubernetes clusters it finds there into the ONE Hanzo fleet, so they appear at /v1/clusters and can run work like any managed or bring-your-own cluster. Answers 201.  The credential is verified LIVE against the provider BEFORE anything is stored, so a bad one is refused and nothing is written; it is then sealed in the org\'s own KMS namespace and never appears in a response, the account index, or a log line. Discovery follows, and a cluster that fails to fold is reported as DATA in the clusters list rather than failing the link.  Re-linking a label that already exists re-seals its credential and re-folds it, so this is how a rotated token is replaced. Requires org admin.
      * @summary Links one of the caller org\'s cloud accounts and folds the Kubernetes clusters it finds there into the ONE Hanzo fleet, so they appear at /v1/clusters and can run work like any managed or bring-your-own cluster.
-     * @param {CloudApiPostV1CloudByProviderAccountsRequest} requestParameters Request parameters.
+     * @param {CloudApiPostCloudByProviderAccountsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
      */
-    public postV1CloudByProviderAccounts(requestParameters: CloudApiPostV1CloudByProviderAccountsRequest, options?: RawAxiosRequestConfig) {
-        return CloudApiFp(this.configuration).postV1CloudByProviderAccounts(requestParameters.provider, requestParameters.venueLinkRequest, options).then((request) => request(this.axios, this.basePath));
+    public postCloudByProviderAccounts(requestParameters: CloudApiPostCloudByProviderAccountsRequest, options?: RawAxiosRequestConfig) {
+        return CloudApiFp(this.configuration).postCloudByProviderAccounts(requestParameters.provider, requestParameters.venueLinkRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Re-discovers one already-linked cloud account and reconciles what it folded: kubeconfigs are refreshed, clusters that appeared since the last sync are folded, and clusters this account folded that the provider no longer returns are detached — only this account\'s own, in the fleet shard it was linked into.  It is idempotent, it reads the credential already sealed at link time, and a discovery failure leaves the existing fold set alone rather than mass-detaching it. An account this org has not linked is not found. Requires org admin.
      * @summary Re-discovers one already-linked cloud account and reconciles what it folded: kubeconfigs are refreshed, clusters that appeared since the last sync are folded, and clusters this account folded that the provider no longer returns are detached — only this account\'s own, in the fleet shard it was linked into.
-     * @param {CloudApiPostV1CloudByProviderAccountsByLabelSyncRequest} requestParameters Request parameters.
+     * @param {CloudApiPostCloudByProviderAccountsByLabelSyncRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CloudApi
      */
-    public postV1CloudByProviderAccountsByLabelSync(requestParameters: CloudApiPostV1CloudByProviderAccountsByLabelSyncRequest, options?: RawAxiosRequestConfig) {
-        return CloudApiFp(this.configuration).postV1CloudByProviderAccountsByLabelSync(requestParameters.provider, requestParameters.label, options).then((request) => request(this.axios, this.basePath));
+    public postCloudByProviderAccountsByLabelSync(requestParameters: CloudApiPostCloudByProviderAccountsByLabelSyncRequest, options?: RawAxiosRequestConfig) {
+        return CloudApiFp(this.configuration).postCloudByProviderAccountsByLabelSync(requestParameters.provider, requestParameters.label, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

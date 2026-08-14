@@ -33,6 +33,12 @@ export interface ApiKey {
      */
     'key'?: string;
     /**
+     * Limit is what this key may reach, as `kind:name` entries — `model:zen5`, `project:acme`, `product:commerce`. Absent means the key reaches whatever its holder does, which is what every key minted before limits existed does and must keep doing.
+     * @type {Array<string>}
+     * @memberof ApiKey
+     */
+    'limit'?: Array<string>;
+    /**
      * Prefix is the recognizable, non-secret head of the key — enough to tell two keys apart, never enough to use one.
      * @type {string}
      * @memberof ApiKey

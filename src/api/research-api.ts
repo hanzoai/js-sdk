@@ -56,7 +56,7 @@ export const ResearchApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ResearchArtifacts: async (project?: string, run?: string, since?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getResearchArtifacts: async (project?: string, run?: string, since?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/research/artifacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -99,9 +99,9 @@ export const ResearchApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ResearchArtifactsBySha256: async (sha256: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getResearchArtifactsBySha256: async (sha256: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'sha256' is not null or undefined
-            assertParamExists('getV1ResearchArtifactsBySha256', 'sha256', sha256)
+            assertParamExists('getResearchArtifactsBySha256', 'sha256', sha256)
             const localVarPath = `/v1/research/artifacts/{sha256}`
                 .replace(`{${"sha256"}}`, encodeURIComponent(String(sha256)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -134,7 +134,7 @@ export const ResearchApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ResearchExperiments: async (project?: string, kind?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getResearchExperiments: async (project?: string, kind?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/research/experiments`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -172,7 +172,7 @@ export const ResearchApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ResearchProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getResearchProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/research/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -203,7 +203,7 @@ export const ResearchApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ResearchTotals: async (project?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getResearchTotals: async (project?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/research/totals`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -238,9 +238,9 @@ export const ResearchApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ResearchArtifacts: async (researchArtifact: ResearchArtifact, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postResearchArtifacts: async (researchArtifact: ResearchArtifact, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'researchArtifact' is not null or undefined
-            assertParamExists('postV1ResearchArtifacts', 'researchArtifact', researchArtifact)
+            assertParamExists('postResearchArtifacts', 'researchArtifact', researchArtifact)
             const localVarPath = `/v1/research/artifacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -274,9 +274,9 @@ export const ResearchApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ResearchExperiments: async (ingestRequest: IngestRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postResearchExperiments: async (ingestRequest: IngestRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ingestRequest' is not null or undefined
-            assertParamExists('postV1ResearchExperiments', 'ingestRequest', ingestRequest)
+            assertParamExists('postResearchExperiments', 'ingestRequest', ingestRequest)
             const localVarPath = `/v1/research/experiments`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -310,9 +310,9 @@ export const ResearchApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ResearchGrants: async (grantRequest: GrantRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postResearchGrants: async (grantRequest: GrantRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'grantRequest' is not null or undefined
-            assertParamExists('postV1ResearchGrants', 'grantRequest', grantRequest)
+            assertParamExists('postResearchGrants', 'grantRequest', grantRequest)
             const localVarPath = `/v1/research/grants`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -358,10 +358,10 @@ export const ResearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ResearchArtifacts(project?: string, run?: string, since?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ResearchArtifacts(project, run, since, options);
+        async getResearchArtifacts(project?: string, run?: string, since?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getResearchArtifacts(project, run, since, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ResearchApi.getV1ResearchArtifacts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ResearchApi.getResearchArtifacts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -371,10 +371,10 @@ export const ResearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ResearchArtifactsBySha256(sha256: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ResearchArtifactsBySha256(sha256, options);
+        async getResearchArtifactsBySha256(sha256: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getResearchArtifactsBySha256(sha256, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ResearchApi.getV1ResearchArtifactsBySha256']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ResearchApi.getResearchArtifactsBySha256']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -385,10 +385,10 @@ export const ResearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ResearchExperiments(project?: string, kind?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExperimentsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ResearchExperiments(project, kind, options);
+        async getResearchExperiments(project?: string, kind?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExperimentsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getResearchExperiments(project, kind, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ResearchApi.getV1ResearchExperiments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ResearchApi.getResearchExperiments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -397,10 +397,10 @@ export const ResearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ResearchProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ResearchProjects(options);
+        async getResearchProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getResearchProjects(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ResearchApi.getV1ResearchProjects']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ResearchApi.getResearchProjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -410,10 +410,10 @@ export const ResearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ResearchTotals(project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResearchTotals>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ResearchTotals(project, options);
+        async getResearchTotals(project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResearchTotals>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getResearchTotals(project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ResearchApi.getV1ResearchTotals']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ResearchApi.getResearchTotals']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -423,10 +423,10 @@ export const ResearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ResearchArtifacts(researchArtifact: ResearchArtifact, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ResearchArtifacts(researchArtifact, options);
+        async postResearchArtifacts(researchArtifact: ResearchArtifact, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postResearchArtifacts(researchArtifact, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ResearchApi.postV1ResearchArtifacts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ResearchApi.postResearchArtifacts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -436,10 +436,10 @@ export const ResearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ResearchExperiments(ingestRequest: IngestRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngestOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ResearchExperiments(ingestRequest, options);
+        async postResearchExperiments(ingestRequest: IngestRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngestOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postResearchExperiments(ingestRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ResearchApi.postV1ResearchExperiments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ResearchApi.postResearchExperiments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -449,10 +449,10 @@ export const ResearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ResearchGrants(grantRequest: GrantRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GrantOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ResearchGrants(grantRequest, options);
+        async postResearchGrants(grantRequest: GrantRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GrantOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postResearchGrants(grantRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ResearchApi.postV1ResearchGrants']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ResearchApi.postResearchGrants']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -468,32 +468,32 @@ export const ResearchApiFactory = function (configuration?: Configuration, baseP
         /**
          * Returns the caller org\'s research-diary feed newest-first — the snapshots and reports tied to its runs, as metadata and content addresses; the bytes themselves are fetched by hash. ?run= narrows to one run, ?project= to one project (default the caller\'s project scope), and ?since= to a unix second.
          * @summary Returns the caller org\'s research-diary feed newest-first — the snapshots and reports tied to its runs, as metadata and content addresses; the bytes themselves are fetched by hash.
-         * @param {ResearchApiGetV1ResearchArtifactsRequest} requestParameters Request parameters.
+         * @param {ResearchApiGetResearchArtifactsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ResearchArtifacts(requestParameters: ResearchApiGetV1ResearchArtifactsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ArtifactsOut> {
-            return localVarFp.getV1ResearchArtifacts(requestParameters.project, requestParameters.run, requestParameters.since, options).then((request) => request(axios, basePath));
+        getResearchArtifacts(requestParameters: ResearchApiGetResearchArtifactsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ArtifactsOut> {
+            return localVarFp.getResearchArtifacts(requestParameters.project, requestParameters.run, requestParameters.since, options).then((request) => request(axios, basePath));
         },
         /**
          * Streams the artifact\'s stored bytes — the retrieval half of hash-addressing, where the diary feed hands out hashes and this hands back what they name. The Content-Type is image/png when the artifact was recorded as a snapshot and application/octet-stream otherwise; it comes from the recorded KIND, not from sniffing the bytes, so an artifact filed as a report always arrives as opaque bytes.  The hash is an address, and the read is NOT global. The store file IS the org, so the same bytes recorded by two tenants are two artifacts, and a hash that exists but belongs to somebody else is a 404 exactly like one that was never recorded — knowing a content hash is never enough to read it. A caller with no validated org is refused 403 outright.  Project narrows further INSIDE that org: the artifact\'s project must equal the caller\'s, which is `?project=` when given and otherwise the caller\'s own project scope, defaulting to the default project. So an artifact filed under a named project is not found until the caller names that project — a mismatch is the same 404 an unknown hash gets, never a distinguishable refusal.  The address can be trusted because the WRITE derived it: the server hashes the bytes it stores, inside the trust boundary, and refuses a client-supplied sha256 that disagrees with them, so poisoning a first write would take a preimage. This read does not re-hash — it looks the hash up as a key.  One shape to expect: this route writes its errors IN-BAND as {\"error\": …} at the real status code, not the {status, error} envelope the typed ops beside it return. It is mounted under an error-flattening filter that would otherwise rewrite its 4xx, so the body is written before that filter runs. A store that cannot be opened is a 500.
          * @summary Fetch one recorded artifact\'s bytes by its content hash.
-         * @param {ResearchApiGetV1ResearchArtifactsBySha256Request} requestParameters Request parameters.
+         * @param {ResearchApiGetResearchArtifactsBySha256Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ResearchArtifactsBySha256(requestParameters: ResearchApiGetV1ResearchArtifactsBySha256Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1ResearchArtifactsBySha256(requestParameters.sha256, options).then((request) => request(axios, basePath));
+        getResearchArtifactsBySha256(requestParameters: ResearchApiGetResearchArtifactsBySha256Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getResearchArtifactsBySha256(requestParameters.sha256, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s CANONICAL experiments — the deterministic deduped view over the versioned history. With no ?project= it reads the org\'s whole set across projects (the ops board\'s cross-project view, since a project is a sub-scope of the one tenant); ?project= narrows to one and ?kind= to one discriminator.
          * @summary Returns the caller org\'s CANONICAL experiments — the deterministic deduped view over the versioned history.
-         * @param {ResearchApiGetV1ResearchExperimentsRequest} requestParameters Request parameters.
+         * @param {ResearchApiGetResearchExperimentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ResearchExperiments(requestParameters: ResearchApiGetV1ResearchExperimentsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ExperimentsOut> {
-            return localVarFp.getV1ResearchExperiments(requestParameters.project, requestParameters.kind, options).then((request) => request(axios, basePath));
+        getResearchExperiments(requestParameters: ResearchApiGetResearchExperimentsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ExperimentsOut> {
+            return localVarFp.getResearchExperiments(requestParameters.project, requestParameters.kind, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every research project in the caller\'s org with its real totals — canonical and retained side by side — which is the ops board\'s \"every project + real totals\" view.
@@ -501,167 +501,167 @@ export const ResearchApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ResearchProjects(options?: RawAxiosRequestConfig): AxiosPromise<ProjectsOut> {
-            return localVarFp.getV1ResearchProjects(options).then((request) => request(axios, basePath));
+        getResearchProjects(options?: RawAxiosRequestConfig): AxiosPromise<ProjectsOut> {
+            return localVarFp.getResearchProjects(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s headline aggregate plus a per-kind breakdown — the observatory\'s poll target. Canonical and retained counts travel together, so a deduped view never reads as loss. ?project= narrows to one project.
          * @summary Returns the caller org\'s headline aggregate plus a per-kind breakdown — the observatory\'s poll target.
-         * @param {ResearchApiGetV1ResearchTotalsRequest} requestParameters Request parameters.
+         * @param {ResearchApiGetResearchTotalsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ResearchTotals(requestParameters: ResearchApiGetV1ResearchTotalsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResearchTotals> {
-            return localVarFp.getV1ResearchTotals(requestParameters.project, options).then((request) => request(axios, basePath));
+        getResearchTotals(requestParameters: ResearchApiGetResearchTotalsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResearchTotals> {
+            return localVarFp.getResearchTotals(requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
          * Records one research-diary artifact — a board snapshot or a generated report — CONTENT-ADDRESSED inside the trust boundary. The caller submits the bytes as base64 `content`; the SERVER hashes them and THAT hash is the identity and the ref, so the address can never be poisoned by a client-asserted one. A client-supplied sha256, if present, must match the bytes. The project is the SERVER\'s value and visibility is forced private. Re-posting the same bytes is a no-op that reports created=false.
          * @summary Records one research-diary artifact — a board snapshot or a generated report — CONTENT-ADDRESSED inside the trust boundary.
-         * @param {ResearchApiPostV1ResearchArtifactsRequest} requestParameters Request parameters.
+         * @param {ResearchApiPostResearchArtifactsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ResearchArtifacts(requestParameters: ResearchApiPostV1ResearchArtifactsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArtifactOut> {
-            return localVarFp.postV1ResearchArtifacts(requestParameters.researchArtifact, options).then((request) => request(axios, basePath));
+        postResearchArtifacts(requestParameters: ResearchApiPostResearchArtifactsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArtifactOut> {
+            return localVarFp.postResearchArtifacts(requestParameters.researchArtifact, options).then((request) => request(axios, basePath));
         },
         /**
          * Appends one batch of experiment and attempt versions to the caller org\'s evidence store, idempotently by content, then rolls it up to the analytics plane best-effort. The project is the SERVER\'s value and visibility is forced private — an upload grants no training or publication right, which is a separate call. A run carrying a BYO endpoint is SSRF-checked before the store is touched. The answer carries BOTH the canonical (deduped) and retained (full history) counts, so a caller sees the versioned truth rather than a dedup that reads as loss.
          * @summary Appends one batch of experiment and attempt versions to the caller org\'s evidence store, idempotently by content, then rolls it up to the analytics plane best-effort.
-         * @param {ResearchApiPostV1ResearchExperimentsRequest} requestParameters Request parameters.
+         * @param {ResearchApiPostResearchExperimentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ResearchExperiments(requestParameters: ResearchApiPostV1ResearchExperimentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngestOut> {
-            return localVarFp.postV1ResearchExperiments(requestParameters.ingestRequest, options).then((request) => request(axios, basePath));
+        postResearchExperiments(requestParameters: ResearchApiPostResearchExperimentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngestOut> {
+            return localVarFp.postResearchExperiments(requestParameters.ingestRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Records the SEPARATE authorization an upload never implies: a record\'s visibility (private, org or public) and, for a run, its training and commons-publication consent. Address a run by its stable id or an artifact by its sha256; an artifact grant sets visibility only. The ORG is the tenant boundary and comes from the validated principal, so a caller can only ever grant within its own org; `project` locates WHICH record inside it and defaults to the caller\'s project scope.
          * @summary Records the SEPARATE authorization an upload never implies: a record\'s visibility (private, org or public) and, for a run, its training and commons-publication consent.
-         * @param {ResearchApiPostV1ResearchGrantsRequest} requestParameters Request parameters.
+         * @param {ResearchApiPostResearchGrantsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ResearchGrants(requestParameters: ResearchApiPostV1ResearchGrantsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GrantOut> {
-            return localVarFp.postV1ResearchGrants(requestParameters.grantRequest, options).then((request) => request(axios, basePath));
+        postResearchGrants(requestParameters: ResearchApiPostResearchGrantsRequest, options?: RawAxiosRequestConfig): AxiosPromise<GrantOut> {
+            return localVarFp.postResearchGrants(requestParameters.grantRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1ResearchArtifacts operation in ResearchApi.
+ * Request parameters for getResearchArtifacts operation in ResearchApi.
  * @export
- * @interface ResearchApiGetV1ResearchArtifactsRequest
+ * @interface ResearchApiGetResearchArtifactsRequest
  */
-export interface ResearchApiGetV1ResearchArtifactsRequest {
+export interface ResearchApiGetResearchArtifactsRequest {
     /**
      * Project narrows to one project. Empty takes the caller\&#39;s project scope.
      * @type {string}
-     * @memberof ResearchApiGetV1ResearchArtifacts
+     * @memberof ResearchApiGetResearchArtifacts
      */
     readonly project?: string
 
     /**
      * Run narrows to one run\&#39;s artifacts by its stable id.
      * @type {string}
-     * @memberof ResearchApiGetV1ResearchArtifacts
+     * @memberof ResearchApiGetResearchArtifacts
      */
     readonly run?: string
 
     /**
      * Since bounds the feed to artifacts recorded at or after this unix second.
      * @type {number}
-     * @memberof ResearchApiGetV1ResearchArtifacts
+     * @memberof ResearchApiGetResearchArtifacts
      */
     readonly since?: number
 }
 
 /**
- * Request parameters for getV1ResearchArtifactsBySha256 operation in ResearchApi.
+ * Request parameters for getResearchArtifactsBySha256 operation in ResearchApi.
  * @export
- * @interface ResearchApiGetV1ResearchArtifactsBySha256Request
+ * @interface ResearchApiGetResearchArtifactsBySha256Request
  */
-export interface ResearchApiGetV1ResearchArtifactsBySha256Request {
+export interface ResearchApiGetResearchArtifactsBySha256Request {
     /**
      * 
      * @type {string}
-     * @memberof ResearchApiGetV1ResearchArtifactsBySha256
+     * @memberof ResearchApiGetResearchArtifactsBySha256
      */
     readonly sha256: string
 }
 
 /**
- * Request parameters for getV1ResearchExperiments operation in ResearchApi.
+ * Request parameters for getResearchExperiments operation in ResearchApi.
  * @export
- * @interface ResearchApiGetV1ResearchExperimentsRequest
+ * @interface ResearchApiGetResearchExperimentsRequest
  */
-export interface ResearchApiGetV1ResearchExperimentsRequest {
+export interface ResearchApiGetResearchExperimentsRequest {
     /**
      * Project narrows to one project. Empty reads the org\&#39;s whole set across projects.
      * @type {string}
-     * @memberof ResearchApiGetV1ResearchExperiments
+     * @memberof ResearchApiGetResearchExperiments
      */
     readonly project?: string
 
     /**
      * Kind narrows to one discriminator: benchmark, kernel-perf, training, ablation or policy-eval.
      * @type {string}
-     * @memberof ResearchApiGetV1ResearchExperiments
+     * @memberof ResearchApiGetResearchExperiments
      */
     readonly kind?: string
 }
 
 /**
- * Request parameters for getV1ResearchTotals operation in ResearchApi.
+ * Request parameters for getResearchTotals operation in ResearchApi.
  * @export
- * @interface ResearchApiGetV1ResearchTotalsRequest
+ * @interface ResearchApiGetResearchTotalsRequest
  */
-export interface ResearchApiGetV1ResearchTotalsRequest {
+export interface ResearchApiGetResearchTotalsRequest {
     /**
      * Project narrows the aggregate to one project. Empty aggregates the whole org.
      * @type {string}
-     * @memberof ResearchApiGetV1ResearchTotals
+     * @memberof ResearchApiGetResearchTotals
      */
     readonly project?: string
 }
 
 /**
- * Request parameters for postV1ResearchArtifacts operation in ResearchApi.
+ * Request parameters for postResearchArtifacts operation in ResearchApi.
  * @export
- * @interface ResearchApiPostV1ResearchArtifactsRequest
+ * @interface ResearchApiPostResearchArtifactsRequest
  */
-export interface ResearchApiPostV1ResearchArtifactsRequest {
+export interface ResearchApiPostResearchArtifactsRequest {
     /**
      * 
      * @type {ResearchArtifact}
-     * @memberof ResearchApiPostV1ResearchArtifacts
+     * @memberof ResearchApiPostResearchArtifacts
      */
     readonly researchArtifact: ResearchArtifact
 }
 
 /**
- * Request parameters for postV1ResearchExperiments operation in ResearchApi.
+ * Request parameters for postResearchExperiments operation in ResearchApi.
  * @export
- * @interface ResearchApiPostV1ResearchExperimentsRequest
+ * @interface ResearchApiPostResearchExperimentsRequest
  */
-export interface ResearchApiPostV1ResearchExperimentsRequest {
+export interface ResearchApiPostResearchExperimentsRequest {
     /**
      * 
      * @type {IngestRequest}
-     * @memberof ResearchApiPostV1ResearchExperiments
+     * @memberof ResearchApiPostResearchExperiments
      */
     readonly ingestRequest: IngestRequest
 }
 
 /**
- * Request parameters for postV1ResearchGrants operation in ResearchApi.
+ * Request parameters for postResearchGrants operation in ResearchApi.
  * @export
- * @interface ResearchApiPostV1ResearchGrantsRequest
+ * @interface ResearchApiPostResearchGrantsRequest
  */
-export interface ResearchApiPostV1ResearchGrantsRequest {
+export interface ResearchApiPostResearchGrantsRequest {
     /**
      * 
      * @type {GrantRequest}
-     * @memberof ResearchApiPostV1ResearchGrants
+     * @memberof ResearchApiPostResearchGrants
      */
     readonly grantRequest: GrantRequest
 }
@@ -676,37 +676,37 @@ export class ResearchApi extends BaseAPI {
     /**
      * Returns the caller org\'s research-diary feed newest-first — the snapshots and reports tied to its runs, as metadata and content addresses; the bytes themselves are fetched by hash. ?run= narrows to one run, ?project= to one project (default the caller\'s project scope), and ?since= to a unix second.
      * @summary Returns the caller org\'s research-diary feed newest-first — the snapshots and reports tied to its runs, as metadata and content addresses; the bytes themselves are fetched by hash.
-     * @param {ResearchApiGetV1ResearchArtifactsRequest} requestParameters Request parameters.
+     * @param {ResearchApiGetResearchArtifactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResearchApi
      */
-    public getV1ResearchArtifacts(requestParameters: ResearchApiGetV1ResearchArtifactsRequest = {}, options?: RawAxiosRequestConfig) {
-        return ResearchApiFp(this.configuration).getV1ResearchArtifacts(requestParameters.project, requestParameters.run, requestParameters.since, options).then((request) => request(this.axios, this.basePath));
+    public getResearchArtifacts(requestParameters: ResearchApiGetResearchArtifactsRequest = {}, options?: RawAxiosRequestConfig) {
+        return ResearchApiFp(this.configuration).getResearchArtifacts(requestParameters.project, requestParameters.run, requestParameters.since, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Streams the artifact\'s stored bytes — the retrieval half of hash-addressing, where the diary feed hands out hashes and this hands back what they name. The Content-Type is image/png when the artifact was recorded as a snapshot and application/octet-stream otherwise; it comes from the recorded KIND, not from sniffing the bytes, so an artifact filed as a report always arrives as opaque bytes.  The hash is an address, and the read is NOT global. The store file IS the org, so the same bytes recorded by two tenants are two artifacts, and a hash that exists but belongs to somebody else is a 404 exactly like one that was never recorded — knowing a content hash is never enough to read it. A caller with no validated org is refused 403 outright.  Project narrows further INSIDE that org: the artifact\'s project must equal the caller\'s, which is `?project=` when given and otherwise the caller\'s own project scope, defaulting to the default project. So an artifact filed under a named project is not found until the caller names that project — a mismatch is the same 404 an unknown hash gets, never a distinguishable refusal.  The address can be trusted because the WRITE derived it: the server hashes the bytes it stores, inside the trust boundary, and refuses a client-supplied sha256 that disagrees with them, so poisoning a first write would take a preimage. This read does not re-hash — it looks the hash up as a key.  One shape to expect: this route writes its errors IN-BAND as {\"error\": …} at the real status code, not the {status, error} envelope the typed ops beside it return. It is mounted under an error-flattening filter that would otherwise rewrite its 4xx, so the body is written before that filter runs. A store that cannot be opened is a 500.
      * @summary Fetch one recorded artifact\'s bytes by its content hash.
-     * @param {ResearchApiGetV1ResearchArtifactsBySha256Request} requestParameters Request parameters.
+     * @param {ResearchApiGetResearchArtifactsBySha256Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResearchApi
      */
-    public getV1ResearchArtifactsBySha256(requestParameters: ResearchApiGetV1ResearchArtifactsBySha256Request, options?: RawAxiosRequestConfig) {
-        return ResearchApiFp(this.configuration).getV1ResearchArtifactsBySha256(requestParameters.sha256, options).then((request) => request(this.axios, this.basePath));
+    public getResearchArtifactsBySha256(requestParameters: ResearchApiGetResearchArtifactsBySha256Request, options?: RawAxiosRequestConfig) {
+        return ResearchApiFp(this.configuration).getResearchArtifactsBySha256(requestParameters.sha256, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s CANONICAL experiments — the deterministic deduped view over the versioned history. With no ?project= it reads the org\'s whole set across projects (the ops board\'s cross-project view, since a project is a sub-scope of the one tenant); ?project= narrows to one and ?kind= to one discriminator.
      * @summary Returns the caller org\'s CANONICAL experiments — the deterministic deduped view over the versioned history.
-     * @param {ResearchApiGetV1ResearchExperimentsRequest} requestParameters Request parameters.
+     * @param {ResearchApiGetResearchExperimentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResearchApi
      */
-    public getV1ResearchExperiments(requestParameters: ResearchApiGetV1ResearchExperimentsRequest = {}, options?: RawAxiosRequestConfig) {
-        return ResearchApiFp(this.configuration).getV1ResearchExperiments(requestParameters.project, requestParameters.kind, options).then((request) => request(this.axios, this.basePath));
+    public getResearchExperiments(requestParameters: ResearchApiGetResearchExperimentsRequest = {}, options?: RawAxiosRequestConfig) {
+        return ResearchApiFp(this.configuration).getResearchExperiments(requestParameters.project, requestParameters.kind, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -716,56 +716,56 @@ export class ResearchApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ResearchApi
      */
-    public getV1ResearchProjects(options?: RawAxiosRequestConfig) {
-        return ResearchApiFp(this.configuration).getV1ResearchProjects(options).then((request) => request(this.axios, this.basePath));
+    public getResearchProjects(options?: RawAxiosRequestConfig) {
+        return ResearchApiFp(this.configuration).getResearchProjects(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s headline aggregate plus a per-kind breakdown — the observatory\'s poll target. Canonical and retained counts travel together, so a deduped view never reads as loss. ?project= narrows to one project.
      * @summary Returns the caller org\'s headline aggregate plus a per-kind breakdown — the observatory\'s poll target.
-     * @param {ResearchApiGetV1ResearchTotalsRequest} requestParameters Request parameters.
+     * @param {ResearchApiGetResearchTotalsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResearchApi
      */
-    public getV1ResearchTotals(requestParameters: ResearchApiGetV1ResearchTotalsRequest = {}, options?: RawAxiosRequestConfig) {
-        return ResearchApiFp(this.configuration).getV1ResearchTotals(requestParameters.project, options).then((request) => request(this.axios, this.basePath));
+    public getResearchTotals(requestParameters: ResearchApiGetResearchTotalsRequest = {}, options?: RawAxiosRequestConfig) {
+        return ResearchApiFp(this.configuration).getResearchTotals(requestParameters.project, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records one research-diary artifact — a board snapshot or a generated report — CONTENT-ADDRESSED inside the trust boundary. The caller submits the bytes as base64 `content`; the SERVER hashes them and THAT hash is the identity and the ref, so the address can never be poisoned by a client-asserted one. A client-supplied sha256, if present, must match the bytes. The project is the SERVER\'s value and visibility is forced private. Re-posting the same bytes is a no-op that reports created=false.
      * @summary Records one research-diary artifact — a board snapshot or a generated report — CONTENT-ADDRESSED inside the trust boundary.
-     * @param {ResearchApiPostV1ResearchArtifactsRequest} requestParameters Request parameters.
+     * @param {ResearchApiPostResearchArtifactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResearchApi
      */
-    public postV1ResearchArtifacts(requestParameters: ResearchApiPostV1ResearchArtifactsRequest, options?: RawAxiosRequestConfig) {
-        return ResearchApiFp(this.configuration).postV1ResearchArtifacts(requestParameters.researchArtifact, options).then((request) => request(this.axios, this.basePath));
+    public postResearchArtifacts(requestParameters: ResearchApiPostResearchArtifactsRequest, options?: RawAxiosRequestConfig) {
+        return ResearchApiFp(this.configuration).postResearchArtifacts(requestParameters.researchArtifact, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Appends one batch of experiment and attempt versions to the caller org\'s evidence store, idempotently by content, then rolls it up to the analytics plane best-effort. The project is the SERVER\'s value and visibility is forced private — an upload grants no training or publication right, which is a separate call. A run carrying a BYO endpoint is SSRF-checked before the store is touched. The answer carries BOTH the canonical (deduped) and retained (full history) counts, so a caller sees the versioned truth rather than a dedup that reads as loss.
      * @summary Appends one batch of experiment and attempt versions to the caller org\'s evidence store, idempotently by content, then rolls it up to the analytics plane best-effort.
-     * @param {ResearchApiPostV1ResearchExperimentsRequest} requestParameters Request parameters.
+     * @param {ResearchApiPostResearchExperimentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResearchApi
      */
-    public postV1ResearchExperiments(requestParameters: ResearchApiPostV1ResearchExperimentsRequest, options?: RawAxiosRequestConfig) {
-        return ResearchApiFp(this.configuration).postV1ResearchExperiments(requestParameters.ingestRequest, options).then((request) => request(this.axios, this.basePath));
+    public postResearchExperiments(requestParameters: ResearchApiPostResearchExperimentsRequest, options?: RawAxiosRequestConfig) {
+        return ResearchApiFp(this.configuration).postResearchExperiments(requestParameters.ingestRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records the SEPARATE authorization an upload never implies: a record\'s visibility (private, org or public) and, for a run, its training and commons-publication consent. Address a run by its stable id or an artifact by its sha256; an artifact grant sets visibility only. The ORG is the tenant boundary and comes from the validated principal, so a caller can only ever grant within its own org; `project` locates WHICH record inside it and defaults to the caller\'s project scope.
      * @summary Records the SEPARATE authorization an upload never implies: a record\'s visibility (private, org or public) and, for a run, its training and commons-publication consent.
-     * @param {ResearchApiPostV1ResearchGrantsRequest} requestParameters Request parameters.
+     * @param {ResearchApiPostResearchGrantsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResearchApi
      */
-    public postV1ResearchGrants(requestParameters: ResearchApiPostV1ResearchGrantsRequest, options?: RawAxiosRequestConfig) {
-        return ResearchApiFp(this.configuration).postV1ResearchGrants(requestParameters.grantRequest, options).then((request) => request(this.axios, this.basePath));
+    public postResearchGrants(requestParameters: ResearchApiPostResearchGrantsRequest, options?: RawAxiosRequestConfig) {
+        return ResearchApiFp(this.configuration).postResearchGrants(requestParameters.grantRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

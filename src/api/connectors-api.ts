@@ -54,9 +54,9 @@ export const ConnectorsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1ConnectorsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteConnectorsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1ConnectorsById', 'id', id)
+            assertParamExists('deleteConnectorsById', 'id', id)
             const localVarPath = `/v1/connectors/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -87,7 +87,7 @@ export const ConnectorsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Connectors: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getConnectors: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/connectors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -118,9 +118,9 @@ export const ConnectorsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ConnectorsByIdToken: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getConnectorsByIdToken: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1ConnectorsByIdToken', 'id', id)
+            assertParamExists('getConnectorsByIdToken', 'id', id)
             const localVarPath = `/v1/connectors/{id}/token`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -151,7 +151,7 @@ export const ConnectorsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ConnectorsProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getConnectorsProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/connectors/providers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -182,9 +182,9 @@ export const ConnectorsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ConnectorsByIdRefresh: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postConnectorsByIdRefresh: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1ConnectorsByIdRefresh', 'id', id)
+            assertParamExists('postConnectorsByIdRefresh', 'id', id)
             const localVarPath = `/v1/connectors/{id}/refresh`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -217,11 +217,11 @@ export const ConnectorsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ConnectorsByProviderCredential: async (provider: string, credentialIn: CredentialIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postConnectorsByProviderCredential: async (provider: string, credentialIn: CredentialIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postV1ConnectorsByProviderCredential', 'provider', provider)
+            assertParamExists('postConnectorsByProviderCredential', 'provider', provider)
             // verify required parameter 'credentialIn' is not null or undefined
-            assertParamExists('postV1ConnectorsByProviderCredential', 'credentialIn', credentialIn)
+            assertParamExists('postConnectorsByProviderCredential', 'credentialIn', credentialIn)
             const localVarPath = `/v1/connectors/{provider}/credential`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -257,11 +257,11 @@ export const ConnectorsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ConnectorsByProviderDevice: async (provider: string, deviceStartIn: DeviceStartIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postConnectorsByProviderDevice: async (provider: string, deviceStartIn: DeviceStartIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postV1ConnectorsByProviderDevice', 'provider', provider)
+            assertParamExists('postConnectorsByProviderDevice', 'provider', provider)
             // verify required parameter 'deviceStartIn' is not null or undefined
-            assertParamExists('postV1ConnectorsByProviderDevice', 'deviceStartIn', deviceStartIn)
+            assertParamExists('postConnectorsByProviderDevice', 'deviceStartIn', deviceStartIn)
             const localVarPath = `/v1/connectors/{provider}/device`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -297,11 +297,11 @@ export const ConnectorsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ConnectorsByProviderDeviceByFlowPoll: async (provider: string, flow: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postConnectorsByProviderDeviceByFlowPoll: async (provider: string, flow: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postV1ConnectorsByProviderDeviceByFlowPoll', 'provider', provider)
+            assertParamExists('postConnectorsByProviderDeviceByFlowPoll', 'provider', provider)
             // verify required parameter 'flow' is not null or undefined
-            assertParamExists('postV1ConnectorsByProviderDeviceByFlowPoll', 'flow', flow)
+            assertParamExists('postConnectorsByProviderDeviceByFlowPoll', 'flow', flow)
             const localVarPath = `/v1/connectors/{provider}/device/{flow}/poll`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)))
                 .replace(`{${"flow"}}`, encodeURIComponent(String(flow)));
@@ -344,10 +344,10 @@ export const ConnectorsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1ConnectorsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DisconnectOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1ConnectorsById(id, options);
+        async deleteConnectorsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DisconnectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteConnectorsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.deleteV1ConnectorsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.deleteConnectorsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -356,10 +356,10 @@ export const ConnectorsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Connectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Connectors(options);
+        async getConnectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getConnectors(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.getV1Connectors']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.getConnectors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -369,10 +369,10 @@ export const ConnectorsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ConnectorsByIdToken(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorTokenOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ConnectorsByIdToken(id, options);
+        async getConnectorsByIdToken(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorTokenOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getConnectorsByIdToken(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.getV1ConnectorsByIdToken']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.getConnectorsByIdToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -381,10 +381,10 @@ export const ConnectorsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ConnectorsProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorProvidersOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ConnectorsProviders(options);
+        async getConnectorsProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorProvidersOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getConnectorsProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.getV1ConnectorsProviders']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.getConnectorsProviders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -394,10 +394,10 @@ export const ConnectorsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ConnectorsByIdRefresh(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RefreshOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ConnectorsByIdRefresh(id, options);
+        async postConnectorsByIdRefresh(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RefreshOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postConnectorsByIdRefresh(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.postV1ConnectorsByIdRefresh']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.postConnectorsByIdRefresh']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -408,10 +408,10 @@ export const ConnectorsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ConnectorsByProviderCredential(provider: string, credentialIn: CredentialIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ConnectorsByProviderCredential(provider, credentialIn, options);
+        async postConnectorsByProviderCredential(provider: string, credentialIn: CredentialIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postConnectorsByProviderCredential(provider, credentialIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.postV1ConnectorsByProviderCredential']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.postConnectorsByProviderCredential']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -422,10 +422,10 @@ export const ConnectorsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ConnectorsByProviderDevice(provider: string, deviceStartIn: DeviceStartIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceStartOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ConnectorsByProviderDevice(provider, deviceStartIn, options);
+        async postConnectorsByProviderDevice(provider: string, deviceStartIn: DeviceStartIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceStartOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postConnectorsByProviderDevice(provider, deviceStartIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.postV1ConnectorsByProviderDevice']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.postConnectorsByProviderDevice']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -436,10 +436,10 @@ export const ConnectorsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ConnectorsByProviderDeviceByFlowPoll(provider: string, flow: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DevicePollOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ConnectorsByProviderDeviceByFlowPoll(provider, flow, options);
+        async postConnectorsByProviderDeviceByFlowPoll(provider: string, flow: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DevicePollOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postConnectorsByProviderDeviceByFlowPoll(provider, flow, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.postV1ConnectorsByProviderDeviceByFlowPoll']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ConnectorsApi.postConnectorsByProviderDeviceByFlowPoll']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -455,12 +455,12 @@ export const ConnectorsApiFactory = function (configuration?: Configuration, bas
         /**
          * Forgets a connector: every custodied secret, then the row. Idempotent — dropping a never-connected id still answers {disconnected:true} (disconnect() parity). No provider Revoke: none of the user-plane providers exposes a revoke endpoint.
          * @summary Forgets a connector: every custodied secret, then the row.
-         * @param {ConnectorsApiDeleteV1ConnectorsByIdRequest} requestParameters Request parameters.
+         * @param {ConnectorsApiDeleteConnectorsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1ConnectorsById(requestParameters: ConnectorsApiDeleteV1ConnectorsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DisconnectOut> {
-            return localVarFp.deleteV1ConnectorsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteConnectorsById(requestParameters: ConnectorsApiDeleteConnectorsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DisconnectOut> {
+            return localVarFp.deleteConnectorsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller\'s OWN connectors across every provider — the set `hanzo connector ls` prints. Rows are keyed (org,user), so this can never surface another user\'s connector, and no secret is in the view.
@@ -468,18 +468,18 @@ export const ConnectorsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Connectors(options?: RawAxiosRequestConfig): AxiosPromise<ConnectorsOut> {
-            return localVarFp.getV1Connectors(options).then((request) => request(axios, basePath));
+        getConnectors(options?: RawAxiosRequestConfig): AxiosPromise<ConnectorsOut> {
+            return localVarFp.getConnectors(options).then((request) => request(axios, basePath));
         },
         /**
          * Hands the custodied access token to its owner — the ONE place custody exits. The (org,user)-keyed row IS the same-user gate: another user\'s id is simply \"no row\" → 404. fresh() auto-rotates within the refreshSkew window; static providers degenerate to a plain kmsGet of Secrets[0]. Refresh tokens are NEVER returned — custody keeps the sink. The token is never logged.
          * @summary Hands the custodied access token to its owner — the ONE place custody exits.
-         * @param {ConnectorsApiGetV1ConnectorsByIdTokenRequest} requestParameters Request parameters.
+         * @param {ConnectorsApiGetConnectorsByIdTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ConnectorsByIdToken(requestParameters: ConnectorsApiGetV1ConnectorsByIdTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectorTokenOut> {
-            return localVarFp.getV1ConnectorsByIdToken(requestParameters.id, options).then((request) => request(axios, basePath));
+        getConnectorsByIdToken(requestParameters: ConnectorsApiGetConnectorsByIdTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectorTokenOut> {
+            return localVarFp.getConnectorsByIdToken(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the user-scoped provider cards — the catalog of what a user can connect, and how. Methods derive from capabilities (Device/Adopt/Verify — Mount asserts at least one), never from a parallel kind enum.
@@ -487,153 +487,153 @@ export const ConnectorsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ConnectorsProviders(options?: RawAxiosRequestConfig): AxiosPromise<ConnectorProvidersOut> {
-            return localVarFp.getV1ConnectorsProviders(options).then((request) => request(axios, basePath));
+        getConnectorsProviders(options?: RawAxiosRequestConfig): AxiosPromise<ConnectorProvidersOut> {
+            return localVarFp.getConnectorsProviders(options).then((request) => request(axios, basePath));
         },
         /**
          * Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window. Only providers that declare a Refresh support it.
          * @summary Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window.
-         * @param {ConnectorsApiPostV1ConnectorsByIdRefreshRequest} requestParameters Request parameters.
+         * @param {ConnectorsApiPostConnectorsByIdRefreshRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ConnectorsByIdRefresh(requestParameters: ConnectorsApiPostV1ConnectorsByIdRefreshRequest, options?: RawAxiosRequestConfig): AxiosPromise<RefreshOut> {
-            return localVarFp.postV1ConnectorsByIdRefresh(requestParameters.id, options).then((request) => request(axios, basePath));
+        postConnectorsByIdRefresh(requestParameters: ConnectorsApiPostConnectorsByIdRefreshRequest, options?: RawAxiosRequestConfig): AxiosPromise<RefreshOut> {
+            return localVarFp.postConnectorsByIdRefresh(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt). ALWAYS verify-before-store: a bad credential is refused and NOTHING is persisted (connectByCredential\'s fail-closed order).
          * @summary Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt).
-         * @param {ConnectorsApiPostV1ConnectorsByProviderCredentialRequest} requestParameters Request parameters.
+         * @param {ConnectorsApiPostConnectorsByProviderCredentialRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ConnectorsByProviderCredential(requestParameters: ConnectorsApiPostV1ConnectorsByProviderCredentialRequest, options?: RawAxiosRequestConfig): AxiosPromise<CredentialOut> {
-            return localVarFp.postV1ConnectorsByProviderCredential(requestParameters.provider, requestParameters.credentialIn, options).then((request) => request(axios, basePath));
+        postConnectorsByProviderCredential(requestParameters: ConnectorsApiPostConnectorsByProviderCredentialRequest, options?: RawAxiosRequestConfig): AxiosPromise<CredentialOut> {
+            return localVarFp.postConnectorsByProviderCredential(requestParameters.provider, requestParameters.credentialIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Begins a device sign-in and returns the code to show the user plus how to poll for completion. KMS readiness is checked NOW rather than dead-ending the user at poll-done (connect() parity), and the per-provider connector cap is checked before the provider is called. The provider\'s device code is persisted only in the encrypted grants table and is NEVER returned.
          * @summary Begins a device sign-in and returns the code to show the user plus how to poll for completion.
-         * @param {ConnectorsApiPostV1ConnectorsByProviderDeviceRequest} requestParameters Request parameters.
+         * @param {ConnectorsApiPostConnectorsByProviderDeviceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ConnectorsByProviderDevice(requestParameters: ConnectorsApiPostV1ConnectorsByProviderDeviceRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceStartOut> {
-            return localVarFp.postV1ConnectorsByProviderDevice(requestParameters.provider, requestParameters.deviceStartIn, options).then((request) => request(axios, basePath));
+        postConnectorsByProviderDevice(requestParameters: ConnectorsApiPostConnectorsByProviderDeviceRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceStartOut> {
+            return localVarFp.postConnectorsByProviderDevice(requestParameters.provider, requestParameters.deviceStartIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Advances a device sign-in. Terminal outcomes are DATA, not errors (verifyConn {active:false} discipline) — the status set is closed: pending|connected|denied|expired. pollSlow collapses to \"pending\" on the wire; the raised cadence rides interval.
          * @summary Advances a device sign-in.
-         * @param {ConnectorsApiPostV1ConnectorsByProviderDeviceByFlowPollRequest} requestParameters Request parameters.
+         * @param {ConnectorsApiPostConnectorsByProviderDeviceByFlowPollRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ConnectorsByProviderDeviceByFlowPoll(requestParameters: ConnectorsApiPostV1ConnectorsByProviderDeviceByFlowPollRequest, options?: RawAxiosRequestConfig): AxiosPromise<DevicePollOut> {
-            return localVarFp.postV1ConnectorsByProviderDeviceByFlowPoll(requestParameters.provider, requestParameters.flow, options).then((request) => request(axios, basePath));
+        postConnectorsByProviderDeviceByFlowPoll(requestParameters: ConnectorsApiPostConnectorsByProviderDeviceByFlowPollRequest, options?: RawAxiosRequestConfig): AxiosPromise<DevicePollOut> {
+            return localVarFp.postConnectorsByProviderDeviceByFlowPoll(requestParameters.provider, requestParameters.flow, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1ConnectorsById operation in ConnectorsApi.
+ * Request parameters for deleteConnectorsById operation in ConnectorsApi.
  * @export
- * @interface ConnectorsApiDeleteV1ConnectorsByIdRequest
+ * @interface ConnectorsApiDeleteConnectorsByIdRequest
  */
-export interface ConnectorsApiDeleteV1ConnectorsByIdRequest {
+export interface ConnectorsApiDeleteConnectorsByIdRequest {
     /**
      * ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
      * @type {string}
-     * @memberof ConnectorsApiDeleteV1ConnectorsById
+     * @memberof ConnectorsApiDeleteConnectorsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1ConnectorsByIdToken operation in ConnectorsApi.
+ * Request parameters for getConnectorsByIdToken operation in ConnectorsApi.
  * @export
- * @interface ConnectorsApiGetV1ConnectorsByIdTokenRequest
+ * @interface ConnectorsApiGetConnectorsByIdTokenRequest
  */
-export interface ConnectorsApiGetV1ConnectorsByIdTokenRequest {
+export interface ConnectorsApiGetConnectorsByIdTokenRequest {
     /**
      * ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
      * @type {string}
-     * @memberof ConnectorsApiGetV1ConnectorsByIdToken
+     * @memberof ConnectorsApiGetConnectorsByIdToken
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1ConnectorsByIdRefresh operation in ConnectorsApi.
+ * Request parameters for postConnectorsByIdRefresh operation in ConnectorsApi.
  * @export
- * @interface ConnectorsApiPostV1ConnectorsByIdRefreshRequest
+ * @interface ConnectorsApiPostConnectorsByIdRefreshRequest
  */
-export interface ConnectorsApiPostV1ConnectorsByIdRefreshRequest {
+export interface ConnectorsApiPostConnectorsByIdRefreshRequest {
     /**
      * ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
      * @type {string}
-     * @memberof ConnectorsApiPostV1ConnectorsByIdRefresh
+     * @memberof ConnectorsApiPostConnectorsByIdRefresh
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1ConnectorsByProviderCredential operation in ConnectorsApi.
+ * Request parameters for postConnectorsByProviderCredential operation in ConnectorsApi.
  * @export
- * @interface ConnectorsApiPostV1ConnectorsByProviderCredentialRequest
+ * @interface ConnectorsApiPostConnectorsByProviderCredentialRequest
  */
-export interface ConnectorsApiPostV1ConnectorsByProviderCredentialRequest {
+export interface ConnectorsApiPostConnectorsByProviderCredentialRequest {
     /**
      * Provider is the user-scoped provider\&#39;s registry id, from the path.
      * @type {string}
-     * @memberof ConnectorsApiPostV1ConnectorsByProviderCredential
+     * @memberof ConnectorsApiPostConnectorsByProviderCredential
      */
     readonly provider: string
 
     /**
      * 
      * @type {CredentialIn}
-     * @memberof ConnectorsApiPostV1ConnectorsByProviderCredential
+     * @memberof ConnectorsApiPostConnectorsByProviderCredential
      */
     readonly credentialIn: CredentialIn
 }
 
 /**
- * Request parameters for postV1ConnectorsByProviderDevice operation in ConnectorsApi.
+ * Request parameters for postConnectorsByProviderDevice operation in ConnectorsApi.
  * @export
- * @interface ConnectorsApiPostV1ConnectorsByProviderDeviceRequest
+ * @interface ConnectorsApiPostConnectorsByProviderDeviceRequest
  */
-export interface ConnectorsApiPostV1ConnectorsByProviderDeviceRequest {
+export interface ConnectorsApiPostConnectorsByProviderDeviceRequest {
     /**
      * Provider is the user-scoped provider\&#39;s registry id, from the path.
      * @type {string}
-     * @memberof ConnectorsApiPostV1ConnectorsByProviderDevice
+     * @memberof ConnectorsApiPostConnectorsByProviderDevice
      */
     readonly provider: string
 
     /**
      * 
      * @type {DeviceStartIn}
-     * @memberof ConnectorsApiPostV1ConnectorsByProviderDevice
+     * @memberof ConnectorsApiPostConnectorsByProviderDevice
      */
     readonly deviceStartIn: DeviceStartIn
 }
 
 /**
- * Request parameters for postV1ConnectorsByProviderDeviceByFlowPoll operation in ConnectorsApi.
+ * Request parameters for postConnectorsByProviderDeviceByFlowPoll operation in ConnectorsApi.
  * @export
- * @interface ConnectorsApiPostV1ConnectorsByProviderDeviceByFlowPollRequest
+ * @interface ConnectorsApiPostConnectorsByProviderDeviceByFlowPollRequest
  */
-export interface ConnectorsApiPostV1ConnectorsByProviderDeviceByFlowPollRequest {
+export interface ConnectorsApiPostConnectorsByProviderDeviceByFlowPollRequest {
     /**
      * Provider is the user-scoped provider\&#39;s registry id, from the path.
      * @type {string}
-     * @memberof ConnectorsApiPostV1ConnectorsByProviderDeviceByFlowPoll
+     * @memberof ConnectorsApiPostConnectorsByProviderDeviceByFlowPoll
      */
     readonly provider: string
 
     /**
      * Flow is the id deviceStartOut returned. Expired or another user\&#39;s flow is indistinguishable from an unknown one: 404.
      * @type {string}
-     * @memberof ConnectorsApiPostV1ConnectorsByProviderDeviceByFlowPoll
+     * @memberof ConnectorsApiPostConnectorsByProviderDeviceByFlowPoll
      */
     readonly flow: string
 }
@@ -648,13 +648,13 @@ export class ConnectorsApi extends BaseAPI {
     /**
      * Forgets a connector: every custodied secret, then the row. Idempotent — dropping a never-connected id still answers {disconnected:true} (disconnect() parity). No provider Revoke: none of the user-plane providers exposes a revoke endpoint.
      * @summary Forgets a connector: every custodied secret, then the row.
-     * @param {ConnectorsApiDeleteV1ConnectorsByIdRequest} requestParameters Request parameters.
+     * @param {ConnectorsApiDeleteConnectorsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ConnectorsApi
      */
-    public deleteV1ConnectorsById(requestParameters: ConnectorsApiDeleteV1ConnectorsByIdRequest, options?: RawAxiosRequestConfig) {
-        return ConnectorsApiFp(this.configuration).deleteV1ConnectorsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteConnectorsById(requestParameters: ConnectorsApiDeleteConnectorsByIdRequest, options?: RawAxiosRequestConfig) {
+        return ConnectorsApiFp(this.configuration).deleteConnectorsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -664,20 +664,20 @@ export class ConnectorsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ConnectorsApi
      */
-    public getV1Connectors(options?: RawAxiosRequestConfig) {
-        return ConnectorsApiFp(this.configuration).getV1Connectors(options).then((request) => request(this.axios, this.basePath));
+    public getConnectors(options?: RawAxiosRequestConfig) {
+        return ConnectorsApiFp(this.configuration).getConnectors(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Hands the custodied access token to its owner — the ONE place custody exits. The (org,user)-keyed row IS the same-user gate: another user\'s id is simply \"no row\" → 404. fresh() auto-rotates within the refreshSkew window; static providers degenerate to a plain kmsGet of Secrets[0]. Refresh tokens are NEVER returned — custody keeps the sink. The token is never logged.
      * @summary Hands the custodied access token to its owner — the ONE place custody exits.
-     * @param {ConnectorsApiGetV1ConnectorsByIdTokenRequest} requestParameters Request parameters.
+     * @param {ConnectorsApiGetConnectorsByIdTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ConnectorsApi
      */
-    public getV1ConnectorsByIdToken(requestParameters: ConnectorsApiGetV1ConnectorsByIdTokenRequest, options?: RawAxiosRequestConfig) {
-        return ConnectorsApiFp(this.configuration).getV1ConnectorsByIdToken(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getConnectorsByIdToken(requestParameters: ConnectorsApiGetConnectorsByIdTokenRequest, options?: RawAxiosRequestConfig) {
+        return ConnectorsApiFp(this.configuration).getConnectorsByIdToken(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -687,56 +687,56 @@ export class ConnectorsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ConnectorsApi
      */
-    public getV1ConnectorsProviders(options?: RawAxiosRequestConfig) {
-        return ConnectorsApiFp(this.configuration).getV1ConnectorsProviders(options).then((request) => request(this.axios, this.basePath));
+    public getConnectorsProviders(options?: RawAxiosRequestConfig) {
+        return ConnectorsApiFp(this.configuration).getConnectorsProviders(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window. Only providers that declare a Refresh support it.
      * @summary Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window.
-     * @param {ConnectorsApiPostV1ConnectorsByIdRefreshRequest} requestParameters Request parameters.
+     * @param {ConnectorsApiPostConnectorsByIdRefreshRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ConnectorsApi
      */
-    public postV1ConnectorsByIdRefresh(requestParameters: ConnectorsApiPostV1ConnectorsByIdRefreshRequest, options?: RawAxiosRequestConfig) {
-        return ConnectorsApiFp(this.configuration).postV1ConnectorsByIdRefresh(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postConnectorsByIdRefresh(requestParameters: ConnectorsApiPostConnectorsByIdRefreshRequest, options?: RawAxiosRequestConfig) {
+        return ConnectorsApiFp(this.configuration).postConnectorsByIdRefresh(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt). ALWAYS verify-before-store: a bad credential is refused and NOTHING is persisted (connectByCredential\'s fail-closed order).
      * @summary Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt).
-     * @param {ConnectorsApiPostV1ConnectorsByProviderCredentialRequest} requestParameters Request parameters.
+     * @param {ConnectorsApiPostConnectorsByProviderCredentialRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ConnectorsApi
      */
-    public postV1ConnectorsByProviderCredential(requestParameters: ConnectorsApiPostV1ConnectorsByProviderCredentialRequest, options?: RawAxiosRequestConfig) {
-        return ConnectorsApiFp(this.configuration).postV1ConnectorsByProviderCredential(requestParameters.provider, requestParameters.credentialIn, options).then((request) => request(this.axios, this.basePath));
+    public postConnectorsByProviderCredential(requestParameters: ConnectorsApiPostConnectorsByProviderCredentialRequest, options?: RawAxiosRequestConfig) {
+        return ConnectorsApiFp(this.configuration).postConnectorsByProviderCredential(requestParameters.provider, requestParameters.credentialIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Begins a device sign-in and returns the code to show the user plus how to poll for completion. KMS readiness is checked NOW rather than dead-ending the user at poll-done (connect() parity), and the per-provider connector cap is checked before the provider is called. The provider\'s device code is persisted only in the encrypted grants table and is NEVER returned.
      * @summary Begins a device sign-in and returns the code to show the user plus how to poll for completion.
-     * @param {ConnectorsApiPostV1ConnectorsByProviderDeviceRequest} requestParameters Request parameters.
+     * @param {ConnectorsApiPostConnectorsByProviderDeviceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ConnectorsApi
      */
-    public postV1ConnectorsByProviderDevice(requestParameters: ConnectorsApiPostV1ConnectorsByProviderDeviceRequest, options?: RawAxiosRequestConfig) {
-        return ConnectorsApiFp(this.configuration).postV1ConnectorsByProviderDevice(requestParameters.provider, requestParameters.deviceStartIn, options).then((request) => request(this.axios, this.basePath));
+    public postConnectorsByProviderDevice(requestParameters: ConnectorsApiPostConnectorsByProviderDeviceRequest, options?: RawAxiosRequestConfig) {
+        return ConnectorsApiFp(this.configuration).postConnectorsByProviderDevice(requestParameters.provider, requestParameters.deviceStartIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Advances a device sign-in. Terminal outcomes are DATA, not errors (verifyConn {active:false} discipline) — the status set is closed: pending|connected|denied|expired. pollSlow collapses to \"pending\" on the wire; the raised cadence rides interval.
      * @summary Advances a device sign-in.
-     * @param {ConnectorsApiPostV1ConnectorsByProviderDeviceByFlowPollRequest} requestParameters Request parameters.
+     * @param {ConnectorsApiPostConnectorsByProviderDeviceByFlowPollRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ConnectorsApi
      */
-    public postV1ConnectorsByProviderDeviceByFlowPoll(requestParameters: ConnectorsApiPostV1ConnectorsByProviderDeviceByFlowPollRequest, options?: RawAxiosRequestConfig) {
-        return ConnectorsApiFp(this.configuration).postV1ConnectorsByProviderDeviceByFlowPoll(requestParameters.provider, requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
+    public postConnectorsByProviderDeviceByFlowPoll(requestParameters: ConnectorsApiPostConnectorsByProviderDeviceByFlowPollRequest, options?: RawAxiosRequestConfig) {
+        return ConnectorsApiFp(this.configuration).postConnectorsByProviderDeviceByFlowPoll(requestParameters.provider, requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -34,9 +34,9 @@ export const DnsApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1DnsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteDnsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('deleteV1DnsByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('deleteDnsByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/dns/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -68,9 +68,9 @@ export const DnsApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DnsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDnsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getV1DnsByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('getDnsByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/dns/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -102,9 +102,9 @@ export const DnsApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1DnsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchDnsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('patchV1DnsByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('patchDnsByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/dns/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -136,9 +136,9 @@ export const DnsApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DnsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postDnsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('postV1DnsByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('postDnsByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/dns/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -170,9 +170,9 @@ export const DnsApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1DnsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putDnsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('putV1DnsByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('putDnsByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/dns/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -214,10 +214,10 @@ export const DnsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1DnsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1DnsByWildcard1(wildcard1, options);
+        async deleteDnsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDnsByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DnsApi.deleteV1DnsByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DnsApi.deleteDnsByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -227,10 +227,10 @@ export const DnsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DnsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DnsByWildcard1(wildcard1, options);
+        async getDnsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDnsByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DnsApi.getV1DnsByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DnsApi.getDnsByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -240,10 +240,10 @@ export const DnsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1DnsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1DnsByWildcard1(wildcard1, options);
+        async patchDnsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchDnsByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DnsApi.patchV1DnsByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DnsApi.patchDnsByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -253,10 +253,10 @@ export const DnsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DnsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DnsByWildcard1(wildcard1, options);
+        async postDnsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDnsByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DnsApi.postV1DnsByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DnsApi.postDnsByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -266,10 +266,10 @@ export const DnsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1DnsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1DnsByWildcard1(wildcard1, options);
+        async putDnsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putDnsByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DnsApi.putV1DnsByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DnsApi.putDnsByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -285,122 +285,122 @@ export const DnsApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Removes a DNS zone or record from the Hanzo DNS control plane. The plane owns the authoritative zone and record store behind every name pointed at Hanzo; this head keeps none of it. The sub-path after /v1/dns and the query string ARE the plane\'s own API address, relayed verbatim, and the plane\'s answer comes back unchanged — its status code, its Content-Type, and its Location on a redirect this head never follows.  It travels under the CALLER\'S OWN identity and substitutes no service credential, which would collapse tenants: the caller\'s validated session bearer goes upstream as Authorization and the server-validated org as X-Org-Id, so a caller in one org reaches only that org\'s zones, exactly as if it had called the plane directly. The upstream host comes only from deployment config, never from the request, so no path can re-target another host.  Fails closed before a byte leaves cloud: no validated principal is 403; an API key is 401, because a pk-/sk- key is not a JWT the OIDC-gated plane can validate and there is no substitute credential to send in its place; a path that normalizes outside /v1/dns, or still carries a percent-escape or a `..` after one decode, is 400; an unconfigured plane is 503 and an unreachable one 502.
          * @summary Delete a DNS zone or record
-         * @param {DnsApiDeleteV1DnsByWildcard1Request} requestParameters Request parameters.
+         * @param {DnsApiDeleteDnsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1DnsByWildcard1(requestParameters: DnsApiDeleteV1DnsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1DnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        deleteDnsByWildcard1(requestParameters: DnsApiDeleteDnsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteDnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Reads DNS state — a zone, a record, a listing — from the Hanzo DNS control plane. The plane owns the authoritative zone and record store behind every name pointed at Hanzo; this head keeps none of it. The sub-path after /v1/dns and the query string ARE the plane\'s own API address, relayed verbatim, and the plane\'s answer comes back unchanged — its status code, its Content-Type, and its Location on a redirect this head never follows.  It travels under the CALLER\'S OWN identity and substitutes no service credential, which would collapse tenants: the caller\'s validated session bearer goes upstream as Authorization and the server-validated org as X-Org-Id, so a caller in one org reaches only that org\'s zones, exactly as if it had called the plane directly. The upstream host comes only from deployment config, never from the request, so no path can re-target another host.  Fails closed before a byte leaves cloud: no validated principal is 403; an API key is 401, because a pk-/sk- key is not a JWT the OIDC-gated plane can validate and there is no substitute credential to send in its place; a path that normalizes outside /v1/dns, or still carries a percent-escape or a `..` after one decode, is 400; an unconfigured plane is 503 and an unreachable one 502.
          * @summary Read your org\'s DNS zones and records
-         * @param {DnsApiGetV1DnsByWildcard1Request} requestParameters Request parameters.
+         * @param {DnsApiGetDnsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DnsByWildcard1(requestParameters: DnsApiGetV1DnsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1DnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        getDnsByWildcard1(requestParameters: DnsApiGetDnsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Amends a DNS zone or record on the Hanzo DNS control plane. The plane owns the authoritative zone and record store behind every name pointed at Hanzo; this head keeps none of it. The sub-path after /v1/dns and the query string ARE the plane\'s own API address, relayed verbatim, and the plane\'s answer comes back unchanged — its status code, its Content-Type, and its Location on a redirect this head never follows.  It travels under the CALLER\'S OWN identity and substitutes no service credential, which would collapse tenants: the caller\'s validated session bearer goes upstream as Authorization and the server-validated org as X-Org-Id, so a caller in one org reaches only that org\'s zones, exactly as if it had called the plane directly. The upstream host comes only from deployment config, never from the request, so no path can re-target another host.  Fails closed before a byte leaves cloud: no validated principal is 403; an API key is 401, because a pk-/sk- key is not a JWT the OIDC-gated plane can validate and there is no substitute credential to send in its place; a path that normalizes outside /v1/dns, or still carries a percent-escape or a `..` after one decode, is 400; an unconfigured plane is 503 and an unreachable one 502.
          * @summary Amend a DNS zone or record
-         * @param {DnsApiPatchV1DnsByWildcard1Request} requestParameters Request parameters.
+         * @param {DnsApiPatchDnsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1DnsByWildcard1(requestParameters: DnsApiPatchV1DnsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1DnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        patchDnsByWildcard1(requestParameters: DnsApiPatchDnsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchDnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates DNS state — a zone, a record — on the Hanzo DNS control plane. The plane owns the authoritative zone and record store behind every name pointed at Hanzo; this head keeps none of it. The sub-path after /v1/dns and the query string ARE the plane\'s own API address, relayed verbatim, and the plane\'s answer comes back unchanged — its status code, its Content-Type, and its Location on a redirect this head never follows.  It travels under the CALLER\'S OWN identity and substitutes no service credential, which would collapse tenants: the caller\'s validated session bearer goes upstream as Authorization and the server-validated org as X-Org-Id, so a caller in one org reaches only that org\'s zones, exactly as if it had called the plane directly. The upstream host comes only from deployment config, never from the request, so no path can re-target another host.  Fails closed before a byte leaves cloud: no validated principal is 403; an API key is 401, because a pk-/sk- key is not a JWT the OIDC-gated plane can validate and there is no substitute credential to send in its place; a path that normalizes outside /v1/dns, or still carries a percent-escape or a `..` after one decode, is 400; an unconfigured plane is 503 and an unreachable one 502.
          * @summary Create a DNS zone or record
-         * @param {DnsApiPostV1DnsByWildcard1Request} requestParameters Request parameters.
+         * @param {DnsApiPostDnsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DnsByWildcard1(requestParameters: DnsApiPostV1DnsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1DnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        postDnsByWildcard1(requestParameters: DnsApiPostDnsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postDnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces a DNS zone or record on the Hanzo DNS control plane. The plane owns the authoritative zone and record store behind every name pointed at Hanzo; this head keeps none of it. The sub-path after /v1/dns and the query string ARE the plane\'s own API address, relayed verbatim, and the plane\'s answer comes back unchanged — its status code, its Content-Type, and its Location on a redirect this head never follows.  It travels under the CALLER\'S OWN identity and substitutes no service credential, which would collapse tenants: the caller\'s validated session bearer goes upstream as Authorization and the server-validated org as X-Org-Id, so a caller in one org reaches only that org\'s zones, exactly as if it had called the plane directly. The upstream host comes only from deployment config, never from the request, so no path can re-target another host.  Fails closed before a byte leaves cloud: no validated principal is 403; an API key is 401, because a pk-/sk- key is not a JWT the OIDC-gated plane can validate and there is no substitute credential to send in its place; a path that normalizes outside /v1/dns, or still carries a percent-escape or a `..` after one decode, is 400; an unconfigured plane is 503 and an unreachable one 502.
          * @summary Replace a DNS zone or record
-         * @param {DnsApiPutV1DnsByWildcard1Request} requestParameters Request parameters.
+         * @param {DnsApiPutDnsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1DnsByWildcard1(requestParameters: DnsApiPutV1DnsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1DnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        putDnsByWildcard1(requestParameters: DnsApiPutDnsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putDnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1DnsByWildcard1 operation in DnsApi.
+ * Request parameters for deleteDnsByWildcard1 operation in DnsApi.
  * @export
- * @interface DnsApiDeleteV1DnsByWildcard1Request
+ * @interface DnsApiDeleteDnsByWildcard1Request
  */
-export interface DnsApiDeleteV1DnsByWildcard1Request {
+export interface DnsApiDeleteDnsByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof DnsApiDeleteV1DnsByWildcard1
+     * @memberof DnsApiDeleteDnsByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for getV1DnsByWildcard1 operation in DnsApi.
+ * Request parameters for getDnsByWildcard1 operation in DnsApi.
  * @export
- * @interface DnsApiGetV1DnsByWildcard1Request
+ * @interface DnsApiGetDnsByWildcard1Request
  */
-export interface DnsApiGetV1DnsByWildcard1Request {
+export interface DnsApiGetDnsByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof DnsApiGetV1DnsByWildcard1
+     * @memberof DnsApiGetDnsByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for patchV1DnsByWildcard1 operation in DnsApi.
+ * Request parameters for patchDnsByWildcard1 operation in DnsApi.
  * @export
- * @interface DnsApiPatchV1DnsByWildcard1Request
+ * @interface DnsApiPatchDnsByWildcard1Request
  */
-export interface DnsApiPatchV1DnsByWildcard1Request {
+export interface DnsApiPatchDnsByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof DnsApiPatchV1DnsByWildcard1
+     * @memberof DnsApiPatchDnsByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for postV1DnsByWildcard1 operation in DnsApi.
+ * Request parameters for postDnsByWildcard1 operation in DnsApi.
  * @export
- * @interface DnsApiPostV1DnsByWildcard1Request
+ * @interface DnsApiPostDnsByWildcard1Request
  */
-export interface DnsApiPostV1DnsByWildcard1Request {
+export interface DnsApiPostDnsByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof DnsApiPostV1DnsByWildcard1
+     * @memberof DnsApiPostDnsByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for putV1DnsByWildcard1 operation in DnsApi.
+ * Request parameters for putDnsByWildcard1 operation in DnsApi.
  * @export
- * @interface DnsApiPutV1DnsByWildcard1Request
+ * @interface DnsApiPutDnsByWildcard1Request
  */
-export interface DnsApiPutV1DnsByWildcard1Request {
+export interface DnsApiPutDnsByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof DnsApiPutV1DnsByWildcard1
+     * @memberof DnsApiPutDnsByWildcard1
      */
     readonly wildcard1: string
 }
@@ -415,61 +415,61 @@ export class DnsApi extends BaseAPI {
     /**
      * Removes a DNS zone or record from the Hanzo DNS control plane. The plane owns the authoritative zone and record store behind every name pointed at Hanzo; this head keeps none of it. The sub-path after /v1/dns and the query string ARE the plane\'s own API address, relayed verbatim, and the plane\'s answer comes back unchanged — its status code, its Content-Type, and its Location on a redirect this head never follows.  It travels under the CALLER\'S OWN identity and substitutes no service credential, which would collapse tenants: the caller\'s validated session bearer goes upstream as Authorization and the server-validated org as X-Org-Id, so a caller in one org reaches only that org\'s zones, exactly as if it had called the plane directly. The upstream host comes only from deployment config, never from the request, so no path can re-target another host.  Fails closed before a byte leaves cloud: no validated principal is 403; an API key is 401, because a pk-/sk- key is not a JWT the OIDC-gated plane can validate and there is no substitute credential to send in its place; a path that normalizes outside /v1/dns, or still carries a percent-escape or a `..` after one decode, is 400; an unconfigured plane is 503 and an unreachable one 502.
      * @summary Delete a DNS zone or record
-     * @param {DnsApiDeleteV1DnsByWildcard1Request} requestParameters Request parameters.
+     * @param {DnsApiDeleteDnsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DnsApi
      */
-    public deleteV1DnsByWildcard1(requestParameters: DnsApiDeleteV1DnsByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DnsApiFp(this.configuration).deleteV1DnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public deleteDnsByWildcard1(requestParameters: DnsApiDeleteDnsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DnsApiFp(this.configuration).deleteDnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reads DNS state — a zone, a record, a listing — from the Hanzo DNS control plane. The plane owns the authoritative zone and record store behind every name pointed at Hanzo; this head keeps none of it. The sub-path after /v1/dns and the query string ARE the plane\'s own API address, relayed verbatim, and the plane\'s answer comes back unchanged — its status code, its Content-Type, and its Location on a redirect this head never follows.  It travels under the CALLER\'S OWN identity and substitutes no service credential, which would collapse tenants: the caller\'s validated session bearer goes upstream as Authorization and the server-validated org as X-Org-Id, so a caller in one org reaches only that org\'s zones, exactly as if it had called the plane directly. The upstream host comes only from deployment config, never from the request, so no path can re-target another host.  Fails closed before a byte leaves cloud: no validated principal is 403; an API key is 401, because a pk-/sk- key is not a JWT the OIDC-gated plane can validate and there is no substitute credential to send in its place; a path that normalizes outside /v1/dns, or still carries a percent-escape or a `..` after one decode, is 400; an unconfigured plane is 503 and an unreachable one 502.
      * @summary Read your org\'s DNS zones and records
-     * @param {DnsApiGetV1DnsByWildcard1Request} requestParameters Request parameters.
+     * @param {DnsApiGetDnsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DnsApi
      */
-    public getV1DnsByWildcard1(requestParameters: DnsApiGetV1DnsByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DnsApiFp(this.configuration).getV1DnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public getDnsByWildcard1(requestParameters: DnsApiGetDnsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DnsApiFp(this.configuration).getDnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Amends a DNS zone or record on the Hanzo DNS control plane. The plane owns the authoritative zone and record store behind every name pointed at Hanzo; this head keeps none of it. The sub-path after /v1/dns and the query string ARE the plane\'s own API address, relayed verbatim, and the plane\'s answer comes back unchanged — its status code, its Content-Type, and its Location on a redirect this head never follows.  It travels under the CALLER\'S OWN identity and substitutes no service credential, which would collapse tenants: the caller\'s validated session bearer goes upstream as Authorization and the server-validated org as X-Org-Id, so a caller in one org reaches only that org\'s zones, exactly as if it had called the plane directly. The upstream host comes only from deployment config, never from the request, so no path can re-target another host.  Fails closed before a byte leaves cloud: no validated principal is 403; an API key is 401, because a pk-/sk- key is not a JWT the OIDC-gated plane can validate and there is no substitute credential to send in its place; a path that normalizes outside /v1/dns, or still carries a percent-escape or a `..` after one decode, is 400; an unconfigured plane is 503 and an unreachable one 502.
      * @summary Amend a DNS zone or record
-     * @param {DnsApiPatchV1DnsByWildcard1Request} requestParameters Request parameters.
+     * @param {DnsApiPatchDnsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DnsApi
      */
-    public patchV1DnsByWildcard1(requestParameters: DnsApiPatchV1DnsByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DnsApiFp(this.configuration).patchV1DnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public patchDnsByWildcard1(requestParameters: DnsApiPatchDnsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DnsApiFp(this.configuration).patchDnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates DNS state — a zone, a record — on the Hanzo DNS control plane. The plane owns the authoritative zone and record store behind every name pointed at Hanzo; this head keeps none of it. The sub-path after /v1/dns and the query string ARE the plane\'s own API address, relayed verbatim, and the plane\'s answer comes back unchanged — its status code, its Content-Type, and its Location on a redirect this head never follows.  It travels under the CALLER\'S OWN identity and substitutes no service credential, which would collapse tenants: the caller\'s validated session bearer goes upstream as Authorization and the server-validated org as X-Org-Id, so a caller in one org reaches only that org\'s zones, exactly as if it had called the plane directly. The upstream host comes only from deployment config, never from the request, so no path can re-target another host.  Fails closed before a byte leaves cloud: no validated principal is 403; an API key is 401, because a pk-/sk- key is not a JWT the OIDC-gated plane can validate and there is no substitute credential to send in its place; a path that normalizes outside /v1/dns, or still carries a percent-escape or a `..` after one decode, is 400; an unconfigured plane is 503 and an unreachable one 502.
      * @summary Create a DNS zone or record
-     * @param {DnsApiPostV1DnsByWildcard1Request} requestParameters Request parameters.
+     * @param {DnsApiPostDnsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DnsApi
      */
-    public postV1DnsByWildcard1(requestParameters: DnsApiPostV1DnsByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DnsApiFp(this.configuration).postV1DnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public postDnsByWildcard1(requestParameters: DnsApiPostDnsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DnsApiFp(this.configuration).postDnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces a DNS zone or record on the Hanzo DNS control plane. The plane owns the authoritative zone and record store behind every name pointed at Hanzo; this head keeps none of it. The sub-path after /v1/dns and the query string ARE the plane\'s own API address, relayed verbatim, and the plane\'s answer comes back unchanged — its status code, its Content-Type, and its Location on a redirect this head never follows.  It travels under the CALLER\'S OWN identity and substitutes no service credential, which would collapse tenants: the caller\'s validated session bearer goes upstream as Authorization and the server-validated org as X-Org-Id, so a caller in one org reaches only that org\'s zones, exactly as if it had called the plane directly. The upstream host comes only from deployment config, never from the request, so no path can re-target another host.  Fails closed before a byte leaves cloud: no validated principal is 403; an API key is 401, because a pk-/sk- key is not a JWT the OIDC-gated plane can validate and there is no substitute credential to send in its place; a path that normalizes outside /v1/dns, or still carries a percent-escape or a `..` after one decode, is 400; an unconfigured plane is 503 and an unreachable one 502.
      * @summary Replace a DNS zone or record
-     * @param {DnsApiPutV1DnsByWildcard1Request} requestParameters Request parameters.
+     * @param {DnsApiPutDnsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DnsApi
      */
-    public putV1DnsByWildcard1(requestParameters: DnsApiPutV1DnsByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DnsApiFp(this.configuration).putV1DnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public putDnsByWildcard1(requestParameters: DnsApiPutDnsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DnsApiFp(this.configuration).putDnsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

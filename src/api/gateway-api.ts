@@ -67,7 +67,7 @@ export const GatewayApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GatewayConfig: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGatewayConfig: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/gateway/config`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -98,9 +98,9 @@ export const GatewayApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1GatewayConfig: async (policy: Policy, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putGatewayConfig: async (policy: Policy, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'policy' is not null or undefined
-            assertParamExists('putV1GatewayConfig', 'policy', policy)
+            assertParamExists('putGatewayConfig', 'policy', policy)
             const localVarPath = `/v1/gateway/config`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -155,10 +155,10 @@ export const GatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GatewayConfig(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Policy>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GatewayConfig(options);
+        async getGatewayConfig(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Policy>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGatewayConfig(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GatewayApi.getV1GatewayConfig']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GatewayApi.getGatewayConfig']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -168,10 +168,10 @@ export const GatewayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1GatewayConfig(policy: Policy, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Policy>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1GatewayConfig(policy, options);
+        async putGatewayConfig(policy: Policy, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Policy>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putGatewayConfig(policy, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GatewayApi.putV1GatewayConfig']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GatewayApi.putGatewayConfig']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -199,32 +199,32 @@ export const GatewayApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GatewayConfig(options?: RawAxiosRequestConfig): AxiosPromise<Policy> {
-            return localVarFp.getV1GatewayConfig(options).then((request) => request(axios, basePath));
+        getGatewayConfig(options?: RawAxiosRequestConfig): AxiosPromise<Policy> {
+            return localVarFp.getGatewayConfig(options).then((request) => request(axios, basePath));
         },
         /**
          * Write updates one policy scope and returns the policy in force after the write. A body carrying any PLATFORM field (cors_origins, per_ip_rpm, window_sec) is a platform write and requires SuperAdmin; otherwise it is a per-org write (org_rpm, cache_ttl_sec, cache_paths, methods) scoped to the caller\'s own org — or, for a SuperAdmin, the tenant named by ?org=<slug>. A body that sets nothing is a 400. The abuse gate\'s mode is an OPERATOR field: setting it requires SuperAdmin, whichever organization it lands on. updated_at and updated_by are server-stamped; a client-supplied value is ignored.
          * @summary Write updates one policy scope and returns the policy in force after the write.
-         * @param {GatewayApiPutV1GatewayConfigRequest} requestParameters Request parameters.
+         * @param {GatewayApiPutGatewayConfigRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1GatewayConfig(requestParameters: GatewayApiPutV1GatewayConfigRequest, options?: RawAxiosRequestConfig): AxiosPromise<Policy> {
-            return localVarFp.putV1GatewayConfig(requestParameters.policy, options).then((request) => request(axios, basePath));
+        putGatewayConfig(requestParameters: GatewayApiPutGatewayConfigRequest, options?: RawAxiosRequestConfig): AxiosPromise<Policy> {
+            return localVarFp.putGatewayConfig(requestParameters.policy, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for putV1GatewayConfig operation in GatewayApi.
+ * Request parameters for putGatewayConfig operation in GatewayApi.
  * @export
- * @interface GatewayApiPutV1GatewayConfigRequest
+ * @interface GatewayApiPutGatewayConfigRequest
  */
-export interface GatewayApiPutV1GatewayConfigRequest {
+export interface GatewayApiPutGatewayConfigRequest {
     /**
      * 
      * @type {Policy}
-     * @memberof GatewayApiPutV1GatewayConfig
+     * @memberof GatewayApiPutGatewayConfig
      */
     readonly policy: Policy
 }
@@ -254,20 +254,20 @@ export class GatewayApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GatewayApi
      */
-    public getV1GatewayConfig(options?: RawAxiosRequestConfig) {
-        return GatewayApiFp(this.configuration).getV1GatewayConfig(options).then((request) => request(this.axios, this.basePath));
+    public getGatewayConfig(options?: RawAxiosRequestConfig) {
+        return GatewayApiFp(this.configuration).getGatewayConfig(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Write updates one policy scope and returns the policy in force after the write. A body carrying any PLATFORM field (cors_origins, per_ip_rpm, window_sec) is a platform write and requires SuperAdmin; otherwise it is a per-org write (org_rpm, cache_ttl_sec, cache_paths, methods) scoped to the caller\'s own org — or, for a SuperAdmin, the tenant named by ?org=<slug>. A body that sets nothing is a 400. The abuse gate\'s mode is an OPERATOR field: setting it requires SuperAdmin, whichever organization it lands on. updated_at and updated_by are server-stamped; a client-supplied value is ignored.
      * @summary Write updates one policy scope and returns the policy in force after the write.
-     * @param {GatewayApiPutV1GatewayConfigRequest} requestParameters Request parameters.
+     * @param {GatewayApiPutGatewayConfigRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GatewayApi
      */
-    public putV1GatewayConfig(requestParameters: GatewayApiPutV1GatewayConfigRequest, options?: RawAxiosRequestConfig) {
-        return GatewayApiFp(this.configuration).putV1GatewayConfig(requestParameters.policy, options).then((request) => request(this.axios, this.basePath));
+    public putGatewayConfig(requestParameters: GatewayApiPutGatewayConfigRequest, options?: RawAxiosRequestConfig) {
+        return GatewayApiFp(this.configuration).putGatewayConfig(requestParameters.policy, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

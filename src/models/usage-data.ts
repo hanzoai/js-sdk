@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { UsageByProduct } from './usage-by-product';
+import type { UsageByModel } from './usage-by-model';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { UsagePoint } from './usage-point';
@@ -31,10 +31,10 @@ import type { UsageTotals } from './usage-totals';
 export interface UsageData {
     /**
      * 
-     * @type {Array<UsageByProduct>}
+     * @type {Array<UsageByModel>}
      * @memberof UsageData
      */
-    'byProduct'?: Array<UsageByProduct>;
+    'byModel'?: Array<UsageByModel>;
     /**
      * 
      * @type {Array<UsagePoint>}

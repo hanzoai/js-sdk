@@ -25,24 +25,18 @@ export interface Summary {
      * @type {number}
      * @memberof Summary
      */
-    'active'?: number;
-    /**
-     * Budget and Spend are the summed campaign budget and spend, in cents.
-     * @type {number}
-     * @memberof Summary
-     */
-    'budget'?: number;
-    /**
-     * Campaigns is how many campaigns the org has, Active how many are running.
-     * @type {number}
-     * @memberof Summary
-     */
-    'campaigns'?: number;
+    'calls'?: number;
     /**
      * 
      * @type {number}
      * @memberof Summary
      */
-    'spend'?: number;
+    'messages'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Summary
+     */
+    'numbers'?: number;
 }
 

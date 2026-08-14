@@ -41,7 +41,7 @@ export const AnalyticsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AnalyticsHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAnalyticsHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/analytics/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -68,13 +68,13 @@ export const AnalyticsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Overview returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
          * @summary Overview returns the caller org\'s analytics KPIs for one time window.
-         * @param {string} [range] Range is a relative window: 24h, 7d or 30d. Default 24h. Ignored when both start and end are given. An unknown value is a 400.
+         * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AnalyticsOverview: async (range?: string, start?: string, end?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAnalyticsOverview: async (range?: string, start?: string, end?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/analytics/overview`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -113,13 +113,13 @@ export const AnalyticsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
          * @summary Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series.
-         * @param {string} [range] Range is a relative window: 24h, 7d or 30d. Default 24h. Ignored when both start and end are given. An unknown value is a 400.
+         * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AnalyticsTimeseries: async (range?: string, start?: string, end?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAnalyticsTimeseries: async (range?: string, start?: string, end?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/analytics/timeseries`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -158,14 +158,14 @@ export const AnalyticsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Top returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
          * @summary Top returns the caller org\'s ranked lenses for one window, five of them at once.
-         * @param {string} [range] Range is a relative window: 24h, 7d or 30d. Default 24h. Ignored when both start and end are given. An unknown value is a 400.
+         * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
          * @param {number} [limit] Limit bounds every ranked lens in the response. Default 10, maximum 100; a value at or below zero, or one that is not a number, takes the default.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AnalyticsTop: async (range?: string, start?: string, end?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAnalyticsTop: async (range?: string, start?: string, end?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/analytics/top`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -221,56 +221,56 @@ export const AnalyticsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AnalyticsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthReport>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AnalyticsHealth(options);
+        async getAnalyticsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthReport>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAnalyticsHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.getV1AnalyticsHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.getAnalyticsHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Overview returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
          * @summary Overview returns the caller org\'s analytics KPIs for one time window.
-         * @param {string} [range] Range is a relative window: 24h, 7d or 30d. Default 24h. Ignored when both start and end are given. An unknown value is a 400.
+         * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AnalyticsOverview(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Overview>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AnalyticsOverview(range, start, end, options);
+        async getAnalyticsOverview(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Overview>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAnalyticsOverview(range, start, end, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.getV1AnalyticsOverview']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.getAnalyticsOverview']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
          * @summary Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series.
-         * @param {string} [range] Range is a relative window: 24h, 7d or 30d. Default 24h. Ignored when both start and end are given. An unknown value is a 400.
+         * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AnalyticsTimeseries(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Timeseries>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AnalyticsTimeseries(range, start, end, options);
+        async getAnalyticsTimeseries(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Timeseries>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAnalyticsTimeseries(range, start, end, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.getV1AnalyticsTimeseries']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.getAnalyticsTimeseries']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Top returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
          * @summary Top returns the caller org\'s ranked lenses for one window, five of them at once.
-         * @param {string} [range] Range is a relative window: 24h, 7d or 30d. Default 24h. Ignored when both start and end are given. An unknown value is a 400.
+         * @param {string} [range] Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
          * @param {string} [start] Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
          * @param {string} [end] End is the exclusive upper bound of a custom window, RFC3339. Requires start.
          * @param {number} [limit] Limit bounds every ranked lens in the response. Default 10, maximum 100; a value at or below zero, or one that is not a number, takes the default.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AnalyticsTop(range?: string, start?: string, end?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Top>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AnalyticsTop(range, start, end, limit, options);
+        async getAnalyticsTop(range?: string, start?: string, end?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Top>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAnalyticsTop(range, start, end, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.getV1AnalyticsTop']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.getAnalyticsTop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -289,129 +289,129 @@ export const AnalyticsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AnalyticsHealth(options?: RawAxiosRequestConfig): AxiosPromise<HealthReport> {
-            return localVarFp.getV1AnalyticsHealth(options).then((request) => request(axios, basePath));
+        getAnalyticsHealth(options?: RawAxiosRequestConfig): AxiosPromise<HealthReport> {
+            return localVarFp.getAnalyticsHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Overview returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
          * @summary Overview returns the caller org\'s analytics KPIs for one time window.
-         * @param {AnalyticsApiGetV1AnalyticsOverviewRequest} requestParameters Request parameters.
+         * @param {AnalyticsApiGetAnalyticsOverviewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AnalyticsOverview(requestParameters: AnalyticsApiGetV1AnalyticsOverviewRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Overview> {
-            return localVarFp.getV1AnalyticsOverview(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
+        getAnalyticsOverview(requestParameters: AnalyticsApiGetAnalyticsOverviewRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Overview> {
+            return localVarFp.getAnalyticsOverview(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
         },
         /**
          * Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
          * @summary Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series.
-         * @param {AnalyticsApiGetV1AnalyticsTimeseriesRequest} requestParameters Request parameters.
+         * @param {AnalyticsApiGetAnalyticsTimeseriesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AnalyticsTimeseries(requestParameters: AnalyticsApiGetV1AnalyticsTimeseriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Timeseries> {
-            return localVarFp.getV1AnalyticsTimeseries(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
+        getAnalyticsTimeseries(requestParameters: AnalyticsApiGetAnalyticsTimeseriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Timeseries> {
+            return localVarFp.getAnalyticsTimeseries(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
         },
         /**
          * Top returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
          * @summary Top returns the caller org\'s ranked lenses for one window, five of them at once.
-         * @param {AnalyticsApiGetV1AnalyticsTopRequest} requestParameters Request parameters.
+         * @param {AnalyticsApiGetAnalyticsTopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AnalyticsTop(requestParameters: AnalyticsApiGetV1AnalyticsTopRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Top> {
-            return localVarFp.getV1AnalyticsTop(requestParameters.range, requestParameters.start, requestParameters.end, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getAnalyticsTop(requestParameters: AnalyticsApiGetAnalyticsTopRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Top> {
+            return localVarFp.getAnalyticsTop(requestParameters.range, requestParameters.start, requestParameters.end, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1AnalyticsOverview operation in AnalyticsApi.
+ * Request parameters for getAnalyticsOverview operation in AnalyticsApi.
  * @export
- * @interface AnalyticsApiGetV1AnalyticsOverviewRequest
+ * @interface AnalyticsApiGetAnalyticsOverviewRequest
  */
-export interface AnalyticsApiGetV1AnalyticsOverviewRequest {
+export interface AnalyticsApiGetAnalyticsOverviewRequest {
     /**
-     * Range is a relative window: 24h, 7d or 30d. Default 24h. Ignored when both start and end are given. An unknown value is a 400.
+     * Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
      * @type {string}
-     * @memberof AnalyticsApiGetV1AnalyticsOverview
+     * @memberof AnalyticsApiGetAnalyticsOverview
      */
     readonly range?: string
 
     /**
      * Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
      * @type {string}
-     * @memberof AnalyticsApiGetV1AnalyticsOverview
+     * @memberof AnalyticsApiGetAnalyticsOverview
      */
     readonly start?: string
 
     /**
      * End is the exclusive upper bound of a custom window, RFC3339. Requires start.
      * @type {string}
-     * @memberof AnalyticsApiGetV1AnalyticsOverview
+     * @memberof AnalyticsApiGetAnalyticsOverview
      */
     readonly end?: string
 }
 
 /**
- * Request parameters for getV1AnalyticsTimeseries operation in AnalyticsApi.
+ * Request parameters for getAnalyticsTimeseries operation in AnalyticsApi.
  * @export
- * @interface AnalyticsApiGetV1AnalyticsTimeseriesRequest
+ * @interface AnalyticsApiGetAnalyticsTimeseriesRequest
  */
-export interface AnalyticsApiGetV1AnalyticsTimeseriesRequest {
+export interface AnalyticsApiGetAnalyticsTimeseriesRequest {
     /**
-     * Range is a relative window: 24h, 7d or 30d. Default 24h. Ignored when both start and end are given. An unknown value is a 400.
+     * Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
      * @type {string}
-     * @memberof AnalyticsApiGetV1AnalyticsTimeseries
+     * @memberof AnalyticsApiGetAnalyticsTimeseries
      */
     readonly range?: string
 
     /**
      * Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
      * @type {string}
-     * @memberof AnalyticsApiGetV1AnalyticsTimeseries
+     * @memberof AnalyticsApiGetAnalyticsTimeseries
      */
     readonly start?: string
 
     /**
      * End is the exclusive upper bound of a custom window, RFC3339. Requires start.
      * @type {string}
-     * @memberof AnalyticsApiGetV1AnalyticsTimeseries
+     * @memberof AnalyticsApiGetAnalyticsTimeseries
      */
     readonly end?: string
 }
 
 /**
- * Request parameters for getV1AnalyticsTop operation in AnalyticsApi.
+ * Request parameters for getAnalyticsTop operation in AnalyticsApi.
  * @export
- * @interface AnalyticsApiGetV1AnalyticsTopRequest
+ * @interface AnalyticsApiGetAnalyticsTopRequest
  */
-export interface AnalyticsApiGetV1AnalyticsTopRequest {
+export interface AnalyticsApiGetAnalyticsTopRequest {
     /**
-     * Range is a relative window: 24h, 7d or 30d. Default 24h. Ignored when both start and end are given. An unknown value is a 400.
+     * Range is a relative window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Default 24h. Ignored when both start and end are given. An unknown value, or one past the 730-day horizon, is a 400.
      * @type {string}
-     * @memberof AnalyticsApiGetV1AnalyticsTop
+     * @memberof AnalyticsApiGetAnalyticsTop
      */
     readonly range?: string
 
     /**
      * Start is the inclusive lower bound of a custom window, RFC3339. Requires end.
      * @type {string}
-     * @memberof AnalyticsApiGetV1AnalyticsTop
+     * @memberof AnalyticsApiGetAnalyticsTop
      */
     readonly start?: string
 
     /**
      * End is the exclusive upper bound of a custom window, RFC3339. Requires start.
      * @type {string}
-     * @memberof AnalyticsApiGetV1AnalyticsTop
+     * @memberof AnalyticsApiGetAnalyticsTop
      */
     readonly end?: string
 
     /**
      * Limit bounds every ranked lens in the response. Default 10, maximum 100; a value at or below zero, or one that is not a number, takes the default.
      * @type {number}
-     * @memberof AnalyticsApiGetV1AnalyticsTop
+     * @memberof AnalyticsApiGetAnalyticsTop
      */
     readonly limit?: number
 }
@@ -430,44 +430,44 @@ export class AnalyticsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AnalyticsApi
      */
-    public getV1AnalyticsHealth(options?: RawAxiosRequestConfig) {
-        return AnalyticsApiFp(this.configuration).getV1AnalyticsHealth(options).then((request) => request(this.axios, this.basePath));
+    public getAnalyticsHealth(options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).getAnalyticsHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Overview returns the caller org\'s analytics KPIs for one time window. Three lenses over one warehouse: llm is the live per-org LLM usage ledger (requests, tokens, spend, models, providers, errors) and is always real; web (pageviews, visitors, sessions) and commerce (orders, revenue, AOV) read the product-event table and report available=false rather than fabricating zeros when it holds nothing yet.  The org is the validated principal\'s — never a parameter — so a caller can only ever read its own tenant. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
      * @summary Overview returns the caller org\'s analytics KPIs for one time window.
-     * @param {AnalyticsApiGetV1AnalyticsOverviewRequest} requestParameters Request parameters.
+     * @param {AnalyticsApiGetAnalyticsOverviewRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalyticsApi
      */
-    public getV1AnalyticsOverview(requestParameters: AnalyticsApiGetV1AnalyticsOverviewRequest = {}, options?: RawAxiosRequestConfig) {
-        return AnalyticsApiFp(this.configuration).getV1AnalyticsOverview(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(this.axios, this.basePath));
+    public getAnalyticsOverview(requestParameters: AnalyticsApiGetAnalyticsOverviewRequest = {}, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).getAnalyticsOverview(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series. One point per hour or per day — the bucket the window implies, 24h giving hours and 7d/30d giving days — carrying requests, total tokens and spend in cents. Empty buckets are filled with zeros so a client charts a continuous line.  The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
      * @summary Timeseries returns the caller org\'s LLM usage over time as an evenly-spaced series.
-     * @param {AnalyticsApiGetV1AnalyticsTimeseriesRequest} requestParameters Request parameters.
+     * @param {AnalyticsApiGetAnalyticsTimeseriesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalyticsApi
      */
-    public getV1AnalyticsTimeseries(requestParameters: AnalyticsApiGetV1AnalyticsTimeseriesRequest = {}, options?: RawAxiosRequestConfig) {
-        return AnalyticsApiFp(this.configuration).getV1AnalyticsTimeseries(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(this.axios, this.basePath));
+    public getAnalyticsTimeseries(requestParameters: AnalyticsApiGetAnalyticsTimeseriesRequest = {}, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).getAnalyticsTimeseries(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Top returns the caller org\'s ranked lenses for one window, five of them at once. models ranks LLM models by spend and is always real; products ranks commerce orders by revenue; topPages ranks requested paths, topReferrers the external referrer domains (\"(direct)\" for a missing or same-origin one) and topSources the utm_source campaigns (\"(none)\" when absent), each by pageviews. Every lens carries each row\'s share of the in-window total, so a top-N honestly shows the long tail.  The four event lenses report available=false rather than fabricating zeros when the product-event table holds nothing yet. The org is the validated principal\'s — never a parameter. 403 without a validated bearer, 400 on an unknown range, 503 when the warehouse is unreachable.
      * @summary Top returns the caller org\'s ranked lenses for one window, five of them at once.
-     * @param {AnalyticsApiGetV1AnalyticsTopRequest} requestParameters Request parameters.
+     * @param {AnalyticsApiGetAnalyticsTopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalyticsApi
      */
-    public getV1AnalyticsTop(requestParameters: AnalyticsApiGetV1AnalyticsTopRequest = {}, options?: RawAxiosRequestConfig) {
-        return AnalyticsApiFp(this.configuration).getV1AnalyticsTop(requestParameters.range, requestParameters.start, requestParameters.end, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getAnalyticsTop(requestParameters: AnalyticsApiGetAnalyticsTopRequest = {}, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).getAnalyticsTop(requestParameters.range, requestParameters.start, requestParameters.end, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

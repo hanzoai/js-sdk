@@ -53,7 +53,7 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Tools: async (source?: string, activated?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTools: async (source?: string, activated?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/tools`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -91,7 +91,7 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ToolsActivation: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getToolsActivation: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/tools/activation`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -126,7 +126,7 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ToolsCatalog: async (q?: string, featured?: string, official?: string, limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getToolsCatalog: async (q?: string, featured?: string, official?: string, limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/tools/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -177,9 +177,9 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ToolsCatalogById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getToolsCatalogById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1ToolsCatalogById', 'id', id)
+            assertParamExists('getToolsCatalogById', 'id', id)
             const localVarPath = `/v1/tools/catalog/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -212,11 +212,11 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1ToolsCatalogById: async (id: string, curateReq: CurateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchToolsCatalogById: async (id: string, curateReq: CurateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchV1ToolsCatalogById', 'id', id)
+            assertParamExists('patchToolsCatalogById', 'id', id)
             // verify required parameter 'curateReq' is not null or undefined
-            assertParamExists('patchV1ToolsCatalogById', 'curateReq', curateReq)
+            assertParamExists('patchToolsCatalogById', 'curateReq', curateReq)
             const localVarPath = `/v1/tools/catalog/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -251,9 +251,9 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ToolsCall: async (toolCall: ToolCall, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postToolsCall: async (toolCall: ToolCall, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'toolCall' is not null or undefined
-            assertParamExists('postV1ToolsCall', 'toolCall', toolCall)
+            assertParamExists('postToolsCall', 'toolCall', toolCall)
             const localVarPath = `/v1/tools/call`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -286,7 +286,7 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ToolsCatalogSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postToolsCatalogSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/tools/catalog/sync`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -317,9 +317,9 @@ export const ToolsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1ToolsActivation: async (activationReq: ActivationReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putToolsActivation: async (activationReq: ActivationReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'activationReq' is not null or undefined
-            assertParamExists('putV1ToolsActivation', 'activationReq', activationReq)
+            assertParamExists('putToolsActivation', 'activationReq', activationReq)
             const localVarPath = `/v1/tools/activation`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -364,10 +364,10 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Tools(source?: string, activated?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Tools(source, activated, options);
+        async getTools(source?: string, activated?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTools(source, activated, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolsApi.getV1Tools']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ToolsApi.getTools']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -376,10 +376,10 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ToolsActivation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivationSet>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ToolsActivation(options);
+        async getToolsActivation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivationSet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getToolsActivation(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolsApi.getV1ToolsActivation']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ToolsApi.getToolsActivation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -393,10 +393,10 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ToolsCatalog(q?: string, featured?: string, official?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpCatalog>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ToolsCatalog(q, featured, official, limit, offset, options);
+        async getToolsCatalog(q?: string, featured?: string, official?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpCatalog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getToolsCatalog(q, featured, official, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolsApi.getV1ToolsCatalog']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ToolsApi.getToolsCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -406,10 +406,10 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ToolsCatalogById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPListing>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ToolsCatalogById(id, options);
+        async getToolsCatalogById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPListing>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getToolsCatalogById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolsApi.getV1ToolsCatalogById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ToolsApi.getToolsCatalogById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -420,10 +420,10 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1ToolsCatalogById(id: string, curateReq: CurateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPListing>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1ToolsCatalogById(id, curateReq, options);
+        async patchToolsCatalogById(id: string, curateReq: CurateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPListing>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchToolsCatalogById(id, curateReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolsApi.patchV1ToolsCatalogById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ToolsApi.patchToolsCatalogById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -433,10 +433,10 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ToolsCall(toolCall: ToolCall, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ToolsCall(toolCall, options);
+        async postToolsCall(toolCall: ToolCall, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ToolResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolsCall(toolCall, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolsApi.postV1ToolsCall']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ToolsApi.postToolsCall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -445,10 +445,10 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ToolsCatalogSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpCatalogSync>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ToolsCatalogSync(options);
+        async postToolsCatalogSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpCatalogSync>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postToolsCatalogSync(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolsApi.postV1ToolsCatalogSync']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ToolsApi.postToolsCatalogSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -458,10 +458,10 @@ export const ToolsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1ToolsActivation(activationReq: ActivationReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivationSet>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1ToolsActivation(activationReq, options);
+        async putToolsActivation(activationReq: ActivationReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivationSet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putToolsActivation(activationReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ToolsApi.putV1ToolsActivation']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ToolsApi.putToolsActivation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -477,12 +477,12 @@ export const ToolsApiFactory = function (configuration?: Configuration, basePath
         /**
          * Lists every tool the caller\'s org and project can reach, from every source, each flagged with whether it is activated. This is the discovery surface: one flat set of names spanning connector actions, user functions, zap-service routes, agents, skills and the org\'s own external MCP servers, deduplicated by name so the highest-precedence source wins a collision. It lists; it does not call — dispatch is POST /v1/tools/call.
          * @summary Lists every tool the caller\'s org and project can reach, from every source, each flagged with whether it is activated.
-         * @param {ToolsApiGetV1ToolsRequest} requestParameters Request parameters.
+         * @param {ToolsApiGetToolsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Tools(requestParameters: ToolsApiGetV1ToolsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ToolList> {
-            return localVarFp.getV1Tools(requestParameters.source, requestParameters.activated, options).then((request) => request(axios, basePath));
+        getTools(requestParameters: ToolsApiGetToolsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ToolList> {
+            return localVarFp.getTools(requestParameters.source, requestParameters.activated, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports which tools are switched on for the caller\'s org and project. Activation is what makes a tool dispatchable and what makes it visible to an agent, so this is the set the MCP tool list is drawn from — every other tool in the registry is discoverable but refused at call time.
@@ -490,48 +490,48 @@ export const ToolsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ToolsActivation(options?: RawAxiosRequestConfig): AxiosPromise<ActivationSet> {
-            return localVarFp.getV1ToolsActivation(options).then((request) => request(axios, basePath));
+        getToolsActivation(options?: RawAxiosRequestConfig): AxiosPromise<ActivationSet> {
+            return localVarFp.getToolsActivation(options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/mcp/servers with its id — and its tools then join the org\'s tool plane and the fleet\'s MCP door. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.
          * @summary Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.
-         * @param {ToolsApiGetV1ToolsCatalogRequest} requestParameters Request parameters.
+         * @param {ToolsApiGetToolsCatalogRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ToolsCatalog(requestParameters: ToolsApiGetV1ToolsCatalogRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<McpCatalog> {
-            return localVarFp.getV1ToolsCatalog(requestParameters.q, requestParameters.featured, requestParameters.official, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
+        getToolsCatalog(requestParameters: ToolsApiGetToolsCatalogRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<McpCatalog> {
+            return localVarFp.getToolsCatalog(requestParameters.q, requestParameters.featured, requestParameters.official, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back.
          * @summary Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint.
-         * @param {ToolsApiGetV1ToolsCatalogByIdRequest} requestParameters Request parameters.
+         * @param {ToolsApiGetToolsCatalogByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ToolsCatalogById(requestParameters: ToolsApiGetV1ToolsCatalogByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPListing> {
-            return localVarFp.getV1ToolsCatalogById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getToolsCatalogById(requestParameters: ToolsApiGetToolsCatalogByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPListing> {
+            return localVarFp.getToolsCatalogById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing. SuperAdmin only; every other caller is refused.  Curation is the half of a catalog row a sync cannot write, and this is the only thing that writes it. The upstream half is never editable here: a description that disagreed with the publisher\'s would be a fork of their listing, and the next sync would silently undo it.
          * @summary Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing.
-         * @param {ToolsApiPatchV1ToolsCatalogByIdRequest} requestParameters Request parameters.
+         * @param {ToolsApiPatchToolsCatalogByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1ToolsCatalogById(requestParameters: ToolsApiPatchV1ToolsCatalogByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPListing> {
-            return localVarFp.patchV1ToolsCatalogById(requestParameters.id, requestParameters.curateReq, options).then((request) => request(axios, basePath));
+        patchToolsCatalogById(requestParameters: ToolsApiPatchToolsCatalogByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPListing> {
+            return localVarFp.patchToolsCatalogById(requestParameters.id, requestParameters.curateReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs one of the caller\'s activated tools and answers with its output.  This is the door onto the tool plane\'s DYNAMIC half — the half no build-time catalogue can hold, because it is per-tenant: an org\'s connected connector actions, its authored skills, its agents and functions, and the tools of every external MCP server it registered. A tool\'s existence, its price and its activation are all rows, not code, so they cannot be known until the caller is.  One policy, the registry\'s: resolve by precedence, refuse an unactivated tool 403, settle a priced one through the x402 seam or fail closed 402, then dispatch to the winning source bound to the caller\'s own (org, project). One metered unit, one audit record. A caller can only ever dispatch its own tools.  Discovery is GET /v1/tools — ?activated=true for the callable set.
          * @summary Runs one of the caller\'s activated tools and answers with its output.
-         * @param {ToolsApiPostV1ToolsCallRequest} requestParameters Request parameters.
+         * @param {ToolsApiPostToolsCallRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ToolsCall(requestParameters: ToolsApiPostV1ToolsCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolResult> {
-            return localVarFp.postV1ToolsCall(requestParameters.toolCall, options).then((request) => request(axios, basePath));
+        postToolsCall(requestParameters: ToolsApiPostToolsCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<ToolResult> {
+            return localVarFp.postToolsCall(requestParameters.toolCall, options).then((request) => request(axios, basePath));
         },
         /**
          * Pulls the public MCP registry into our canonical copy and reports what changed. SuperAdmin only; every other caller is refused.  It is IDEMPOTENT: a listing is keyed by the publisher\'s own reverse-DNS name, so a second pass over an unchanged registry rewrites the same rows and reports added=0, updated=0. It never deletes — a listing that vanishes upstream may be one an org has already enabled, and dropping its description would not drop its server. And it never touches CURATION: hidden, featured, an admin-set official and a logo survive every sync, because the write does not name those columns.
@@ -539,144 +539,144 @@ export const ToolsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ToolsCatalogSync(options?: RawAxiosRequestConfig): AxiosPromise<McpCatalogSync> {
-            return localVarFp.postV1ToolsCatalogSync(options).then((request) => request(axios, basePath));
+        postToolsCatalogSync(options?: RawAxiosRequestConfig): AxiosPromise<McpCatalogSync> {
+            return localVarFp.postToolsCatalogSync(options).then((request) => request(axios, basePath));
         },
         /**
          * Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set. It is the ONE write path that turns skills, plugins and connectors into callable tools — an unactivated tool is listed by discovery but refused 403 at dispatch. Activate is applied before Deactivate, so a name in both lists ends up off. More than 256 toggles in one request is refused 413.
          * @summary Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set.
-         * @param {ToolsApiPutV1ToolsActivationRequest} requestParameters Request parameters.
+         * @param {ToolsApiPutToolsActivationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1ToolsActivation(requestParameters: ToolsApiPutV1ToolsActivationRequest, options?: RawAxiosRequestConfig): AxiosPromise<ActivationSet> {
-            return localVarFp.putV1ToolsActivation(requestParameters.activationReq, options).then((request) => request(axios, basePath));
+        putToolsActivation(requestParameters: ToolsApiPutToolsActivationRequest, options?: RawAxiosRequestConfig): AxiosPromise<ActivationSet> {
+            return localVarFp.putToolsActivation(requestParameters.activationReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1Tools operation in ToolsApi.
+ * Request parameters for getTools operation in ToolsApi.
  * @export
- * @interface ToolsApiGetV1ToolsRequest
+ * @interface ToolsApiGetToolsRequest
  */
-export interface ToolsApiGetV1ToolsRequest {
+export interface ToolsApiGetToolsRequest {
     /**
      * Source keeps only tools from one source — connector, function, zap-service, agent, skill or mcp. Empty keeps every source.
      * @type {string}
-     * @memberof ToolsApiGetV1Tools
+     * @memberof ToolsApiGetTools
      */
     readonly source?: string
 
     /**
      * Activated keeps only the tools activated for the caller\&#39;s org and project, and only when it is exactly the string \&quot;true\&quot;.
      * @type {string}
-     * @memberof ToolsApiGetV1Tools
+     * @memberof ToolsApiGetTools
      */
     readonly activated?: string
 }
 
 /**
- * Request parameters for getV1ToolsCatalog operation in ToolsApi.
+ * Request parameters for getToolsCatalog operation in ToolsApi.
  * @export
- * @interface ToolsApiGetV1ToolsCatalogRequest
+ * @interface ToolsApiGetToolsCatalogRequest
  */
-export interface ToolsApiGetV1ToolsCatalogRequest {
+export interface ToolsApiGetToolsCatalogRequest {
     /**
      * Q matches the name, title or description, case-insensitively.
      * @type {string}
-     * @memberof ToolsApiGetV1ToolsCatalog
+     * @memberof ToolsApiGetToolsCatalog
      */
     readonly q?: string
 
     /**
      * Featured keeps only the listings we put on the front of the shelf, and only when it is exactly the string \&quot;true\&quot;.
      * @type {string}
-     * @memberof ToolsApiGetV1ToolsCatalog
+     * @memberof ToolsApiGetToolsCatalog
      */
     readonly featured?: string
 
     /**
      * Official keeps only the vendors\&#39; OWN servers — not third-party copies of them — and only when it is exactly the string \&quot;true\&quot;.
      * @type {string}
-     * @memberof ToolsApiGetV1ToolsCatalog
+     * @memberof ToolsApiGetToolsCatalog
      */
     readonly official?: string
 
     /**
      * Limit bounds the page: default 50, maximum 200. A value that is not a positive integer reads as the default.
      * @type {number}
-     * @memberof ToolsApiGetV1ToolsCatalog
+     * @memberof ToolsApiGetToolsCatalog
      */
     readonly limit?: number
 
     /**
      * Offset skips that many listings.
      * @type {number}
-     * @memberof ToolsApiGetV1ToolsCatalog
+     * @memberof ToolsApiGetToolsCatalog
      */
     readonly offset?: number
 }
 
 /**
- * Request parameters for getV1ToolsCatalogById operation in ToolsApi.
+ * Request parameters for getToolsCatalogById operation in ToolsApi.
  * @export
- * @interface ToolsApiGetV1ToolsCatalogByIdRequest
+ * @interface ToolsApiGetToolsCatalogByIdRequest
  */
-export interface ToolsApiGetV1ToolsCatalogByIdRequest {
+export interface ToolsApiGetToolsCatalogByIdRequest {
     /**
      * ID is the listing, from the path. It is the publisher\&#39;s reverse-DNS name with its one slash written as an underscore — \&quot;com.stripe_mcp\&quot;.
      * @type {string}
-     * @memberof ToolsApiGetV1ToolsCatalogById
+     * @memberof ToolsApiGetToolsCatalogById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for patchV1ToolsCatalogById operation in ToolsApi.
+ * Request parameters for patchToolsCatalogById operation in ToolsApi.
  * @export
- * @interface ToolsApiPatchV1ToolsCatalogByIdRequest
+ * @interface ToolsApiPatchToolsCatalogByIdRequest
  */
-export interface ToolsApiPatchV1ToolsCatalogByIdRequest {
+export interface ToolsApiPatchToolsCatalogByIdRequest {
     /**
      * ID is the listing to curate, from the path.
      * @type {string}
-     * @memberof ToolsApiPatchV1ToolsCatalogById
+     * @memberof ToolsApiPatchToolsCatalogById
      */
     readonly id: string
 
     /**
      * 
      * @type {CurateReq}
-     * @memberof ToolsApiPatchV1ToolsCatalogById
+     * @memberof ToolsApiPatchToolsCatalogById
      */
     readonly curateReq: CurateReq
 }
 
 /**
- * Request parameters for postV1ToolsCall operation in ToolsApi.
+ * Request parameters for postToolsCall operation in ToolsApi.
  * @export
- * @interface ToolsApiPostV1ToolsCallRequest
+ * @interface ToolsApiPostToolsCallRequest
  */
-export interface ToolsApiPostV1ToolsCallRequest {
+export interface ToolsApiPostToolsCallRequest {
     /**
      * 
      * @type {ToolCall}
-     * @memberof ToolsApiPostV1ToolsCall
+     * @memberof ToolsApiPostToolsCall
      */
     readonly toolCall: ToolCall
 }
 
 /**
- * Request parameters for putV1ToolsActivation operation in ToolsApi.
+ * Request parameters for putToolsActivation operation in ToolsApi.
  * @export
- * @interface ToolsApiPutV1ToolsActivationRequest
+ * @interface ToolsApiPutToolsActivationRequest
  */
-export interface ToolsApiPutV1ToolsActivationRequest {
+export interface ToolsApiPutToolsActivationRequest {
     /**
      * 
      * @type {ActivationReq}
-     * @memberof ToolsApiPutV1ToolsActivation
+     * @memberof ToolsApiPutToolsActivation
      */
     readonly activationReq: ActivationReq
 }
@@ -691,13 +691,13 @@ export class ToolsApi extends BaseAPI {
     /**
      * Lists every tool the caller\'s org and project can reach, from every source, each flagged with whether it is activated. This is the discovery surface: one flat set of names spanning connector actions, user functions, zap-service routes, agents, skills and the org\'s own external MCP servers, deduplicated by name so the highest-precedence source wins a collision. It lists; it does not call — dispatch is POST /v1/tools/call.
      * @summary Lists every tool the caller\'s org and project can reach, from every source, each flagged with whether it is activated.
-     * @param {ToolsApiGetV1ToolsRequest} requestParameters Request parameters.
+     * @param {ToolsApiGetToolsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public getV1Tools(requestParameters: ToolsApiGetV1ToolsRequest = {}, options?: RawAxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).getV1Tools(requestParameters.source, requestParameters.activated, options).then((request) => request(this.axios, this.basePath));
+    public getTools(requestParameters: ToolsApiGetToolsRequest = {}, options?: RawAxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).getTools(requestParameters.source, requestParameters.activated, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -707,56 +707,56 @@ export class ToolsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public getV1ToolsActivation(options?: RawAxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).getV1ToolsActivation(options).then((request) => request(this.axios, this.basePath));
+    public getToolsActivation(options?: RawAxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).getToolsActivation(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.  This is the SHELF an org picks from. A listing with a streamable-http endpoint can be enabled as-is — POST /v1/mcp/servers with its id — and its tools then join the org\'s tool plane and the fleet\'s MCP door. A listing that only ships a stdio package needs a process to run it, which is why the transports are on every entry rather than implied.  Hidden entries are absent: they are the ones we took off the shelf. A platform SuperAdmin sees them, because the same query answers \"what is on the shelf\" and \"what is in the catalog\" and two queries would drift apart.  It is PAGED — 50 by default, 200 at most. The public registry publishes tens of thousands of servers, so an unbounded answer is a twenty-megabyte response and a storefront that renders in a minute. total is the whole match, not the page.
      * @summary Lists the MCP servers the public registries publish, as we hold them: our canonical copy of registry.modelcontextprotocol.io, plus what we decided about each entry.
-     * @param {ToolsApiGetV1ToolsCatalogRequest} requestParameters Request parameters.
+     * @param {ToolsApiGetToolsCatalogRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public getV1ToolsCatalog(requestParameters: ToolsApiGetV1ToolsCatalogRequest = {}, options?: RawAxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).getV1ToolsCatalog(requestParameters.q, requestParameters.featured, requestParameters.official, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
+    public getToolsCatalog(requestParameters: ToolsApiGetToolsCatalogRequest = {}, options?: RawAxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).getToolsCatalog(requestParameters.q, requestParameters.featured, requestParameters.official, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint. It is what a branding page renders, and what tells a caller whether the listing can be enabled here and now (a streamable-http remote) or needs somewhere to run first (a stdio package).  A HIDDEN listing is not served to an org — a shelf that renders what it does not list would be a way around the shelf — but is served to a SuperAdmin, who is the one deciding whether to put it back.
      * @summary Returns one catalog entry in full: the publisher\'s description, its repository and site, every package form with the runtime that launches it, and every hosted endpoint.
-     * @param {ToolsApiGetV1ToolsCatalogByIdRequest} requestParameters Request parameters.
+     * @param {ToolsApiGetToolsCatalogByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public getV1ToolsCatalogById(requestParameters: ToolsApiGetV1ToolsCatalogByIdRequest, options?: RawAxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).getV1ToolsCatalogById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getToolsCatalogById(requestParameters: ToolsApiGetToolsCatalogByIdRequest, options?: RawAxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).getToolsCatalogById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing. SuperAdmin only; every other caller is refused.  Curation is the half of a catalog row a sync cannot write, and this is the only thing that writes it. The upstream half is never editable here: a description that disagreed with the publisher\'s would be a fork of their listing, and the next sync would silently undo it.
      * @summary Sets what WE say about one catalog entry — hidden, featured, official, logo — and answers with the stored listing.
-     * @param {ToolsApiPatchV1ToolsCatalogByIdRequest} requestParameters Request parameters.
+     * @param {ToolsApiPatchToolsCatalogByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public patchV1ToolsCatalogById(requestParameters: ToolsApiPatchV1ToolsCatalogByIdRequest, options?: RawAxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).patchV1ToolsCatalogById(requestParameters.id, requestParameters.curateReq, options).then((request) => request(this.axios, this.basePath));
+    public patchToolsCatalogById(requestParameters: ToolsApiPatchToolsCatalogByIdRequest, options?: RawAxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).patchToolsCatalogById(requestParameters.id, requestParameters.curateReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Runs one of the caller\'s activated tools and answers with its output.  This is the door onto the tool plane\'s DYNAMIC half — the half no build-time catalogue can hold, because it is per-tenant: an org\'s connected connector actions, its authored skills, its agents and functions, and the tools of every external MCP server it registered. A tool\'s existence, its price and its activation are all rows, not code, so they cannot be known until the caller is.  One policy, the registry\'s: resolve by precedence, refuse an unactivated tool 403, settle a priced one through the x402 seam or fail closed 402, then dispatch to the winning source bound to the caller\'s own (org, project). One metered unit, one audit record. A caller can only ever dispatch its own tools.  Discovery is GET /v1/tools — ?activated=true for the callable set.
      * @summary Runs one of the caller\'s activated tools and answers with its output.
-     * @param {ToolsApiPostV1ToolsCallRequest} requestParameters Request parameters.
+     * @param {ToolsApiPostToolsCallRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public postV1ToolsCall(requestParameters: ToolsApiPostV1ToolsCallRequest, options?: RawAxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).postV1ToolsCall(requestParameters.toolCall, options).then((request) => request(this.axios, this.basePath));
+    public postToolsCall(requestParameters: ToolsApiPostToolsCallRequest, options?: RawAxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).postToolsCall(requestParameters.toolCall, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -766,20 +766,20 @@ export class ToolsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public postV1ToolsCatalogSync(options?: RawAxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).postV1ToolsCatalogSync(options).then((request) => request(this.axios, this.basePath));
+    public postToolsCatalogSync(options?: RawAxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).postToolsCatalogSync(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set. It is the ONE write path that turns skills, plugins and connectors into callable tools — an unactivated tool is listed by discovery but refused 403 at dispatch. Activate is applied before Deactivate, so a name in both lists ends up off. More than 256 toggles in one request is refused 413.
      * @summary Switches tools on and off for the caller\'s org and project, and answers with the resulting activated set.
-     * @param {ToolsApiPutV1ToolsActivationRequest} requestParameters Request parameters.
+     * @param {ToolsApiPutToolsActivationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ToolsApi
      */
-    public putV1ToolsActivation(requestParameters: ToolsApiPutV1ToolsActivationRequest, options?: RawAxiosRequestConfig) {
-        return ToolsApiFp(this.configuration).putV1ToolsActivation(requestParameters.activationReq, options).then((request) => request(this.axios, this.basePath));
+    public putToolsActivation(requestParameters: ToolsApiPutToolsActivationRequest, options?: RawAxiosRequestConfig) {
+        return ToolsApiFp(this.configuration).putToolsActivation(requestParameters.activationReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

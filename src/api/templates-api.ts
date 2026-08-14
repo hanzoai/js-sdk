@@ -42,9 +42,9 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TemplatesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteTemplatesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('deleteV1TemplatesBySlug', 'slug', slug)
+            assertParamExists('deleteTemplatesBySlug', 'slug', slug)
             const localVarPath = `/v1/templates/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -75,7 +75,7 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Templates: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTemplates: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/templates`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -106,9 +106,9 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TemplatesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTemplatesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getV1TemplatesBySlug', 'slug', slug)
+            assertParamExists('getTemplatesBySlug', 'slug', slug)
             const localVarPath = `/v1/templates/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -140,9 +140,9 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Templates: async (publishKitIn: PublishKitIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTemplates: async (publishKitIn: PublishKitIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'publishKitIn' is not null or undefined
-            assertParamExists('postV1Templates', 'publishKitIn', publishKitIn)
+            assertParamExists('postTemplates', 'publishKitIn', publishKitIn)
             const localVarPath = `/v1/templates`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -177,11 +177,11 @@ export const TemplatesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1TemplatesBySlug: async (slug: string, replaceKitIn: ReplaceKitIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putTemplatesBySlug: async (slug: string, replaceKitIn: ReplaceKitIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('putV1TemplatesBySlug', 'slug', slug)
+            assertParamExists('putTemplatesBySlug', 'slug', slug)
             // verify required parameter 'replaceKitIn' is not null or undefined
-            assertParamExists('putV1TemplatesBySlug', 'replaceKitIn', replaceKitIn)
+            assertParamExists('putTemplatesBySlug', 'replaceKitIn', replaceKitIn)
             const localVarPath = `/v1/templates/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -226,10 +226,10 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1TemplatesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1TemplatesBySlug(slug, options);
+        async deleteTemplatesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTemplatesBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.deleteV1TemplatesBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.deleteTemplatesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -238,10 +238,10 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Templates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KitList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Templates(options);
+        async getTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KitList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTemplates(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.getV1Templates']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.getTemplates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -251,10 +251,10 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TemplatesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StarterKit>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TemplatesBySlug(slug, options);
+        async getTemplatesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StarterKit>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTemplatesBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.getV1TemplatesBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.getTemplatesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -264,10 +264,10 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Templates(publishKitIn: PublishKitIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StarterKit>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Templates(publishKitIn, options);
+        async postTemplates(publishKitIn: PublishKitIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StarterKit>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTemplates(publishKitIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.postV1Templates']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.postTemplates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -278,10 +278,10 @@ export const TemplatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1TemplatesBySlug(slug: string, replaceKitIn: ReplaceKitIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StarterKit>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1TemplatesBySlug(slug, replaceKitIn, options);
+        async putTemplatesBySlug(slug: string, replaceKitIn: ReplaceKitIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StarterKit>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTemplatesBySlug(slug, replaceKitIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.putV1TemplatesBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TemplatesApi.putTemplatesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -297,12 +297,12 @@ export const TemplatesApiFactory = function (configuration?: Configuration, base
         /**
          * Deletes the caller org\'s OWN starter kit. A slug they do not own is a 404, never a delete: the DELETE binds org.
          * @summary Deletes the caller org\'s OWN starter kit.
-         * @param {TemplatesApiDeleteV1TemplatesBySlugRequest} requestParameters Request parameters.
+         * @param {TemplatesApiDeleteTemplatesBySlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TemplatesBySlug(requestParameters: TemplatesApiDeleteV1TemplatesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1TemplatesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        deleteTemplatesBySlug(requestParameters: TemplatesApiDeleteTemplatesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTemplatesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the public starter-kit catalog plus, for a validated caller, that org\'s own private kits. No request field can widen the scope: the org comes from the validated principal, so an anonymous or cross-org caller structurally sees the public catalog only.
@@ -310,101 +310,101 @@ export const TemplatesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Templates(options?: RawAxiosRequestConfig): AxiosPromise<KitList> {
-            return localVarFp.getV1Templates(options).then((request) => request(axios, basePath));
+        getTemplates(options?: RawAxiosRequestConfig): AxiosPromise<KitList> {
+            return localVarFp.getTemplates(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one starter kit: the caller org\'s own by that slug, else the public catalog\'s. A slug another org owns reads as not found.
          * @summary Returns one starter kit: the caller org\'s own by that slug, else the public catalog\'s.
-         * @param {TemplatesApiGetV1TemplatesBySlugRequest} requestParameters Request parameters.
+         * @param {TemplatesApiGetTemplatesBySlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TemplatesBySlug(requestParameters: TemplatesApiGetV1TemplatesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<StarterKit> {
-            return localVarFp.getV1TemplatesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        getTemplatesBySlug(requestParameters: TemplatesApiGetTemplatesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<StarterKit> {
+            return localVarFp.getTemplatesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a starter kit PRIVATE to the caller\'s org and answers 201 with the stored kit. The owner is stamped by the server, so a body \"org\" is never trusted; publishing over a public-catalog slug is 409, so a slug still names exactly one kit.
          * @summary Creates a starter kit PRIVATE to the caller\'s org and answers 201 with the stored kit.
-         * @param {TemplatesApiPostV1TemplatesRequest} requestParameters Request parameters.
+         * @param {TemplatesApiPostTemplatesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Templates(requestParameters: TemplatesApiPostV1TemplatesRequest, options?: RawAxiosRequestConfig): AxiosPromise<StarterKit> {
-            return localVarFp.postV1Templates(requestParameters.publishKitIn, options).then((request) => request(axios, basePath));
+        postTemplates(requestParameters: TemplatesApiPostTemplatesRequest, options?: RawAxiosRequestConfig): AxiosPromise<StarterKit> {
+            return localVarFp.postTemplates(requestParameters.publishKitIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Overwrites the caller org\'s OWN starter kit at the path slug, answering the stored kit. A slug they do not own is 404, never a create: the UPDATE binds org, so a PUT can never reach another org\'s kit.
          * @summary Overwrites the caller org\'s OWN starter kit at the path slug, answering the stored kit.
-         * @param {TemplatesApiPutV1TemplatesBySlugRequest} requestParameters Request parameters.
+         * @param {TemplatesApiPutTemplatesBySlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1TemplatesBySlug(requestParameters: TemplatesApiPutV1TemplatesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<StarterKit> {
-            return localVarFp.putV1TemplatesBySlug(requestParameters.slug, requestParameters.replaceKitIn, options).then((request) => request(axios, basePath));
+        putTemplatesBySlug(requestParameters: TemplatesApiPutTemplatesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<StarterKit> {
+            return localVarFp.putTemplatesBySlug(requestParameters.slug, requestParameters.replaceKitIn, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1TemplatesBySlug operation in TemplatesApi.
+ * Request parameters for deleteTemplatesBySlug operation in TemplatesApi.
  * @export
- * @interface TemplatesApiDeleteV1TemplatesBySlugRequest
+ * @interface TemplatesApiDeleteTemplatesBySlugRequest
  */
-export interface TemplatesApiDeleteV1TemplatesBySlugRequest {
+export interface TemplatesApiDeleteTemplatesBySlugRequest {
     /**
      * Slug is the starter kit to act on, from the path.
      * @type {string}
-     * @memberof TemplatesApiDeleteV1TemplatesBySlug
+     * @memberof TemplatesApiDeleteTemplatesBySlug
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for getV1TemplatesBySlug operation in TemplatesApi.
+ * Request parameters for getTemplatesBySlug operation in TemplatesApi.
  * @export
- * @interface TemplatesApiGetV1TemplatesBySlugRequest
+ * @interface TemplatesApiGetTemplatesBySlugRequest
  */
-export interface TemplatesApiGetV1TemplatesBySlugRequest {
+export interface TemplatesApiGetTemplatesBySlugRequest {
     /**
      * Slug is the starter kit to act on, from the path.
      * @type {string}
-     * @memberof TemplatesApiGetV1TemplatesBySlug
+     * @memberof TemplatesApiGetTemplatesBySlug
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for postV1Templates operation in TemplatesApi.
+ * Request parameters for postTemplates operation in TemplatesApi.
  * @export
- * @interface TemplatesApiPostV1TemplatesRequest
+ * @interface TemplatesApiPostTemplatesRequest
  */
-export interface TemplatesApiPostV1TemplatesRequest {
+export interface TemplatesApiPostTemplatesRequest {
     /**
      * 
      * @type {PublishKitIn}
-     * @memberof TemplatesApiPostV1Templates
+     * @memberof TemplatesApiPostTemplates
      */
     readonly publishKitIn: PublishKitIn
 }
 
 /**
- * Request parameters for putV1TemplatesBySlug operation in TemplatesApi.
+ * Request parameters for putTemplatesBySlug operation in TemplatesApi.
  * @export
- * @interface TemplatesApiPutV1TemplatesBySlugRequest
+ * @interface TemplatesApiPutTemplatesBySlugRequest
  */
-export interface TemplatesApiPutV1TemplatesBySlugRequest {
+export interface TemplatesApiPutTemplatesBySlugRequest {
     /**
      * Slug is the kit to replace, from the path.
      * @type {string}
-     * @memberof TemplatesApiPutV1TemplatesBySlug
+     * @memberof TemplatesApiPutTemplatesBySlug
      */
     readonly slug: string
 
     /**
      * 
      * @type {ReplaceKitIn}
-     * @memberof TemplatesApiPutV1TemplatesBySlug
+     * @memberof TemplatesApiPutTemplatesBySlug
      */
     readonly replaceKitIn: ReplaceKitIn
 }
@@ -419,13 +419,13 @@ export class TemplatesApi extends BaseAPI {
     /**
      * Deletes the caller org\'s OWN starter kit. A slug they do not own is a 404, never a delete: the DELETE binds org.
      * @summary Deletes the caller org\'s OWN starter kit.
-     * @param {TemplatesApiDeleteV1TemplatesBySlugRequest} requestParameters Request parameters.
+     * @param {TemplatesApiDeleteTemplatesBySlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TemplatesApi
      */
-    public deleteV1TemplatesBySlug(requestParameters: TemplatesApiDeleteV1TemplatesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return TemplatesApiFp(this.configuration).deleteV1TemplatesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public deleteTemplatesBySlug(requestParameters: TemplatesApiDeleteTemplatesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return TemplatesApiFp(this.configuration).deleteTemplatesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -435,44 +435,44 @@ export class TemplatesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TemplatesApi
      */
-    public getV1Templates(options?: RawAxiosRequestConfig) {
-        return TemplatesApiFp(this.configuration).getV1Templates(options).then((request) => request(this.axios, this.basePath));
+    public getTemplates(options?: RawAxiosRequestConfig) {
+        return TemplatesApiFp(this.configuration).getTemplates(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one starter kit: the caller org\'s own by that slug, else the public catalog\'s. A slug another org owns reads as not found.
      * @summary Returns one starter kit: the caller org\'s own by that slug, else the public catalog\'s.
-     * @param {TemplatesApiGetV1TemplatesBySlugRequest} requestParameters Request parameters.
+     * @param {TemplatesApiGetTemplatesBySlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TemplatesApi
      */
-    public getV1TemplatesBySlug(requestParameters: TemplatesApiGetV1TemplatesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return TemplatesApiFp(this.configuration).getV1TemplatesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public getTemplatesBySlug(requestParameters: TemplatesApiGetTemplatesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return TemplatesApiFp(this.configuration).getTemplatesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a starter kit PRIVATE to the caller\'s org and answers 201 with the stored kit. The owner is stamped by the server, so a body \"org\" is never trusted; publishing over a public-catalog slug is 409, so a slug still names exactly one kit.
      * @summary Creates a starter kit PRIVATE to the caller\'s org and answers 201 with the stored kit.
-     * @param {TemplatesApiPostV1TemplatesRequest} requestParameters Request parameters.
+     * @param {TemplatesApiPostTemplatesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TemplatesApi
      */
-    public postV1Templates(requestParameters: TemplatesApiPostV1TemplatesRequest, options?: RawAxiosRequestConfig) {
-        return TemplatesApiFp(this.configuration).postV1Templates(requestParameters.publishKitIn, options).then((request) => request(this.axios, this.basePath));
+    public postTemplates(requestParameters: TemplatesApiPostTemplatesRequest, options?: RawAxiosRequestConfig) {
+        return TemplatesApiFp(this.configuration).postTemplates(requestParameters.publishKitIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Overwrites the caller org\'s OWN starter kit at the path slug, answering the stored kit. A slug they do not own is 404, never a create: the UPDATE binds org, so a PUT can never reach another org\'s kit.
      * @summary Overwrites the caller org\'s OWN starter kit at the path slug, answering the stored kit.
-     * @param {TemplatesApiPutV1TemplatesBySlugRequest} requestParameters Request parameters.
+     * @param {TemplatesApiPutTemplatesBySlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TemplatesApi
      */
-    public putV1TemplatesBySlug(requestParameters: TemplatesApiPutV1TemplatesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return TemplatesApiFp(this.configuration).putV1TemplatesBySlug(requestParameters.slug, requestParameters.replaceKitIn, options).then((request) => request(this.axios, this.basePath));
+    public putTemplatesBySlug(requestParameters: TemplatesApiPutTemplatesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return TemplatesApiFp(this.configuration).putTemplatesBySlug(requestParameters.slug, requestParameters.replaceKitIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

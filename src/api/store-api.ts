@@ -34,9 +34,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1StoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteStoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('deleteV1StoreByStoreid', 'storeid', storeid)
+            assertParamExists('deleteStoreByStoreid', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -69,11 +69,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1StoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteStoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('deleteV1StoreByStoreidListingByKey', 'storeid', storeid)
+            assertParamExists('deleteStoreByStoreidListingByKey', 'storeid', storeid)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('deleteV1StoreByStoreidListingByKey', 'key', key)
+            assertParamExists('deleteStoreByStoreidListingByKey', 'key', key)
             const localVarPath = `/v1/store/{storeid}/listing/{key}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -105,7 +105,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Store: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getStore: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/store/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -135,7 +135,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreAccess: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getStoreAccess: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/store/access`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -166,9 +166,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getStoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('getV1StoreByStoreid', 'storeid', storeid)
+            assertParamExists('getStoreByStoreid', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -201,11 +201,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreidBundleByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getStoreByStoreidBundleByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('getV1StoreByStoreidBundleByKey', 'storeid', storeid)
+            assertParamExists('getStoreByStoreidBundleByKey', 'storeid', storeid)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('getV1StoreByStoreidBundleByKey', 'key', key)
+            assertParamExists('getStoreByStoreidBundleByKey', 'key', key)
             const localVarPath = `/v1/store/{storeid}/bundle/{key}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -238,9 +238,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreidListing: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getStoreByStoreidListing: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('getV1StoreByStoreidListing', 'storeid', storeid)
+            assertParamExists('getStoreByStoreidListing', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}/listing`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -273,11 +273,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getStoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('getV1StoreByStoreidListingByKey', 'storeid', storeid)
+            assertParamExists('getStoreByStoreidListingByKey', 'storeid', storeid)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('getV1StoreByStoreidListingByKey', 'key', key)
+            assertParamExists('getStoreByStoreidListingByKey', 'key', key)
             const localVarPath = `/v1/store/{storeid}/listing/{key}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -311,11 +311,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreidProductByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getStoreByStoreidProductByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('getV1StoreByStoreidProductByKey', 'storeid', storeid)
+            assertParamExists('getStoreByStoreidProductByKey', 'storeid', storeid)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('getV1StoreByStoreidProductByKey', 'key', key)
+            assertParamExists('getStoreByStoreidProductByKey', 'key', key)
             const localVarPath = `/v1/store/{storeid}/product/{key}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -349,11 +349,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreidVariantByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getStoreByStoreidVariantByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('getV1StoreByStoreidVariantByKey', 'storeid', storeid)
+            assertParamExists('getStoreByStoreidVariantByKey', 'storeid', storeid)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('getV1StoreByStoreidVariantByKey', 'key', key)
+            assertParamExists('getStoreByStoreidVariantByKey', 'key', key)
             const localVarPath = `/v1/store/{storeid}/variant/{key}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -385,7 +385,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreCurrent: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getStoreCurrent: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/store/current`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -416,9 +416,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1StoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchStoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('patchV1StoreByStoreid', 'storeid', storeid)
+            assertParamExists('patchStoreByStoreid', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -451,11 +451,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1StoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchStoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('patchV1StoreByStoreidListingByKey', 'storeid', storeid)
+            assertParamExists('patchStoreByStoreidListingByKey', 'storeid', storeid)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('patchV1StoreByStoreidListingByKey', 'key', key)
+            assertParamExists('patchStoreByStoreidListingByKey', 'key', key)
             const localVarPath = `/v1/store/{storeid}/listing/{key}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -487,7 +487,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Store: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStore: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/store/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -518,9 +518,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreid', 'storeid', storeid)
+            assertParamExists('postStoreByStoreid', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -552,9 +552,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidAuthorize: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidAuthorize: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidAuthorize', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidAuthorize', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}/authorize`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -587,11 +587,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidAuthorizeByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidAuthorizeByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidAuthorizeByOrderid', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidAuthorizeByOrderid', 'storeid', storeid)
             // verify required parameter 'orderid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidAuthorizeByOrderid', 'orderid', orderid)
+            assertParamExists('postStoreByStoreidAuthorizeByOrderid', 'orderid', orderid)
             const localVarPath = `/v1/store/{storeid}/authorize/{orderid}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
@@ -625,11 +625,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCaptureByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidCaptureByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCaptureByOrderid', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidCaptureByOrderid', 'storeid', storeid)
             // verify required parameter 'orderid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCaptureByOrderid', 'orderid', orderid)
+            assertParamExists('postStoreByStoreidCaptureByOrderid', 'orderid', orderid)
             const localVarPath = `/v1/store/{storeid}/capture/{orderid}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
@@ -662,9 +662,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCharge: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidCharge: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCharge', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidCharge', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}/charge`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -696,9 +696,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutAuthorize: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidCheckoutAuthorize: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCheckoutAuthorize', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidCheckoutAuthorize', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}/checkout/authorize`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -731,11 +731,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutAuthorizeByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidCheckoutAuthorizeByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCheckoutAuthorizeByOrderid', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidCheckoutAuthorizeByOrderid', 'storeid', storeid)
             // verify required parameter 'orderid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCheckoutAuthorizeByOrderid', 'orderid', orderid)
+            assertParamExists('postStoreByStoreidCheckoutAuthorizeByOrderid', 'orderid', orderid)
             const localVarPath = `/v1/store/{storeid}/checkout/authorize/{orderid}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
@@ -769,11 +769,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutCaptureByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidCheckoutCaptureByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCheckoutCaptureByOrderid', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidCheckoutCaptureByOrderid', 'storeid', storeid)
             // verify required parameter 'orderid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCheckoutCaptureByOrderid', 'orderid', orderid)
+            assertParamExists('postStoreByStoreidCheckoutCaptureByOrderid', 'orderid', orderid)
             const localVarPath = `/v1/store/{storeid}/checkout/capture/{orderid}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
@@ -806,9 +806,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutCharge: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidCheckoutCharge: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCheckoutCharge', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidCheckoutCharge', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}/checkout/charge`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -841,11 +841,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutPaypalCancelByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidCheckoutPaypalCancelByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCheckoutPaypalCancelByPaykey', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidCheckoutPaypalCancelByPaykey', 'storeid', storeid)
             // verify required parameter 'payKey' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCheckoutPaypalCancelByPaykey', 'payKey', payKey)
+            assertParamExists('postStoreByStoreidCheckoutPaypalCancelByPaykey', 'payKey', payKey)
             const localVarPath = `/v1/store/{storeid}/checkout/paypal/cancel/{payKey}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"payKey"}}`, encodeURIComponent(String(payKey)));
@@ -879,11 +879,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutPaypalConfirmByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidCheckoutPaypalConfirmByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCheckoutPaypalConfirmByPaykey', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidCheckoutPaypalConfirmByPaykey', 'storeid', storeid)
             // verify required parameter 'payKey' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCheckoutPaypalConfirmByPaykey', 'payKey', payKey)
+            assertParamExists('postStoreByStoreidCheckoutPaypalConfirmByPaykey', 'payKey', payKey)
             const localVarPath = `/v1/store/{storeid}/checkout/paypal/confirm/{payKey}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"payKey"}}`, encodeURIComponent(String(payKey)));
@@ -916,9 +916,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutPaypalPay: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidCheckoutPaypalPay: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidCheckoutPaypalPay', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidCheckoutPaypalPay', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}/checkout/paypal/pay`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -951,11 +951,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidListingByKey', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidListingByKey', 'storeid', storeid)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('postV1StoreByStoreidListingByKey', 'key', key)
+            assertParamExists('postStoreByStoreidListingByKey', 'key', key)
             const localVarPath = `/v1/store/{storeid}/listing/{key}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -989,11 +989,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidPaypalCancelByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidPaypalCancelByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidPaypalCancelByPaykey', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidPaypalCancelByPaykey', 'storeid', storeid)
             // verify required parameter 'payKey' is not null or undefined
-            assertParamExists('postV1StoreByStoreidPaypalCancelByPaykey', 'payKey', payKey)
+            assertParamExists('postStoreByStoreidPaypalCancelByPaykey', 'payKey', payKey)
             const localVarPath = `/v1/store/{storeid}/paypal/cancel/{payKey}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"payKey"}}`, encodeURIComponent(String(payKey)));
@@ -1027,11 +1027,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidPaypalConfirmByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidPaypalConfirmByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidPaypalConfirmByPaykey', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidPaypalConfirmByPaykey', 'storeid', storeid)
             // verify required parameter 'payKey' is not null or undefined
-            assertParamExists('postV1StoreByStoreidPaypalConfirmByPaykey', 'payKey', payKey)
+            assertParamExists('postStoreByStoreidPaypalConfirmByPaykey', 'payKey', payKey)
             const localVarPath = `/v1/store/{storeid}/paypal/confirm/{payKey}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"payKey"}}`, encodeURIComponent(String(payKey)));
@@ -1064,9 +1064,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidPaypalPay: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidPaypalPay: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidPaypalPay', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidPaypalPay', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}/paypal/pay`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1098,9 +1098,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidTrial: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreByStoreidTrial: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('postV1StoreByStoreidTrial', 'storeid', storeid)
+            assertParamExists('postStoreByStoreidTrial', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}/trial`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1131,7 +1131,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postStoreToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/store/token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1162,9 +1162,9 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1StoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putStoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('putV1StoreByStoreid', 'storeid', storeid)
+            assertParamExists('putStoreByStoreid', 'storeid', storeid)
             const localVarPath = `/v1/store/{storeid}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1197,11 +1197,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1StoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putStoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeid' is not null or undefined
-            assertParamExists('putV1StoreByStoreidListingByKey', 'storeid', storeid)
+            assertParamExists('putStoreByStoreidListingByKey', 'storeid', storeid)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('putV1StoreByStoreidListingByKey', 'key', key)
+            assertParamExists('putStoreByStoreidListingByKey', 'key', key)
             const localVarPath = `/v1/store/{storeid}/listing/{key}`
                 .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -1244,10 +1244,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1StoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1StoreByStoreid(storeid, options);
+        async deleteStoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteStoreByStoreid(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.deleteV1StoreByStoreid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.deleteStoreByStoreid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1258,10 +1258,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1StoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1StoreByStoreidListingByKey(storeid, key, options);
+        async deleteStoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteStoreByStoreidListingByKey(storeid, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.deleteV1StoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.deleteStoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1270,10 +1270,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Store(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Store(options);
+        async getStore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStore(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.getV1Store']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.getStore']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1282,10 +1282,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1StoreAccess(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1StoreAccess(options);
+        async getStoreAccess(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStoreAccess(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.getV1StoreAccess']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.getStoreAccess']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1295,10 +1295,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1StoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1StoreByStoreid(storeid, options);
+        async getStoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStoreByStoreid(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.getV1StoreByStoreid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.getStoreByStoreid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1309,10 +1309,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1StoreByStoreidBundleByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1StoreByStoreidBundleByKey(storeid, key, options);
+        async getStoreByStoreidBundleByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStoreByStoreidBundleByKey(storeid, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.getV1StoreByStoreidBundleByKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.getStoreByStoreidBundleByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1322,10 +1322,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1StoreByStoreidListing(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1StoreByStoreidListing(storeid, options);
+        async getStoreByStoreidListing(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStoreByStoreidListing(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.getV1StoreByStoreidListing']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.getStoreByStoreidListing']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1336,10 +1336,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1StoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1StoreByStoreidListingByKey(storeid, key, options);
+        async getStoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStoreByStoreidListingByKey(storeid, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.getV1StoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.getStoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1350,10 +1350,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1StoreByStoreidProductByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1StoreByStoreidProductByKey(storeid, key, options);
+        async getStoreByStoreidProductByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStoreByStoreidProductByKey(storeid, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.getV1StoreByStoreidProductByKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.getStoreByStoreidProductByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1364,10 +1364,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1StoreByStoreidVariantByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1StoreByStoreidVariantByKey(storeid, key, options);
+        async getStoreByStoreidVariantByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStoreByStoreidVariantByKey(storeid, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.getV1StoreByStoreidVariantByKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.getStoreByStoreidVariantByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1376,10 +1376,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1StoreCurrent(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1StoreCurrent(options);
+        async getStoreCurrent(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStoreCurrent(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.getV1StoreCurrent']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.getStoreCurrent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1389,10 +1389,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1StoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1StoreByStoreid(storeid, options);
+        async patchStoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchStoreByStoreid(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.patchV1StoreByStoreid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.patchStoreByStoreid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1403,10 +1403,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1StoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1StoreByStoreidListingByKey(storeid, key, options);
+        async patchStoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchStoreByStoreidListingByKey(storeid, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.patchV1StoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.patchStoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1415,10 +1415,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Store(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Store(options);
+        async postStore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStore(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1Store']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStore']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1428,10 +1428,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreid(storeid, options);
+        async postStoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreid(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1441,10 +1441,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidAuthorize(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidAuthorize(storeid, options);
+        async postStoreByStoreidAuthorize(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidAuthorize(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidAuthorize']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidAuthorize']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1455,10 +1455,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidAuthorizeByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidAuthorizeByOrderid(storeid, orderid, options);
+        async postStoreByStoreidAuthorizeByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidAuthorizeByOrderid(storeid, orderid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidAuthorizeByOrderid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidAuthorizeByOrderid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1469,10 +1469,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidCaptureByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidCaptureByOrderid(storeid, orderid, options);
+        async postStoreByStoreidCaptureByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidCaptureByOrderid(storeid, orderid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidCaptureByOrderid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidCaptureByOrderid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1482,10 +1482,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidCharge(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidCharge(storeid, options);
+        async postStoreByStoreidCharge(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidCharge(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidCharge']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidCharge']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1495,10 +1495,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidCheckoutAuthorize(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidCheckoutAuthorize(storeid, options);
+        async postStoreByStoreidCheckoutAuthorize(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidCheckoutAuthorize(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidCheckoutAuthorize']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidCheckoutAuthorize']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1509,10 +1509,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidCheckoutAuthorizeByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidCheckoutAuthorizeByOrderid(storeid, orderid, options);
+        async postStoreByStoreidCheckoutAuthorizeByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidCheckoutAuthorizeByOrderid(storeid, orderid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidCheckoutAuthorizeByOrderid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidCheckoutAuthorizeByOrderid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1523,10 +1523,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidCheckoutCaptureByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidCheckoutCaptureByOrderid(storeid, orderid, options);
+        async postStoreByStoreidCheckoutCaptureByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidCheckoutCaptureByOrderid(storeid, orderid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidCheckoutCaptureByOrderid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidCheckoutCaptureByOrderid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1536,10 +1536,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidCheckoutCharge(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidCheckoutCharge(storeid, options);
+        async postStoreByStoreidCheckoutCharge(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidCheckoutCharge(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidCheckoutCharge']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidCheckoutCharge']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1550,10 +1550,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidCheckoutPaypalCancelByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidCheckoutPaypalCancelByPaykey(storeid, payKey, options);
+        async postStoreByStoreidCheckoutPaypalCancelByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidCheckoutPaypalCancelByPaykey(storeid, payKey, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidCheckoutPaypalCancelByPaykey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidCheckoutPaypalCancelByPaykey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1564,10 +1564,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidCheckoutPaypalConfirmByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidCheckoutPaypalConfirmByPaykey(storeid, payKey, options);
+        async postStoreByStoreidCheckoutPaypalConfirmByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidCheckoutPaypalConfirmByPaykey(storeid, payKey, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidCheckoutPaypalConfirmByPaykey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidCheckoutPaypalConfirmByPaykey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1577,10 +1577,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidCheckoutPaypalPay(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidCheckoutPaypalPay(storeid, options);
+        async postStoreByStoreidCheckoutPaypalPay(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidCheckoutPaypalPay(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidCheckoutPaypalPay']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidCheckoutPaypalPay']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1591,10 +1591,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidListingByKey(storeid, key, options);
+        async postStoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidListingByKey(storeid, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1605,10 +1605,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidPaypalCancelByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidPaypalCancelByPaykey(storeid, payKey, options);
+        async postStoreByStoreidPaypalCancelByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidPaypalCancelByPaykey(storeid, payKey, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidPaypalCancelByPaykey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidPaypalCancelByPaykey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1619,10 +1619,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidPaypalConfirmByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidPaypalConfirmByPaykey(storeid, payKey, options);
+        async postStoreByStoreidPaypalConfirmByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidPaypalConfirmByPaykey(storeid, payKey, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidPaypalConfirmByPaykey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidPaypalConfirmByPaykey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1632,10 +1632,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidPaypalPay(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidPaypalPay(storeid, options);
+        async postStoreByStoreidPaypalPay(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidPaypalPay(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidPaypalPay']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidPaypalPay']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1645,10 +1645,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreByStoreidTrial(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreByStoreidTrial(storeid, options);
+        async postStoreByStoreidTrial(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreByStoreidTrial(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreByStoreidTrial']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreByStoreidTrial']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1657,10 +1657,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1StoreToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1StoreToken(options);
+        async postStoreToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postStoreToken(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.postV1StoreToken']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.postStoreToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1670,10 +1670,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1StoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1StoreByStoreid(storeid, options);
+        async putStoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putStoreByStoreid(storeid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.putV1StoreByStoreid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.putStoreByStoreid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1684,10 +1684,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1StoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1StoreByStoreidListingByKey(storeid, key, options);
+        async putStoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putStoreByStoreidListingByKey(storeid, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StoreApi.putV1StoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.putStoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1703,22 +1703,22 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * Removes the addressed store and answers 204 with no body. Before the live row goes, the entity is written once more under a tombstone kind, so the deletion leaves a recoverable copy rather than destroying the record outright; the store\'s listing overrides live inside that row and go with it. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin or store-write token.
          * @summary Delete a storefront, keeping a recoverable copy
-         * @param {StoreApiDeleteV1StoreByStoreidRequest} requestParameters Request parameters.
+         * @param {StoreApiDeleteStoreByStoreidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1StoreByStoreid(requestParameters: StoreApiDeleteV1StoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1StoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        deleteStoreByStoreid(requestParameters: StoreApiDeleteStoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteStoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Drops the key from the store\'s listing map and re-saves the store, answering 204 with no body. It UN-OVERRIDES rather than deletes: the product, variant or bundle itself is untouched and simply reverts to its catalog values on this storefront. A key that is not present is 404, and so is a store id outside the caller org\'s namespace. Admin-gated.
          * @summary Remove a listing override
-         * @param {StoreApiDeleteV1StoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+         * @param {StoreApiDeleteStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1StoreByStoreidListingByKey(requestParameters: StoreApiDeleteV1StoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1StoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        deleteStoreByStoreidListingByKey(requestParameters: StoreApiDeleteStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers a pagination envelope — page, display, the rows, and a total count — read from the caller org\'s OWN namespaced database, so one tenant can never list another\'s stores. Sorting defaults to the store slug and is overridable with sort; display is the page size and page applies only alongside it, and either one that is not a positive integer is refused rather than silently ignored. The limit query overrides the reported COUNT only and never the rows returned. A request that resolves no org namespace is served an empty page, never an unscoped scan. Readable with an admin token, a store-scoped token, or the anonymous published storefront key.
@@ -1726,8 +1726,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Store(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1Store(options).then((request) => request(axios, basePath));
+        getStore(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getStore(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers allowed, the store id, and a status of trial, active, payment_required, store_required or unavailable — the entitlement check a merchant surface gates on. The rule that surprises people is that entitlement is PER STORE, not per org: the store needs its own current subscription on the entry plan, either trialing with a trial end still ahead or active with a period end still ahead, so an org-wide balance or a sibling store\'s plan unlocks nothing here. The store comes from the X-Store-Id header and otherwise falls back to the org\'s first store; neither resolving is store_required with allowed false, and a backing-store failure is 503 with status unavailable — a retry signal, not a denial.
@@ -1735,68 +1735,68 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreAccess(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1StoreAccess(options).then((request) => request(axios, basePath));
+        getStoreAccess(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getStoreAccess(options).then((request) => request(axios, basePath));
         },
         /**
          * Reads the addressed store from the caller org\'s own namespaced database, so an id belonging to another tenant is simply absent there and answers 404 rather than leaking its existence. The body is the stored entity including its embedded listing override map. Readable with an admin or store-read token and also with the anonymous published storefront key, which is what lets a logged-out storefront resolve the store it is rendering.
          * @summary Fetch one storefront
-         * @param {StoreApiGetV1StoreByStoreidRequest} requestParameters Request parameters.
+         * @param {StoreApiGetStoreByStoreidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreid(requestParameters: StoreApiGetV1StoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1StoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        getStoreByStoreid(requestParameters: StoreApiGetStoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getStoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the stored bundle with the store\'s listing for it laid over the top — every non-empty listing field wins, and the currency is forced to the store\'s own — so the caller reads what this storefront actually sells rather than the catalog-wide record. The overlay is keyed by the item\'s ID: a listing filed only under a slug or SKU does not reach it, unlike the listing reads, which do fall back to those. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
          * @summary Fetch a bundle as this storefront sells it
-         * @param {StoreApiGetV1StoreByStoreidBundleByKeyRequest} requestParameters Request parameters.
+         * @param {StoreApiGetStoreByStoreidBundleByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreidBundleByKey(requestParameters: StoreApiGetV1StoreByStoreidBundleByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1StoreByStoreidBundleByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        getStoreByStoreidBundleByKey(requestParameters: StoreApiGetStoreByStoreidBundleByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getStoreByStoreidBundleByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every override this store applies to catalog items — name, price, list price, media, availability and the hidden flag — keyed by product or variant id, in one read. A listing is an OVERRIDE, not a product: the catalog item exists independently and this map only says how this storefront presents it. Read from the caller org\'s own namespaced database, so a store id belonging to another tenant is 404. Readable with an admin token or the anonymous published storefront key.
          * @summary The storefront\'s whole listing override map
-         * @param {StoreApiGetV1StoreByStoreidListingRequest} requestParameters Request parameters.
+         * @param {StoreApiGetStoreByStoreidListingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreidListing(requestParameters: StoreApiGetV1StoreByStoreidListingRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1StoreByStoreidListing(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        getStoreByStoreidListing(requestParameters: StoreApiGetStoreByStoreidListingRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getStoreByStoreidListing(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Looks the key up in the store\'s listing map first and, failing that, matches it against each listing\'s slug and then its SKU — so a storefront holding only a product\'s URL slug can still resolve the override. That fallback is unique to the listing reads; the item overlay routes match by id alone. A key matching none of the three is 404, as is a store id outside the caller org\'s namespace. Readable with an admin token or the anonymous published storefront key.
          * @summary Fetch one listing override, by item id or by its slug or SKU
-         * @param {StoreApiGetV1StoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+         * @param {StoreApiGetStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreidListingByKey(requestParameters: StoreApiGetV1StoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1StoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        getStoreByStoreidListingByKey(requestParameters: StoreApiGetStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the stored product with the store\'s listing for it laid over the top — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what lets two storefronts sell the same catalog product at their own price, name and media. The overlay is keyed by the product\'s ID, so a listing filed only under a slug or SKU does not apply here. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
          * @summary Fetch a product as this storefront sells it
-         * @param {StoreApiGetV1StoreByStoreidProductByKeyRequest} requestParameters Request parameters.
+         * @param {StoreApiGetStoreByStoreidProductByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreidProductByKey(requestParameters: StoreApiGetV1StoreByStoreidProductByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1StoreByStoreidProductByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        getStoreByStoreidProductByKey(requestParameters: StoreApiGetStoreByStoreidProductByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getStoreByStoreidProductByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the stored variant with the store\'s listing for it overlaid — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what makes per-storefront pricing of a shared variant possible. The overlay is keyed by the variant\'s ID, never by its slug or SKU. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
          * @summary Fetch a variant as this storefront sells it
-         * @param {StoreApiGetV1StoreByStoreidVariantByKeyRequest} requestParameters Request parameters.
+         * @param {StoreApiGetStoreByStoreidVariantByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreByStoreidVariantByKey(requestParameters: StoreApiGetV1StoreByStoreidVariantByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1StoreByStoreidVariantByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        getStoreByStoreidVariantByKey(requestParameters: StoreApiGetStoreByStoreidVariantByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getStoreByStoreidVariantByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s store resolved FROM THE AUTHENTICATED ORG rather than from a path id — which is how an admin dashboard or a storefront edge learns the store id it should then read and write against. An X-Store-Id header selects a specific store, resolved only inside the caller\'s own namespace, so a foreign id cannot cross the tenant boundary and answers 404 instead. With no header the org\'s first store is returned, and an org that has none yet has its canonical default provisioned lazily and idempotently, carrying no payment credentials. Only when there is no org in context, or provisioning fails, does it fall back to a placeholder store literally named default, which a storefront edge should treat as unconfigured.
@@ -1804,28 +1804,28 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1StoreCurrent(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1StoreCurrent(options).then((request) => request(axios, basePath));
+        getStoreCurrent(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getStoreCurrent(options).then((request) => request(axios, basePath));
         },
         /**
          * Loads the stored store and decodes the body over it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged entity. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin token, or one holding both store read and store write.
          * @summary Change part of a storefront
-         * @param {StoreApiPatchV1StoreByStoreidRequest} requestParameters Request parameters.
+         * @param {StoreApiPatchStoreByStoreidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1StoreByStoreid(requestParameters: StoreApiPatchV1StoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1StoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        patchStoreByStoreid(requestParameters: StoreApiPatchStoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchStoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Requires the key to already be present — an absent one is 404 — and answers the store\'s listing map at 200. Read the behaviour before relying on it: the decoded body is applied to a COPY taken out of the map and is never assigned back, so the stored listing is unchanged and the map returned is exactly the map that was already there. An actual edit to an existing listing has to go through the upsert, which does write its result back into the store. A body that fails to decode is still 400. Admin-gated and namespaced to the caller\'s org.
          * @summary Confirm a listing override exists and re-save the store
-         * @param {StoreApiPatchV1StoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+         * @param {StoreApiPatchStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1StoreByStoreidListingByKey(requestParameters: StoreApiPatchV1StoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1StoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        patchStoreByStoreidListingByKey(requestParameters: StoreApiPatchStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a store from the body inside the caller org\'s own namespaced database, so the row is physically isolated to that tenant from its first write, and answers it at 201 with a Location header naming its id. Requires an admin or store-write token: the anonymous published storefront key may READ stores but never create one. A body that fails to decode is 400.
@@ -1833,178 +1833,178 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Store(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Store(options).then((request) => request(axios, basePath));
+        postStore(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStore(options).then((request) => request(axios, basePath));
         },
         /**
          * Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header, the header winning when both are present. Only PUT, PATCH and DELETE are accepted; anything else resolves to 405. The trap is the default: naming NO override at all is treated as a partial update, never as a create. Authorization is whatever the underlying operation requires, since the real handler runs.
          * @summary Method-override tunnel for clients that cannot send PUT, PATCH or DELETE
-         * @param {StoreApiPostV1StoreByStoreidRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreid(requestParameters: StoreApiPostV1StoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        postStoreByStoreid(requestParameters: StoreApiPostStoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Tallies a new order for the addressed store from the user, payment and order body, reserves its items, runs the processor authorization and answers the saved order with a Location header pointing at it. The gate is a token carrying admin or published scope, so a published storefront key is enough; no token is 401 and a token with neither bit is 403. The store is loaded BEFORE any payment work and its currency OVERRIDES whatever the body asked for, so a store that will not load ends the call with 500 and nothing is charged. On any authorization failure the reservations are released and the order and payment are persisted as cancelled, so a failed attempt still leaves a durable record. Capture is a separate call.
          * @summary Authorize a new order against a storefront, holding the funds without settling them
-         * @param {StoreApiPostV1StoreByStoreidAuthorizeRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidAuthorizeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidAuthorize(requestParameters: StoreApiPostV1StoreByStoreidAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidAuthorize(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        postStoreByStoreidAuthorize(requestParameters: StoreApiPostStoreByStoreidAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidAuthorize(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Continues the order named in the path rather than minting a new one, holding funds for it. The order is loaded from the caller org\'s own store, so an id belonging to another tenant is a 404. The rule most callers get wrong is that the body\'s order object is MERGED onto the loaded order before the tally — this is not a read-only reference, and a field sent here overwrites what is stored. The gate, the store resolution and the currency override behave exactly as on the bodiless-id sibling, and settling is still the capture call\'s job.
          * @summary Authorize an order that already exists, holding the funds without settling them
-         * @param {StoreApiPostV1StoreByStoreidAuthorizeByOrderidRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidAuthorizeByOrderidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidAuthorizeByOrderid(requestParameters: StoreApiPostV1StoreByStoreidAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
+        postStoreByStoreidAuthorizeByOrderid(requestParameters: StoreApiPostStoreByStoreidAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
         },
         /**
          * Settles the order named in the path — the second half of the two-step flow — and answers the updated order with a Location header. Dispatch follows the order\'s STORED payment type, and a successful capture is the moment the rest of the system learns about the sale: order and payment rows are updated, coupon redemptions, referral, cart and stats are written, the confirmation email goes out, and the paid and completed events are emitted. A capture failure releases the order\'s inventory reservations and answers 400, so a failed settlement never leaves items held.
          * @summary Capture a previously authorized order and settle the payment
-         * @param {StoreApiPostV1StoreByStoreidCaptureByOrderidRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidCaptureByOrderidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCaptureByOrderid(requestParameters: StoreApiPostV1StoreByStoreidCaptureByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
+        postStoreByStoreidCaptureByOrderid(requestParameters: StoreApiPostStoreByStoreidCaptureByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs authorization and capture back to back against a freshly created order — the one-step flow for callers with no reason to hold funds. It takes the authorize body and inherits every authorize rule: the store\'s currency wins over the body, the items are reserved before the processor is called, and the amount bounds the processor enforces still apply. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects — confirmation email, redemptions, stats, the paid and completed events — run only when both halves succeed.
          * @summary Authorize and capture a new order in one call
-         * @param {StoreApiPostV1StoreByStoreidChargeRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidChargeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCharge(requestParameters: StoreApiPostV1StoreByStoreidChargeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidCharge(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        postStoreByStoreidCharge(requestParameters: StoreApiPostStoreByStoreidChargeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidCharge(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Authorizes a new order for the addressed store and holds the funds, answering the saved order with a Location header. It binds the identical handler as the shorter authorize address, so the two are ONE operation at two spellings and not two behaviours; the checkout prefix is the newer one. Every rule carries over: admin or published scope on the token, the store loaded first with its currency overriding the body, items reserved before the processor call, and reservations released with the order persisted cancelled on failure. Nothing is settled here.
          * @summary Authorize a new order against a storefront, holding the funds — the checkout spelling
-         * @param {StoreApiPostV1StoreByStoreidCheckoutAuthorizeRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidCheckoutAuthorizeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutAuthorize(requestParameters: StoreApiPostV1StoreByStoreidCheckoutAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidCheckoutAuthorize(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        postStoreByStoreidCheckoutAuthorize(requestParameters: StoreApiPostStoreByStoreidCheckoutAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidCheckoutAuthorize(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Continues the order named in the path rather than minting one, and shares its handler byte for byte with the unprefixed authorize-by-id address. The order is loaded from the caller org\'s own store, so another tenant\'s id is a 404, and the body\'s order object is merged onto the loaded row before the tally — a field sent here overwrites what is stored. Store resolution, the token gate and the currency override behave as on every other authorize address; settle with the capture address and the same order id.
          * @summary Authorize an existing order, holding the funds — the checkout spelling
-         * @param {StoreApiPostV1StoreByStoreidCheckoutAuthorizeByOrderidRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidCheckoutAuthorizeByOrderidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutAuthorizeByOrderid(requestParameters: StoreApiPostV1StoreByStoreidCheckoutAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidCheckoutAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
+        postStoreByStoreidCheckoutAuthorizeByOrderid(requestParameters: StoreApiPostStoreByStoreidCheckoutAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidCheckoutAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
         },
         /**
          * Settles the authorized order named in the path and answers the updated order with a Location header, running the same handler as the unprefixed capture address. Dispatch follows the order\'s stored payment type. Success is what triggers the downstream work — order and payment updates, redemptions, referral, cart and stats, the confirmation email, and the paid and completed events — while a failure releases the order\'s inventory reservations and answers 400.
          * @summary Capture a previously authorized order and settle it — the checkout spelling
-         * @param {StoreApiPostV1StoreByStoreidCheckoutCaptureByOrderidRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidCheckoutCaptureByOrderidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutCaptureByOrderid(requestParameters: StoreApiPostV1StoreByStoreidCheckoutCaptureByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidCheckoutCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
+        postStoreByStoreidCheckoutCaptureByOrderid(requestParameters: StoreApiPostStoreByStoreidCheckoutCaptureByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidCheckoutCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
         },
         /**
          * Performs authorization and capture back to back against a newly created order for the addressed store, on the same handler as the unprefixed charge address. It takes the authorize body and inherits every authorize rule, including the store\'s currency winning over the body and the items being reserved before the processor is called. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects run only when both succeed.
          * @summary Authorize and capture a new order in one call — the checkout spelling
-         * @param {StoreApiPostV1StoreByStoreidCheckoutChargeRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidCheckoutChargeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutCharge(requestParameters: StoreApiPostV1StoreByStoreidCheckoutChargeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidCheckoutCharge(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        postStoreByStoreidCheckoutCharge(requestParameters: StoreApiPostStoreByStoreidCheckoutChargeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidCheckoutCharge(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Meant to void the payments carrying the given pay key, stamp them cancelled and cancel the order, but the shared checkout handler resolves its order from an ORDER ID path parameter this route does not carry. The result is an untyped order and a cancel dispatch that refuses with 400 before the pay key lookup ever runs. Token gate, namespacing and store resolution happen first, so a missing token is still 401 and an unloadable store still 500. It is the same handler as the unprefixed cancel address, with the same outcome.
          * @summary PayPal cancel by pay key — refuses, exactly as the unprefixed address does
-         * @param {StoreApiPostV1StoreByStoreidCheckoutPaypalCancelByPaykeyRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidCheckoutPaypalCancelByPaykeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters: StoreApiPostV1StoreByStoreidCheckoutPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
+        postStoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters: StoreApiPostStoreByStoreidCheckoutPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
         },
         /**
          * Meant to mark the payments carrying the given pay key as paid and set the order to paid, it cannot reach that work from this address: the shared checkout handler takes its order from an ORDER ID path parameter this route does not carry, so the order is always fresh and untyped and the confirm dispatch refuses with 400 before the pay key is queried. The token gate, the namespace middleware and the store lookup all run ahead of that, so authentication and store failures surface first. Behaviour is identical to the unprefixed confirm address; the checkout prefix changes nothing here.
          * @summary PayPal confirm by pay key — refuses, exactly as the unprefixed address does
-         * @param {StoreApiPostV1StoreByStoreidCheckoutPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters: StoreApiPostV1StoreByStoreidCheckoutPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
+        postStoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters: StoreApiPostStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
         },
         /**
          * Begins a PayPal authorization by running the ordinary store authorize flow, since the route binds that exact handler — body, store resolution, tally, reservations and failure behaviour are the authorize address\'s, unchanged. The processor is chosen from the body\'s payment type, so this path reaches PayPal only when that type says so. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. Build against the plain authorize address instead.
          * @summary Start a PayPal authorization for a new order — the checkout spelling
-         * @param {StoreApiPostV1StoreByStoreidCheckoutPaypalPayRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidCheckoutPaypalPayRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidCheckoutPaypalPay(requestParameters: StoreApiPostV1StoreByStoreidCheckoutPaypalPayRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidCheckoutPaypalPay(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        postStoreByStoreidCheckoutPaypalPay(requestParameters: StoreApiPostStoreByStoreidCheckoutPaypalPayRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidCheckoutPaypalPay(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates the override and answers the store\'s ENTIRE listing map at 201 with a Location header — not just the entry that was added. A key already present is refused 400: creation never silently overwrites, so changing an existing listing has to be an explicit replace. The stored listing has its currency stamped from the store\'s own, which the replace path does not do. The key is matched exactly here, with none of the slug or SKU fallback the read allows. Admin-gated and resolved inside the caller org\'s namespace.
          * @summary Add a listing override under a new key
-         * @param {StoreApiPostV1StoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidListingByKey(requestParameters: StoreApiPostV1StoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        postStoreByStoreidListingByKey(requestParameters: StoreApiPostStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Intended to void the payments carrying the given pay key, stamp them cancelled and cancel the order, it never reaches that work: the shared checkout handler reads its order from an ORDER ID path parameter this route does not carry, leaving an untyped order that the cancel dispatch refuses with 400 before the pay key lookup runs. Authentication, namespacing and store resolution happen ahead of the refusal, so a missing token is 401 and an unloadable store 500. Cancelling a real PayPal authorization needs an address that carries the order id.
          * @summary PayPal cancel by pay key — refuses, because a pay key alone does not identify the order
-         * @param {StoreApiPostV1StoreByStoreidPaypalCancelByPaykeyRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidPaypalCancelByPaykeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidPaypalCancelByPaykey(requestParameters: StoreApiPostV1StoreByStoreidPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
+        postStoreByStoreidPaypalCancelByPaykey(requestParameters: StoreApiPostStoreByStoreidPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
         },
         /**
          * Intended to mark every payment carrying the given pay key as paid and flip the order to paid, it cannot do that from this address and does not pretend to: the shared checkout handler resolves its order from an ORDER ID path parameter that this route does not carry, so it always works against a fresh untyped order and the confirm dispatch refuses it with 400 before the pay key is ever queried. The token gate, the namespace and the store lookup all run ahead of that, so a missing token is still 401 and an unloadable store still 500. Drive a PayPal return through an address that carries the order id.
          * @summary PayPal confirm by pay key — refuses, because a pay key alone does not identify the order
-         * @param {StoreApiPostV1StoreByStoreidPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidPaypalConfirmByPaykey(requestParameters: StoreApiPostV1StoreByStoreidPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
+        postStoreByStoreidPaypalConfirmByPaykey(requestParameters: StoreApiPostStoreByStoreidPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs the ordinary store authorize flow — the route binds that very handler, so the body, the store resolution, the tally, the reservations and the failure behaviour are the authorize address\'s, unchanged. It reaches PayPal only when the body\'s payment type says so; nothing about this path forces the processor, so a card-typed payment posted here authorizes on the card processor instead. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. It is the older entry point; the plain authorize address is the one to build against.
          * @summary Start a PayPal authorization for a new order
-         * @param {StoreApiPostV1StoreByStoreidPaypalPayRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidPaypalPayRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidPaypalPay(requestParameters: StoreApiPostV1StoreByStoreidPaypalPayRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidPaypalPay(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        postStoreByStoreidPaypalPay(requestParameters: StoreApiPostStoreByStoreidPaypalPayRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidPaypalPay(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a trialing subscription for the addressed store on the entry plan and grants that plan\'s trial credit, answering 201 when this call actually started one and 200 with a reason otherwise — not_new when the store already has billing history, trial_not_configured when no entry plan is wired. The window is always the SEVEN-DAY no-card trial, because this address never presents a card; the longer card-present window is reached only by adding a card afterwards. Entitlement is per store while the billing subject is the org, so every store an org owns takes its own trial. Admin-gated and namespaced to the caller\'s org: no resolvable store is 404 with store_required, and a backing-store failure is 503.
          * @summary Start this store\'s no-card trial on the entry plan
-         * @param {StoreApiPostV1StoreByStoreidTrialRequest} requestParameters Request parameters.
+         * @param {StoreApiPostStoreByStoreidTrialRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreByStoreidTrial(requestParameters: StoreApiPostV1StoreByStoreidTrialRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreByStoreidTrial(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        postStoreByStoreidTrial(requestParameters: StoreApiPostStoreByStoreidTrialRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreByStoreidTrial(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers a freshly minted token carrying ONLY the published-read permission — enough for a logged-out shopper\'s storefront to read your published catalog and nothing more, with no write and no admin scope. It is org-bound, signed with the org\'s own secret and subject to the org id, so unlike a shared service token it can never act on another tenant. Minting ROTATES rather than accumulates: the previous storefront token is dropped first and is invalid immediately, so re-minting is how you revoke. Admin is enforced by the handler as well as the route, because the route\'s token gate does not apply on the identity path and a plain member must not be able to mint their org\'s key.
@@ -2012,546 +2012,546 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1StoreToken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1StoreToken(options).then((request) => request(axios, basePath));
+        postStoreToken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postStoreToken(options).then((request) => request(axios, basePath));
         },
         /**
          * This is a true REPLACEMENT, not a merge: the stored key is preserved but the body is decoded onto a fresh entity, so every field the body omits is written back as its zero value. Use the partial update when you mean to change part of a store. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is a 404 before anything is written. Requires an admin token, or one holding both store read and store write.
          * @summary Replace a storefront outright
-         * @param {StoreApiPutV1StoreByStoreidRequest} requestParameters Request parameters.
+         * @param {StoreApiPutStoreByStoreidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1StoreByStoreid(requestParameters: StoreApiPutV1StoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1StoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        putStoreByStoreid(requestParameters: StoreApiPutStoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putStoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
         },
         /**
          * Decodes the body over the existing listing when the key is present, so fields it omits keep their stored values, and builds the listing from the body alone when the key is new. Answers 200 when it replaced something and 201 with a Location header when it created it; either way the body is the store\'s entire listing map, not the single entry. Unlike creation, this path does NOT restamp the listing\'s currency from the store. Admin-gated, with the store resolved inside the caller org\'s namespace.
          * @summary Upsert a listing override
-         * @param {StoreApiPutV1StoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+         * @param {StoreApiPutStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1StoreByStoreidListingByKey(requestParameters: StoreApiPutV1StoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1StoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        putStoreByStoreidListingByKey(requestParameters: StoreApiPutStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1StoreByStoreid operation in StoreApi.
+ * Request parameters for deleteStoreByStoreid operation in StoreApi.
  * @export
- * @interface StoreApiDeleteV1StoreByStoreidRequest
+ * @interface StoreApiDeleteStoreByStoreidRequest
  */
-export interface StoreApiDeleteV1StoreByStoreidRequest {
+export interface StoreApiDeleteStoreByStoreidRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiDeleteV1StoreByStoreid
+     * @memberof StoreApiDeleteStoreByStoreid
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for deleteV1StoreByStoreidListingByKey operation in StoreApi.
+ * Request parameters for deleteStoreByStoreidListingByKey operation in StoreApi.
  * @export
- * @interface StoreApiDeleteV1StoreByStoreidListingByKeyRequest
+ * @interface StoreApiDeleteStoreByStoreidListingByKeyRequest
  */
-export interface StoreApiDeleteV1StoreByStoreidListingByKeyRequest {
+export interface StoreApiDeleteStoreByStoreidListingByKeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiDeleteV1StoreByStoreidListingByKey
+     * @memberof StoreApiDeleteStoreByStoreidListingByKey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiDeleteV1StoreByStoreidListingByKey
+     * @memberof StoreApiDeleteStoreByStoreidListingByKey
      */
     readonly key: string
 }
 
 /**
- * Request parameters for getV1StoreByStoreid operation in StoreApi.
+ * Request parameters for getStoreByStoreid operation in StoreApi.
  * @export
- * @interface StoreApiGetV1StoreByStoreidRequest
+ * @interface StoreApiGetStoreByStoreidRequest
  */
-export interface StoreApiGetV1StoreByStoreidRequest {
+export interface StoreApiGetStoreByStoreidRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiGetV1StoreByStoreid
+     * @memberof StoreApiGetStoreByStoreid
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for getV1StoreByStoreidBundleByKey operation in StoreApi.
+ * Request parameters for getStoreByStoreidBundleByKey operation in StoreApi.
  * @export
- * @interface StoreApiGetV1StoreByStoreidBundleByKeyRequest
+ * @interface StoreApiGetStoreByStoreidBundleByKeyRequest
  */
-export interface StoreApiGetV1StoreByStoreidBundleByKeyRequest {
+export interface StoreApiGetStoreByStoreidBundleByKeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiGetV1StoreByStoreidBundleByKey
+     * @memberof StoreApiGetStoreByStoreidBundleByKey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiGetV1StoreByStoreidBundleByKey
+     * @memberof StoreApiGetStoreByStoreidBundleByKey
      */
     readonly key: string
 }
 
 /**
- * Request parameters for getV1StoreByStoreidListing operation in StoreApi.
+ * Request parameters for getStoreByStoreidListing operation in StoreApi.
  * @export
- * @interface StoreApiGetV1StoreByStoreidListingRequest
+ * @interface StoreApiGetStoreByStoreidListingRequest
  */
-export interface StoreApiGetV1StoreByStoreidListingRequest {
+export interface StoreApiGetStoreByStoreidListingRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiGetV1StoreByStoreidListing
+     * @memberof StoreApiGetStoreByStoreidListing
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for getV1StoreByStoreidListingByKey operation in StoreApi.
+ * Request parameters for getStoreByStoreidListingByKey operation in StoreApi.
  * @export
- * @interface StoreApiGetV1StoreByStoreidListingByKeyRequest
+ * @interface StoreApiGetStoreByStoreidListingByKeyRequest
  */
-export interface StoreApiGetV1StoreByStoreidListingByKeyRequest {
+export interface StoreApiGetStoreByStoreidListingByKeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiGetV1StoreByStoreidListingByKey
+     * @memberof StoreApiGetStoreByStoreidListingByKey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiGetV1StoreByStoreidListingByKey
+     * @memberof StoreApiGetStoreByStoreidListingByKey
      */
     readonly key: string
 }
 
 /**
- * Request parameters for getV1StoreByStoreidProductByKey operation in StoreApi.
+ * Request parameters for getStoreByStoreidProductByKey operation in StoreApi.
  * @export
- * @interface StoreApiGetV1StoreByStoreidProductByKeyRequest
+ * @interface StoreApiGetStoreByStoreidProductByKeyRequest
  */
-export interface StoreApiGetV1StoreByStoreidProductByKeyRequest {
+export interface StoreApiGetStoreByStoreidProductByKeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiGetV1StoreByStoreidProductByKey
+     * @memberof StoreApiGetStoreByStoreidProductByKey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiGetV1StoreByStoreidProductByKey
+     * @memberof StoreApiGetStoreByStoreidProductByKey
      */
     readonly key: string
 }
 
 /**
- * Request parameters for getV1StoreByStoreidVariantByKey operation in StoreApi.
+ * Request parameters for getStoreByStoreidVariantByKey operation in StoreApi.
  * @export
- * @interface StoreApiGetV1StoreByStoreidVariantByKeyRequest
+ * @interface StoreApiGetStoreByStoreidVariantByKeyRequest
  */
-export interface StoreApiGetV1StoreByStoreidVariantByKeyRequest {
+export interface StoreApiGetStoreByStoreidVariantByKeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiGetV1StoreByStoreidVariantByKey
+     * @memberof StoreApiGetStoreByStoreidVariantByKey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiGetV1StoreByStoreidVariantByKey
+     * @memberof StoreApiGetStoreByStoreidVariantByKey
      */
     readonly key: string
 }
 
 /**
- * Request parameters for patchV1StoreByStoreid operation in StoreApi.
+ * Request parameters for patchStoreByStoreid operation in StoreApi.
  * @export
- * @interface StoreApiPatchV1StoreByStoreidRequest
+ * @interface StoreApiPatchStoreByStoreidRequest
  */
-export interface StoreApiPatchV1StoreByStoreidRequest {
+export interface StoreApiPatchStoreByStoreidRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPatchV1StoreByStoreid
+     * @memberof StoreApiPatchStoreByStoreid
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for patchV1StoreByStoreidListingByKey operation in StoreApi.
+ * Request parameters for patchStoreByStoreidListingByKey operation in StoreApi.
  * @export
- * @interface StoreApiPatchV1StoreByStoreidListingByKeyRequest
+ * @interface StoreApiPatchStoreByStoreidListingByKeyRequest
  */
-export interface StoreApiPatchV1StoreByStoreidListingByKeyRequest {
+export interface StoreApiPatchStoreByStoreidListingByKeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPatchV1StoreByStoreidListingByKey
+     * @memberof StoreApiPatchStoreByStoreidListingByKey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPatchV1StoreByStoreidListingByKey
+     * @memberof StoreApiPatchStoreByStoreidListingByKey
      */
     readonly key: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreid operation in StoreApi.
+ * Request parameters for postStoreByStoreid operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidRequest
+ * @interface StoreApiPostStoreByStoreidRequest
  */
-export interface StoreApiPostV1StoreByStoreidRequest {
+export interface StoreApiPostStoreByStoreidRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreid
+     * @memberof StoreApiPostStoreByStoreid
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidAuthorize operation in StoreApi.
+ * Request parameters for postStoreByStoreidAuthorize operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidAuthorizeRequest
+ * @interface StoreApiPostStoreByStoreidAuthorizeRequest
  */
-export interface StoreApiPostV1StoreByStoreidAuthorizeRequest {
+export interface StoreApiPostStoreByStoreidAuthorizeRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidAuthorize
+     * @memberof StoreApiPostStoreByStoreidAuthorize
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidAuthorizeByOrderid operation in StoreApi.
+ * Request parameters for postStoreByStoreidAuthorizeByOrderid operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidAuthorizeByOrderidRequest
+ * @interface StoreApiPostStoreByStoreidAuthorizeByOrderidRequest
  */
-export interface StoreApiPostV1StoreByStoreidAuthorizeByOrderidRequest {
+export interface StoreApiPostStoreByStoreidAuthorizeByOrderidRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidAuthorizeByOrderid
+     * @memberof StoreApiPostStoreByStoreidAuthorizeByOrderid
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidAuthorizeByOrderid
+     * @memberof StoreApiPostStoreByStoreidAuthorizeByOrderid
      */
     readonly orderid: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidCaptureByOrderid operation in StoreApi.
+ * Request parameters for postStoreByStoreidCaptureByOrderid operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidCaptureByOrderidRequest
+ * @interface StoreApiPostStoreByStoreidCaptureByOrderidRequest
  */
-export interface StoreApiPostV1StoreByStoreidCaptureByOrderidRequest {
+export interface StoreApiPostStoreByStoreidCaptureByOrderidRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCaptureByOrderid
+     * @memberof StoreApiPostStoreByStoreidCaptureByOrderid
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCaptureByOrderid
+     * @memberof StoreApiPostStoreByStoreidCaptureByOrderid
      */
     readonly orderid: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidCharge operation in StoreApi.
+ * Request parameters for postStoreByStoreidCharge operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidChargeRequest
+ * @interface StoreApiPostStoreByStoreidChargeRequest
  */
-export interface StoreApiPostV1StoreByStoreidChargeRequest {
+export interface StoreApiPostStoreByStoreidChargeRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCharge
+     * @memberof StoreApiPostStoreByStoreidCharge
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidCheckoutAuthorize operation in StoreApi.
+ * Request parameters for postStoreByStoreidCheckoutAuthorize operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidCheckoutAuthorizeRequest
+ * @interface StoreApiPostStoreByStoreidCheckoutAuthorizeRequest
  */
-export interface StoreApiPostV1StoreByStoreidCheckoutAuthorizeRequest {
+export interface StoreApiPostStoreByStoreidCheckoutAuthorizeRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCheckoutAuthorize
+     * @memberof StoreApiPostStoreByStoreidCheckoutAuthorize
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidCheckoutAuthorizeByOrderid operation in StoreApi.
+ * Request parameters for postStoreByStoreidCheckoutAuthorizeByOrderid operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidCheckoutAuthorizeByOrderidRequest
+ * @interface StoreApiPostStoreByStoreidCheckoutAuthorizeByOrderidRequest
  */
-export interface StoreApiPostV1StoreByStoreidCheckoutAuthorizeByOrderidRequest {
+export interface StoreApiPostStoreByStoreidCheckoutAuthorizeByOrderidRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCheckoutAuthorizeByOrderid
+     * @memberof StoreApiPostStoreByStoreidCheckoutAuthorizeByOrderid
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCheckoutAuthorizeByOrderid
+     * @memberof StoreApiPostStoreByStoreidCheckoutAuthorizeByOrderid
      */
     readonly orderid: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidCheckoutCaptureByOrderid operation in StoreApi.
+ * Request parameters for postStoreByStoreidCheckoutCaptureByOrderid operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidCheckoutCaptureByOrderidRequest
+ * @interface StoreApiPostStoreByStoreidCheckoutCaptureByOrderidRequest
  */
-export interface StoreApiPostV1StoreByStoreidCheckoutCaptureByOrderidRequest {
+export interface StoreApiPostStoreByStoreidCheckoutCaptureByOrderidRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCheckoutCaptureByOrderid
+     * @memberof StoreApiPostStoreByStoreidCheckoutCaptureByOrderid
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCheckoutCaptureByOrderid
+     * @memberof StoreApiPostStoreByStoreidCheckoutCaptureByOrderid
      */
     readonly orderid: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidCheckoutCharge operation in StoreApi.
+ * Request parameters for postStoreByStoreidCheckoutCharge operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidCheckoutChargeRequest
+ * @interface StoreApiPostStoreByStoreidCheckoutChargeRequest
  */
-export interface StoreApiPostV1StoreByStoreidCheckoutChargeRequest {
+export interface StoreApiPostStoreByStoreidCheckoutChargeRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCheckoutCharge
+     * @memberof StoreApiPostStoreByStoreidCheckoutCharge
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidCheckoutPaypalCancelByPaykey operation in StoreApi.
+ * Request parameters for postStoreByStoreidCheckoutPaypalCancelByPaykey operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidCheckoutPaypalCancelByPaykeyRequest
+ * @interface StoreApiPostStoreByStoreidCheckoutPaypalCancelByPaykeyRequest
  */
-export interface StoreApiPostV1StoreByStoreidCheckoutPaypalCancelByPaykeyRequest {
+export interface StoreApiPostStoreByStoreidCheckoutPaypalCancelByPaykeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCheckoutPaypalCancelByPaykey
+     * @memberof StoreApiPostStoreByStoreidCheckoutPaypalCancelByPaykey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCheckoutPaypalCancelByPaykey
+     * @memberof StoreApiPostStoreByStoreidCheckoutPaypalCancelByPaykey
      */
     readonly payKey: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidCheckoutPaypalConfirmByPaykey operation in StoreApi.
+ * Request parameters for postStoreByStoreidCheckoutPaypalConfirmByPaykey operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidCheckoutPaypalConfirmByPaykeyRequest
+ * @interface StoreApiPostStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest
  */
-export interface StoreApiPostV1StoreByStoreidCheckoutPaypalConfirmByPaykeyRequest {
+export interface StoreApiPostStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCheckoutPaypalConfirmByPaykey
+     * @memberof StoreApiPostStoreByStoreidCheckoutPaypalConfirmByPaykey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCheckoutPaypalConfirmByPaykey
+     * @memberof StoreApiPostStoreByStoreidCheckoutPaypalConfirmByPaykey
      */
     readonly payKey: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidCheckoutPaypalPay operation in StoreApi.
+ * Request parameters for postStoreByStoreidCheckoutPaypalPay operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidCheckoutPaypalPayRequest
+ * @interface StoreApiPostStoreByStoreidCheckoutPaypalPayRequest
  */
-export interface StoreApiPostV1StoreByStoreidCheckoutPaypalPayRequest {
+export interface StoreApiPostStoreByStoreidCheckoutPaypalPayRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidCheckoutPaypalPay
+     * @memberof StoreApiPostStoreByStoreidCheckoutPaypalPay
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidListingByKey operation in StoreApi.
+ * Request parameters for postStoreByStoreidListingByKey operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidListingByKeyRequest
+ * @interface StoreApiPostStoreByStoreidListingByKeyRequest
  */
-export interface StoreApiPostV1StoreByStoreidListingByKeyRequest {
+export interface StoreApiPostStoreByStoreidListingByKeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidListingByKey
+     * @memberof StoreApiPostStoreByStoreidListingByKey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidListingByKey
+     * @memberof StoreApiPostStoreByStoreidListingByKey
      */
     readonly key: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidPaypalCancelByPaykey operation in StoreApi.
+ * Request parameters for postStoreByStoreidPaypalCancelByPaykey operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidPaypalCancelByPaykeyRequest
+ * @interface StoreApiPostStoreByStoreidPaypalCancelByPaykeyRequest
  */
-export interface StoreApiPostV1StoreByStoreidPaypalCancelByPaykeyRequest {
+export interface StoreApiPostStoreByStoreidPaypalCancelByPaykeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidPaypalCancelByPaykey
+     * @memberof StoreApiPostStoreByStoreidPaypalCancelByPaykey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidPaypalCancelByPaykey
+     * @memberof StoreApiPostStoreByStoreidPaypalCancelByPaykey
      */
     readonly payKey: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidPaypalConfirmByPaykey operation in StoreApi.
+ * Request parameters for postStoreByStoreidPaypalConfirmByPaykey operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidPaypalConfirmByPaykeyRequest
+ * @interface StoreApiPostStoreByStoreidPaypalConfirmByPaykeyRequest
  */
-export interface StoreApiPostV1StoreByStoreidPaypalConfirmByPaykeyRequest {
+export interface StoreApiPostStoreByStoreidPaypalConfirmByPaykeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidPaypalConfirmByPaykey
+     * @memberof StoreApiPostStoreByStoreidPaypalConfirmByPaykey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidPaypalConfirmByPaykey
+     * @memberof StoreApiPostStoreByStoreidPaypalConfirmByPaykey
      */
     readonly payKey: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidPaypalPay operation in StoreApi.
+ * Request parameters for postStoreByStoreidPaypalPay operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidPaypalPayRequest
+ * @interface StoreApiPostStoreByStoreidPaypalPayRequest
  */
-export interface StoreApiPostV1StoreByStoreidPaypalPayRequest {
+export interface StoreApiPostStoreByStoreidPaypalPayRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidPaypalPay
+     * @memberof StoreApiPostStoreByStoreidPaypalPay
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for postV1StoreByStoreidTrial operation in StoreApi.
+ * Request parameters for postStoreByStoreidTrial operation in StoreApi.
  * @export
- * @interface StoreApiPostV1StoreByStoreidTrialRequest
+ * @interface StoreApiPostStoreByStoreidTrialRequest
  */
-export interface StoreApiPostV1StoreByStoreidTrialRequest {
+export interface StoreApiPostStoreByStoreidTrialRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPostV1StoreByStoreidTrial
+     * @memberof StoreApiPostStoreByStoreidTrial
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for putV1StoreByStoreid operation in StoreApi.
+ * Request parameters for putStoreByStoreid operation in StoreApi.
  * @export
- * @interface StoreApiPutV1StoreByStoreidRequest
+ * @interface StoreApiPutStoreByStoreidRequest
  */
-export interface StoreApiPutV1StoreByStoreidRequest {
+export interface StoreApiPutStoreByStoreidRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPutV1StoreByStoreid
+     * @memberof StoreApiPutStoreByStoreid
      */
     readonly storeid: string
 }
 
 /**
- * Request parameters for putV1StoreByStoreidListingByKey operation in StoreApi.
+ * Request parameters for putStoreByStoreidListingByKey operation in StoreApi.
  * @export
- * @interface StoreApiPutV1StoreByStoreidListingByKeyRequest
+ * @interface StoreApiPutStoreByStoreidListingByKeyRequest
  */
-export interface StoreApiPutV1StoreByStoreidListingByKeyRequest {
+export interface StoreApiPutStoreByStoreidListingByKeyRequest {
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPutV1StoreByStoreidListingByKey
+     * @memberof StoreApiPutStoreByStoreidListingByKey
      */
     readonly storeid: string
 
     /**
      * 
      * @type {string}
-     * @memberof StoreApiPutV1StoreByStoreidListingByKey
+     * @memberof StoreApiPutStoreByStoreidListingByKey
      */
     readonly key: string
 }
@@ -2566,25 +2566,25 @@ export class StoreApi extends BaseAPI {
     /**
      * Removes the addressed store and answers 204 with no body. Before the live row goes, the entity is written once more under a tombstone kind, so the deletion leaves a recoverable copy rather than destroying the record outright; the store\'s listing overrides live inside that row and go with it. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin or store-write token.
      * @summary Delete a storefront, keeping a recoverable copy
-     * @param {StoreApiDeleteV1StoreByStoreidRequest} requestParameters Request parameters.
+     * @param {StoreApiDeleteStoreByStoreidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public deleteV1StoreByStoreid(requestParameters: StoreApiDeleteV1StoreByStoreidRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).deleteV1StoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public deleteStoreByStoreid(requestParameters: StoreApiDeleteStoreByStoreidRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).deleteStoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Drops the key from the store\'s listing map and re-saves the store, answering 204 with no body. It UN-OVERRIDES rather than deletes: the product, variant or bundle itself is untouched and simply reverts to its catalog values on this storefront. A key that is not present is 404, and so is a store id outside the caller org\'s namespace. Admin-gated.
      * @summary Remove a listing override
-     * @param {StoreApiDeleteV1StoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+     * @param {StoreApiDeleteStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public deleteV1StoreByStoreidListingByKey(requestParameters: StoreApiDeleteV1StoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).deleteV1StoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public deleteStoreByStoreidListingByKey(requestParameters: StoreApiDeleteStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).deleteStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2594,8 +2594,8 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public getV1Store(options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).getV1Store(options).then((request) => request(this.axios, this.basePath));
+    public getStore(options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).getStore(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2605,80 +2605,80 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public getV1StoreAccess(options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).getV1StoreAccess(options).then((request) => request(this.axios, this.basePath));
+    public getStoreAccess(options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).getStoreAccess(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reads the addressed store from the caller org\'s own namespaced database, so an id belonging to another tenant is simply absent there and answers 404 rather than leaking its existence. The body is the stored entity including its embedded listing override map. Readable with an admin or store-read token and also with the anonymous published storefront key, which is what lets a logged-out storefront resolve the store it is rendering.
      * @summary Fetch one storefront
-     * @param {StoreApiGetV1StoreByStoreidRequest} requestParameters Request parameters.
+     * @param {StoreApiGetStoreByStoreidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public getV1StoreByStoreid(requestParameters: StoreApiGetV1StoreByStoreidRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).getV1StoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public getStoreByStoreid(requestParameters: StoreApiGetStoreByStoreidRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).getStoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the stored bundle with the store\'s listing for it laid over the top — every non-empty listing field wins, and the currency is forced to the store\'s own — so the caller reads what this storefront actually sells rather than the catalog-wide record. The overlay is keyed by the item\'s ID: a listing filed only under a slug or SKU does not reach it, unlike the listing reads, which do fall back to those. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
      * @summary Fetch a bundle as this storefront sells it
-     * @param {StoreApiGetV1StoreByStoreidBundleByKeyRequest} requestParameters Request parameters.
+     * @param {StoreApiGetStoreByStoreidBundleByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public getV1StoreByStoreidBundleByKey(requestParameters: StoreApiGetV1StoreByStoreidBundleByKeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).getV1StoreByStoreidBundleByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public getStoreByStoreidBundleByKey(requestParameters: StoreApiGetStoreByStoreidBundleByKeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).getStoreByStoreidBundleByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns every override this store applies to catalog items — name, price, list price, media, availability and the hidden flag — keyed by product or variant id, in one read. A listing is an OVERRIDE, not a product: the catalog item exists independently and this map only says how this storefront presents it. Read from the caller org\'s own namespaced database, so a store id belonging to another tenant is 404. Readable with an admin token or the anonymous published storefront key.
      * @summary The storefront\'s whole listing override map
-     * @param {StoreApiGetV1StoreByStoreidListingRequest} requestParameters Request parameters.
+     * @param {StoreApiGetStoreByStoreidListingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public getV1StoreByStoreidListing(requestParameters: StoreApiGetV1StoreByStoreidListingRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).getV1StoreByStoreidListing(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public getStoreByStoreidListing(requestParameters: StoreApiGetStoreByStoreidListingRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).getStoreByStoreidListing(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Looks the key up in the store\'s listing map first and, failing that, matches it against each listing\'s slug and then its SKU — so a storefront holding only a product\'s URL slug can still resolve the override. That fallback is unique to the listing reads; the item overlay routes match by id alone. A key matching none of the three is 404, as is a store id outside the caller org\'s namespace. Readable with an admin token or the anonymous published storefront key.
      * @summary Fetch one listing override, by item id or by its slug or SKU
-     * @param {StoreApiGetV1StoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+     * @param {StoreApiGetStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public getV1StoreByStoreidListingByKey(requestParameters: StoreApiGetV1StoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).getV1StoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public getStoreByStoreidListingByKey(requestParameters: StoreApiGetStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).getStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the stored product with the store\'s listing for it laid over the top — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what lets two storefronts sell the same catalog product at their own price, name and media. The overlay is keyed by the product\'s ID, so a listing filed only under a slug or SKU does not apply here. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
      * @summary Fetch a product as this storefront sells it
-     * @param {StoreApiGetV1StoreByStoreidProductByKeyRequest} requestParameters Request parameters.
+     * @param {StoreApiGetStoreByStoreidProductByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public getV1StoreByStoreidProductByKey(requestParameters: StoreApiGetV1StoreByStoreidProductByKeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).getV1StoreByStoreidProductByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public getStoreByStoreidProductByKey(requestParameters: StoreApiGetStoreByStoreidProductByKeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).getStoreByStoreidProductByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the stored variant with the store\'s listing for it overlaid — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what makes per-storefront pricing of a shared variant possible. The overlay is keyed by the variant\'s ID, never by its slug or SKU. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
      * @summary Fetch a variant as this storefront sells it
-     * @param {StoreApiGetV1StoreByStoreidVariantByKeyRequest} requestParameters Request parameters.
+     * @param {StoreApiGetStoreByStoreidVariantByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public getV1StoreByStoreidVariantByKey(requestParameters: StoreApiGetV1StoreByStoreidVariantByKeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).getV1StoreByStoreidVariantByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public getStoreByStoreidVariantByKey(requestParameters: StoreApiGetStoreByStoreidVariantByKeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).getStoreByStoreidVariantByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2688,32 +2688,32 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public getV1StoreCurrent(options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).getV1StoreCurrent(options).then((request) => request(this.axios, this.basePath));
+    public getStoreCurrent(options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).getStoreCurrent(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Loads the stored store and decodes the body over it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged entity. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin token, or one holding both store read and store write.
      * @summary Change part of a storefront
-     * @param {StoreApiPatchV1StoreByStoreidRequest} requestParameters Request parameters.
+     * @param {StoreApiPatchStoreByStoreidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public patchV1StoreByStoreid(requestParameters: StoreApiPatchV1StoreByStoreidRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).patchV1StoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public patchStoreByStoreid(requestParameters: StoreApiPatchStoreByStoreidRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).patchStoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Requires the key to already be present — an absent one is 404 — and answers the store\'s listing map at 200. Read the behaviour before relying on it: the decoded body is applied to a COPY taken out of the map and is never assigned back, so the stored listing is unchanged and the map returned is exactly the map that was already there. An actual edit to an existing listing has to go through the upsert, which does write its result back into the store. A body that fails to decode is still 400. Admin-gated and namespaced to the caller\'s org.
      * @summary Confirm a listing override exists and re-save the store
-     * @param {StoreApiPatchV1StoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+     * @param {StoreApiPatchStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public patchV1StoreByStoreidListingByKey(requestParameters: StoreApiPatchV1StoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).patchV1StoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public patchStoreByStoreidListingByKey(requestParameters: StoreApiPatchStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).patchStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2723,212 +2723,212 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1Store(options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1Store(options).then((request) => request(this.axios, this.basePath));
+    public postStore(options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStore(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header, the header winning when both are present. Only PUT, PATCH and DELETE are accepted; anything else resolves to 405. The trap is the default: naming NO override at all is treated as a partial update, never as a create. Authorization is whatever the underlying operation requires, since the real handler runs.
      * @summary Method-override tunnel for clients that cannot send PUT, PATCH or DELETE
-     * @param {StoreApiPostV1StoreByStoreidRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreid(requestParameters: StoreApiPostV1StoreByStoreidRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreid(requestParameters: StoreApiPostStoreByStoreidRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Tallies a new order for the addressed store from the user, payment and order body, reserves its items, runs the processor authorization and answers the saved order with a Location header pointing at it. The gate is a token carrying admin or published scope, so a published storefront key is enough; no token is 401 and a token with neither bit is 403. The store is loaded BEFORE any payment work and its currency OVERRIDES whatever the body asked for, so a store that will not load ends the call with 500 and nothing is charged. On any authorization failure the reservations are released and the order and payment are persisted as cancelled, so a failed attempt still leaves a durable record. Capture is a separate call.
      * @summary Authorize a new order against a storefront, holding the funds without settling them
-     * @param {StoreApiPostV1StoreByStoreidAuthorizeRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidAuthorizeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidAuthorize(requestParameters: StoreApiPostV1StoreByStoreidAuthorizeRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidAuthorize(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidAuthorize(requestParameters: StoreApiPostStoreByStoreidAuthorizeRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidAuthorize(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Continues the order named in the path rather than minting a new one, holding funds for it. The order is loaded from the caller org\'s own store, so an id belonging to another tenant is a 404. The rule most callers get wrong is that the body\'s order object is MERGED onto the loaded order before the tally — this is not a read-only reference, and a field sent here overwrites what is stored. The gate, the store resolution and the currency override behave exactly as on the bodiless-id sibling, and settling is still the capture call\'s job.
      * @summary Authorize an order that already exists, holding the funds without settling them
-     * @param {StoreApiPostV1StoreByStoreidAuthorizeByOrderidRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidAuthorizeByOrderidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidAuthorizeByOrderid(requestParameters: StoreApiPostV1StoreByStoreidAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidAuthorizeByOrderid(requestParameters: StoreApiPostStoreByStoreidAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Settles the order named in the path — the second half of the two-step flow — and answers the updated order with a Location header. Dispatch follows the order\'s STORED payment type, and a successful capture is the moment the rest of the system learns about the sale: order and payment rows are updated, coupon redemptions, referral, cart and stats are written, the confirmation email goes out, and the paid and completed events are emitted. A capture failure releases the order\'s inventory reservations and answers 400, so a failed settlement never leaves items held.
      * @summary Capture a previously authorized order and settle the payment
-     * @param {StoreApiPostV1StoreByStoreidCaptureByOrderidRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidCaptureByOrderidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidCaptureByOrderid(requestParameters: StoreApiPostV1StoreByStoreidCaptureByOrderidRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidCaptureByOrderid(requestParameters: StoreApiPostStoreByStoreidCaptureByOrderidRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Runs authorization and capture back to back against a freshly created order — the one-step flow for callers with no reason to hold funds. It takes the authorize body and inherits every authorize rule: the store\'s currency wins over the body, the items are reserved before the processor is called, and the amount bounds the processor enforces still apply. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects — confirmation email, redemptions, stats, the paid and completed events — run only when both halves succeed.
      * @summary Authorize and capture a new order in one call
-     * @param {StoreApiPostV1StoreByStoreidChargeRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidChargeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidCharge(requestParameters: StoreApiPostV1StoreByStoreidChargeRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidCharge(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidCharge(requestParameters: StoreApiPostStoreByStoreidChargeRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidCharge(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Authorizes a new order for the addressed store and holds the funds, answering the saved order with a Location header. It binds the identical handler as the shorter authorize address, so the two are ONE operation at two spellings and not two behaviours; the checkout prefix is the newer one. Every rule carries over: admin or published scope on the token, the store loaded first with its currency overriding the body, items reserved before the processor call, and reservations released with the order persisted cancelled on failure. Nothing is settled here.
      * @summary Authorize a new order against a storefront, holding the funds — the checkout spelling
-     * @param {StoreApiPostV1StoreByStoreidCheckoutAuthorizeRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidCheckoutAuthorizeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidCheckoutAuthorize(requestParameters: StoreApiPostV1StoreByStoreidCheckoutAuthorizeRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidCheckoutAuthorize(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidCheckoutAuthorize(requestParameters: StoreApiPostStoreByStoreidCheckoutAuthorizeRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidCheckoutAuthorize(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Continues the order named in the path rather than minting one, and shares its handler byte for byte with the unprefixed authorize-by-id address. The order is loaded from the caller org\'s own store, so another tenant\'s id is a 404, and the body\'s order object is merged onto the loaded row before the tally — a field sent here overwrites what is stored. Store resolution, the token gate and the currency override behave as on every other authorize address; settle with the capture address and the same order id.
      * @summary Authorize an existing order, holding the funds — the checkout spelling
-     * @param {StoreApiPostV1StoreByStoreidCheckoutAuthorizeByOrderidRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidCheckoutAuthorizeByOrderidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidCheckoutAuthorizeByOrderid(requestParameters: StoreApiPostV1StoreByStoreidCheckoutAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidCheckoutAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidCheckoutAuthorizeByOrderid(requestParameters: StoreApiPostStoreByStoreidCheckoutAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidCheckoutAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Settles the authorized order named in the path and answers the updated order with a Location header, running the same handler as the unprefixed capture address. Dispatch follows the order\'s stored payment type. Success is what triggers the downstream work — order and payment updates, redemptions, referral, cart and stats, the confirmation email, and the paid and completed events — while a failure releases the order\'s inventory reservations and answers 400.
      * @summary Capture a previously authorized order and settle it — the checkout spelling
-     * @param {StoreApiPostV1StoreByStoreidCheckoutCaptureByOrderidRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidCheckoutCaptureByOrderidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidCheckoutCaptureByOrderid(requestParameters: StoreApiPostV1StoreByStoreidCheckoutCaptureByOrderidRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidCheckoutCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidCheckoutCaptureByOrderid(requestParameters: StoreApiPostStoreByStoreidCheckoutCaptureByOrderidRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidCheckoutCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Performs authorization and capture back to back against a newly created order for the addressed store, on the same handler as the unprefixed charge address. It takes the authorize body and inherits every authorize rule, including the store\'s currency winning over the body and the items being reserved before the processor is called. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects run only when both succeed.
      * @summary Authorize and capture a new order in one call — the checkout spelling
-     * @param {StoreApiPostV1StoreByStoreidCheckoutChargeRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidCheckoutChargeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidCheckoutCharge(requestParameters: StoreApiPostV1StoreByStoreidCheckoutChargeRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidCheckoutCharge(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidCheckoutCharge(requestParameters: StoreApiPostStoreByStoreidCheckoutChargeRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidCheckoutCharge(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Meant to void the payments carrying the given pay key, stamp them cancelled and cancel the order, but the shared checkout handler resolves its order from an ORDER ID path parameter this route does not carry. The result is an untyped order and a cancel dispatch that refuses with 400 before the pay key lookup ever runs. Token gate, namespacing and store resolution happen first, so a missing token is still 401 and an unloadable store still 500. It is the same handler as the unprefixed cancel address, with the same outcome.
      * @summary PayPal cancel by pay key — refuses, exactly as the unprefixed address does
-     * @param {StoreApiPostV1StoreByStoreidCheckoutPaypalCancelByPaykeyRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidCheckoutPaypalCancelByPaykeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters: StoreApiPostV1StoreByStoreidCheckoutPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters: StoreApiPostStoreByStoreidCheckoutPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Meant to mark the payments carrying the given pay key as paid and set the order to paid, it cannot reach that work from this address: the shared checkout handler takes its order from an ORDER ID path parameter this route does not carry, so the order is always fresh and untyped and the confirm dispatch refuses with 400 before the pay key is queried. The token gate, the namespace middleware and the store lookup all run ahead of that, so authentication and store failures surface first. Behaviour is identical to the unprefixed confirm address; the checkout prefix changes nothing here.
      * @summary PayPal confirm by pay key — refuses, exactly as the unprefixed address does
-     * @param {StoreApiPostV1StoreByStoreidCheckoutPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters: StoreApiPostV1StoreByStoreidCheckoutPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters: StoreApiPostStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Begins a PayPal authorization by running the ordinary store authorize flow, since the route binds that exact handler — body, store resolution, tally, reservations and failure behaviour are the authorize address\'s, unchanged. The processor is chosen from the body\'s payment type, so this path reaches PayPal only when that type says so. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. Build against the plain authorize address instead.
      * @summary Start a PayPal authorization for a new order — the checkout spelling
-     * @param {StoreApiPostV1StoreByStoreidCheckoutPaypalPayRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidCheckoutPaypalPayRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidCheckoutPaypalPay(requestParameters: StoreApiPostV1StoreByStoreidCheckoutPaypalPayRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidCheckoutPaypalPay(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidCheckoutPaypalPay(requestParameters: StoreApiPostStoreByStoreidCheckoutPaypalPayRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidCheckoutPaypalPay(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates the override and answers the store\'s ENTIRE listing map at 201 with a Location header — not just the entry that was added. A key already present is refused 400: creation never silently overwrites, so changing an existing listing has to be an explicit replace. The stored listing has its currency stamped from the store\'s own, which the replace path does not do. The key is matched exactly here, with none of the slug or SKU fallback the read allows. Admin-gated and resolved inside the caller org\'s namespace.
      * @summary Add a listing override under a new key
-     * @param {StoreApiPostV1StoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidListingByKey(requestParameters: StoreApiPostV1StoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidListingByKey(requestParameters: StoreApiPostStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Intended to void the payments carrying the given pay key, stamp them cancelled and cancel the order, it never reaches that work: the shared checkout handler reads its order from an ORDER ID path parameter this route does not carry, leaving an untyped order that the cancel dispatch refuses with 400 before the pay key lookup runs. Authentication, namespacing and store resolution happen ahead of the refusal, so a missing token is 401 and an unloadable store 500. Cancelling a real PayPal authorization needs an address that carries the order id.
      * @summary PayPal cancel by pay key — refuses, because a pay key alone does not identify the order
-     * @param {StoreApiPostV1StoreByStoreidPaypalCancelByPaykeyRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidPaypalCancelByPaykeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidPaypalCancelByPaykey(requestParameters: StoreApiPostV1StoreByStoreidPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidPaypalCancelByPaykey(requestParameters: StoreApiPostStoreByStoreidPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Intended to mark every payment carrying the given pay key as paid and flip the order to paid, it cannot do that from this address and does not pretend to: the shared checkout handler resolves its order from an ORDER ID path parameter that this route does not carry, so it always works against a fresh untyped order and the confirm dispatch refuses it with 400 before the pay key is ever queried. The token gate, the namespace and the store lookup all run ahead of that, so a missing token is still 401 and an unloadable store still 500. Drive a PayPal return through an address that carries the order id.
      * @summary PayPal confirm by pay key — refuses, because a pay key alone does not identify the order
-     * @param {StoreApiPostV1StoreByStoreidPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidPaypalConfirmByPaykey(requestParameters: StoreApiPostV1StoreByStoreidPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidPaypalConfirmByPaykey(requestParameters: StoreApiPostStoreByStoreidPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Runs the ordinary store authorize flow — the route binds that very handler, so the body, the store resolution, the tally, the reservations and the failure behaviour are the authorize address\'s, unchanged. It reaches PayPal only when the body\'s payment type says so; nothing about this path forces the processor, so a card-typed payment posted here authorizes on the card processor instead. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. It is the older entry point; the plain authorize address is the one to build against.
      * @summary Start a PayPal authorization for a new order
-     * @param {StoreApiPostV1StoreByStoreidPaypalPayRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidPaypalPayRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidPaypalPay(requestParameters: StoreApiPostV1StoreByStoreidPaypalPayRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidPaypalPay(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidPaypalPay(requestParameters: StoreApiPostStoreByStoreidPaypalPayRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidPaypalPay(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a trialing subscription for the addressed store on the entry plan and grants that plan\'s trial credit, answering 201 when this call actually started one and 200 with a reason otherwise — not_new when the store already has billing history, trial_not_configured when no entry plan is wired. The window is always the SEVEN-DAY no-card trial, because this address never presents a card; the longer card-present window is reached only by adding a card afterwards. Entitlement is per store while the billing subject is the org, so every store an org owns takes its own trial. Admin-gated and namespaced to the caller\'s org: no resolvable store is 404 with store_required, and a backing-store failure is 503.
      * @summary Start this store\'s no-card trial on the entry plan
-     * @param {StoreApiPostV1StoreByStoreidTrialRequest} requestParameters Request parameters.
+     * @param {StoreApiPostStoreByStoreidTrialRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreByStoreidTrial(requestParameters: StoreApiPostV1StoreByStoreidTrialRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreByStoreidTrial(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public postStoreByStoreidTrial(requestParameters: StoreApiPostStoreByStoreidTrialRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreByStoreidTrial(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2938,32 +2938,32 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public postV1StoreToken(options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).postV1StoreToken(options).then((request) => request(this.axios, this.basePath));
+    public postStoreToken(options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).postStoreToken(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * This is a true REPLACEMENT, not a merge: the stored key is preserved but the body is decoded onto a fresh entity, so every field the body omits is written back as its zero value. Use the partial update when you mean to change part of a store. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is a 404 before anything is written. Requires an admin token, or one holding both store read and store write.
      * @summary Replace a storefront outright
-     * @param {StoreApiPutV1StoreByStoreidRequest} requestParameters Request parameters.
+     * @param {StoreApiPutStoreByStoreidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public putV1StoreByStoreid(requestParameters: StoreApiPutV1StoreByStoreidRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).putV1StoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    public putStoreByStoreid(requestParameters: StoreApiPutStoreByStoreidRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).putStoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Decodes the body over the existing listing when the key is present, so fields it omits keep their stored values, and builds the listing from the body alone when the key is new. Answers 200 when it replaced something and 201 with a Location header when it created it; either way the body is the store\'s entire listing map, not the single entry. Unlike creation, this path does NOT restamp the listing\'s currency from the store. Admin-gated, with the store resolved inside the caller org\'s namespace.
      * @summary Upsert a listing override
-     * @param {StoreApiPutV1StoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+     * @param {StoreApiPutStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public putV1StoreByStoreidListingByKey(requestParameters: StoreApiPutV1StoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).putV1StoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public putStoreByStoreidListingByKey(requestParameters: StoreApiPutStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).putStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

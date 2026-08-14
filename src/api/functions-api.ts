@@ -56,9 +56,9 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1FunctionsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteFunctionsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1FunctionsByName', 'name', name)
+            assertParamExists('deleteFunctionsByName', 'name', name)
             const localVarPath = `/v1/functions/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -89,7 +89,7 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Functions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFunctions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/functions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -120,9 +120,9 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFunctionsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1FunctionsByName', 'name', name)
+            assertParamExists('getFunctionsByName', 'name', name)
             const localVarPath = `/v1/functions/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -155,9 +155,9 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsByNameInvocations: async (name: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFunctionsByNameInvocations: async (name: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1FunctionsByNameInvocations', 'name', name)
+            assertParamExists('getFunctionsByNameInvocations', 'name', name)
             const localVarPath = `/v1/functions/{name}/invocations`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -193,9 +193,9 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsByNameLogs: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFunctionsByNameLogs: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1FunctionsByNameLogs', 'name', name)
+            assertParamExists('getFunctionsByNameLogs', 'name', name)
             const localVarPath = `/v1/functions/{name}/logs`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -226,7 +226,7 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsDeployments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFunctionsDeployments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/functions/deployments`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -257,7 +257,7 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsMetrics: async (range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFunctionsMetrics: async (range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/functions/metrics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -291,7 +291,7 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsSecrets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFunctionsSecrets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/functions/secrets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -321,7 +321,7 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsTriggers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFunctionsTriggers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/functions/triggers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -352,9 +352,9 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Functions: async (definition: Definition, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFunctions: async (definition: Definition, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'definition' is not null or undefined
-            assertParamExists('postV1Functions', 'definition', definition)
+            assertParamExists('postFunctions', 'definition', definition)
             const localVarPath = `/v1/functions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -389,11 +389,11 @@ export const FunctionsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FunctionsByNameInvoke: async (name: string, invokeReq: InvokeReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFunctionsByNameInvoke: async (name: string, invokeReq: InvokeReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1FunctionsByNameInvoke', 'name', name)
+            assertParamExists('postFunctionsByNameInvoke', 'name', name)
             // verify required parameter 'invokeReq' is not null or undefined
-            assertParamExists('postV1FunctionsByNameInvoke', 'invokeReq', invokeReq)
+            assertParamExists('postFunctionsByNameInvoke', 'invokeReq', invokeReq)
             const localVarPath = `/v1/functions/{name}/invoke`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -438,10 +438,10 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1FunctionsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1FunctionsByName(name, options);
+        async deleteFunctionsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFunctionsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.deleteV1FunctionsByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.deleteFunctionsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -450,10 +450,10 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Functions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FnList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Functions(options);
+        async getFunctions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FnList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFunctions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getV1Functions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getFunctions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -463,10 +463,10 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FunctionsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FunctionDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FunctionsByName(name, options);
+        async getFunctionsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FunctionDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFunctionsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getV1FunctionsByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getFunctionsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -477,10 +477,10 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FunctionsByNameInvocations(name: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InvocationList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FunctionsByNameInvocations(name, limit, options);
+        async getFunctionsByNameInvocations(name: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InvocationList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFunctionsByNameInvocations(name, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getV1FunctionsByNameInvocations']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getFunctionsByNameInvocations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -490,10 +490,10 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FunctionsByNameLogs(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogLines>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FunctionsByNameLogs(name, options);
+        async getFunctionsByNameLogs(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogLines>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFunctionsByNameLogs(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getV1FunctionsByNameLogs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getFunctionsByNameLogs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -502,10 +502,10 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FunctionsDeployments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FnList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FunctionsDeployments(options);
+        async getFunctionsDeployments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FnList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFunctionsDeployments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getV1FunctionsDeployments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getFunctionsDeployments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -515,10 +515,10 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FunctionsMetrics(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Usage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FunctionsMetrics(range, options);
+        async getFunctionsMetrics(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Usage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFunctionsMetrics(range, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getV1FunctionsMetrics']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getFunctionsMetrics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -527,10 +527,10 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FunctionsSecrets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FunctionsSecrets(options);
+        async getFunctionsSecrets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SecretList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFunctionsSecrets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getV1FunctionsSecrets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getFunctionsSecrets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -539,10 +539,10 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FunctionsTriggers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TriggerList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FunctionsTriggers(options);
+        async getFunctionsTriggers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TriggerList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFunctionsTriggers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getV1FunctionsTriggers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.getFunctionsTriggers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -552,10 +552,10 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Functions(definition: Definition, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FunctionView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Functions(definition, options);
+        async postFunctions(definition: Definition, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FunctionView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFunctions(definition, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.postV1Functions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.postFunctions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -566,10 +566,10 @@ export const FunctionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1FunctionsByNameInvoke(name: string, invokeReq: InvokeReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InvocationView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1FunctionsByNameInvoke(name, invokeReq, options);
+        async postFunctionsByNameInvoke(name: string, invokeReq: InvokeReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InvocationView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFunctionsByNameInvoke(name, invokeReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.postV1FunctionsByNameInvoke']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FunctionsApi.postFunctionsByNameInvoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -585,12 +585,12 @@ export const FunctionsApiFactory = function (configuration?: Configuration, base
         /**
          * Removes one of the caller org\'s functions and answers 204.  A name this org does not hold is 404 — never a silent success — and a name belonging to another tenant is the same 404, because the delete is predicated on the validated org.
          * @summary Removes one of the caller org\'s functions and answers 204.
-         * @param {FunctionsApiDeleteV1FunctionsByNameRequest} requestParameters Request parameters.
+         * @param {FunctionsApiDeleteFunctionsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1FunctionsByName(requestParameters: FunctionsApiDeleteV1FunctionsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.deleteV1FunctionsByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteFunctionsByName(requestParameters: FunctionsApiDeleteFunctionsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.deleteFunctionsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Is every serverless function the caller\'s org has published, each with its real 7-day rollup.  A row carries the function\'s runtime, resource limits, deployment target and its invoke endpoint, plus envCount — how many secrets it mounts. The rollup fields are ABSENT rather than zero when the function has not run in the window, so a console renders \"—\" instead of a fabricated 0.  Requires a validated principal; the listing is scoped to its org.
@@ -598,38 +598,38 @@ export const FunctionsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Functions(options?: RawAxiosRequestConfig): AxiosPromise<FnList> {
-            return localVarFp.getV1Functions(options).then((request) => request(axios, basePath));
+        getFunctions(options?: RawAxiosRequestConfig): AxiosPromise<FnList> {
+            return localVarFp.getFunctions(options).then((request) => request(axios, basePath));
         },
         /**
          * Is one function with everything a detail page needs in one round-trip: its definition, its 7-day rollup, its trigger, its twenty most recent invocations and the NAMES of the secrets it mounts.  Secret values are never read or returned. A name the caller\'s org does not hold is 404, which is also what another tenant\'s function looks like from here.
          * @summary Is one function with everything a detail page needs in one round-trip: its definition, its 7-day rollup, its trigger, its twenty most recent invocations and the NAMES of the secrets it mounts.
-         * @param {FunctionsApiGetV1FunctionsByNameRequest} requestParameters Request parameters.
+         * @param {FunctionsApiGetFunctionsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsByName(requestParameters: FunctionsApiGetV1FunctionsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<FunctionDetail> {
-            return localVarFp.getV1FunctionsByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getFunctionsByName(requestParameters: FunctionsApiGetFunctionsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<FunctionDetail> {
+            return localVarFp.getFunctionsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Is one function\'s past runs, newest first — each with its status, HTTP code, method, time and duration.  These are real recorded rows, not a projection: an invocation appears here only once it actually ran. Requires a validated principal; the read is scoped to its org.
          * @summary Is one function\'s past runs, newest first — each with its status, HTTP code, method, time and duration.
-         * @param {FunctionsApiGetV1FunctionsByNameInvocationsRequest} requestParameters Request parameters.
+         * @param {FunctionsApiGetFunctionsByNameInvocationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsByNameInvocations(requestParameters: FunctionsApiGetV1FunctionsByNameInvocationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<InvocationList> {
-            return localVarFp.getV1FunctionsByNameInvocations(requestParameters.name, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getFunctionsByNameInvocations(requestParameters: FunctionsApiGetFunctionsByNameInvocationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<InvocationList> {
+            return localVarFp.getFunctionsByNameInvocations(requestParameters.name, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Is the output of a function\'s most recent run — its error text when that run failed, else what it printed.  It is the LAST run only, and it is empty when the function has never run. There is no log retention behind this beyond the recorded invocation itself.
          * @summary Is the output of a function\'s most recent run — its error text when that run failed, else what it printed.
-         * @param {FunctionsApiGetV1FunctionsByNameLogsRequest} requestParameters Request parameters.
+         * @param {FunctionsApiGetFunctionsByNameLogsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsByNameLogs(requestParameters: FunctionsApiGetV1FunctionsByNameLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LogLines> {
-            return localVarFp.getV1FunctionsByNameLogs(requestParameters.name, options).then((request) => request(axios, basePath));
+        getFunctionsByNameLogs(requestParameters: FunctionsApiGetFunctionsByNameLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<LogLines> {
+            return localVarFp.getFunctionsByNameLogs(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Is what is live right now — each function\'s current record IS its live deployment, so this is the deployment inventory.  There is no deployment history behind it: a function has one record, and publishing replaces it. The 7-day rollup is deliberately absent here, because this read is about what is deployed rather than about how it has performed.
@@ -637,18 +637,18 @@ export const FunctionsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsDeployments(options?: RawAxiosRequestConfig): AxiosPromise<FnList> {
-            return localVarFp.getV1FunctionsDeployments(options).then((request) => request(axios, basePath));
+        getFunctionsDeployments(options?: RawAxiosRequestConfig): AxiosPromise<FnList> {
+            return localVarFp.getFunctionsDeployments(options).then((request) => request(axios, basePath));
         },
         /**
          * Is the org\'s serverless dashboard over a window: a per-function invocation costLine and how those invocations ended.  Every point is a REAL count of rows that fell in that bucket — nothing is interpolated or invented, so an empty window draws a flat line rather than a fabricated one.  costCents is null and stays null: there is no per-invocation cost source to read, and reporting a number computed some other way would be a guess presented as a measurement. Requires a validated principal; the read is scoped to its org.
          * @summary Is the org\'s serverless dashboard over a window: a per-function invocation costLine and how those invocations ended.
-         * @param {FunctionsApiGetV1FunctionsMetricsRequest} requestParameters Request parameters.
+         * @param {FunctionsApiGetFunctionsMetricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsMetrics(requestParameters: FunctionsApiGetV1FunctionsMetricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Usage> {
-            return localVarFp.getV1FunctionsMetrics(requestParameters.range, options).then((request) => request(axios, basePath));
+        getFunctionsMetrics(requestParameters: FunctionsApiGetFunctionsMetricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Usage> {
+            return localVarFp.getFunctionsMetrics(requestParameters.range, options).then((request) => request(axios, basePath));
         },
         /**
          * Is the NAMES of the secrets the caller org\'s functions mount.  Values are NEVER read or returned — this surface knows which names a function asks for and nothing about what is behind them, which is what makes it safe to list at all. One row per distinct (namespace, name).
@@ -656,8 +656,8 @@ export const FunctionsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsSecrets(options?: RawAxiosRequestConfig): AxiosPromise<SecretList> {
-            return localVarFp.getV1FunctionsSecrets(options).then((request) => request(axios, basePath));
+        getFunctionsSecrets(options?: RawAxiosRequestConfig): AxiosPromise<SecretList> {
+            return localVarFp.getFunctionsSecrets(options).then((request) => request(axios, basePath));
         },
         /**
          * Is what calls the caller org\'s functions — one row per function.  Every function has exactly one trigger today, its HTTP invoke endpoint, so this is the function list read as \"how is each of these reached\".
@@ -665,140 +665,140 @@ export const FunctionsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FunctionsTriggers(options?: RawAxiosRequestConfig): AxiosPromise<TriggerList> {
-            return localVarFp.getV1FunctionsTriggers(options).then((request) => request(axios, basePath));
+        getFunctionsTriggers(options?: RawAxiosRequestConfig): AxiosPromise<TriggerList> {
+            return localVarFp.getFunctionsTriggers(options).then((request) => request(axios, basePath));
         },
         /**
          * Publishes a serverless function under the caller\'s org and answers 201 with it.  The name is the key and is claimed once; the names that would shadow a collection route are reserved. runtime and environment are the same field — either spelling is accepted — and default to node.  Bounds are clamped rather than refused where a clamp is honest: a timeout above the 900-second ceiling becomes the ceiling instead of silently reverting to the 30-second default, and an omitted memory limit becomes 256Mi. target=fleet runs on the org\'s own GPU fleet and supports runtime=python only.  Requires a validated principal; the function is owned by that principal\'s org.
          * @summary Publishes a serverless function under the caller\'s org and answers 201 with it.
-         * @param {FunctionsApiPostV1FunctionsRequest} requestParameters Request parameters.
+         * @param {FunctionsApiPostFunctionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Functions(requestParameters: FunctionsApiPostV1FunctionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<FunctionView> {
-            return localVarFp.postV1Functions(requestParameters.definition, options).then((request) => request(axios, basePath));
+        postFunctions(requestParameters: FunctionsApiPostFunctionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<FunctionView> {
+            return localVarFp.postFunctions(requestParameters.definition, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs a function and records a REAL invocation.  The answer is the invocation record whatever happened to it: 200 when the org\'s code ran clean, 502 when it ran and failed, 503 when this deployment has no sandbox to run code in. The record IS the evidence, so it rides the failure rather than being replaced by an error envelope.  Billing is two-part and both parts are prepaid-then-metered on the one shared meter: a flat per-invocation request fee, gated BEFORE any sandbox compute runs so an unfunded org gets 402 and nothing executes, and a usage-native GB-seconds compute debit taken after the run. Either is independently free when its fee is zero, so an operator can bill by request alone, by compute alone, or by both — and a zero request fee removes the balance gate with it.  A TRANSPORT failure is not charged: the sandbox being unreachable ran no billable compute. Code that ran and exited non-zero IS charged — that is a successful invocation of a failing program, not a billing failure.  When the sandbox is not configured on this deployment, a non-fleet function fails closed before anything is recorded — no execution and no fabricated output. Scoped to the caller\'s org; requires a validated principal.
          * @summary Runs a function and records a REAL invocation.
-         * @param {FunctionsApiPostV1FunctionsByNameInvokeRequest} requestParameters Request parameters.
+         * @param {FunctionsApiPostFunctionsByNameInvokeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FunctionsByNameInvoke(requestParameters: FunctionsApiPostV1FunctionsByNameInvokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<InvocationView> {
-            return localVarFp.postV1FunctionsByNameInvoke(requestParameters.name, requestParameters.invokeReq, options).then((request) => request(axios, basePath));
+        postFunctionsByNameInvoke(requestParameters: FunctionsApiPostFunctionsByNameInvokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<InvocationView> {
+            return localVarFp.postFunctionsByNameInvoke(requestParameters.name, requestParameters.invokeReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1FunctionsByName operation in FunctionsApi.
+ * Request parameters for deleteFunctionsByName operation in FunctionsApi.
  * @export
- * @interface FunctionsApiDeleteV1FunctionsByNameRequest
+ * @interface FunctionsApiDeleteFunctionsByNameRequest
  */
-export interface FunctionsApiDeleteV1FunctionsByNameRequest {
+export interface FunctionsApiDeleteFunctionsByNameRequest {
     /**
      * Name is the function the URL names.
      * @type {string}
-     * @memberof FunctionsApiDeleteV1FunctionsByName
+     * @memberof FunctionsApiDeleteFunctionsByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1FunctionsByName operation in FunctionsApi.
+ * Request parameters for getFunctionsByName operation in FunctionsApi.
  * @export
- * @interface FunctionsApiGetV1FunctionsByNameRequest
+ * @interface FunctionsApiGetFunctionsByNameRequest
  */
-export interface FunctionsApiGetV1FunctionsByNameRequest {
+export interface FunctionsApiGetFunctionsByNameRequest {
     /**
      * Name is the function the URL names.
      * @type {string}
-     * @memberof FunctionsApiGetV1FunctionsByName
+     * @memberof FunctionsApiGetFunctionsByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1FunctionsByNameInvocations operation in FunctionsApi.
+ * Request parameters for getFunctionsByNameInvocations operation in FunctionsApi.
  * @export
- * @interface FunctionsApiGetV1FunctionsByNameInvocationsRequest
+ * @interface FunctionsApiGetFunctionsByNameInvocationsRequest
  */
-export interface FunctionsApiGetV1FunctionsByNameInvocationsRequest {
+export interface FunctionsApiGetFunctionsByNameInvocationsRequest {
     /**
      * Name is the function the URL names.
      * @type {string}
-     * @memberof FunctionsApiGetV1FunctionsByNameInvocations
+     * @memberof FunctionsApiGetFunctionsByNameInvocations
      */
     readonly name: string
 
     /**
      * Limit caps the page, defaulting to 100.
      * @type {number}
-     * @memberof FunctionsApiGetV1FunctionsByNameInvocations
+     * @memberof FunctionsApiGetFunctionsByNameInvocations
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1FunctionsByNameLogs operation in FunctionsApi.
+ * Request parameters for getFunctionsByNameLogs operation in FunctionsApi.
  * @export
- * @interface FunctionsApiGetV1FunctionsByNameLogsRequest
+ * @interface FunctionsApiGetFunctionsByNameLogsRequest
  */
-export interface FunctionsApiGetV1FunctionsByNameLogsRequest {
+export interface FunctionsApiGetFunctionsByNameLogsRequest {
     /**
      * Name is the function the URL names.
      * @type {string}
-     * @memberof FunctionsApiGetV1FunctionsByNameLogs
+     * @memberof FunctionsApiGetFunctionsByNameLogs
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1FunctionsMetrics operation in FunctionsApi.
+ * Request parameters for getFunctionsMetrics operation in FunctionsApi.
  * @export
- * @interface FunctionsApiGetV1FunctionsMetricsRequest
+ * @interface FunctionsApiGetFunctionsMetricsRequest
  */
-export interface FunctionsApiGetV1FunctionsMetricsRequest {
+export interface FunctionsApiGetFunctionsMetricsRequest {
     /**
      * Range is 1H, 6H, 24H (the default), 7D or 30D. Anything else falls back to 24H rather than failing.
      * @type {string}
-     * @memberof FunctionsApiGetV1FunctionsMetrics
+     * @memberof FunctionsApiGetFunctionsMetrics
      */
     readonly range?: string
 }
 
 /**
- * Request parameters for postV1Functions operation in FunctionsApi.
+ * Request parameters for postFunctions operation in FunctionsApi.
  * @export
- * @interface FunctionsApiPostV1FunctionsRequest
+ * @interface FunctionsApiPostFunctionsRequest
  */
-export interface FunctionsApiPostV1FunctionsRequest {
+export interface FunctionsApiPostFunctionsRequest {
     /**
      * 
      * @type {Definition}
-     * @memberof FunctionsApiPostV1Functions
+     * @memberof FunctionsApiPostFunctions
      */
     readonly definition: Definition
 }
 
 /**
- * Request parameters for postV1FunctionsByNameInvoke operation in FunctionsApi.
+ * Request parameters for postFunctionsByNameInvoke operation in FunctionsApi.
  * @export
- * @interface FunctionsApiPostV1FunctionsByNameInvokeRequest
+ * @interface FunctionsApiPostFunctionsByNameInvokeRequest
  */
-export interface FunctionsApiPostV1FunctionsByNameInvokeRequest {
+export interface FunctionsApiPostFunctionsByNameInvokeRequest {
     /**
      * 
      * @type {string}
-     * @memberof FunctionsApiPostV1FunctionsByNameInvoke
+     * @memberof FunctionsApiPostFunctionsByNameInvoke
      */
     readonly name: string
 
     /**
      * 
      * @type {InvokeReq}
-     * @memberof FunctionsApiPostV1FunctionsByNameInvoke
+     * @memberof FunctionsApiPostFunctionsByNameInvoke
      */
     readonly invokeReq: InvokeReq
 }
@@ -813,13 +813,13 @@ export class FunctionsApi extends BaseAPI {
     /**
      * Removes one of the caller org\'s functions and answers 204.  A name this org does not hold is 404 — never a silent success — and a name belonging to another tenant is the same 404, because the delete is predicated on the validated org.
      * @summary Removes one of the caller org\'s functions and answers 204.
-     * @param {FunctionsApiDeleteV1FunctionsByNameRequest} requestParameters Request parameters.
+     * @param {FunctionsApiDeleteFunctionsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public deleteV1FunctionsByName(requestParameters: FunctionsApiDeleteV1FunctionsByNameRequest, options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).deleteV1FunctionsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteFunctionsByName(requestParameters: FunctionsApiDeleteFunctionsByNameRequest, options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).deleteFunctionsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -829,44 +829,44 @@ export class FunctionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public getV1Functions(options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).getV1Functions(options).then((request) => request(this.axios, this.basePath));
+    public getFunctions(options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).getFunctions(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is one function with everything a detail page needs in one round-trip: its definition, its 7-day rollup, its trigger, its twenty most recent invocations and the NAMES of the secrets it mounts.  Secret values are never read or returned. A name the caller\'s org does not hold is 404, which is also what another tenant\'s function looks like from here.
      * @summary Is one function with everything a detail page needs in one round-trip: its definition, its 7-day rollup, its trigger, its twenty most recent invocations and the NAMES of the secrets it mounts.
-     * @param {FunctionsApiGetV1FunctionsByNameRequest} requestParameters Request parameters.
+     * @param {FunctionsApiGetFunctionsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public getV1FunctionsByName(requestParameters: FunctionsApiGetV1FunctionsByNameRequest, options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).getV1FunctionsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getFunctionsByName(requestParameters: FunctionsApiGetFunctionsByNameRequest, options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).getFunctionsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is one function\'s past runs, newest first — each with its status, HTTP code, method, time and duration.  These are real recorded rows, not a projection: an invocation appears here only once it actually ran. Requires a validated principal; the read is scoped to its org.
      * @summary Is one function\'s past runs, newest first — each with its status, HTTP code, method, time and duration.
-     * @param {FunctionsApiGetV1FunctionsByNameInvocationsRequest} requestParameters Request parameters.
+     * @param {FunctionsApiGetFunctionsByNameInvocationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public getV1FunctionsByNameInvocations(requestParameters: FunctionsApiGetV1FunctionsByNameInvocationsRequest, options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).getV1FunctionsByNameInvocations(requestParameters.name, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getFunctionsByNameInvocations(requestParameters: FunctionsApiGetFunctionsByNameInvocationsRequest, options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).getFunctionsByNameInvocations(requestParameters.name, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is the output of a function\'s most recent run — its error text when that run failed, else what it printed.  It is the LAST run only, and it is empty when the function has never run. There is no log retention behind this beyond the recorded invocation itself.
      * @summary Is the output of a function\'s most recent run — its error text when that run failed, else what it printed.
-     * @param {FunctionsApiGetV1FunctionsByNameLogsRequest} requestParameters Request parameters.
+     * @param {FunctionsApiGetFunctionsByNameLogsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public getV1FunctionsByNameLogs(requestParameters: FunctionsApiGetV1FunctionsByNameLogsRequest, options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).getV1FunctionsByNameLogs(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getFunctionsByNameLogs(requestParameters: FunctionsApiGetFunctionsByNameLogsRequest, options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).getFunctionsByNameLogs(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -876,20 +876,20 @@ export class FunctionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public getV1FunctionsDeployments(options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).getV1FunctionsDeployments(options).then((request) => request(this.axios, this.basePath));
+    public getFunctionsDeployments(options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).getFunctionsDeployments(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is the org\'s serverless dashboard over a window: a per-function invocation costLine and how those invocations ended.  Every point is a REAL count of rows that fell in that bucket — nothing is interpolated or invented, so an empty window draws a flat line rather than a fabricated one.  costCents is null and stays null: there is no per-invocation cost source to read, and reporting a number computed some other way would be a guess presented as a measurement. Requires a validated principal; the read is scoped to its org.
      * @summary Is the org\'s serverless dashboard over a window: a per-function invocation costLine and how those invocations ended.
-     * @param {FunctionsApiGetV1FunctionsMetricsRequest} requestParameters Request parameters.
+     * @param {FunctionsApiGetFunctionsMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public getV1FunctionsMetrics(requestParameters: FunctionsApiGetV1FunctionsMetricsRequest = {}, options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).getV1FunctionsMetrics(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
+    public getFunctionsMetrics(requestParameters: FunctionsApiGetFunctionsMetricsRequest = {}, options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).getFunctionsMetrics(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -899,8 +899,8 @@ export class FunctionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public getV1FunctionsSecrets(options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).getV1FunctionsSecrets(options).then((request) => request(this.axios, this.basePath));
+    public getFunctionsSecrets(options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).getFunctionsSecrets(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -910,32 +910,32 @@ export class FunctionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public getV1FunctionsTriggers(options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).getV1FunctionsTriggers(options).then((request) => request(this.axios, this.basePath));
+    public getFunctionsTriggers(options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).getFunctionsTriggers(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Publishes a serverless function under the caller\'s org and answers 201 with it.  The name is the key and is claimed once; the names that would shadow a collection route are reserved. runtime and environment are the same field — either spelling is accepted — and default to node.  Bounds are clamped rather than refused where a clamp is honest: a timeout above the 900-second ceiling becomes the ceiling instead of silently reverting to the 30-second default, and an omitted memory limit becomes 256Mi. target=fleet runs on the org\'s own GPU fleet and supports runtime=python only.  Requires a validated principal; the function is owned by that principal\'s org.
      * @summary Publishes a serverless function under the caller\'s org and answers 201 with it.
-     * @param {FunctionsApiPostV1FunctionsRequest} requestParameters Request parameters.
+     * @param {FunctionsApiPostFunctionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public postV1Functions(requestParameters: FunctionsApiPostV1FunctionsRequest, options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).postV1Functions(requestParameters.definition, options).then((request) => request(this.axios, this.basePath));
+    public postFunctions(requestParameters: FunctionsApiPostFunctionsRequest, options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).postFunctions(requestParameters.definition, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Runs a function and records a REAL invocation.  The answer is the invocation record whatever happened to it: 200 when the org\'s code ran clean, 502 when it ran and failed, 503 when this deployment has no sandbox to run code in. The record IS the evidence, so it rides the failure rather than being replaced by an error envelope.  Billing is two-part and both parts are prepaid-then-metered on the one shared meter: a flat per-invocation request fee, gated BEFORE any sandbox compute runs so an unfunded org gets 402 and nothing executes, and a usage-native GB-seconds compute debit taken after the run. Either is independently free when its fee is zero, so an operator can bill by request alone, by compute alone, or by both — and a zero request fee removes the balance gate with it.  A TRANSPORT failure is not charged: the sandbox being unreachable ran no billable compute. Code that ran and exited non-zero IS charged — that is a successful invocation of a failing program, not a billing failure.  When the sandbox is not configured on this deployment, a non-fleet function fails closed before anything is recorded — no execution and no fabricated output. Scoped to the caller\'s org; requires a validated principal.
      * @summary Runs a function and records a REAL invocation.
-     * @param {FunctionsApiPostV1FunctionsByNameInvokeRequest} requestParameters Request parameters.
+     * @param {FunctionsApiPostFunctionsByNameInvokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FunctionsApi
      */
-    public postV1FunctionsByNameInvoke(requestParameters: FunctionsApiPostV1FunctionsByNameInvokeRequest, options?: RawAxiosRequestConfig) {
-        return FunctionsApiFp(this.configuration).postV1FunctionsByNameInvoke(requestParameters.name, requestParameters.invokeReq, options).then((request) => request(this.axios, this.basePath));
+    public postFunctionsByNameInvoke(requestParameters: FunctionsApiPostFunctionsByNameInvokeRequest, options?: RawAxiosRequestConfig) {
+        return FunctionsApiFp(this.configuration).postFunctionsByNameInvoke(requestParameters.name, requestParameters.invokeReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

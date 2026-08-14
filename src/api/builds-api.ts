@@ -35,7 +35,7 @@ export const BuildsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Builds: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBuilds: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/builds`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const BuildsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Builds(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildBoard>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Builds(options);
+        async getBuilds(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBuilds(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BuildsApi.getV1Builds']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BuildsApi.getBuilds']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const BuildsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Builds(options?: RawAxiosRequestConfig): AxiosPromise<BuildBoard> {
-            return localVarFp.getV1Builds(options).then((request) => request(axios, basePath));
+        getBuilds(options?: RawAxiosRequestConfig): AxiosPromise<BuildBoard> {
+            return localVarFp.getBuilds(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class BuildsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BuildsApi
      */
-    public getV1Builds(options?: RawAxiosRequestConfig) {
-        return BuildsApiFp(this.configuration).getV1Builds(options).then((request) => request(this.axios, this.basePath));
+    public getBuilds(options?: RawAxiosRequestConfig) {
+        return BuildsApiFp(this.configuration).getBuilds(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

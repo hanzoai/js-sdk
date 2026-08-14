@@ -35,7 +35,7 @@ export const PrefsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Prefs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPrefs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/prefs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -65,7 +65,7 @@ export const PrefsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1Prefs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchPrefs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/prefs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -105,10 +105,10 @@ export const PrefsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Prefs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PrefsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Prefs(options);
+        async getPrefs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PrefsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPrefs(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PrefsApi.getV1Prefs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PrefsApi.getPrefs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -117,10 +117,10 @@ export const PrefsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1Prefs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1Prefs(options);
+        async patchPrefs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPrefs(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PrefsApi.patchV1Prefs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PrefsApi.patchPrefs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -139,8 +139,8 @@ export const PrefsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Prefs(options?: RawAxiosRequestConfig): AxiosPromise<PrefsView> {
-            return localVarFp.getV1Prefs(options).then((request) => request(axios, basePath));
+        getPrefs(options?: RawAxiosRequestConfig): AxiosPromise<PrefsView> {
+            return localVarFp.getPrefs(options).then((request) => request(axios, basePath));
         },
         /**
          * Merges a JSON object key-wise into the signed-in caller\'s OWN preference document and answers with the whole document after the merge, so a surface saves `theme` without having to send back the `density` another surface owns. The merge is SHALLOW and the key space is open: an unnamed key is left untouched, a named key is replaced whole, and a key sent with a `null` value is DELETED. The subject is the `<owner>/<name>` identity built from the validated credential and is the mandatory predicate on the write, so there is no path to another user\'s preferences — not for an org admin, not for a platform SuperAdmin. Fails closed: no validated principal is 403; an empty body or a literal `null` is 400; and a patch or a resulting document over 16 KiB or 128 keys is 413.
@@ -148,8 +148,8 @@ export const PrefsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1Prefs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1Prefs(options).then((request) => request(axios, basePath));
+        patchPrefs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchPrefs(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -168,8 +168,8 @@ export class PrefsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PrefsApi
      */
-    public getV1Prefs(options?: RawAxiosRequestConfig) {
-        return PrefsApiFp(this.configuration).getV1Prefs(options).then((request) => request(this.axios, this.basePath));
+    public getPrefs(options?: RawAxiosRequestConfig) {
+        return PrefsApiFp(this.configuration).getPrefs(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -179,8 +179,8 @@ export class PrefsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PrefsApi
      */
-    public patchV1Prefs(options?: RawAxiosRequestConfig) {
-        return PrefsApiFp(this.configuration).patchV1Prefs(options).then((request) => request(this.axios, this.basePath));
+    public patchPrefs(options?: RawAxiosRequestConfig) {
+        return PrefsApiFp(this.configuration).patchPrefs(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -35,7 +35,7 @@ export const MeshApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MeshServices: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMeshServices: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/mesh/services`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const MeshApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MeshServices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeshServiceList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MeshServices(options);
+        async getMeshServices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeshServiceList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMeshServices(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MeshApi.getV1MeshServices']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MeshApi.getMeshServices']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const MeshApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MeshServices(options?: RawAxiosRequestConfig): AxiosPromise<MeshServiceList> {
-            return localVarFp.getV1MeshServices(options).then((request) => request(axios, basePath));
+        getMeshServices(options?: RawAxiosRequestConfig): AxiosPromise<MeshServiceList> {
+            return localVarFp.getMeshServices(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class MeshApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MeshApi
      */
-    public getV1MeshServices(options?: RawAxiosRequestConfig) {
-        return MeshApiFp(this.configuration).getV1MeshServices(options).then((request) => request(this.axios, this.basePath));
+    public getMeshServices(options?: RawAxiosRequestConfig) {
+        return MeshApiFp(this.configuration).getMeshServices(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

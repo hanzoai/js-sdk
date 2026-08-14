@@ -22,31 +22,31 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Artifact } from '../models';
+import type { LicensingFingerprintRequest } from '../models';
 // @ts-ignore
-import type { FingerprintRequest } from '../models';
+import type { LicensingFingerprintResponse } from '../models';
 // @ts-ignore
-import type { FingerprintResponse } from '../models';
+import type { LicensingHealthView } from '../models';
 // @ts-ignore
-import type { HealthView } from '../models';
+import type { LicensingIssueRequest } from '../models';
 // @ts-ignore
-import type { IssueRequest } from '../models';
+import type { LicensingIssueResponse } from '../models';
 // @ts-ignore
-import type { IssueResponse } from '../models';
+import type { LicensingPubkeyView } from '../models';
 // @ts-ignore
-import type { PubkeyView } from '../models';
+import type { LicensingRelease } from '../models';
 // @ts-ignore
-import type { Release } from '../models';
+import type { LicensingReleaseAsset } from '../models';
 // @ts-ignore
-import type { ReleaseList } from '../models';
+import type { LicensingReleaseList } from '../models';
 // @ts-ignore
-import type { RevokeRequest } from '../models';
+import type { LicensingRevokeRequest } from '../models';
 // @ts-ignore
-import type { RevokeResponse } from '../models';
+import type { LicensingRevokeResponse } from '../models';
 // @ts-ignore
-import type { VerifyRequest } from '../models';
+import type { LicensingVerifyRequest } from '../models';
 // @ts-ignore
-import type { VerifyResponse } from '../models';
+import type { LicensingVerifyResponse } from '../models';
 /**
  * LicensingApi - axios parameter creator
  * @export
@@ -57,13 +57,14 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
          * Download resolves a release to its artifact, gated on a valid license.  The gate is the LICENSE token, not the IAM bearer: being signed in is not permission to download a paid binary — holding a good license for it is. The token must verify against this deployment\'s public key, be unrevoked, be scoped to the release\'s app, and carry every feature the release requires. Present it as the `X-License-Token` header (preferred, since a header does not land in proxy logs) or as `?token=`.  The response pairs the artifact URL with its cosign signature so the client verifies the binary BEFORE trusting it: a signed URL alone proves where the bytes came from, not what they are. A yanked release is 410 Gone.
          * @summary Download resolves a release to its artifact, gated on a valid license.
          * @param {string} release 
+         * @param {string} [xLicenseToken] 
          * @param {string} [token] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingDownloadByRelease: async (release: string, token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLicensingDownloadByRelease: async (release: string, xLicenseToken?: string, token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'release' is not null or undefined
-            assertParamExists('getV1LicensingDownloadByRelease', 'release', release)
+            assertParamExists('getLicensingDownloadByRelease', 'release', release)
             const localVarPath = `/v1/licensing/download/{release}`
                 .replace(`{${"release"}}`, encodeURIComponent(String(release)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -83,6 +84,9 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
 
 
     
+            if (xLicenseToken != null) {
+                localVarHeaderParameter['X-License-Token'] = String(xLicenseToken);
+            }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -98,7 +102,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingHealthz: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLicensingHealthz: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/licensing/healthz`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -128,7 +132,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingJwks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLicensingJwks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/licensing/jwks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -158,7 +162,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingPubkey: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLicensingPubkey: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/licensing/pubkey`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -188,7 +192,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingReleases: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLicensingReleases: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/licensing/releases`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -219,9 +223,9 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingReleasesByRelease: async (release: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLicensingReleasesByRelease: async (release: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'release' is not null or undefined
-            assertParamExists('getV1LicensingReleasesByRelease', 'release', release)
+            assertParamExists('getLicensingReleasesByRelease', 'release', release)
             const localVarPath = `/v1/licensing/releases/{release}`
                 .replace(`{${"release"}}`, encodeURIComponent(String(release)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -249,13 +253,13 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Fingerprint turns raw device signals into the opaque value that binds a license to one machine.  This is the anti-copy step: the value returned here is folded into the signed token, so a token minted with it runs only on the device it was bound to. The derivation is one-way and salted — the signals are never stored and never echoed back — so the response is safe to persist client-side and pass to issue. Signals too weak to identify a machine (a hostname alone) are refused rather than turned into a binding that would collide with other machines.
          * @summary Fingerprint turns raw device signals into the opaque value that binds a license to one machine.
-         * @param {FingerprintRequest} fingerprintRequest 
+         * @param {LicensingFingerprintRequest} licensingFingerprintRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LicensingFingerprint: async (fingerprintRequest: FingerprintRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'fingerprintRequest' is not null or undefined
-            assertParamExists('postV1LicensingFingerprint', 'fingerprintRequest', fingerprintRequest)
+        postLicensingFingerprint: async (licensingFingerprintRequest: LicensingFingerprintRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'licensingFingerprintRequest' is not null or undefined
+            assertParamExists('postLicensingFingerprint', 'licensingFingerprintRequest', licensingFingerprintRequest)
             const localVarPath = `/v1/licensing/fingerprint`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -275,7 +279,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(fingerprintRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(licensingFingerprintRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -285,13 +289,13 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed — by the KMS, never by key material in this process. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
          * @summary Issue mints a signed license token for a product the caller\'s org already pays for.
-         * @param {IssueRequest} issueRequest 
+         * @param {LicensingIssueRequest} licensingIssueRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LicensingIssue: async (issueRequest: IssueRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'issueRequest' is not null or undefined
-            assertParamExists('postV1LicensingIssue', 'issueRequest', issueRequest)
+        postLicensingIssue: async (licensingIssueRequest: LicensingIssueRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'licensingIssueRequest' is not null or undefined
+            assertParamExists('postLicensingIssue', 'licensingIssueRequest', licensingIssueRequest)
             const localVarPath = `/v1/licensing/issue`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -311,7 +315,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(issueRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(licensingIssueRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -321,13 +325,13 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Publishes a signed binary release, answering 201 Created.  Outside dev a release MUST carry its cosign signature: this is how a binary becomes downloadable, so accepting an unsigned one would let an unverifiable artifact into the distribution path. Org-admin only — publishing is an operator action, not something a licensee does.
          * @summary Publishes a signed binary release, answering 201 Created.
-         * @param {Release} release 
+         * @param {LicensingRelease} licensingRelease 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LicensingReleases: async (release: Release, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'release' is not null or undefined
-            assertParamExists('postV1LicensingReleases', 'release', release)
+        postLicensingReleases: async (licensingRelease: LicensingRelease, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'licensingRelease' is not null or undefined
+            assertParamExists('postLicensingReleases', 'licensingRelease', licensingRelease)
             const localVarPath = `/v1/licensing/releases`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -347,7 +351,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(release, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(licensingRelease, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -357,13 +361,13 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Revoke turns off tokens that have already been issued.  A signed token cannot be un-signed, so revocation is the only way to withdraw one: this appends an entry that verify and the license-gated download both consult. It is a POST rather than a DELETE because it APPENDS a durable, attributed record — the entry names the admin who recorded it and when — rather than removing one.  Org-admin only. Scope it as narrowly as the incident allows: \"nonce\" for one leaked token, \"holder\" for one compromised account, \"fingerprint\" for one stolen machine, \"release\" when a whole build is bad.
          * @summary Revoke turns off tokens that have already been issued.
-         * @param {RevokeRequest} revokeRequest 
+         * @param {LicensingRevokeRequest} licensingRevokeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LicensingRevoke: async (revokeRequest: RevokeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'revokeRequest' is not null or undefined
-            assertParamExists('postV1LicensingRevoke', 'revokeRequest', revokeRequest)
+        postLicensingRevoke: async (licensingRevokeRequest: LicensingRevokeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'licensingRevokeRequest' is not null or undefined
+            assertParamExists('postLicensingRevoke', 'licensingRevokeRequest', licensingRevokeRequest)
             const localVarPath = `/v1/licensing/revoke`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -383,7 +387,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(revokeRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(licensingRevokeRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -393,13 +397,13 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Verify checks a license token online: signature, schema, expiry, app_id and the revocation list.  It is UNAUTHENTICATED and always answers 200 — a bad token is `valid:false` with a reason rather than an error status, because \"is this token good\" is a question anyone may ask about a credential they already hold and the answer is the same either way. It is also OPTIONAL: the engine verifies OFFLINE against the published public key (GET /v1/licensing/pubkey) and needs this endpoint only to learn about revocation, so an outage here never stops a paid customer working.
          * @summary Verify checks a license token online: signature, schema, expiry, app_id and the revocation list.
-         * @param {VerifyRequest} verifyRequest 
+         * @param {LicensingVerifyRequest} licensingVerifyRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LicensingVerify: async (verifyRequest: VerifyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'verifyRequest' is not null or undefined
-            assertParamExists('postV1LicensingVerify', 'verifyRequest', verifyRequest)
+        postLicensingVerify: async (licensingVerifyRequest: LicensingVerifyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'licensingVerifyRequest' is not null or undefined
+            assertParamExists('postLicensingVerify', 'licensingVerifyRequest', licensingVerifyRequest)
             const localVarPath = `/v1/licensing/verify`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -419,7 +423,7 @@ export const LicensingApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(verifyRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(licensingVerifyRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -440,14 +444,15 @@ export const LicensingApiFp = function(configuration?: Configuration) {
          * Download resolves a release to its artifact, gated on a valid license.  The gate is the LICENSE token, not the IAM bearer: being signed in is not permission to download a paid binary — holding a good license for it is. The token must verify against this deployment\'s public key, be unrevoked, be scoped to the release\'s app, and carry every feature the release requires. Present it as the `X-License-Token` header (preferred, since a header does not land in proxy logs) or as `?token=`.  The response pairs the artifact URL with its cosign signature so the client verifies the binary BEFORE trusting it: a signed URL alone proves where the bytes came from, not what they are. A yanked release is 410 Gone.
          * @summary Download resolves a release to its artifact, gated on a valid license.
          * @param {string} release 
+         * @param {string} [xLicenseToken] 
          * @param {string} [token] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LicensingDownloadByRelease(release: string, token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Artifact>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LicensingDownloadByRelease(release, token, options);
+        async getLicensingDownloadByRelease(release: string, xLicenseToken?: string, token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingReleaseAsset>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLicensingDownloadByRelease(release, xLicenseToken, token, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getV1LicensingDownloadByRelease']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getLicensingDownloadByRelease']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -456,10 +461,10 @@ export const LicensingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LicensingHealthz(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LicensingHealthz(options);
+        async getLicensingHealthz(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingHealthView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLicensingHealthz(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getV1LicensingHealthz']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getLicensingHealthz']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -468,10 +473,10 @@ export const LicensingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LicensingJwks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PubkeyView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LicensingJwks(options);
+        async getLicensingJwks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingPubkeyView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLicensingJwks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getV1LicensingJwks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getLicensingJwks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -480,10 +485,10 @@ export const LicensingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LicensingPubkey(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PubkeyView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LicensingPubkey(options);
+        async getLicensingPubkey(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingPubkeyView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLicensingPubkey(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getV1LicensingPubkey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getLicensingPubkey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -492,10 +497,10 @@ export const LicensingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LicensingReleases(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReleaseList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LicensingReleases(options);
+        async getLicensingReleases(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingReleaseList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLicensingReleases(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getV1LicensingReleases']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getLicensingReleases']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -505,75 +510,75 @@ export const LicensingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LicensingReleasesByRelease(release: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Release>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LicensingReleasesByRelease(release, options);
+        async getLicensingReleasesByRelease(release: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingRelease>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLicensingReleasesByRelease(release, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getV1LicensingReleasesByRelease']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LicensingApi.getLicensingReleasesByRelease']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Fingerprint turns raw device signals into the opaque value that binds a license to one machine.  This is the anti-copy step: the value returned here is folded into the signed token, so a token minted with it runs only on the device it was bound to. The derivation is one-way and salted — the signals are never stored and never echoed back — so the response is safe to persist client-side and pass to issue. Signals too weak to identify a machine (a hostname alone) are refused rather than turned into a binding that would collide with other machines.
          * @summary Fingerprint turns raw device signals into the opaque value that binds a license to one machine.
-         * @param {FingerprintRequest} fingerprintRequest 
+         * @param {LicensingFingerprintRequest} licensingFingerprintRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1LicensingFingerprint(fingerprintRequest: FingerprintRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FingerprintResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1LicensingFingerprint(fingerprintRequest, options);
+        async postLicensingFingerprint(licensingFingerprintRequest: LicensingFingerprintRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingFingerprintResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLicensingFingerprint(licensingFingerprintRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postV1LicensingFingerprint']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postLicensingFingerprint']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed — by the KMS, never by key material in this process. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
          * @summary Issue mints a signed license token for a product the caller\'s org already pays for.
-         * @param {IssueRequest} issueRequest 
+         * @param {LicensingIssueRequest} licensingIssueRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1LicensingIssue(issueRequest: IssueRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IssueResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1LicensingIssue(issueRequest, options);
+        async postLicensingIssue(licensingIssueRequest: LicensingIssueRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingIssueResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLicensingIssue(licensingIssueRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postV1LicensingIssue']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postLicensingIssue']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Publishes a signed binary release, answering 201 Created.  Outside dev a release MUST carry its cosign signature: this is how a binary becomes downloadable, so accepting an unsigned one would let an unverifiable artifact into the distribution path. Org-admin only — publishing is an operator action, not something a licensee does.
          * @summary Publishes a signed binary release, answering 201 Created.
-         * @param {Release} release 
+         * @param {LicensingRelease} licensingRelease 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1LicensingReleases(release: Release, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Release>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1LicensingReleases(release, options);
+        async postLicensingReleases(licensingRelease: LicensingRelease, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingRelease>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLicensingReleases(licensingRelease, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postV1LicensingReleases']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postLicensingReleases']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Revoke turns off tokens that have already been issued.  A signed token cannot be un-signed, so revocation is the only way to withdraw one: this appends an entry that verify and the license-gated download both consult. It is a POST rather than a DELETE because it APPENDS a durable, attributed record — the entry names the admin who recorded it and when — rather than removing one.  Org-admin only. Scope it as narrowly as the incident allows: \"nonce\" for one leaked token, \"holder\" for one compromised account, \"fingerprint\" for one stolen machine, \"release\" when a whole build is bad.
          * @summary Revoke turns off tokens that have already been issued.
-         * @param {RevokeRequest} revokeRequest 
+         * @param {LicensingRevokeRequest} licensingRevokeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1LicensingRevoke(revokeRequest: RevokeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1LicensingRevoke(revokeRequest, options);
+        async postLicensingRevoke(licensingRevokeRequest: LicensingRevokeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingRevokeResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLicensingRevoke(licensingRevokeRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postV1LicensingRevoke']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postLicensingRevoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Verify checks a license token online: signature, schema, expiry, app_id and the revocation list.  It is UNAUTHENTICATED and always answers 200 — a bad token is `valid:false` with a reason rather than an error status, because \"is this token good\" is a question anyone may ask about a credential they already hold and the answer is the same either way. It is also OPTIONAL: the engine verifies OFFLINE against the published public key (GET /v1/licensing/pubkey) and needs this endpoint only to learn about revocation, so an outage here never stops a paid customer working.
          * @summary Verify checks a license token online: signature, schema, expiry, app_id and the revocation list.
-         * @param {VerifyRequest} verifyRequest 
+         * @param {LicensingVerifyRequest} licensingVerifyRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1LicensingVerify(verifyRequest: VerifyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerifyResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1LicensingVerify(verifyRequest, options);
+        async postLicensingVerify(licensingVerifyRequest: LicensingVerifyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LicensingVerifyResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLicensingVerify(licensingVerifyRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postV1LicensingVerify']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LicensingApi.postLicensingVerify']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -589,12 +594,12 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
         /**
          * Download resolves a release to its artifact, gated on a valid license.  The gate is the LICENSE token, not the IAM bearer: being signed in is not permission to download a paid binary — holding a good license for it is. The token must verify against this deployment\'s public key, be unrevoked, be scoped to the release\'s app, and carry every feature the release requires. Present it as the `X-License-Token` header (preferred, since a header does not land in proxy logs) or as `?token=`.  The response pairs the artifact URL with its cosign signature so the client verifies the binary BEFORE trusting it: a signed URL alone proves where the bytes came from, not what they are. A yanked release is 410 Gone.
          * @summary Download resolves a release to its artifact, gated on a valid license.
-         * @param {LicensingApiGetV1LicensingDownloadByReleaseRequest} requestParameters Request parameters.
+         * @param {LicensingApiGetLicensingDownloadByReleaseRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingDownloadByRelease(requestParameters: LicensingApiGetV1LicensingDownloadByReleaseRequest, options?: RawAxiosRequestConfig): AxiosPromise<Artifact> {
-            return localVarFp.getV1LicensingDownloadByRelease(requestParameters.release, requestParameters.token, options).then((request) => request(axios, basePath));
+        getLicensingDownloadByRelease(requestParameters: LicensingApiGetLicensingDownloadByReleaseRequest, options?: RawAxiosRequestConfig): AxiosPromise<LicensingReleaseAsset> {
+            return localVarFp.getLicensingDownloadByRelease(requestParameters.release, requestParameters.xLicenseToken, requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
          * Health reports which signer this deployment mints with, and in which env.  It answers 200 whenever the process is up: there is nothing downstream to probe, since the KMS is reached only when a token is actually minted. Its value is the `signer` field — `\"signer\":\"local\"` on a production host says that deployment is signing licenses with a development key, which is a misconfiguration worth paging on rather than a healthy 200.
@@ -602,8 +607,8 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingHealthz(options?: RawAxiosRequestConfig): AxiosPromise<HealthView> {
-            return localVarFp.getV1LicensingHealthz(options).then((request) => request(axios, basePath));
+        getLicensingHealthz(options?: RawAxiosRequestConfig): AxiosPromise<LicensingHealthView> {
+            return localVarFp.getLicensingHealthz(options).then((request) => request(axios, basePath));
         },
         /**
          * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half never enters this process — it lives in the KMS — so nothing served here is a secret. `provider` names the KMS holding that half; `\"local\"` means a development key, and a token signed by one is not a production credential.
@@ -611,8 +616,8 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingJwks(options?: RawAxiosRequestConfig): AxiosPromise<PubkeyView> {
-            return localVarFp.getV1LicensingJwks(options).then((request) => request(axios, basePath));
+        getLicensingJwks(options?: RawAxiosRequestConfig): AxiosPromise<LicensingPubkeyView> {
+            return localVarFp.getLicensingJwks(options).then((request) => request(axios, basePath));
         },
         /**
          * Pubkey publishes the Ed25519 PUBLIC verification key, at both /pubkey and /jwks.  This is the only public-safe surface here and the reason the whole scheme works offline: the engine embeds or fetches this key once and then verifies every license itself, with no call home per launch. The private half never enters this process — it lives in the KMS — so nothing served here is a secret. `provider` names the KMS holding that half; `\"local\"` means a development key, and a token signed by one is not a production credential.
@@ -620,8 +625,8 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingPubkey(options?: RawAxiosRequestConfig): AxiosPromise<PubkeyView> {
-            return localVarFp.getV1LicensingPubkey(options).then((request) => request(axios, basePath));
+        getLicensingPubkey(options?: RawAxiosRequestConfig): AxiosPromise<LicensingPubkeyView> {
+            return localVarFp.getLicensingPubkey(options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the signed binary releases this deployment can serve.  Metadata only, and no download URL: the artifact is behind GET /v1/licensing/download/{release}, which is gated on a valid license token. Knowing that a release exists is not permission to run it, which is why this list needs no license of its own.
@@ -629,175 +634,182 @@ export const LicensingApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingReleases(options?: RawAxiosRequestConfig): AxiosPromise<ReleaseList> {
-            return localVarFp.getV1LicensingReleases(options).then((request) => request(axios, basePath));
+        getLicensingReleases(options?: RawAxiosRequestConfig): AxiosPromise<LicensingReleaseList> {
+            return localVarFp.getLicensingReleases(options).then((request) => request(axios, basePath));
         },
         /**
          * Reads one release\'s metadata: its product, version, platform and the cosign material a client verifies the binary against.  An unknown id is 404. Like the list, this is metadata only — the bytes are behind the license-gated download.
          * @summary Reads one release\'s metadata: its product, version, platform and the cosign material a client verifies the binary against.
-         * @param {LicensingApiGetV1LicensingReleasesByReleaseRequest} requestParameters Request parameters.
+         * @param {LicensingApiGetLicensingReleasesByReleaseRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LicensingReleasesByRelease(requestParameters: LicensingApiGetV1LicensingReleasesByReleaseRequest, options?: RawAxiosRequestConfig): AxiosPromise<Release> {
-            return localVarFp.getV1LicensingReleasesByRelease(requestParameters.release, options).then((request) => request(axios, basePath));
+        getLicensingReleasesByRelease(requestParameters: LicensingApiGetLicensingReleasesByReleaseRequest, options?: RawAxiosRequestConfig): AxiosPromise<LicensingRelease> {
+            return localVarFp.getLicensingReleasesByRelease(requestParameters.release, options).then((request) => request(axios, basePath));
         },
         /**
          * Fingerprint turns raw device signals into the opaque value that binds a license to one machine.  This is the anti-copy step: the value returned here is folded into the signed token, so a token minted with it runs only on the device it was bound to. The derivation is one-way and salted — the signals are never stored and never echoed back — so the response is safe to persist client-side and pass to issue. Signals too weak to identify a machine (a hostname alone) are refused rather than turned into a binding that would collide with other machines.
          * @summary Fingerprint turns raw device signals into the opaque value that binds a license to one machine.
-         * @param {LicensingApiPostV1LicensingFingerprintRequest} requestParameters Request parameters.
+         * @param {LicensingApiPostLicensingFingerprintRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LicensingFingerprint(requestParameters: LicensingApiPostV1LicensingFingerprintRequest, options?: RawAxiosRequestConfig): AxiosPromise<FingerprintResponse> {
-            return localVarFp.postV1LicensingFingerprint(requestParameters.fingerprintRequest, options).then((request) => request(axios, basePath));
+        postLicensingFingerprint(requestParameters: LicensingApiPostLicensingFingerprintRequest, options?: RawAxiosRequestConfig): AxiosPromise<LicensingFingerprintResponse> {
+            return localVarFp.postLicensingFingerprint(requestParameters.licensingFingerprintRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed — by the KMS, never by key material in this process. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
          * @summary Issue mints a signed license token for a product the caller\'s org already pays for.
-         * @param {LicensingApiPostV1LicensingIssueRequest} requestParameters Request parameters.
+         * @param {LicensingApiPostLicensingIssueRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LicensingIssue(requestParameters: LicensingApiPostV1LicensingIssueRequest, options?: RawAxiosRequestConfig): AxiosPromise<IssueResponse> {
-            return localVarFp.postV1LicensingIssue(requestParameters.issueRequest, options).then((request) => request(axios, basePath));
+        postLicensingIssue(requestParameters: LicensingApiPostLicensingIssueRequest, options?: RawAxiosRequestConfig): AxiosPromise<LicensingIssueResponse> {
+            return localVarFp.postLicensingIssue(requestParameters.licensingIssueRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Publishes a signed binary release, answering 201 Created.  Outside dev a release MUST carry its cosign signature: this is how a binary becomes downloadable, so accepting an unsigned one would let an unverifiable artifact into the distribution path. Org-admin only — publishing is an operator action, not something a licensee does.
          * @summary Publishes a signed binary release, answering 201 Created.
-         * @param {LicensingApiPostV1LicensingReleasesRequest} requestParameters Request parameters.
+         * @param {LicensingApiPostLicensingReleasesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LicensingReleases(requestParameters: LicensingApiPostV1LicensingReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Release> {
-            return localVarFp.postV1LicensingReleases(requestParameters.release, options).then((request) => request(axios, basePath));
+        postLicensingReleases(requestParameters: LicensingApiPostLicensingReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<LicensingRelease> {
+            return localVarFp.postLicensingReleases(requestParameters.licensingRelease, options).then((request) => request(axios, basePath));
         },
         /**
          * Revoke turns off tokens that have already been issued.  A signed token cannot be un-signed, so revocation is the only way to withdraw one: this appends an entry that verify and the license-gated download both consult. It is a POST rather than a DELETE because it APPENDS a durable, attributed record — the entry names the admin who recorded it and when — rather than removing one.  Org-admin only. Scope it as narrowly as the incident allows: \"nonce\" for one leaked token, \"holder\" for one compromised account, \"fingerprint\" for one stolen machine, \"release\" when a whole build is bad.
          * @summary Revoke turns off tokens that have already been issued.
-         * @param {LicensingApiPostV1LicensingRevokeRequest} requestParameters Request parameters.
+         * @param {LicensingApiPostLicensingRevokeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LicensingRevoke(requestParameters: LicensingApiPostV1LicensingRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<RevokeResponse> {
-            return localVarFp.postV1LicensingRevoke(requestParameters.revokeRequest, options).then((request) => request(axios, basePath));
+        postLicensingRevoke(requestParameters: LicensingApiPostLicensingRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<LicensingRevokeResponse> {
+            return localVarFp.postLicensingRevoke(requestParameters.licensingRevokeRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Verify checks a license token online: signature, schema, expiry, app_id and the revocation list.  It is UNAUTHENTICATED and always answers 200 — a bad token is `valid:false` with a reason rather than an error status, because \"is this token good\" is a question anyone may ask about a credential they already hold and the answer is the same either way. It is also OPTIONAL: the engine verifies OFFLINE against the published public key (GET /v1/licensing/pubkey) and needs this endpoint only to learn about revocation, so an outage here never stops a paid customer working.
          * @summary Verify checks a license token online: signature, schema, expiry, app_id and the revocation list.
-         * @param {LicensingApiPostV1LicensingVerifyRequest} requestParameters Request parameters.
+         * @param {LicensingApiPostLicensingVerifyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LicensingVerify(requestParameters: LicensingApiPostV1LicensingVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<VerifyResponse> {
-            return localVarFp.postV1LicensingVerify(requestParameters.verifyRequest, options).then((request) => request(axios, basePath));
+        postLicensingVerify(requestParameters: LicensingApiPostLicensingVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<LicensingVerifyResponse> {
+            return localVarFp.postLicensingVerify(requestParameters.licensingVerifyRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1LicensingDownloadByRelease operation in LicensingApi.
+ * Request parameters for getLicensingDownloadByRelease operation in LicensingApi.
  * @export
- * @interface LicensingApiGetV1LicensingDownloadByReleaseRequest
+ * @interface LicensingApiGetLicensingDownloadByReleaseRequest
  */
-export interface LicensingApiGetV1LicensingDownloadByReleaseRequest {
+export interface LicensingApiGetLicensingDownloadByReleaseRequest {
     /**
      * 
      * @type {string}
-     * @memberof LicensingApiGetV1LicensingDownloadByRelease
+     * @memberof LicensingApiGetLicensingDownloadByRelease
      */
     readonly release: string
 
     /**
      * 
      * @type {string}
-     * @memberof LicensingApiGetV1LicensingDownloadByRelease
+     * @memberof LicensingApiGetLicensingDownloadByRelease
+     */
+    readonly xLicenseToken?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof LicensingApiGetLicensingDownloadByRelease
      */
     readonly token?: string
 }
 
 /**
- * Request parameters for getV1LicensingReleasesByRelease operation in LicensingApi.
+ * Request parameters for getLicensingReleasesByRelease operation in LicensingApi.
  * @export
- * @interface LicensingApiGetV1LicensingReleasesByReleaseRequest
+ * @interface LicensingApiGetLicensingReleasesByReleaseRequest
  */
-export interface LicensingApiGetV1LicensingReleasesByReleaseRequest {
+export interface LicensingApiGetLicensingReleasesByReleaseRequest {
     /**
      * 
      * @type {string}
-     * @memberof LicensingApiGetV1LicensingReleasesByRelease
+     * @memberof LicensingApiGetLicensingReleasesByRelease
      */
     readonly release: string
 }
 
 /**
- * Request parameters for postV1LicensingFingerprint operation in LicensingApi.
+ * Request parameters for postLicensingFingerprint operation in LicensingApi.
  * @export
- * @interface LicensingApiPostV1LicensingFingerprintRequest
+ * @interface LicensingApiPostLicensingFingerprintRequest
  */
-export interface LicensingApiPostV1LicensingFingerprintRequest {
+export interface LicensingApiPostLicensingFingerprintRequest {
     /**
      * 
-     * @type {FingerprintRequest}
-     * @memberof LicensingApiPostV1LicensingFingerprint
+     * @type {LicensingFingerprintRequest}
+     * @memberof LicensingApiPostLicensingFingerprint
      */
-    readonly fingerprintRequest: FingerprintRequest
+    readonly licensingFingerprintRequest: LicensingFingerprintRequest
 }
 
 /**
- * Request parameters for postV1LicensingIssue operation in LicensingApi.
+ * Request parameters for postLicensingIssue operation in LicensingApi.
  * @export
- * @interface LicensingApiPostV1LicensingIssueRequest
+ * @interface LicensingApiPostLicensingIssueRequest
  */
-export interface LicensingApiPostV1LicensingIssueRequest {
+export interface LicensingApiPostLicensingIssueRequest {
     /**
      * 
-     * @type {IssueRequest}
-     * @memberof LicensingApiPostV1LicensingIssue
+     * @type {LicensingIssueRequest}
+     * @memberof LicensingApiPostLicensingIssue
      */
-    readonly issueRequest: IssueRequest
+    readonly licensingIssueRequest: LicensingIssueRequest
 }
 
 /**
- * Request parameters for postV1LicensingReleases operation in LicensingApi.
+ * Request parameters for postLicensingReleases operation in LicensingApi.
  * @export
- * @interface LicensingApiPostV1LicensingReleasesRequest
+ * @interface LicensingApiPostLicensingReleasesRequest
  */
-export interface LicensingApiPostV1LicensingReleasesRequest {
+export interface LicensingApiPostLicensingReleasesRequest {
     /**
      * 
-     * @type {Release}
-     * @memberof LicensingApiPostV1LicensingReleases
+     * @type {LicensingRelease}
+     * @memberof LicensingApiPostLicensingReleases
      */
-    readonly release: Release
+    readonly licensingRelease: LicensingRelease
 }
 
 /**
- * Request parameters for postV1LicensingRevoke operation in LicensingApi.
+ * Request parameters for postLicensingRevoke operation in LicensingApi.
  * @export
- * @interface LicensingApiPostV1LicensingRevokeRequest
+ * @interface LicensingApiPostLicensingRevokeRequest
  */
-export interface LicensingApiPostV1LicensingRevokeRequest {
+export interface LicensingApiPostLicensingRevokeRequest {
     /**
      * 
-     * @type {RevokeRequest}
-     * @memberof LicensingApiPostV1LicensingRevoke
+     * @type {LicensingRevokeRequest}
+     * @memberof LicensingApiPostLicensingRevoke
      */
-    readonly revokeRequest: RevokeRequest
+    readonly licensingRevokeRequest: LicensingRevokeRequest
 }
 
 /**
- * Request parameters for postV1LicensingVerify operation in LicensingApi.
+ * Request parameters for postLicensingVerify operation in LicensingApi.
  * @export
- * @interface LicensingApiPostV1LicensingVerifyRequest
+ * @interface LicensingApiPostLicensingVerifyRequest
  */
-export interface LicensingApiPostV1LicensingVerifyRequest {
+export interface LicensingApiPostLicensingVerifyRequest {
     /**
      * 
-     * @type {VerifyRequest}
-     * @memberof LicensingApiPostV1LicensingVerify
+     * @type {LicensingVerifyRequest}
+     * @memberof LicensingApiPostLicensingVerify
      */
-    readonly verifyRequest: VerifyRequest
+    readonly licensingVerifyRequest: LicensingVerifyRequest
 }
 
 /**
@@ -810,13 +822,13 @@ export class LicensingApi extends BaseAPI {
     /**
      * Download resolves a release to its artifact, gated on a valid license.  The gate is the LICENSE token, not the IAM bearer: being signed in is not permission to download a paid binary — holding a good license for it is. The token must verify against this deployment\'s public key, be unrevoked, be scoped to the release\'s app, and carry every feature the release requires. Present it as the `X-License-Token` header (preferred, since a header does not land in proxy logs) or as `?token=`.  The response pairs the artifact URL with its cosign signature so the client verifies the binary BEFORE trusting it: a signed URL alone proves where the bytes came from, not what they are. A yanked release is 410 Gone.
      * @summary Download resolves a release to its artifact, gated on a valid license.
-     * @param {LicensingApiGetV1LicensingDownloadByReleaseRequest} requestParameters Request parameters.
+     * @param {LicensingApiGetLicensingDownloadByReleaseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LicensingApi
      */
-    public getV1LicensingDownloadByRelease(requestParameters: LicensingApiGetV1LicensingDownloadByReleaseRequest, options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).getV1LicensingDownloadByRelease(requestParameters.release, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    public getLicensingDownloadByRelease(requestParameters: LicensingApiGetLicensingDownloadByReleaseRequest, options?: RawAxiosRequestConfig) {
+        return LicensingApiFp(this.configuration).getLicensingDownloadByRelease(requestParameters.release, requestParameters.xLicenseToken, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -826,8 +838,8 @@ export class LicensingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LicensingApi
      */
-    public getV1LicensingHealthz(options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).getV1LicensingHealthz(options).then((request) => request(this.axios, this.basePath));
+    public getLicensingHealthz(options?: RawAxiosRequestConfig) {
+        return LicensingApiFp(this.configuration).getLicensingHealthz(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -837,8 +849,8 @@ export class LicensingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LicensingApi
      */
-    public getV1LicensingJwks(options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).getV1LicensingJwks(options).then((request) => request(this.axios, this.basePath));
+    public getLicensingJwks(options?: RawAxiosRequestConfig) {
+        return LicensingApiFp(this.configuration).getLicensingJwks(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -848,8 +860,8 @@ export class LicensingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LicensingApi
      */
-    public getV1LicensingPubkey(options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).getV1LicensingPubkey(options).then((request) => request(this.axios, this.basePath));
+    public getLicensingPubkey(options?: RawAxiosRequestConfig) {
+        return LicensingApiFp(this.configuration).getLicensingPubkey(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -859,80 +871,80 @@ export class LicensingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LicensingApi
      */
-    public getV1LicensingReleases(options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).getV1LicensingReleases(options).then((request) => request(this.axios, this.basePath));
+    public getLicensingReleases(options?: RawAxiosRequestConfig) {
+        return LicensingApiFp(this.configuration).getLicensingReleases(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reads one release\'s metadata: its product, version, platform and the cosign material a client verifies the binary against.  An unknown id is 404. Like the list, this is metadata only — the bytes are behind the license-gated download.
      * @summary Reads one release\'s metadata: its product, version, platform and the cosign material a client verifies the binary against.
-     * @param {LicensingApiGetV1LicensingReleasesByReleaseRequest} requestParameters Request parameters.
+     * @param {LicensingApiGetLicensingReleasesByReleaseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LicensingApi
      */
-    public getV1LicensingReleasesByRelease(requestParameters: LicensingApiGetV1LicensingReleasesByReleaseRequest, options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).getV1LicensingReleasesByRelease(requestParameters.release, options).then((request) => request(this.axios, this.basePath));
+    public getLicensingReleasesByRelease(requestParameters: LicensingApiGetLicensingReleasesByReleaseRequest, options?: RawAxiosRequestConfig) {
+        return LicensingApiFp(this.configuration).getLicensingReleasesByRelease(requestParameters.release, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Fingerprint turns raw device signals into the opaque value that binds a license to one machine.  This is the anti-copy step: the value returned here is folded into the signed token, so a token minted with it runs only on the device it was bound to. The derivation is one-way and salted — the signals are never stored and never echoed back — so the response is safe to persist client-side and pass to issue. Signals too weak to identify a machine (a hostname alone) are refused rather than turned into a binding that would collide with other machines.
      * @summary Fingerprint turns raw device signals into the opaque value that binds a license to one machine.
-     * @param {LicensingApiPostV1LicensingFingerprintRequest} requestParameters Request parameters.
+     * @param {LicensingApiPostLicensingFingerprintRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LicensingApi
      */
-    public postV1LicensingFingerprint(requestParameters: LicensingApiPostV1LicensingFingerprintRequest, options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).postV1LicensingFingerprint(requestParameters.fingerprintRequest, options).then((request) => request(this.axios, this.basePath));
+    public postLicensingFingerprint(requestParameters: LicensingApiPostLicensingFingerprintRequest, options?: RawAxiosRequestConfig) {
+        return LicensingApiFp(this.configuration).postLicensingFingerprint(requestParameters.licensingFingerprintRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Issue mints a signed license token for a product the caller\'s org already pays for.  The order is the whole security argument: the caller is an IAM-validated principal, commerce is then asked whether that principal\'s ORG holds an ACTIVE entitlement for the product, and only then is a token signed — by the KMS, never by key material in this process. A product the org does not own answers 403 and no token. The signed features are the plan\'s features verbatim, so the engine enforces exactly what was bought, and the expiry is clamped to the entitlement\'s so a token cannot outlive the subscription that paid for it.  The token is the credential the engine runs on. Treat it as a secret.
      * @summary Issue mints a signed license token for a product the caller\'s org already pays for.
-     * @param {LicensingApiPostV1LicensingIssueRequest} requestParameters Request parameters.
+     * @param {LicensingApiPostLicensingIssueRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LicensingApi
      */
-    public postV1LicensingIssue(requestParameters: LicensingApiPostV1LicensingIssueRequest, options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).postV1LicensingIssue(requestParameters.issueRequest, options).then((request) => request(this.axios, this.basePath));
+    public postLicensingIssue(requestParameters: LicensingApiPostLicensingIssueRequest, options?: RawAxiosRequestConfig) {
+        return LicensingApiFp(this.configuration).postLicensingIssue(requestParameters.licensingIssueRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Publishes a signed binary release, answering 201 Created.  Outside dev a release MUST carry its cosign signature: this is how a binary becomes downloadable, so accepting an unsigned one would let an unverifiable artifact into the distribution path. Org-admin only — publishing is an operator action, not something a licensee does.
      * @summary Publishes a signed binary release, answering 201 Created.
-     * @param {LicensingApiPostV1LicensingReleasesRequest} requestParameters Request parameters.
+     * @param {LicensingApiPostLicensingReleasesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LicensingApi
      */
-    public postV1LicensingReleases(requestParameters: LicensingApiPostV1LicensingReleasesRequest, options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).postV1LicensingReleases(requestParameters.release, options).then((request) => request(this.axios, this.basePath));
+    public postLicensingReleases(requestParameters: LicensingApiPostLicensingReleasesRequest, options?: RawAxiosRequestConfig) {
+        return LicensingApiFp(this.configuration).postLicensingReleases(requestParameters.licensingRelease, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Revoke turns off tokens that have already been issued.  A signed token cannot be un-signed, so revocation is the only way to withdraw one: this appends an entry that verify and the license-gated download both consult. It is a POST rather than a DELETE because it APPENDS a durable, attributed record — the entry names the admin who recorded it and when — rather than removing one.  Org-admin only. Scope it as narrowly as the incident allows: \"nonce\" for one leaked token, \"holder\" for one compromised account, \"fingerprint\" for one stolen machine, \"release\" when a whole build is bad.
      * @summary Revoke turns off tokens that have already been issued.
-     * @param {LicensingApiPostV1LicensingRevokeRequest} requestParameters Request parameters.
+     * @param {LicensingApiPostLicensingRevokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LicensingApi
      */
-    public postV1LicensingRevoke(requestParameters: LicensingApiPostV1LicensingRevokeRequest, options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).postV1LicensingRevoke(requestParameters.revokeRequest, options).then((request) => request(this.axios, this.basePath));
+    public postLicensingRevoke(requestParameters: LicensingApiPostLicensingRevokeRequest, options?: RawAxiosRequestConfig) {
+        return LicensingApiFp(this.configuration).postLicensingRevoke(requestParameters.licensingRevokeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Verify checks a license token online: signature, schema, expiry, app_id and the revocation list.  It is UNAUTHENTICATED and always answers 200 — a bad token is `valid:false` with a reason rather than an error status, because \"is this token good\" is a question anyone may ask about a credential they already hold and the answer is the same either way. It is also OPTIONAL: the engine verifies OFFLINE against the published public key (GET /v1/licensing/pubkey) and needs this endpoint only to learn about revocation, so an outage here never stops a paid customer working.
      * @summary Verify checks a license token online: signature, schema, expiry, app_id and the revocation list.
-     * @param {LicensingApiPostV1LicensingVerifyRequest} requestParameters Request parameters.
+     * @param {LicensingApiPostLicensingVerifyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LicensingApi
      */
-    public postV1LicensingVerify(requestParameters: LicensingApiPostV1LicensingVerifyRequest, options?: RawAxiosRequestConfig) {
-        return LicensingApiFp(this.configuration).postV1LicensingVerify(requestParameters.verifyRequest, options).then((request) => request(this.axios, this.basePath));
+    public postLicensingVerify(requestParameters: LicensingApiPostLicensingVerifyRequest, options?: RawAxiosRequestConfig) {
+        return LicensingApiFp(this.configuration).postLicensingVerify(requestParameters.licensingVerifyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

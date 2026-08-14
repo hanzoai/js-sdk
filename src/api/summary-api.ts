@@ -35,7 +35,7 @@ export const SummaryApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Summary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/summary`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const SummaryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Summary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yStatusSummary>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Summary(options);
+        async getSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yStatusSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SummaryApi.getV1Summary']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SummaryApi.getSummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const SummaryApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Summary(options?: RawAxiosRequestConfig): AxiosPromise<O11yStatusSummary> {
-            return localVarFp.getV1Summary(options).then((request) => request(axios, basePath));
+        getSummary(options?: RawAxiosRequestConfig): AxiosPromise<O11yStatusSummary> {
+            return localVarFp.getSummary(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class SummaryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SummaryApi
      */
-    public getV1Summary(options?: RawAxiosRequestConfig) {
-        return SummaryApiFp(this.configuration).getV1Summary(options).then((request) => request(this.axios, this.basePath));
+    public getSummary(options?: RawAxiosRequestConfig) {
+        return SummaryApiFp(this.configuration).getSummary(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

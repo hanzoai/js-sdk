@@ -34,9 +34,9 @@ export const DownloadApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DownloadByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDownloadByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getV1DownloadByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('getDownloadByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/download/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -78,10 +78,10 @@ export const DownloadApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DownloadByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DownloadByWildcard1(wildcard1, options);
+        async getDownloadByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDownloadByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DownloadApi.getV1DownloadByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DownloadApi.getDownloadByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,26 +97,26 @@ export const DownloadApiFactory = function (configuration?: Configuration, baseP
         /**
          * Fetches one file\'s BYTES from a session, addressed as {session_id}/{fileId} — a plot, a generated CSV, whatever a run wrote. The content type is derived from the name and defaults to application/octet-stream.  This is the one address whose success body is not JSON, which is why it is not a typed operation: a typed operation always marshals a Go value.
          * @summary Download a file from a session
-         * @param {DownloadApiGetV1DownloadByWildcard1Request} requestParameters Request parameters.
+         * @param {DownloadApiGetDownloadByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DownloadByWildcard1(requestParameters: DownloadApiGetV1DownloadByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1DownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        getDownloadByWildcard1(requestParameters: DownloadApiGetDownloadByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1DownloadByWildcard1 operation in DownloadApi.
+ * Request parameters for getDownloadByWildcard1 operation in DownloadApi.
  * @export
- * @interface DownloadApiGetV1DownloadByWildcard1Request
+ * @interface DownloadApiGetDownloadByWildcard1Request
  */
-export interface DownloadApiGetV1DownloadByWildcard1Request {
+export interface DownloadApiGetDownloadByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof DownloadApiGetV1DownloadByWildcard1
+     * @memberof DownloadApiGetDownloadByWildcard1
      */
     readonly wildcard1: string
 }
@@ -131,13 +131,13 @@ export class DownloadApi extends BaseAPI {
     /**
      * Fetches one file\'s BYTES from a session, addressed as {session_id}/{fileId} — a plot, a generated CSV, whatever a run wrote. The content type is derived from the name and defaults to application/octet-stream.  This is the one address whose success body is not JSON, which is why it is not a typed operation: a typed operation always marshals a Go value.
      * @summary Download a file from a session
-     * @param {DownloadApiGetV1DownloadByWildcard1Request} requestParameters Request parameters.
+     * @param {DownloadApiGetDownloadByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DownloadApi
      */
-    public getV1DownloadByWildcard1(requestParameters: DownloadApiGetV1DownloadByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DownloadApiFp(this.configuration).getV1DownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public getDownloadByWildcard1(requestParameters: DownloadApiGetDownloadByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DownloadApiFp(this.configuration).getDownloadByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

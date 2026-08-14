@@ -50,9 +50,9 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1KbConnectorsByProvider: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteKbConnectorsByProvider: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('deleteV1KbConnectorsByProvider', 'provider', provider)
+            assertParamExists('deleteKbConnectorsByProvider', 'provider', provider)
             const localVarPath = `/v1/kb/connectors/{provider}`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -83,7 +83,7 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KbConnectors: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getKbConnectors: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/kb/connectors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -117,9 +117,9 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KbConnectorsByProviderCallback: async (provider: string, code?: string, state?: string, error?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getKbConnectorsByProviderCallback: async (provider: string, code?: string, state?: string, error?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('getV1KbConnectorsByProviderCallback', 'provider', provider)
+            assertParamExists('getKbConnectorsByProviderCallback', 'provider', provider)
             const localVarPath = `/v1/kb/connectors/{provider}/callback`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -163,9 +163,9 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KbConnectorsByProviderConnect: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getKbConnectorsByProviderConnect: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('getV1KbConnectorsByProviderConnect', 'provider', provider)
+            assertParamExists('getKbConnectorsByProviderConnect', 'provider', provider)
             const localVarPath = `/v1/kb/connectors/{provider}/connect`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -196,7 +196,7 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KbConnectorsCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getKbConnectorsCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/kb/connectors/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -227,7 +227,7 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KbGraph: async (project?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getKbGraph: async (project?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/kb/graph`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -262,9 +262,9 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1KbConnectorsByProviderSync: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postKbConnectorsByProviderSync: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postV1KbConnectorsByProviderSync', 'provider', provider)
+            assertParamExists('postKbConnectorsByProviderSync', 'provider', provider)
             const localVarPath = `/v1/kb/connectors/{provider}/sync`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -295,7 +295,7 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1KbImport: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postKbImport: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/kb/import`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -326,9 +326,9 @@ export const KbApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1KbSearch: async (searchIn: SearchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postKbSearch: async (searchIn: SearchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'searchIn' is not null or undefined
-            assertParamExists('postV1KbSearch', 'searchIn', searchIn)
+            assertParamExists('postKbSearch', 'searchIn', searchIn)
             const localVarPath = `/v1/kb/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -372,10 +372,10 @@ export const KbApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1KbConnectorsByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectionOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1KbConnectorsByProvider(provider, options);
+        async deleteKbConnectorsByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectionOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteKbConnectorsByProvider(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KbApi.deleteV1KbConnectorsByProvider']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KbApi.deleteKbConnectorsByProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -384,10 +384,10 @@ export const KbApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1KbConnectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KbConnectorsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1KbConnectors(options);
+        async getKbConnectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KbConnectorsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKbConnectors(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KbApi.getV1KbConnectors']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KbApi.getKbConnectors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -400,10 +400,10 @@ export const KbApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1KbConnectorsByProviderCallback(provider: string, code?: string, state?: string, error?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectionOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1KbConnectorsByProviderCallback(provider, code, state, error, options);
+        async getKbConnectorsByProviderCallback(provider: string, code?: string, state?: string, error?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectionOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKbConnectorsByProviderCallback(provider, code, state, error, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KbApi.getV1KbConnectorsByProviderCallback']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KbApi.getKbConnectorsByProviderCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -413,10 +413,10 @@ export const KbApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1KbConnectorsByProviderConnect(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KbAuthorizeOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1KbConnectorsByProviderConnect(provider, options);
+        async getKbConnectorsByProviderConnect(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KbAuthorizeOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKbConnectorsByProviderConnect(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KbApi.getV1KbConnectorsByProviderConnect']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KbApi.getKbConnectorsByProviderConnect']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -425,10 +425,10 @@ export const KbApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1KbConnectorsCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CatalogOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1KbConnectorsCatalog(options);
+        async getKbConnectorsCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CatalogOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKbConnectorsCatalog(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KbApi.getV1KbConnectorsCatalog']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KbApi.getKbConnectorsCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -438,10 +438,10 @@ export const KbApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1KbGraph(project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1KbGraph(project, options);
+        async getKbGraph(project?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKbGraph(project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KbApi.getV1KbGraph']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KbApi.getKbGraph']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -451,10 +451,10 @@ export const KbApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1KbConnectorsByProviderSync(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KbSyncOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1KbConnectorsByProviderSync(provider, options);
+        async postKbConnectorsByProviderSync(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KbSyncOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKbConnectorsByProviderSync(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KbApi.postV1KbConnectorsByProviderSync']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KbApi.postKbConnectorsByProviderSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -463,10 +463,10 @@ export const KbApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1KbImport(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1KbImport(options);
+        async postKbImport(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKbImport(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KbApi.postV1KbImport']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KbApi.postKbImport']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -476,10 +476,10 @@ export const KbApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1KbSearch(searchIn: SearchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1KbSearch(searchIn, options);
+        async postKbSearch(searchIn: SearchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postKbSearch(searchIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['KbApi.postV1KbSearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['KbApi.postKbSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -495,12 +495,12 @@ export const KbApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
          * @summary Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected.
-         * @param {KbApiDeleteV1KbConnectorsByProviderRequest} requestParameters Request parameters.
+         * @param {KbApiDeleteKbConnectorsByProviderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1KbConnectorsByProvider(requestParameters: KbApiDeleteV1KbConnectorsByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectionOut> {
-            return localVarFp.deleteV1KbConnectorsByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
+        deleteKbConnectorsByProvider(requestParameters: KbApiDeleteKbConnectorsByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectionOut> {
+            return localVarFp.deleteKbConnectorsByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every supported knowledge connector with THIS org\'s connection state and the REAL number of documents each has ingested into the org\'s store. A provider that is configured for the deployment but not yet connected appears as disconnected, so the console can offer a Connect button. No secret is ever returned.
@@ -508,28 +508,28 @@ export const KbApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KbConnectors(options?: RawAxiosRequestConfig): AxiosPromise<KbConnectorsOut> {
-            return localVarFp.getV1KbConnectors(options).then((request) => request(axios, basePath));
+        getKbConnectors(options?: RawAxiosRequestConfig): AxiosPromise<KbConnectorsOut> {
+            return localVarFp.getKbConnectors(options).then((request) => request(axios, basePath));
         },
         /**
          * CompleteConnectorOAuth finishes an OAuth connection: it exchanges the provider\'s code for a token, seals that token in KMS, and records the connection. THE ORG COMES FROM THE SIGNED STATE, not from a header and not from the provider, so an attacker cannot bind their own account to someone else\'s org — a tampered, expired or foreign-provider state is refused outright. The token itself is never returned, never written into the document, and never logged; the document holds only its KMS path.
          * @summary CompleteConnectorOAuth finishes an OAuth connection: it exchanges the provider\'s code for a token, seals that token in KMS, and records the connection.
-         * @param {KbApiGetV1KbConnectorsByProviderCallbackRequest} requestParameters Request parameters.
+         * @param {KbApiGetKbConnectorsByProviderCallbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KbConnectorsByProviderCallback(requestParameters: KbApiGetV1KbConnectorsByProviderCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectionOut> {
-            return localVarFp.getV1KbConnectorsByProviderCallback(requestParameters.provider, requestParameters.code, requestParameters.state, requestParameters.error, options).then((request) => request(axios, basePath));
+        getKbConnectorsByProviderCallback(requestParameters: KbApiGetKbConnectorsByProviderCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectionOut> {
+            return localVarFp.getKbConnectorsByProviderCallback(requestParameters.provider, requestParameters.code, requestParameters.state, requestParameters.error, options).then((request) => request(axios, basePath));
         },
         /**
          * StartConnectorOAuth returns the provider authorize URL the console opens to connect this org\'s account. There is no server-side redirect — the console stays in control of the navigation. The URL carries a state this server SIGNED over the caller\'s validated org, so the connection the callback completes can only ever land in that org.
          * @summary StartConnectorOAuth returns the provider authorize URL the console opens to connect this org\'s account.
-         * @param {KbApiGetV1KbConnectorsByProviderConnectRequest} requestParameters Request parameters.
+         * @param {KbApiGetKbConnectorsByProviderConnectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KbConnectorsByProviderConnect(requestParameters: KbApiGetV1KbConnectorsByProviderConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<KbAuthorizeOut> {
-            return localVarFp.getV1KbConnectorsByProviderConnect(requestParameters.provider, options).then((request) => request(axios, basePath));
+        getKbConnectorsByProviderConnect(requestParameters: KbApiGetKbConnectorsByProviderConnectRequest, options?: RawAxiosRequestConfig): AxiosPromise<KbAuthorizeOut> {
+            return localVarFp.getKbConnectorsByProviderConnect(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the ONE catalog of everything a caller can connect: every first-party connector and every long-tail one, in a single list sorted by provider. `configured` reports whether this deployment holds OAuth credentials for a source, so the console can show Connect rather than a dead button, and `kind` is a badge only — the connect and sync lifecycle is identical for both. The catalog itself is org-independent; a validated principal is still required. It is metadata only: no secret is ever returned.
@@ -537,28 +537,28 @@ export const KbApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KbConnectorsCatalog(options?: RawAxiosRequestConfig): AxiosPromise<CatalogOut> {
-            return localVarFp.getV1KbConnectorsCatalog(options).then((request) => request(axios, basePath));
+        getKbConnectorsCatalog(options?: RawAxiosRequestConfig): AxiosPromise<CatalogOut> {
+            return localVarFp.getKbConnectorsCatalog(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s knowledge as a node/edge graph shaped for a force-directed renderer: pages, memories and synced sources as nodes; the page parent tree, the wikilinks between pages, and each source\'s connector provenance as edges. Wikilink targets are resolved HERE by title or slug, so a rename never needs an edge rewrite and a link that matches no page renders as its own \"unresolved\" node instead of vanishing. ?project= narrows it. A store outage degrades to an honest empty graph, never a 5xx.
          * @summary Returns the caller org\'s knowledge as a node/edge graph shaped for a force-directed renderer: pages, memories and synced sources as nodes; the page parent tree, the wikilinks between pages, and each source\'s connector provenance as edges.
-         * @param {KbApiGetV1KbGraphRequest} requestParameters Request parameters.
+         * @param {KbApiGetKbGraphRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1KbGraph(requestParameters: KbApiGetV1KbGraphRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GraphOut> {
-            return localVarFp.getV1KbGraph(requestParameters.project, options).then((request) => request(axios, basePath));
+        getKbGraph(requestParameters: KbApiGetKbGraphRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GraphOut> {
+            return localVarFp.getKbGraph(requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
          * Pulls the provider\'s documents for the caller\'s org and files them as knowledge sources, which the store\'s own hook then indexes — so a synced document is retrievable exactly like a hand-written page. The org is the validated tenant and the credential is read from KMS, so an org can only ever sync its own connection. A provider failure is reported honestly (502) and recorded on the connector rather than silently swallowed.
          * @summary Pulls the provider\'s documents for the caller\'s org and files them as knowledge sources, which the store\'s own hook then indexes — so a synced document is retrievable exactly like a hand-written page.
-         * @param {KbApiPostV1KbConnectorsByProviderSyncRequest} requestParameters Request parameters.
+         * @param {KbApiPostKbConnectorsByProviderSyncRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1KbConnectorsByProviderSync(requestParameters: KbApiPostV1KbConnectorsByProviderSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<KbSyncOut> {
-            return localVarFp.postV1KbConnectorsByProviderSync(requestParameters.provider, options).then((request) => request(axios, basePath));
+        postKbConnectorsByProviderSync(requestParameters: KbApiPostKbConnectorsByProviderSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<KbSyncOut> {
+            return localVarFp.postKbConnectorsByProviderSync(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * Ingests an uploaded export as a tree of kb-page documents with its link structure intact. `?format=` picks the normalizer — obsidian, notion, roam or evernote — and the export arrives as a multipart `file` part, or as the raw request body when there is no multipart part: an Obsidian or Notion vault zip, a Roam JSON (raw or inside the zip Roam downloads), or an Evernote .enex.  The pages are filed through the SAME ingest path a connector sync uses, so the kb-page hook indexes each one for retrieval AND extracts its `[[wikilinks]]` into kb-link edges — the imported vault is searchable and its graph is navigable without a second pass. Parents are filed before their children, and each page takes a slug unique within the org (suffixed -2, -3, … on collision), so a re-import adds pages rather than overwriting the ones already there.  Scoped to the caller\'s validated org; `?project=` narrows every imported page to one project. No validated principal is 403, and an org that has not installed the kb module is refused with the install call to make first. The bounds are 64 MB per upload, 5000 pages and 8 MB per archive entry: pages past the five-thousandth are dropped and a larger entry is truncated at its bound, and a page the store rejects is skipped — so the answer\'s `imported` count is what was actually filed, not what was sent.
@@ -566,123 +566,123 @@ export const KbApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1KbImport(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1KbImport(options).then((request) => request(axios, basePath));
+        postKbImport(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postKbImport(options).then((request) => request(axios, basePath));
         },
         /**
          * Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN vector namespace answers. The org comes from the validated principal, and both the collection and the payload filter are pinned to it, so cross-tenant retrieval is impossible. An unreachable index returns an honest empty result set with degraded=true, never a 5xx.
          * @summary Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages.
-         * @param {KbApiPostV1KbSearchRequest} requestParameters Request parameters.
+         * @param {KbApiPostKbSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1KbSearch(requestParameters: KbApiPostV1KbSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<SearchOut> {
-            return localVarFp.postV1KbSearch(requestParameters.searchIn, options).then((request) => request(axios, basePath));
+        postKbSearch(requestParameters: KbApiPostKbSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<SearchOut> {
+            return localVarFp.postKbSearch(requestParameters.searchIn, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1KbConnectorsByProvider operation in KbApi.
+ * Request parameters for deleteKbConnectorsByProvider operation in KbApi.
  * @export
- * @interface KbApiDeleteV1KbConnectorsByProviderRequest
+ * @interface KbApiDeleteKbConnectorsByProviderRequest
  */
-export interface KbApiDeleteV1KbConnectorsByProviderRequest {
+export interface KbApiDeleteKbConnectorsByProviderRequest {
     /**
      * Provider is the connector to act on: github, slack, google or notion.
      * @type {string}
-     * @memberof KbApiDeleteV1KbConnectorsByProvider
+     * @memberof KbApiDeleteKbConnectorsByProvider
      */
     readonly provider: string
 }
 
 /**
- * Request parameters for getV1KbConnectorsByProviderCallback operation in KbApi.
+ * Request parameters for getKbConnectorsByProviderCallback operation in KbApi.
  * @export
- * @interface KbApiGetV1KbConnectorsByProviderCallbackRequest
+ * @interface KbApiGetKbConnectorsByProviderCallbackRequest
  */
-export interface KbApiGetV1KbConnectorsByProviderCallbackRequest {
+export interface KbApiGetKbConnectorsByProviderCallbackRequest {
     /**
      * Provider is the connector completing its flow, from the path.
      * @type {string}
-     * @memberof KbApiGetV1KbConnectorsByProviderCallback
+     * @memberof KbApiGetKbConnectorsByProviderCallback
      */
     readonly provider: string
 
     /**
      * Code is the provider\&#39;s authorization code, exchanged for a token.
      * @type {string}
-     * @memberof KbApiGetV1KbConnectorsByProviderCallback
+     * @memberof KbApiGetKbConnectorsByProviderCallback
      */
     readonly code?: string
 
     /**
      * State is the org-bound value this server signed at connect time.
      * @type {string}
-     * @memberof KbApiGetV1KbConnectorsByProviderCallback
+     * @memberof KbApiGetKbConnectorsByProviderCallback
      */
     readonly state?: string
 
     /**
      * Error is the provider\&#39;s denial reason when the user refused consent.
      * @type {string}
-     * @memberof KbApiGetV1KbConnectorsByProviderCallback
+     * @memberof KbApiGetKbConnectorsByProviderCallback
      */
     readonly error?: string
 }
 
 /**
- * Request parameters for getV1KbConnectorsByProviderConnect operation in KbApi.
+ * Request parameters for getKbConnectorsByProviderConnect operation in KbApi.
  * @export
- * @interface KbApiGetV1KbConnectorsByProviderConnectRequest
+ * @interface KbApiGetKbConnectorsByProviderConnectRequest
  */
-export interface KbApiGetV1KbConnectorsByProviderConnectRequest {
+export interface KbApiGetKbConnectorsByProviderConnectRequest {
     /**
      * Provider is the connector to act on: github, slack, google or notion.
      * @type {string}
-     * @memberof KbApiGetV1KbConnectorsByProviderConnect
+     * @memberof KbApiGetKbConnectorsByProviderConnect
      */
     readonly provider: string
 }
 
 /**
- * Request parameters for getV1KbGraph operation in KbApi.
+ * Request parameters for getKbGraph operation in KbApi.
  * @export
- * @interface KbApiGetV1KbGraphRequest
+ * @interface KbApiGetKbGraphRequest
  */
-export interface KbApiGetV1KbGraphRequest {
+export interface KbApiGetKbGraphRequest {
     /**
      * Project narrows the graph to one project scope. Empty reads the whole org.
      * @type {string}
-     * @memberof KbApiGetV1KbGraph
+     * @memberof KbApiGetKbGraph
      */
     readonly project?: string
 }
 
 /**
- * Request parameters for postV1KbConnectorsByProviderSync operation in KbApi.
+ * Request parameters for postKbConnectorsByProviderSync operation in KbApi.
  * @export
- * @interface KbApiPostV1KbConnectorsByProviderSyncRequest
+ * @interface KbApiPostKbConnectorsByProviderSyncRequest
  */
-export interface KbApiPostV1KbConnectorsByProviderSyncRequest {
+export interface KbApiPostKbConnectorsByProviderSyncRequest {
     /**
      * Provider is the connector to act on: github, slack, google or notion.
      * @type {string}
-     * @memberof KbApiPostV1KbConnectorsByProviderSync
+     * @memberof KbApiPostKbConnectorsByProviderSync
      */
     readonly provider: string
 }
 
 /**
- * Request parameters for postV1KbSearch operation in KbApi.
+ * Request parameters for postKbSearch operation in KbApi.
  * @export
- * @interface KbApiPostV1KbSearchRequest
+ * @interface KbApiPostKbSearchRequest
  */
-export interface KbApiPostV1KbSearchRequest {
+export interface KbApiPostKbSearchRequest {
     /**
      * 
      * @type {SearchIn}
-     * @memberof KbApiPostV1KbSearch
+     * @memberof KbApiPostKbSearch
      */
     readonly searchIn: SearchIn
 }
@@ -697,13 +697,13 @@ export class KbApi extends BaseAPI {
     /**
      * Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected. The documents already ingested stay in the org\'s store — they are the org\'s own data — but stop being retrievable by search; a caller deletes them through the document surface.
      * @summary Revokes a connection: it tombstones the stored credential so a later sync cannot reuse it, purges this provider\'s points from the org\'s vector namespace, and marks the connector disconnected.
-     * @param {KbApiDeleteV1KbConnectorsByProviderRequest} requestParameters Request parameters.
+     * @param {KbApiDeleteKbConnectorsByProviderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KbApi
      */
-    public deleteV1KbConnectorsByProvider(requestParameters: KbApiDeleteV1KbConnectorsByProviderRequest, options?: RawAxiosRequestConfig) {
-        return KbApiFp(this.configuration).deleteV1KbConnectorsByProvider(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    public deleteKbConnectorsByProvider(requestParameters: KbApiDeleteKbConnectorsByProviderRequest, options?: RawAxiosRequestConfig) {
+        return KbApiFp(this.configuration).deleteKbConnectorsByProvider(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -713,32 +713,32 @@ export class KbApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KbApi
      */
-    public getV1KbConnectors(options?: RawAxiosRequestConfig) {
-        return KbApiFp(this.configuration).getV1KbConnectors(options).then((request) => request(this.axios, this.basePath));
+    public getKbConnectors(options?: RawAxiosRequestConfig) {
+        return KbApiFp(this.configuration).getKbConnectors(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * CompleteConnectorOAuth finishes an OAuth connection: it exchanges the provider\'s code for a token, seals that token in KMS, and records the connection. THE ORG COMES FROM THE SIGNED STATE, not from a header and not from the provider, so an attacker cannot bind their own account to someone else\'s org — a tampered, expired or foreign-provider state is refused outright. The token itself is never returned, never written into the document, and never logged; the document holds only its KMS path.
      * @summary CompleteConnectorOAuth finishes an OAuth connection: it exchanges the provider\'s code for a token, seals that token in KMS, and records the connection.
-     * @param {KbApiGetV1KbConnectorsByProviderCallbackRequest} requestParameters Request parameters.
+     * @param {KbApiGetKbConnectorsByProviderCallbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KbApi
      */
-    public getV1KbConnectorsByProviderCallback(requestParameters: KbApiGetV1KbConnectorsByProviderCallbackRequest, options?: RawAxiosRequestConfig) {
-        return KbApiFp(this.configuration).getV1KbConnectorsByProviderCallback(requestParameters.provider, requestParameters.code, requestParameters.state, requestParameters.error, options).then((request) => request(this.axios, this.basePath));
+    public getKbConnectorsByProviderCallback(requestParameters: KbApiGetKbConnectorsByProviderCallbackRequest, options?: RawAxiosRequestConfig) {
+        return KbApiFp(this.configuration).getKbConnectorsByProviderCallback(requestParameters.provider, requestParameters.code, requestParameters.state, requestParameters.error, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * StartConnectorOAuth returns the provider authorize URL the console opens to connect this org\'s account. There is no server-side redirect — the console stays in control of the navigation. The URL carries a state this server SIGNED over the caller\'s validated org, so the connection the callback completes can only ever land in that org.
      * @summary StartConnectorOAuth returns the provider authorize URL the console opens to connect this org\'s account.
-     * @param {KbApiGetV1KbConnectorsByProviderConnectRequest} requestParameters Request parameters.
+     * @param {KbApiGetKbConnectorsByProviderConnectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KbApi
      */
-    public getV1KbConnectorsByProviderConnect(requestParameters: KbApiGetV1KbConnectorsByProviderConnectRequest, options?: RawAxiosRequestConfig) {
-        return KbApiFp(this.configuration).getV1KbConnectorsByProviderConnect(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    public getKbConnectorsByProviderConnect(requestParameters: KbApiGetKbConnectorsByProviderConnectRequest, options?: RawAxiosRequestConfig) {
+        return KbApiFp(this.configuration).getKbConnectorsByProviderConnect(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -748,32 +748,32 @@ export class KbApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KbApi
      */
-    public getV1KbConnectorsCatalog(options?: RawAxiosRequestConfig) {
-        return KbApiFp(this.configuration).getV1KbConnectorsCatalog(options).then((request) => request(this.axios, this.basePath));
+    public getKbConnectorsCatalog(options?: RawAxiosRequestConfig) {
+        return KbApiFp(this.configuration).getKbConnectorsCatalog(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s knowledge as a node/edge graph shaped for a force-directed renderer: pages, memories and synced sources as nodes; the page parent tree, the wikilinks between pages, and each source\'s connector provenance as edges. Wikilink targets are resolved HERE by title or slug, so a rename never needs an edge rewrite and a link that matches no page renders as its own \"unresolved\" node instead of vanishing. ?project= narrows it. A store outage degrades to an honest empty graph, never a 5xx.
      * @summary Returns the caller org\'s knowledge as a node/edge graph shaped for a force-directed renderer: pages, memories and synced sources as nodes; the page parent tree, the wikilinks between pages, and each source\'s connector provenance as edges.
-     * @param {KbApiGetV1KbGraphRequest} requestParameters Request parameters.
+     * @param {KbApiGetKbGraphRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KbApi
      */
-    public getV1KbGraph(requestParameters: KbApiGetV1KbGraphRequest = {}, options?: RawAxiosRequestConfig) {
-        return KbApiFp(this.configuration).getV1KbGraph(requestParameters.project, options).then((request) => request(this.axios, this.basePath));
+    public getKbGraph(requestParameters: KbApiGetKbGraphRequest = {}, options?: RawAxiosRequestConfig) {
+        return KbApiFp(this.configuration).getKbGraph(requestParameters.project, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Pulls the provider\'s documents for the caller\'s org and files them as knowledge sources, which the store\'s own hook then indexes — so a synced document is retrievable exactly like a hand-written page. The org is the validated tenant and the credential is read from KMS, so an org can only ever sync its own connection. A provider failure is reported honestly (502) and recorded on the connector rather than silently swallowed.
      * @summary Pulls the provider\'s documents for the caller\'s org and files them as knowledge sources, which the store\'s own hook then indexes — so a synced document is retrievable exactly like a hand-written page.
-     * @param {KbApiPostV1KbConnectorsByProviderSyncRequest} requestParameters Request parameters.
+     * @param {KbApiPostKbConnectorsByProviderSyncRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KbApi
      */
-    public postV1KbConnectorsByProviderSync(requestParameters: KbApiPostV1KbConnectorsByProviderSyncRequest, options?: RawAxiosRequestConfig) {
-        return KbApiFp(this.configuration).postV1KbConnectorsByProviderSync(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    public postKbConnectorsByProviderSync(requestParameters: KbApiPostKbConnectorsByProviderSyncRequest, options?: RawAxiosRequestConfig) {
+        return KbApiFp(this.configuration).postKbConnectorsByProviderSync(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -783,20 +783,20 @@ export class KbApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KbApi
      */
-    public postV1KbImport(options?: RawAxiosRequestConfig) {
-        return KbApiFp(this.configuration).postV1KbImport(options).then((request) => request(this.axios, this.basePath));
+    public postKbImport(options?: RawAxiosRequestConfig) {
+        return KbApiFp(this.configuration).postKbImport(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages. This is the RAG entry point: an agent asks \"what does this org know about X\" and the org\'s OWN vector namespace answers. The org comes from the validated principal, and both the collection and the payload filter are pinned to it, so cross-tenant retrieval is impossible. An unreachable index returns an honest empty result set with degraded=true, never a 5xx.
      * @summary Runs a semantic search over the caller org\'s own knowledge — its wiki pages, its agent memories and everything its connectors have synced — and returns the matching passages.
-     * @param {KbApiPostV1KbSearchRequest} requestParameters Request parameters.
+     * @param {KbApiPostKbSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KbApi
      */
-    public postV1KbSearch(requestParameters: KbApiPostV1KbSearchRequest, options?: RawAxiosRequestConfig) {
-        return KbApiFp(this.configuration).postV1KbSearch(requestParameters.searchIn, options).then((request) => request(this.axios, this.basePath));
+    public postKbSearch(requestParameters: KbApiPostKbSearchRequest, options?: RawAxiosRequestConfig) {
+        return KbApiFp(this.configuration).postKbSearch(requestParameters.searchIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -42,7 +42,7 @@ export const TranslateApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TranslateMemory: async (target?: string, state?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTranslateMemory: async (target?: string, state?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/translate/memory`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -84,7 +84,7 @@ export const TranslateApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Translate: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTranslate: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/translate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -115,9 +115,9 @@ export const TranslateApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1TranslateMemory: async (reviewRequest: ReviewRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putTranslateMemory: async (reviewRequest: ReviewRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'reviewRequest' is not null or undefined
-            assertParamExists('putV1TranslateMemory', 'reviewRequest', reviewRequest)
+            assertParamExists('putTranslateMemory', 'reviewRequest', reviewRequest)
             const localVarPath = `/v1/translate/memory`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -163,10 +163,10 @@ export const TranslateApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TranslateMemory(target?: string, state?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TranslateMemory(target, state, limit, options);
+        async getTranslateMemory(target?: string, state?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTranslateMemory(target, state, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TranslateApi.getV1TranslateMemory']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TranslateApi.getTranslateMemory']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -175,10 +175,10 @@ export const TranslateApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Translate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Translate(options);
+        async postTranslate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTranslate(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TranslateApi.postV1Translate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TranslateApi.postTranslate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -188,10 +188,10 @@ export const TranslateApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1TranslateMemory(reviewRequest: ReviewRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryEntry>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1TranslateMemory(reviewRequest, options);
+        async putTranslateMemory(reviewRequest: ReviewRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MemoryEntry>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTranslateMemory(reviewRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TranslateApi.putV1TranslateMemory']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TranslateApi.putTranslateMemory']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -207,12 +207,12 @@ export const TranslateApiFactory = function (configuration?: Configuration, base
         /**
          * List returns the org\'s own translation-memory entries, newest first, optionally narrowed to one target language and/or one position on the review ladder. It is the review lane\'s read: what a human reviewer works through.  The org is ALWAYS the validated principal\'s org, never a request field, so one tenant can never read another\'s memory — the entries hold customer source text.
          * @summary List returns the org\'s own translation-memory entries, newest first, optionally narrowed to one target language and/or one position on the review ladder.
-         * @param {TranslateApiGetV1TranslateMemoryRequest} requestParameters Request parameters.
+         * @param {TranslateApiGetTranslateMemoryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TranslateMemory(requestParameters: TranslateApiGetV1TranslateMemoryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MemoryPage> {
-            return localVarFp.getV1TranslateMemory(requestParameters.target, requestParameters.state, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getTranslateMemory(requestParameters: TranslateApiGetTranslateMemoryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MemoryPage> {
+            return localVarFp.getTranslateMemory(requestParameters.target, requestParameters.state, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one translation per input string, in input order, each carrying where it sits on the review ladder and whether it came from your memory rather than an engine — plus a usage block of REAL counts (strings, cached, translated, and the source characters that actually reached an engine). Send `text` for one string or `batch` for many, never both. When you name no `source`, the detected one is reported back.  THE TRANSLATION MEMORY IS CONSULTED FIRST AND IT IS NORMATIVE, NOT A CACHE. Every string keys on (source text, target, glossary version, tier); a hit is returned VERBATIM and never re-translated, which is what makes a locale rebuild idempotent under a non-deterministic model and the bill proportional to what actually changed. Misses go to the engine and are written back at state `machine`. Editing a glossary term changes the key, so a stale rendering can never be served.  IT CANNOT TRAMPLE REVIEWED WORK. A write from this route may create an entry or refresh one still at `machine`, and nothing else — a string a human moved to approved or published through the memory review lane survives every rebuild, and comes back here unchanged. The memory is the caller\'s OWN org\'s, a separate store per org: the source text you send is customer content and lands nowhere else. Read it back or review it at /v1/translate/memory.  `tier` picks the engine and defaults to quality — the model plane, which carries context, terminology and tone, and which bills its own tokens, so nothing is charged twice here. `bulk` is the high-volume engine and is metered HERE, on the source characters that reached it: a fully-cached rebuild reports zero characters and costs zero. BULK NEVER FALLS BACK TO QUALITY — on a deployment that does not serve it the answer is 503 for that tier, so a caller is never quietly served, or charged, at a tier it did not ask for. A bulk request beyond its balance is refused with the nested {\"error\":{\"code\",\"message\"}} body at 402/503.  `target` IS CHECKED FOR SHAPE, NOT FOR SUPPORT: anything BCP-47-shaped is accepted (`es`, `pt-BR`), anything else is 400. There is no unsupported-language error — a well-formed tag no engine can actually render is passed straight through, and whatever comes back is what gets stored and returned. `format` (text, html, markdown) tells the engine what markup to preserve; `glossary` fixes terms verbatim.  Requires a validated principal — 401 without one, and the org is always that principal\'s. At most 512 strings per call and 32768 characters per string; an engine that fails or answers a reply that does not cover every input is 502, and nothing is stored.
@@ -220,60 +220,60 @@ export const TranslateApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Translate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Translate(options).then((request) => request(axios, basePath));
+        postTranslate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postTranslate(options).then((request) => request(axios, basePath));
         },
         /**
          * Review records a human decision on one translation-memory entry, and returns the entry as stored. A human write always wins over the stored value, and once it lands at approved or published no machine write can move it again — which is what makes a locale rebuild safe to run against reviewed work.  The org is ALWAYS the validated principal\'s org, never a request field, so a review can only ever land in the caller\'s own memory.
          * @summary Review records a human decision on one translation-memory entry, and returns the entry as stored.
-         * @param {TranslateApiPutV1TranslateMemoryRequest} requestParameters Request parameters.
+         * @param {TranslateApiPutTranslateMemoryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1TranslateMemory(requestParameters: TranslateApiPutV1TranslateMemoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<MemoryEntry> {
-            return localVarFp.putV1TranslateMemory(requestParameters.reviewRequest, options).then((request) => request(axios, basePath));
+        putTranslateMemory(requestParameters: TranslateApiPutTranslateMemoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<MemoryEntry> {
+            return localVarFp.putTranslateMemory(requestParameters.reviewRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1TranslateMemory operation in TranslateApi.
+ * Request parameters for getTranslateMemory operation in TranslateApi.
  * @export
- * @interface TranslateApiGetV1TranslateMemoryRequest
+ * @interface TranslateApiGetTranslateMemoryRequest
  */
-export interface TranslateApiGetV1TranslateMemoryRequest {
+export interface TranslateApiGetTranslateMemoryRequest {
     /**
      * Target narrows to one target language tag (BCP-47, e.g. \&quot;es\&quot; or \&quot;pt-BR\&quot;).
      * @type {string}
-     * @memberof TranslateApiGetV1TranslateMemory
+     * @memberof TranslateApiGetTranslateMemory
      */
     readonly target?: string
 
     /**
      * State narrows to one position on the review ladder: machine, suggested, approved or published.
      * @type {string}
-     * @memberof TranslateApiGetV1TranslateMemory
+     * @memberof TranslateApiGetTranslateMemory
      */
     readonly state?: string
 
     /**
      * Limit caps the rows returned. Non-positive or unparseable means the server default (200); the ceiling is 1000.
      * @type {number}
-     * @memberof TranslateApiGetV1TranslateMemory
+     * @memberof TranslateApiGetTranslateMemory
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for putV1TranslateMemory operation in TranslateApi.
+ * Request parameters for putTranslateMemory operation in TranslateApi.
  * @export
- * @interface TranslateApiPutV1TranslateMemoryRequest
+ * @interface TranslateApiPutTranslateMemoryRequest
  */
-export interface TranslateApiPutV1TranslateMemoryRequest {
+export interface TranslateApiPutTranslateMemoryRequest {
     /**
      * 
      * @type {ReviewRequest}
-     * @memberof TranslateApiPutV1TranslateMemory
+     * @memberof TranslateApiPutTranslateMemory
      */
     readonly reviewRequest: ReviewRequest
 }
@@ -288,13 +288,13 @@ export class TranslateApi extends BaseAPI {
     /**
      * List returns the org\'s own translation-memory entries, newest first, optionally narrowed to one target language and/or one position on the review ladder. It is the review lane\'s read: what a human reviewer works through.  The org is ALWAYS the validated principal\'s org, never a request field, so one tenant can never read another\'s memory — the entries hold customer source text.
      * @summary List returns the org\'s own translation-memory entries, newest first, optionally narrowed to one target language and/or one position on the review ladder.
-     * @param {TranslateApiGetV1TranslateMemoryRequest} requestParameters Request parameters.
+     * @param {TranslateApiGetTranslateMemoryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TranslateApi
      */
-    public getV1TranslateMemory(requestParameters: TranslateApiGetV1TranslateMemoryRequest = {}, options?: RawAxiosRequestConfig) {
-        return TranslateApiFp(this.configuration).getV1TranslateMemory(requestParameters.target, requestParameters.state, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getTranslateMemory(requestParameters: TranslateApiGetTranslateMemoryRequest = {}, options?: RawAxiosRequestConfig) {
+        return TranslateApiFp(this.configuration).getTranslateMemory(requestParameters.target, requestParameters.state, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -304,20 +304,20 @@ export class TranslateApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TranslateApi
      */
-    public postV1Translate(options?: RawAxiosRequestConfig) {
-        return TranslateApiFp(this.configuration).postV1Translate(options).then((request) => request(this.axios, this.basePath));
+    public postTranslate(options?: RawAxiosRequestConfig) {
+        return TranslateApiFp(this.configuration).postTranslate(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Review records a human decision on one translation-memory entry, and returns the entry as stored. A human write always wins over the stored value, and once it lands at approved or published no machine write can move it again — which is what makes a locale rebuild safe to run against reviewed work.  The org is ALWAYS the validated principal\'s org, never a request field, so a review can only ever land in the caller\'s own memory.
      * @summary Review records a human decision on one translation-memory entry, and returns the entry as stored.
-     * @param {TranslateApiPutV1TranslateMemoryRequest} requestParameters Request parameters.
+     * @param {TranslateApiPutTranslateMemoryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TranslateApi
      */
-    public putV1TranslateMemory(requestParameters: TranslateApiPutV1TranslateMemoryRequest, options?: RawAxiosRequestConfig) {
-        return TranslateApiFp(this.configuration).putV1TranslateMemory(requestParameters.reviewRequest, options).then((request) => request(this.axios, this.basePath));
+    public putTranslateMemory(requestParameters: TranslateApiPutTranslateMemoryRequest, options?: RawAxiosRequestConfig) {
+        return TranslateApiFp(this.configuration).putTranslateMemory(requestParameters.reviewRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

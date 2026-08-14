@@ -47,7 +47,7 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RegistryImages: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRegistryImages: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/registry/images`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -78,7 +78,7 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RegistryPackages: async (query?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRegistryPackages: async (query?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/registry/packages`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -112,7 +112,7 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RegistryProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRegistryProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/registry/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -142,7 +142,7 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RegistryStatus: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRegistryStatus: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/registry/status`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -173,7 +173,7 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RegistryTags: async (image?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRegistryTags: async (image?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/registry/tags`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -208,9 +208,9 @@ export const RegistryApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RegistryToken: async (registryMint: RegistryMint, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRegistryToken: async (registryMint: RegistryMint, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'registryMint' is not null or undefined
-            assertParamExists('postV1RegistryToken', 'registryMint', registryMint)
+            assertParamExists('postRegistryToken', 'registryMint', registryMint)
             const localVarPath = `/v1/registry/token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -253,10 +253,10 @@ export const RegistryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RegistryImages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryImageList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RegistryImages(options);
+        async getRegistryImages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryImageList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRegistryImages(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RegistryApi.getV1RegistryImages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RegistryApi.getRegistryImages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -266,10 +266,10 @@ export const RegistryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RegistryPackages(query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryPackageList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RegistryPackages(query, options);
+        async getRegistryPackages(query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryPackageList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRegistryPackages(query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RegistryApi.getV1RegistryPackages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RegistryApi.getRegistryPackages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -278,10 +278,10 @@ export const RegistryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RegistryProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryProjectList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RegistryProjects(options);
+        async getRegistryProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryProjectList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRegistryProjects(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RegistryApi.getV1RegistryProjects']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RegistryApi.getRegistryProjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -290,10 +290,10 @@ export const RegistryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RegistryStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryStatus>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RegistryStatus(options);
+        async getRegistryStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRegistryStatus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RegistryApi.getV1RegistryStatus']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RegistryApi.getRegistryStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -303,10 +303,10 @@ export const RegistryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RegistryTags(image?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryTagList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RegistryTags(image, options);
+        async getRegistryTags(image?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryTagList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRegistryTags(image, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RegistryApi.getV1RegistryTags']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RegistryApi.getRegistryTags']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -316,10 +316,10 @@ export const RegistryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1RegistryToken(registryMint: RegistryMint, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryToken>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1RegistryToken(registryMint, options);
+        async postRegistryToken(registryMint: RegistryMint, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegistryToken>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRegistryToken(registryMint, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RegistryApi.postV1RegistryToken']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RegistryApi.postRegistryToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -338,18 +338,18 @@ export const RegistryApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RegistryImages(options?: RawAxiosRequestConfig): AxiosPromise<RegistryImageList> {
-            return localVarFp.getV1RegistryImages(options).then((request) => request(axios, basePath));
+        getRegistryImages(options?: RawAxiosRequestConfig): AxiosPromise<RegistryImageList> {
+            return localVarFp.getRegistryImages(options).then((request) => request(axios, basePath));
         },
         /**
          * Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope. The org boundary is applied server-side after the search, so a query can never widen it.
          * @summary Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope.
-         * @param {RegistryApiGetV1RegistryPackagesRequest} requestParameters Request parameters.
+         * @param {RegistryApiGetRegistryPackagesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RegistryPackages(requestParameters: RegistryApiGetV1RegistryPackagesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RegistryPackageList> {
-            return localVarFp.getV1RegistryPackages(requestParameters.query, options).then((request) => request(axios, basePath));
+        getRegistryPackages(requestParameters: RegistryApiGetRegistryPackagesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RegistryPackageList> {
+            return localVarFp.getRegistryPackages(requestParameters.query, options).then((request) => request(axios, basePath));
         },
         /**
          * Projects lists the namespaces the caller can see with what each holds: the org\'s slug, its repository count on the OCI catalog, and its package count on the npm registry. Today that is exactly one row — the caller\'s org.
@@ -357,8 +357,8 @@ export const RegistryApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RegistryProjects(options?: RawAxiosRequestConfig): AxiosPromise<RegistryProjectList> {
-            return localVarFp.getV1RegistryProjects(options).then((request) => request(axios, basePath));
+        getRegistryProjects(options?: RawAxiosRequestConfig): AxiosPromise<RegistryProjectList> {
+            return localVarFp.getRegistryProjects(options).then((request) => request(axios, basePath));
         },
         /**
          * Status reports whether the OCI and npm registries are reachable and, when the OCI half is auth-gated, which token realm its challenge advertises — an honest lens for \"is the registry plane up\", never a fabricated ok.
@@ -366,70 +366,70 @@ export const RegistryApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RegistryStatus(options?: RawAxiosRequestConfig): AxiosPromise<RegistryStatus> {
-            return localVarFp.getV1RegistryStatus(options).then((request) => request(axios, basePath));
+        getRegistryStatus(options?: RawAxiosRequestConfig): AxiosPromise<RegistryStatus> {
+            return localVarFp.getRegistryStatus(options).then((request) => request(axios, basePath));
         },
         /**
          * Tags lists one org-owned repository\'s tags, read live from the OCI registry. The repository is addressed inside the org\'s namespace — a name outside it cannot be expressed, and an unknown one answers 404.
          * @summary Tags lists one org-owned repository\'s tags, read live from the OCI registry.
-         * @param {RegistryApiGetV1RegistryTagsRequest} requestParameters Request parameters.
+         * @param {RegistryApiGetRegistryTagsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RegistryTags(requestParameters: RegistryApiGetV1RegistryTagsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RegistryTagList> {
-            return localVarFp.getV1RegistryTags(requestParameters.image, options).then((request) => request(axios, basePath));
+        getRegistryTags(requestParameters: RegistryApiGetRegistryTagsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RegistryTagList> {
+            return localVarFp.getRegistryTags(requestParameters.image, options).then((request) => request(axios, basePath));
         },
         /**
          * Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against. The scope is pinned server-side to `<org>/<image>` with the `pull` action — no field exists to name another org\'s image or ask for push. Use it as `Authorization: Bearer …` on the OCI wire; it expires in minutes.
          * @summary Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against.
-         * @param {RegistryApiPostV1RegistryTokenRequest} requestParameters Request parameters.
+         * @param {RegistryApiPostRegistryTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RegistryToken(requestParameters: RegistryApiPostV1RegistryTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegistryToken> {
-            return localVarFp.postV1RegistryToken(requestParameters.registryMint, options).then((request) => request(axios, basePath));
+        postRegistryToken(requestParameters: RegistryApiPostRegistryTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegistryToken> {
+            return localVarFp.postRegistryToken(requestParameters.registryMint, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1RegistryPackages operation in RegistryApi.
+ * Request parameters for getRegistryPackages operation in RegistryApi.
  * @export
- * @interface RegistryApiGetV1RegistryPackagesRequest
+ * @interface RegistryApiGetRegistryPackagesRequest
  */
-export interface RegistryApiGetV1RegistryPackagesRequest {
+export interface RegistryApiGetRegistryPackagesRequest {
     /**
      * Query narrows the listing within the org\&#39;s scope when present; the org boundary itself is never widened by it. It rides the query string.
      * @type {string}
-     * @memberof RegistryApiGetV1RegistryPackages
+     * @memberof RegistryApiGetRegistryPackages
      */
     readonly query?: string
 }
 
 /**
- * Request parameters for getV1RegistryTags operation in RegistryApi.
+ * Request parameters for getRegistryTags operation in RegistryApi.
  * @export
- * @interface RegistryApiGetV1RegistryTagsRequest
+ * @interface RegistryApiGetRegistryTagsRequest
  */
-export interface RegistryApiGetV1RegistryTagsRequest {
+export interface RegistryApiGetRegistryTagsRequest {
     /**
      * Image is the repository name inside the org\&#39;s namespace, as returned by the images op. It rides the query string.
      * @type {string}
-     * @memberof RegistryApiGetV1RegistryTags
+     * @memberof RegistryApiGetRegistryTags
      */
     readonly image?: string
 }
 
 /**
- * Request parameters for postV1RegistryToken operation in RegistryApi.
+ * Request parameters for postRegistryToken operation in RegistryApi.
  * @export
- * @interface RegistryApiPostV1RegistryTokenRequest
+ * @interface RegistryApiPostRegistryTokenRequest
  */
-export interface RegistryApiPostV1RegistryTokenRequest {
+export interface RegistryApiPostRegistryTokenRequest {
     /**
      * 
      * @type {RegistryMint}
-     * @memberof RegistryApiPostV1RegistryToken
+     * @memberof RegistryApiPostRegistryToken
      */
     readonly registryMint: RegistryMint
 }
@@ -448,20 +448,20 @@ export class RegistryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RegistryApi
      */
-    public getV1RegistryImages(options?: RawAxiosRequestConfig) {
-        return RegistryApiFp(this.configuration).getV1RegistryImages(options).then((request) => request(this.axios, this.basePath));
+    public getRegistryImages(options?: RawAxiosRequestConfig) {
+        return RegistryApiFp(this.configuration).getRegistryImages(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope. The org boundary is applied server-side after the search, so a query can never widen it.
      * @summary Packages lists the org\'s npm packages — `<org>` and `@<org>/…` — from the npm registry\'s search index, optionally narrowed by a query within that scope.
-     * @param {RegistryApiGetV1RegistryPackagesRequest} requestParameters Request parameters.
+     * @param {RegistryApiGetRegistryPackagesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RegistryApi
      */
-    public getV1RegistryPackages(requestParameters: RegistryApiGetV1RegistryPackagesRequest = {}, options?: RawAxiosRequestConfig) {
-        return RegistryApiFp(this.configuration).getV1RegistryPackages(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+    public getRegistryPackages(requestParameters: RegistryApiGetRegistryPackagesRequest = {}, options?: RawAxiosRequestConfig) {
+        return RegistryApiFp(this.configuration).getRegistryPackages(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -471,8 +471,8 @@ export class RegistryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RegistryApi
      */
-    public getV1RegistryProjects(options?: RawAxiosRequestConfig) {
-        return RegistryApiFp(this.configuration).getV1RegistryProjects(options).then((request) => request(this.axios, this.basePath));
+    public getRegistryProjects(options?: RawAxiosRequestConfig) {
+        return RegistryApiFp(this.configuration).getRegistryProjects(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -482,32 +482,32 @@ export class RegistryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RegistryApi
      */
-    public getV1RegistryStatus(options?: RawAxiosRequestConfig) {
-        return RegistryApiFp(this.configuration).getV1RegistryStatus(options).then((request) => request(this.axios, this.basePath));
+    public getRegistryStatus(options?: RawAxiosRequestConfig) {
+        return RegistryApiFp(this.configuration).getRegistryStatus(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Tags lists one org-owned repository\'s tags, read live from the OCI registry. The repository is addressed inside the org\'s namespace — a name outside it cannot be expressed, and an unknown one answers 404.
      * @summary Tags lists one org-owned repository\'s tags, read live from the OCI registry.
-     * @param {RegistryApiGetV1RegistryTagsRequest} requestParameters Request parameters.
+     * @param {RegistryApiGetRegistryTagsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RegistryApi
      */
-    public getV1RegistryTags(requestParameters: RegistryApiGetV1RegistryTagsRequest = {}, options?: RawAxiosRequestConfig) {
-        return RegistryApiFp(this.configuration).getV1RegistryTags(requestParameters.image, options).then((request) => request(this.axios, this.basePath));
+    public getRegistryTags(requestParameters: RegistryApiGetRegistryTagsRequest = {}, options?: RawAxiosRequestConfig) {
+        return RegistryApiFp(this.configuration).getRegistryTags(requestParameters.image, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against. The scope is pinned server-side to `<org>/<image>` with the `pull` action — no field exists to name another org\'s image or ask for push. Use it as `Authorization: Bearer …` on the OCI wire; it expires in minutes.
      * @summary Token mints a short-lived, pull-only registry token for exactly one of the org\'s images, through the same IAM realm the docker CLI authenticates against.
-     * @param {RegistryApiPostV1RegistryTokenRequest} requestParameters Request parameters.
+     * @param {RegistryApiPostRegistryTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RegistryApi
      */
-    public postV1RegistryToken(requestParameters: RegistryApiPostV1RegistryTokenRequest, options?: RawAxiosRequestConfig) {
-        return RegistryApiFp(this.configuration).postV1RegistryToken(requestParameters.registryMint, options).then((request) => request(this.axios, this.basePath));
+    public postRegistryToken(requestParameters: RegistryApiPostRegistryTokenRequest, options?: RawAxiosRequestConfig) {
+        return RegistryApiFp(this.configuration).postRegistryToken(requestParameters.registryMint, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

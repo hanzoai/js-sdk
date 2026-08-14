@@ -56,9 +56,9 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SandboxesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteSandboxesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1SandboxesById', 'id', id)
+            assertParamExists('deleteSandboxesById', 'id', id)
             const localVarPath = `/v1/sandboxes/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -125,7 +125,7 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Sandboxes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSandboxes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/sandboxes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -156,9 +156,9 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SandboxesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSandboxesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SandboxesById', 'id', id)
+            assertParamExists('getSandboxesById', 'id', id)
             const localVarPath = `/v1/sandboxes/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -190,10 +190,78 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SandboxesByIdFs: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSandboxesByIdFs: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SandboxesByIdFs', 'id', id)
+            assertParamExists('getSandboxesByIdFs', 'id', id)
             const localVarPath = `/v1/sandboxes/{id}/fs`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * A complete, self-contained desktop — noVNC inline, no other origin — that opens its own socket and draws this sandbox\'s display. Embed it in an iframe and there is nothing else to build.  `ticket` is the credential from the POST above, carried through to the socket. The page is NOT gated: it is inert markup and does not redeem the ticket, because a ticket is spent once and a page that spent it would hold a credential that no longer opens anything. `frame-ancestors` admits our own brands\' hosts and nothing further.  It is served for every class, not only for `desktop`. The class is a fact about the image, and a sandbox with no VNC server already fails exactly — the connection is refused and the page says so — where a check here would be a second opinion about what is running inside a pod, formed from a label rather than from the pod.
+         * @summary The screen, as a page
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSandboxesByIdScreen: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getSandboxesByIdScreen', 'id', id)
+            const localVarPath = `/v1/sandboxes/{id}/screen`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Upgrades to a WebSocket carrying RFB — the VNC wire protocol — from the sandbox\'s display, for a host that brings its own client. Requires `ticket`; a missing, expired or already-spent one answers 401 without upgrading.  THE WIRE IS RFB, in BINARY frames both ways, and it is not interpreted here: this is a pipe between the caller\'s client and the server inside the pod.  THE PIXELS COME OUT THROUGH THE EXEC CHANNEL. The display binds 127.0.0.1 only and deliberately nothing else, so there is no address to dial — `socat` joins the stream to that loopback port over the same Kubernetes exec subresource every other call into a sandbox uses. One way in, one thing to authorize, nothing further exposed.  The window size is ignored. A browser pane is not the X server\'s geometry, and the client scales what it is given rather than asking a server with no RandR to resize itself.
+         * @summary The screen, as a socket
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSandboxesByIdScreenWs: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getSandboxesByIdScreenWs', 'id', id)
+            const localVarPath = `/v1/sandboxes/{id}/screen/ws`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -224,9 +292,9 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SandboxesByIdTerminal: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSandboxesByIdTerminal: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SandboxesByIdTerminal', 'id', id)
+            assertParamExists('getSandboxesByIdTerminal', 'id', id)
             const localVarPath = `/v1/sandboxes/{id}/terminal`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -258,9 +326,9 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SandboxesByIdTerminalWs: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSandboxesByIdTerminalWs: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SandboxesByIdTerminalWs', 'id', id)
+            assertParamExists('getSandboxesByIdTerminalWs', 'id', id)
             const localVarPath = `/v1/sandboxes/{id}/terminal/ws`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -322,12 +390,12 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Creates a sandbox and returns it. `class` is one of `exec`, `dev` or `desktop`; `dev` and `desktop` are attached to a `project`, which is required for them and names the volume the work persists on. `ttlSec` bounds the lease, and `image` overrides the class default.  This is the ONLY path that creates cluster objects. The isolation boundary is the pod\'s runtime class, one field, so what a sandbox is confined by is a deployment decision rather than anything this operation negotiates.
+         * Creates a sandbox and returns it. `class` is one of `exec`, `dev`, `desktop` or `android`; `dev` and `desktop` are attached to a `project`, which is required for them and names the volume the work persists on. `ttlSec` bounds the lease, and `image` overrides the class default.  This is the ONLY path that creates cluster objects. The isolation boundary is the pod\'s runtime class, one field, so what a sandbox is confined by is a deployment decision rather than anything this operation negotiates.
          * @summary Lease a sandbox
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Sandboxes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSandboxes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/sandboxes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -358,9 +426,9 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SandboxesByIdExec: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSandboxesByIdExec: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1SandboxesByIdExec', 'id', id)
+            assertParamExists('postSandboxesByIdExec', 'id', id)
             const localVarPath = `/v1/sandboxes/{id}/exec`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -392,10 +460,44 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SandboxesByIdFs: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSandboxesByIdFs: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1SandboxesByIdFs', 'id', id)
+            assertParamExists('postSandboxesByIdFs', 'id', id)
             const localVarPath = `/v1/sandboxes/{id}/fs`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Mints a SINGLE-USE ticket for this sandbox\'s DISPLAY and returns `{ticket, expiresIn, url}`, where url is the desktop PAGE with the ticket already on it. The same ticket as the terminal\'s, minted for a different door.  A ticket says which org and which sandbox, and the terminal and the screen are two views of one machine: a caller who may type in a sandbox may look at it. What the door decides is the URL handed back, which is the only part that differs.  Mint one per screen, and mint a fresh one to reconnect.
+         * @summary Open a screen
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSandboxesByIdScreenTicket: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postSandboxesByIdScreenTicket', 'id', id)
+            const localVarPath = `/v1/sandboxes/{id}/screen/ticket`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -426,9 +528,9 @@ export const SandboxesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SandboxesByIdTerminalTicket: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSandboxesByIdTerminalTicket: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1SandboxesByIdTerminalTicket', 'id', id)
+            assertParamExists('postSandboxesByIdTerminalTicket', 'id', id)
             const localVarPath = `/v1/sandboxes/{id}/terminal/ticket`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -614,10 +716,10 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1SandboxesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SandboxesById(id, options);
+        async deleteSandboxesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSandboxesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.deleteV1SandboxesById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.deleteSandboxesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -639,10 +741,10 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Sandboxes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Sandboxes(options);
+        async getSandboxes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSandboxes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getV1Sandboxes']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getSandboxes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -652,10 +754,10 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SandboxesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SandboxesById(id, options);
+        async getSandboxesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSandboxesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getV1SandboxesById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getSandboxesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -665,10 +767,36 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SandboxesByIdFs(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SandboxesByIdFs(id, options);
+        async getSandboxesByIdFs(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSandboxesByIdFs(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getV1SandboxesByIdFs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getSandboxesByIdFs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * A complete, self-contained desktop — noVNC inline, no other origin — that opens its own socket and draws this sandbox\'s display. Embed it in an iframe and there is nothing else to build.  `ticket` is the credential from the POST above, carried through to the socket. The page is NOT gated: it is inert markup and does not redeem the ticket, because a ticket is spent once and a page that spent it would hold a credential that no longer opens anything. `frame-ancestors` admits our own brands\' hosts and nothing further.  It is served for every class, not only for `desktop`. The class is a fact about the image, and a sandbox with no VNC server already fails exactly — the connection is refused and the page says so — where a check here would be a second opinion about what is running inside a pod, formed from a label rather than from the pod.
+         * @summary The screen, as a page
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSandboxesByIdScreen(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSandboxesByIdScreen(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getSandboxesByIdScreen']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Upgrades to a WebSocket carrying RFB — the VNC wire protocol — from the sandbox\'s display, for a host that brings its own client. Requires `ticket`; a missing, expired or already-spent one answers 401 without upgrading.  THE WIRE IS RFB, in BINARY frames both ways, and it is not interpreted here: this is a pipe between the caller\'s client and the server inside the pod.  THE PIXELS COME OUT THROUGH THE EXEC CHANNEL. The display binds 127.0.0.1 only and deliberately nothing else, so there is no address to dial — `socat` joins the stream to that loopback port over the same Kubernetes exec subresource every other call into a sandbox uses. One way in, one thing to authorize, nothing further exposed.  The window size is ignored. A browser pane is not the X server\'s geometry, and the client scales what it is given rather than asking a server with no RandR to resize itself.
+         * @summary The screen, as a socket
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSandboxesByIdScreenWs(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSandboxesByIdScreenWs(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getSandboxesByIdScreenWs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -678,10 +806,10 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SandboxesByIdTerminal(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SandboxesByIdTerminal(id, options);
+        async getSandboxesByIdTerminal(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSandboxesByIdTerminal(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getV1SandboxesByIdTerminal']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getSandboxesByIdTerminal']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -691,10 +819,10 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SandboxesByIdTerminalWs(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SandboxesByIdTerminalWs(id, options);
+        async getSandboxesByIdTerminalWs(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSandboxesByIdTerminalWs(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getV1SandboxesByIdTerminalWs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.getSandboxesByIdTerminalWs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -711,15 +839,15 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a sandbox and returns it. `class` is one of `exec`, `dev` or `desktop`; `dev` and `desktop` are attached to a `project`, which is required for them and names the volume the work persists on. `ttlSec` bounds the lease, and `image` overrides the class default.  This is the ONLY path that creates cluster objects. The isolation boundary is the pod\'s runtime class, one field, so what a sandbox is confined by is a deployment decision rather than anything this operation negotiates.
+         * Creates a sandbox and returns it. `class` is one of `exec`, `dev`, `desktop` or `android`; `dev` and `desktop` are attached to a `project`, which is required for them and names the volume the work persists on. `ttlSec` bounds the lease, and `image` overrides the class default.  This is the ONLY path that creates cluster objects. The isolation boundary is the pod\'s runtime class, one field, so what a sandbox is confined by is a deployment decision rather than anything this operation negotiates.
          * @summary Lease a sandbox
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Sandboxes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Sandboxes(options);
+        async postSandboxes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.postV1Sandboxes']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.postSandboxes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -729,10 +857,10 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1SandboxesByIdExec(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SandboxesByIdExec(id, options);
+        async postSandboxesByIdExec(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxesByIdExec(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.postV1SandboxesByIdExec']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.postSandboxesByIdExec']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -742,10 +870,23 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1SandboxesByIdFs(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SandboxesByIdFs(id, options);
+        async postSandboxesByIdFs(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxesByIdFs(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.postV1SandboxesByIdFs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.postSandboxesByIdFs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Mints a SINGLE-USE ticket for this sandbox\'s DISPLAY and returns `{ticket, expiresIn, url}`, where url is the desktop PAGE with the ticket already on it. The same ticket as the terminal\'s, minted for a different door.  A ticket says which org and which sandbox, and the terminal and the screen are two views of one machine: a caller who may type in a sandbox may look at it. What the door decides is the URL handed back, which is the only part that differs.  Mint one per screen, and mint a fresh one to reconnect.
+         * @summary Open a screen
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postSandboxesByIdScreenTicket(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxesByIdScreenTicket(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.postSandboxesByIdScreenTicket']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -755,10 +896,10 @@ export const SandboxesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1SandboxesByIdTerminalTicket(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SandboxesByIdTerminalTicket(id, options);
+        async postSandboxesByIdTerminalTicket(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSandboxesByIdTerminalTicket(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.postV1SandboxesByIdTerminalTicket']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SandboxesApi.postSandboxesByIdTerminalTicket']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -826,12 +967,12 @@ export const SandboxesApiFactory = function (configuration?: Configuration, base
         /**
          * Stops the sandbox\'s pod and drops the lease. The VOLUME survives by default, so a `dev` or `desktop` sandbox can be leased again over the same project and find its checkout where it left it.  `purge=1` deletes the volume too. It is opt-in because it is the one part of this that cannot be undone.
          * @summary End a sandbox
-         * @param {SandboxesApiDeleteV1SandboxesByIdRequest} requestParameters Request parameters.
+         * @param {SandboxesApiDeleteSandboxesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SandboxesById(requestParameters: SandboxesApiDeleteV1SandboxesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1SandboxesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteSandboxesById(requestParameters: SandboxesApiDeleteSandboxesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteSandboxesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Ends the caller\'s sandbox lease: the pod goes, and the volume goes only when the caller asked for that too.
@@ -849,48 +990,68 @@ export const SandboxesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Sandboxes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1Sandboxes(options).then((request) => request(axios, basePath));
+        getSandboxes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSandboxes(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the caller org\'s sandboxes. An id belonging to another org answers 404 and not 403 — a 403 would confirm the id exists, and whether a given sandbox exists is itself a cross-tenant fact.
          * @summary One sandbox
-         * @param {SandboxesApiGetV1SandboxesByIdRequest} requestParameters Request parameters.
+         * @param {SandboxesApiGetSandboxesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SandboxesById(requestParameters: SandboxesApiGetV1SandboxesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1SandboxesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getSandboxesById(requestParameters: SandboxesApiGetSandboxesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSandboxesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Reads one file from the sandbox\'s project directory as text, or lists the entries when the path names a directory. Paths resolve under the project root and a path that climbs out is refused rather than rewritten.
          * @summary Read a file, or list a directory
-         * @param {SandboxesApiGetV1SandboxesByIdFsRequest} requestParameters Request parameters.
+         * @param {SandboxesApiGetSandboxesByIdFsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SandboxesByIdFs(requestParameters: SandboxesApiGetV1SandboxesByIdFsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1SandboxesByIdFs(requestParameters.id, options).then((request) => request(axios, basePath));
+        getSandboxesByIdFs(requestParameters: SandboxesApiGetSandboxesByIdFsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSandboxesByIdFs(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * A complete, self-contained desktop — noVNC inline, no other origin — that opens its own socket and draws this sandbox\'s display. Embed it in an iframe and there is nothing else to build.  `ticket` is the credential from the POST above, carried through to the socket. The page is NOT gated: it is inert markup and does not redeem the ticket, because a ticket is spent once and a page that spent it would hold a credential that no longer opens anything. `frame-ancestors` admits our own brands\' hosts and nothing further.  It is served for every class, not only for `desktop`. The class is a fact about the image, and a sandbox with no VNC server already fails exactly — the connection is refused and the page says so — where a check here would be a second opinion about what is running inside a pod, formed from a label rather than from the pod.
+         * @summary The screen, as a page
+         * @param {SandboxesApiGetSandboxesByIdScreenRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSandboxesByIdScreen(requestParameters: SandboxesApiGetSandboxesByIdScreenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSandboxesByIdScreen(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Upgrades to a WebSocket carrying RFB — the VNC wire protocol — from the sandbox\'s display, for a host that brings its own client. Requires `ticket`; a missing, expired or already-spent one answers 401 without upgrading.  THE WIRE IS RFB, in BINARY frames both ways, and it is not interpreted here: this is a pipe between the caller\'s client and the server inside the pod.  THE PIXELS COME OUT THROUGH THE EXEC CHANNEL. The display binds 127.0.0.1 only and deliberately nothing else, so there is no address to dial — `socat` joins the stream to that loopback port over the same Kubernetes exec subresource every other call into a sandbox uses. One way in, one thing to authorize, nothing further exposed.  The window size is ignored. A browser pane is not the X server\'s geometry, and the client scales what it is given rather than asking a server with no RandR to resize itself.
+         * @summary The screen, as a socket
+         * @param {SandboxesApiGetSandboxesByIdScreenWsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSandboxesByIdScreenWs(requestParameters: SandboxesApiGetSandboxesByIdScreenWsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSandboxesByIdScreenWs(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * A complete, self-contained terminal — xterm inline, no other origin — that opens its own socket and runs a shell in this sandbox. Embed it in an iframe and there is nothing else to build.  `ticket` is the credential from the POST above and `arg` names the session (see the socket below); both are simply carried through to the socket. The page is NOT gated — it is inert markup and does not redeem the ticket, because a ticket is spent once and a page that spent it would hold a credential that no longer opens anything.  When the terminal is up it posts `{source:\"hanzo-term\", ready:true}` to its parent frame, so a host can tell a live terminal from a page that failed into something else. `frame-ancestors` admits our own brands\' hosts and nothing further.
          * @summary The terminal, as a page
-         * @param {SandboxesApiGetV1SandboxesByIdTerminalRequest} requestParameters Request parameters.
+         * @param {SandboxesApiGetSandboxesByIdTerminalRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SandboxesByIdTerminal(requestParameters: SandboxesApiGetV1SandboxesByIdTerminalRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1SandboxesByIdTerminal(requestParameters.id, options).then((request) => request(axios, basePath));
+        getSandboxesByIdTerminal(requestParameters: SandboxesApiGetSandboxesByIdTerminalRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSandboxesByIdTerminal(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Upgrades to a WebSocket carrying a login shell on a pseudo-terminal inside the sandbox — for a host that brings its own emulator. Requires `ticket`; a missing, expired or already-spent one answers 401 without upgrading.  THE WIRE. A text frame is stdin, unless it is the one control object `{\"resize\":{\"cols\":N,\"rows\":M}}`; a binary frame is always stdin. Output comes back as BINARY frames, because a pty emits arbitrary bytes cut at arbitrary offsets and a text frame carrying half a rune is one the browser closes the connection over.  `arg` names a SESSION: the shell runs under `tmux new -A -s <arg>`, which attaches to that session if it exists and creates it if it does not — so one sandbox holds as many terminals as a caller has names for. It is 1-64 characters of letters, digits, `-` or `_` and may not begin with `-`; anything else is 400. Without `arg` the shell is unnamed and unmultiplexed.  The shell is `zsh -l`, falling back to `bash -l` and then to `sh -l`, and to the plain shell again when the image has no tmux. Every step is a preference and none is a requirement: whatever else the image carries — the hanzo CLI included — is a command to type, never a condition for getting a prompt.
          * @summary The terminal, as a socket
-         * @param {SandboxesApiGetV1SandboxesByIdTerminalWsRequest} requestParameters Request parameters.
+         * @param {SandboxesApiGetSandboxesByIdTerminalWsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SandboxesByIdTerminalWs(requestParameters: SandboxesApiGetV1SandboxesByIdTerminalWsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1SandboxesByIdTerminalWs(requestParameters.id, options).then((request) => request(axios, basePath));
+        getSandboxesByIdTerminalWs(requestParameters: SandboxesApiGetSandboxesByIdTerminalWsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSandboxesByIdTerminalWs(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Leases the caller\'s sandbox, or returns the one it named if that lease is still running.  What comes back is a real computer: a pod under a runtime boundary with a toolchain already in it, its own filesystem, and a lease that ends it. Every other op here acts on the one this returns.
@@ -903,43 +1064,53 @@ export const SandboxesApiFactory = function (configuration?: Configuration, base
             return localVarFp.leaseSandbox(requestParameters.leaseIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a sandbox and returns it. `class` is one of `exec`, `dev` or `desktop`; `dev` and `desktop` are attached to a `project`, which is required for them and names the volume the work persists on. `ttlSec` bounds the lease, and `image` overrides the class default.  This is the ONLY path that creates cluster objects. The isolation boundary is the pod\'s runtime class, one field, so what a sandbox is confined by is a deployment decision rather than anything this operation negotiates.
+         * Creates a sandbox and returns it. `class` is one of `exec`, `dev`, `desktop` or `android`; `dev` and `desktop` are attached to a `project`, which is required for them and names the volume the work persists on. `ttlSec` bounds the lease, and `image` overrides the class default.  This is the ONLY path that creates cluster objects. The isolation boundary is the pod\'s runtime class, one field, so what a sandbox is confined by is a deployment decision rather than anything this operation negotiates.
          * @summary Lease a sandbox
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Sandboxes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Sandboxes(options).then((request) => request(axios, basePath));
+        postSandboxes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSandboxes(options).then((request) => request(axios, basePath));
         },
         /**
          * Runs a command inside the sandbox and returns its exit code, stdout and stderr. A non-zero exit is a SUCCESSFUL call carrying a failed program — the HTTP status stays 200, because \"the tests failed\" and \"the sandbox is broken\" are different facts.  NOTHING RUNS IN cloud. The command is streamed to the Kubernetes exec subresource of the sandbox\'s pod, which runs under the gVisor runtime class. The sandbox is addressed by pod NAME through the apiserver, never by address.
          * @summary Run a command in a sandbox
-         * @param {SandboxesApiPostV1SandboxesByIdExecRequest} requestParameters Request parameters.
+         * @param {SandboxesApiPostSandboxesByIdExecRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SandboxesByIdExec(requestParameters: SandboxesApiPostV1SandboxesByIdExecRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1SandboxesByIdExec(requestParameters.id, options).then((request) => request(axios, basePath));
+        postSandboxesByIdExec(requestParameters: SandboxesApiPostSandboxesByIdExecRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSandboxesByIdExec(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Writes the request body to one file in the sandbox\'s project directory, creating parent directories. Same confinement as the read above.
          * @summary Write a file
-         * @param {SandboxesApiPostV1SandboxesByIdFsRequest} requestParameters Request parameters.
+         * @param {SandboxesApiPostSandboxesByIdFsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SandboxesByIdFs(requestParameters: SandboxesApiPostV1SandboxesByIdFsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1SandboxesByIdFs(requestParameters.id, options).then((request) => request(axios, basePath));
+        postSandboxesByIdFs(requestParameters: SandboxesApiPostSandboxesByIdFsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSandboxesByIdFs(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Mints a SINGLE-USE ticket for this sandbox\'s DISPLAY and returns `{ticket, expiresIn, url}`, where url is the desktop PAGE with the ticket already on it. The same ticket as the terminal\'s, minted for a different door.  A ticket says which org and which sandbox, and the terminal and the screen are two views of one machine: a caller who may type in a sandbox may look at it. What the door decides is the URL handed back, which is the only part that differs.  Mint one per screen, and mint a fresh one to reconnect.
+         * @summary Open a screen
+         * @param {SandboxesApiPostSandboxesByIdScreenTicketRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postSandboxesByIdScreenTicket(requestParameters: SandboxesApiPostSandboxesByIdScreenTicketRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSandboxesByIdScreenTicket(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Mints a SINGLE-USE ticket for one interactive terminal in this sandbox and returns `{ticket, expiresIn, url}`, where url is the terminal PAGE with the ticket already on it.  It exists because a browser carries no Authorization header into a WebSocket or an iframe, so a terminal cannot be authenticated the way every other route here is. The ticket is a credential MINTED for that one terminal: bound to this org and this sandbox, valid for thirty seconds, and gone the first time it is presented. A long-lived bearer in a query string would instead be written into every access log on the path.  Mint one per terminal, and mint a fresh one to reconnect.
          * @summary Open a terminal
-         * @param {SandboxesApiPostV1SandboxesByIdTerminalTicketRequest} requestParameters Request parameters.
+         * @param {SandboxesApiPostSandboxesByIdTerminalTicketRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SandboxesByIdTerminalTicket(requestParameters: SandboxesApiPostV1SandboxesByIdTerminalTicketRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1SandboxesByIdTerminalTicket(requestParameters.id, options).then((request) => request(axios, basePath));
+        postSandboxesByIdTerminalTicket(requestParameters: SandboxesApiPostSandboxesByIdTerminalTicketRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSandboxesByIdTerminalTicket(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Reads one path in the caller\'s sandbox: a file\'s bytes, or a directory\'s entries when the path names one.
@@ -985,15 +1156,15 @@ export const SandboxesApiFactory = function (configuration?: Configuration, base
 };
 
 /**
- * Request parameters for deleteV1SandboxesById operation in SandboxesApi.
+ * Request parameters for deleteSandboxesById operation in SandboxesApi.
  * @export
- * @interface SandboxesApiDeleteV1SandboxesByIdRequest
+ * @interface SandboxesApiDeleteSandboxesByIdRequest
  */
-export interface SandboxesApiDeleteV1SandboxesByIdRequest {
+export interface SandboxesApiDeleteSandboxesByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof SandboxesApiDeleteV1SandboxesById
+     * @memberof SandboxesApiDeleteSandboxesById
      */
     readonly id: string
 }
@@ -1013,57 +1184,85 @@ export interface SandboxesApiEndSandboxRequest {
 }
 
 /**
- * Request parameters for getV1SandboxesById operation in SandboxesApi.
+ * Request parameters for getSandboxesById operation in SandboxesApi.
  * @export
- * @interface SandboxesApiGetV1SandboxesByIdRequest
+ * @interface SandboxesApiGetSandboxesByIdRequest
  */
-export interface SandboxesApiGetV1SandboxesByIdRequest {
+export interface SandboxesApiGetSandboxesByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof SandboxesApiGetV1SandboxesById
+     * @memberof SandboxesApiGetSandboxesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1SandboxesByIdFs operation in SandboxesApi.
+ * Request parameters for getSandboxesByIdFs operation in SandboxesApi.
  * @export
- * @interface SandboxesApiGetV1SandboxesByIdFsRequest
+ * @interface SandboxesApiGetSandboxesByIdFsRequest
  */
-export interface SandboxesApiGetV1SandboxesByIdFsRequest {
+export interface SandboxesApiGetSandboxesByIdFsRequest {
     /**
      * 
      * @type {string}
-     * @memberof SandboxesApiGetV1SandboxesByIdFs
+     * @memberof SandboxesApiGetSandboxesByIdFs
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1SandboxesByIdTerminal operation in SandboxesApi.
+ * Request parameters for getSandboxesByIdScreen operation in SandboxesApi.
  * @export
- * @interface SandboxesApiGetV1SandboxesByIdTerminalRequest
+ * @interface SandboxesApiGetSandboxesByIdScreenRequest
  */
-export interface SandboxesApiGetV1SandboxesByIdTerminalRequest {
+export interface SandboxesApiGetSandboxesByIdScreenRequest {
     /**
      * 
      * @type {string}
-     * @memberof SandboxesApiGetV1SandboxesByIdTerminal
+     * @memberof SandboxesApiGetSandboxesByIdScreen
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1SandboxesByIdTerminalWs operation in SandboxesApi.
+ * Request parameters for getSandboxesByIdScreenWs operation in SandboxesApi.
  * @export
- * @interface SandboxesApiGetV1SandboxesByIdTerminalWsRequest
+ * @interface SandboxesApiGetSandboxesByIdScreenWsRequest
  */
-export interface SandboxesApiGetV1SandboxesByIdTerminalWsRequest {
+export interface SandboxesApiGetSandboxesByIdScreenWsRequest {
     /**
      * 
      * @type {string}
-     * @memberof SandboxesApiGetV1SandboxesByIdTerminalWs
+     * @memberof SandboxesApiGetSandboxesByIdScreenWs
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getSandboxesByIdTerminal operation in SandboxesApi.
+ * @export
+ * @interface SandboxesApiGetSandboxesByIdTerminalRequest
+ */
+export interface SandboxesApiGetSandboxesByIdTerminalRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SandboxesApiGetSandboxesByIdTerminal
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getSandboxesByIdTerminalWs operation in SandboxesApi.
+ * @export
+ * @interface SandboxesApiGetSandboxesByIdTerminalWsRequest
+ */
+export interface SandboxesApiGetSandboxesByIdTerminalWsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SandboxesApiGetSandboxesByIdTerminalWs
      */
     readonly id: string
 }
@@ -1083,43 +1282,57 @@ export interface SandboxesApiLeaseSandboxRequest {
 }
 
 /**
- * Request parameters for postV1SandboxesByIdExec operation in SandboxesApi.
+ * Request parameters for postSandboxesByIdExec operation in SandboxesApi.
  * @export
- * @interface SandboxesApiPostV1SandboxesByIdExecRequest
+ * @interface SandboxesApiPostSandboxesByIdExecRequest
  */
-export interface SandboxesApiPostV1SandboxesByIdExecRequest {
+export interface SandboxesApiPostSandboxesByIdExecRequest {
     /**
      * 
      * @type {string}
-     * @memberof SandboxesApiPostV1SandboxesByIdExec
+     * @memberof SandboxesApiPostSandboxesByIdExec
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1SandboxesByIdFs operation in SandboxesApi.
+ * Request parameters for postSandboxesByIdFs operation in SandboxesApi.
  * @export
- * @interface SandboxesApiPostV1SandboxesByIdFsRequest
+ * @interface SandboxesApiPostSandboxesByIdFsRequest
  */
-export interface SandboxesApiPostV1SandboxesByIdFsRequest {
+export interface SandboxesApiPostSandboxesByIdFsRequest {
     /**
      * 
      * @type {string}
-     * @memberof SandboxesApiPostV1SandboxesByIdFs
+     * @memberof SandboxesApiPostSandboxesByIdFs
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1SandboxesByIdTerminalTicket operation in SandboxesApi.
+ * Request parameters for postSandboxesByIdScreenTicket operation in SandboxesApi.
  * @export
- * @interface SandboxesApiPostV1SandboxesByIdTerminalTicketRequest
+ * @interface SandboxesApiPostSandboxesByIdScreenTicketRequest
  */
-export interface SandboxesApiPostV1SandboxesByIdTerminalTicketRequest {
+export interface SandboxesApiPostSandboxesByIdScreenTicketRequest {
     /**
      * 
      * @type {string}
-     * @memberof SandboxesApiPostV1SandboxesByIdTerminalTicket
+     * @memberof SandboxesApiPostSandboxesByIdScreenTicket
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for postSandboxesByIdTerminalTicket operation in SandboxesApi.
+ * @export
+ * @interface SandboxesApiPostSandboxesByIdTerminalTicketRequest
+ */
+export interface SandboxesApiPostSandboxesByIdTerminalTicketRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SandboxesApiPostSandboxesByIdTerminalTicket
      */
     readonly id: string
 }
@@ -1190,13 +1403,13 @@ export class SandboxesApi extends BaseAPI {
     /**
      * Stops the sandbox\'s pod and drops the lease. The VOLUME survives by default, so a `dev` or `desktop` sandbox can be leased again over the same project and find its checkout where it left it.  `purge=1` deletes the volume too. It is opt-in because it is the one part of this that cannot be undone.
      * @summary End a sandbox
-     * @param {SandboxesApiDeleteV1SandboxesByIdRequest} requestParameters Request parameters.
+     * @param {SandboxesApiDeleteSandboxesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandboxesApi
      */
-    public deleteV1SandboxesById(requestParameters: SandboxesApiDeleteV1SandboxesByIdRequest, options?: RawAxiosRequestConfig) {
-        return SandboxesApiFp(this.configuration).deleteV1SandboxesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteSandboxesById(requestParameters: SandboxesApiDeleteSandboxesByIdRequest, options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).deleteSandboxesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1218,56 +1431,80 @@ export class SandboxesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SandboxesApi
      */
-    public getV1Sandboxes(options?: RawAxiosRequestConfig) {
-        return SandboxesApiFp(this.configuration).getV1Sandboxes(options).then((request) => request(this.axios, this.basePath));
+    public getSandboxes(options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).getSandboxes(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one of the caller org\'s sandboxes. An id belonging to another org answers 404 and not 403 — a 403 would confirm the id exists, and whether a given sandbox exists is itself a cross-tenant fact.
      * @summary One sandbox
-     * @param {SandboxesApiGetV1SandboxesByIdRequest} requestParameters Request parameters.
+     * @param {SandboxesApiGetSandboxesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandboxesApi
      */
-    public getV1SandboxesById(requestParameters: SandboxesApiGetV1SandboxesByIdRequest, options?: RawAxiosRequestConfig) {
-        return SandboxesApiFp(this.configuration).getV1SandboxesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getSandboxesById(requestParameters: SandboxesApiGetSandboxesByIdRequest, options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).getSandboxesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reads one file from the sandbox\'s project directory as text, or lists the entries when the path names a directory. Paths resolve under the project root and a path that climbs out is refused rather than rewritten.
      * @summary Read a file, or list a directory
-     * @param {SandboxesApiGetV1SandboxesByIdFsRequest} requestParameters Request parameters.
+     * @param {SandboxesApiGetSandboxesByIdFsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandboxesApi
      */
-    public getV1SandboxesByIdFs(requestParameters: SandboxesApiGetV1SandboxesByIdFsRequest, options?: RawAxiosRequestConfig) {
-        return SandboxesApiFp(this.configuration).getV1SandboxesByIdFs(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getSandboxesByIdFs(requestParameters: SandboxesApiGetSandboxesByIdFsRequest, options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).getSandboxesByIdFs(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * A complete, self-contained desktop — noVNC inline, no other origin — that opens its own socket and draws this sandbox\'s display. Embed it in an iframe and there is nothing else to build.  `ticket` is the credential from the POST above, carried through to the socket. The page is NOT gated: it is inert markup and does not redeem the ticket, because a ticket is spent once and a page that spent it would hold a credential that no longer opens anything. `frame-ancestors` admits our own brands\' hosts and nothing further.  It is served for every class, not only for `desktop`. The class is a fact about the image, and a sandbox with no VNC server already fails exactly — the connection is refused and the page says so — where a check here would be a second opinion about what is running inside a pod, formed from a label rather than from the pod.
+     * @summary The screen, as a page
+     * @param {SandboxesApiGetSandboxesByIdScreenRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandboxesApi
+     */
+    public getSandboxesByIdScreen(requestParameters: SandboxesApiGetSandboxesByIdScreenRequest, options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).getSandboxesByIdScreen(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Upgrades to a WebSocket carrying RFB — the VNC wire protocol — from the sandbox\'s display, for a host that brings its own client. Requires `ticket`; a missing, expired or already-spent one answers 401 without upgrading.  THE WIRE IS RFB, in BINARY frames both ways, and it is not interpreted here: this is a pipe between the caller\'s client and the server inside the pod.  THE PIXELS COME OUT THROUGH THE EXEC CHANNEL. The display binds 127.0.0.1 only and deliberately nothing else, so there is no address to dial — `socat` joins the stream to that loopback port over the same Kubernetes exec subresource every other call into a sandbox uses. One way in, one thing to authorize, nothing further exposed.  The window size is ignored. A browser pane is not the X server\'s geometry, and the client scales what it is given rather than asking a server with no RandR to resize itself.
+     * @summary The screen, as a socket
+     * @param {SandboxesApiGetSandboxesByIdScreenWsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandboxesApi
+     */
+    public getSandboxesByIdScreenWs(requestParameters: SandboxesApiGetSandboxesByIdScreenWsRequest, options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).getSandboxesByIdScreenWs(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A complete, self-contained terminal — xterm inline, no other origin — that opens its own socket and runs a shell in this sandbox. Embed it in an iframe and there is nothing else to build.  `ticket` is the credential from the POST above and `arg` names the session (see the socket below); both are simply carried through to the socket. The page is NOT gated — it is inert markup and does not redeem the ticket, because a ticket is spent once and a page that spent it would hold a credential that no longer opens anything.  When the terminal is up it posts `{source:\"hanzo-term\", ready:true}` to its parent frame, so a host can tell a live terminal from a page that failed into something else. `frame-ancestors` admits our own brands\' hosts and nothing further.
      * @summary The terminal, as a page
-     * @param {SandboxesApiGetV1SandboxesByIdTerminalRequest} requestParameters Request parameters.
+     * @param {SandboxesApiGetSandboxesByIdTerminalRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandboxesApi
      */
-    public getV1SandboxesByIdTerminal(requestParameters: SandboxesApiGetV1SandboxesByIdTerminalRequest, options?: RawAxiosRequestConfig) {
-        return SandboxesApiFp(this.configuration).getV1SandboxesByIdTerminal(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getSandboxesByIdTerminal(requestParameters: SandboxesApiGetSandboxesByIdTerminalRequest, options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).getSandboxesByIdTerminal(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Upgrades to a WebSocket carrying a login shell on a pseudo-terminal inside the sandbox — for a host that brings its own emulator. Requires `ticket`; a missing, expired or already-spent one answers 401 without upgrading.  THE WIRE. A text frame is stdin, unless it is the one control object `{\"resize\":{\"cols\":N,\"rows\":M}}`; a binary frame is always stdin. Output comes back as BINARY frames, because a pty emits arbitrary bytes cut at arbitrary offsets and a text frame carrying half a rune is one the browser closes the connection over.  `arg` names a SESSION: the shell runs under `tmux new -A -s <arg>`, which attaches to that session if it exists and creates it if it does not — so one sandbox holds as many terminals as a caller has names for. It is 1-64 characters of letters, digits, `-` or `_` and may not begin with `-`; anything else is 400. Without `arg` the shell is unnamed and unmultiplexed.  The shell is `zsh -l`, falling back to `bash -l` and then to `sh -l`, and to the plain shell again when the image has no tmux. Every step is a preference and none is a requirement: whatever else the image carries — the hanzo CLI included — is a command to type, never a condition for getting a prompt.
      * @summary The terminal, as a socket
-     * @param {SandboxesApiGetV1SandboxesByIdTerminalWsRequest} requestParameters Request parameters.
+     * @param {SandboxesApiGetSandboxesByIdTerminalWsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandboxesApi
      */
-    public getV1SandboxesByIdTerminalWs(requestParameters: SandboxesApiGetV1SandboxesByIdTerminalWsRequest, options?: RawAxiosRequestConfig) {
-        return SandboxesApiFp(this.configuration).getV1SandboxesByIdTerminalWs(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getSandboxesByIdTerminalWs(requestParameters: SandboxesApiGetSandboxesByIdTerminalWsRequest, options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).getSandboxesByIdTerminalWs(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1283,50 +1520,62 @@ export class SandboxesApi extends BaseAPI {
     }
 
     /**
-     * Creates a sandbox and returns it. `class` is one of `exec`, `dev` or `desktop`; `dev` and `desktop` are attached to a `project`, which is required for them and names the volume the work persists on. `ttlSec` bounds the lease, and `image` overrides the class default.  This is the ONLY path that creates cluster objects. The isolation boundary is the pod\'s runtime class, one field, so what a sandbox is confined by is a deployment decision rather than anything this operation negotiates.
+     * Creates a sandbox and returns it. `class` is one of `exec`, `dev`, `desktop` or `android`; `dev` and `desktop` are attached to a `project`, which is required for them and names the volume the work persists on. `ttlSec` bounds the lease, and `image` overrides the class default.  This is the ONLY path that creates cluster objects. The isolation boundary is the pod\'s runtime class, one field, so what a sandbox is confined by is a deployment decision rather than anything this operation negotiates.
      * @summary Lease a sandbox
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandboxesApi
      */
-    public postV1Sandboxes(options?: RawAxiosRequestConfig) {
-        return SandboxesApiFp(this.configuration).postV1Sandboxes(options).then((request) => request(this.axios, this.basePath));
+    public postSandboxes(options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).postSandboxes(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Runs a command inside the sandbox and returns its exit code, stdout and stderr. A non-zero exit is a SUCCESSFUL call carrying a failed program — the HTTP status stays 200, because \"the tests failed\" and \"the sandbox is broken\" are different facts.  NOTHING RUNS IN cloud. The command is streamed to the Kubernetes exec subresource of the sandbox\'s pod, which runs under the gVisor runtime class. The sandbox is addressed by pod NAME through the apiserver, never by address.
      * @summary Run a command in a sandbox
-     * @param {SandboxesApiPostV1SandboxesByIdExecRequest} requestParameters Request parameters.
+     * @param {SandboxesApiPostSandboxesByIdExecRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandboxesApi
      */
-    public postV1SandboxesByIdExec(requestParameters: SandboxesApiPostV1SandboxesByIdExecRequest, options?: RawAxiosRequestConfig) {
-        return SandboxesApiFp(this.configuration).postV1SandboxesByIdExec(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postSandboxesByIdExec(requestParameters: SandboxesApiPostSandboxesByIdExecRequest, options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).postSandboxesByIdExec(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Writes the request body to one file in the sandbox\'s project directory, creating parent directories. Same confinement as the read above.
      * @summary Write a file
-     * @param {SandboxesApiPostV1SandboxesByIdFsRequest} requestParameters Request parameters.
+     * @param {SandboxesApiPostSandboxesByIdFsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandboxesApi
      */
-    public postV1SandboxesByIdFs(requestParameters: SandboxesApiPostV1SandboxesByIdFsRequest, options?: RawAxiosRequestConfig) {
-        return SandboxesApiFp(this.configuration).postV1SandboxesByIdFs(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postSandboxesByIdFs(requestParameters: SandboxesApiPostSandboxesByIdFsRequest, options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).postSandboxesByIdFs(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Mints a SINGLE-USE ticket for this sandbox\'s DISPLAY and returns `{ticket, expiresIn, url}`, where url is the desktop PAGE with the ticket already on it. The same ticket as the terminal\'s, minted for a different door.  A ticket says which org and which sandbox, and the terminal and the screen are two views of one machine: a caller who may type in a sandbox may look at it. What the door decides is the URL handed back, which is the only part that differs.  Mint one per screen, and mint a fresh one to reconnect.
+     * @summary Open a screen
+     * @param {SandboxesApiPostSandboxesByIdScreenTicketRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SandboxesApi
+     */
+    public postSandboxesByIdScreenTicket(requestParameters: SandboxesApiPostSandboxesByIdScreenTicketRequest, options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).postSandboxesByIdScreenTicket(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Mints a SINGLE-USE ticket for one interactive terminal in this sandbox and returns `{ticket, expiresIn, url}`, where url is the terminal PAGE with the ticket already on it.  It exists because a browser carries no Authorization header into a WebSocket or an iframe, so a terminal cannot be authenticated the way every other route here is. The ticket is a credential MINTED for that one terminal: bound to this org and this sandbox, valid for thirty seconds, and gone the first time it is presented. A long-lived bearer in a query string would instead be written into every access log on the path.  Mint one per terminal, and mint a fresh one to reconnect.
      * @summary Open a terminal
-     * @param {SandboxesApiPostV1SandboxesByIdTerminalTicketRequest} requestParameters Request parameters.
+     * @param {SandboxesApiPostSandboxesByIdTerminalTicketRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SandboxesApi
      */
-    public postV1SandboxesByIdTerminalTicket(requestParameters: SandboxesApiPostV1SandboxesByIdTerminalTicketRequest, options?: RawAxiosRequestConfig) {
-        return SandboxesApiFp(this.configuration).postV1SandboxesByIdTerminalTicket(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postSandboxesByIdTerminalTicket(requestParameters: SandboxesApiPostSandboxesByIdTerminalTicketRequest, options?: RawAxiosRequestConfig) {
+        return SandboxesApiFp(this.configuration).postSandboxesByIdTerminalTicket(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

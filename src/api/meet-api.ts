@@ -35,7 +35,7 @@ export const MeetApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MeetHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMeetHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/meet/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -65,7 +65,7 @@ export const MeetApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MeetSession: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMeetSession: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/meet/session`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -95,7 +95,7 @@ export const MeetApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MeetGettoken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMeetGettoken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/meet/getToken`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -135,10 +135,10 @@ export const MeetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MeetHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeetHealth>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MeetHealth(options);
+        async getMeetHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MeetHealth>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMeetHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MeetApi.getV1MeetHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MeetApi.getMeetHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -147,10 +147,10 @@ export const MeetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MeetSession(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MeetSession(options);
+        async getMeetSession(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMeetSession(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MeetApi.getV1MeetSession']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MeetApi.getMeetSession']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -159,10 +159,10 @@ export const MeetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MeetGettoken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MeetGettoken(options);
+        async postMeetGettoken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMeetGettoken(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MeetApi.postV1MeetGettoken']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MeetApi.postMeetGettoken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -181,8 +181,8 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MeetHealth(options?: RawAxiosRequestConfig): AxiosPromise<MeetHealth> {
-            return localVarFp.getV1MeetHealth(options).then((request) => request(axios, basePath));
+        getMeetHealth(options?: RawAxiosRequestConfig): AxiosPromise<MeetHealth> {
+            return localVarFp.getMeetHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the three facts the native lobby cannot know on its own: the identity a seat would be taken under, the LiveKit address the browser dials, and the workspaces this caller may open a room in.  It is the SAME decision getToken makes, asked before the room exists rather than after it is named. A room is bound to its tenant by its name\'s leading workspace segment, and only a workspace this answer lists will be admitted — so the lobby offers exactly what the mint would grant, and a person is never shown a room they would then be refused. Workspaces the caller holds only a guest role in are omitted for that reason.  An empty list is a real answer, not a fault: an IAM identity with no workspace has no room to open, and the lobby says so instead of failing.  `ws` is empty when this deployment has not been told where its media plane is (LIVEKIT_WS). Token minting is unaffected — the published office client supplies its own address — so this is a degraded native UI, not a degraded service, and the lobby refuses to dial rather than guessing a host.
@@ -190,8 +190,8 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MeetSession(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1MeetSession(options).then((request) => request(axios, basePath));
+        getMeetSession(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMeetSession(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers with a LiveKit join token for exactly the room named in the body. The body is the RAW token as text/plain — one opaque string, not JSON and not wrapped in an envelope, which is what the office client reads.  The caller presents its workspace session as a Bearer. Every clause is a refusal: the session must verify, its SIGNED workspace claim must equal the room\'s leading name segment — rooms are named `<workspace>_<room>_<id>`, and that prefix is the only thing binding a room to a tenant — and the session must carry a privileged workspace role, so a guest is refused rather than seated.  The participant identity is the SESSION\'S, never the body\'s. `_id` is accepted for compatibility with the published client bundle and deliberately ignored: LiveKit treats the identity as unique and ejects a duplicate, so honouring a caller-chosen one would let anyone in a workspace kick out a colleague and impersonate them. `participantName` is a display name only.  An unconfigured deployment answers 503 under its own name rather than 404, and the refusal states only that the office is unconfigured — the reason names key material and stays in the boot log.
@@ -199,8 +199,8 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MeetGettoken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1MeetGettoken(options).then((request) => request(axios, basePath));
+        postMeetGettoken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMeetGettoken(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -219,8 +219,8 @@ export class MeetApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MeetApi
      */
-    public getV1MeetHealth(options?: RawAxiosRequestConfig) {
-        return MeetApiFp(this.configuration).getV1MeetHealth(options).then((request) => request(this.axios, this.basePath));
+    public getMeetHealth(options?: RawAxiosRequestConfig) {
+        return MeetApiFp(this.configuration).getMeetHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -230,8 +230,8 @@ export class MeetApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MeetApi
      */
-    public getV1MeetSession(options?: RawAxiosRequestConfig) {
-        return MeetApiFp(this.configuration).getV1MeetSession(options).then((request) => request(this.axios, this.basePath));
+    public getMeetSession(options?: RawAxiosRequestConfig) {
+        return MeetApiFp(this.configuration).getMeetSession(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -241,8 +241,8 @@ export class MeetApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MeetApi
      */
-    public postV1MeetGettoken(options?: RawAxiosRequestConfig) {
-        return MeetApiFp(this.configuration).postV1MeetGettoken(options).then((request) => request(this.axios, this.basePath));
+    public postMeetGettoken(options?: RawAxiosRequestConfig) {
+        return MeetApiFp(this.configuration).postMeetGettoken(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

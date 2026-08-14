@@ -21,6 +21,12 @@
  */
 export interface CodingStartIn {
     /**
+     * After names a previous run\'s session, and starts this one from where that one stopped instead of from the repository\'s default. It is how a follow-up instruction — \"now add tests for it\" — builds on work already done rather than beginning again on a fresh clone.  It sets the base and nothing else, so this run still writes its OWN branch. One run, one branch: a run that wrote back onto an earlier run\'s branch would break the rule the forge\'s ref policy is built on, and would leave two turns of work with one name to review.  A caller who already knows the branch may pass Base directly; this exists because the branch is derived from a session id and nobody should have to know how. Base wins if both are given.
+     * @type {string}
+     * @memberof CodingStartIn
+     */
+    'after'?: string;
+    /**
      * AgentRef names a configured agent to run as, which is how an org pins a harness, a model and a prompt to a name. Empty runs the default agent.
      * @type {string}
      * @memberof CodingStartIn
@@ -33,7 +39,7 @@ export interface CodingStartIn {
      */
     'base'?: string;
     /**
-     * 
+     * Desktop asks for a run with a SCREEN — an image carrying an X server — for a task that has to drive a browser or another windowed program. False, the default, is a headless checkout, which is what writing code needs.
      * @type {boolean}
      * @memberof CodingStartIn
      */
@@ -68,12 +74,6 @@ export interface CodingStartIn {
      * @memberof CodingStartIn
      */
     'repo'?: string;
-    /**
-     * Subject is the person the run is attributed to — a linked Hanzo identity the door already proved, never a name the caller picks. Empty is refused rather than defaulted: a run that lost its human must not execute as the org.
-     * @type {string}
-     * @memberof CodingStartIn
-     */
-    'subject'?: string;
     /**
      * TargetID routes the run to a registered machine the org has claimed instead of to a sandbox in our cluster. Empty runs it here, which is the usual case.
      * @type {string}

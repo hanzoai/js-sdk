@@ -36,13 +36,13 @@ export const AvatarApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AvatarByOrgByUserByDigest: async (org: string, user: string, digest: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAvatarByOrgByUserByDigest: async (org: string, user: string, digest: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'org' is not null or undefined
-            assertParamExists('getV1AvatarByOrgByUserByDigest', 'org', org)
+            assertParamExists('getAvatarByOrgByUserByDigest', 'org', org)
             // verify required parameter 'user' is not null or undefined
-            assertParamExists('getV1AvatarByOrgByUserByDigest', 'user', user)
+            assertParamExists('getAvatarByOrgByUserByDigest', 'user', user)
             // verify required parameter 'digest' is not null or undefined
-            assertParamExists('getV1AvatarByOrgByUserByDigest', 'digest', digest)
+            assertParamExists('getAvatarByOrgByUserByDigest', 'digest', digest)
             const localVarPath = `/v1/avatar/{org}/{user}/{digest}`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)))
                 .replace(`{${"user"}}`, encodeURIComponent(String(user)))
@@ -75,7 +75,7 @@ export const AvatarApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Avatar: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAvatar: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/avatar`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -118,10 +118,10 @@ export const AvatarApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AvatarByOrgByUserByDigest(org: string, user: string, digest: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AvatarByOrgByUserByDigest(org, user, digest, options);
+        async getAvatarByOrgByUserByDigest(org: string, user: string, digest: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAvatarByOrgByUserByDigest(org, user, digest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AvatarApi.getV1AvatarByOrgByUserByDigest']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AvatarApi.getAvatarByOrgByUserByDigest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -130,10 +130,10 @@ export const AvatarApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Avatar(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Avatar(options);
+        async postAvatar(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAvatar(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AvatarApi.postV1Avatar']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AvatarApi.postAvatar']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -149,12 +149,12 @@ export const AvatarApiFactory = function (configuration?: Configuration, basePat
         /**
          * Streams a profile photo\'s raw BYTES. This is the address stored on the user\'s IAM record and rendered directly by an `<img>`, so it takes no credentials — the 64-hex content digest in the path is the capability, and it can only be produced by someone who already has the image.  The Content-Type is derived from the stored bytes and the response carries nosniff, so only a real raster image is ever served and only under its true type. Anything else — a miss, a malformed path, an object that is not an image — is one 404, and a hit caches for a year because the address is the content.
          * @summary Fetch a profile photo
-         * @param {AvatarApiGetV1AvatarByOrgByUserByDigestRequest} requestParameters Request parameters.
+         * @param {AvatarApiGetAvatarByOrgByUserByDigestRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AvatarByOrgByUserByDigest(requestParameters: AvatarApiGetV1AvatarByOrgByUserByDigestRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1AvatarByOrgByUserByDigest(requestParameters.org, requestParameters.user, requestParameters.digest, options).then((request) => request(axios, basePath));
+        getAvatarByOrgByUserByDigest(requestParameters: AvatarApiGetAvatarByOrgByUserByDigestRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getAvatarByOrgByUserByDigest(requestParameters.org, requestParameters.user, requestParameters.digest, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores one image as the signed-in user\'s profile photo and answers the URL it is served from, which is also written to the user\'s IAM record — so every surface that already renders `avatar` picks it up with no further call.  The body is a multipart form with a `file` part. The format is decided by the BYTES, never the filename or the part\'s Content-Type: png, jpeg, gif and webp are accepted and everything else is refused with 415, so an SVG cannot be stored as a picture and later served as a program. Over 8 MiB is 413; empty is 400.  The photo is addressed by the sha256 of its bytes, so setting a new one yields a new URL rather than a stale cache of the old face. The caller is taken from the validated identity ONLY — there is no way to name a different subject — so this always sets your own photo, and a caller with no organization yet is refused.
@@ -162,36 +162,36 @@ export const AvatarApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Avatar(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Avatar(options).then((request) => request(axios, basePath));
+        postAvatar(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAvatar(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1AvatarByOrgByUserByDigest operation in AvatarApi.
+ * Request parameters for getAvatarByOrgByUserByDigest operation in AvatarApi.
  * @export
- * @interface AvatarApiGetV1AvatarByOrgByUserByDigestRequest
+ * @interface AvatarApiGetAvatarByOrgByUserByDigestRequest
  */
-export interface AvatarApiGetV1AvatarByOrgByUserByDigestRequest {
+export interface AvatarApiGetAvatarByOrgByUserByDigestRequest {
     /**
      * 
      * @type {string}
-     * @memberof AvatarApiGetV1AvatarByOrgByUserByDigest
+     * @memberof AvatarApiGetAvatarByOrgByUserByDigest
      */
     readonly org: string
 
     /**
      * 
      * @type {string}
-     * @memberof AvatarApiGetV1AvatarByOrgByUserByDigest
+     * @memberof AvatarApiGetAvatarByOrgByUserByDigest
      */
     readonly user: string
 
     /**
      * 
      * @type {string}
-     * @memberof AvatarApiGetV1AvatarByOrgByUserByDigest
+     * @memberof AvatarApiGetAvatarByOrgByUserByDigest
      */
     readonly digest: string
 }
@@ -206,13 +206,13 @@ export class AvatarApi extends BaseAPI {
     /**
      * Streams a profile photo\'s raw BYTES. This is the address stored on the user\'s IAM record and rendered directly by an `<img>`, so it takes no credentials — the 64-hex content digest in the path is the capability, and it can only be produced by someone who already has the image.  The Content-Type is derived from the stored bytes and the response carries nosniff, so only a real raster image is ever served and only under its true type. Anything else — a miss, a malformed path, an object that is not an image — is one 404, and a hit caches for a year because the address is the content.
      * @summary Fetch a profile photo
-     * @param {AvatarApiGetV1AvatarByOrgByUserByDigestRequest} requestParameters Request parameters.
+     * @param {AvatarApiGetAvatarByOrgByUserByDigestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AvatarApi
      */
-    public getV1AvatarByOrgByUserByDigest(requestParameters: AvatarApiGetV1AvatarByOrgByUserByDigestRequest, options?: RawAxiosRequestConfig) {
-        return AvatarApiFp(this.configuration).getV1AvatarByOrgByUserByDigest(requestParameters.org, requestParameters.user, requestParameters.digest, options).then((request) => request(this.axios, this.basePath));
+    public getAvatarByOrgByUserByDigest(requestParameters: AvatarApiGetAvatarByOrgByUserByDigestRequest, options?: RawAxiosRequestConfig) {
+        return AvatarApiFp(this.configuration).getAvatarByOrgByUserByDigest(requestParameters.org, requestParameters.user, requestParameters.digest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -222,8 +222,8 @@ export class AvatarApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AvatarApi
      */
-    public postV1Avatar(options?: RawAxiosRequestConfig) {
-        return AvatarApiFp(this.configuration).postV1Avatar(options).then((request) => request(this.axios, this.basePath));
+    public postAvatar(options?: RawAxiosRequestConfig) {
+        return AvatarApiFp(this.configuration).postAvatar(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -35,7 +35,7 @@ export const IndexersApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Indexers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIndexers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/indexers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const IndexersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Indexers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexersOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Indexers(options);
+        async getIndexers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexersOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexersApi.getV1Indexers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexersApi.getIndexers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const IndexersApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Indexers(options?: RawAxiosRequestConfig): AxiosPromise<IndexersOut> {
-            return localVarFp.getV1Indexers(options).then((request) => request(axios, basePath));
+        getIndexers(options?: RawAxiosRequestConfig): AxiosPromise<IndexersOut> {
+            return localVarFp.getIndexers(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class IndexersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof IndexersApi
      */
-    public getV1Indexers(options?: RawAxiosRequestConfig) {
-        return IndexersApiFp(this.configuration).getV1Indexers(options).then((request) => request(this.axios, this.basePath));
+    public getIndexers(options?: RawAxiosRequestConfig) {
+        return IndexersApiFp(this.configuration).getIndexers(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

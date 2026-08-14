@@ -86,9 +86,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AgentsByRef: async (ref: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteAgentsByRef: async (ref: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ref' is not null or undefined
-            assertParamExists('deleteV1AgentsByRef', 'ref', ref)
+            assertParamExists('deleteAgentsByRef', 'ref', ref)
             const localVarPath = `/v1/agents/{ref}`
                 .replace(`{${"ref"}}`, encodeURIComponent(String(ref)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -120,9 +120,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AgentsTargetsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteAgentsTargetsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1AgentsTargetsById', 'id', id)
+            assertParamExists('deleteAgentsTargetsById', 'id', id)
             const localVarPath = `/v1/agents/targets/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -153,7 +153,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Agents: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgents: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agents`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -183,7 +183,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsActivity: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsActivity: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agents/activity`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -214,7 +214,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsBuilds: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsBuilds: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agents/builds`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -250,11 +250,11 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsBuildsByOrgByProject: async (org: string, project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsBuildsByOrgByProject: async (org: string, project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'org' is not null or undefined
-            assertParamExists('getV1AgentsBuildsByOrgByProject', 'org', org)
+            assertParamExists('getAgentsBuildsByOrgByProject', 'org', org)
             // verify required parameter 'project' is not null or undefined
-            assertParamExists('getV1AgentsBuildsByOrgByProject', 'project', project)
+            assertParamExists('getAgentsBuildsByOrgByProject', 'project', project)
             const localVarPath = `/v1/agents/builds/{org}/{project}`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
@@ -287,9 +287,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsByRef: async (ref: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsByRef: async (ref: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ref' is not null or undefined
-            assertParamExists('getV1AgentsByRef', 'ref', ref)
+            assertParamExists('getAgentsByRef', 'ref', ref)
             const localVarPath = `/v1/agents/{ref}`
                 .replace(`{${"ref"}}`, encodeURIComponent(String(ref)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -322,9 +322,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsByRefRuns: async (ref: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsByRefRuns: async (ref: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ref' is not null or undefined
-            assertParamExists('getV1AgentsByRefRuns', 'ref', ref)
+            assertParamExists('getAgentsByRefRuns', 'ref', ref)
             const localVarPath = `/v1/agents/{ref}/runs`
                 .replace(`{${"ref"}}`, encodeURIComponent(String(ref)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -360,7 +360,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsMetrics: async (range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsMetrics: async (range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agents/metrics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -396,7 +396,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsRuns: async (limit?: number, status?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsRuns: async (limit?: number, status?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agents/runs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -439,7 +439,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsSessions: async (root?: string, parent?: string, status?: string, project?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsSessions: async (root?: string, parent?: string, status?: string, project?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agents/sessions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -490,9 +490,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsSessionsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsSessionsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1AgentsSessionsById', 'id', id)
+            assertParamExists('getAgentsSessionsById', 'id', id)
             const localVarPath = `/v1/agents/sessions/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -525,9 +525,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsSessionsByIdControl: async (id: string, after?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsSessionsByIdControl: async (id: string, after?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1AgentsSessionsByIdControl', 'id', id)
+            assertParamExists('getAgentsSessionsByIdControl', 'id', id)
             const localVarPath = `/v1/agents/sessions/{id}/control`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -563,9 +563,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsSessionsByIdTree: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsSessionsByIdTree: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1AgentsSessionsByIdTree', 'id', id)
+            assertParamExists('getAgentsSessionsByIdTree', 'id', id)
             const localVarPath = `/v1/agents/sessions/{id}/tree`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -596,7 +596,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsSessionsStream: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsSessionsStream: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agents/sessions/stream`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -626,7 +626,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsTargets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsTargets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agents/targets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -657,9 +657,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsTargetsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsTargetsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1AgentsTargetsById', 'id', id)
+            assertParamExists('getAgentsTargetsById', 'id', id)
             const localVarPath = `/v1/agents/targets/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -692,11 +692,11 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AgentsByRef: async (ref: string, updateAgentIn: UpdateAgentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAgentsByRef: async (ref: string, updateAgentIn: UpdateAgentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ref' is not null or undefined
-            assertParamExists('patchV1AgentsByRef', 'ref', ref)
+            assertParamExists('patchAgentsByRef', 'ref', ref)
             // verify required parameter 'updateAgentIn' is not null or undefined
-            assertParamExists('patchV1AgentsByRef', 'updateAgentIn', updateAgentIn)
+            assertParamExists('patchAgentsByRef', 'updateAgentIn', updateAgentIn)
             const localVarPath = `/v1/agents/{ref}`
                 .replace(`{${"ref"}}`, encodeURIComponent(String(ref)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -732,11 +732,11 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AgentsSessionsById: async (id: string, patchSessionIn: PatchSessionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAgentsSessionsById: async (id: string, patchSessionIn: PatchSessionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchV1AgentsSessionsById', 'id', id)
+            assertParamExists('patchAgentsSessionsById', 'id', id)
             // verify required parameter 'patchSessionIn' is not null or undefined
-            assertParamExists('patchV1AgentsSessionsById', 'patchSessionIn', patchSessionIn)
+            assertParamExists('patchAgentsSessionsById', 'patchSessionIn', patchSessionIn)
             const localVarPath = `/v1/agents/sessions/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -772,11 +772,11 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AgentsTargetsById: async (id: string, patchTargetIn: PatchTargetIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAgentsTargetsById: async (id: string, patchTargetIn: PatchTargetIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchV1AgentsTargetsById', 'id', id)
+            assertParamExists('patchAgentsTargetsById', 'id', id)
             // verify required parameter 'patchTargetIn' is not null or undefined
-            assertParamExists('patchV1AgentsTargetsById', 'patchTargetIn', patchTargetIn)
+            assertParamExists('patchAgentsTargetsById', 'patchTargetIn', patchTargetIn)
             const localVarPath = `/v1/agents/targets/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -811,9 +811,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Agents: async (createAgentIn: CreateAgentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgents: async (createAgentIn: CreateAgentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createAgentIn' is not null or undefined
-            assertParamExists('postV1Agents', 'createAgentIn', createAgentIn)
+            assertParamExists('postAgents', 'createAgentIn', createAgentIn)
             const localVarPath = `/v1/agents`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -847,9 +847,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsByRefRun: async (ref: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgentsByRefRun: async (ref: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ref' is not null or undefined
-            assertParamExists('postV1AgentsByRefRun', 'ref', ref)
+            assertParamExists('postAgentsByRefRun', 'ref', ref)
             const localVarPath = `/v1/agents/{ref}/run`
                 .replace(`{${"ref"}}`, encodeURIComponent(String(ref)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -881,9 +881,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessions: async (registerReq: RegisterReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgentsSessions: async (registerReq: RegisterReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'registerReq' is not null or undefined
-            assertParamExists('postV1AgentsSessions', 'registerReq', registerReq)
+            assertParamExists('postAgentsSessions', 'registerReq', registerReq)
             const localVarPath = `/v1/agents/sessions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -917,9 +917,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessionsByIdEvents: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgentsSessionsByIdEvents: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AgentsSessionsByIdEvents', 'id', id)
+            assertParamExists('postAgentsSessionsByIdEvents', 'id', id)
             const localVarPath = `/v1/agents/sessions/{id}/events`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -951,9 +951,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessionsByIdMessage: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgentsSessionsByIdMessage: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AgentsSessionsByIdMessage', 'id', id)
+            assertParamExists('postAgentsSessionsByIdMessage', 'id', id)
             const localVarPath = `/v1/agents/sessions/{id}/message`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -985,9 +985,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessionsByIdPause: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgentsSessionsByIdPause: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AgentsSessionsByIdPause', 'id', id)
+            assertParamExists('postAgentsSessionsByIdPause', 'id', id)
             const localVarPath = `/v1/agents/sessions/{id}/pause`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1019,9 +1019,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessionsByIdResume: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgentsSessionsByIdResume: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AgentsSessionsByIdResume', 'id', id)
+            assertParamExists('postAgentsSessionsByIdResume', 'id', id)
             const localVarPath = `/v1/agents/sessions/{id}/resume`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1053,9 +1053,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessionsByIdStop: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgentsSessionsByIdStop: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AgentsSessionsByIdStop', 'id', id)
+            assertParamExists('postAgentsSessionsByIdStop', 'id', id)
             const localVarPath = `/v1/agents/sessions/{id}/stop`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1087,9 +1087,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsTargets: async (targetReq: TargetReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgentsTargets: async (targetReq: TargetReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'targetReq' is not null or undefined
-            assertParamExists('postV1AgentsTargets', 'targetReq', targetReq)
+            assertParamExists('postAgentsTargets', 'targetReq', targetReq)
             const localVarPath = `/v1/agents/targets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1123,9 +1123,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsTargetsByIdClaim: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgentsTargetsByIdClaim: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AgentsTargetsByIdClaim', 'id', id)
+            assertParamExists('postAgentsTargetsByIdClaim', 'id', id)
             const localVarPath = `/v1/agents/targets/{id}/claim`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1157,9 +1157,9 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsTargetsByIdKey: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgentsTargetsByIdKey: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AgentsTargetsByIdKey', 'id', id)
+            assertParamExists('postAgentsTargetsByIdKey', 'id', id)
             const localVarPath = `/v1/agents/targets/{id}/key`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1193,13 +1193,13 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsTargetsByIdRunsByRunidReport: async (id: string, runId: string, reportRunIn: ReportRunIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAgentsTargetsByIdRunsByRunidReport: async (id: string, runId: string, reportRunIn: ReportRunIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AgentsTargetsByIdRunsByRunidReport', 'id', id)
+            assertParamExists('postAgentsTargetsByIdRunsByRunidReport', 'id', id)
             // verify required parameter 'runId' is not null or undefined
-            assertParamExists('postV1AgentsTargetsByIdRunsByRunidReport', 'runId', runId)
+            assertParamExists('postAgentsTargetsByIdRunsByRunidReport', 'runId', runId)
             // verify required parameter 'reportRunIn' is not null or undefined
-            assertParamExists('postV1AgentsTargetsByIdRunsByRunidReport', 'reportRunIn', reportRunIn)
+            assertParamExists('postAgentsTargetsByIdRunsByRunidReport', 'reportRunIn', reportRunIn)
             const localVarPath = `/v1/agents/targets/{id}/runs/{runId}/report`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)))
                 .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
@@ -1245,10 +1245,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AgentsByRef(ref: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AgentsByRef(ref, options);
+        async deleteAgentsByRef(ref: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAgentsByRef(ref, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.deleteV1AgentsByRef']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.deleteAgentsByRef']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1258,10 +1258,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AgentsTargetsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetDeleted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AgentsTargetsById(id, options);
+        async deleteAgentsTargetsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetDeleted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAgentsTargetsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.deleteV1AgentsTargetsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.deleteAgentsTargetsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1270,10 +1270,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Agents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Agents(options);
+        async getAgents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgents(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1Agents']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1282,10 +1282,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsActivity(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivityFeed>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsActivity(options);
+        async getAgentsActivity(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivityFeed>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsActivity(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsActivity']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsActivity']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1295,10 +1295,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsBuilds(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsBuilds(limit, options);
+        async getAgentsBuilds(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsBuilds(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsBuilds']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsBuilds']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1309,10 +1309,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsBuildsByOrgByProject(org: string, project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsBuildsByOrgByProject(org, project, options);
+        async getAgentsBuildsByOrgByProject(org: string, project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsBuildsByOrgByProject(org, project, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsBuildsByOrgByProject']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsBuildsByOrgByProject']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1322,10 +1322,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsByRef(ref: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsByRef(ref, options);
+        async getAgentsByRef(ref: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsByRef(ref, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsByRef']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsByRef']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1336,10 +1336,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsByRefRuns(ref: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsByRefRuns(ref, limit, options);
+        async getAgentsByRefRuns(ref: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsByRefRuns(ref, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsByRefRuns']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsByRefRuns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1349,10 +1349,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsMetrics(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsMetrics(range, options);
+        async getAgentsMetrics(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsMetrics(range, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsMetrics']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsMetrics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1363,10 +1363,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsRuns(limit?: number, status?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsRuns(limit, status, options);
+        async getAgentsRuns(limit?: number, status?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsRuns(limit, status, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsRuns']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsRuns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1380,10 +1380,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsSessions(root?: string, parent?: string, status?: string, project?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsSessions(root, parent, status, project, limit, options);
+        async getAgentsSessions(root?: string, parent?: string, status?: string, project?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsSessions(root, parent, status, project, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsSessions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsSessions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1393,10 +1393,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsSessionsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsSessionsById(id, options);
+        async getAgentsSessionsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsSessionsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsSessionsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsSessionsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1407,10 +1407,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsSessionsByIdControl(id: string, after?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ControlDrain>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsSessionsByIdControl(id, after, options);
+        async getAgentsSessionsByIdControl(id: string, after?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ControlDrain>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsSessionsByIdControl(id, after, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsSessionsByIdControl']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsSessionsByIdControl']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1420,10 +1420,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsSessionsByIdTree(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TreeNode>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsSessionsByIdTree(id, options);
+        async getAgentsSessionsByIdTree(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TreeNode>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsSessionsByIdTree(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsSessionsByIdTree']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsSessionsByIdTree']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1432,10 +1432,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsSessionsStream(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsSessionsStream(options);
+        async getAgentsSessionsStream(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsSessionsStream(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsSessionsStream']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsSessionsStream']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1444,10 +1444,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsTargets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsTargets(options);
+        async getAgentsTargets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsTargets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsTargets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsTargets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1457,10 +1457,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AgentsTargetsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AgentsTargetsById(id, options);
+        async getAgentsTargetsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsTargetsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getV1AgentsTargetsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsTargetsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1471,10 +1471,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AgentsByRef(ref: string, updateAgentIn: UpdateAgentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AgentsByRef(ref, updateAgentIn, options);
+        async patchAgentsByRef(ref: string, updateAgentIn: UpdateAgentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAgentsByRef(ref, updateAgentIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.patchV1AgentsByRef']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.patchAgentsByRef']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1485,10 +1485,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AgentsSessionsById(id: string, patchSessionIn: PatchSessionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AgentsSessionsById(id, patchSessionIn, options);
+        async patchAgentsSessionsById(id: string, patchSessionIn: PatchSessionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAgentsSessionsById(id, patchSessionIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.patchV1AgentsSessionsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.patchAgentsSessionsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1499,10 +1499,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AgentsTargetsById(id: string, patchTargetIn: PatchTargetIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AgentsTargetsById(id, patchTargetIn, options);
+        async patchAgentsTargetsById(id: string, patchTargetIn: PatchTargetIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAgentsTargetsById(id, patchTargetIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.patchV1AgentsTargetsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.patchAgentsTargetsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1512,10 +1512,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Agents(createAgentIn: CreateAgentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Agents(createAgentIn, options);
+        async postAgents(createAgentIn: CreateAgentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AgentView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgents(createAgentIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1Agents']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1525,10 +1525,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AgentsByRefRun(ref: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AgentsByRefRun(ref, options);
+        async postAgentsByRefRun(ref: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsByRefRun(ref, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1AgentsByRefRun']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsByRefRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1538,10 +1538,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AgentsSessions(registerReq: RegisterReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AgentsSessions(registerReq, options);
+        async postAgentsSessions(registerReq: RegisterReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsSessions(registerReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1AgentsSessions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsSessions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1551,10 +1551,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AgentsSessionsByIdEvents(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AgentsSessionsByIdEvents(id, options);
+        async postAgentsSessionsByIdEvents(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsSessionsByIdEvents(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1AgentsSessionsByIdEvents']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsSessionsByIdEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1564,10 +1564,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AgentsSessionsByIdMessage(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AgentsSessionsByIdMessage(id, options);
+        async postAgentsSessionsByIdMessage(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsSessionsByIdMessage(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1AgentsSessionsByIdMessage']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsSessionsByIdMessage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1577,10 +1577,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AgentsSessionsByIdPause(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AgentsSessionsByIdPause(id, options);
+        async postAgentsSessionsByIdPause(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsSessionsByIdPause(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1AgentsSessionsByIdPause']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsSessionsByIdPause']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1590,10 +1590,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AgentsSessionsByIdResume(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AgentsSessionsByIdResume(id, options);
+        async postAgentsSessionsByIdResume(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsSessionsByIdResume(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1AgentsSessionsByIdResume']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsSessionsByIdResume']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1603,10 +1603,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AgentsSessionsByIdStop(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AgentsSessionsByIdStop(id, options);
+        async postAgentsSessionsByIdStop(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsSessionsByIdStop(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1AgentsSessionsByIdStop']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsSessionsByIdStop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1616,10 +1616,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AgentsTargets(targetReq: TargetReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AgentsTargets(targetReq, options);
+        async postAgentsTargets(targetReq: TargetReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsTargets(targetReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1AgentsTargets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsTargets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1629,10 +1629,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AgentsTargetsByIdClaim(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoutedRunOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AgentsTargetsByIdClaim(id, options);
+        async postAgentsTargetsByIdClaim(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoutedRunOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsTargetsByIdClaim(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1AgentsTargetsByIdClaim']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsTargetsByIdClaim']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1642,10 +1642,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AgentsTargetsByIdKey(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClaimKeyOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AgentsTargetsByIdKey(id, options);
+        async postAgentsTargetsByIdKey(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClaimKeyOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsTargetsByIdKey(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1AgentsTargetsByIdKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsTargetsByIdKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1657,10 +1657,10 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AgentsTargetsByIdRunsByRunidReport(id: string, runId: string, reportRunIn: ReportRunIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AgentsTargetsByIdRunsByRunidReport(id, runId, reportRunIn, options);
+        async postAgentsTargetsByIdRunsByRunidReport(id: string, runId: string, reportRunIn: ReportRunIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsTargetsByIdRunsByRunidReport(id, runId, reportRunIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postV1AgentsTargetsByIdRunsByRunidReport']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsTargetsByIdRunsByRunidReport']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1676,22 +1676,22 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
         /**
          * Removes an agent and every run recorded against it. Answers 204.
          * @summary Removes an agent and every run recorded against it.
-         * @param {AgentsApiDeleteV1AgentsByRefRequest} requestParameters Request parameters.
+         * @param {AgentsApiDeleteAgentsByRefRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AgentsByRef(requestParameters: AgentsApiDeleteV1AgentsByRefRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1AgentsByRef(requestParameters.ref, options).then((request) => request(axios, basePath));
+        deleteAgentsByRef(requestParameters: AgentsApiDeleteAgentsByRefRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteAgentsByRef(requestParameters.ref, options).then((request) => request(axios, basePath));
         },
         /**
          * Deregisters one machine. Only its owner, or an org admin, may remove it; an unknown id, a cross-org id and a machine owned by someone else all answer the same not-found, so a probe learns nothing about what exists.
          * @summary Deregisters one machine.
-         * @param {AgentsApiDeleteV1AgentsTargetsByIdRequest} requestParameters Request parameters.
+         * @param {AgentsApiDeleteAgentsTargetsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AgentsTargetsById(requestParameters: AgentsApiDeleteV1AgentsTargetsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TargetDeleted> {
-            return localVarFp.deleteV1AgentsTargetsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteAgentsTargetsById(requestParameters: AgentsApiDeleteAgentsTargetsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TargetDeleted> {
+            return localVarFp.deleteAgentsTargetsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every agent defined in the caller\'s org, each with the number of runs recorded against it.
@@ -1699,8 +1699,8 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Agents(options?: RawAxiosRequestConfig): AxiosPromise<AgentList> {
-            return localVarFp.getV1Agents(options).then((request) => request(axios, basePath));
+        getAgents(options?: RawAxiosRequestConfig): AxiosPromise<AgentList> {
+            return localVarFp.getAgents(options).then((request) => request(axios, basePath));
         },
         /**
          * Serves the org-wide recent-activity feed. Events are REAL: each recorded run is an invoked (ok) or failed (error) event; each agent\'s own create/update timestamps are created/updated events. Merged, newest first, capped. Nothing is invented — an org with no agents and no runs gets [].
@@ -1708,108 +1708,108 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsActivity(options?: RawAxiosRequestConfig): AxiosPromise<ActivityFeed> {
-            return localVarFp.getV1AgentsActivity(options).then((request) => request(axios, basePath));
+        getAgentsActivity(options?: RawAxiosRequestConfig): AxiosPromise<ActivityFeed> {
+            return localVarFp.getAgentsActivity(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the public index of every published build, most recently updated first, so a gallery can link straight to the story behind each product. PUBLIC, no tenancy: publishing is the author\'s act, and only published root sessions appear here.
          * @summary Returns the public index of every published build, most recently updated first, so a gallery can link straight to the story behind each product.
-         * @param {AgentsApiGetV1AgentsBuildsRequest} requestParameters Request parameters.
+         * @param {AgentsApiGetAgentsBuildsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsBuilds(requestParameters: AgentsApiGetV1AgentsBuildsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BuildList> {
-            return localVarFp.getV1AgentsBuilds(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getAgentsBuilds(requestParameters: AgentsApiGetAgentsBuildsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BuildList> {
+            return localVarFp.getAgentsBuilds(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the readable build of one product: the agent session that produced it, turn by turn — the prompts, the reasoning, the commits each turn produced — plus the exact `git log` that re-derives every commit binding from git itself, so nothing here has to be taken on trust.  PUBLIC, no tenancy: it answers only for a session its author explicitly published, which is what makes it safe to be anonymous. An unpublished session is invisible here no matter who asks; its owner reads it through the org-scoped /v1/agents/sessions routes, which need a validated principal.
          * @summary Returns the readable build of one product: the agent session that produced it, turn by turn — the prompts, the reasoning, the commits each turn produced — plus the exact `git log` that re-derives every commit binding from git itself, so nothing here has to be taken on trust.
-         * @param {AgentsApiGetV1AgentsBuildsByOrgByProjectRequest} requestParameters Request parameters.
+         * @param {AgentsApiGetAgentsBuildsByOrgByProjectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsBuildsByOrgByProject(requestParameters: AgentsApiGetV1AgentsBuildsByOrgByProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<BuildView> {
-            return localVarFp.getV1AgentsBuildsByOrgByProject(requestParameters.org, requestParameters.project, options).then((request) => request(axios, basePath));
+        getAgentsBuildsByOrgByProject(requestParameters: AgentsApiGetAgentsBuildsByOrgByProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<BuildView> {
+            return localVarFp.getAgentsBuildsByOrgByProject(requestParameters.org, requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one agent with its system prompt and its 20 most recent runs. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
          * @summary Returns one agent with its system prompt and its 20 most recent runs.
-         * @param {AgentsApiGetV1AgentsByRefRequest} requestParameters Request parameters.
+         * @param {AgentsApiGetAgentsByRefRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsByRef(requestParameters: AgentsApiGetV1AgentsByRefRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentDetail> {
-            return localVarFp.getV1AgentsByRef(requestParameters.ref, options).then((request) => request(axios, basePath));
+        getAgentsByRef(requestParameters: AgentsApiGetAgentsByRefRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentDetail> {
+            return localVarFp.getAgentsByRef(requestParameters.ref, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took. Every row is a run that actually happened.
          * @summary Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took.
-         * @param {AgentsApiGetV1AgentsByRefRunsRequest} requestParameters Request parameters.
+         * @param {AgentsApiGetAgentsByRefRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsByRefRuns(requestParameters: AgentsApiGetV1AgentsByRefRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunList> {
-            return localVarFp.getV1AgentsByRefRuns(requestParameters.ref, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getAgentsByRefRuns(requestParameters: AgentsApiGetAgentsByRefRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunList> {
+            return localVarFp.getAgentsByRefRuns(requestParameters.ref, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Serves the invocations-over-time histogram for the org\'s Agents dashboard. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
          * @summary Serves the invocations-over-time histogram for the org\'s Agents dashboard.
-         * @param {AgentsApiGetV1AgentsMetricsRequest} requestParameters Request parameters.
+         * @param {AgentsApiGetAgentsMetricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsMetrics(requestParameters: AgentsApiGetV1AgentsMetricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MetricsView> {
-            return localVarFp.getV1AgentsMetrics(requestParameters.range, options).then((request) => request(axios, basePath));
+        getAgentsMetrics(requestParameters: AgentsApiGetAgentsMetricsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<MetricsView> {
+            return localVarFp.getAgentsMetrics(requestParameters.range, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
          * @summary Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.
-         * @param {AgentsApiGetV1AgentsRunsRequest} requestParameters Request parameters.
+         * @param {AgentsApiGetAgentsRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsRuns(requestParameters: AgentsApiGetV1AgentsRunsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RunList> {
-            return localVarFp.getV1AgentsRuns(requestParameters.limit, requestParameters.status, options).then((request) => request(axios, basePath));
+        getAgentsRuns(requestParameters: AgentsApiGetAgentsRunsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RunList> {
+            return localVarFp.getAgentsRuns(requestParameters.limit, requestParameters.status, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s live sessions, newest first — each with its event count, its direct-child count and a one-line preview of its latest event. With no filter it returns ROOT sessions only, so a dashboard shows one row per flow rather than one per subagent; ?root= or ?parent= descends.
          * @summary Returns the caller org\'s live sessions, newest first — each with its event count, its direct-child count and a one-line preview of its latest event.
-         * @param {AgentsApiGetV1AgentsSessionsRequest} requestParameters Request parameters.
+         * @param {AgentsApiGetAgentsSessionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsSessions(requestParameters: AgentsApiGetV1AgentsSessionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SessionList> {
-            return localVarFp.getV1AgentsSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getAgentsSessions(requestParameters: AgentsApiGetAgentsSessionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SessionList> {
+            return localVarFp.getAgentsSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
          * @summary Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
-         * @param {AgentsApiGetV1AgentsSessionsByIdRequest} requestParameters Request parameters.
+         * @param {AgentsApiGetAgentsSessionsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsSessionsById(requestParameters: AgentsApiGetV1AgentsSessionsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SessionDetail> {
-            return localVarFp.getV1AgentsSessionsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getAgentsSessionsById(requestParameters: AgentsApiGetAgentsSessionsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SessionDetail> {
+            return localVarFp.getAgentsSessionsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the steering commands (pause/resume/stop/message) recorded against the caller\'s own session that are newer than the cursor, oldest first, with the cursor to poll from next. It is how a locally started `hanzo code` session — which is not task-backed, so nothing forwards its commands to an execution engine — consumes what the dashboard posted. Read-only and bounded at 200 per poll, so a steady poll is cheap and an applied command is never redelivered.
          * @summary Returns the steering commands (pause/resume/stop/message) recorded against the caller\'s own session that are newer than the cursor, oldest first, with the cursor to poll from next.
-         * @param {AgentsApiGetV1AgentsSessionsByIdControlRequest} requestParameters Request parameters.
+         * @param {AgentsApiGetAgentsSessionsByIdControlRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsSessionsByIdControl(requestParameters: AgentsApiGetV1AgentsSessionsByIdControlRequest, options?: RawAxiosRequestConfig): AxiosPromise<ControlDrain> {
-            return localVarFp.getV1AgentsSessionsByIdControl(requestParameters.id, requestParameters.after, options).then((request) => request(axios, basePath));
+        getAgentsSessionsByIdControl(requestParameters: AgentsApiGetAgentsSessionsByIdControlRequest, options?: RawAxiosRequestConfig): AxiosPromise<ControlDrain> {
+            return localVarFp.getAgentsSessionsByIdControl(requestParameters.id, requestParameters.after, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count. One indexed read pulls the whole flow (every node of a flow shares a root id), so the shape is assembled in memory rather than by walking the store per node.
          * @summary Returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count.
-         * @param {AgentsApiGetV1AgentsSessionsByIdTreeRequest} requestParameters Request parameters.
+         * @param {AgentsApiGetAgentsSessionsByIdTreeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsSessionsByIdTree(requestParameters: AgentsApiGetV1AgentsSessionsByIdTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<TreeNode> {
-            return localVarFp.getV1AgentsSessionsByIdTree(requestParameters.id, options).then((request) => request(axios, basePath));
+        getAgentsSessionsByIdTree(requestParameters: AgentsApiGetAgentsSessionsByIdTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<TreeNode> {
+            return localVarFp.getAgentsSessionsByIdTree(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Holds the connection open as text/event-stream and pushes a frame each time the org\'s registry moves: an `event: session` frame carrying the same session shape the list and detail reads answer with (a registration, an update, or a login-manager revoke tearing a session down), and an `event: event` frame carrying one appended turn. Optional ?root=<session id> narrows the feed to a single subagent tree.  Requires a validated principal carrying an org; 403 without one. Org-scoped fail-closed: the bus filters on tenant before it fans out, so a subscriber only ever receives its own org\'s updates, and ?root= narrows that further but can never widen it.  Delivery is best-effort and the GET reads remain the source of truth. A subscriber that falls more than 256 frames behind is DROPPED — its channel is closed and the stream ends — so one stuck dashboard can never back-pressure a session write; the client reconnects and re-reads the session endpoints to resynchronise. A `: ping` comment every 25 seconds holds the connection open through proxies and is how a departed client is noticed.
@@ -1817,8 +1817,8 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsSessionsStream(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1AgentsSessionsStream(options).then((request) => request(axios, basePath));
+        getAgentsSessionsStream(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getAgentsSessionsStream(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every machine registered to the caller\'s org, newest first, each with its live session load.
@@ -1826,651 +1826,651 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsTargets(options?: RawAxiosRequestConfig): AxiosPromise<TargetList> {
-            return localVarFp.getV1AgentsTargets(options).then((request) => request(axios, basePath));
+        getAgentsTargets(options?: RawAxiosRequestConfig): AxiosPromise<TargetList> {
+            return localVarFp.getAgentsTargets(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one registered machine, with its live session load.
          * @summary Returns one registered machine, with its live session load.
-         * @param {AgentsApiGetV1AgentsTargetsByIdRequest} requestParameters Request parameters.
+         * @param {AgentsApiGetAgentsTargetsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AgentsTargetsById(requestParameters: AgentsApiGetV1AgentsTargetsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TargetView> {
-            return localVarFp.getV1AgentsTargetsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getAgentsTargetsById(requestParameters: AgentsApiGetAgentsTargetsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TargetView> {
+            return localVarFp.getAgentsTargetsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes an agent in place. Every field is optional; a field the request omits keeps its stored value. The resulting mode+schedule are re-validated together, so a partial update can never leave a long-running agent without the cron the scheduler needs to fire it, and a transition INTO long-running counts against the per-org cap on scheduled agents.
          * @summary Changes an agent in place.
-         * @param {AgentsApiPatchV1AgentsByRefRequest} requestParameters Request parameters.
+         * @param {AgentsApiPatchAgentsByRefRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AgentsByRef(requestParameters: AgentsApiPatchV1AgentsByRefRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentView> {
-            return localVarFp.patchV1AgentsByRef(requestParameters.ref, requestParameters.updateAgentIn, options).then((request) => request(axios, basePath));
+        patchAgentsByRef(requestParameters: AgentsApiPatchAgentsByRefRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentView> {
+            return localVarFp.patchAgentsByRef(requestParameters.ref, requestParameters.updateAgentIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates a session\'s surface-owned truth: its status, its title, the run-target it is dispatched to, and the product it built plus whether that build\'s story is public. A FINISHED session stays finished — reopening a done/error run would fabricate liveness — and publishing is refused unless the session names the project it built, because the public build route is keyed on (org, project).
          * @summary Updates a session\'s surface-owned truth: its status, its title, the run-target it is dispatched to, and the product it built plus whether that build\'s story is public.
-         * @param {AgentsApiPatchV1AgentsSessionsByIdRequest} requestParameters Request parameters.
+         * @param {AgentsApiPatchAgentsSessionsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AgentsSessionsById(requestParameters: AgentsApiPatchV1AgentsSessionsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SessionView> {
-            return localVarFp.patchV1AgentsSessionsById(requestParameters.id, requestParameters.patchSessionIn, options).then((request) => request(axios, basePath));
+        patchAgentsSessionsById(requestParameters: AgentsApiPatchAgentsSessionsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SessionView> {
+            return localVarFp.patchAgentsSessionsById(requestParameters.id, requestParameters.patchSessionIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates one machine in place. Every field is optional; a field the request omits is left alone. A metrics patch IS a heartbeat — the server stamps its own clock, so a client can neither forge nor backdate staleness.
          * @summary Updates one machine in place.
-         * @param {AgentsApiPatchV1AgentsTargetsByIdRequest} requestParameters Request parameters.
+         * @param {AgentsApiPatchAgentsTargetsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AgentsTargetsById(requestParameters: AgentsApiPatchV1AgentsTargetsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TargetView> {
-            return localVarFp.patchV1AgentsTargetsById(requestParameters.id, requestParameters.patchTargetIn, options).then((request) => request(axios, basePath));
+        patchAgentsTargetsById(requestParameters: AgentsApiPatchAgentsTargetsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TargetView> {
+            return localVarFp.patchAgentsTargetsById(requestParameters.id, requestParameters.patchTargetIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Defines an agent in the caller\'s org: a model, a system prompt (instructions) and a set of tool names. The name must be unique in the org and match ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$. An omitted model takes the deployment\'s configured default; a named one is checked against the gateway\'s served catalog, so a model this deployment never serves is refused here rather than failing at run time. A long-running agent must carry a 5-field cron schedule (the scheduler would otherwise never fire it) and counts against a per-org cap on scheduled agents.
          * @summary Defines an agent in the caller\'s org: a model, a system prompt (instructions) and a set of tool names.
-         * @param {AgentsApiPostV1AgentsRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Agents(requestParameters: AgentsApiPostV1AgentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentView> {
-            return localVarFp.postV1Agents(requestParameters.createAgentIn, options).then((request) => request(axios, basePath));
+        postAgents(requestParameters: AgentsApiPostAgentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AgentView> {
+            return localVarFp.postAgents(requestParameters.createAgentIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Composes the agent\'s stored instructions with the caller\'s `input`, executes one real chat completion through the same in-process AI client the rest of the console uses, and answers with the run that was recorded: its id, status, model, output, duration and error. Every run this returns reflects an execution that actually happened — a model failure is recorded and reported, never hidden and never fabricated. A transient upstream failure (429, 5xx, empty choices) is retried up to three times with jittered backoff, and a configured failover model is tried before the run is called an error.  `ref` is the agent\'s public `agent_…` id or its org-unique name; either resolves the same agent, and it must belong to the caller\'s org, so an agent in another tenant is a 404 exactly like one that does not exist. A validated principal is required and the check is made twice on purpose: this route MOVES MONEY, so the debit\'s principal requirement is asserted where the money moves rather than inherited from the tenant lookup.  The org\'s balance is authorized BEFORE any inference, so an unfunded tenant gets 402 and no free compute, and a billing plane that cannot answer gets 503 rather than a free run. The flat per-run fee is an operator knob; setting it to zero makes runs free and removes the balance gate with them. Only a SUCCESSFUL run is billed, attributed to the model actually used — a failover run bills the model it fell over to, not the one it started on. A deployment with no inference wired answers 503 before any of this.  THE RULE A READER GETS WRONG: a failed run is a 502 whose body is the RUN, not an error envelope. The execution happened, the run was persisted to this agent\'s history, and its `error` field is the product — so a client that treats every non-2xx as an opaque failure throws away the only account of what went wrong. Each run also opens a root session in the live session registry, best-effort: a bookkeeping failure there never fails the run, because the run and its billing already happened.
          * @summary Run one of your org\'s agents and get the recorded run back.
-         * @param {AgentsApiPostV1AgentsByRefRunRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsByRefRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsByRefRun(requestParameters: AgentsApiPostV1AgentsByRefRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AgentsByRefRun(requestParameters.ref, options).then((request) => request(axios, basePath));
+        postAgentsByRefRun(requestParameters: AgentsApiPostAgentsByRefRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAgentsByRefRun(requestParameters.ref, options).then((request) => request(axios, basePath));
         },
         /**
          * Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off. A session with a parentSessionId becomes a subagent of that session and inherits its root, so one flow is one tree; without one it is itself a root. Registering with a terminal status records a session that has already finished.
          * @summary Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off.
-         * @param {AgentsApiPostV1AgentsSessionsRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsSessionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessions(requestParameters: AgentsApiPostV1AgentsSessionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SessionView> {
-            return localVarFp.postV1AgentsSessions(requestParameters.registerReq, options).then((request) => request(axios, basePath));
+        postAgentsSessions(requestParameters: AgentsApiPostAgentsSessionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SessionView> {
+            return localVarFp.postAgentsSessions(requestParameters.registerReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Records a message, tool-call, spawn, log, status or control turn against the session and answers 201 with the stored event, including the monotonic `seq` the store assigned — the cursor every reader pages from. The same turn is fanned out live to every stream subscriber watching that session\'s tree.  Requires a validated principal carrying an org, and the session must already exist IN THAT ORG: an id belonging to another tenant is a 404 exactly like one that does not exist, so the log can never be written across a tenant boundary. `actor` defaults to the calling principal when the body names none. `kind` must be one of the six above, and `payload` must be valid JSON of at most 64 KiB.  The payload is scanned for credentials BEFORE it is stored, and a hit REFUSES the write with 422 rather than redacting it: {status, code: \"secret_in_transcript\", error, findings:[…]}, each finding naming the rule, severity, line, a masked preview and a SHA-256 fingerprint the author can match against the value they rotate. The detected value itself appears nowhere in that body, because it was never stored. That in-band findings array is the reason this operation cannot be typed.
          * @summary Append one turn to a session\'s ordered log.
-         * @param {AgentsApiPostV1AgentsSessionsByIdEventsRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsSessionsByIdEventsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessionsByIdEvents(requestParameters: AgentsApiPostV1AgentsSessionsByIdEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AgentsSessionsByIdEvents(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAgentsSessionsByIdEvents(requestParameters: AgentsApiPostAgentsSessionsByIdEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAgentsSessionsByIdEvents(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Records `message` as a durable control event carrying the caller\'s text and answers 200 with {command, event, forwarded} — this is how a dashboard steers an agent mid-run. It is the one command with a required body: a `message` (up to 16 KiB) or a `payload`, and 400 with neither. The credential scan that guards an appended turn covers `payload` here; `message` is bounded but not scanned.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
          * @summary Send text into a running session.
-         * @param {AgentsApiPostV1AgentsSessionsByIdMessageRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsSessionsByIdMessageRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessionsByIdMessage(requestParameters: AgentsApiPostV1AgentsSessionsByIdMessageRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AgentsSessionsByIdMessage(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAgentsSessionsByIdMessage(requestParameters: AgentsApiPostAgentsSessionsByIdMessageRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAgentsSessionsByIdMessage(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Records `pause` as a durable control event on the session and answers 200 with {command, event, forwarded} — the stored event carries the `seq` that orders it against every other turn.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
          * @summary Ask a running session to pause.
-         * @param {AgentsApiPostV1AgentsSessionsByIdPauseRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsSessionsByIdPauseRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessionsByIdPause(requestParameters: AgentsApiPostV1AgentsSessionsByIdPauseRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AgentsSessionsByIdPause(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAgentsSessionsByIdPause(requestParameters: AgentsApiPostAgentsSessionsByIdPauseRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAgentsSessionsByIdPause(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Records `resume` as a durable control event on the session and answers 200 with {command, event, forwarded}. The session is NOT required to be paused first: the only status this refuses is a finished one, because the live status is the running surface\'s to report rather than this endpoint\'s to enforce.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
          * @summary Ask a paused session to carry on.
-         * @param {AgentsApiPostV1AgentsSessionsByIdResumeRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsSessionsByIdResumeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessionsByIdResume(requestParameters: AgentsApiPostV1AgentsSessionsByIdResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AgentsSessionsByIdResume(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAgentsSessionsByIdResume(requestParameters: AgentsApiPostAgentsSessionsByIdResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAgentsSessionsByIdResume(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Records `stop` as a durable control event on the session and answers 200 with {command, event, forwarded}. Stop is the one command that CANCELS a task-backed session\'s durable workflow instead of signalling it — pause, resume and message are cooperative signals the workflow decides how to act on, while this tears it down, with the request\'s `message` recorded as the cancellation reason (a default stands in when none is given).   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
          * @summary Ask a session to stop for good.
-         * @param {AgentsApiPostV1AgentsSessionsByIdStopRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsSessionsByIdStopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsSessionsByIdStop(requestParameters: AgentsApiPostV1AgentsSessionsByIdStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AgentsSessionsByIdStop(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAgentsSessionsByIdStop(requestParameters: AgentsApiPostAgentsSessionsByIdStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAgentsSessionsByIdStop(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Registers a machine as an agent target, or re-links one that is already registered. Re-linking is idempotent and keyed on org+host+owner, so a machine that reconnects refreshes its own row rather than piling up duplicates; it answers 200, while a first registration answers 201.
          * @summary Registers a machine as an agent target, or re-links one that is already registered.
-         * @param {AgentsApiPostV1AgentsTargetsRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsTargetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsTargets(requestParameters: AgentsApiPostV1AgentsTargetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TargetView> {
-            return localVarFp.postV1AgentsTargets(requestParameters.targetReq, options).then((request) => request(axios, basePath));
+        postAgentsTargets(requestParameters: AgentsApiPostAgentsTargetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TargetView> {
+            return localVarFp.postAgentsTargets(requestParameters.targetReq, options).then((request) => request(axios, basePath));
         },
         /**
          * ClaimRoutedRun is the machine\'s long poll for work: it authenticates the daemon, stamps the liveness the dispatch gate reads (the poll IS the proof a runner is listening), and waits up to 25 seconds for the next run addressed to THIS machine. It answers the run when one arrives and 204 with no body when the window elapses, on which the daemon re-polls immediately.  TWO independent proofs are required and both fail closed to the same 403: the caller must own this machine (or be an org admin) AND present its claim key in X-Target-Key. A run offered to one machine is unreachable from another\'s claim.
          * @summary ClaimRoutedRun is the machine\'s long poll for work: it authenticates the daemon, stamps the liveness the dispatch gate reads (the poll IS the proof a runner is listening), and waits up to 25 seconds for the next run addressed to THIS machine.
-         * @param {AgentsApiPostV1AgentsTargetsByIdClaimRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsTargetsByIdClaimRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsTargetsByIdClaim(requestParameters: AgentsApiPostV1AgentsTargetsByIdClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoutedRunOut> {
-            return localVarFp.postV1AgentsTargetsByIdClaim(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAgentsTargetsByIdClaim(requestParameters: AgentsApiPostAgentsTargetsByIdClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoutedRunOut> {
+            return localVarFp.postAgentsTargetsByIdClaim(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Mints (or rotates) the claim key a `hanzo code --serve` daemon presents to claim work for this machine, and returns it ONCE: only its SHA-256 hash is stored. Rotating supersedes any prior daemon, so only the machine\'s owner — or an org admin — may call it; every other caller gets the same not-found an unknown id gets, and learns nothing about what exists.
          * @summary Mints (or rotates) the claim key a `hanzo code --serve` daemon presents to claim work for this machine, and returns it ONCE: only its SHA-256 hash is stored.
-         * @param {AgentsApiPostV1AgentsTargetsByIdKeyRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsTargetsByIdKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsTargetsByIdKey(requestParameters: AgentsApiPostV1AgentsTargetsByIdKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClaimKeyOut> {
-            return localVarFp.postV1AgentsTargetsByIdKey(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAgentsTargetsByIdKey(requestParameters: AgentsApiPostAgentsTargetsByIdKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClaimKeyOut> {
+            return localVarFp.postAgentsTargetsByIdKey(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Completes a claimed run: it delivers the terminal result to the run\'s durable owner, which is what lets that workflow finish. Scoped to (org, target, run) and claim-key authenticated, so a machine can only ever report a run it legitimately holds. Idempotent — a report for an unknown or already-finished run answers delivered:false rather than failing, because the session\'s terminal state was already set by the machine\'s own stream.
          * @summary Completes a claimed run: it delivers the terminal result to the run\'s durable owner, which is what lets that workflow finish.
-         * @param {AgentsApiPostV1AgentsTargetsByIdRunsByRunidReportRequest} requestParameters Request parameters.
+         * @param {AgentsApiPostAgentsTargetsByIdRunsByRunidReportRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AgentsTargetsByIdRunsByRunidReport(requestParameters: AgentsApiPostV1AgentsTargetsByIdRunsByRunidReportRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReportOut> {
-            return localVarFp.postV1AgentsTargetsByIdRunsByRunidReport(requestParameters.id, requestParameters.runId, requestParameters.reportRunIn, options).then((request) => request(axios, basePath));
+        postAgentsTargetsByIdRunsByRunidReport(requestParameters: AgentsApiPostAgentsTargetsByIdRunsByRunidReportRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReportOut> {
+            return localVarFp.postAgentsTargetsByIdRunsByRunidReport(requestParameters.id, requestParameters.runId, requestParameters.reportRunIn, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1AgentsByRef operation in AgentsApi.
+ * Request parameters for deleteAgentsByRef operation in AgentsApi.
  * @export
- * @interface AgentsApiDeleteV1AgentsByRefRequest
+ * @interface AgentsApiDeleteAgentsByRefRequest
  */
-export interface AgentsApiDeleteV1AgentsByRefRequest {
+export interface AgentsApiDeleteAgentsByRefRequest {
     /**
      * Ref is the agent\&#39;s public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
      * @type {string}
-     * @memberof AgentsApiDeleteV1AgentsByRef
+     * @memberof AgentsApiDeleteAgentsByRef
      */
     readonly ref: string
 }
 
 /**
- * Request parameters for deleteV1AgentsTargetsById operation in AgentsApi.
+ * Request parameters for deleteAgentsTargetsById operation in AgentsApi.
  * @export
- * @interface AgentsApiDeleteV1AgentsTargetsByIdRequest
+ * @interface AgentsApiDeleteAgentsTargetsByIdRequest
  */
-export interface AgentsApiDeleteV1AgentsTargetsByIdRequest {
+export interface AgentsApiDeleteAgentsTargetsByIdRequest {
     /**
      * ID is the target to act on, from the path.
      * @type {string}
-     * @memberof AgentsApiDeleteV1AgentsTargetsById
+     * @memberof AgentsApiDeleteAgentsTargetsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1AgentsBuilds operation in AgentsApi.
+ * Request parameters for getAgentsBuilds operation in AgentsApi.
  * @export
- * @interface AgentsApiGetV1AgentsBuildsRequest
+ * @interface AgentsApiGetAgentsBuildsRequest
  */
-export interface AgentsApiGetV1AgentsBuildsRequest {
+export interface AgentsApiGetAgentsBuildsRequest {
     /**
      * Limit caps the page. Absent, zero or over 500 reads as 100.
      * @type {number}
-     * @memberof AgentsApiGetV1AgentsBuilds
+     * @memberof AgentsApiGetAgentsBuilds
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1AgentsBuildsByOrgByProject operation in AgentsApi.
+ * Request parameters for getAgentsBuildsByOrgByProject operation in AgentsApi.
  * @export
- * @interface AgentsApiGetV1AgentsBuildsByOrgByProjectRequest
+ * @interface AgentsApiGetAgentsBuildsByOrgByProjectRequest
  */
-export interface AgentsApiGetV1AgentsBuildsByOrgByProjectRequest {
+export interface AgentsApiGetAgentsBuildsByOrgByProjectRequest {
     /**
      * Org is the org that published the build, from the path.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsBuildsByOrgByProject
+     * @memberof AgentsApiGetAgentsBuildsByOrgByProject
      */
     readonly org: string
 
     /**
      * Project is the product\&#39;s slug, from the path.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsBuildsByOrgByProject
+     * @memberof AgentsApiGetAgentsBuildsByOrgByProject
      */
     readonly project: string
 }
 
 /**
- * Request parameters for getV1AgentsByRef operation in AgentsApi.
+ * Request parameters for getAgentsByRef operation in AgentsApi.
  * @export
- * @interface AgentsApiGetV1AgentsByRefRequest
+ * @interface AgentsApiGetAgentsByRefRequest
  */
-export interface AgentsApiGetV1AgentsByRefRequest {
+export interface AgentsApiGetAgentsByRefRequest {
     /**
      * Ref is the agent\&#39;s public id (the agent_… handle create and list return) or its org-unique name, from the path. Either resolves the same agent.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsByRef
+     * @memberof AgentsApiGetAgentsByRef
      */
     readonly ref: string
 }
 
 /**
- * Request parameters for getV1AgentsByRefRuns operation in AgentsApi.
+ * Request parameters for getAgentsByRefRuns operation in AgentsApi.
  * @export
- * @interface AgentsApiGetV1AgentsByRefRunsRequest
+ * @interface AgentsApiGetAgentsByRefRunsRequest
  */
-export interface AgentsApiGetV1AgentsByRefRunsRequest {
+export interface AgentsApiGetAgentsByRefRunsRequest {
     /**
      * Ref is the agent\&#39;s public id or its org-unique name, from the path.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsByRefRuns
+     * @memberof AgentsApiGetAgentsByRefRuns
      */
     readonly ref: string
 
     /**
      * Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
      * @type {number}
-     * @memberof AgentsApiGetV1AgentsByRefRuns
+     * @memberof AgentsApiGetAgentsByRefRuns
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1AgentsMetrics operation in AgentsApi.
+ * Request parameters for getAgentsMetrics operation in AgentsApi.
  * @export
- * @interface AgentsApiGetV1AgentsMetricsRequest
+ * @interface AgentsApiGetAgentsMetricsRequest
  */
-export interface AgentsApiGetV1AgentsMetricsRequest {
+export interface AgentsApiGetAgentsMetricsRequest {
     /**
      * Range is the window to bucket: 24H, 7D or 30D. Anything else reads as 30D.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsMetrics
+     * @memberof AgentsApiGetAgentsMetrics
      */
     readonly range?: string
 }
 
 /**
- * Request parameters for getV1AgentsRuns operation in AgentsApi.
+ * Request parameters for getAgentsRuns operation in AgentsApi.
  * @export
- * @interface AgentsApiGetV1AgentsRunsRequest
+ * @interface AgentsApiGetAgentsRunsRequest
  */
-export interface AgentsApiGetV1AgentsRunsRequest {
+export interface AgentsApiGetAgentsRunsRequest {
     /**
      * Limit caps how many runs come back, newest first. Absent, zero or out of range (1..200) reads as 50.
      * @type {number}
-     * @memberof AgentsApiGetV1AgentsRuns
+     * @memberof AgentsApiGetAgentsRuns
      */
     readonly limit?: number
 
     /**
      * Status keeps only runs with this outcome (\&quot;ok\&quot; or \&quot;error\&quot;). Empty keeps both. It is the filter an operator reaches for first — \&quot;show me what broke\&quot; — and answering it here rather than by paging the whole history client-side is the difference between a usable feed and a download.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsRuns
+     * @memberof AgentsApiGetAgentsRuns
      */
     readonly status?: string
 }
 
 /**
- * Request parameters for getV1AgentsSessions operation in AgentsApi.
+ * Request parameters for getAgentsSessions operation in AgentsApi.
  * @export
- * @interface AgentsApiGetV1AgentsSessionsRequest
+ * @interface AgentsApiGetAgentsSessionsRequest
  */
-export interface AgentsApiGetV1AgentsSessionsRequest {
+export interface AgentsApiGetAgentsSessionsRequest {
     /**
      * Root scopes the page to one subagent tree (its root session id).
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsSessions
+     * @memberof AgentsApiGetAgentsSessions
      */
     readonly root?: string
 
     /**
      * Parent scopes the page to the direct children of one session. Ignored when root is set; with neither, only ROOT sessions come back.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsSessions
+     * @memberof AgentsApiGetAgentsSessions
      */
     readonly parent?: string
 
     /**
      * Status filters to running, paused, done or error.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsSessions
+     * @memberof AgentsApiGetAgentsSessions
      */
     readonly status?: string
 
     /**
      * Project filters to the sessions tagged with one product slug.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsSessions
+     * @memberof AgentsApiGetAgentsSessions
      */
     readonly project?: string
 
     /**
      * Limit caps the page. Absent, zero or over 500 reads as 100.
      * @type {number}
-     * @memberof AgentsApiGetV1AgentsSessions
+     * @memberof AgentsApiGetAgentsSessions
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1AgentsSessionsById operation in AgentsApi.
+ * Request parameters for getAgentsSessionsById operation in AgentsApi.
  * @export
- * @interface AgentsApiGetV1AgentsSessionsByIdRequest
+ * @interface AgentsApiGetAgentsSessionsByIdRequest
  */
-export interface AgentsApiGetV1AgentsSessionsByIdRequest {
+export interface AgentsApiGetAgentsSessionsByIdRequest {
     /**
      * ID is the session to act on, from the path.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsSessionsById
+     * @memberof AgentsApiGetAgentsSessionsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1AgentsSessionsByIdControl operation in AgentsApi.
+ * Request parameters for getAgentsSessionsByIdControl operation in AgentsApi.
  * @export
- * @interface AgentsApiGetV1AgentsSessionsByIdControlRequest
+ * @interface AgentsApiGetAgentsSessionsByIdControlRequest
  */
-export interface AgentsApiGetV1AgentsSessionsByIdControlRequest {
+export interface AgentsApiGetAgentsSessionsByIdControlRequest {
     /**
      * ID is the session whose commands are being drained, from the path.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsSessionsByIdControl
+     * @memberof AgentsApiGetAgentsSessionsByIdControl
      */
     readonly id: string
 
     /**
      * After is the last seq this poller applied; only commands newer than it come back. Absent or negative reads as 0, which drains from the beginning.
      * @type {number}
-     * @memberof AgentsApiGetV1AgentsSessionsByIdControl
+     * @memberof AgentsApiGetAgentsSessionsByIdControl
      */
     readonly after?: number
 }
 
 /**
- * Request parameters for getV1AgentsSessionsByIdTree operation in AgentsApi.
+ * Request parameters for getAgentsSessionsByIdTree operation in AgentsApi.
  * @export
- * @interface AgentsApiGetV1AgentsSessionsByIdTreeRequest
+ * @interface AgentsApiGetAgentsSessionsByIdTreeRequest
  */
-export interface AgentsApiGetV1AgentsSessionsByIdTreeRequest {
+export interface AgentsApiGetAgentsSessionsByIdTreeRequest {
     /**
      * ID is the session to act on, from the path.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsSessionsByIdTree
+     * @memberof AgentsApiGetAgentsSessionsByIdTree
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1AgentsTargetsById operation in AgentsApi.
+ * Request parameters for getAgentsTargetsById operation in AgentsApi.
  * @export
- * @interface AgentsApiGetV1AgentsTargetsByIdRequest
+ * @interface AgentsApiGetAgentsTargetsByIdRequest
  */
-export interface AgentsApiGetV1AgentsTargetsByIdRequest {
+export interface AgentsApiGetAgentsTargetsByIdRequest {
     /**
      * ID is the target to act on, from the path.
      * @type {string}
-     * @memberof AgentsApiGetV1AgentsTargetsById
+     * @memberof AgentsApiGetAgentsTargetsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for patchV1AgentsByRef operation in AgentsApi.
+ * Request parameters for patchAgentsByRef operation in AgentsApi.
  * @export
- * @interface AgentsApiPatchV1AgentsByRefRequest
+ * @interface AgentsApiPatchAgentsByRefRequest
  */
-export interface AgentsApiPatchV1AgentsByRefRequest {
+export interface AgentsApiPatchAgentsByRefRequest {
     /**
      * Ref is the agent to update — its public id or org-unique name, from the path.
      * @type {string}
-     * @memberof AgentsApiPatchV1AgentsByRef
+     * @memberof AgentsApiPatchAgentsByRef
      */
     readonly ref: string
 
     /**
      * 
      * @type {UpdateAgentIn}
-     * @memberof AgentsApiPatchV1AgentsByRef
+     * @memberof AgentsApiPatchAgentsByRef
      */
     readonly updateAgentIn: UpdateAgentIn
 }
 
 /**
- * Request parameters for patchV1AgentsSessionsById operation in AgentsApi.
+ * Request parameters for patchAgentsSessionsById operation in AgentsApi.
  * @export
- * @interface AgentsApiPatchV1AgentsSessionsByIdRequest
+ * @interface AgentsApiPatchAgentsSessionsByIdRequest
  */
-export interface AgentsApiPatchV1AgentsSessionsByIdRequest {
+export interface AgentsApiPatchAgentsSessionsByIdRequest {
     /**
      * ID is the session to update, from the path.
      * @type {string}
-     * @memberof AgentsApiPatchV1AgentsSessionsById
+     * @memberof AgentsApiPatchAgentsSessionsById
      */
     readonly id: string
 
     /**
      * 
      * @type {PatchSessionIn}
-     * @memberof AgentsApiPatchV1AgentsSessionsById
+     * @memberof AgentsApiPatchAgentsSessionsById
      */
     readonly patchSessionIn: PatchSessionIn
 }
 
 /**
- * Request parameters for patchV1AgentsTargetsById operation in AgentsApi.
+ * Request parameters for patchAgentsTargetsById operation in AgentsApi.
  * @export
- * @interface AgentsApiPatchV1AgentsTargetsByIdRequest
+ * @interface AgentsApiPatchAgentsTargetsByIdRequest
  */
-export interface AgentsApiPatchV1AgentsTargetsByIdRequest {
+export interface AgentsApiPatchAgentsTargetsByIdRequest {
     /**
      * ID is the target to update, from the path.
      * @type {string}
-     * @memberof AgentsApiPatchV1AgentsTargetsById
+     * @memberof AgentsApiPatchAgentsTargetsById
      */
     readonly id: string
 
     /**
      * 
      * @type {PatchTargetIn}
-     * @memberof AgentsApiPatchV1AgentsTargetsById
+     * @memberof AgentsApiPatchAgentsTargetsById
      */
     readonly patchTargetIn: PatchTargetIn
 }
 
 /**
- * Request parameters for postV1Agents operation in AgentsApi.
+ * Request parameters for postAgents operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsRequest
+ * @interface AgentsApiPostAgentsRequest
  */
-export interface AgentsApiPostV1AgentsRequest {
+export interface AgentsApiPostAgentsRequest {
     /**
      * 
      * @type {CreateAgentIn}
-     * @memberof AgentsApiPostV1Agents
+     * @memberof AgentsApiPostAgents
      */
     readonly createAgentIn: CreateAgentIn
 }
 
 /**
- * Request parameters for postV1AgentsByRefRun operation in AgentsApi.
+ * Request parameters for postAgentsByRefRun operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsByRefRunRequest
+ * @interface AgentsApiPostAgentsByRefRunRequest
  */
-export interface AgentsApiPostV1AgentsByRefRunRequest {
+export interface AgentsApiPostAgentsByRefRunRequest {
     /**
      * 
      * @type {string}
-     * @memberof AgentsApiPostV1AgentsByRefRun
+     * @memberof AgentsApiPostAgentsByRefRun
      */
     readonly ref: string
 }
 
 /**
- * Request parameters for postV1AgentsSessions operation in AgentsApi.
+ * Request parameters for postAgentsSessions operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsSessionsRequest
+ * @interface AgentsApiPostAgentsSessionsRequest
  */
-export interface AgentsApiPostV1AgentsSessionsRequest {
+export interface AgentsApiPostAgentsSessionsRequest {
     /**
      * 
      * @type {RegisterReq}
-     * @memberof AgentsApiPostV1AgentsSessions
+     * @memberof AgentsApiPostAgentsSessions
      */
     readonly registerReq: RegisterReq
 }
 
 /**
- * Request parameters for postV1AgentsSessionsByIdEvents operation in AgentsApi.
+ * Request parameters for postAgentsSessionsByIdEvents operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsSessionsByIdEventsRequest
+ * @interface AgentsApiPostAgentsSessionsByIdEventsRequest
  */
-export interface AgentsApiPostV1AgentsSessionsByIdEventsRequest {
+export interface AgentsApiPostAgentsSessionsByIdEventsRequest {
     /**
      * 
      * @type {string}
-     * @memberof AgentsApiPostV1AgentsSessionsByIdEvents
+     * @memberof AgentsApiPostAgentsSessionsByIdEvents
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AgentsSessionsByIdMessage operation in AgentsApi.
+ * Request parameters for postAgentsSessionsByIdMessage operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsSessionsByIdMessageRequest
+ * @interface AgentsApiPostAgentsSessionsByIdMessageRequest
  */
-export interface AgentsApiPostV1AgentsSessionsByIdMessageRequest {
+export interface AgentsApiPostAgentsSessionsByIdMessageRequest {
     /**
      * 
      * @type {string}
-     * @memberof AgentsApiPostV1AgentsSessionsByIdMessage
+     * @memberof AgentsApiPostAgentsSessionsByIdMessage
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AgentsSessionsByIdPause operation in AgentsApi.
+ * Request parameters for postAgentsSessionsByIdPause operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsSessionsByIdPauseRequest
+ * @interface AgentsApiPostAgentsSessionsByIdPauseRequest
  */
-export interface AgentsApiPostV1AgentsSessionsByIdPauseRequest {
+export interface AgentsApiPostAgentsSessionsByIdPauseRequest {
     /**
      * 
      * @type {string}
-     * @memberof AgentsApiPostV1AgentsSessionsByIdPause
+     * @memberof AgentsApiPostAgentsSessionsByIdPause
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AgentsSessionsByIdResume operation in AgentsApi.
+ * Request parameters for postAgentsSessionsByIdResume operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsSessionsByIdResumeRequest
+ * @interface AgentsApiPostAgentsSessionsByIdResumeRequest
  */
-export interface AgentsApiPostV1AgentsSessionsByIdResumeRequest {
+export interface AgentsApiPostAgentsSessionsByIdResumeRequest {
     /**
      * 
      * @type {string}
-     * @memberof AgentsApiPostV1AgentsSessionsByIdResume
+     * @memberof AgentsApiPostAgentsSessionsByIdResume
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AgentsSessionsByIdStop operation in AgentsApi.
+ * Request parameters for postAgentsSessionsByIdStop operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsSessionsByIdStopRequest
+ * @interface AgentsApiPostAgentsSessionsByIdStopRequest
  */
-export interface AgentsApiPostV1AgentsSessionsByIdStopRequest {
+export interface AgentsApiPostAgentsSessionsByIdStopRequest {
     /**
      * 
      * @type {string}
-     * @memberof AgentsApiPostV1AgentsSessionsByIdStop
+     * @memberof AgentsApiPostAgentsSessionsByIdStop
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AgentsTargets operation in AgentsApi.
+ * Request parameters for postAgentsTargets operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsTargetsRequest
+ * @interface AgentsApiPostAgentsTargetsRequest
  */
-export interface AgentsApiPostV1AgentsTargetsRequest {
+export interface AgentsApiPostAgentsTargetsRequest {
     /**
      * 
      * @type {TargetReq}
-     * @memberof AgentsApiPostV1AgentsTargets
+     * @memberof AgentsApiPostAgentsTargets
      */
     readonly targetReq: TargetReq
 }
 
 /**
- * Request parameters for postV1AgentsTargetsByIdClaim operation in AgentsApi.
+ * Request parameters for postAgentsTargetsByIdClaim operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsTargetsByIdClaimRequest
+ * @interface AgentsApiPostAgentsTargetsByIdClaimRequest
  */
-export interface AgentsApiPostV1AgentsTargetsByIdClaimRequest {
+export interface AgentsApiPostAgentsTargetsByIdClaimRequest {
     /**
      * ID is the target to act on, from the path.
      * @type {string}
-     * @memberof AgentsApiPostV1AgentsTargetsByIdClaim
+     * @memberof AgentsApiPostAgentsTargetsByIdClaim
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AgentsTargetsByIdKey operation in AgentsApi.
+ * Request parameters for postAgentsTargetsByIdKey operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsTargetsByIdKeyRequest
+ * @interface AgentsApiPostAgentsTargetsByIdKeyRequest
  */
-export interface AgentsApiPostV1AgentsTargetsByIdKeyRequest {
+export interface AgentsApiPostAgentsTargetsByIdKeyRequest {
     /**
      * ID is the target to act on, from the path.
      * @type {string}
-     * @memberof AgentsApiPostV1AgentsTargetsByIdKey
+     * @memberof AgentsApiPostAgentsTargetsByIdKey
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AgentsTargetsByIdRunsByRunidReport operation in AgentsApi.
+ * Request parameters for postAgentsTargetsByIdRunsByRunidReport operation in AgentsApi.
  * @export
- * @interface AgentsApiPostV1AgentsTargetsByIdRunsByRunidReportRequest
+ * @interface AgentsApiPostAgentsTargetsByIdRunsByRunidReportRequest
  */
-export interface AgentsApiPostV1AgentsTargetsByIdRunsByRunidReportRequest {
+export interface AgentsApiPostAgentsTargetsByIdRunsByRunidReportRequest {
     /**
      * ID is the machine reporting, from the path.
      * @type {string}
-     * @memberof AgentsApiPostV1AgentsTargetsByIdRunsByRunidReport
+     * @memberof AgentsApiPostAgentsTargetsByIdRunsByRunidReport
      */
     readonly id: string
 
     /**
      * RunID is the routed run being completed, from the path.
      * @type {string}
-     * @memberof AgentsApiPostV1AgentsTargetsByIdRunsByRunidReport
+     * @memberof AgentsApiPostAgentsTargetsByIdRunsByRunidReport
      */
     readonly runId: string
 
     /**
      * 
      * @type {ReportRunIn}
-     * @memberof AgentsApiPostV1AgentsTargetsByIdRunsByRunidReport
+     * @memberof AgentsApiPostAgentsTargetsByIdRunsByRunidReport
      */
     readonly reportRunIn: ReportRunIn
 }
@@ -2485,25 +2485,25 @@ export class AgentsApi extends BaseAPI {
     /**
      * Removes an agent and every run recorded against it. Answers 204.
      * @summary Removes an agent and every run recorded against it.
-     * @param {AgentsApiDeleteV1AgentsByRefRequest} requestParameters Request parameters.
+     * @param {AgentsApiDeleteAgentsByRefRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public deleteV1AgentsByRef(requestParameters: AgentsApiDeleteV1AgentsByRefRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).deleteV1AgentsByRef(requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
+    public deleteAgentsByRef(requestParameters: AgentsApiDeleteAgentsByRefRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).deleteAgentsByRef(requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Deregisters one machine. Only its owner, or an org admin, may remove it; an unknown id, a cross-org id and a machine owned by someone else all answer the same not-found, so a probe learns nothing about what exists.
      * @summary Deregisters one machine.
-     * @param {AgentsApiDeleteV1AgentsTargetsByIdRequest} requestParameters Request parameters.
+     * @param {AgentsApiDeleteAgentsTargetsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public deleteV1AgentsTargetsById(requestParameters: AgentsApiDeleteV1AgentsTargetsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).deleteV1AgentsTargetsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteAgentsTargetsById(requestParameters: AgentsApiDeleteAgentsTargetsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).deleteAgentsTargetsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2513,8 +2513,8 @@ export class AgentsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1Agents(options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1Agents(options).then((request) => request(this.axios, this.basePath));
+    public getAgents(options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgents(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2524,128 +2524,128 @@ export class AgentsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsActivity(options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsActivity(options).then((request) => request(this.axios, this.basePath));
+    public getAgentsActivity(options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsActivity(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the public index of every published build, most recently updated first, so a gallery can link straight to the story behind each product. PUBLIC, no tenancy: publishing is the author\'s act, and only published root sessions appear here.
      * @summary Returns the public index of every published build, most recently updated first, so a gallery can link straight to the story behind each product.
-     * @param {AgentsApiGetV1AgentsBuildsRequest} requestParameters Request parameters.
+     * @param {AgentsApiGetAgentsBuildsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsBuilds(requestParameters: AgentsApiGetV1AgentsBuildsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsBuilds(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getAgentsBuilds(requestParameters: AgentsApiGetAgentsBuildsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsBuilds(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the readable build of one product: the agent session that produced it, turn by turn — the prompts, the reasoning, the commits each turn produced — plus the exact `git log` that re-derives every commit binding from git itself, so nothing here has to be taken on trust.  PUBLIC, no tenancy: it answers only for a session its author explicitly published, which is what makes it safe to be anonymous. An unpublished session is invisible here no matter who asks; its owner reads it through the org-scoped /v1/agents/sessions routes, which need a validated principal.
      * @summary Returns the readable build of one product: the agent session that produced it, turn by turn — the prompts, the reasoning, the commits each turn produced — plus the exact `git log` that re-derives every commit binding from git itself, so nothing here has to be taken on trust.
-     * @param {AgentsApiGetV1AgentsBuildsByOrgByProjectRequest} requestParameters Request parameters.
+     * @param {AgentsApiGetAgentsBuildsByOrgByProjectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsBuildsByOrgByProject(requestParameters: AgentsApiGetV1AgentsBuildsByOrgByProjectRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsBuildsByOrgByProject(requestParameters.org, requestParameters.project, options).then((request) => request(this.axios, this.basePath));
+    public getAgentsBuildsByOrgByProject(requestParameters: AgentsApiGetAgentsBuildsByOrgByProjectRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsBuildsByOrgByProject(requestParameters.org, requestParameters.project, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one agent with its system prompt and its 20 most recent runs. The ref is the agent\'s public id or its org-unique name — a created agent is immediately gettable by whatever create handed back.
      * @summary Returns one agent with its system prompt and its 20 most recent runs.
-     * @param {AgentsApiGetV1AgentsByRefRequest} requestParameters Request parameters.
+     * @param {AgentsApiGetAgentsByRefRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsByRef(requestParameters: AgentsApiGetV1AgentsByRefRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsByRef(requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
+    public getAgentsByRef(requestParameters: AgentsApiGetAgentsByRefRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsByRef(requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took. Every row is a run that actually happened.
      * @summary Returns one agent\'s execution history, newest first — each run\'s input, its output or its error, and how long it took.
-     * @param {AgentsApiGetV1AgentsByRefRunsRequest} requestParameters Request parameters.
+     * @param {AgentsApiGetAgentsByRefRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsByRefRuns(requestParameters: AgentsApiGetV1AgentsByRefRunsRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsByRefRuns(requestParameters.ref, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getAgentsByRefRuns(requestParameters: AgentsApiGetAgentsByRefRunsRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsByRefRuns(requestParameters.ref, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Serves the invocations-over-time histogram for the org\'s Agents dashboard. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
      * @summary Serves the invocations-over-time histogram for the org\'s Agents dashboard.
-     * @param {AgentsApiGetV1AgentsMetricsRequest} requestParameters Request parameters.
+     * @param {AgentsApiGetAgentsMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsMetrics(requestParameters: AgentsApiGetV1AgentsMetricsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsMetrics(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
+    public getAgentsMetrics(requestParameters: AgentsApiGetAgentsMetricsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsMetrics(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.  It is the feed the per-agent history could not be: an operator asking \"what is this tenant\'s agent plane doing\" does not start out knowing an agent ref, and answering by listing the agents and then paging each one\'s history is N+1 round trips to reconstruct one ordering the database already has (RunsSince, ordered by created_at over the org index).  The org is the CALLER\'s, resolved from identity by tenantStore — never a parameter. There is deliberately no org field on orgRunsQuery to forge: run history is the tenant\'s own record, and the only tenant this can answer for is the one asking.
      * @summary Returns the org\'s agent runs across EVERY agent, newest first — what ran here, for whom, on which model, how long it took, and why it failed.
-     * @param {AgentsApiGetV1AgentsRunsRequest} requestParameters Request parameters.
+     * @param {AgentsApiGetAgentsRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsRuns(requestParameters: AgentsApiGetV1AgentsRunsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsRuns(requestParameters.limit, requestParameters.status, options).then((request) => request(this.axios, this.basePath));
+    public getAgentsRuns(requestParameters: AgentsApiGetAgentsRunsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsRuns(requestParameters.limit, requestParameters.status, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s live sessions, newest first — each with its event count, its direct-child count and a one-line preview of its latest event. With no filter it returns ROOT sessions only, so a dashboard shows one row per flow rather than one per subagent; ?root= or ?parent= descends.
      * @summary Returns the caller org\'s live sessions, newest first — each with its event count, its direct-child count and a one-line preview of its latest event.
-     * @param {AgentsApiGetV1AgentsSessionsRequest} requestParameters Request parameters.
+     * @param {AgentsApiGetAgentsSessionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsSessions(requestParameters: AgentsApiGetV1AgentsSessionsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getAgentsSessions(requestParameters: AgentsApiGetAgentsSessionsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
      * @summary Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
-     * @param {AgentsApiGetV1AgentsSessionsByIdRequest} requestParameters Request parameters.
+     * @param {AgentsApiGetAgentsSessionsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsSessionsById(requestParameters: AgentsApiGetV1AgentsSessionsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsSessionsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getAgentsSessionsById(requestParameters: AgentsApiGetAgentsSessionsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsSessionsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the steering commands (pause/resume/stop/message) recorded against the caller\'s own session that are newer than the cursor, oldest first, with the cursor to poll from next. It is how a locally started `hanzo code` session — which is not task-backed, so nothing forwards its commands to an execution engine — consumes what the dashboard posted. Read-only and bounded at 200 per poll, so a steady poll is cheap and an applied command is never redelivered.
      * @summary Returns the steering commands (pause/resume/stop/message) recorded against the caller\'s own session that are newer than the cursor, oldest first, with the cursor to poll from next.
-     * @param {AgentsApiGetV1AgentsSessionsByIdControlRequest} requestParameters Request parameters.
+     * @param {AgentsApiGetAgentsSessionsByIdControlRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsSessionsByIdControl(requestParameters: AgentsApiGetV1AgentsSessionsByIdControlRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsSessionsByIdControl(requestParameters.id, requestParameters.after, options).then((request) => request(this.axios, this.basePath));
+    public getAgentsSessionsByIdControl(requestParameters: AgentsApiGetAgentsSessionsByIdControlRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsSessionsByIdControl(requestParameters.id, requestParameters.after, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count. One indexed read pulls the whole flow (every node of a flow shares a root id), so the shape is assembled in memory rather than by walking the store per node.
      * @summary Returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count.
-     * @param {AgentsApiGetV1AgentsSessionsByIdTreeRequest} requestParameters Request parameters.
+     * @param {AgentsApiGetAgentsSessionsByIdTreeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsSessionsByIdTree(requestParameters: AgentsApiGetV1AgentsSessionsByIdTreeRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsSessionsByIdTree(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getAgentsSessionsByIdTree(requestParameters: AgentsApiGetAgentsSessionsByIdTreeRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsSessionsByIdTree(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2655,8 +2655,8 @@ export class AgentsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsSessionsStream(options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsSessionsStream(options).then((request) => request(this.axios, this.basePath));
+    public getAgentsSessionsStream(options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsSessionsStream(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2666,200 +2666,200 @@ export class AgentsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsTargets(options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsTargets(options).then((request) => request(this.axios, this.basePath));
+    public getAgentsTargets(options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsTargets(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one registered machine, with its live session load.
      * @summary Returns one registered machine, with its live session load.
-     * @param {AgentsApiGetV1AgentsTargetsByIdRequest} requestParameters Request parameters.
+     * @param {AgentsApiGetAgentsTargetsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public getV1AgentsTargetsById(requestParameters: AgentsApiGetV1AgentsTargetsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getV1AgentsTargetsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getAgentsTargetsById(requestParameters: AgentsApiGetAgentsTargetsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsTargetsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Changes an agent in place. Every field is optional; a field the request omits keeps its stored value. The resulting mode+schedule are re-validated together, so a partial update can never leave a long-running agent without the cron the scheduler needs to fire it, and a transition INTO long-running counts against the per-org cap on scheduled agents.
      * @summary Changes an agent in place.
-     * @param {AgentsApiPatchV1AgentsByRefRequest} requestParameters Request parameters.
+     * @param {AgentsApiPatchAgentsByRefRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public patchV1AgentsByRef(requestParameters: AgentsApiPatchV1AgentsByRefRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).patchV1AgentsByRef(requestParameters.ref, requestParameters.updateAgentIn, options).then((request) => request(this.axios, this.basePath));
+    public patchAgentsByRef(requestParameters: AgentsApiPatchAgentsByRefRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).patchAgentsByRef(requestParameters.ref, requestParameters.updateAgentIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Updates a session\'s surface-owned truth: its status, its title, the run-target it is dispatched to, and the product it built plus whether that build\'s story is public. A FINISHED session stays finished — reopening a done/error run would fabricate liveness — and publishing is refused unless the session names the project it built, because the public build route is keyed on (org, project).
      * @summary Updates a session\'s surface-owned truth: its status, its title, the run-target it is dispatched to, and the product it built plus whether that build\'s story is public.
-     * @param {AgentsApiPatchV1AgentsSessionsByIdRequest} requestParameters Request parameters.
+     * @param {AgentsApiPatchAgentsSessionsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public patchV1AgentsSessionsById(requestParameters: AgentsApiPatchV1AgentsSessionsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).patchV1AgentsSessionsById(requestParameters.id, requestParameters.patchSessionIn, options).then((request) => request(this.axios, this.basePath));
+    public patchAgentsSessionsById(requestParameters: AgentsApiPatchAgentsSessionsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).patchAgentsSessionsById(requestParameters.id, requestParameters.patchSessionIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Updates one machine in place. Every field is optional; a field the request omits is left alone. A metrics patch IS a heartbeat — the server stamps its own clock, so a client can neither forge nor backdate staleness.
      * @summary Updates one machine in place.
-     * @param {AgentsApiPatchV1AgentsTargetsByIdRequest} requestParameters Request parameters.
+     * @param {AgentsApiPatchAgentsTargetsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public patchV1AgentsTargetsById(requestParameters: AgentsApiPatchV1AgentsTargetsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).patchV1AgentsTargetsById(requestParameters.id, requestParameters.patchTargetIn, options).then((request) => request(this.axios, this.basePath));
+    public patchAgentsTargetsById(requestParameters: AgentsApiPatchAgentsTargetsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).patchAgentsTargetsById(requestParameters.id, requestParameters.patchTargetIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Defines an agent in the caller\'s org: a model, a system prompt (instructions) and a set of tool names. The name must be unique in the org and match ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$. An omitted model takes the deployment\'s configured default; a named one is checked against the gateway\'s served catalog, so a model this deployment never serves is refused here rather than failing at run time. A long-running agent must carry a 5-field cron schedule (the scheduler would otherwise never fire it) and counts against a per-org cap on scheduled agents.
      * @summary Defines an agent in the caller\'s org: a model, a system prompt (instructions) and a set of tool names.
-     * @param {AgentsApiPostV1AgentsRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1Agents(requestParameters: AgentsApiPostV1AgentsRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1Agents(requestParameters.createAgentIn, options).then((request) => request(this.axios, this.basePath));
+    public postAgents(requestParameters: AgentsApiPostAgentsRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgents(requestParameters.createAgentIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Composes the agent\'s stored instructions with the caller\'s `input`, executes one real chat completion through the same in-process AI client the rest of the console uses, and answers with the run that was recorded: its id, status, model, output, duration and error. Every run this returns reflects an execution that actually happened — a model failure is recorded and reported, never hidden and never fabricated. A transient upstream failure (429, 5xx, empty choices) is retried up to three times with jittered backoff, and a configured failover model is tried before the run is called an error.  `ref` is the agent\'s public `agent_…` id or its org-unique name; either resolves the same agent, and it must belong to the caller\'s org, so an agent in another tenant is a 404 exactly like one that does not exist. A validated principal is required and the check is made twice on purpose: this route MOVES MONEY, so the debit\'s principal requirement is asserted where the money moves rather than inherited from the tenant lookup.  The org\'s balance is authorized BEFORE any inference, so an unfunded tenant gets 402 and no free compute, and a billing plane that cannot answer gets 503 rather than a free run. The flat per-run fee is an operator knob; setting it to zero makes runs free and removes the balance gate with them. Only a SUCCESSFUL run is billed, attributed to the model actually used — a failover run bills the model it fell over to, not the one it started on. A deployment with no inference wired answers 503 before any of this.  THE RULE A READER GETS WRONG: a failed run is a 502 whose body is the RUN, not an error envelope. The execution happened, the run was persisted to this agent\'s history, and its `error` field is the product — so a client that treats every non-2xx as an opaque failure throws away the only account of what went wrong. Each run also opens a root session in the live session registry, best-effort: a bookkeeping failure there never fails the run, because the run and its billing already happened.
      * @summary Run one of your org\'s agents and get the recorded run back.
-     * @param {AgentsApiPostV1AgentsByRefRunRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsByRefRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1AgentsByRefRun(requestParameters: AgentsApiPostV1AgentsByRefRunRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1AgentsByRefRun(requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
+    public postAgentsByRefRun(requestParameters: AgentsApiPostAgentsByRefRunRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsByRefRun(requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off. A session with a parentSessionId becomes a subagent of that session and inherits its root, so one flow is one tree; without one it is itself a root. Registering with a terminal status records a session that has already finished.
      * @summary Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off.
-     * @param {AgentsApiPostV1AgentsSessionsRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsSessionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1AgentsSessions(requestParameters: AgentsApiPostV1AgentsSessionsRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1AgentsSessions(requestParameters.registerReq, options).then((request) => request(this.axios, this.basePath));
+    public postAgentsSessions(requestParameters: AgentsApiPostAgentsSessionsRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsSessions(requestParameters.registerReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records a message, tool-call, spawn, log, status or control turn against the session and answers 201 with the stored event, including the monotonic `seq` the store assigned — the cursor every reader pages from. The same turn is fanned out live to every stream subscriber watching that session\'s tree.  Requires a validated principal carrying an org, and the session must already exist IN THAT ORG: an id belonging to another tenant is a 404 exactly like one that does not exist, so the log can never be written across a tenant boundary. `actor` defaults to the calling principal when the body names none. `kind` must be one of the six above, and `payload` must be valid JSON of at most 64 KiB.  The payload is scanned for credentials BEFORE it is stored, and a hit REFUSES the write with 422 rather than redacting it: {status, code: \"secret_in_transcript\", error, findings:[…]}, each finding naming the rule, severity, line, a masked preview and a SHA-256 fingerprint the author can match against the value they rotate. The detected value itself appears nowhere in that body, because it was never stored. That in-band findings array is the reason this operation cannot be typed.
      * @summary Append one turn to a session\'s ordered log.
-     * @param {AgentsApiPostV1AgentsSessionsByIdEventsRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsSessionsByIdEventsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1AgentsSessionsByIdEvents(requestParameters: AgentsApiPostV1AgentsSessionsByIdEventsRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1AgentsSessionsByIdEvents(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAgentsSessionsByIdEvents(requestParameters: AgentsApiPostAgentsSessionsByIdEventsRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsSessionsByIdEvents(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records `message` as a durable control event carrying the caller\'s text and answers 200 with {command, event, forwarded} — this is how a dashboard steers an agent mid-run. It is the one command with a required body: a `message` (up to 16 KiB) or a `payload`, and 400 with neither. The credential scan that guards an appended turn covers `payload` here; `message` is bounded but not scanned.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
      * @summary Send text into a running session.
-     * @param {AgentsApiPostV1AgentsSessionsByIdMessageRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsSessionsByIdMessageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1AgentsSessionsByIdMessage(requestParameters: AgentsApiPostV1AgentsSessionsByIdMessageRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1AgentsSessionsByIdMessage(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAgentsSessionsByIdMessage(requestParameters: AgentsApiPostAgentsSessionsByIdMessageRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsSessionsByIdMessage(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records `pause` as a durable control event on the session and answers 200 with {command, event, forwarded} — the stored event carries the `seq` that orders it against every other turn.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
      * @summary Ask a running session to pause.
-     * @param {AgentsApiPostV1AgentsSessionsByIdPauseRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsSessionsByIdPauseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1AgentsSessionsByIdPause(requestParameters: AgentsApiPostV1AgentsSessionsByIdPauseRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1AgentsSessionsByIdPause(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAgentsSessionsByIdPause(requestParameters: AgentsApiPostAgentsSessionsByIdPauseRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsSessionsByIdPause(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records `resume` as a durable control event on the session and answers 200 with {command, event, forwarded}. The session is NOT required to be paused first: the only status this refuses is a finished one, because the live status is the running surface\'s to report rather than this endpoint\'s to enforce.   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
      * @summary Ask a paused session to carry on.
-     * @param {AgentsApiPostV1AgentsSessionsByIdResumeRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsSessionsByIdResumeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1AgentsSessionsByIdResume(requestParameters: AgentsApiPostV1AgentsSessionsByIdResumeRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1AgentsSessionsByIdResume(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAgentsSessionsByIdResume(requestParameters: AgentsApiPostAgentsSessionsByIdResumeRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsSessionsByIdResume(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records `stop` as a durable control event on the session and answers 200 with {command, event, forwarded}. Stop is the one command that CANCELS a task-backed session\'s durable workflow instead of signalling it — pause, resume and message are cooperative signals the workflow decides how to act on, while this tears it down, with the request\'s `message` recorded as the cancellation reason (a default stands in when none is given).   Requires a validated principal carrying an org, and the session must exist IN THAT ORG — a foreign id is a 404, so no tenant can steer another\'s agents. A FINISHED session (done or error) refuses every command with 409: a run that has ended cannot be steered.  THE COMMAND IS AN INTENT, NOT A STATE CHANGE. Nothing here writes the session\'s status. A 200 means the command was durably recorded and delivered, never that the agent has actually paused, resumed or stopped; the status becomes paused, done or error only when the surface running the agent reports it back through a session update. That surface learns of the command in one of two ways: a task-backed session (one carrying a workflow id, with a tasks backend wired) has it forwarded to the durable-execution engine, and `forwarded` says so; everything else is record-only, and the running surface — a locally started `hanzo code` session, for one — drains it by polling the session\'s control endpoint. Today that is every session: the only controller wired forwards nothing, so `forwarded` is false and polling is how a command arrives. If a forward is attempted and fails, the answer is 502 stating that the command was recorded but not forwarded: the intent is never lost.
      * @summary Ask a session to stop for good.
-     * @param {AgentsApiPostV1AgentsSessionsByIdStopRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsSessionsByIdStopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1AgentsSessionsByIdStop(requestParameters: AgentsApiPostV1AgentsSessionsByIdStopRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1AgentsSessionsByIdStop(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAgentsSessionsByIdStop(requestParameters: AgentsApiPostAgentsSessionsByIdStopRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsSessionsByIdStop(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Registers a machine as an agent target, or re-links one that is already registered. Re-linking is idempotent and keyed on org+host+owner, so a machine that reconnects refreshes its own row rather than piling up duplicates; it answers 200, while a first registration answers 201.
      * @summary Registers a machine as an agent target, or re-links one that is already registered.
-     * @param {AgentsApiPostV1AgentsTargetsRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsTargetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1AgentsTargets(requestParameters: AgentsApiPostV1AgentsTargetsRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1AgentsTargets(requestParameters.targetReq, options).then((request) => request(this.axios, this.basePath));
+    public postAgentsTargets(requestParameters: AgentsApiPostAgentsTargetsRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsTargets(requestParameters.targetReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * ClaimRoutedRun is the machine\'s long poll for work: it authenticates the daemon, stamps the liveness the dispatch gate reads (the poll IS the proof a runner is listening), and waits up to 25 seconds for the next run addressed to THIS machine. It answers the run when one arrives and 204 with no body when the window elapses, on which the daemon re-polls immediately.  TWO independent proofs are required and both fail closed to the same 403: the caller must own this machine (or be an org admin) AND present its claim key in X-Target-Key. A run offered to one machine is unreachable from another\'s claim.
      * @summary ClaimRoutedRun is the machine\'s long poll for work: it authenticates the daemon, stamps the liveness the dispatch gate reads (the poll IS the proof a runner is listening), and waits up to 25 seconds for the next run addressed to THIS machine.
-     * @param {AgentsApiPostV1AgentsTargetsByIdClaimRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsTargetsByIdClaimRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1AgentsTargetsByIdClaim(requestParameters: AgentsApiPostV1AgentsTargetsByIdClaimRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1AgentsTargetsByIdClaim(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAgentsTargetsByIdClaim(requestParameters: AgentsApiPostAgentsTargetsByIdClaimRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsTargetsByIdClaim(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Mints (or rotates) the claim key a `hanzo code --serve` daemon presents to claim work for this machine, and returns it ONCE: only its SHA-256 hash is stored. Rotating supersedes any prior daemon, so only the machine\'s owner — or an org admin — may call it; every other caller gets the same not-found an unknown id gets, and learns nothing about what exists.
      * @summary Mints (or rotates) the claim key a `hanzo code --serve` daemon presents to claim work for this machine, and returns it ONCE: only its SHA-256 hash is stored.
-     * @param {AgentsApiPostV1AgentsTargetsByIdKeyRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsTargetsByIdKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1AgentsTargetsByIdKey(requestParameters: AgentsApiPostV1AgentsTargetsByIdKeyRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1AgentsTargetsByIdKey(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAgentsTargetsByIdKey(requestParameters: AgentsApiPostAgentsTargetsByIdKeyRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsTargetsByIdKey(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Completes a claimed run: it delivers the terminal result to the run\'s durable owner, which is what lets that workflow finish. Scoped to (org, target, run) and claim-key authenticated, so a machine can only ever report a run it legitimately holds. Idempotent — a report for an unknown or already-finished run answers delivered:false rather than failing, because the session\'s terminal state was already set by the machine\'s own stream.
      * @summary Completes a claimed run: it delivers the terminal result to the run\'s durable owner, which is what lets that workflow finish.
-     * @param {AgentsApiPostV1AgentsTargetsByIdRunsByRunidReportRequest} requestParameters Request parameters.
+     * @param {AgentsApiPostAgentsTargetsByIdRunsByRunidReportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
-    public postV1AgentsTargetsByIdRunsByRunidReport(requestParameters: AgentsApiPostV1AgentsTargetsByIdRunsByRunidReportRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).postV1AgentsTargetsByIdRunsByRunidReport(requestParameters.id, requestParameters.runId, requestParameters.reportRunIn, options).then((request) => request(this.axios, this.basePath));
+    public postAgentsTargetsByIdRunsByRunidReport(requestParameters: AgentsApiPostAgentsTargetsByIdRunsByRunidReportRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsTargetsByIdRunsByRunidReport(requestParameters.id, requestParameters.runId, requestParameters.reportRunIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

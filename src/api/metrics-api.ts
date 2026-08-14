@@ -33,7 +33,7 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MetricsHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMetricsHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/metrics/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MetricsQuery: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMetricsQuery: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/metrics/query`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -93,7 +93,7 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MetricsBatch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMetricsBatch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/metrics/batch`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -123,7 +123,7 @@ export const MetricsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MetricsWrite: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMetricsWrite: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/metrics/write`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -163,10 +163,10 @@ export const MetricsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MetricsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MetricsHealth(options);
+        async getMetricsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMetricsHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MetricsApi.getV1MetricsHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MetricsApi.getMetricsHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -175,10 +175,10 @@ export const MetricsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MetricsQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MetricsQuery(options);
+        async getMetricsQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMetricsQuery(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MetricsApi.getV1MetricsQuery']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MetricsApi.getMetricsQuery']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -187,10 +187,10 @@ export const MetricsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MetricsBatch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MetricsBatch(options);
+        async postMetricsBatch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMetricsBatch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MetricsApi.postV1MetricsBatch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MetricsApi.postMetricsBatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -199,10 +199,10 @@ export const MetricsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MetricsWrite(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MetricsWrite(options);
+        async postMetricsWrite(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMetricsWrite(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MetricsApi.postV1MetricsWrite']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MetricsApi.postMetricsWrite']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -221,8 +221,8 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MetricsHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1MetricsHealth(options).then((request) => request(axios, basePath));
+        getMetricsHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMetricsHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers `{count, series}`, where `count` is the number of matching SERIES and each series carries the samples that fall inside the window. `name` selects one series name, and an absent or empty `name` returns every series the org holds. `match` is a `k=v,k2=v2` label matcher applied as a SUPERSET test: a series matches when it carries all the named labels with those values, extra labels and all.  `start` and `end` are nanoseconds since the Unix epoch, and here is the rule worth knowing: a bound that is absent, empty or unparseable becomes 0, which this store reads as UNBOUNDED. A malformed `start` therefore silently widens the query instead of failing it. There is no limit parameter — the window and the matcher are the whole of what bounds the answer.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`, so a query can only ever read the org the edge asserted.
@@ -230,8 +230,8 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MetricsQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1MetricsQuery(options).then((request) => request(axios, basePath));
+        getMetricsQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMetricsQuery(options).then((request) => request(axios, basePath));
         },
         /**
          * Writes every sample in a luxfi/metric `MetricBatch` into the calling org\'s store and answers `{written}`: the number of SAMPLES stored, not families and not metrics. This is the exact wire shape the ZAP `MsgMetricBatch` transport carries, so the HTTP door and the optional ZAP push receiver share one code path and one meaning — the transport is an optimisation, never a different contract.  A counter or gauge lands as one sample. A histogram or summary contributes DERIVED `<name>_sum` and `<name>_count` series, so one metric can write more than one sample and `written` can exceed the number of metrics you sent. The batch\'s own `TimestampNs` stamps every sample it carries.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`; each org gets its own store, WAL-durable under the deployment\'s data dir. A body that does not decode is 400.
@@ -239,8 +239,8 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MetricsBatch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1MetricsBatch(options).then((request) => request(axios, basePath));
+        postMetricsBatch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMetricsBatch(options).then((request) => request(axios, basePath));
         },
         /**
          * Takes `{series:[{name, labels, samples:[{t, v}]}]}`, appends every sample, creating each series on first write, and answers `{written}` — again counting SAMPLES, so three series of ten samples is 30.  A series is identified by its name PLUS its whole label set, so adding one label makes a different series rather than annotating an existing one. Timestamps `t` are NANOSECONDS since the Unix epoch; a sample sent without one is stored at 0 and is then excluded by any query that sets a lower bound, which is the usual reason a write that reported success does not read back. Retention is per series and bounded — past 65536 samples the oldest are evicted.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`. A body that does not decode is 400; nothing else is validated or rejected.
@@ -248,8 +248,8 @@ export const MetricsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MetricsWrite(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1MetricsWrite(options).then((request) => request(axios, basePath));
+        postMetricsWrite(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMetricsWrite(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -268,8 +268,8 @@ export class MetricsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MetricsApi
      */
-    public getV1MetricsHealth(options?: RawAxiosRequestConfig) {
-        return MetricsApiFp(this.configuration).getV1MetricsHealth(options).then((request) => request(this.axios, this.basePath));
+    public getMetricsHealth(options?: RawAxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).getMetricsHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -279,8 +279,8 @@ export class MetricsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MetricsApi
      */
-    public getV1MetricsQuery(options?: RawAxiosRequestConfig) {
-        return MetricsApiFp(this.configuration).getV1MetricsQuery(options).then((request) => request(this.axios, this.basePath));
+    public getMetricsQuery(options?: RawAxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).getMetricsQuery(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -290,8 +290,8 @@ export class MetricsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MetricsApi
      */
-    public postV1MetricsBatch(options?: RawAxiosRequestConfig) {
-        return MetricsApiFp(this.configuration).postV1MetricsBatch(options).then((request) => request(this.axios, this.basePath));
+    public postMetricsBatch(options?: RawAxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).postMetricsBatch(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -301,8 +301,8 @@ export class MetricsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MetricsApi
      */
-    public postV1MetricsWrite(options?: RawAxiosRequestConfig) {
-        return MetricsApiFp(this.configuration).postV1MetricsWrite(options).then((request) => request(this.axios, this.basePath));
+    public postMetricsWrite(options?: RawAxiosRequestConfig) {
+        return MetricsApiFp(this.configuration).postMetricsWrite(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

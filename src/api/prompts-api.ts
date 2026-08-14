@@ -44,9 +44,9 @@ export const PromptsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PromptsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePromptsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1PromptsByName', 'name', name)
+            assertParamExists('deletePromptsByName', 'name', name)
             const localVarPath = `/v1/prompts/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -77,7 +77,7 @@ export const PromptsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Prompts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPrompts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/prompts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -108,9 +108,9 @@ export const PromptsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PromptsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPromptsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1PromptsByName', 'name', name)
+            assertParamExists('getPromptsByName', 'name', name)
             const localVarPath = `/v1/prompts/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -141,7 +141,7 @@ export const PromptsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PromptsCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPromptsCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/prompts/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -171,7 +171,7 @@ export const PromptsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PromptsMetrics: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPromptsMetrics: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/prompts/metrics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -202,9 +202,9 @@ export const PromptsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Prompts: async (promptReq: PromptReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPrompts: async (promptReq: PromptReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'promptReq' is not null or undefined
-            assertParamExists('postV1Prompts', 'promptReq', promptReq)
+            assertParamExists('postPrompts', 'promptReq', promptReq)
             const localVarPath = `/v1/prompts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -248,10 +248,10 @@ export const PromptsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1PromptsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PromptsByName(name, options);
+        async deletePromptsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePromptsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PromptsApi.deleteV1PromptsByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PromptsApi.deletePromptsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -260,10 +260,10 @@ export const PromptsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Prompts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Prompts(options);
+        async getPrompts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPrompts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PromptsApi.getV1Prompts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PromptsApi.getPrompts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -273,10 +273,10 @@ export const PromptsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PromptsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PromptsByName(name, options);
+        async getPromptsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPromptsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PromptsApi.getV1PromptsByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PromptsApi.getPromptsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -285,10 +285,10 @@ export const PromptsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PromptsCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CatalogList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PromptsCatalog(options);
+        async getPromptsCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CatalogList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPromptsCatalog(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PromptsApi.getV1PromptsCatalog']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PromptsApi.getPromptsCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -297,10 +297,10 @@ export const PromptsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PromptsMetrics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PromptsMetrics(options);
+        async getPromptsMetrics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MetricList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPromptsMetrics(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PromptsApi.getV1PromptsMetrics']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PromptsApi.getPromptsMetrics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -310,10 +310,10 @@ export const PromptsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Prompts(promptReq: PromptReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Prompts(promptReq, options);
+        async postPrompts(promptReq: PromptReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromptDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPrompts(promptReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PromptsApi.postV1Prompts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PromptsApi.postPrompts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -329,12 +329,12 @@ export const PromptsApiFactory = function (configuration?: Configuration, basePa
         /**
          * Delete removes one of the caller org\'s prompts and every version of it, answering 204. It is scoped to the caller\'s org, so a name another tenant owns is the same 404 an unknown name gives. There is no undo: the version history goes with it.
          * @summary Delete removes one of the caller org\'s prompts and every version of it, answering 204.
-         * @param {PromptsApiDeleteV1PromptsByNameRequest} requestParameters Request parameters.
+         * @param {PromptsApiDeletePromptsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PromptsByName(requestParameters: PromptsApiDeleteV1PromptsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1PromptsByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deletePromptsByName(requestParameters: PromptsApiDeletePromptsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePromptsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * List returns the caller org\'s prompt library as one row per prompt: its name, type, every version number it has, its taxonomy and when it last changed. The template bodies are deliberately absent — fetch one prompt to read its text.
@@ -342,18 +342,18 @@ export const PromptsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Prompts(options?: RawAxiosRequestConfig): AxiosPromise<PromptList> {
-            return localVarFp.getV1Prompts(options).then((request) => request(axios, basePath));
+        getPrompts(options?: RawAxiosRequestConfig): AxiosPromise<PromptList> {
+            return localVarFp.getPrompts(options).then((request) => request(axios, basePath));
         },
         /**
          * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
          * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
-         * @param {PromptsApiGetV1PromptsByNameRequest} requestParameters Request parameters.
+         * @param {PromptsApiGetPromptsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PromptsByName(requestParameters: PromptsApiGetV1PromptsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PromptDetail> {
-            return localVarFp.getV1PromptsByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getPromptsByName(requestParameters: PromptsApiGetPromptsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PromptDetail> {
+            return localVarFp.getPromptsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Catalog returns the read-only starter prompt library shipped with the binary — reference content every tenant sees the same, NOT the caller\'s own prompts and never mixed into them. An org\'s library stays honestly empty until someone explicitly imports a starter, which is an ordinary POST /v1/prompts. Entries that would fail the create guards are dropped, so everything offered here can actually be imported.
@@ -361,8 +361,8 @@ export const PromptsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PromptsCatalog(options?: RawAxiosRequestConfig): AxiosPromise<CatalogList> {
-            return localVarFp.getV1PromptsCatalog(options).then((request) => request(axios, basePath));
+        getPromptsCatalog(options?: RawAxiosRequestConfig): AxiosPromise<CatalogList> {
+            return localVarFp.getPromptsCatalog(options).then((request) => request(axios, basePath));
         },
         /**
          * Metrics returns real per-prompt statistics for the caller\'s org: how many versions each prompt has, which one is current, and when it was created and last changed. Every number is counted from the store — nothing here is estimated or fabricated.
@@ -370,60 +370,60 @@ export const PromptsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PromptsMetrics(options?: RawAxiosRequestConfig): AxiosPromise<MetricList> {
-            return localVarFp.getV1PromptsMetrics(options).then((request) => request(axios, basePath));
+        getPromptsMetrics(options?: RawAxiosRequestConfig): AxiosPromise<MetricList> {
+            return localVarFp.getPromptsMetrics(options).then((request) => request(axios, basePath));
         },
         /**
          * Create records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
          * @summary Create records a prompt for the caller\'s org and answers 201 with it.
-         * @param {PromptsApiPostV1PromptsRequest} requestParameters Request parameters.
+         * @param {PromptsApiPostPromptsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Prompts(requestParameters: PromptsApiPostV1PromptsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PromptDetail> {
-            return localVarFp.postV1Prompts(requestParameters.promptReq, options).then((request) => request(axios, basePath));
+        postPrompts(requestParameters: PromptsApiPostPromptsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PromptDetail> {
+            return localVarFp.postPrompts(requestParameters.promptReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1PromptsByName operation in PromptsApi.
+ * Request parameters for deletePromptsByName operation in PromptsApi.
  * @export
- * @interface PromptsApiDeleteV1PromptsByNameRequest
+ * @interface PromptsApiDeletePromptsByNameRequest
  */
-export interface PromptsApiDeleteV1PromptsByNameRequest {
+export interface PromptsApiDeletePromptsByNameRequest {
     /**
      * Name is the prompt to act on, from the path.
      * @type {string}
-     * @memberof PromptsApiDeleteV1PromptsByName
+     * @memberof PromptsApiDeletePromptsByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1PromptsByName operation in PromptsApi.
+ * Request parameters for getPromptsByName operation in PromptsApi.
  * @export
- * @interface PromptsApiGetV1PromptsByNameRequest
+ * @interface PromptsApiGetPromptsByNameRequest
  */
-export interface PromptsApiGetV1PromptsByNameRequest {
+export interface PromptsApiGetPromptsByNameRequest {
     /**
      * Name is the prompt to act on, from the path.
      * @type {string}
-     * @memberof PromptsApiGetV1PromptsByName
+     * @memberof PromptsApiGetPromptsByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for postV1Prompts operation in PromptsApi.
+ * Request parameters for postPrompts operation in PromptsApi.
  * @export
- * @interface PromptsApiPostV1PromptsRequest
+ * @interface PromptsApiPostPromptsRequest
  */
-export interface PromptsApiPostV1PromptsRequest {
+export interface PromptsApiPostPromptsRequest {
     /**
      * 
      * @type {PromptReq}
-     * @memberof PromptsApiPostV1Prompts
+     * @memberof PromptsApiPostPrompts
      */
     readonly promptReq: PromptReq
 }
@@ -438,13 +438,13 @@ export class PromptsApi extends BaseAPI {
     /**
      * Delete removes one of the caller org\'s prompts and every version of it, answering 204. It is scoped to the caller\'s org, so a name another tenant owns is the same 404 an unknown name gives. There is no undo: the version history goes with it.
      * @summary Delete removes one of the caller org\'s prompts and every version of it, answering 204.
-     * @param {PromptsApiDeleteV1PromptsByNameRequest} requestParameters Request parameters.
+     * @param {PromptsApiDeletePromptsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PromptsApi
      */
-    public deleteV1PromptsByName(requestParameters: PromptsApiDeleteV1PromptsByNameRequest, options?: RawAxiosRequestConfig) {
-        return PromptsApiFp(this.configuration).deleteV1PromptsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deletePromptsByName(requestParameters: PromptsApiDeletePromptsByNameRequest, options?: RawAxiosRequestConfig) {
+        return PromptsApiFp(this.configuration).deletePromptsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -454,20 +454,20 @@ export class PromptsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PromptsApi
      */
-    public getV1Prompts(options?: RawAxiosRequestConfig) {
-        return PromptsApiFp(this.configuration).getV1Prompts(options).then((request) => request(this.axios, this.basePath));
+    public getPrompts(options?: RawAxiosRequestConfig) {
+        return PromptsApiFp(this.configuration).getPrompts(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had. The history carries version numbers, types and timestamps only — not each version\'s body — so a long history cannot inflate this response. A name the caller\'s org does not own is 404, whoever owns it.
      * @summary Get returns one of the caller org\'s prompts: its CURRENT template text plus the metadata of every version it has had.
-     * @param {PromptsApiGetV1PromptsByNameRequest} requestParameters Request parameters.
+     * @param {PromptsApiGetPromptsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PromptsApi
      */
-    public getV1PromptsByName(requestParameters: PromptsApiGetV1PromptsByNameRequest, options?: RawAxiosRequestConfig) {
-        return PromptsApiFp(this.configuration).getV1PromptsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getPromptsByName(requestParameters: PromptsApiGetPromptsByNameRequest, options?: RawAxiosRequestConfig) {
+        return PromptsApiFp(this.configuration).getPromptsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -477,8 +477,8 @@ export class PromptsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PromptsApi
      */
-    public getV1PromptsCatalog(options?: RawAxiosRequestConfig) {
-        return PromptsApiFp(this.configuration).getV1PromptsCatalog(options).then((request) => request(this.axios, this.basePath));
+    public getPromptsCatalog(options?: RawAxiosRequestConfig) {
+        return PromptsApiFp(this.configuration).getPromptsCatalog(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -488,20 +488,20 @@ export class PromptsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PromptsApi
      */
-    public getV1PromptsMetrics(options?: RawAxiosRequestConfig) {
-        return PromptsApiFp(this.configuration).getV1PromptsMetrics(options).then((request) => request(this.axios, this.basePath));
+    public getPromptsMetrics(options?: RawAxiosRequestConfig) {
+        return PromptsApiFp(this.configuration).getPromptsMetrics(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create records a prompt for the caller\'s org and answers 201 with it. A name the org already uses is NOT an error and NOT an overwrite: it appends a new version, so the library keeps real, inspectable history and the response carries the whole version list. The name is also the URL segment the prompt is fetched by, which is why its shape is constrained and a handful of names are reserved.
      * @summary Create records a prompt for the caller\'s org and answers 201 with it.
-     * @param {PromptsApiPostV1PromptsRequest} requestParameters Request parameters.
+     * @param {PromptsApiPostPromptsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PromptsApi
      */
-    public postV1Prompts(requestParameters: PromptsApiPostV1PromptsRequest, options?: RawAxiosRequestConfig) {
-        return PromptsApiFp(this.configuration).postV1Prompts(requestParameters.promptReq, options).then((request) => request(this.axios, this.basePath));
+    public postPrompts(requestParameters: PromptsApiPostPromptsRequest, options?: RawAxiosRequestConfig) {
+        return PromptsApiFp(this.configuration).postPrompts(requestParameters.promptReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

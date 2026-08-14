@@ -48,9 +48,9 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CampaignById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCampaignById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1CampaignById', 'id', id)
+            assertParamExists('deleteCampaignById', 'id', id)
             const localVarPath = `/v1/campaign/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -83,11 +83,11 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CampaignByIdChannelsByKind: async (id: string, kind: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCampaignByIdChannelsByKind: async (id: string, kind: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1CampaignByIdChannelsByKind', 'id', id)
+            assertParamExists('deleteCampaignByIdChannelsByKind', 'id', id)
             // verify required parameter 'kind' is not null or undefined
-            assertParamExists('deleteV1CampaignByIdChannelsByKind', 'kind', kind)
+            assertParamExists('deleteCampaignByIdChannelsByKind', 'kind', kind)
             const localVarPath = `/v1/campaign/{id}/channels/{kind}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)))
                 .replace(`{${"kind"}}`, encodeURIComponent(String(kind)));
@@ -121,7 +121,7 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Campaign: async (status?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCampaign: async (status?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/campaign`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -160,9 +160,9 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CampaignById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCampaignById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1CampaignById', 'id', id)
+            assertParamExists('getCampaignById', 'id', id)
             const localVarPath = `/v1/campaign/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -197,9 +197,9 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CampaignByIdMetrics: async (id: string, range?: string, start?: string, end?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCampaignByIdMetrics: async (id: string, range?: string, start?: string, end?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1CampaignByIdMetrics', 'id', id)
+            assertParamExists('getCampaignByIdMetrics', 'id', id)
             const localVarPath = `/v1/campaign/{id}/metrics`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -242,7 +242,7 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CampaignSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCampaignSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/campaign/summary`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -273,9 +273,9 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Campaign: async (campaignWrite: CampaignWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCampaign: async (campaignWrite: CampaignWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'campaignWrite' is not null or undefined
-            assertParamExists('postV1Campaign', 'campaignWrite', campaignWrite)
+            assertParamExists('postCampaign', 'campaignWrite', campaignWrite)
             const localVarPath = `/v1/campaign`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -310,11 +310,11 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CampaignByIdChannels: async (id: string, channelAdd: ChannelAdd, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCampaignByIdChannels: async (id: string, channelAdd: ChannelAdd, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1CampaignByIdChannels', 'id', id)
+            assertParamExists('postCampaignByIdChannels', 'id', id)
             // verify required parameter 'channelAdd' is not null or undefined
-            assertParamExists('postV1CampaignByIdChannels', 'channelAdd', channelAdd)
+            assertParamExists('postCampaignByIdChannels', 'channelAdd', channelAdd)
             const localVarPath = `/v1/campaign/{id}/channels`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -349,9 +349,9 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CampaignByIdLaunch: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCampaignByIdLaunch: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1CampaignByIdLaunch', 'id', id)
+            assertParamExists('postCampaignByIdLaunch', 'id', id)
             const localVarPath = `/v1/campaign/{id}/launch`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -383,9 +383,9 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CampaignByIdPause: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCampaignByIdPause: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1CampaignByIdPause', 'id', id)
+            assertParamExists('postCampaignByIdPause', 'id', id)
             const localVarPath = `/v1/campaign/{id}/pause`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -418,11 +418,11 @@ export const CampaignApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CampaignById: async (id: string, campaignUpdate: CampaignUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCampaignById: async (id: string, campaignUpdate: CampaignUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1CampaignById', 'id', id)
+            assertParamExists('putCampaignById', 'id', id)
             // verify required parameter 'campaignUpdate' is not null or undefined
-            assertParamExists('putV1CampaignById', 'campaignUpdate', campaignUpdate)
+            assertParamExists('putCampaignById', 'campaignUpdate', campaignUpdate)
             const localVarPath = `/v1/campaign/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -467,10 +467,10 @@ export const CampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CampaignById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CampaignById(id, options);
+        async deleteCampaignById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCampaignById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CampaignApi.deleteV1CampaignById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CampaignApi.deleteCampaignById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -481,10 +481,10 @@ export const CampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CampaignByIdChannelsByKind(id: string, kind: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CampaignByIdChannelsByKind(id, kind, options);
+        async deleteCampaignByIdChannelsByKind(id: string, kind: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCampaignByIdChannelsByKind(id, kind, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CampaignApi.deleteV1CampaignByIdChannelsByKind']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CampaignApi.deleteCampaignByIdChannelsByKind']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -495,10 +495,10 @@ export const CampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Campaign(status?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Campaign(status, limit, options);
+        async getCampaign(status?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCampaign(status, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CampaignApi.getV1Campaign']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CampaignApi.getCampaign']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -508,10 +508,10 @@ export const CampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CampaignById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CampaignById(id, options);
+        async getCampaignById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCampaignById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CampaignApi.getV1CampaignById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CampaignApi.getCampaignById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -524,10 +524,10 @@ export const CampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CampaignByIdMetrics(id: string, range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignResults>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CampaignByIdMetrics(id, range, start, end, options);
+        async getCampaignByIdMetrics(id: string, range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignResults>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCampaignByIdMetrics(id, range, start, end, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CampaignApi.getV1CampaignByIdMetrics']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CampaignApi.getCampaignByIdMetrics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -536,10 +536,10 @@ export const CampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CampaignSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignSummary>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CampaignSummary(options);
+        async getCampaignSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCampaignSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CampaignApi.getV1CampaignSummary']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CampaignApi.getCampaignSummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -549,10 +549,10 @@ export const CampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Campaign(campaignWrite: CampaignWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Campaign(campaignWrite, options);
+        async postCampaign(campaignWrite: CampaignWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCampaign(campaignWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CampaignApi.postV1Campaign']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CampaignApi.postCampaign']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -563,10 +563,10 @@ export const CampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CampaignByIdChannels(id: string, channelAdd: ChannelAdd, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CampaignByIdChannels(id, channelAdd, options);
+        async postCampaignByIdChannels(id: string, channelAdd: ChannelAdd, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCampaignByIdChannels(id, channelAdd, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CampaignApi.postV1CampaignByIdChannels']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CampaignApi.postCampaignByIdChannels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -576,10 +576,10 @@ export const CampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CampaignByIdLaunch(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CampaignByIdLaunch(id, options);
+        async postCampaignByIdLaunch(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCampaignByIdLaunch(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CampaignApi.postV1CampaignByIdLaunch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CampaignApi.postCampaignByIdLaunch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -589,10 +589,10 @@ export const CampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CampaignByIdPause(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CampaignByIdPause(id, options);
+        async postCampaignByIdPause(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCampaignByIdPause(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CampaignApi.postV1CampaignByIdPause']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CampaignApi.postCampaignByIdPause']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -603,10 +603,10 @@ export const CampaignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CampaignById(id: string, campaignUpdate: CampaignUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CampaignById(id, campaignUpdate, options);
+        async putCampaignById(id: string, campaignUpdate: CampaignUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCampaignById(id, campaignUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CampaignApi.putV1CampaignById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CampaignApi.putCampaignById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -622,52 +622,52 @@ export const CampaignApiFactory = function (configuration?: Configuration, baseP
         /**
          * Removes one campaign of the caller\'s org and answers 204 with no body. 404 when the org has no campaign with that id.  It deletes the RECORD, not the executions: a campaign whose channels are live on a provider should be paused first, or those executions keep running with nothing here to report them.
          * @summary Removes one campaign of the caller\'s org and answers 204 with no body.
-         * @param {CampaignApiDeleteV1CampaignByIdRequest} requestParameters Request parameters.
+         * @param {CampaignApiDeleteCampaignByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CampaignById(requestParameters: CampaignApiDeleteV1CampaignByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CampaignById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteCampaignById(requestParameters: CampaignApiDeleteCampaignByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCampaignById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Drops one channel from a campaign and returns the updated campaign. 404 when the campaign carries no channel of that kind.  It removes the channel from the PLAN. A channel that is live at its provider should be paused first — dropping the row here leaves nothing to pause it with afterwards.
          * @summary Drops one channel from a campaign and returns the updated campaign.
-         * @param {CampaignApiDeleteV1CampaignByIdChannelsByKindRequest} requestParameters Request parameters.
+         * @param {CampaignApiDeleteCampaignByIdChannelsByKindRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CampaignByIdChannelsByKind(requestParameters: CampaignApiDeleteV1CampaignByIdChannelsByKindRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRecord> {
-            return localVarFp.deleteV1CampaignByIdChannelsByKind(requestParameters.id, requestParameters.kind, options).then((request) => request(axios, basePath));
+        deleteCampaignByIdChannelsByKind(requestParameters: CampaignApiDeleteCampaignByIdChannelsByKindRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRecord> {
+            return localVarFp.deleteCampaignByIdChannelsByKind(requestParameters.id, requestParameters.kind, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s campaigns, newest first, optionally narrowed to one status.  A campaign is the top-level go-to-market object: a value that SPANS channels (paid, organic, email) and fans out to the executor for each. The listing is org-scoped server-side, so one org can never see another\'s campaigns.
          * @summary Returns the org\'s campaigns, newest first, optionally narrowed to one status.
-         * @param {CampaignApiGetV1CampaignRequest} requestParameters Request parameters.
+         * @param {CampaignApiGetCampaignRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Campaign(requestParameters: CampaignApiGetV1CampaignRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CampaignPage> {
-            return localVarFp.getV1Campaign(requestParameters.status, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getCampaign(requestParameters: CampaignApiGetCampaignRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CampaignPage> {
+            return localVarFp.getCampaign(requestParameters.status, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one campaign of the caller\'s org — its name, audience, creatives, channels with their per-channel launch state, schedule, budget and status. 404 when the org has no campaign with that id.
          * @summary Returns one campaign of the caller\'s org — its name, audience, creatives, channels with their per-channel launch state, schedule, budget and status.
-         * @param {CampaignApiGetV1CampaignByIdRequest} requestParameters Request parameters.
+         * @param {CampaignApiGetCampaignByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CampaignById(requestParameters: CampaignApiGetV1CampaignByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRecord> {
-            return localVarFp.getV1CampaignById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getCampaignById(requestParameters: CampaignApiGetCampaignByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRecord> {
+            return localVarFp.getCampaignById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a campaign\'s results over a window: the analytics funnel (impressions, clicks, conversions, revenue, visitors), the spend each channel\'s connector reports, and the derived growth KPIs — CTR, CVR, CAC and ROAS.  There is exactly ONE metrics plane and nothing is stored here: the funnel is an analytics query over the campaign\'s utm_campaign-tagged events, and the spend is each provider\'s own number read through the org\'s connector. A warehouse that is not emitting yet degrades to available:false with zeroes — honest-empty, never a 500 and never a fabricated number. When the campaign runs more than one creative and an experiment is wired, abTest carries the A/B analysis.
          * @summary Returns a campaign\'s results over a window: the analytics funnel (impressions, clicks, conversions, revenue, visitors), the spend each channel\'s connector reports, and the derived growth KPIs — CTR, CVR, CAC and ROAS.
-         * @param {CampaignApiGetV1CampaignByIdMetricsRequest} requestParameters Request parameters.
+         * @param {CampaignApiGetCampaignByIdMetricsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CampaignByIdMetrics(requestParameters: CampaignApiGetV1CampaignByIdMetricsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignResults> {
-            return localVarFp.getV1CampaignByIdMetrics(requestParameters.id, requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
+        getCampaignByIdMetrics(requestParameters: CampaignApiGetCampaignByIdMetricsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignResults> {
+            return localVarFp.getCampaignByIdMetrics(requestParameters.id, requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s go-to-market roll-up: how many campaigns exist, how many are live, their total budget in cents, and which channel executors this deployment can actually reach.  The channel list is the deployment\'s honest capability, not a wish: a kind missing from it is one a launch will record as \"unavailable\" rather than fail on.
@@ -675,247 +675,247 @@ export const CampaignApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CampaignSummary(options?: RawAxiosRequestConfig): AxiosPromise<CampaignSummary> {
-            return localVarFp.getV1CampaignSummary(options).then((request) => request(axios, basePath));
+        getCampaignSummary(options?: RawAxiosRequestConfig): AxiosPromise<CampaignSummary> {
+            return localVarFp.getCampaignSummary(options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a campaign as a DRAFT and returns it.  A draft is inert: nothing is sent, no connector is touched and no budget is committed until the campaign is launched. The channels named here are validated and de-duplicated by kind (one executor per kind), and every channel starts \"pending\" whatever the caller claims — a client can never assert a launched state.
          * @summary Creates a campaign as a DRAFT and returns it.
-         * @param {CampaignApiPostV1CampaignRequest} requestParameters Request parameters.
+         * @param {CampaignApiPostCampaignRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Campaign(requestParameters: CampaignApiPostV1CampaignRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRecord> {
-            return localVarFp.postV1Campaign(requestParameters.campaignWrite, options).then((request) => request(axios, basePath));
+        postCampaign(requestParameters: CampaignApiPostCampaignRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRecord> {
+            return localVarFp.postCampaign(requestParameters.campaignWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a channel to a campaign, or REPLACES the one it already has of that kind, and returns the updated campaign.  A campaign carries at most one channel per kind, because the kind IS the executor: adding a second \"paid\" channel would mean two ad accounts running one campaign with no way to tell their results apart. The new channel starts \"pending\" — adding it does not launch it.
          * @summary Adds a channel to a campaign, or REPLACES the one it already has of that kind, and returns the updated campaign.
-         * @param {CampaignApiPostV1CampaignByIdChannelsRequest} requestParameters Request parameters.
+         * @param {CampaignApiPostCampaignByIdChannelsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CampaignByIdChannels(requestParameters: CampaignApiPostV1CampaignByIdChannelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRecord> {
-            return localVarFp.postV1CampaignByIdChannels(requestParameters.id, requestParameters.channelAdd, options).then((request) => request(axios, basePath));
+        postCampaignByIdChannels(requestParameters: CampaignApiPostCampaignByIdChannelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRecord> {
+            return localVarFp.postCampaignByIdChannels(requestParameters.id, requestParameters.channelAdd, options).then((request) => request(axios, basePath));
         },
         /**
          * Pushes the campaign live on each of its channels through that channel\'s executor and answers the whole campaign with the per-channel outcome written back onto it.  The fan-out is BEST-EFFORT PER CHANNEL, and the honest reading of the result is the rule most callers get wrong: one channel failing never aborts the others, so each channel row carries its own `live`, `failed` or `unavailable` status and detail, and a paid launch can be live while an email launch failed. The campaign itself is `live` when AT LEAST ONE channel launched and `failed` only when none did — `live` is not a claim that every channel launched. Repeating the call is safe: a channel already live is skipped, never re-launched. A campaign carrying more than one creative has its variant assigned here by the experiment seam and tagged as `utm_content`.  Org-scoped and fails closed: a valid bearer is required (403 without one), the campaign is read under the caller\'s OWN org so another tenant\'s id is a 404, and a campaign with no channels is a 400 — there is nothing to launch. Each executor resolves its own org\'s connector token from the org passed to it, so a launch can never spend through another tenant\'s connector.
          * @summary Launch a campaign across every channel it declares
-         * @param {CampaignApiPostV1CampaignByIdLaunchRequest} requestParameters Request parameters.
+         * @param {CampaignApiPostCampaignByIdLaunchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CampaignByIdLaunch(requestParameters: CampaignApiPostV1CampaignByIdLaunchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CampaignByIdLaunch(requestParameters.id, options).then((request) => request(axios, basePath));
+        postCampaignByIdLaunch(requestParameters: CampaignApiPostCampaignByIdLaunchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCampaignByIdLaunch(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Pauses each live channel on its provider and answers the whole campaign, moved to `paused`, with the per-channel outcome written back onto it.  Only channels that are live and carry a provider reference are touched; a channel whose executor is no longer wired is marked `unavailable` and one whose pause errored is marked `failed`, with the reason on the row. The campaign still reports `paused` in both cases, and that is deliberate rather than sloppy: no live channel remains that this process will meter, and the rows say exactly which provider was not reached so it can be settled by hand.  Org-scoped and fails closed: a valid bearer is required (403 without one) and the campaign is read under the caller\'s OWN org, so another tenant\'s id is a 404.
          * @summary Pause every live channel on a campaign at its provider
-         * @param {CampaignApiPostV1CampaignByIdPauseRequest} requestParameters Request parameters.
+         * @param {CampaignApiPostCampaignByIdPauseRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CampaignByIdPause(requestParameters: CampaignApiPostV1CampaignByIdPauseRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CampaignByIdPause(requestParameters.id, options).then((request) => request(axios, basePath));
+        postCampaignByIdPause(requestParameters: CampaignApiPostCampaignByIdPauseRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCampaignByIdPause(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Rewrites a campaign\'s core fields — name, audience, creatives, schedule and budget — and returns the updated campaign.  Channels are replaced ONLY while the campaign is still a draft. Once it is launched its channels carry provider state (an external id, a live status), so they are added and removed explicitly through the channels sub-resource instead; a whole-object write would silently orphan a running execution.
          * @summary Rewrites a campaign\'s core fields — name, audience, creatives, schedule and budget — and returns the updated campaign.
-         * @param {CampaignApiPutV1CampaignByIdRequest} requestParameters Request parameters.
+         * @param {CampaignApiPutCampaignByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CampaignById(requestParameters: CampaignApiPutV1CampaignByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRecord> {
-            return localVarFp.putV1CampaignById(requestParameters.id, requestParameters.campaignUpdate, options).then((request) => request(axios, basePath));
+        putCampaignById(requestParameters: CampaignApiPutCampaignByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CampaignRecord> {
+            return localVarFp.putCampaignById(requestParameters.id, requestParameters.campaignUpdate, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1CampaignById operation in CampaignApi.
+ * Request parameters for deleteCampaignById operation in CampaignApi.
  * @export
- * @interface CampaignApiDeleteV1CampaignByIdRequest
+ * @interface CampaignApiDeleteCampaignByIdRequest
  */
-export interface CampaignApiDeleteV1CampaignByIdRequest {
+export interface CampaignApiDeleteCampaignByIdRequest {
     /**
      * ID is the campaign\&#39;s server-minted handle, \&quot;cmp_\&quot;-prefixed.
      * @type {string}
-     * @memberof CampaignApiDeleteV1CampaignById
+     * @memberof CampaignApiDeleteCampaignById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1CampaignByIdChannelsByKind operation in CampaignApi.
+ * Request parameters for deleteCampaignByIdChannelsByKind operation in CampaignApi.
  * @export
- * @interface CampaignApiDeleteV1CampaignByIdChannelsByKindRequest
+ * @interface CampaignApiDeleteCampaignByIdChannelsByKindRequest
  */
-export interface CampaignApiDeleteV1CampaignByIdChannelsByKindRequest {
+export interface CampaignApiDeleteCampaignByIdChannelsByKindRequest {
     /**
      * ID is the campaign, from the path.
      * @type {string}
-     * @memberof CampaignApiDeleteV1CampaignByIdChannelsByKind
+     * @memberof CampaignApiDeleteCampaignByIdChannelsByKind
      */
     readonly id: string
 
     /**
      * Kind is the channel to remove: paid, organic or email.
      * @type {string}
-     * @memberof CampaignApiDeleteV1CampaignByIdChannelsByKind
+     * @memberof CampaignApiDeleteCampaignByIdChannelsByKind
      */
     readonly kind: string
 }
 
 /**
- * Request parameters for getV1Campaign operation in CampaignApi.
+ * Request parameters for getCampaign operation in CampaignApi.
  * @export
- * @interface CampaignApiGetV1CampaignRequest
+ * @interface CampaignApiGetCampaignRequest
  */
-export interface CampaignApiGetV1CampaignRequest {
+export interface CampaignApiGetCampaignRequest {
     /**
      * Status keeps only campaigns in that state: draft, live, paused or failed. Empty means any.
      * @type {string}
-     * @memberof CampaignApiGetV1Campaign
+     * @memberof CampaignApiGetCampaign
      */
     readonly status?: string
 
     /**
      * Limit bounds the page. 0 or less means the default of 200; anything above 1000 is clamped to 1000.
      * @type {number}
-     * @memberof CampaignApiGetV1Campaign
+     * @memberof CampaignApiGetCampaign
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1CampaignById operation in CampaignApi.
+ * Request parameters for getCampaignById operation in CampaignApi.
  * @export
- * @interface CampaignApiGetV1CampaignByIdRequest
+ * @interface CampaignApiGetCampaignByIdRequest
  */
-export interface CampaignApiGetV1CampaignByIdRequest {
+export interface CampaignApiGetCampaignByIdRequest {
     /**
      * ID is the campaign\&#39;s server-minted handle, \&quot;cmp_\&quot;-prefixed.
      * @type {string}
-     * @memberof CampaignApiGetV1CampaignById
+     * @memberof CampaignApiGetCampaignById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1CampaignByIdMetrics operation in CampaignApi.
+ * Request parameters for getCampaignByIdMetrics operation in CampaignApi.
  * @export
- * @interface CampaignApiGetV1CampaignByIdMetricsRequest
+ * @interface CampaignApiGetCampaignByIdMetricsRequest
  */
-export interface CampaignApiGetV1CampaignByIdMetricsRequest {
+export interface CampaignApiGetCampaignByIdMetricsRequest {
     /**
      * ID is the campaign to report on, from the path.
      * @type {string}
-     * @memberof CampaignApiGetV1CampaignByIdMetrics
+     * @memberof CampaignApiGetCampaignByIdMetrics
      */
     readonly id: string
 
     /**
      * Range is the lookback window: 24h, 7d, 30d or 90d. Anything else, including empty, reads as 30d.
      * @type {string}
-     * @memberof CampaignApiGetV1CampaignByIdMetrics
+     * @memberof CampaignApiGetCampaignByIdMetrics
      */
     readonly range?: string
 
     /**
      * Start is an explicit RFC3339 window start. Honored only together with End, and only when End is after it.
      * @type {string}
-     * @memberof CampaignApiGetV1CampaignByIdMetrics
+     * @memberof CampaignApiGetCampaignByIdMetrics
      */
     readonly start?: string
 
     /**
      * End is an explicit RFC3339 window end.
      * @type {string}
-     * @memberof CampaignApiGetV1CampaignByIdMetrics
+     * @memberof CampaignApiGetCampaignByIdMetrics
      */
     readonly end?: string
 }
 
 /**
- * Request parameters for postV1Campaign operation in CampaignApi.
+ * Request parameters for postCampaign operation in CampaignApi.
  * @export
- * @interface CampaignApiPostV1CampaignRequest
+ * @interface CampaignApiPostCampaignRequest
  */
-export interface CampaignApiPostV1CampaignRequest {
+export interface CampaignApiPostCampaignRequest {
     /**
      * 
      * @type {CampaignWrite}
-     * @memberof CampaignApiPostV1Campaign
+     * @memberof CampaignApiPostCampaign
      */
     readonly campaignWrite: CampaignWrite
 }
 
 /**
- * Request parameters for postV1CampaignByIdChannels operation in CampaignApi.
+ * Request parameters for postCampaignByIdChannels operation in CampaignApi.
  * @export
- * @interface CampaignApiPostV1CampaignByIdChannelsRequest
+ * @interface CampaignApiPostCampaignByIdChannelsRequest
  */
-export interface CampaignApiPostV1CampaignByIdChannelsRequest {
+export interface CampaignApiPostCampaignByIdChannelsRequest {
     /**
      * ID is the campaign to add the channel to, from the path.
      * @type {string}
-     * @memberof CampaignApiPostV1CampaignByIdChannels
+     * @memberof CampaignApiPostCampaignByIdChannels
      */
     readonly id: string
 
     /**
      * 
      * @type {ChannelAdd}
-     * @memberof CampaignApiPostV1CampaignByIdChannels
+     * @memberof CampaignApiPostCampaignByIdChannels
      */
     readonly channelAdd: ChannelAdd
 }
 
 /**
- * Request parameters for postV1CampaignByIdLaunch operation in CampaignApi.
+ * Request parameters for postCampaignByIdLaunch operation in CampaignApi.
  * @export
- * @interface CampaignApiPostV1CampaignByIdLaunchRequest
+ * @interface CampaignApiPostCampaignByIdLaunchRequest
  */
-export interface CampaignApiPostV1CampaignByIdLaunchRequest {
+export interface CampaignApiPostCampaignByIdLaunchRequest {
     /**
      * 
      * @type {string}
-     * @memberof CampaignApiPostV1CampaignByIdLaunch
+     * @memberof CampaignApiPostCampaignByIdLaunch
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1CampaignByIdPause operation in CampaignApi.
+ * Request parameters for postCampaignByIdPause operation in CampaignApi.
  * @export
- * @interface CampaignApiPostV1CampaignByIdPauseRequest
+ * @interface CampaignApiPostCampaignByIdPauseRequest
  */
-export interface CampaignApiPostV1CampaignByIdPauseRequest {
+export interface CampaignApiPostCampaignByIdPauseRequest {
     /**
      * 
      * @type {string}
-     * @memberof CampaignApiPostV1CampaignByIdPause
+     * @memberof CampaignApiPostCampaignByIdPause
      */
     readonly id: string
 }
 
 /**
- * Request parameters for putV1CampaignById operation in CampaignApi.
+ * Request parameters for putCampaignById operation in CampaignApi.
  * @export
- * @interface CampaignApiPutV1CampaignByIdRequest
+ * @interface CampaignApiPutCampaignByIdRequest
  */
-export interface CampaignApiPutV1CampaignByIdRequest {
+export interface CampaignApiPutCampaignByIdRequest {
     /**
      * ID is the campaign to update, from the path.
      * @type {string}
-     * @memberof CampaignApiPutV1CampaignById
+     * @memberof CampaignApiPutCampaignById
      */
     readonly id: string
 
     /**
      * 
      * @type {CampaignUpdate}
-     * @memberof CampaignApiPutV1CampaignById
+     * @memberof CampaignApiPutCampaignById
      */
     readonly campaignUpdate: CampaignUpdate
 }
@@ -930,61 +930,61 @@ export class CampaignApi extends BaseAPI {
     /**
      * Removes one campaign of the caller\'s org and answers 204 with no body. 404 when the org has no campaign with that id.  It deletes the RECORD, not the executions: a campaign whose channels are live on a provider should be paused first, or those executions keep running with nothing here to report them.
      * @summary Removes one campaign of the caller\'s org and answers 204 with no body.
-     * @param {CampaignApiDeleteV1CampaignByIdRequest} requestParameters Request parameters.
+     * @param {CampaignApiDeleteCampaignByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CampaignApi
      */
-    public deleteV1CampaignById(requestParameters: CampaignApiDeleteV1CampaignByIdRequest, options?: RawAxiosRequestConfig) {
-        return CampaignApiFp(this.configuration).deleteV1CampaignById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteCampaignById(requestParameters: CampaignApiDeleteCampaignByIdRequest, options?: RawAxiosRequestConfig) {
+        return CampaignApiFp(this.configuration).deleteCampaignById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Drops one channel from a campaign and returns the updated campaign. 404 when the campaign carries no channel of that kind.  It removes the channel from the PLAN. A channel that is live at its provider should be paused first — dropping the row here leaves nothing to pause it with afterwards.
      * @summary Drops one channel from a campaign and returns the updated campaign.
-     * @param {CampaignApiDeleteV1CampaignByIdChannelsByKindRequest} requestParameters Request parameters.
+     * @param {CampaignApiDeleteCampaignByIdChannelsByKindRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CampaignApi
      */
-    public deleteV1CampaignByIdChannelsByKind(requestParameters: CampaignApiDeleteV1CampaignByIdChannelsByKindRequest, options?: RawAxiosRequestConfig) {
-        return CampaignApiFp(this.configuration).deleteV1CampaignByIdChannelsByKind(requestParameters.id, requestParameters.kind, options).then((request) => request(this.axios, this.basePath));
+    public deleteCampaignByIdChannelsByKind(requestParameters: CampaignApiDeleteCampaignByIdChannelsByKindRequest, options?: RawAxiosRequestConfig) {
+        return CampaignApiFp(this.configuration).deleteCampaignByIdChannelsByKind(requestParameters.id, requestParameters.kind, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the org\'s campaigns, newest first, optionally narrowed to one status.  A campaign is the top-level go-to-market object: a value that SPANS channels (paid, organic, email) and fans out to the executor for each. The listing is org-scoped server-side, so one org can never see another\'s campaigns.
      * @summary Returns the org\'s campaigns, newest first, optionally narrowed to one status.
-     * @param {CampaignApiGetV1CampaignRequest} requestParameters Request parameters.
+     * @param {CampaignApiGetCampaignRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CampaignApi
      */
-    public getV1Campaign(requestParameters: CampaignApiGetV1CampaignRequest = {}, options?: RawAxiosRequestConfig) {
-        return CampaignApiFp(this.configuration).getV1Campaign(requestParameters.status, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getCampaign(requestParameters: CampaignApiGetCampaignRequest = {}, options?: RawAxiosRequestConfig) {
+        return CampaignApiFp(this.configuration).getCampaign(requestParameters.status, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one campaign of the caller\'s org — its name, audience, creatives, channels with their per-channel launch state, schedule, budget and status. 404 when the org has no campaign with that id.
      * @summary Returns one campaign of the caller\'s org — its name, audience, creatives, channels with their per-channel launch state, schedule, budget and status.
-     * @param {CampaignApiGetV1CampaignByIdRequest} requestParameters Request parameters.
+     * @param {CampaignApiGetCampaignByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CampaignApi
      */
-    public getV1CampaignById(requestParameters: CampaignApiGetV1CampaignByIdRequest, options?: RawAxiosRequestConfig) {
-        return CampaignApiFp(this.configuration).getV1CampaignById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getCampaignById(requestParameters: CampaignApiGetCampaignByIdRequest, options?: RawAxiosRequestConfig) {
+        return CampaignApiFp(this.configuration).getCampaignById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns a campaign\'s results over a window: the analytics funnel (impressions, clicks, conversions, revenue, visitors), the spend each channel\'s connector reports, and the derived growth KPIs — CTR, CVR, CAC and ROAS.  There is exactly ONE metrics plane and nothing is stored here: the funnel is an analytics query over the campaign\'s utm_campaign-tagged events, and the spend is each provider\'s own number read through the org\'s connector. A warehouse that is not emitting yet degrades to available:false with zeroes — honest-empty, never a 500 and never a fabricated number. When the campaign runs more than one creative and an experiment is wired, abTest carries the A/B analysis.
      * @summary Returns a campaign\'s results over a window: the analytics funnel (impressions, clicks, conversions, revenue, visitors), the spend each channel\'s connector reports, and the derived growth KPIs — CTR, CVR, CAC and ROAS.
-     * @param {CampaignApiGetV1CampaignByIdMetricsRequest} requestParameters Request parameters.
+     * @param {CampaignApiGetCampaignByIdMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CampaignApi
      */
-    public getV1CampaignByIdMetrics(requestParameters: CampaignApiGetV1CampaignByIdMetricsRequest, options?: RawAxiosRequestConfig) {
-        return CampaignApiFp(this.configuration).getV1CampaignByIdMetrics(requestParameters.id, requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(this.axios, this.basePath));
+    public getCampaignByIdMetrics(requestParameters: CampaignApiGetCampaignByIdMetricsRequest, options?: RawAxiosRequestConfig) {
+        return CampaignApiFp(this.configuration).getCampaignByIdMetrics(requestParameters.id, requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -994,68 +994,68 @@ export class CampaignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CampaignApi
      */
-    public getV1CampaignSummary(options?: RawAxiosRequestConfig) {
-        return CampaignApiFp(this.configuration).getV1CampaignSummary(options).then((request) => request(this.axios, this.basePath));
+    public getCampaignSummary(options?: RawAxiosRequestConfig) {
+        return CampaignApiFp(this.configuration).getCampaignSummary(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a campaign as a DRAFT and returns it.  A draft is inert: nothing is sent, no connector is touched and no budget is committed until the campaign is launched. The channels named here are validated and de-duplicated by kind (one executor per kind), and every channel starts \"pending\" whatever the caller claims — a client can never assert a launched state.
      * @summary Creates a campaign as a DRAFT and returns it.
-     * @param {CampaignApiPostV1CampaignRequest} requestParameters Request parameters.
+     * @param {CampaignApiPostCampaignRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CampaignApi
      */
-    public postV1Campaign(requestParameters: CampaignApiPostV1CampaignRequest, options?: RawAxiosRequestConfig) {
-        return CampaignApiFp(this.configuration).postV1Campaign(requestParameters.campaignWrite, options).then((request) => request(this.axios, this.basePath));
+    public postCampaign(requestParameters: CampaignApiPostCampaignRequest, options?: RawAxiosRequestConfig) {
+        return CampaignApiFp(this.configuration).postCampaign(requestParameters.campaignWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds a channel to a campaign, or REPLACES the one it already has of that kind, and returns the updated campaign.  A campaign carries at most one channel per kind, because the kind IS the executor: adding a second \"paid\" channel would mean two ad accounts running one campaign with no way to tell their results apart. The new channel starts \"pending\" — adding it does not launch it.
      * @summary Adds a channel to a campaign, or REPLACES the one it already has of that kind, and returns the updated campaign.
-     * @param {CampaignApiPostV1CampaignByIdChannelsRequest} requestParameters Request parameters.
+     * @param {CampaignApiPostCampaignByIdChannelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CampaignApi
      */
-    public postV1CampaignByIdChannels(requestParameters: CampaignApiPostV1CampaignByIdChannelsRequest, options?: RawAxiosRequestConfig) {
-        return CampaignApiFp(this.configuration).postV1CampaignByIdChannels(requestParameters.id, requestParameters.channelAdd, options).then((request) => request(this.axios, this.basePath));
+    public postCampaignByIdChannels(requestParameters: CampaignApiPostCampaignByIdChannelsRequest, options?: RawAxiosRequestConfig) {
+        return CampaignApiFp(this.configuration).postCampaignByIdChannels(requestParameters.id, requestParameters.channelAdd, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Pushes the campaign live on each of its channels through that channel\'s executor and answers the whole campaign with the per-channel outcome written back onto it.  The fan-out is BEST-EFFORT PER CHANNEL, and the honest reading of the result is the rule most callers get wrong: one channel failing never aborts the others, so each channel row carries its own `live`, `failed` or `unavailable` status and detail, and a paid launch can be live while an email launch failed. The campaign itself is `live` when AT LEAST ONE channel launched and `failed` only when none did — `live` is not a claim that every channel launched. Repeating the call is safe: a channel already live is skipped, never re-launched. A campaign carrying more than one creative has its variant assigned here by the experiment seam and tagged as `utm_content`.  Org-scoped and fails closed: a valid bearer is required (403 without one), the campaign is read under the caller\'s OWN org so another tenant\'s id is a 404, and a campaign with no channels is a 400 — there is nothing to launch. Each executor resolves its own org\'s connector token from the org passed to it, so a launch can never spend through another tenant\'s connector.
      * @summary Launch a campaign across every channel it declares
-     * @param {CampaignApiPostV1CampaignByIdLaunchRequest} requestParameters Request parameters.
+     * @param {CampaignApiPostCampaignByIdLaunchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CampaignApi
      */
-    public postV1CampaignByIdLaunch(requestParameters: CampaignApiPostV1CampaignByIdLaunchRequest, options?: RawAxiosRequestConfig) {
-        return CampaignApiFp(this.configuration).postV1CampaignByIdLaunch(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postCampaignByIdLaunch(requestParameters: CampaignApiPostCampaignByIdLaunchRequest, options?: RawAxiosRequestConfig) {
+        return CampaignApiFp(this.configuration).postCampaignByIdLaunch(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Pauses each live channel on its provider and answers the whole campaign, moved to `paused`, with the per-channel outcome written back onto it.  Only channels that are live and carry a provider reference are touched; a channel whose executor is no longer wired is marked `unavailable` and one whose pause errored is marked `failed`, with the reason on the row. The campaign still reports `paused` in both cases, and that is deliberate rather than sloppy: no live channel remains that this process will meter, and the rows say exactly which provider was not reached so it can be settled by hand.  Org-scoped and fails closed: a valid bearer is required (403 without one) and the campaign is read under the caller\'s OWN org, so another tenant\'s id is a 404.
      * @summary Pause every live channel on a campaign at its provider
-     * @param {CampaignApiPostV1CampaignByIdPauseRequest} requestParameters Request parameters.
+     * @param {CampaignApiPostCampaignByIdPauseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CampaignApi
      */
-    public postV1CampaignByIdPause(requestParameters: CampaignApiPostV1CampaignByIdPauseRequest, options?: RawAxiosRequestConfig) {
-        return CampaignApiFp(this.configuration).postV1CampaignByIdPause(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postCampaignByIdPause(requestParameters: CampaignApiPostCampaignByIdPauseRequest, options?: RawAxiosRequestConfig) {
+        return CampaignApiFp(this.configuration).postCampaignByIdPause(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Rewrites a campaign\'s core fields — name, audience, creatives, schedule and budget — and returns the updated campaign.  Channels are replaced ONLY while the campaign is still a draft. Once it is launched its channels carry provider state (an external id, a live status), so they are added and removed explicitly through the channels sub-resource instead; a whole-object write would silently orphan a running execution.
      * @summary Rewrites a campaign\'s core fields — name, audience, creatives, schedule and budget — and returns the updated campaign.
-     * @param {CampaignApiPutV1CampaignByIdRequest} requestParameters Request parameters.
+     * @param {CampaignApiPutCampaignByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CampaignApi
      */
-    public putV1CampaignById(requestParameters: CampaignApiPutV1CampaignByIdRequest, options?: RawAxiosRequestConfig) {
-        return CampaignApiFp(this.configuration).putV1CampaignById(requestParameters.id, requestParameters.campaignUpdate, options).then((request) => request(this.axios, this.basePath));
+    public putCampaignById(requestParameters: CampaignApiPutCampaignByIdRequest, options?: RawAxiosRequestConfig) {
+        return CampaignApiFp(this.configuration).putCampaignById(requestParameters.id, requestParameters.campaignUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

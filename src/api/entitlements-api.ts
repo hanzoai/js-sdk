@@ -35,7 +35,7 @@ export const EntitlementsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Entitlements: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEntitlements: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/entitlements`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const EntitlementsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Entitlements(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectionView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Entitlements(options);
+        async getEntitlements(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectionView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEntitlements(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EntitlementsApi.getV1Entitlements']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EntitlementsApi.getEntitlements']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const EntitlementsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Entitlements(options?: RawAxiosRequestConfig): AxiosPromise<ProjectionView> {
-            return localVarFp.getV1Entitlements(options).then((request) => request(axios, basePath));
+        getEntitlements(options?: RawAxiosRequestConfig): AxiosPromise<ProjectionView> {
+            return localVarFp.getEntitlements(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class EntitlementsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EntitlementsApi
      */
-    public getV1Entitlements(options?: RawAxiosRequestConfig) {
-        return EntitlementsApiFp(this.configuration).getV1Entitlements(options).then((request) => request(this.axios, this.basePath));
+    public getEntitlements(options?: RawAxiosRequestConfig) {
+        return EntitlementsApiFp(this.configuration).getEntitlements(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

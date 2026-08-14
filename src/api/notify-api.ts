@@ -37,7 +37,7 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1NotifyHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getNotifyHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/notify/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -68,9 +68,9 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1NotifySend: async (notifySend: NotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postNotifySend: async (notifySend: NotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'notifySend' is not null or undefined
-            assertParamExists('postV1NotifySend', 'notifySend', notifySend)
+            assertParamExists('postNotifySend', 'notifySend', notifySend)
             const localVarPath = `/v1/notify/send`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -104,9 +104,9 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1NotifySendEmail: async (notifySend: NotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postNotifySendEmail: async (notifySend: NotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'notifySend' is not null or undefined
-            assertParamExists('postV1NotifySendEmail', 'notifySend', notifySend)
+            assertParamExists('postNotifySendEmail', 'notifySend', notifySend)
             const localVarPath = `/v1/notify/send/email`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -140,9 +140,9 @@ export const NotifyApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1NotifySendSms: async (notifySend: NotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postNotifySendSms: async (notifySend: NotifySend, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'notifySend' is not null or undefined
-            assertParamExists('postV1NotifySendSms', 'notifySend', notifySend)
+            assertParamExists('postNotifySendSms', 'notifySend', notifySend)
             const localVarPath = `/v1/notify/send/sms`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -185,10 +185,10 @@ export const NotifyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1NotifyHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NotifyHealth>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1NotifyHealth(options);
+        async getNotifyHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NotifyHealth>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNotifyHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['NotifyApi.getV1NotifyHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['NotifyApi.getNotifyHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -198,10 +198,10 @@ export const NotifyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1NotifySend(notifySend: NotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1NotifySend(notifySend, options);
+        async postNotifySend(notifySend: NotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postNotifySend(notifySend, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['NotifyApi.postV1NotifySend']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['NotifyApi.postNotifySend']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -211,10 +211,10 @@ export const NotifyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1NotifySendEmail(notifySend: NotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1NotifySendEmail(notifySend, options);
+        async postNotifySendEmail(notifySend: NotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postNotifySendEmail(notifySend, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['NotifyApi.postV1NotifySendEmail']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['NotifyApi.postNotifySendEmail']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -224,10 +224,10 @@ export const NotifyApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1NotifySendSms(notifySend: NotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1NotifySendSms(notifySend, options);
+        async postNotifySendSms(notifySend: NotifySend, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postNotifySendSms(notifySend, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['NotifyApi.postV1NotifySendSms']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['NotifyApi.postNotifySendSms']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -246,80 +246,80 @@ export const NotifyApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1NotifyHealth(options?: RawAxiosRequestConfig): AxiosPromise<NotifyHealth> {
-            return localVarFp.getV1NotifyHealth(options).then((request) => request(axios, basePath));
+        getNotifyHealth(options?: RawAxiosRequestConfig): AxiosPromise<NotifyHealth> {
+            return localVarFp.getNotifyHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Delivers one transactional message by email or SMS through the caller org\'s own provider credential.  The channel comes from the body — sms or email — and the provider credential is read from KMS at orgs/<org>/notify/<service>/<key>, never from the environment. The org is the validated principal\'s, never a client-supplied value, so a caller can only ever send as their own tenant; an unauthenticated caller gets 401. Naming no provider picks the one whose credentials are actually configured (Twilio, then Plivo for SMS; Twilio Email, then SMTP for email) and fails closed when none is. Delivery is synchronous and per recipient: one recipient answers the bare {message_id,status} outcome, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
          * @summary Delivers one transactional message by email or SMS through the caller org\'s own provider credential.
-         * @param {NotifyApiPostV1NotifySendRequest} requestParameters Request parameters.
+         * @param {NotifyApiPostNotifySendRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1NotifySend(requestParameters: NotifyApiPostV1NotifySendRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postV1NotifySend(requestParameters.notifySend, options).then((request) => request(axios, basePath));
+        postNotifySend(requestParameters: NotifyApiPostNotifySendRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.postNotifySend(requestParameters.notifySend, options).then((request) => request(axios, basePath));
         },
         /**
          * Delivers one transactional email through the caller org\'s own provider credential.  It is the channel-pinned form of the generic send: identical in every respect except that the channel is fixed to email, OVERRIDING whatever the body names — so a body that says sms still goes out as mail. The provider is the org\'s own email credential from KMS (Twilio Email, then SMTP), resolved for the validated principal\'s org; an unauthenticated caller gets 401. Subject is carried on the email channel only.
          * @summary Delivers one transactional email through the caller org\'s own provider credential.
-         * @param {NotifyApiPostV1NotifySendEmailRequest} requestParameters Request parameters.
+         * @param {NotifyApiPostNotifySendEmailRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1NotifySendEmail(requestParameters: NotifyApiPostV1NotifySendEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postV1NotifySendEmail(requestParameters.notifySend, options).then((request) => request(axios, basePath));
+        postNotifySendEmail(requestParameters: NotifyApiPostNotifySendEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.postNotifySendEmail(requestParameters.notifySend, options).then((request) => request(axios, basePath));
         },
         /**
          * Delivers one transactional SMS through the caller org\'s own provider credential.  It is the channel-pinned form of the generic send: identical in every respect except that the channel is fixed to sms, OVERRIDING whatever the body names — so a body that says email still goes out as a text message. The provider is the org\'s own SMS credential from KMS (Twilio, then Plivo), resolved for the validated principal\'s org; an unauthenticated caller gets 401.
          * @summary Delivers one transactional SMS through the caller org\'s own provider credential.
-         * @param {NotifyApiPostV1NotifySendSmsRequest} requestParameters Request parameters.
+         * @param {NotifyApiPostNotifySendSmsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1NotifySendSms(requestParameters: NotifyApiPostV1NotifySendSmsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postV1NotifySendSms(requestParameters.notifySend, options).then((request) => request(axios, basePath));
+        postNotifySendSms(requestParameters: NotifyApiPostNotifySendSmsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.postNotifySendSms(requestParameters.notifySend, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for postV1NotifySend operation in NotifyApi.
+ * Request parameters for postNotifySend operation in NotifyApi.
  * @export
- * @interface NotifyApiPostV1NotifySendRequest
+ * @interface NotifyApiPostNotifySendRequest
  */
-export interface NotifyApiPostV1NotifySendRequest {
+export interface NotifyApiPostNotifySendRequest {
     /**
      * 
      * @type {NotifySend}
-     * @memberof NotifyApiPostV1NotifySend
+     * @memberof NotifyApiPostNotifySend
      */
     readonly notifySend: NotifySend
 }
 
 /**
- * Request parameters for postV1NotifySendEmail operation in NotifyApi.
+ * Request parameters for postNotifySendEmail operation in NotifyApi.
  * @export
- * @interface NotifyApiPostV1NotifySendEmailRequest
+ * @interface NotifyApiPostNotifySendEmailRequest
  */
-export interface NotifyApiPostV1NotifySendEmailRequest {
+export interface NotifyApiPostNotifySendEmailRequest {
     /**
      * 
      * @type {NotifySend}
-     * @memberof NotifyApiPostV1NotifySendEmail
+     * @memberof NotifyApiPostNotifySendEmail
      */
     readonly notifySend: NotifySend
 }
 
 /**
- * Request parameters for postV1NotifySendSms operation in NotifyApi.
+ * Request parameters for postNotifySendSms operation in NotifyApi.
  * @export
- * @interface NotifyApiPostV1NotifySendSmsRequest
+ * @interface NotifyApiPostNotifySendSmsRequest
  */
-export interface NotifyApiPostV1NotifySendSmsRequest {
+export interface NotifyApiPostNotifySendSmsRequest {
     /**
      * 
      * @type {NotifySend}
-     * @memberof NotifyApiPostV1NotifySendSms
+     * @memberof NotifyApiPostNotifySendSms
      */
     readonly notifySend: NotifySend
 }
@@ -338,44 +338,44 @@ export class NotifyApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NotifyApi
      */
-    public getV1NotifyHealth(options?: RawAxiosRequestConfig) {
-        return NotifyApiFp(this.configuration).getV1NotifyHealth(options).then((request) => request(this.axios, this.basePath));
+    public getNotifyHealth(options?: RawAxiosRequestConfig) {
+        return NotifyApiFp(this.configuration).getNotifyHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Delivers one transactional message by email or SMS through the caller org\'s own provider credential.  The channel comes from the body — sms or email — and the provider credential is read from KMS at orgs/<org>/notify/<service>/<key>, never from the environment. The org is the validated principal\'s, never a client-supplied value, so a caller can only ever send as their own tenant; an unauthenticated caller gets 401. Naming no provider picks the one whose credentials are actually configured (Twilio, then Plivo for SMS; Twilio Email, then SMTP for email) and fails closed when none is. Delivery is synchronous and per recipient: one recipient answers the bare {message_id,status} outcome, several answer the {items:[…]} envelope. A terminal provider failure is a 200 whose status is failed with the reason in error, never a transport error. sync=true is REQUIRED — an async dispatch answers 503, because the queue plane that would run it is owned elsewhere. The message body wins verbatim when present; otherwise template_id (or the event name) selects a built-in template rendered against template_vars.
      * @summary Delivers one transactional message by email or SMS through the caller org\'s own provider credential.
-     * @param {NotifyApiPostV1NotifySendRequest} requestParameters Request parameters.
+     * @param {NotifyApiPostNotifySendRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NotifyApi
      */
-    public postV1NotifySend(requestParameters: NotifyApiPostV1NotifySendRequest, options?: RawAxiosRequestConfig) {
-        return NotifyApiFp(this.configuration).postV1NotifySend(requestParameters.notifySend, options).then((request) => request(this.axios, this.basePath));
+    public postNotifySend(requestParameters: NotifyApiPostNotifySendRequest, options?: RawAxiosRequestConfig) {
+        return NotifyApiFp(this.configuration).postNotifySend(requestParameters.notifySend, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Delivers one transactional email through the caller org\'s own provider credential.  It is the channel-pinned form of the generic send: identical in every respect except that the channel is fixed to email, OVERRIDING whatever the body names — so a body that says sms still goes out as mail. The provider is the org\'s own email credential from KMS (Twilio Email, then SMTP), resolved for the validated principal\'s org; an unauthenticated caller gets 401. Subject is carried on the email channel only.
      * @summary Delivers one transactional email through the caller org\'s own provider credential.
-     * @param {NotifyApiPostV1NotifySendEmailRequest} requestParameters Request parameters.
+     * @param {NotifyApiPostNotifySendEmailRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NotifyApi
      */
-    public postV1NotifySendEmail(requestParameters: NotifyApiPostV1NotifySendEmailRequest, options?: RawAxiosRequestConfig) {
-        return NotifyApiFp(this.configuration).postV1NotifySendEmail(requestParameters.notifySend, options).then((request) => request(this.axios, this.basePath));
+    public postNotifySendEmail(requestParameters: NotifyApiPostNotifySendEmailRequest, options?: RawAxiosRequestConfig) {
+        return NotifyApiFp(this.configuration).postNotifySendEmail(requestParameters.notifySend, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Delivers one transactional SMS through the caller org\'s own provider credential.  It is the channel-pinned form of the generic send: identical in every respect except that the channel is fixed to sms, OVERRIDING whatever the body names — so a body that says email still goes out as a text message. The provider is the org\'s own SMS credential from KMS (Twilio, then Plivo), resolved for the validated principal\'s org; an unauthenticated caller gets 401.
      * @summary Delivers one transactional SMS through the caller org\'s own provider credential.
-     * @param {NotifyApiPostV1NotifySendSmsRequest} requestParameters Request parameters.
+     * @param {NotifyApiPostNotifySendSmsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NotifyApi
      */
-    public postV1NotifySendSms(requestParameters: NotifyApiPostV1NotifySendSmsRequest, options?: RawAxiosRequestConfig) {
-        return NotifyApiFp(this.configuration).postV1NotifySendSms(requestParameters.notifySend, options).then((request) => request(this.axios, this.basePath));
+    public postNotifySendSms(requestParameters: NotifyApiPostNotifySendSmsRequest, options?: RawAxiosRequestConfig) {
+        return NotifyApiFp(this.configuration).postNotifySendSms(requestParameters.notifySend, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -33,7 +33,7 @@ export const TrafficApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TrafficGlobe: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTrafficGlobe: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/traffic/globe`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const TrafficApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TrafficGlobe(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TrafficGlobe(options);
+        async getTrafficGlobe(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTrafficGlobe(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TrafficApi.getV1TrafficGlobe']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TrafficApi.getTrafficGlobe']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const TrafficApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TrafficGlobe(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1TrafficGlobe(options).then((request) => request(axios, basePath));
+        getTrafficGlobe(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTrafficGlobe(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class TrafficApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TrafficApi
      */
-    public getV1TrafficGlobe(options?: RawAxiosRequestConfig) {
-        return TrafficApiFp(this.configuration).getV1TrafficGlobe(options).then((request) => request(this.axios, this.basePath));
+    public getTrafficGlobe(options?: RawAxiosRequestConfig) {
+        return TrafficApiFp(this.configuration).getTrafficGlobe(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

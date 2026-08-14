@@ -49,7 +49,7 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BenchmarkCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBenchmarkCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/benchmark/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -82,11 +82,11 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BenchmarkCompare: async (a: string, b: string, benchmark?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBenchmarkCompare: async (a: string, b: string, benchmark?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'a' is not null or undefined
-            assertParamExists('getV1BenchmarkCompare', 'a', a)
+            assertParamExists('getBenchmarkCompare', 'a', a)
             // verify required parameter 'b' is not null or undefined
-            assertParamExists('getV1BenchmarkCompare', 'b', b)
+            assertParamExists('getBenchmarkCompare', 'b', b)
             const localVarPath = `/v1/benchmark/compare`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -129,7 +129,7 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BenchmarkLeaderboard: async (benchmark?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBenchmarkLeaderboard: async (benchmark?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/benchmark/leaderboard`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -163,7 +163,7 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BenchmarkPresets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBenchmarkPresets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/benchmark/presets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -194,9 +194,9 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BenchmarkPresets: async (preset: Preset, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postBenchmarkPresets: async (preset: Preset, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'preset' is not null or undefined
-            assertParamExists('postV1BenchmarkPresets', 'preset', preset)
+            assertParamExists('postBenchmarkPresets', 'preset', preset)
             const localVarPath = `/v1/benchmark/presets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -230,9 +230,9 @@ export const BenchmarkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BenchmarkRuns: async (suite: Suite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postBenchmarkRuns: async (suite: Suite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'suite' is not null or undefined
-            assertParamExists('postV1BenchmarkRuns', 'suite', suite)
+            assertParamExists('postBenchmarkRuns', 'suite', suite)
             const localVarPath = `/v1/benchmark/runs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -275,10 +275,10 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1BenchmarkCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkCatalog>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BenchmarkCatalog(options);
+        async getBenchmarkCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BenchmarkCatalog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkCatalog(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getV1BenchmarkCatalog']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getBenchmarkCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -290,10 +290,10 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1BenchmarkCompare(a: string, b: string, benchmark?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Pairing>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BenchmarkCompare(a, b, benchmark, options);
+        async getBenchmarkCompare(a: string, b: string, benchmark?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Pairing>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkCompare(a, b, benchmark, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getV1BenchmarkCompare']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getBenchmarkCompare']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -303,10 +303,10 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1BenchmarkLeaderboard(benchmark?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Leaderboard>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BenchmarkLeaderboard(benchmark, options);
+        async getBenchmarkLeaderboard(benchmark?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Leaderboard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkLeaderboard(benchmark, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getV1BenchmarkLeaderboard']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getBenchmarkLeaderboard']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -315,10 +315,10 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1BenchmarkPresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PresetList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BenchmarkPresets(options);
+        async getBenchmarkPresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PresetList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBenchmarkPresets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getV1BenchmarkPresets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.getBenchmarkPresets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -328,10 +328,10 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1BenchmarkPresets(preset: Preset, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PresetAccepted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BenchmarkPresets(preset, options);
+        async postBenchmarkPresets(preset: Preset, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PresetAccepted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBenchmarkPresets(preset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.postV1BenchmarkPresets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.postBenchmarkPresets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -341,10 +341,10 @@ export const BenchmarkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1BenchmarkRuns(suite: Suite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Admission>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BenchmarkRuns(suite, options);
+        async postBenchmarkRuns(suite: Suite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Admission>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBenchmarkRuns(suite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.postV1BenchmarkRuns']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BenchmarkApi.postBenchmarkRuns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -363,28 +363,28 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BenchmarkCatalog(options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkCatalog> {
-            return localVarFp.getV1BenchmarkCatalog(options).then((request) => request(axios, basePath));
+        getBenchmarkCatalog(options?: RawAxiosRequestConfig): AxiosPromise<BenchmarkCatalog> {
+            return localVarFp.getBenchmarkCatalog(options).then((request) => request(axios, basePath));
         },
         /**
          * Is the ONLY valid arm-vs-arm test: it pairs the two models on the items BOTH completed, and answers rescue and damage counts with an exact-McNemar p.  Pairing is what prevents the subset artifact — comparing one model\'s easy subset against another\'s full run — so n_common, not either arm\'s own coverage, is the number to read this by.  Both a and b are required. The benchmark defaults to gpqa_diamond.
          * @summary Is the ONLY valid arm-vs-arm test: it pairs the two models on the items BOTH completed, and answers rescue and damage counts with an exact-McNemar p.
-         * @param {BenchmarkApiGetV1BenchmarkCompareRequest} requestParameters Request parameters.
+         * @param {BenchmarkApiGetBenchmarkCompareRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BenchmarkCompare(requestParameters: BenchmarkApiGetV1BenchmarkCompareRequest, options?: RawAxiosRequestConfig): AxiosPromise<Pairing> {
-            return localVarFp.getV1BenchmarkCompare(requestParameters.a, requestParameters.b, requestParameters.benchmark, options).then((request) => request(axios, basePath));
+        getBenchmarkCompare(requestParameters: BenchmarkApiGetBenchmarkCompareRequest, options?: RawAxiosRequestConfig): AxiosPromise<Pairing> {
+            return localVarFp.getBenchmarkCompare(requestParameters.a, requestParameters.b, requestParameters.benchmark, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.  The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows published null, a model with only a claim shows measured null, and gap exists only where both do.  n is coverage and is not decoration: two measured numbers taken over different item counts are not comparable, so read the row\'s n before reading its accuracy.
          * @summary Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.
-         * @param {BenchmarkApiGetV1BenchmarkLeaderboardRequest} requestParameters Request parameters.
+         * @param {BenchmarkApiGetBenchmarkLeaderboardRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BenchmarkLeaderboard(requestParameters: BenchmarkApiGetV1BenchmarkLeaderboardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Leaderboard> {
-            return localVarFp.getV1BenchmarkLeaderboard(requestParameters.benchmark, options).then((request) => request(axios, basePath));
+        getBenchmarkLeaderboard(requestParameters: BenchmarkApiGetBenchmarkLeaderboardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Leaderboard> {
+            return localVarFp.getBenchmarkLeaderboard(requestParameters.benchmark, options).then((request) => request(axios, basePath));
         },
         /**
          * Are the router blends available to compose from — a named set of model arms, the rank they escalate through and the panel width that bounds fan-out — each served by the model layer as enso-<name>.  Today it answers exactly one row, the reference blend: a worked example written in models we name, published as an example of the FORM. It is deliberately not the composition of a Hanzo-served tier — the tier name exists to abstract that — so fork it and swap arms by what the leaderboard measures on your own tasks rather than reading it as a disclosure.
@@ -392,98 +392,98 @@ export const BenchmarkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BenchmarkPresets(options?: RawAxiosRequestConfig): AxiosPromise<PresetList> {
-            return localVarFp.getV1BenchmarkPresets(options).then((request) => request(axios, basePath));
+        getBenchmarkPresets(options?: RawAxiosRequestConfig): AxiosPromise<PresetList> {
+            return localVarFp.getBenchmarkPresets(options).then((request) => request(axios, basePath));
         },
         /**
          * Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.  It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Defaults fill the shape rather than refusing it: an omitted rank becomes the arms in declared order and a panel below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
          * @summary Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.
-         * @param {BenchmarkApiPostV1BenchmarkPresetsRequest} requestParameters Request parameters.
+         * @param {BenchmarkApiPostBenchmarkPresetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BenchmarkPresets(requestParameters: BenchmarkApiPostV1BenchmarkPresetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PresetAccepted> {
-            return localVarFp.postV1BenchmarkPresets(requestParameters.preset, options).then((request) => request(axios, basePath));
+        postBenchmarkPresets(requestParameters: BenchmarkApiPostBenchmarkPresetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PresetAccepted> {
+            return localVarFp.postBenchmarkPresets(requestParameters.preset, options).then((request) => request(axios, basePath));
         },
         /**
          * Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.  It is an ADMISSION, not a result: the work is done by the harness afterwards and the numbers appear on the leaderboard as it completes them.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free.  Validation is up front and total — a request with neither model nor endpoint is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
          * @summary Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.
-         * @param {BenchmarkApiPostV1BenchmarkRunsRequest} requestParameters Request parameters.
+         * @param {BenchmarkApiPostBenchmarkRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BenchmarkRuns(requestParameters: BenchmarkApiPostV1BenchmarkRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Admission> {
-            return localVarFp.postV1BenchmarkRuns(requestParameters.suite, options).then((request) => request(axios, basePath));
+        postBenchmarkRuns(requestParameters: BenchmarkApiPostBenchmarkRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Admission> {
+            return localVarFp.postBenchmarkRuns(requestParameters.suite, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1BenchmarkCompare operation in BenchmarkApi.
+ * Request parameters for getBenchmarkCompare operation in BenchmarkApi.
  * @export
- * @interface BenchmarkApiGetV1BenchmarkCompareRequest
+ * @interface BenchmarkApiGetBenchmarkCompareRequest
  */
-export interface BenchmarkApiGetV1BenchmarkCompareRequest {
+export interface BenchmarkApiGetBenchmarkCompareRequest {
     /**
      * A is the first model id. It is required.
      * @type {string}
-     * @memberof BenchmarkApiGetV1BenchmarkCompare
+     * @memberof BenchmarkApiGetBenchmarkCompare
      */
     readonly a: string
 
     /**
      * B is the second model id. It is required.
      * @type {string}
-     * @memberof BenchmarkApiGetV1BenchmarkCompare
+     * @memberof BenchmarkApiGetBenchmarkCompare
      */
     readonly b: string
 
     /**
      * Benchmark is the catalog id to compare on, defaulting to gpqa_diamond.
      * @type {string}
-     * @memberof BenchmarkApiGetV1BenchmarkCompare
+     * @memberof BenchmarkApiGetBenchmarkCompare
      */
     readonly benchmark?: string
 }
 
 /**
- * Request parameters for getV1BenchmarkLeaderboard operation in BenchmarkApi.
+ * Request parameters for getBenchmarkLeaderboard operation in BenchmarkApi.
  * @export
- * @interface BenchmarkApiGetV1BenchmarkLeaderboardRequest
+ * @interface BenchmarkApiGetBenchmarkLeaderboardRequest
  */
-export interface BenchmarkApiGetV1BenchmarkLeaderboardRequest {
+export interface BenchmarkApiGetBenchmarkLeaderboardRequest {
     /**
      * Benchmark is the catalog id to read, defaulting to gpqa_diamond.
      * @type {string}
-     * @memberof BenchmarkApiGetV1BenchmarkLeaderboard
+     * @memberof BenchmarkApiGetBenchmarkLeaderboard
      */
     readonly benchmark?: string
 }
 
 /**
- * Request parameters for postV1BenchmarkPresets operation in BenchmarkApi.
+ * Request parameters for postBenchmarkPresets operation in BenchmarkApi.
  * @export
- * @interface BenchmarkApiPostV1BenchmarkPresetsRequest
+ * @interface BenchmarkApiPostBenchmarkPresetsRequest
  */
-export interface BenchmarkApiPostV1BenchmarkPresetsRequest {
+export interface BenchmarkApiPostBenchmarkPresetsRequest {
     /**
      * 
      * @type {Preset}
-     * @memberof BenchmarkApiPostV1BenchmarkPresets
+     * @memberof BenchmarkApiPostBenchmarkPresets
      */
     readonly preset: Preset
 }
 
 /**
- * Request parameters for postV1BenchmarkRuns operation in BenchmarkApi.
+ * Request parameters for postBenchmarkRuns operation in BenchmarkApi.
  * @export
- * @interface BenchmarkApiPostV1BenchmarkRunsRequest
+ * @interface BenchmarkApiPostBenchmarkRunsRequest
  */
-export interface BenchmarkApiPostV1BenchmarkRunsRequest {
+export interface BenchmarkApiPostBenchmarkRunsRequest {
     /**
      * 
      * @type {Suite}
-     * @memberof BenchmarkApiPostV1BenchmarkRuns
+     * @memberof BenchmarkApiPostBenchmarkRuns
      */
     readonly suite: Suite
 }
@@ -502,32 +502,32 @@ export class BenchmarkApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BenchmarkApi
      */
-    public getV1BenchmarkCatalog(options?: RawAxiosRequestConfig) {
-        return BenchmarkApiFp(this.configuration).getV1BenchmarkCatalog(options).then((request) => request(this.axios, this.basePath));
+    public getBenchmarkCatalog(options?: RawAxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).getBenchmarkCatalog(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is the ONLY valid arm-vs-arm test: it pairs the two models on the items BOTH completed, and answers rescue and damage counts with an exact-McNemar p.  Pairing is what prevents the subset artifact — comparing one model\'s easy subset against another\'s full run — so n_common, not either arm\'s own coverage, is the number to read this by.  Both a and b are required. The benchmark defaults to gpqa_diamond.
      * @summary Is the ONLY valid arm-vs-arm test: it pairs the two models on the items BOTH completed, and answers rescue and damage counts with an exact-McNemar p.
-     * @param {BenchmarkApiGetV1BenchmarkCompareRequest} requestParameters Request parameters.
+     * @param {BenchmarkApiGetBenchmarkCompareRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi
      */
-    public getV1BenchmarkCompare(requestParameters: BenchmarkApiGetV1BenchmarkCompareRequest, options?: RawAxiosRequestConfig) {
-        return BenchmarkApiFp(this.configuration).getV1BenchmarkCompare(requestParameters.a, requestParameters.b, requestParameters.benchmark, options).then((request) => request(this.axios, this.basePath));
+    public getBenchmarkCompare(requestParameters: BenchmarkApiGetBenchmarkCompareRequest, options?: RawAxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).getBenchmarkCompare(requestParameters.a, requestParameters.b, requestParameters.benchmark, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.  The gap is the point of the arena; provider-reported claims have run materially hot against one standardized harness.  The two planes are NEVER blended, and that is the rule to read the rows by: a model we have measured but no vendor has claimed for shows published null, a model with only a claim shows measured null, and gap exists only where both do.  n is coverage and is not decoration: two measured numbers taken over different item counts are not comparable, so read the row\'s n before reading its accuracy.
      * @summary Answers one row per model for the benchmark named — what our own harness measured, beside what the vendor claims, and the gap between them.
-     * @param {BenchmarkApiGetV1BenchmarkLeaderboardRequest} requestParameters Request parameters.
+     * @param {BenchmarkApiGetBenchmarkLeaderboardRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi
      */
-    public getV1BenchmarkLeaderboard(requestParameters: BenchmarkApiGetV1BenchmarkLeaderboardRequest = {}, options?: RawAxiosRequestConfig) {
-        return BenchmarkApiFp(this.configuration).getV1BenchmarkLeaderboard(requestParameters.benchmark, options).then((request) => request(this.axios, this.basePath));
+    public getBenchmarkLeaderboard(requestParameters: BenchmarkApiGetBenchmarkLeaderboardRequest = {}, options?: RawAxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).getBenchmarkLeaderboard(requestParameters.benchmark, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -537,32 +537,32 @@ export class BenchmarkApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BenchmarkApi
      */
-    public getV1BenchmarkPresets(options?: RawAxiosRequestConfig) {
-        return BenchmarkApiFp(this.configuration).getV1BenchmarkPresets(options).then((request) => request(this.axios, this.basePath));
+    public getBenchmarkPresets(options?: RawAxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).getBenchmarkPresets(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.  It VALIDATES AND ECHOES: the definition is not persisted yet, so a preset accepted here is not one the model layer will resolve. Treat the response as a check on the blend, not a promise to serve it.  Defaults fill the shape rather than refusing it: an omitted rank becomes the arms in declared order and a panel below 1 becomes 1. The one real invariant is that rank may only name arms the blend declares — the same rule the model catalog enforces — and a rank naming anything else is a 422 listing exactly which entries were undeclared. A blend with no name or no arms is a 400.
      * @summary Validates a router blend — its name, its arms, the rank they escalate through and the panel fan-out width — and answers 202 with the preset and the enso-<name> it would be served as.
-     * @param {BenchmarkApiPostV1BenchmarkPresetsRequest} requestParameters Request parameters.
+     * @param {BenchmarkApiPostBenchmarkPresetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi
      */
-    public postV1BenchmarkPresets(requestParameters: BenchmarkApiPostV1BenchmarkPresetsRequest, options?: RawAxiosRequestConfig) {
-        return BenchmarkApiFp(this.configuration).postV1BenchmarkPresets(requestParameters.preset, options).then((request) => request(this.axios, this.basePath));
+    public postBenchmarkPresets(requestParameters: BenchmarkApiPostBenchmarkPresetsRequest, options?: RawAxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).postBenchmarkPresets(requestParameters.preset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.  It is an ADMISSION, not a result: the work is done by the harness afterwards and the numbers appear on the leaderboard as it completes them.  Cost is bounded by the store rather than by a quota: attempts are append-only and keyed by (benchmark, item, model), so an (item, model) pair already attempted is skipped instead of re-spent, and re-queuing the same run is close to free.  Validation is up front and total — a request with neither model nor endpoint is a 400, one with no benchmarks is a 400, and any benchmark id outside the catalog is a 422 naming exactly which ids were unknown, so a typo never silently queues a partial run.
      * @summary Admits and queues a benchmark run against a model or your own endpoint, and answers 202 with the receipt.
-     * @param {BenchmarkApiPostV1BenchmarkRunsRequest} requestParameters Request parameters.
+     * @param {BenchmarkApiPostBenchmarkRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BenchmarkApi
      */
-    public postV1BenchmarkRuns(requestParameters: BenchmarkApiPostV1BenchmarkRunsRequest, options?: RawAxiosRequestConfig) {
-        return BenchmarkApiFp(this.configuration).postV1BenchmarkRuns(requestParameters.suite, options).then((request) => request(this.axios, this.basePath));
+    public postBenchmarkRuns(requestParameters: BenchmarkApiPostBenchmarkRunsRequest, options?: RawAxiosRequestConfig) {
+        return BenchmarkApiFp(this.configuration).postBenchmarkRuns(requestParameters.suite, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

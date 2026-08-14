@@ -33,7 +33,7 @@ export const CompletionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Completions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCompletions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/completions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const CompletionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Completions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Completions(options);
+        async postCompletions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompletions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompletionsApi.postV1Completions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompletionsApi.postCompletions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const CompletionsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Completions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Completions(options).then((request) => request(axios, basePath));
+        postCompletions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCompletions(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class CompletionsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CompletionsApi
      */
-    public postV1Completions(options?: RawAxiosRequestConfig) {
-        return CompletionsApiFp(this.configuration).postV1Completions(options).then((request) => request(this.axios, this.basePath));
+    public postCompletions(options?: RawAxiosRequestConfig) {
+        return CompletionsApiFp(this.configuration).postCompletions(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

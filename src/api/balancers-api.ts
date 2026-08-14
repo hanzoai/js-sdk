@@ -40,9 +40,9 @@ export const BalancersApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1BalancersById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteBalancersById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1BalancersById', 'id', id)
+            assertParamExists('deleteBalancersById', 'id', id)
             const localVarPath = `/v1/balancers/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -73,7 +73,7 @@ export const BalancersApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Balancers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBalancers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/balancers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -104,9 +104,9 @@ export const BalancersApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BalancersById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBalancersById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1BalancersById', 'id', id)
+            assertParamExists('getBalancersById', 'id', id)
             const localVarPath = `/v1/balancers/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -138,9 +138,9 @@ export const BalancersApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Balancers: async (createLBReq: CreateLBReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postBalancers: async (createLBReq: CreateLBReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createLBReq' is not null or undefined
-            assertParamExists('postV1Balancers', 'createLBReq', createLBReq)
+            assertParamExists('postBalancers', 'createLBReq', createLBReq)
             const localVarPath = `/v1/balancers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -184,10 +184,10 @@ export const BalancersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1BalancersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1BalancersById(id, options);
+        async deleteBalancersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteBalancersById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BalancersApi.deleteV1BalancersById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BalancersApi.deleteBalancersById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -196,10 +196,10 @@ export const BalancersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Balancers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LbList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Balancers(options);
+        async getBalancers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LbList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBalancers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BalancersApi.getV1Balancers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BalancersApi.getBalancers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -209,10 +209,10 @@ export const BalancersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1BalancersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LbView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BalancersById(id, options);
+        async getBalancersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LbView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBalancersById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BalancersApi.getV1BalancersById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BalancersApi.getBalancersById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -222,10 +222,10 @@ export const BalancersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Balancers(createLBReq: CreateLBReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LbView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Balancers(createLBReq, options);
+        async postBalancers(createLBReq: CreateLBReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LbView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBalancers(createLBReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BalancersApi.postV1Balancers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BalancersApi.postBalancers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -241,12 +241,12 @@ export const BalancersApiFactory = function (configuration?: Configuration, base
         /**
          * Removes one of the caller org\'s load balancers and answers 204. Ownership is confirmed by re-fetching the resource before anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s load balancer.
          * @summary Removes one of the caller org\'s load balancers and answers 204.
-         * @param {BalancersApiDeleteV1BalancersByIdRequest} requestParameters Request parameters.
+         * @param {BalancersApiDeleteBalancersByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1BalancersById(requestParameters: BalancersApiDeleteV1BalancersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1BalancersById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteBalancersById(requestParameters: BalancersApiDeleteBalancersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteBalancersById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every load balancer the caller\'s org owns, under the friendly names the org created them with. Same account-wide filter as the VPC listing: a load balancer outside the caller\'s \"o\"<orgHash>- namespace is never in the answer.
@@ -254,70 +254,70 @@ export const BalancersApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Balancers(options?: RawAxiosRequestConfig): AxiosPromise<LbList> {
-            return localVarFp.getV1Balancers(options).then((request) => request(axios, basePath));
+        getBalancers(options?: RawAxiosRequestConfig): AxiosPromise<LbList> {
+            return localVarFp.getBalancers(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the caller org\'s load balancers by id. One that exists in another org\'s namespace is reported 404, never 403 — the same existence-oracle guard the VPC read applies.
          * @summary Returns one of the caller org\'s load balancers by id.
-         * @param {BalancersApiGetV1BalancersByIdRequest} requestParameters Request parameters.
+         * @param {BalancersApiGetBalancersByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BalancersById(requestParameters: BalancersApiGetV1BalancersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LbView> {
-            return localVarFp.getV1BalancersById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getBalancersById(requestParameters: BalancersApiGetBalancersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LbView> {
+            return localVarFp.getBalancersById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a load balancer in the caller\'s org namespace and answers 201 with it. The physical DigitalOcean name is derived server-side from the validated org; a name that already exists there is a 409. Omitting forwarding rules yields a usable HTTP 80→80 load balancer rather than a 422.
          * @summary Creates a load balancer in the caller\'s org namespace and answers 201 with it.
-         * @param {BalancersApiPostV1BalancersRequest} requestParameters Request parameters.
+         * @param {BalancersApiPostBalancersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Balancers(requestParameters: BalancersApiPostV1BalancersRequest, options?: RawAxiosRequestConfig): AxiosPromise<LbView> {
-            return localVarFp.postV1Balancers(requestParameters.createLBReq, options).then((request) => request(axios, basePath));
+        postBalancers(requestParameters: BalancersApiPostBalancersRequest, options?: RawAxiosRequestConfig): AxiosPromise<LbView> {
+            return localVarFp.postBalancers(requestParameters.createLBReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1BalancersById operation in BalancersApi.
+ * Request parameters for deleteBalancersById operation in BalancersApi.
  * @export
- * @interface BalancersApiDeleteV1BalancersByIdRequest
+ * @interface BalancersApiDeleteBalancersByIdRequest
  */
-export interface BalancersApiDeleteV1BalancersByIdRequest {
+export interface BalancersApiDeleteBalancersByIdRequest {
     /**
      * ID is the DigitalOcean resource id (a UUID), from the path.
      * @type {string}
-     * @memberof BalancersApiDeleteV1BalancersById
+     * @memberof BalancersApiDeleteBalancersById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1BalancersById operation in BalancersApi.
+ * Request parameters for getBalancersById operation in BalancersApi.
  * @export
- * @interface BalancersApiGetV1BalancersByIdRequest
+ * @interface BalancersApiGetBalancersByIdRequest
  */
-export interface BalancersApiGetV1BalancersByIdRequest {
+export interface BalancersApiGetBalancersByIdRequest {
     /**
      * ID is the DigitalOcean resource id (a UUID), from the path.
      * @type {string}
-     * @memberof BalancersApiGetV1BalancersById
+     * @memberof BalancersApiGetBalancersById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1Balancers operation in BalancersApi.
+ * Request parameters for postBalancers operation in BalancersApi.
  * @export
- * @interface BalancersApiPostV1BalancersRequest
+ * @interface BalancersApiPostBalancersRequest
  */
-export interface BalancersApiPostV1BalancersRequest {
+export interface BalancersApiPostBalancersRequest {
     /**
      * 
      * @type {CreateLBReq}
-     * @memberof BalancersApiPostV1Balancers
+     * @memberof BalancersApiPostBalancers
      */
     readonly createLBReq: CreateLBReq
 }
@@ -332,13 +332,13 @@ export class BalancersApi extends BaseAPI {
     /**
      * Removes one of the caller org\'s load balancers and answers 204. Ownership is confirmed by re-fetching the resource before anything is deleted, so a cross-tenant id is a 404 rather than a delete of another org\'s load balancer.
      * @summary Removes one of the caller org\'s load balancers and answers 204.
-     * @param {BalancersApiDeleteV1BalancersByIdRequest} requestParameters Request parameters.
+     * @param {BalancersApiDeleteBalancersByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BalancersApi
      */
-    public deleteV1BalancersById(requestParameters: BalancersApiDeleteV1BalancersByIdRequest, options?: RawAxiosRequestConfig) {
-        return BalancersApiFp(this.configuration).deleteV1BalancersById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteBalancersById(requestParameters: BalancersApiDeleteBalancersByIdRequest, options?: RawAxiosRequestConfig) {
+        return BalancersApiFp(this.configuration).deleteBalancersById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -348,32 +348,32 @@ export class BalancersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BalancersApi
      */
-    public getV1Balancers(options?: RawAxiosRequestConfig) {
-        return BalancersApiFp(this.configuration).getV1Balancers(options).then((request) => request(this.axios, this.basePath));
+    public getBalancers(options?: RawAxiosRequestConfig) {
+        return BalancersApiFp(this.configuration).getBalancers(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one of the caller org\'s load balancers by id. One that exists in another org\'s namespace is reported 404, never 403 — the same existence-oracle guard the VPC read applies.
      * @summary Returns one of the caller org\'s load balancers by id.
-     * @param {BalancersApiGetV1BalancersByIdRequest} requestParameters Request parameters.
+     * @param {BalancersApiGetBalancersByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BalancersApi
      */
-    public getV1BalancersById(requestParameters: BalancersApiGetV1BalancersByIdRequest, options?: RawAxiosRequestConfig) {
-        return BalancersApiFp(this.configuration).getV1BalancersById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getBalancersById(requestParameters: BalancersApiGetBalancersByIdRequest, options?: RawAxiosRequestConfig) {
+        return BalancersApiFp(this.configuration).getBalancersById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a load balancer in the caller\'s org namespace and answers 201 with it. The physical DigitalOcean name is derived server-side from the validated org; a name that already exists there is a 409. Omitting forwarding rules yields a usable HTTP 80→80 load balancer rather than a 422.
      * @summary Creates a load balancer in the caller\'s org namespace and answers 201 with it.
-     * @param {BalancersApiPostV1BalancersRequest} requestParameters Request parameters.
+     * @param {BalancersApiPostBalancersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BalancersApi
      */
-    public postV1Balancers(requestParameters: BalancersApiPostV1BalancersRequest, options?: RawAxiosRequestConfig) {
-        return BalancersApiFp(this.configuration).postV1Balancers(requestParameters.createLBReq, options).then((request) => request(this.axios, this.basePath));
+    public postBalancers(requestParameters: BalancersApiPostBalancersRequest, options?: RawAxiosRequestConfig) {
+        return BalancersApiFp(this.configuration).postBalancers(requestParameters.createLBReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

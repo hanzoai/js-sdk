@@ -33,7 +33,7 @@ export const QueryApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Query: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postQuery: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/query`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const QueryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Query(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Query(options);
+        async postQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postQuery(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['QueryApi.postV1Query']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['QueryApi.postQuery']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const QueryApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Query(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Query(options).then((request) => request(axios, basePath));
+        postQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postQuery(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class QueryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof QueryApi
      */
-    public postV1Query(options?: RawAxiosRequestConfig) {
-        return QueryApiFp(this.configuration).postV1Query(options).then((request) => request(this.axios, this.basePath));
+    public postQuery(options?: RawAxiosRequestConfig) {
+        return QueryApiFp(this.configuration).postQuery(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

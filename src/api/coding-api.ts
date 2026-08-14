@@ -32,15 +32,15 @@ import type { CodingStarted } from '../models';
 export const CodingApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Is the app\'s door. It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {CodingStartIn} codingStartIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Coding: async (codingStartIn: CodingStartIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCoding: async (codingStartIn: CodingStartIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'codingStartIn' is not null or undefined
-            assertParamExists('postV1Coding', 'codingStartIn', codingStartIn)
+            assertParamExists('postCoding', 'codingStartIn', codingStartIn)
             const localVarPath = `/v1/coding`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -78,16 +78,16 @@ export const CodingApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CodingApiAxiosParamCreator(configuration)
     return {
         /**
-         * Is the app\'s door. It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {CodingStartIn} codingStartIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Coding(codingStartIn: CodingStartIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodingStarted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Coding(codingStartIn, options);
+        async postCoding(codingStartIn: CodingStartIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodingStarted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCoding(codingStartIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodingApi.postV1Coding']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodingApi.postCoding']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -101,28 +101,28 @@ export const CodingApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = CodingApiFp(configuration)
     return {
         /**
-         * Is the app\'s door. It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
-         * @param {CodingApiPostV1CodingRequest} requestParameters Request parameters.
+         * @param {CodingApiPostCodingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Coding(requestParameters: CodingApiPostV1CodingRequest, options?: RawAxiosRequestConfig): AxiosPromise<CodingStarted> {
-            return localVarFp.postV1Coding(requestParameters.codingStartIn, options).then((request) => request(axios, basePath));
+        postCoding(requestParameters: CodingApiPostCodingRequest, options?: RawAxiosRequestConfig): AxiosPromise<CodingStarted> {
+            return localVarFp.postCoding(requestParameters.codingStartIn, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for postV1Coding operation in CodingApi.
+ * Request parameters for postCoding operation in CodingApi.
  * @export
- * @interface CodingApiPostV1CodingRequest
+ * @interface CodingApiPostCodingRequest
  */
-export interface CodingApiPostV1CodingRequest {
+export interface CodingApiPostCodingRequest {
     /**
      * 
      * @type {CodingStartIn}
-     * @memberof CodingApiPostV1Coding
+     * @memberof CodingApiPostCoding
      */
     readonly codingStartIn: CodingStartIn
 }
@@ -135,15 +135,15 @@ export interface CodingApiPostV1CodingRequest {
  */
 export class CodingApi extends BaseAPI {
     /**
-     * Is the app\'s door. It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.
+     * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
      * @summary Start one autonomous coding run against a repo in the caller\'s org
-     * @param {CodingApiPostV1CodingRequest} requestParameters Request parameters.
+     * @param {CodingApiPostCodingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodingApi
      */
-    public postV1Coding(requestParameters: CodingApiPostV1CodingRequest, options?: RawAxiosRequestConfig) {
-        return CodingApiFp(this.configuration).postV1Coding(requestParameters.codingStartIn, options).then((request) => request(this.axios, this.basePath));
+    public postCoding(requestParameters: CodingApiPostCodingRequest, options?: RawAxiosRequestConfig) {
+        return CodingApiFp(this.configuration).postCoding(requestParameters.codingStartIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

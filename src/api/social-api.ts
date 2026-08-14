@@ -34,9 +34,9 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SocialAccountsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteSocialAccountsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1SocialAccountsById', 'id', id)
+            assertParamExists('deleteSocialAccountsById', 'id', id)
             const localVarPath = `/v1/social/accounts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -68,9 +68,9 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SocialPostsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteSocialPostsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1SocialPostsById', 'id', id)
+            assertParamExists('deleteSocialPostsById', 'id', id)
             const localVarPath = `/v1/social/posts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -101,7 +101,7 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSocialAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/social/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -132,9 +132,9 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialAccountsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSocialAccountsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SocialAccountsById', 'id', id)
+            assertParamExists('getSocialAccountsById', 'id', id)
             const localVarPath = `/v1/social/accounts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -165,7 +165,7 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialPosts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSocialPosts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/social/posts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -196,9 +196,9 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialPostsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSocialPostsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SocialPostsById', 'id', id)
+            assertParamExists('getSocialPostsById', 'id', id)
             const localVarPath = `/v1/social/posts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -229,7 +229,7 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSocialProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/social/providers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -259,7 +259,7 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSocialSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/social/summary`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -289,7 +289,7 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SocialAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSocialAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/social/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -319,7 +319,7 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SocialPosts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSocialPosts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/social/posts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -350,9 +350,9 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SocialPostsByIdPublish: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSocialPostsByIdPublish: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1SocialPostsByIdPublish', 'id', id)
+            assertParamExists('postSocialPostsByIdPublish', 'id', id)
             const localVarPath = `/v1/social/posts/{id}/publish`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -384,9 +384,9 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1SocialAccountsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putSocialAccountsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1SocialAccountsById', 'id', id)
+            assertParamExists('putSocialAccountsById', 'id', id)
             const localVarPath = `/v1/social/accounts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -418,9 +418,9 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1SocialPostsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putSocialPostsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1SocialPostsById', 'id', id)
+            assertParamExists('putSocialPostsById', 'id', id)
             const localVarPath = `/v1/social/posts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -462,10 +462,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1SocialAccountsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SocialAccountsById(id, options);
+        async deleteSocialAccountsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSocialAccountsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.deleteV1SocialAccountsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.deleteSocialAccountsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -475,10 +475,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1SocialPostsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SocialPostsById(id, options);
+        async deleteSocialPostsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSocialPostsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.deleteV1SocialPostsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.deleteSocialPostsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -487,10 +487,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SocialAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SocialAccounts(options);
+        async getSocialAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialAccounts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.getV1SocialAccounts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -500,10 +500,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SocialAccountsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SocialAccountsById(id, options);
+        async getSocialAccountsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialAccountsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.getV1SocialAccountsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialAccountsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -512,10 +512,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SocialPosts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SocialPosts(options);
+        async getSocialPosts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialPosts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.getV1SocialPosts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialPosts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -525,10 +525,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SocialPostsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SocialPostsById(id, options);
+        async getSocialPostsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialPostsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.getV1SocialPostsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialPostsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -537,10 +537,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SocialProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SocialProviders(options);
+        async getSocialProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.getV1SocialProviders']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialProviders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -549,10 +549,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SocialSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SocialSummary(options);
+        async getSocialSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.getV1SocialSummary']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialSummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -561,10 +561,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1SocialAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SocialAccounts(options);
+        async postSocialAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialAccounts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.postV1SocialAccounts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.postSocialAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -573,10 +573,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1SocialPosts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SocialPosts(options);
+        async postSocialPosts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialPosts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.postV1SocialPosts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.postSocialPosts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -586,10 +586,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1SocialPostsByIdPublish(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SocialPostsByIdPublish(id, options);
+        async postSocialPostsByIdPublish(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialPostsByIdPublish(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.postV1SocialPostsByIdPublish']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.postSocialPostsByIdPublish']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -599,10 +599,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1SocialAccountsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1SocialAccountsById(id, options);
+        async putSocialAccountsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialAccountsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.putV1SocialAccountsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.putSocialAccountsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -612,10 +612,10 @@ export const SocialApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1SocialPostsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1SocialPostsById(id, options);
+        async putSocialPostsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialPostsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SocialApi.putV1SocialPostsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SocialApi.putSocialPostsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -631,22 +631,22 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
         /**
          * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
          * @summary Disconnect one account
-         * @param {SocialApiDeleteV1SocialAccountsByIdRequest} requestParameters Request parameters.
+         * @param {SocialApiDeleteSocialAccountsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SocialAccountsById(requestParameters: SocialApiDeleteV1SocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1SocialAccountsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteSocialAccountsById(requestParameters: SocialApiDeleteSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteSocialAccountsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one post from the org and answers 204 with no body; an id that is not there is 404.  It deletes the record here only. A post that has already published is not retracted from the network by deleting it.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
          * @summary Delete one post
-         * @param {SocialApiDeleteV1SocialPostsByIdRequest} requestParameters Request parameters.
+         * @param {SocialApiDeleteSocialPostsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SocialPostsById(requestParameters: SocialApiDeleteV1SocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1SocialPostsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteSocialPostsById(requestParameters: SocialApiDeleteSocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteSocialPostsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps. `provider` filters to one network; `limit` bounds the page, defaulting to 200 and capped at 1000.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
@@ -654,18 +654,18 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialAccounts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1SocialAccounts(options).then((request) => request(axios, basePath));
+        getSocialAccounts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSocialAccounts(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404. The provider access token is not part of the response.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
          * @summary Read one connected account
-         * @param {SocialApiGetV1SocialAccountsByIdRequest} requestParameters Request parameters.
+         * @param {SocialApiGetSocialAccountsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialAccountsById(requestParameters: SocialApiGetV1SocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1SocialAccountsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getSocialAccountsById(requestParameters: SocialApiGetSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSocialAccountsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps. `status` filters to one of draft, scheduled, published or failed; `limit` bounds the page, defaulting to 200 and capped at 1000.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
@@ -673,18 +673,18 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialPosts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1SocialPosts(options).then((request) => request(axios, basePath));
+        getSocialPosts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSocialPosts(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under. 404 when there is no such post for this org.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
          * @summary Read one post
-         * @param {SocialApiGetV1SocialPostsByIdRequest} requestParameters Request parameters.
+         * @param {SocialApiGetSocialPostsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialPostsById(requestParameters: SocialApiGetV1SocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1SocialPostsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getSocialPostsById(requestParameters: SocialApiGetSocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSocialPostsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.  This is a live read of the deployment\'s own configuration, not a static list of networks — it answers \"can I connect this today\", which is what a connect affordance and a pre-cutover checklist both need. It says nothing about whether the caller has connected an account; that is the accounts listing.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
@@ -692,8 +692,8 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1SocialProviders(options).then((request) => request(axios, basePath));
+        getSocialProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSocialProviders(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected. It is the dashboard roll-up, computed over the org\'s own rows in one read.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
@@ -701,8 +701,8 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SocialSummary(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1SocialSummary(options).then((request) => request(axios, basePath));
+        getSocialSummary(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSocialSummary(options).then((request) => request(axios, basePath));
         },
         /**
          * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.  `provider` must be one of x, facebook, instagram, linkedin, tiktok, youtube or threads, defaulting to x when omitted. `status` is one of connected, disconnected or error, defaulting to connected. The handle is trimmed and bounded at 1024 characters.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
@@ -710,8 +710,8 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SocialAccounts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1SocialAccounts(options).then((request) => request(axios, basePath));
+        postSocialAccounts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSocialAccounts(options).then((request) => request(axios, basePath));
         },
         /**
          * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.  `content` is required and bounded at 8192 characters; `channel` is one of the seven supported networks, defaulting to x; `status` is one of draft, scheduled, published or failed, defaulting to draft; up to 10 media URLs are kept, each bounded at 1024 characters.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
@@ -719,136 +719,136 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SocialPosts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1SocialPosts(options).then((request) => request(axios, basePath));
+        postSocialPosts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSocialPosts(options).then((request) => request(axios, basePath));
         },
         /**
          * Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.  It is IDEMPOTENT: a post that has already published, or that another caller is publishing right now, comes back unchanged rather than being posted twice. That claim is taken before any network call, which is what makes a double submit safe.  The two failure shapes differ on purpose. Having no connected account for the channel is the caller\'s to fix, so it is recorded ON the post as failed with the reason and answers normally. A deployment that lacks the network\'s own credentials cannot publish for anyone, so that is a 503 naming exactly what is missing.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
          * @summary Publish one post now
-         * @param {SocialApiPostV1SocialPostsByIdPublishRequest} requestParameters Request parameters.
+         * @param {SocialApiPostSocialPostsByIdPublishRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SocialPostsByIdPublish(requestParameters: SocialApiPostV1SocialPostsByIdPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1SocialPostsByIdPublish(requestParameters.id, options).then((request) => request(axios, basePath));
+        postSocialPostsByIdPublish(requestParameters: SocialApiPostSocialPostsByIdPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSocialPostsByIdPublish(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
          * @summary Replace one connected account
-         * @param {SocialApiPutV1SocialAccountsByIdRequest} requestParameters Request parameters.
+         * @param {SocialApiPutSocialAccountsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1SocialAccountsById(requestParameters: SocialApiPutV1SocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1SocialAccountsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        putSocialAccountsById(requestParameters: SocialApiPutSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putSocialAccountsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
          * @summary Replace one post
-         * @param {SocialApiPutV1SocialPostsByIdRequest} requestParameters Request parameters.
+         * @param {SocialApiPutSocialPostsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1SocialPostsById(requestParameters: SocialApiPutV1SocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1SocialPostsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        putSocialPostsById(requestParameters: SocialApiPutSocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putSocialPostsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1SocialAccountsById operation in SocialApi.
+ * Request parameters for deleteSocialAccountsById operation in SocialApi.
  * @export
- * @interface SocialApiDeleteV1SocialAccountsByIdRequest
+ * @interface SocialApiDeleteSocialAccountsByIdRequest
  */
-export interface SocialApiDeleteV1SocialAccountsByIdRequest {
+export interface SocialApiDeleteSocialAccountsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof SocialApiDeleteV1SocialAccountsById
+     * @memberof SocialApiDeleteSocialAccountsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1SocialPostsById operation in SocialApi.
+ * Request parameters for deleteSocialPostsById operation in SocialApi.
  * @export
- * @interface SocialApiDeleteV1SocialPostsByIdRequest
+ * @interface SocialApiDeleteSocialPostsByIdRequest
  */
-export interface SocialApiDeleteV1SocialPostsByIdRequest {
+export interface SocialApiDeleteSocialPostsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof SocialApiDeleteV1SocialPostsById
+     * @memberof SocialApiDeleteSocialPostsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1SocialAccountsById operation in SocialApi.
+ * Request parameters for getSocialAccountsById operation in SocialApi.
  * @export
- * @interface SocialApiGetV1SocialAccountsByIdRequest
+ * @interface SocialApiGetSocialAccountsByIdRequest
  */
-export interface SocialApiGetV1SocialAccountsByIdRequest {
+export interface SocialApiGetSocialAccountsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof SocialApiGetV1SocialAccountsById
+     * @memberof SocialApiGetSocialAccountsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1SocialPostsById operation in SocialApi.
+ * Request parameters for getSocialPostsById operation in SocialApi.
  * @export
- * @interface SocialApiGetV1SocialPostsByIdRequest
+ * @interface SocialApiGetSocialPostsByIdRequest
  */
-export interface SocialApiGetV1SocialPostsByIdRequest {
+export interface SocialApiGetSocialPostsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof SocialApiGetV1SocialPostsById
+     * @memberof SocialApiGetSocialPostsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1SocialPostsByIdPublish operation in SocialApi.
+ * Request parameters for postSocialPostsByIdPublish operation in SocialApi.
  * @export
- * @interface SocialApiPostV1SocialPostsByIdPublishRequest
+ * @interface SocialApiPostSocialPostsByIdPublishRequest
  */
-export interface SocialApiPostV1SocialPostsByIdPublishRequest {
+export interface SocialApiPostSocialPostsByIdPublishRequest {
     /**
      * 
      * @type {string}
-     * @memberof SocialApiPostV1SocialPostsByIdPublish
+     * @memberof SocialApiPostSocialPostsByIdPublish
      */
     readonly id: string
 }
 
 /**
- * Request parameters for putV1SocialAccountsById operation in SocialApi.
+ * Request parameters for putSocialAccountsById operation in SocialApi.
  * @export
- * @interface SocialApiPutV1SocialAccountsByIdRequest
+ * @interface SocialApiPutSocialAccountsByIdRequest
  */
-export interface SocialApiPutV1SocialAccountsByIdRequest {
+export interface SocialApiPutSocialAccountsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof SocialApiPutV1SocialAccountsById
+     * @memberof SocialApiPutSocialAccountsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for putV1SocialPostsById operation in SocialApi.
+ * Request parameters for putSocialPostsById operation in SocialApi.
  * @export
- * @interface SocialApiPutV1SocialPostsByIdRequest
+ * @interface SocialApiPutSocialPostsByIdRequest
  */
-export interface SocialApiPutV1SocialPostsByIdRequest {
+export interface SocialApiPutSocialPostsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof SocialApiPutV1SocialPostsById
+     * @memberof SocialApiPutSocialPostsById
      */
     readonly id: string
 }
@@ -863,25 +863,25 @@ export class SocialApi extends BaseAPI {
     /**
      * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
      * @summary Disconnect one account
-     * @param {SocialApiDeleteV1SocialAccountsByIdRequest} requestParameters Request parameters.
+     * @param {SocialApiDeleteSocialAccountsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public deleteV1SocialAccountsById(requestParameters: SocialApiDeleteV1SocialAccountsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).deleteV1SocialAccountsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteSocialAccountsById(requestParameters: SocialApiDeleteSocialAccountsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).deleteSocialAccountsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one post from the org and answers 204 with no body; an id that is not there is 404.  It deletes the record here only. A post that has already published is not retracted from the network by deleting it.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
      * @summary Delete one post
-     * @param {SocialApiDeleteV1SocialPostsByIdRequest} requestParameters Request parameters.
+     * @param {SocialApiDeleteSocialPostsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public deleteV1SocialPostsById(requestParameters: SocialApiDeleteV1SocialPostsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).deleteV1SocialPostsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteSocialPostsById(requestParameters: SocialApiDeleteSocialPostsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).deleteSocialPostsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -891,20 +891,20 @@ export class SocialApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public getV1SocialAccounts(options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).getV1SocialAccounts(options).then((request) => request(this.axios, this.basePath));
+    public getSocialAccounts(options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getSocialAccounts(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404. The provider access token is not part of the response.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
      * @summary Read one connected account
-     * @param {SocialApiGetV1SocialAccountsByIdRequest} requestParameters Request parameters.
+     * @param {SocialApiGetSocialAccountsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public getV1SocialAccountsById(requestParameters: SocialApiGetV1SocialAccountsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).getV1SocialAccountsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getSocialAccountsById(requestParameters: SocialApiGetSocialAccountsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getSocialAccountsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -914,20 +914,20 @@ export class SocialApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public getV1SocialPosts(options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).getV1SocialPosts(options).then((request) => request(this.axios, this.basePath));
+    public getSocialPosts(options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getSocialPosts(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under. 404 when there is no such post for this org.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
      * @summary Read one post
-     * @param {SocialApiGetV1SocialPostsByIdRequest} requestParameters Request parameters.
+     * @param {SocialApiGetSocialPostsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public getV1SocialPostsById(requestParameters: SocialApiGetV1SocialPostsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).getV1SocialPostsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getSocialPostsById(requestParameters: SocialApiGetSocialPostsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getSocialPostsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -937,8 +937,8 @@ export class SocialApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public getV1SocialProviders(options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).getV1SocialProviders(options).then((request) => request(this.axios, this.basePath));
+    public getSocialProviders(options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getSocialProviders(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -948,8 +948,8 @@ export class SocialApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public getV1SocialSummary(options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).getV1SocialSummary(options).then((request) => request(this.axios, this.basePath));
+    public getSocialSummary(options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getSocialSummary(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -959,8 +959,8 @@ export class SocialApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public postV1SocialAccounts(options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).postV1SocialAccounts(options).then((request) => request(this.axios, this.basePath));
+    public postSocialAccounts(options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).postSocialAccounts(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -970,44 +970,44 @@ export class SocialApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public postV1SocialPosts(options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).postV1SocialPosts(options).then((request) => request(this.axios, this.basePath));
+    public postSocialPosts(options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).postSocialPosts(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.  It is IDEMPOTENT: a post that has already published, or that another caller is publishing right now, comes back unchanged rather than being posted twice. That claim is taken before any network call, which is what makes a double submit safe.  The two failure shapes differ on purpose. Having no connected account for the channel is the caller\'s to fix, so it is recorded ON the post as failed with the reason and answers normally. A deployment that lacks the network\'s own credentials cannot publish for anyone, so that is a 503 naming exactly what is missing.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
      * @summary Publish one post now
-     * @param {SocialApiPostV1SocialPostsByIdPublishRequest} requestParameters Request parameters.
+     * @param {SocialApiPostSocialPostsByIdPublishRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public postV1SocialPostsByIdPublish(requestParameters: SocialApiPostV1SocialPostsByIdPublishRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).postV1SocialPostsByIdPublish(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postSocialPostsByIdPublish(requestParameters: SocialApiPostSocialPostsByIdPublishRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).postSocialPostsByIdPublish(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
      * @summary Replace one connected account
-     * @param {SocialApiPutV1SocialAccountsByIdRequest} requestParameters Request parameters.
+     * @param {SocialApiPutSocialAccountsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public putV1SocialAccountsById(requestParameters: SocialApiPutV1SocialAccountsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).putV1SocialAccountsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public putSocialAccountsById(requestParameters: SocialApiPutSocialAccountsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).putSocialAccountsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
      * @summary Replace one post
-     * @param {SocialApiPutV1SocialPostsByIdRequest} requestParameters Request parameters.
+     * @param {SocialApiPutSocialPostsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public putV1SocialPostsById(requestParameters: SocialApiPutV1SocialPostsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).putV1SocialPostsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public putSocialPostsById(requestParameters: SocialApiPutSocialPostsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).putSocialPostsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

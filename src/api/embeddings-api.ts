@@ -33,7 +33,7 @@ export const EmbeddingsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Embeddings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEmbeddings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/embeddings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const EmbeddingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Embeddings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Embeddings(options);
+        async postEmbeddings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEmbeddings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EmbeddingsApi.postV1Embeddings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EmbeddingsApi.postEmbeddings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const EmbeddingsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Embeddings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Embeddings(options).then((request) => request(axios, basePath));
+        postEmbeddings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postEmbeddings(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class EmbeddingsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EmbeddingsApi
      */
-    public postV1Embeddings(options?: RawAxiosRequestConfig) {
-        return EmbeddingsApiFp(this.configuration).postV1Embeddings(options).then((request) => request(this.axios, this.basePath));
+    public postEmbeddings(options?: RawAxiosRequestConfig) {
+        return EmbeddingsApiFp(this.configuration).postEmbeddings(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

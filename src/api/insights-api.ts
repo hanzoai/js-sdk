@@ -38,7 +38,7 @@ export const InsightsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1InsightsEvents: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getInsightsEvents: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/insights/events`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -72,7 +72,7 @@ export const InsightsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1InsightsHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getInsightsHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/insights/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -113,10 +113,10 @@ export const InsightsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1InsightsEvents(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1InsightsEvents(limit, options);
+        async getInsightsEvents(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EventList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getInsightsEvents(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['InsightsApi.getV1InsightsEvents']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['InsightsApi.getInsightsEvents']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -125,10 +125,10 @@ export const InsightsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1InsightsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InsightsStatus>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1InsightsHealth(options);
+        async getInsightsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InsightsStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getInsightsHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['InsightsApi.getV1InsightsHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['InsightsApi.getInsightsHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -144,12 +144,12 @@ export const InsightsApiFactory = function (configuration?: Configuration, baseP
         /**
          * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture doors fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
          * @summary Returns the caller org\'s most recent product events, newest first.
-         * @param {InsightsApiGetV1InsightsEventsRequest} requestParameters Request parameters.
+         * @param {InsightsApiGetInsightsEventsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1InsightsEvents(requestParameters: InsightsApiGetV1InsightsEventsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventList> {
-            return localVarFp.getV1InsightsEvents(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getInsightsEvents(requestParameters: InsightsApiGetInsightsEventsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EventList> {
+            return localVarFp.getInsightsEvents(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports that the unified insights surface is serving. It reads no tenant data and consults no dependency, so it answers 200 unconditionally and needs no principal — liveness must be probe-able. The warehouse-connectivity probe is a different question and lives at GET /v1/analytics/health.
@@ -157,22 +157,22 @@ export const InsightsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1InsightsHealth(options?: RawAxiosRequestConfig): AxiosPromise<InsightsStatus> {
-            return localVarFp.getV1InsightsHealth(options).then((request) => request(axios, basePath));
+        getInsightsHealth(options?: RawAxiosRequestConfig): AxiosPromise<InsightsStatus> {
+            return localVarFp.getInsightsHealth(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1InsightsEvents operation in InsightsApi.
+ * Request parameters for getInsightsEvents operation in InsightsApi.
  * @export
- * @interface InsightsApiGetV1InsightsEventsRequest
+ * @interface InsightsApiGetInsightsEventsRequest
  */
-export interface InsightsApiGetV1InsightsEventsRequest {
+export interface InsightsApiGetInsightsEventsRequest {
     /**
      * Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
      * @type {number}
-     * @memberof InsightsApiGetV1InsightsEvents
+     * @memberof InsightsApiGetInsightsEvents
      */
     readonly limit?: number
 }
@@ -187,13 +187,13 @@ export class InsightsApi extends BaseAPI {
     /**
      * Returns the caller org\'s most recent product events, newest first. The console\'s raw-event view over event.event — the same table the capture doors fill — one row per stored event, with the row\'s attributes returned as the properties object.  The org is the validated principal\'s — never a parameter — and a read requires a real bearer, never the write-only publishable key. 403 without a validated bearer, 503 when the warehouse is unreachable.
      * @summary Returns the caller org\'s most recent product events, newest first.
-     * @param {InsightsApiGetV1InsightsEventsRequest} requestParameters Request parameters.
+     * @param {InsightsApiGetInsightsEventsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof InsightsApi
      */
-    public getV1InsightsEvents(requestParameters: InsightsApiGetV1InsightsEventsRequest = {}, options?: RawAxiosRequestConfig) {
-        return InsightsApiFp(this.configuration).getV1InsightsEvents(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getInsightsEvents(requestParameters: InsightsApiGetInsightsEventsRequest = {}, options?: RawAxiosRequestConfig) {
+        return InsightsApiFp(this.configuration).getInsightsEvents(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -203,8 +203,8 @@ export class InsightsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InsightsApi
      */
-    public getV1InsightsHealth(options?: RawAxiosRequestConfig) {
-        return InsightsApiFp(this.configuration).getV1InsightsHealth(options).then((request) => request(this.axios, this.basePath));
+    public getInsightsHealth(options?: RawAxiosRequestConfig) {
+        return InsightsApiFp(this.configuration).getInsightsHealth(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

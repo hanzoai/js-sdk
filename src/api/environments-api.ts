@@ -35,7 +35,7 @@ export const EnvironmentsApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Environments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEnvironments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/environments`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const EnvironmentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Environments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentBoard>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Environments(options);
+        async getEnvironments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EnvironmentsApi.getV1Environments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EnvironmentsApi.getEnvironments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const EnvironmentsApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Environments(options?: RawAxiosRequestConfig): AxiosPromise<EnvironmentBoard> {
-            return localVarFp.getV1Environments(options).then((request) => request(axios, basePath));
+        getEnvironments(options?: RawAxiosRequestConfig): AxiosPromise<EnvironmentBoard> {
+            return localVarFp.getEnvironments(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class EnvironmentsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EnvironmentsApi
      */
-    public getV1Environments(options?: RawAxiosRequestConfig) {
-        return EnvironmentsApiFp(this.configuration).getV1Environments(options).then((request) => request(this.axios, this.basePath));
+    public getEnvironments(options?: RawAxiosRequestConfig) {
+        return EnvironmentsApiFp(this.configuration).getEnvironments(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

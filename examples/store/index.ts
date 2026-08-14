@@ -20,15 +20,15 @@ const name = `example-store-${Date.now()}`;
 async function main() {
   const kv = new KvApi(config());
 
-  await kv.postV1Kv({ provisionRequest: { name } });
+  await kv.postKv({ provisionRequest: { name } });
   console.log(`provisioned ${name}`);
 
   try {
-    const { data: store } = await kv.getV1KvByName({ name });
+    const { data: store } = await kv.getKvByName({ name });
     console.log(`read back: ${store.name} · ${store.kind} · status ${store.status}`);
     console.log(`  host ${store.host}:${store.port}`);
   } finally {
-    await kv.deleteV1KvByName({ name });
+    await kv.deleteKvByName({ name });
     console.log(`deleted ${name}`);
   }
 }

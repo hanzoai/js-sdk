@@ -44,7 +44,7 @@ export const AuditApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Audit: async (sub?: string, action?: string, resource?: string, resourceId?: string, result?: string, since?: string, until?: string, pageSize?: string, p?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAudit: async (sub?: string, action?: string, resource?: string, resourceId?: string, result?: string, since?: string, until?: string, pageSize?: string, p?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/audit`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -129,10 +129,10 @@ export const AuditApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Audit(sub?: string, action?: string, resource?: string, resourceId?: string, result?: string, since?: string, until?: string, pageSize?: string, p?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrailPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Audit(sub, action, resource, resourceId, result, since, until, pageSize, p, options);
+        async getAudit(sub?: string, action?: string, resource?: string, resourceId?: string, result?: string, since?: string, until?: string, pageSize?: string, p?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrailPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAudit(sub, action, resource, resourceId, result, since, until, pageSize, p, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuditApi.getV1Audit']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuditApi.getAudit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -148,82 +148,82 @@ export const AuditApiFactory = function (configuration?: Configuration, basePath
         /**
          * List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.  Every filter is optional and applies WITHIN the caller\'s org — the org itself is the validated principal\'s and can never be widened by a request. Fails closed: an absent principal is a true \"not signed in\" (401), and a deployment with no local tamper-evident store answers an honest 501 rather than silently serving somebody else\'s trail.
          * @summary List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.
-         * @param {AuditApiGetV1AuditRequest} requestParameters Request parameters.
+         * @param {AuditApiGetAuditRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Audit(requestParameters: AuditApiGetV1AuditRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TrailPage> {
-            return localVarFp.getV1Audit(requestParameters.sub, requestParameters.action, requestParameters.resource, requestParameters.resourceId, requestParameters.result, requestParameters.since, requestParameters.until, requestParameters.pageSize, requestParameters.p, options).then((request) => request(axios, basePath));
+        getAudit(requestParameters: AuditApiGetAuditRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<TrailPage> {
+            return localVarFp.getAudit(requestParameters.sub, requestParameters.action, requestParameters.resource, requestParameters.resourceId, requestParameters.result, requestParameters.since, requestParameters.until, requestParameters.pageSize, requestParameters.p, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1Audit operation in AuditApi.
+ * Request parameters for getAudit operation in AuditApi.
  * @export
- * @interface AuditApiGetV1AuditRequest
+ * @interface AuditApiGetAuditRequest
  */
-export interface AuditApiGetV1AuditRequest {
+export interface AuditApiGetAuditRequest {
     /**
      * Sub narrows the trail to one actor — the validated subject that made the request. Blank means every actor in the org.
      * @type {string}
-     * @memberof AuditApiGetV1Audit
+     * @memberof AuditApiGetAudit
      */
     readonly sub?: string
 
     /**
      * Action narrows it to one action name, e.g. \&quot;machine.create\&quot;.
      * @type {string}
-     * @memberof AuditApiGetV1Audit
+     * @memberof AuditApiGetAudit
      */
     readonly action?: string
 
     /**
      * Resource narrows it to one resource TYPE, e.g. \&quot;apikey\&quot;.
      * @type {string}
-     * @memberof AuditApiGetV1Audit
+     * @memberof AuditApiGetAudit
      */
     readonly resource?: string
 
     /**
      * ResourceID narrows it to one resource instance.
      * @type {string}
-     * @memberof AuditApiGetV1Audit
+     * @memberof AuditApiGetAudit
      */
     readonly resourceId?: string
 
     /**
      * Result narrows it to one outcome: \&quot;success\&quot;, \&quot;deny\&quot; or \&quot;error\&quot;.
      * @type {string}
-     * @memberof AuditApiGetV1Audit
+     * @memberof AuditApiGetAudit
      */
     readonly result?: string
 
     /**
      * Since is the inclusive lower time bound, RFC3339. An unparseable value is ignored rather than refused — one malformed filter must not hide the trail.
      * @type {string}
-     * @memberof AuditApiGetV1Audit
+     * @memberof AuditApiGetAudit
      */
     readonly since?: string
 
     /**
      * Until is the upper time bound, RFC3339, with the same tolerance.
      * @type {string}
-     * @memberof AuditApiGetV1Audit
+     * @memberof AuditApiGetAudit
      */
     readonly until?: string
 
     /**
      * PageSize is rows per page, default 100. A value that is not a positive integer falls back to the default.
      * @type {string}
-     * @memberof AuditApiGetV1Audit
+     * @memberof AuditApiGetAudit
      */
     readonly pageSize?: string
 
     /**
      * Page is the 1-based page number, driving the offset. Anything below 2 reads the first page.
      * @type {string}
-     * @memberof AuditApiGetV1Audit
+     * @memberof AuditApiGetAudit
      */
     readonly p?: string
 }
@@ -238,13 +238,13 @@ export class AuditApi extends BaseAPI {
     /**
      * List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.  Every filter is optional and applies WITHIN the caller\'s org — the org itself is the validated principal\'s and can never be widened by a request. Fails closed: an absent principal is a true \"not signed in\" (401), and a deployment with no local tamper-evident store answers an honest 501 rather than silently serving somebody else\'s trail.
      * @summary List reads the caller\'s OWN org audit trail, newest first, with the total the filter matched so a console can page it.
-     * @param {AuditApiGetV1AuditRequest} requestParameters Request parameters.
+     * @param {AuditApiGetAuditRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuditApi
      */
-    public getV1Audit(requestParameters: AuditApiGetV1AuditRequest = {}, options?: RawAxiosRequestConfig) {
-        return AuditApiFp(this.configuration).getV1Audit(requestParameters.sub, requestParameters.action, requestParameters.resource, requestParameters.resourceId, requestParameters.result, requestParameters.since, requestParameters.until, requestParameters.pageSize, requestParameters.p, options).then((request) => request(this.axios, this.basePath));
+    public getAudit(requestParameters: AuditApiGetAuditRequest = {}, options?: RawAxiosRequestConfig) {
+        return AuditApiFp(this.configuration).getAudit(requestParameters.sub, requestParameters.action, requestParameters.resource, requestParameters.resourceId, requestParameters.result, requestParameters.since, requestParameters.until, requestParameters.pageSize, requestParameters.p, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -38,9 +38,9 @@ export const SettingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SettingsByProduct: async (product: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSettingsByProduct: async (product: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'product' is not null or undefined
-            assertParamExists('getV1SettingsByProduct', 'product', product)
+            assertParamExists('getSettingsByProduct', 'product', product)
             const localVarPath = `/v1/settings/{product}`
                 .replace(`{${"product"}}`, encodeURIComponent(String(product)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -73,11 +73,11 @@ export const SettingsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1SettingsByProduct: async (product: string, settingsReq: SettingsReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putSettingsByProduct: async (product: string, settingsReq: SettingsReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'product' is not null or undefined
-            assertParamExists('putV1SettingsByProduct', 'product', product)
+            assertParamExists('putSettingsByProduct', 'product', product)
             // verify required parameter 'settingsReq' is not null or undefined
-            assertParamExists('putV1SettingsByProduct', 'settingsReq', settingsReq)
+            assertParamExists('putSettingsByProduct', 'settingsReq', settingsReq)
             const localVarPath = `/v1/settings/{product}`
                 .replace(`{${"product"}}`, encodeURIComponent(String(product)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -122,10 +122,10 @@ export const SettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SettingsByProduct(product: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SettingsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SettingsByProduct(product, options);
+        async getSettingsByProduct(product: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SettingsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSettingsByProduct(product, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SettingsApi.getV1SettingsByProduct']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SettingsApi.getSettingsByProduct']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -136,10 +136,10 @@ export const SettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1SettingsByProduct(product: string, settingsReq: SettingsReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SettingsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1SettingsByProduct(product, settingsReq, options);
+        async putSettingsByProduct(product: string, settingsReq: SettingsReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SettingsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putSettingsByProduct(product, settingsReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SettingsApi.putV1SettingsByProduct']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SettingsApi.putSettingsByProduct']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -155,57 +155,57 @@ export const SettingsApiFactory = function (configuration?: Configuration, baseP
         /**
          * Reads the caller org\'s configuration for one product, with every secret field MASKED — only the names of the set secrets come back, never their values, which live in KMS. A product the org has never configured is not a 404: it answers 200 with an empty config object, so the console\'s Settings tab always renders and merges its own display defaults on top.
          * @summary Reads the caller org\'s configuration for one product, with every secret field MASKED — only the names of the set secrets come back, never their values, which live in KMS.
-         * @param {SettingsApiGetV1SettingsByProductRequest} requestParameters Request parameters.
+         * @param {SettingsApiGetSettingsByProductRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SettingsByProduct(requestParameters: SettingsApiGetV1SettingsByProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<SettingsView> {
-            return localVarFp.getV1SettingsByProduct(requestParameters.product, options).then((request) => request(axios, basePath));
+        getSettingsByProduct(requestParameters: SettingsApiGetSettingsByProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<SettingsView> {
+            return localVarFp.getSettingsByProduct(requestParameters.product, options).then((request) => request(axios, basePath));
         },
         /**
          * Writes the caller org\'s configuration for one product and answers the stored result, secrets masked. Secret VALUES are sealed into KMS under orgs/{org}/settings/{product}/{key} and never touch this deployment\'s database; with no KMS configured a write that carries any secret is refused whole (503) rather than dropping it or persisting it in the clear. A secret the body omits keeps its stored value, so a partial write never silently clears one.
          * @summary Writes the caller org\'s configuration for one product and answers the stored result, secrets masked.
-         * @param {SettingsApiPutV1SettingsByProductRequest} requestParameters Request parameters.
+         * @param {SettingsApiPutSettingsByProductRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1SettingsByProduct(requestParameters: SettingsApiPutV1SettingsByProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<SettingsView> {
-            return localVarFp.putV1SettingsByProduct(requestParameters.product, requestParameters.settingsReq, options).then((request) => request(axios, basePath));
+        putSettingsByProduct(requestParameters: SettingsApiPutSettingsByProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<SettingsView> {
+            return localVarFp.putSettingsByProduct(requestParameters.product, requestParameters.settingsReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1SettingsByProduct operation in SettingsApi.
+ * Request parameters for getSettingsByProduct operation in SettingsApi.
  * @export
- * @interface SettingsApiGetV1SettingsByProductRequest
+ * @interface SettingsApiGetSettingsByProductRequest
  */
-export interface SettingsApiGetV1SettingsByProductRequest {
+export interface SettingsApiGetSettingsByProductRequest {
     /**
      * Product is the catalog slug, from the path. Must match ^[a-z0-9][a-z0-9._-]{0,62}$.
      * @type {string}
-     * @memberof SettingsApiGetV1SettingsByProduct
+     * @memberof SettingsApiGetSettingsByProduct
      */
     readonly product: string
 }
 
 /**
- * Request parameters for putV1SettingsByProduct operation in SettingsApi.
+ * Request parameters for putSettingsByProduct operation in SettingsApi.
  * @export
- * @interface SettingsApiPutV1SettingsByProductRequest
+ * @interface SettingsApiPutSettingsByProductRequest
  */
-export interface SettingsApiPutV1SettingsByProductRequest {
+export interface SettingsApiPutSettingsByProductRequest {
     /**
      * Product is the catalog slug, from the PATH. zip binds the path last, so the URL names the product being written whatever a body field claims.
      * @type {string}
-     * @memberof SettingsApiPutV1SettingsByProduct
+     * @memberof SettingsApiPutSettingsByProduct
      */
     readonly product: string
 
     /**
      * 
      * @type {SettingsReq}
-     * @memberof SettingsApiPutV1SettingsByProduct
+     * @memberof SettingsApiPutSettingsByProduct
      */
     readonly settingsReq: SettingsReq
 }
@@ -220,25 +220,25 @@ export class SettingsApi extends BaseAPI {
     /**
      * Reads the caller org\'s configuration for one product, with every secret field MASKED — only the names of the set secrets come back, never their values, which live in KMS. A product the org has never configured is not a 404: it answers 200 with an empty config object, so the console\'s Settings tab always renders and merges its own display defaults on top.
      * @summary Reads the caller org\'s configuration for one product, with every secret field MASKED — only the names of the set secrets come back, never their values, which live in KMS.
-     * @param {SettingsApiGetV1SettingsByProductRequest} requestParameters Request parameters.
+     * @param {SettingsApiGetSettingsByProductRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingsApi
      */
-    public getV1SettingsByProduct(requestParameters: SettingsApiGetV1SettingsByProductRequest, options?: RawAxiosRequestConfig) {
-        return SettingsApiFp(this.configuration).getV1SettingsByProduct(requestParameters.product, options).then((request) => request(this.axios, this.basePath));
+    public getSettingsByProduct(requestParameters: SettingsApiGetSettingsByProductRequest, options?: RawAxiosRequestConfig) {
+        return SettingsApiFp(this.configuration).getSettingsByProduct(requestParameters.product, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Writes the caller org\'s configuration for one product and answers the stored result, secrets masked. Secret VALUES are sealed into KMS under orgs/{org}/settings/{product}/{key} and never touch this deployment\'s database; with no KMS configured a write that carries any secret is refused whole (503) rather than dropping it or persisting it in the clear. A secret the body omits keeps its stored value, so a partial write never silently clears one.
      * @summary Writes the caller org\'s configuration for one product and answers the stored result, secrets masked.
-     * @param {SettingsApiPutV1SettingsByProductRequest} requestParameters Request parameters.
+     * @param {SettingsApiPutSettingsByProductRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingsApi
      */
-    public putV1SettingsByProduct(requestParameters: SettingsApiPutV1SettingsByProductRequest, options?: RawAxiosRequestConfig) {
-        return SettingsApiFp(this.configuration).putV1SettingsByProduct(requestParameters.product, requestParameters.settingsReq, options).then((request) => request(this.axios, this.basePath));
+    public putSettingsByProduct(requestParameters: SettingsApiPutSettingsByProductRequest, options?: RawAxiosRequestConfig) {
+        return SettingsApiFp(this.configuration).putSettingsByProduct(requestParameters.product, requestParameters.settingsReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

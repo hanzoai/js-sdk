@@ -33,7 +33,7 @@ export const AudioApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AudioFoley: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAudioFoley: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/audio/foley`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const AudioApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AudioMusic: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAudioMusic: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/audio/music`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -93,7 +93,7 @@ export const AudioApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AudioSpeech: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAudioSpeech: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/audio/speech`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -123,7 +123,7 @@ export const AudioApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AudioTranscriptions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAudioTranscriptions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/audio/transcriptions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -153,7 +153,7 @@ export const AudioApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AudioVoice: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAudioVoice: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/audio/voice`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -193,10 +193,10 @@ export const AudioApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AudioFoley(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AudioFoley(options);
+        async postAudioFoley(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAudioFoley(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AudioApi.postV1AudioFoley']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AudioApi.postAudioFoley']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -205,10 +205,10 @@ export const AudioApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AudioMusic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AudioMusic(options);
+        async postAudioMusic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAudioMusic(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AudioApi.postV1AudioMusic']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AudioApi.postAudioMusic']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -217,10 +217,10 @@ export const AudioApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AudioSpeech(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AudioSpeech(options);
+        async postAudioSpeech(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAudioSpeech(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AudioApi.postV1AudioSpeech']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AudioApi.postAudioSpeech']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -229,10 +229,10 @@ export const AudioApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AudioTranscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AudioTranscriptions(options);
+        async postAudioTranscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAudioTranscriptions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AudioApi.postV1AudioTranscriptions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AudioApi.postAudioTranscriptions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -241,10 +241,10 @@ export const AudioApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AudioVoice(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AudioVoice(options);
+        async postAudioVoice(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAudioVoice(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AudioApi.postV1AudioVoice']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AudioApi.postAudioVoice']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -263,8 +263,8 @@ export const AudioApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AudioFoley(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AudioFoley(options).then((request) => request(axios, basePath));
+        postAudioFoley(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAudioFoley(options).then((request) => request(axios, basePath));
         },
         /**
          * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
@@ -272,8 +272,8 @@ export const AudioApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AudioMusic(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AudioMusic(options).then((request) => request(axios, basePath));
+        postAudioMusic(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAudioMusic(options).then((request) => request(axios, basePath));
         },
         /**
          * The OpenAI-compatible TTS endpoint (POST /v1/audio/speech). It authenticates the caller, resolves `model` to its TTS provider (the SAME model-route resolution the chat/images/video endpoints use — so a BYO node registered as a TTS provider works transparently), synthesizes the audio, and streams the bytes back. One code path, OpenAI-shaped, no store/message coupling (unlike the legacy /v1/generate-text-to-speech-audio which is bound to a chat store).
@@ -281,8 +281,8 @@ export const AudioApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AudioSpeech(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AudioSpeech(options).then((request) => request(axios, basePath));
+        postAudioSpeech(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAudioSpeech(options).then((request) => request(axios, basePath));
         },
         /**
          * The OpenAI-compatible STT endpoint (POST /v1/audio/transcriptions, multipart: file + model [+ language + response_format]). It mirrors AudioSpeech exactly: authenticate the caller, resolve `model` to its STT provider through the SAME model-route resolution (so the in-cluster speech service — or any BYO node registered as an STT provider — works transparently), transcribe, and return the OpenAI body. One code path, OpenAI-shaped, no store coupling (unlike the legacy /v1/process-speech-to-text, which is bound to a chat store).
@@ -290,8 +290,8 @@ export const AudioApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AudioTranscriptions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AudioTranscriptions(options).then((request) => request(axios, basePath));
+        postAudioTranscriptions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAudioTranscriptions(options).then((request) => request(axios, basePath));
         },
         /**
          * Serves the generative audio verbs — /v1/audio/voice (TTS), /music, /foley — that the Zen family serves natively. It resolves the SKU and, for a Zen model, forwards to zen\'s matching verb billed per call at the discovered price. These verbs are Zen-native; a non-Zen model is rejected.
@@ -299,8 +299,8 @@ export const AudioApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AudioVoice(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AudioVoice(options).then((request) => request(axios, basePath));
+        postAudioVoice(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAudioVoice(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -319,8 +319,8 @@ export class AudioApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AudioApi
      */
-    public postV1AudioFoley(options?: RawAxiosRequestConfig) {
-        return AudioApiFp(this.configuration).postV1AudioFoley(options).then((request) => request(this.axios, this.basePath));
+    public postAudioFoley(options?: RawAxiosRequestConfig) {
+        return AudioApiFp(this.configuration).postAudioFoley(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -330,8 +330,8 @@ export class AudioApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AudioApi
      */
-    public postV1AudioMusic(options?: RawAxiosRequestConfig) {
-        return AudioApiFp(this.configuration).postV1AudioMusic(options).then((request) => request(this.axios, this.basePath));
+    public postAudioMusic(options?: RawAxiosRequestConfig) {
+        return AudioApiFp(this.configuration).postAudioMusic(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -341,8 +341,8 @@ export class AudioApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AudioApi
      */
-    public postV1AudioSpeech(options?: RawAxiosRequestConfig) {
-        return AudioApiFp(this.configuration).postV1AudioSpeech(options).then((request) => request(this.axios, this.basePath));
+    public postAudioSpeech(options?: RawAxiosRequestConfig) {
+        return AudioApiFp(this.configuration).postAudioSpeech(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -352,8 +352,8 @@ export class AudioApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AudioApi
      */
-    public postV1AudioTranscriptions(options?: RawAxiosRequestConfig) {
-        return AudioApiFp(this.configuration).postV1AudioTranscriptions(options).then((request) => request(this.axios, this.basePath));
+    public postAudioTranscriptions(options?: RawAxiosRequestConfig) {
+        return AudioApiFp(this.configuration).postAudioTranscriptions(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -363,8 +363,8 @@ export class AudioApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AudioApi
      */
-    public postV1AudioVoice(options?: RawAxiosRequestConfig) {
-        return AudioApiFp(this.configuration).postV1AudioVoice(options).then((request) => request(this.axios, this.basePath));
+    public postAudioVoice(options?: RawAxiosRequestConfig) {
+        return AudioApiFp(this.configuration).postAudioVoice(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

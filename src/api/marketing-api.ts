@@ -88,9 +88,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketingAudiencesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMarketingAudiencesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1MarketingAudiencesById', 'id', id)
+            assertParamExists('deleteMarketingAudiencesById', 'id', id)
             const localVarPath = `/v1/marketing/audiences/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -122,9 +122,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketingCalendarById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMarketingCalendarById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1MarketingCalendarById', 'id', id)
+            assertParamExists('deleteMarketingCalendarById', 'id', id)
             const localVarPath = `/v1/marketing/calendar/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -156,9 +156,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketingCampaignsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMarketingCampaignsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1MarketingCampaignsById', 'id', id)
+            assertParamExists('deleteMarketingCampaignsById', 'id', id)
             const localVarPath = `/v1/marketing/campaigns/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -193,7 +193,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketingSuppressions: async (channel?: string, address?: string, reason?: string, createdAt?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMarketingSuppressions: async (channel?: string, address?: string, reason?: string, createdAt?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/suppressions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -240,7 +240,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingAudiences: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingAudiences: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/audiences`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -275,9 +275,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingAudiencesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingAudiencesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1MarketingAudiencesById', 'id', id)
+            assertParamExists('getMarketingAudiencesById', 'id', id)
             const localVarPath = `/v1/marketing/audiences/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -309,9 +309,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingAudiencesByIdPreview: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingAudiencesByIdPreview: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1MarketingAudiencesByIdPreview', 'id', id)
+            assertParamExists('getMarketingAudiencesByIdPreview', 'id', id)
             const localVarPath = `/v1/marketing/audiences/{id}/preview`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -344,7 +344,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingCalendar: async (status?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingCalendar: async (status?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/calendar`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -383,9 +383,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingCalendarById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingCalendarById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1MarketingCalendarById', 'id', id)
+            assertParamExists('getMarketingCalendarById', 'id', id)
             const localVarPath = `/v1/marketing/calendar/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -418,7 +418,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingCampaigns: async (status?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingCampaigns: async (status?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -457,9 +457,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingCampaignsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingCampaignsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1MarketingCampaignsById', 'id', id)
+            assertParamExists('getMarketingCampaignsById', 'id', id)
             const localVarPath = `/v1/marketing/campaigns/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -490,7 +490,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingPromos: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingPromos: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/promos`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -523,9 +523,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingPromosByCodeEligibility: async (code: string, plan?: string, seats?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingPromosByCodeEligibility: async (code: string, plan?: string, seats?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'code' is not null or undefined
-            assertParamExists('getV1MarketingPromosByCodeEligibility', 'code', code)
+            assertParamExists('getMarketingPromosByCodeEligibility', 'code', code)
             const localVarPath = `/v1/marketing/promos/{code}/eligibility`
                 .replace(`{${"code"}}`, encodeURIComponent(String(code)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -565,9 +565,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingPromosByCodeRedemption: async (code: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingPromosByCodeRedemption: async (code: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'code' is not null or undefined
-            assertParamExists('getV1MarketingPromosByCodeRedemption', 'code', code)
+            assertParamExists('getMarketingPromosByCodeRedemption', 'code', code)
             const localVarPath = `/v1/marketing/promos/{code}/redemption`
                 .replace(`{${"code"}}`, encodeURIComponent(String(code)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -599,7 +599,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSequences: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingSequences: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/sequences`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -634,9 +634,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSequencesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingSequencesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1MarketingSequencesById', 'id', id)
+            assertParamExists('getMarketingSequencesById', 'id', id)
             const localVarPath = `/v1/marketing/sequences/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -669,9 +669,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSequencesByIdEnrollments: async (id: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingSequencesByIdEnrollments: async (id: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1MarketingSequencesByIdEnrollments', 'id', id)
+            assertParamExists('getMarketingSequencesByIdEnrollments', 'id', id)
             const localVarPath = `/v1/marketing/sequences/{id}/enrollments`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -707,9 +707,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSequencesByIdSteps: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingSequencesByIdSteps: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1MarketingSequencesByIdSteps', 'id', id)
+            assertParamExists('getMarketingSequencesByIdSteps', 'id', id)
             const localVarPath = `/v1/marketing/sequences/{id}/steps`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -740,7 +740,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/summary`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -771,7 +771,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSuppressions: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingSuppressions: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/suppressions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -809,7 +809,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingUnsubscribe: async (org?: string, channel?: string, address?: string, token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketingUnsubscribe: async (org?: string, channel?: string, address?: string, token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketing/unsubscribe`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -856,9 +856,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingAudiences: async (audience: Audience, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingAudiences: async (audience: Audience, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'audience' is not null or undefined
-            assertParamExists('postV1MarketingAudiences', 'audience', audience)
+            assertParamExists('postMarketingAudiences', 'audience', audience)
             const localVarPath = `/v1/marketing/audiences`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -892,9 +892,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingCalendar: async (calendarPost: CalendarPost, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingCalendar: async (calendarPost: CalendarPost, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'calendarPost' is not null or undefined
-            assertParamExists('postV1MarketingCalendar', 'calendarPost', calendarPost)
+            assertParamExists('postMarketingCalendar', 'calendarPost', calendarPost)
             const localVarPath = `/v1/marketing/calendar`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -928,9 +928,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingCalendarByIdPublish: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingCalendarByIdPublish: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1MarketingCalendarByIdPublish', 'id', id)
+            assertParamExists('postMarketingCalendarByIdPublish', 'id', id)
             const localVarPath = `/v1/marketing/calendar/{id}/publish`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -962,9 +962,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingCampaigns: async (campaign: Campaign, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingCampaigns: async (campaign: Campaign, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'campaign' is not null or undefined
-            assertParamExists('postV1MarketingCampaigns', 'campaign', campaign)
+            assertParamExists('postMarketingCampaigns', 'campaign', campaign)
             const localVarPath = `/v1/marketing/campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -999,11 +999,11 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingCampaignsByIdSchedule: async (id: string, scheduleInput: ScheduleInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingCampaignsByIdSchedule: async (id: string, scheduleInput: ScheduleInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1MarketingCampaignsByIdSchedule', 'id', id)
+            assertParamExists('postMarketingCampaignsByIdSchedule', 'id', id)
             // verify required parameter 'scheduleInput' is not null or undefined
-            assertParamExists('postV1MarketingCampaignsByIdSchedule', 'scheduleInput', scheduleInput)
+            assertParamExists('postMarketingCampaignsByIdSchedule', 'scheduleInput', scheduleInput)
             const localVarPath = `/v1/marketing/campaigns/{id}/schedule`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1039,11 +1039,11 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingPromosByCodeRedeem: async (code: string, redeemInput: RedeemInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingPromosByCodeRedeem: async (code: string, redeemInput: RedeemInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'code' is not null or undefined
-            assertParamExists('postV1MarketingPromosByCodeRedeem', 'code', code)
+            assertParamExists('postMarketingPromosByCodeRedeem', 'code', code)
             // verify required parameter 'redeemInput' is not null or undefined
-            assertParamExists('postV1MarketingPromosByCodeRedeem', 'redeemInput', redeemInput)
+            assertParamExists('postMarketingPromosByCodeRedeem', 'redeemInput', redeemInput)
             const localVarPath = `/v1/marketing/promos/{code}/redeem`
                 .replace(`{${"code"}}`, encodeURIComponent(String(code)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1078,9 +1078,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSequences: async (sequence: Sequence, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingSequences: async (sequence: Sequence, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'sequence' is not null or undefined
-            assertParamExists('postV1MarketingSequences', 'sequence', sequence)
+            assertParamExists('postMarketingSequences', 'sequence', sequence)
             const localVarPath = `/v1/marketing/sequences`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1115,11 +1115,11 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSequencesByIdEnroll: async (id: string, enrollInput: EnrollInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingSequencesByIdEnroll: async (id: string, enrollInput: EnrollInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1MarketingSequencesByIdEnroll', 'id', id)
+            assertParamExists('postMarketingSequencesByIdEnroll', 'id', id)
             // verify required parameter 'enrollInput' is not null or undefined
-            assertParamExists('postV1MarketingSequencesByIdEnroll', 'enrollInput', enrollInput)
+            assertParamExists('postMarketingSequencesByIdEnroll', 'enrollInput', enrollInput)
             const localVarPath = `/v1/marketing/sequences/{id}/enroll`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1155,11 +1155,11 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSequencesByIdEnrollmentsByEidCancel: async (id: string, eid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingSequencesByIdEnrollmentsByEidCancel: async (id: string, eid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1MarketingSequencesByIdEnrollmentsByEidCancel', 'id', id)
+            assertParamExists('postMarketingSequencesByIdEnrollmentsByEidCancel', 'id', id)
             // verify required parameter 'eid' is not null or undefined
-            assertParamExists('postV1MarketingSequencesByIdEnrollmentsByEidCancel', 'eid', eid)
+            assertParamExists('postMarketingSequencesByIdEnrollmentsByEidCancel', 'eid', eid)
             const localVarPath = `/v1/marketing/sequences/{id}/enrollments/{eid}/cancel`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)))
                 .replace(`{${"eid"}}`, encodeURIComponent(String(eid)));
@@ -1193,11 +1193,11 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSequencesByIdStatus: async (id: string, sequenceStatus: SequenceStatus, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingSequencesByIdStatus: async (id: string, sequenceStatus: SequenceStatus, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1MarketingSequencesByIdStatus', 'id', id)
+            assertParamExists('postMarketingSequencesByIdStatus', 'id', id)
             // verify required parameter 'sequenceStatus' is not null or undefined
-            assertParamExists('postV1MarketingSequencesByIdStatus', 'sequenceStatus', sequenceStatus)
+            assertParamExists('postMarketingSequencesByIdStatus', 'sequenceStatus', sequenceStatus)
             const localVarPath = `/v1/marketing/sequences/{id}/status`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1233,11 +1233,11 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSequencesByIdSteps: async (id: string, stepInput: StepInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingSequencesByIdSteps: async (id: string, stepInput: StepInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1MarketingSequencesByIdSteps', 'id', id)
+            assertParamExists('postMarketingSequencesByIdSteps', 'id', id)
             // verify required parameter 'stepInput' is not null or undefined
-            assertParamExists('postV1MarketingSequencesByIdSteps', 'stepInput', stepInput)
+            assertParamExists('postMarketingSequencesByIdSteps', 'stepInput', stepInput)
             const localVarPath = `/v1/marketing/sequences/{id}/steps`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1272,9 +1272,9 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSuppressions: async (suppression: Suppression, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketingSuppressions: async (suppression: Suppression, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'suppression' is not null or undefined
-            assertParamExists('postV1MarketingSuppressions', 'suppression', suppression)
+            assertParamExists('postMarketingSuppressions', 'suppression', suppression)
             const localVarPath = `/v1/marketing/suppressions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1309,11 +1309,11 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1MarketingCalendarById: async (id: string, calendarPost: CalendarPost, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putMarketingCalendarById: async (id: string, calendarPost: CalendarPost, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1MarketingCalendarById', 'id', id)
+            assertParamExists('putMarketingCalendarById', 'id', id)
             // verify required parameter 'calendarPost' is not null or undefined
-            assertParamExists('putV1MarketingCalendarById', 'calendarPost', calendarPost)
+            assertParamExists('putMarketingCalendarById', 'calendarPost', calendarPost)
             const localVarPath = `/v1/marketing/calendar/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1349,11 +1349,11 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1MarketingCampaignsById: async (id: string, campaign: Campaign, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putMarketingCampaignsById: async (id: string, campaign: Campaign, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1MarketingCampaignsById', 'id', id)
+            assertParamExists('putMarketingCampaignsById', 'id', id)
             // verify required parameter 'campaign' is not null or undefined
-            assertParamExists('putV1MarketingCampaignsById', 'campaign', campaign)
+            assertParamExists('putMarketingCampaignsById', 'campaign', campaign)
             const localVarPath = `/v1/marketing/campaigns/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1398,10 +1398,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1MarketingAudiencesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1MarketingAudiencesById(id, options);
+        async deleteMarketingAudiencesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketingAudiencesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteV1MarketingAudiencesById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteMarketingAudiencesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1411,10 +1411,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1MarketingCalendarById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1MarketingCalendarById(id, options);
+        async deleteMarketingCalendarById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketingCalendarById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteV1MarketingCalendarById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteMarketingCalendarById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1424,10 +1424,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1MarketingCampaignsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1MarketingCampaignsById(id, options);
+        async deleteMarketingCampaignsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketingCampaignsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteV1MarketingCampaignsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteMarketingCampaignsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1440,10 +1440,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1MarketingSuppressions(channel?: string, address?: string, reason?: string, createdAt?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1MarketingSuppressions(channel, address, reason, createdAt, options);
+        async deleteMarketingSuppressions(channel?: string, address?: string, reason?: string, createdAt?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketingSuppressions(channel, address, reason, createdAt, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteV1MarketingSuppressions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.deleteMarketingSuppressions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1453,10 +1453,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingAudiences(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AudienceList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingAudiences(limit, options);
+        async getMarketingAudiences(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AudienceList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingAudiences(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingAudiences']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingAudiences']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1466,10 +1466,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingAudiencesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Audience>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingAudiencesById(id, options);
+        async getMarketingAudiencesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Audience>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingAudiencesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingAudiencesById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingAudiencesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1479,10 +1479,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingAudiencesByIdPreview(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AudiencePreview>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingAudiencesByIdPreview(id, options);
+        async getMarketingAudiencesByIdPreview(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AudiencePreview>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingAudiencesByIdPreview(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingAudiencesByIdPreview']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingAudiencesByIdPreview']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1493,10 +1493,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingCalendar(status?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingCalendar(status, limit, options);
+        async getMarketingCalendar(status?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingCalendar(status, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingCalendar']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingCalendar']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1506,10 +1506,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingCalendarById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarPost>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingCalendarById(id, options);
+        async getMarketingCalendarById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarPost>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingCalendarById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingCalendarById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingCalendarById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1520,10 +1520,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingCampaigns(status?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingCampaigns(status, limit, options);
+        async getMarketingCampaigns(status?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CampaignList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingCampaigns(status, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingCampaigns']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingCampaigns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1533,10 +1533,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingCampaignsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Campaign>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingCampaignsById(id, options);
+        async getMarketingCampaignsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Campaign>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingCampaignsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingCampaignsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingCampaignsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1545,10 +1545,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingPromos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromoList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingPromos(options);
+        async getMarketingPromos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PromoList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingPromos(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingPromos']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingPromos']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1560,10 +1560,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingPromosByCodeEligibility(code: string, plan?: string, seats?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Quote>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingPromosByCodeEligibility(code, plan, seats, options);
+        async getMarketingPromosByCodeEligibility(code: string, plan?: string, seats?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Quote>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingPromosByCodeEligibility(code, plan, seats, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingPromosByCodeEligibility']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingPromosByCodeEligibility']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1573,10 +1573,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingPromosByCodeRedemption(code: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Redemption>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingPromosByCodeRedemption(code, options);
+        async getMarketingPromosByCodeRedemption(code: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Redemption>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingPromosByCodeRedemption(code, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingPromosByCodeRedemption']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingPromosByCodeRedemption']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1586,10 +1586,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingSequences(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SequenceList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingSequences(limit, options);
+        async getMarketingSequences(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SequenceList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSequences(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingSequences']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingSequences']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1599,10 +1599,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingSequencesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SequenceView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingSequencesById(id, options);
+        async getMarketingSequencesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SequenceView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSequencesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingSequencesById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingSequencesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1613,10 +1613,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingSequencesByIdEnrollments(id: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnrollmentList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingSequencesByIdEnrollments(id, limit, options);
+        async getMarketingSequencesByIdEnrollments(id: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnrollmentList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSequencesByIdEnrollments(id, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingSequencesByIdEnrollments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingSequencesByIdEnrollments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1626,10 +1626,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingSequencesByIdSteps(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StepList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingSequencesByIdSteps(id, options);
+        async getMarketingSequencesByIdSteps(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StepList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSequencesByIdSteps(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingSequencesByIdSteps']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingSequencesByIdSteps']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1638,10 +1638,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Summary>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingSummary(options);
+        async getMarketingSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Summary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingSummary']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingSummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1651,10 +1651,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingSuppressions(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuppressionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingSuppressions(limit, options);
+        async getMarketingSuppressions(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuppressionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingSuppressions(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingSuppressions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingSuppressions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1667,10 +1667,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketingUnsubscribe(org?: string, channel?: string, address?: string, token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Unsubscribed>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketingUnsubscribe(org, channel, address, token, options);
+        async getMarketingUnsubscribe(org?: string, channel?: string, address?: string, token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Unsubscribed>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketingUnsubscribe(org, channel, address, token, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getV1MarketingUnsubscribe']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.getMarketingUnsubscribe']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1680,10 +1680,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingAudiences(audience: Audience, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Audience>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingAudiences(audience, options);
+        async postMarketingAudiences(audience: Audience, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Audience>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingAudiences(audience, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingAudiences']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingAudiences']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1693,10 +1693,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingCalendar(calendarPost: CalendarPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarPost>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingCalendar(calendarPost, options);
+        async postMarketingCalendar(calendarPost: CalendarPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarPost>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingCalendar(calendarPost, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingCalendar']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingCalendar']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1706,10 +1706,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingCalendarByIdPublish(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarPost>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingCalendarByIdPublish(id, options);
+        async postMarketingCalendarByIdPublish(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarPost>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingCalendarByIdPublish(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingCalendarByIdPublish']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingCalendarByIdPublish']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1719,10 +1719,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingCampaigns(campaign: Campaign, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Campaign>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingCampaigns(campaign, options);
+        async postMarketingCampaigns(campaign: Campaign, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Campaign>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingCampaigns(campaign, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingCampaigns']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingCampaigns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1733,10 +1733,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingCampaignsByIdSchedule(id: string, scheduleInput: ScheduleInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Campaign>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingCampaignsByIdSchedule(id, scheduleInput, options);
+        async postMarketingCampaignsByIdSchedule(id: string, scheduleInput: ScheduleInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Campaign>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingCampaignsByIdSchedule(id, scheduleInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingCampaignsByIdSchedule']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingCampaignsByIdSchedule']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1747,10 +1747,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingPromosByCodeRedeem(code: string, redeemInput: RedeemInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RedeemResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingPromosByCodeRedeem(code, redeemInput, options);
+        async postMarketingPromosByCodeRedeem(code: string, redeemInput: RedeemInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RedeemResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingPromosByCodeRedeem(code, redeemInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingPromosByCodeRedeem']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingPromosByCodeRedeem']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1760,10 +1760,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingSequences(sequence: Sequence, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Sequence>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingSequences(sequence, options);
+        async postMarketingSequences(sequence: Sequence, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Sequence>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingSequences(sequence, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingSequences']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingSequences']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1774,10 +1774,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingSequencesByIdEnroll(id: string, enrollInput: EnrollInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnrollResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingSequencesByIdEnroll(id, enrollInput, options);
+        async postMarketingSequencesByIdEnroll(id: string, enrollInput: EnrollInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnrollResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingSequencesByIdEnroll(id, enrollInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingSequencesByIdEnroll']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingSequencesByIdEnroll']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1788,10 +1788,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingSequencesByIdEnrollmentsByEidCancel(id: string, eid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingSequencesByIdEnrollmentsByEidCancel(id, eid, options);
+        async postMarketingSequencesByIdEnrollmentsByEidCancel(id: string, eid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingSequencesByIdEnrollmentsByEidCancel(id, eid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingSequencesByIdEnrollmentsByEidCancel']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingSequencesByIdEnrollmentsByEidCancel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1802,10 +1802,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingSequencesByIdStatus(id: string, sequenceStatus: SequenceStatus, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SequenceStatus>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingSequencesByIdStatus(id, sequenceStatus, options);
+        async postMarketingSequencesByIdStatus(id: string, sequenceStatus: SequenceStatus, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SequenceStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingSequencesByIdStatus(id, sequenceStatus, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingSequencesByIdStatus']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingSequencesByIdStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1816,10 +1816,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingSequencesByIdSteps(id: string, stepInput: StepInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Step>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingSequencesByIdSteps(id, stepInput, options);
+        async postMarketingSequencesByIdSteps(id: string, stepInput: StepInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Step>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingSequencesByIdSteps(id, stepInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingSequencesByIdSteps']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingSequencesByIdSteps']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1829,10 +1829,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketingSuppressions(suppression: Suppression, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Suppression>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketingSuppressions(suppression, options);
+        async postMarketingSuppressions(suppression: Suppression, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Suppression>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketingSuppressions(suppression, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postV1MarketingSuppressions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.postMarketingSuppressions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1843,10 +1843,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1MarketingCalendarById(id: string, calendarPost: CalendarPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarPost>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1MarketingCalendarById(id, calendarPost, options);
+        async putMarketingCalendarById(id: string, calendarPost: CalendarPost, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CalendarPost>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMarketingCalendarById(id, calendarPost, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.putV1MarketingCalendarById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.putMarketingCalendarById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1857,10 +1857,10 @@ export const MarketingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1MarketingCampaignsById(id: string, campaign: Campaign, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Campaign>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1MarketingCampaignsById(id, campaign, options);
+        async putMarketingCampaignsById(id: string, campaign: Campaign, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Campaign>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMarketingCampaignsById(id, campaign, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketingApi.putV1MarketingCampaignsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketingApi.putMarketingCampaignsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1876,112 +1876,112 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
         /**
          * Removes one of the caller org\'s audiences and answers 204. It deletes the saved filter only — no customer, event or enrollment is touched.
          * @summary Removes one of the caller org\'s audiences and answers 204.
-         * @param {MarketingApiDeleteV1MarketingAudiencesByIdRequest} requestParameters Request parameters.
+         * @param {MarketingApiDeleteMarketingAudiencesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketingAudiencesById(requestParameters: MarketingApiDeleteV1MarketingAudiencesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1MarketingAudiencesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteMarketingAudiencesById(requestParameters: MarketingApiDeleteMarketingAudiencesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMarketingAudiencesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller org\'s posts and answers 204. A post already published is deleted from the calendar only — nothing is retracted from the network it went out on.
          * @summary Removes one of the caller org\'s posts and answers 204.
-         * @param {MarketingApiDeleteV1MarketingCalendarByIdRequest} requestParameters Request parameters.
+         * @param {MarketingApiDeleteMarketingCalendarByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketingCalendarById(requestParameters: MarketingApiDeleteV1MarketingCalendarByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1MarketingCalendarById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteMarketingCalendarById(requestParameters: MarketingApiDeleteMarketingCalendarByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMarketingCalendarById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller org\'s campaigns and answers 204. A campaign belonging to another org reads as not found and is left untouched.
          * @summary Removes one of the caller org\'s campaigns and answers 204.
-         * @param {MarketingApiDeleteV1MarketingCampaignsByIdRequest} requestParameters Request parameters.
+         * @param {MarketingApiDeleteMarketingCampaignsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketingCampaignsById(requestParameters: MarketingApiDeleteV1MarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1MarketingCampaignsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteMarketingCampaignsById(requestParameters: MarketingApiDeleteMarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMarketingCampaignsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.
          * @summary Re-subscribes an address on one channel and answers 204.
-         * @param {MarketingApiDeleteV1MarketingSuppressionsRequest} requestParameters Request parameters.
+         * @param {MarketingApiDeleteMarketingSuppressionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketingSuppressions(requestParameters: MarketingApiDeleteV1MarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1MarketingSuppressions(requestParameters.channel, requestParameters.address, requestParameters.reason, requestParameters.createdAt, options).then((request) => request(axios, basePath));
+        deleteMarketingSuppressions(requestParameters: MarketingApiDeleteMarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMarketingSuppressions(requestParameters.channel, requestParameters.address, requestParameters.reason, requestParameters.createdAt, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s saved audiences, most recently updated first.
          * @summary Returns the org\'s saved audiences, most recently updated first.
-         * @param {MarketingApiGetV1MarketingAudiencesRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingAudiencesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingAudiences(requestParameters: MarketingApiGetV1MarketingAudiencesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AudienceList> {
-            return localVarFp.getV1MarketingAudiences(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getMarketingAudiences(requestParameters: MarketingApiGetMarketingAudiencesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AudienceList> {
+            return localVarFp.getMarketingAudiences(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the caller org\'s saved audiences. An audience belonging to another org reads as not found.
          * @summary Returns one of the caller org\'s saved audiences.
-         * @param {MarketingApiGetV1MarketingAudiencesByIdRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingAudiencesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingAudiencesById(requestParameters: MarketingApiGetV1MarketingAudiencesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Audience> {
-            return localVarFp.getV1MarketingAudiencesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getMarketingAudiencesById(requestParameters: MarketingApiGetMarketingAudiencesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Audience> {
+            return localVarFp.getMarketingAudiencesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Evaluates the cohort LIVE — the same resolution an enrollment would run — and reports how big it is and how many real mailboxes it reaches. It is the honest answer to \"is this send worth making\": a cohort of 500 that mails 3 says so, in deliverable and unmatched. Nothing is sent.
          * @summary Evaluates the cohort LIVE — the same resolution an enrollment would run — and reports how big it is and how many real mailboxes it reaches.
-         * @param {MarketingApiGetV1MarketingAudiencesByIdPreviewRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingAudiencesByIdPreviewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingAudiencesByIdPreview(requestParameters: MarketingApiGetV1MarketingAudiencesByIdPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<AudiencePreview> {
-            return localVarFp.getV1MarketingAudiencesByIdPreview(requestParameters.id, options).then((request) => request(axios, basePath));
+        getMarketingAudiencesByIdPreview(requestParameters: MarketingApiGetMarketingAudiencesByIdPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<AudiencePreview> {
+            return localVarFp.getMarketingAudiencesByIdPreview(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
          * @summary Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
-         * @param {MarketingApiGetV1MarketingCalendarRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingCalendarRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingCalendar(requestParameters: MarketingApiGetV1MarketingCalendarRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PostList> {
-            return localVarFp.getV1MarketingCalendar(requestParameters.status, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getMarketingCalendar(requestParameters: MarketingApiGetMarketingCalendarRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PostList> {
+            return localVarFp.getMarketingCalendar(requestParameters.status, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the caller org\'s posts, including the exact error behind a failed publish. A post belonging to another org reads as not found.
          * @summary Returns one of the caller org\'s posts, including the exact error behind a failed publish.
-         * @param {MarketingApiGetV1MarketingCalendarByIdRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingCalendarByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingCalendarById(requestParameters: MarketingApiGetV1MarketingCalendarByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarPost> {
-            return localVarFp.getV1MarketingCalendarById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getMarketingCalendarById(requestParameters: MarketingApiGetMarketingCalendarByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarPost> {
+            return localVarFp.getMarketingCalendarById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s campaigns, most recently updated first, optionally narrowed to one lifecycle status.
          * @summary Returns the org\'s campaigns, most recently updated first, optionally narrowed to one lifecycle status.
-         * @param {MarketingApiGetV1MarketingCampaignsRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingCampaignsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingCampaigns(requestParameters: MarketingApiGetV1MarketingCampaignsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CampaignList> {
-            return localVarFp.getV1MarketingCampaigns(requestParameters.status, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getMarketingCampaigns(requestParameters: MarketingApiGetMarketingCampaignsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CampaignList> {
+            return localVarFp.getMarketingCampaigns(requestParameters.status, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the caller org\'s campaigns. A campaign belonging to another org reads as not found.
          * @summary Returns one of the caller org\'s campaigns.
-         * @param {MarketingApiGetV1MarketingCampaignsByIdRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingCampaignsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingCampaignsById(requestParameters: MarketingApiGetV1MarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Campaign> {
-            return localVarFp.getV1MarketingCampaignsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getMarketingCampaignsById(requestParameters: MarketingApiGetMarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Campaign> {
+            return localVarFp.getMarketingCampaignsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every promo the deployment offers with its live counters: how many orgs have redeemed it and how many redemptions remain under the cap. The promos are fleet-wide, not per-org — only the counters move.
@@ -1989,68 +1989,68 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingPromos(options?: RawAxiosRequestConfig): AxiosPromise<PromoList> {
-            return localVarFp.getV1MarketingPromos(options).then((request) => request(axios, basePath));
+        getMarketingPromos(options?: RawAxiosRequestConfig): AxiosPromise<PromoList> {
+            return localVarFp.getMarketingPromos(options).then((request) => request(axios, basePath));
         },
         /**
          * Prices a promo against a plan and seat count. It is PURE: nothing is redeemed, credited or counted, so it is safe to call from a pricing page on every keystroke. An inactive promo or an exhausted cap quotes ineligible with the reason rather than erroring.
          * @summary Prices a promo against a plan and seat count.
-         * @param {MarketingApiGetV1MarketingPromosByCodeEligibilityRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingPromosByCodeEligibilityRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingPromosByCodeEligibility(requestParameters: MarketingApiGetV1MarketingPromosByCodeEligibilityRequest, options?: RawAxiosRequestConfig): AxiosPromise<Quote> {
-            return localVarFp.getV1MarketingPromosByCodeEligibility(requestParameters.code, requestParameters.plan, requestParameters.seats, options).then((request) => request(axios, basePath));
+        getMarketingPromosByCodeEligibility(requestParameters: MarketingApiGetMarketingPromosByCodeEligibilityRequest, options?: RawAxiosRequestConfig): AxiosPromise<Quote> {
+            return localVarFp.getMarketingPromosByCodeEligibility(requestParameters.code, requestParameters.plan, requestParameters.seats, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s OWN redemption of a promo — an org-scoped read, so it can never surface another tenant\'s. Not found when this org has not redeemed it.
          * @summary Returns the caller org\'s OWN redemption of a promo — an org-scoped read, so it can never surface another tenant\'s.
-         * @param {MarketingApiGetV1MarketingPromosByCodeRedemptionRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingPromosByCodeRedemptionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingPromosByCodeRedemption(requestParameters: MarketingApiGetV1MarketingPromosByCodeRedemptionRequest, options?: RawAxiosRequestConfig): AxiosPromise<Redemption> {
-            return localVarFp.getV1MarketingPromosByCodeRedemption(requestParameters.code, options).then((request) => request(axios, basePath));
+        getMarketingPromosByCodeRedemption(requestParameters: MarketingApiGetMarketingPromosByCodeRedemptionRequest, options?: RawAxiosRequestConfig): AxiosPromise<Redemption> {
+            return localVarFp.getMarketingPromosByCodeRedemption(requestParameters.code, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s drip sequences, most recently updated first.
          * @summary Returns the org\'s drip sequences, most recently updated first.
-         * @param {MarketingApiGetV1MarketingSequencesRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingSequencesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSequences(requestParameters: MarketingApiGetV1MarketingSequencesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SequenceList> {
-            return localVarFp.getV1MarketingSequences(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getMarketingSequences(requestParameters: MarketingApiGetMarketingSequencesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SequenceList> {
+            return localVarFp.getMarketingSequences(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the caller org\'s sequences together with its steps in send order. A sequence belonging to another org reads as not found.
          * @summary Returns one of the caller org\'s sequences together with its steps in send order.
-         * @param {MarketingApiGetV1MarketingSequencesByIdRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingSequencesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSequencesById(requestParameters: MarketingApiGetV1MarketingSequencesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SequenceView> {
-            return localVarFp.getV1MarketingSequencesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getMarketingSequencesById(requestParameters: MarketingApiGetMarketingSequencesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SequenceView> {
+            return localVarFp.getMarketingSequencesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns who is walking one sequence, most recently enrolled first, with each walk\'s current step and next due time.
          * @summary Returns who is walking one sequence, most recently enrolled first, with each walk\'s current step and next due time.
-         * @param {MarketingApiGetV1MarketingSequencesByIdEnrollmentsRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingSequencesByIdEnrollmentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSequencesByIdEnrollments(requestParameters: MarketingApiGetV1MarketingSequencesByIdEnrollmentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EnrollmentList> {
-            return localVarFp.getV1MarketingSequencesByIdEnrollments(requestParameters.id, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getMarketingSequencesByIdEnrollments(requestParameters: MarketingApiGetMarketingSequencesByIdEnrollmentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EnrollmentList> {
+            return localVarFp.getMarketingSequencesByIdEnrollments(requestParameters.id, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one sequence\'s steps in send order.
          * @summary Returns one sequence\'s steps in send order.
-         * @param {MarketingApiGetV1MarketingSequencesByIdStepsRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingSequencesByIdStepsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSequencesByIdSteps(requestParameters: MarketingApiGetV1MarketingSequencesByIdStepsRequest, options?: RawAxiosRequestConfig): AxiosPromise<StepList> {
-            return localVarFp.getV1MarketingSequencesByIdSteps(requestParameters.id, options).then((request) => request(axios, basePath));
+        getMarketingSequencesByIdSteps(requestParameters: MarketingApiGetMarketingSequencesByIdStepsRequest, options?: RawAxiosRequestConfig): AxiosPromise<StepList> {
+            return localVarFp.getMarketingSequencesByIdSteps(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Rolls up the caller org\'s campaigns: how many there are, how many are active, and the summed budget and spend in cents.
@@ -2058,763 +2058,763 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSummary(options?: RawAxiosRequestConfig): AxiosPromise<Summary> {
-            return localVarFp.getV1MarketingSummary(options).then((request) => request(axios, basePath));
+        getMarketingSummary(options?: RawAxiosRequestConfig): AxiosPromise<Summary> {
+            return localVarFp.getMarketingSummary(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
          * @summary Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
-         * @param {MarketingApiGetV1MarketingSuppressionsRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingSuppressionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingSuppressions(requestParameters: MarketingApiGetV1MarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SuppressionList> {
-            return localVarFp.getV1MarketingSuppressions(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getMarketingSuppressions(requestParameters: MarketingApiGetMarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SuppressionList> {
+            return localVarFp.getMarketingSuppressions(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer. The token binds (org, channel, address), so a caller can only opt OUT exactly the tuple it was minted for — never another address and never another org. An invalid token is refused, and a deployment with no KMS-sealed key refuses rather than accepting anything.
          * @summary Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer.
-         * @param {MarketingApiGetV1MarketingUnsubscribeRequest} requestParameters Request parameters.
+         * @param {MarketingApiGetMarketingUnsubscribeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketingUnsubscribe(requestParameters: MarketingApiGetV1MarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Unsubscribed> {
-            return localVarFp.getV1MarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, options).then((request) => request(axios, basePath));
+        getMarketingUnsubscribe(requestParameters: MarketingApiGetMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Unsubscribed> {
+            return localVarFp.getMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
          * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.
          * @summary Saves a cohort filter for the caller\'s org.
-         * @param {MarketingApiPostV1MarketingAudiencesRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingAudiencesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingAudiences(requestParameters: MarketingApiPostV1MarketingAudiencesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Audience> {
-            return localVarFp.postV1MarketingAudiences(requestParameters.audience, options).then((request) => request(axios, basePath));
+        postMarketingAudiences(requestParameters: MarketingApiPostMarketingAudiencesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Audience> {
+            return localVarFp.postMarketingAudiences(requestParameters.audience, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a post to the content calendar. Channel and body are required. A scheduledAt in the future makes the post \"scheduled\" and the durable sweep publishes it when it comes due — claimed once, so a post publishes at most once; without one it stays a draft.
          * @summary Adds a post to the content calendar.
-         * @param {MarketingApiPostV1MarketingCalendarRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingCalendarRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingCalendar(requestParameters: MarketingApiPostV1MarketingCalendarRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarPost> {
-            return localVarFp.postV1MarketingCalendar(requestParameters.calendarPost, options).then((request) => request(axios, basePath));
+        postMarketingCalendar(requestParameters: MarketingApiPostMarketingCalendarRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarPost> {
+            return localVarFp.postMarketingCalendar(requestParameters.calendarPost, options).then((request) => request(axios, basePath));
         },
         /**
          * Publishes a post NOW, synchronously, whatever its schedule. No social connector is wired today, so every channel answers an honest 501 naming the seam a real one would plug into, and the post is recorded failed with that exact reason — never a faked \"published\".
          * @summary Publishes a post NOW, synchronously, whatever its schedule.
-         * @param {MarketingApiPostV1MarketingCalendarByIdPublishRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingCalendarByIdPublishRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingCalendarByIdPublish(requestParameters: MarketingApiPostV1MarketingCalendarByIdPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarPost> {
-            return localVarFp.postV1MarketingCalendarByIdPublish(requestParameters.id, options).then((request) => request(axios, basePath));
+        postMarketingCalendarByIdPublish(requestParameters: MarketingApiPostMarketingCalendarByIdPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarPost> {
+            return localVarFp.postMarketingCalendarByIdPublish(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Registers a campaign in the caller\'s org. Name is required; channel defaults to email and status to draft, and a future scheduledAt with no explicit status makes the campaign \"scheduled\". Budget and spend are cents and are clamped to >= 0. The id, createdAt and updatedAt of the input are ignored — the server assigns them.
          * @summary Registers a campaign in the caller\'s org.
-         * @param {MarketingApiPostV1MarketingCampaignsRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingCampaignsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingCampaigns(requestParameters: MarketingApiPostV1MarketingCampaignsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Campaign> {
-            return localVarFp.postV1MarketingCampaigns(requestParameters.campaign, options).then((request) => request(axios, basePath));
+        postMarketingCampaigns(requestParameters: MarketingApiPostMarketingCampaignsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Campaign> {
+            return localVarFp.postMarketingCampaigns(requestParameters.campaign, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets a campaign\'s send time and moves it to \"scheduled\". A scheduledAt of 0 clears the schedule and returns it to \"draft\".
          * @summary Sets a campaign\'s send time and moves it to \"scheduled\".
-         * @param {MarketingApiPostV1MarketingCampaignsByIdScheduleRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingCampaignsByIdScheduleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingCampaignsByIdSchedule(requestParameters: MarketingApiPostV1MarketingCampaignsByIdScheduleRequest, options?: RawAxiosRequestConfig): AxiosPromise<Campaign> {
-            return localVarFp.postV1MarketingCampaignsByIdSchedule(requestParameters.id, requestParameters.scheduleInput, options).then((request) => request(axios, basePath));
+        postMarketingCampaignsByIdSchedule(requestParameters: MarketingApiPostMarketingCampaignsByIdScheduleRequest, options?: RawAxiosRequestConfig): AxiosPromise<Campaign> {
+            return localVarFp.postMarketingCampaignsByIdSchedule(requestParameters.id, requestParameters.scheduleInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Records the caller org\'s claim on a promo. NOTHING IS CREDITED: the redemption is a row, and credit into an org is an admin decision made on the admin surface against an auditable ledger.  The plan is DERIVED from the org\'s live ACTIVE/TRIALING paid subscription and can never be named by the caller — an org with no qualifying subscription is refused, and so is one whose subscription cannot be read. The seat count is the single-seat floor (claimSeats), so the recorded figure has no input that can inflate it.  Guards run under one lock so the cap cannot be raced past: the fleet-wide redemption cap, one redemption per org, one per payment instrument (REQUIRED), and the per-redemption ceiling.  It is IDEMPOTENT: an org that already redeemed gets its original redemption back with alreadyRedeemed true.
          * @summary Records the caller org\'s claim on a promo.
-         * @param {MarketingApiPostV1MarketingPromosByCodeRedeemRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingPromosByCodeRedeemRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingPromosByCodeRedeem(requestParameters: MarketingApiPostV1MarketingPromosByCodeRedeemRequest, options?: RawAxiosRequestConfig): AxiosPromise<RedeemResult> {
-            return localVarFp.postV1MarketingPromosByCodeRedeem(requestParameters.code, requestParameters.redeemInput, options).then((request) => request(axios, basePath));
+        postMarketingPromosByCodeRedeem(requestParameters: MarketingApiPostMarketingPromosByCodeRedeemRequest, options?: RawAxiosRequestConfig): AxiosPromise<RedeemResult> {
+            return localVarFp.postMarketingPromosByCodeRedeem(requestParameters.code, requestParameters.redeemInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Registers a drip sequence in the caller\'s org. Name is required; status defaults to draft, and a sequence must be ACTIVE before it will accept enrollments. The id, createdAt and updatedAt of the input are ignored — the server assigns them.
          * @summary Registers a drip sequence in the caller\'s org.
-         * @param {MarketingApiPostV1MarketingSequencesRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingSequencesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSequences(requestParameters: MarketingApiPostV1MarketingSequencesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Sequence> {
-            return localVarFp.postV1MarketingSequences(requestParameters.sequence, options).then((request) => request(axios, basePath));
+        postMarketingSequences(requestParameters: MarketingApiPostMarketingSequencesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Sequence> {
+            return localVarFp.postMarketingSequences(requestParameters.sequence, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds one contact or a whole audience to a sequence and schedules the first step for each. The sequence must be ACTIVE (a draft sends nothing), and the request must name exactly one of address or audienceId.  Enrolling is ALL this does: the message itself is sent later by the drip engine, through the suppression gate, so an opted-out customer can be enrolled here and still never be mailed. Re-posting is safe — an address this sequence already took is counted in alreadyEnrolled and never double-dripped — which is what makes retrying a partially-applied announcement a resume rather than a second send.
          * @summary Adds one contact or a whole audience to a sequence and schedules the first step for each.
-         * @param {MarketingApiPostV1MarketingSequencesByIdEnrollRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingSequencesByIdEnrollRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSequencesByIdEnroll(requestParameters: MarketingApiPostV1MarketingSequencesByIdEnrollRequest, options?: RawAxiosRequestConfig): AxiosPromise<EnrollResult> {
-            return localVarFp.postV1MarketingSequencesByIdEnroll(requestParameters.id, requestParameters.enrollInput, options).then((request) => request(axios, basePath));
+        postMarketingSequencesByIdEnroll(requestParameters: MarketingApiPostMarketingSequencesByIdEnrollRequest, options?: RawAxiosRequestConfig): AxiosPromise<EnrollResult> {
+            return localVarFp.postMarketingSequencesByIdEnroll(requestParameters.id, requestParameters.enrollInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled. Only an ACTIVE enrollment can be canceled — one already completed or canceled reads as not found.
          * @summary Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled.
-         * @param {MarketingApiPostV1MarketingSequencesByIdEnrollmentsByEidCancelRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingSequencesByIdEnrollmentsByEidCancelRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSequencesByIdEnrollmentsByEidCancel(requestParameters: MarketingApiPostV1MarketingSequencesByIdEnrollmentsByEidCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1MarketingSequencesByIdEnrollmentsByEidCancel(requestParameters.id, requestParameters.eid, options).then((request) => request(axios, basePath));
+        postMarketingSequencesByIdEnrollmentsByEidCancel(requestParameters: MarketingApiPostMarketingSequencesByIdEnrollmentsByEidCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMarketingSequencesByIdEnrollmentsByEidCancel(requestParameters.id, requestParameters.eid, options).then((request) => request(axios, basePath));
         },
         /**
          * Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments. It does not touch enrollments already walking: archiving stops new ones, not in-flight ones.
          * @summary Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments.
-         * @param {MarketingApiPostV1MarketingSequencesByIdStatusRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingSequencesByIdStatusRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSequencesByIdStatus(requestParameters: MarketingApiPostV1MarketingSequencesByIdStatusRequest, options?: RawAxiosRequestConfig): AxiosPromise<SequenceStatus> {
-            return localVarFp.postV1MarketingSequencesByIdStatus(requestParameters.id, requestParameters.sequenceStatus, options).then((request) => request(axios, basePath));
+        postMarketingSequencesByIdStatus(requestParameters: MarketingApiPostMarketingSequencesByIdStatusRequest, options?: RawAxiosRequestConfig): AxiosPromise<SequenceStatus> {
+            return localVarFp.postMarketingSequencesByIdStatus(requestParameters.id, requestParameters.sequenceStatus, options).then((request) => request(axios, basePath));
         },
         /**
          * Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added. Body is required and delaySeconds must be >= 0. Adding a step does not disturb enrollments already walking — one that has passed this index simply never sees it.
          * @summary Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added.
-         * @param {MarketingApiPostV1MarketingSequencesByIdStepsRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingSequencesByIdStepsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSequencesByIdSteps(requestParameters: MarketingApiPostV1MarketingSequencesByIdStepsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Step> {
-            return localVarFp.postV1MarketingSequencesByIdSteps(requestParameters.id, requestParameters.stepInput, options).then((request) => request(axios, basePath));
+        postMarketingSequencesByIdSteps(requestParameters: MarketingApiPostMarketingSequencesByIdStepsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Step> {
+            return localVarFp.postMarketingSequencesByIdSteps(requestParameters.id, requestParameters.stepInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.
          * @summary Records an opt-out for the org (admin / self-service management).
-         * @param {MarketingApiPostV1MarketingSuppressionsRequest} requestParameters Request parameters.
+         * @param {MarketingApiPostMarketingSuppressionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketingSuppressions(requestParameters: MarketingApiPostV1MarketingSuppressionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Suppression> {
-            return localVarFp.postV1MarketingSuppressions(requestParameters.suppression, options).then((request) => request(axios, basePath));
+        postMarketingSuppressions(requestParameters: MarketingApiPostMarketingSuppressionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Suppression> {
+            return localVarFp.postMarketingSuppressions(requestParameters.suppression, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces a post\'s editable fields. It is a full write, not a patch, and it RESETS the lifecycle from the schedule: a scheduledAt makes the post \"scheduled\" again and none makes it a draft — so editing a failed post requeues it rather than leaving it stuck.
          * @summary Replaces a post\'s editable fields.
-         * @param {MarketingApiPutV1MarketingCalendarByIdRequest} requestParameters Request parameters.
+         * @param {MarketingApiPutMarketingCalendarByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1MarketingCalendarById(requestParameters: MarketingApiPutV1MarketingCalendarByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarPost> {
-            return localVarFp.putV1MarketingCalendarById(requestParameters.id, requestParameters.calendarPost, options).then((request) => request(axios, basePath));
+        putMarketingCalendarById(requestParameters: MarketingApiPutMarketingCalendarByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CalendarPost> {
+            return localVarFp.putMarketingCalendarById(requestParameters.id, requestParameters.calendarPost, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces a campaign\'s editable fields. It is a full write, not a patch: every field takes the value in the body, and an omitted one is cleared. The id comes from the path — the body cannot retarget another campaign — and createdAt is never rewritten.
          * @summary Replaces a campaign\'s editable fields.
-         * @param {MarketingApiPutV1MarketingCampaignsByIdRequest} requestParameters Request parameters.
+         * @param {MarketingApiPutMarketingCampaignsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1MarketingCampaignsById(requestParameters: MarketingApiPutV1MarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Campaign> {
-            return localVarFp.putV1MarketingCampaignsById(requestParameters.id, requestParameters.campaign, options).then((request) => request(axios, basePath));
+        putMarketingCampaignsById(requestParameters: MarketingApiPutMarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Campaign> {
+            return localVarFp.putMarketingCampaignsById(requestParameters.id, requestParameters.campaign, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1MarketingAudiencesById operation in MarketingApi.
+ * Request parameters for deleteMarketingAudiencesById operation in MarketingApi.
  * @export
- * @interface MarketingApiDeleteV1MarketingAudiencesByIdRequest
+ * @interface MarketingApiDeleteMarketingAudiencesByIdRequest
  */
-export interface MarketingApiDeleteV1MarketingAudiencesByIdRequest {
+export interface MarketingApiDeleteMarketingAudiencesByIdRequest {
     /**
      * ID is the audience id from the path, as returned by create.
      * @type {string}
-     * @memberof MarketingApiDeleteV1MarketingAudiencesById
+     * @memberof MarketingApiDeleteMarketingAudiencesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1MarketingCalendarById operation in MarketingApi.
+ * Request parameters for deleteMarketingCalendarById operation in MarketingApi.
  * @export
- * @interface MarketingApiDeleteV1MarketingCalendarByIdRequest
+ * @interface MarketingApiDeleteMarketingCalendarByIdRequest
  */
-export interface MarketingApiDeleteV1MarketingCalendarByIdRequest {
+export interface MarketingApiDeleteMarketingCalendarByIdRequest {
     /**
      * ID is the post id from the path, as returned by create.
      * @type {string}
-     * @memberof MarketingApiDeleteV1MarketingCalendarById
+     * @memberof MarketingApiDeleteMarketingCalendarById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1MarketingCampaignsById operation in MarketingApi.
+ * Request parameters for deleteMarketingCampaignsById operation in MarketingApi.
  * @export
- * @interface MarketingApiDeleteV1MarketingCampaignsByIdRequest
+ * @interface MarketingApiDeleteMarketingCampaignsByIdRequest
  */
-export interface MarketingApiDeleteV1MarketingCampaignsByIdRequest {
+export interface MarketingApiDeleteMarketingCampaignsByIdRequest {
     /**
      * ID is the campaign id from the path, as returned by create.
      * @type {string}
-     * @memberof MarketingApiDeleteV1MarketingCampaignsById
+     * @memberof MarketingApiDeleteMarketingCampaignsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1MarketingSuppressions operation in MarketingApi.
+ * Request parameters for deleteMarketingSuppressions operation in MarketingApi.
  * @export
- * @interface MarketingApiDeleteV1MarketingSuppressionsRequest
+ * @interface MarketingApiDeleteMarketingSuppressionsRequest
  */
-export interface MarketingApiDeleteV1MarketingSuppressionsRequest {
+export interface MarketingApiDeleteMarketingSuppressionsRequest {
     /**
      * Channel is the surface opted out of: email, sms, social, meta, google or tiktok. Empty means email. Opting out of one leaves the others reachable.
      * @type {string}
-     * @memberof MarketingApiDeleteV1MarketingSuppressions
+     * @memberof MarketingApiDeleteMarketingSuppressions
      */
     readonly channel?: string
 
     /**
      * Address is the recipient, normalized (lower-cased, trimmed) so an opt-out cannot be slipped past on a case or whitespace difference. Required.
      * @type {string}
-     * @memberof MarketingApiDeleteV1MarketingSuppressions
+     * @memberof MarketingApiDeleteMarketingSuppressions
      */
     readonly address?: string
 
     /**
      * Reason is a free-text note, capped at 1024 bytes. The public one-click endpoint records \&quot;one-click unsubscribe\&quot;.
      * @type {string}
-     * @memberof MarketingApiDeleteV1MarketingSuppressions
+     * @memberof MarketingApiDeleteMarketingSuppressions
      */
     readonly reason?: string
 
     /**
      * CreatedAt is unix seconds, server-assigned.
      * @type {number}
-     * @memberof MarketingApiDeleteV1MarketingSuppressions
+     * @memberof MarketingApiDeleteMarketingSuppressions
      */
     readonly createdAt?: number
 }
 
 /**
- * Request parameters for getV1MarketingAudiences operation in MarketingApi.
+ * Request parameters for getMarketingAudiences operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingAudiencesRequest
+ * @interface MarketingApiGetMarketingAudiencesRequest
  */
-export interface MarketingApiGetV1MarketingAudiencesRequest {
+export interface MarketingApiGetMarketingAudiencesRequest {
     /**
      * Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
      * @type {number}
-     * @memberof MarketingApiGetV1MarketingAudiences
+     * @memberof MarketingApiGetMarketingAudiences
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1MarketingAudiencesById operation in MarketingApi.
+ * Request parameters for getMarketingAudiencesById operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingAudiencesByIdRequest
+ * @interface MarketingApiGetMarketingAudiencesByIdRequest
  */
-export interface MarketingApiGetV1MarketingAudiencesByIdRequest {
+export interface MarketingApiGetMarketingAudiencesByIdRequest {
     /**
      * ID is the audience id from the path, as returned by create.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingAudiencesById
+     * @memberof MarketingApiGetMarketingAudiencesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1MarketingAudiencesByIdPreview operation in MarketingApi.
+ * Request parameters for getMarketingAudiencesByIdPreview operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingAudiencesByIdPreviewRequest
+ * @interface MarketingApiGetMarketingAudiencesByIdPreviewRequest
  */
-export interface MarketingApiGetV1MarketingAudiencesByIdPreviewRequest {
+export interface MarketingApiGetMarketingAudiencesByIdPreviewRequest {
     /**
      * ID is the audience id from the path, as returned by create.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingAudiencesByIdPreview
+     * @memberof MarketingApiGetMarketingAudiencesByIdPreview
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1MarketingCalendar operation in MarketingApi.
+ * Request parameters for getMarketingCalendar operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingCalendarRequest
+ * @interface MarketingApiGetMarketingCalendarRequest
  */
-export interface MarketingApiGetV1MarketingCalendarRequest {
+export interface MarketingApiGetMarketingCalendarRequest {
     /**
      * Status keeps only posts in that state (draft, scheduled, published, failed, canceled). Empty means every post.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingCalendar
+     * @memberof MarketingApiGetMarketingCalendar
      */
     readonly status?: string
 
     /**
      * Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
      * @type {number}
-     * @memberof MarketingApiGetV1MarketingCalendar
+     * @memberof MarketingApiGetMarketingCalendar
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1MarketingCalendarById operation in MarketingApi.
+ * Request parameters for getMarketingCalendarById operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingCalendarByIdRequest
+ * @interface MarketingApiGetMarketingCalendarByIdRequest
  */
-export interface MarketingApiGetV1MarketingCalendarByIdRequest {
+export interface MarketingApiGetMarketingCalendarByIdRequest {
     /**
      * ID is the post id from the path, as returned by create.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingCalendarById
+     * @memberof MarketingApiGetMarketingCalendarById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1MarketingCampaigns operation in MarketingApi.
+ * Request parameters for getMarketingCampaigns operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingCampaignsRequest
+ * @interface MarketingApiGetMarketingCampaignsRequest
  */
-export interface MarketingApiGetV1MarketingCampaignsRequest {
+export interface MarketingApiGetMarketingCampaignsRequest {
     /**
      * Status keeps only campaigns in that lifecycle state (draft, scheduled, active, paused, completed). Empty means every campaign.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingCampaigns
+     * @memberof MarketingApiGetMarketingCampaigns
      */
     readonly status?: string
 
     /**
      * Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
      * @type {number}
-     * @memberof MarketingApiGetV1MarketingCampaigns
+     * @memberof MarketingApiGetMarketingCampaigns
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1MarketingCampaignsById operation in MarketingApi.
+ * Request parameters for getMarketingCampaignsById operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingCampaignsByIdRequest
+ * @interface MarketingApiGetMarketingCampaignsByIdRequest
  */
-export interface MarketingApiGetV1MarketingCampaignsByIdRequest {
+export interface MarketingApiGetMarketingCampaignsByIdRequest {
     /**
      * ID is the campaign id from the path, as returned by create.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingCampaignsById
+     * @memberof MarketingApiGetMarketingCampaignsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1MarketingPromosByCodeEligibility operation in MarketingApi.
+ * Request parameters for getMarketingPromosByCodeEligibility operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingPromosByCodeEligibilityRequest
+ * @interface MarketingApiGetMarketingPromosByCodeEligibilityRequest
  */
-export interface MarketingApiGetV1MarketingPromosByCodeEligibilityRequest {
+export interface MarketingApiGetMarketingPromosByCodeEligibilityRequest {
     /**
      * Code is the promo code from the path.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingPromosByCodeEligibility
+     * @memberof MarketingApiGetMarketingPromosByCodeEligibility
      */
     readonly code: string
 
     /**
      * Plan is the plan being priced: pro, max or team. Anything else (including the free Developer plan) has no list price and so nothing to discount.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingPromosByCodeEligibility
+     * @memberof MarketingApiGetMarketingPromosByCodeEligibility
      */
     readonly plan?: string
 
     /**
      * Seats is the Team seat count; 0 means 1, and it is ignored for the single-seat plans.
      * @type {number}
-     * @memberof MarketingApiGetV1MarketingPromosByCodeEligibility
+     * @memberof MarketingApiGetMarketingPromosByCodeEligibility
      */
     readonly seats?: number
 }
 
 /**
- * Request parameters for getV1MarketingPromosByCodeRedemption operation in MarketingApi.
+ * Request parameters for getMarketingPromosByCodeRedemption operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingPromosByCodeRedemptionRequest
+ * @interface MarketingApiGetMarketingPromosByCodeRedemptionRequest
  */
-export interface MarketingApiGetV1MarketingPromosByCodeRedemptionRequest {
+export interface MarketingApiGetMarketingPromosByCodeRedemptionRequest {
     /**
      * Code is the promo code from the path, e.g. \&quot;first1000\&quot;.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingPromosByCodeRedemption
+     * @memberof MarketingApiGetMarketingPromosByCodeRedemption
      */
     readonly code: string
 }
 
 /**
- * Request parameters for getV1MarketingSequences operation in MarketingApi.
+ * Request parameters for getMarketingSequences operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingSequencesRequest
+ * @interface MarketingApiGetMarketingSequencesRequest
  */
-export interface MarketingApiGetV1MarketingSequencesRequest {
+export interface MarketingApiGetMarketingSequencesRequest {
     /**
      * Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
      * @type {number}
-     * @memberof MarketingApiGetV1MarketingSequences
+     * @memberof MarketingApiGetMarketingSequences
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1MarketingSequencesById operation in MarketingApi.
+ * Request parameters for getMarketingSequencesById operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingSequencesByIdRequest
+ * @interface MarketingApiGetMarketingSequencesByIdRequest
  */
-export interface MarketingApiGetV1MarketingSequencesByIdRequest {
+export interface MarketingApiGetMarketingSequencesByIdRequest {
     /**
      * ID is the sequence id from the path, as returned by create.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingSequencesById
+     * @memberof MarketingApiGetMarketingSequencesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1MarketingSequencesByIdEnrollments operation in MarketingApi.
+ * Request parameters for getMarketingSequencesByIdEnrollments operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingSequencesByIdEnrollmentsRequest
+ * @interface MarketingApiGetMarketingSequencesByIdEnrollmentsRequest
  */
-export interface MarketingApiGetV1MarketingSequencesByIdEnrollmentsRequest {
+export interface MarketingApiGetMarketingSequencesByIdEnrollmentsRequest {
     /**
      * ID is the sequence id from the path.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingSequencesByIdEnrollments
+     * @memberof MarketingApiGetMarketingSequencesByIdEnrollments
      */
     readonly id: string
 
     /**
      * Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
      * @type {number}
-     * @memberof MarketingApiGetV1MarketingSequencesByIdEnrollments
+     * @memberof MarketingApiGetMarketingSequencesByIdEnrollments
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1MarketingSequencesByIdSteps operation in MarketingApi.
+ * Request parameters for getMarketingSequencesByIdSteps operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingSequencesByIdStepsRequest
+ * @interface MarketingApiGetMarketingSequencesByIdStepsRequest
  */
-export interface MarketingApiGetV1MarketingSequencesByIdStepsRequest {
+export interface MarketingApiGetMarketingSequencesByIdStepsRequest {
     /**
      * ID is the sequence id from the path, as returned by create.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingSequencesByIdSteps
+     * @memberof MarketingApiGetMarketingSequencesByIdSteps
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1MarketingSuppressions operation in MarketingApi.
+ * Request parameters for getMarketingSuppressions operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingSuppressionsRequest
+ * @interface MarketingApiGetMarketingSuppressionsRequest
  */
-export interface MarketingApiGetV1MarketingSuppressionsRequest {
+export interface MarketingApiGetMarketingSuppressionsRequest {
     /**
      * Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
      * @type {number}
-     * @memberof MarketingApiGetV1MarketingSuppressions
+     * @memberof MarketingApiGetMarketingSuppressions
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1MarketingUnsubscribe operation in MarketingApi.
+ * Request parameters for getMarketingUnsubscribe operation in MarketingApi.
  * @export
- * @interface MarketingApiGetV1MarketingUnsubscribeRequest
+ * @interface MarketingApiGetMarketingUnsubscribeRequest
  */
-export interface MarketingApiGetV1MarketingUnsubscribeRequest {
+export interface MarketingApiGetMarketingUnsubscribeRequest {
     /**
      * Org is the org the link was minted for.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingUnsubscribe
+     * @memberof MarketingApiGetMarketingUnsubscribe
      */
     readonly org?: string
 
     /**
      * Channel is the surface to opt out of.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingUnsubscribe
+     * @memberof MarketingApiGetMarketingUnsubscribe
      */
     readonly channel?: string
 
     /**
      * Address is the recipient to opt out.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingUnsubscribe
+     * @memberof MarketingApiGetMarketingUnsubscribe
      */
     readonly address?: string
 
     /**
      * Token is the HMAC over (org, channel, address). It is the ONLY authority here — there is no principal — so it binds the request to one tuple and nothing else.
      * @type {string}
-     * @memberof MarketingApiGetV1MarketingUnsubscribe
+     * @memberof MarketingApiGetMarketingUnsubscribe
      */
     readonly token?: string
 }
 
 /**
- * Request parameters for postV1MarketingAudiences operation in MarketingApi.
+ * Request parameters for postMarketingAudiences operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingAudiencesRequest
+ * @interface MarketingApiPostMarketingAudiencesRequest
  */
-export interface MarketingApiPostV1MarketingAudiencesRequest {
+export interface MarketingApiPostMarketingAudiencesRequest {
     /**
      * 
      * @type {Audience}
-     * @memberof MarketingApiPostV1MarketingAudiences
+     * @memberof MarketingApiPostMarketingAudiences
      */
     readonly audience: Audience
 }
 
 /**
- * Request parameters for postV1MarketingCalendar operation in MarketingApi.
+ * Request parameters for postMarketingCalendar operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingCalendarRequest
+ * @interface MarketingApiPostMarketingCalendarRequest
  */
-export interface MarketingApiPostV1MarketingCalendarRequest {
+export interface MarketingApiPostMarketingCalendarRequest {
     /**
      * 
      * @type {CalendarPost}
-     * @memberof MarketingApiPostV1MarketingCalendar
+     * @memberof MarketingApiPostMarketingCalendar
      */
     readonly calendarPost: CalendarPost
 }
 
 /**
- * Request parameters for postV1MarketingCalendarByIdPublish operation in MarketingApi.
+ * Request parameters for postMarketingCalendarByIdPublish operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingCalendarByIdPublishRequest
+ * @interface MarketingApiPostMarketingCalendarByIdPublishRequest
  */
-export interface MarketingApiPostV1MarketingCalendarByIdPublishRequest {
+export interface MarketingApiPostMarketingCalendarByIdPublishRequest {
     /**
      * ID is the post id from the path, as returned by create.
      * @type {string}
-     * @memberof MarketingApiPostV1MarketingCalendarByIdPublish
+     * @memberof MarketingApiPostMarketingCalendarByIdPublish
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1MarketingCampaigns operation in MarketingApi.
+ * Request parameters for postMarketingCampaigns operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingCampaignsRequest
+ * @interface MarketingApiPostMarketingCampaignsRequest
  */
-export interface MarketingApiPostV1MarketingCampaignsRequest {
+export interface MarketingApiPostMarketingCampaignsRequest {
     /**
      * 
      * @type {Campaign}
-     * @memberof MarketingApiPostV1MarketingCampaigns
+     * @memberof MarketingApiPostMarketingCampaigns
      */
     readonly campaign: Campaign
 }
 
 /**
- * Request parameters for postV1MarketingCampaignsByIdSchedule operation in MarketingApi.
+ * Request parameters for postMarketingCampaignsByIdSchedule operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingCampaignsByIdScheduleRequest
+ * @interface MarketingApiPostMarketingCampaignsByIdScheduleRequest
  */
-export interface MarketingApiPostV1MarketingCampaignsByIdScheduleRequest {
+export interface MarketingApiPostMarketingCampaignsByIdScheduleRequest {
     /**
      * ID is the campaign id from the path.
      * @type {string}
-     * @memberof MarketingApiPostV1MarketingCampaignsByIdSchedule
+     * @memberof MarketingApiPostMarketingCampaignsByIdSchedule
      */
     readonly id: string
 
     /**
      * 
      * @type {ScheduleInput}
-     * @memberof MarketingApiPostV1MarketingCampaignsByIdSchedule
+     * @memberof MarketingApiPostMarketingCampaignsByIdSchedule
      */
     readonly scheduleInput: ScheduleInput
 }
 
 /**
- * Request parameters for postV1MarketingPromosByCodeRedeem operation in MarketingApi.
+ * Request parameters for postMarketingPromosByCodeRedeem operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingPromosByCodeRedeemRequest
+ * @interface MarketingApiPostMarketingPromosByCodeRedeemRequest
  */
-export interface MarketingApiPostV1MarketingPromosByCodeRedeemRequest {
+export interface MarketingApiPostMarketingPromosByCodeRedeemRequest {
     /**
      * Code is the promo code from the path.
      * @type {string}
-     * @memberof MarketingApiPostV1MarketingPromosByCodeRedeem
+     * @memberof MarketingApiPostMarketingPromosByCodeRedeem
      */
     readonly code: string
 
     /**
      * 
      * @type {RedeemInput}
-     * @memberof MarketingApiPostV1MarketingPromosByCodeRedeem
+     * @memberof MarketingApiPostMarketingPromosByCodeRedeem
      */
     readonly redeemInput: RedeemInput
 }
 
 /**
- * Request parameters for postV1MarketingSequences operation in MarketingApi.
+ * Request parameters for postMarketingSequences operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingSequencesRequest
+ * @interface MarketingApiPostMarketingSequencesRequest
  */
-export interface MarketingApiPostV1MarketingSequencesRequest {
+export interface MarketingApiPostMarketingSequencesRequest {
     /**
      * 
      * @type {Sequence}
-     * @memberof MarketingApiPostV1MarketingSequences
+     * @memberof MarketingApiPostMarketingSequences
      */
     readonly sequence: Sequence
 }
 
 /**
- * Request parameters for postV1MarketingSequencesByIdEnroll operation in MarketingApi.
+ * Request parameters for postMarketingSequencesByIdEnroll operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingSequencesByIdEnrollRequest
+ * @interface MarketingApiPostMarketingSequencesByIdEnrollRequest
  */
-export interface MarketingApiPostV1MarketingSequencesByIdEnrollRequest {
+export interface MarketingApiPostMarketingSequencesByIdEnrollRequest {
     /**
      * ID is the sequence id from the path.
      * @type {string}
-     * @memberof MarketingApiPostV1MarketingSequencesByIdEnroll
+     * @memberof MarketingApiPostMarketingSequencesByIdEnroll
      */
     readonly id: string
 
     /**
      * 
      * @type {EnrollInput}
-     * @memberof MarketingApiPostV1MarketingSequencesByIdEnroll
+     * @memberof MarketingApiPostMarketingSequencesByIdEnroll
      */
     readonly enrollInput: EnrollInput
 }
 
 /**
- * Request parameters for postV1MarketingSequencesByIdEnrollmentsByEidCancel operation in MarketingApi.
+ * Request parameters for postMarketingSequencesByIdEnrollmentsByEidCancel operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingSequencesByIdEnrollmentsByEidCancelRequest
+ * @interface MarketingApiPostMarketingSequencesByIdEnrollmentsByEidCancelRequest
  */
-export interface MarketingApiPostV1MarketingSequencesByIdEnrollmentsByEidCancelRequest {
+export interface MarketingApiPostMarketingSequencesByIdEnrollmentsByEidCancelRequest {
     /**
      * ID is the sequence id from the path.
      * @type {string}
-     * @memberof MarketingApiPostV1MarketingSequencesByIdEnrollmentsByEidCancel
+     * @memberof MarketingApiPostMarketingSequencesByIdEnrollmentsByEidCancel
      */
     readonly id: string
 
     /**
      * EID is the enrollment id from the path, as returned by a single-address enroll.
      * @type {string}
-     * @memberof MarketingApiPostV1MarketingSequencesByIdEnrollmentsByEidCancel
+     * @memberof MarketingApiPostMarketingSequencesByIdEnrollmentsByEidCancel
      */
     readonly eid: string
 }
 
 /**
- * Request parameters for postV1MarketingSequencesByIdStatus operation in MarketingApi.
+ * Request parameters for postMarketingSequencesByIdStatus operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingSequencesByIdStatusRequest
+ * @interface MarketingApiPostMarketingSequencesByIdStatusRequest
  */
-export interface MarketingApiPostV1MarketingSequencesByIdStatusRequest {
+export interface MarketingApiPostMarketingSequencesByIdStatusRequest {
     /**
      * ID is the sequence id from the path.
      * @type {string}
-     * @memberof MarketingApiPostV1MarketingSequencesByIdStatus
+     * @memberof MarketingApiPostMarketingSequencesByIdStatus
      */
     readonly id: string
 
     /**
      * 
      * @type {SequenceStatus}
-     * @memberof MarketingApiPostV1MarketingSequencesByIdStatus
+     * @memberof MarketingApiPostMarketingSequencesByIdStatus
      */
     readonly sequenceStatus: SequenceStatus
 }
 
 /**
- * Request parameters for postV1MarketingSequencesByIdSteps operation in MarketingApi.
+ * Request parameters for postMarketingSequencesByIdSteps operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingSequencesByIdStepsRequest
+ * @interface MarketingApiPostMarketingSequencesByIdStepsRequest
  */
-export interface MarketingApiPostV1MarketingSequencesByIdStepsRequest {
+export interface MarketingApiPostMarketingSequencesByIdStepsRequest {
     /**
      * SequenceID is the sequence id from the path (the route\&#39;s :id).
      * @type {string}
-     * @memberof MarketingApiPostV1MarketingSequencesByIdSteps
+     * @memberof MarketingApiPostMarketingSequencesByIdSteps
      */
     readonly id: string
 
     /**
      * 
      * @type {StepInput}
-     * @memberof MarketingApiPostV1MarketingSequencesByIdSteps
+     * @memberof MarketingApiPostMarketingSequencesByIdSteps
      */
     readonly stepInput: StepInput
 }
 
 /**
- * Request parameters for postV1MarketingSuppressions operation in MarketingApi.
+ * Request parameters for postMarketingSuppressions operation in MarketingApi.
  * @export
- * @interface MarketingApiPostV1MarketingSuppressionsRequest
+ * @interface MarketingApiPostMarketingSuppressionsRequest
  */
-export interface MarketingApiPostV1MarketingSuppressionsRequest {
+export interface MarketingApiPostMarketingSuppressionsRequest {
     /**
      * 
      * @type {Suppression}
-     * @memberof MarketingApiPostV1MarketingSuppressions
+     * @memberof MarketingApiPostMarketingSuppressions
      */
     readonly suppression: Suppression
 }
 
 /**
- * Request parameters for putV1MarketingCalendarById operation in MarketingApi.
+ * Request parameters for putMarketingCalendarById operation in MarketingApi.
  * @export
- * @interface MarketingApiPutV1MarketingCalendarByIdRequest
+ * @interface MarketingApiPutMarketingCalendarByIdRequest
  */
-export interface MarketingApiPutV1MarketingCalendarByIdRequest {
+export interface MarketingApiPutMarketingCalendarByIdRequest {
     /**
      * ID is the server-assigned post id (\&quot;cal_\&quot; + 128 random bits).
      * @type {string}
-     * @memberof MarketingApiPutV1MarketingCalendarById
+     * @memberof MarketingApiPutMarketingCalendarById
      */
     readonly id: string
 
     /**
      * 
      * @type {CalendarPost}
-     * @memberof MarketingApiPutV1MarketingCalendarById
+     * @memberof MarketingApiPutMarketingCalendarById
      */
     readonly calendarPost: CalendarPost
 }
 
 /**
- * Request parameters for putV1MarketingCampaignsById operation in MarketingApi.
+ * Request parameters for putMarketingCampaignsById operation in MarketingApi.
  * @export
- * @interface MarketingApiPutV1MarketingCampaignsByIdRequest
+ * @interface MarketingApiPutMarketingCampaignsByIdRequest
  */
-export interface MarketingApiPutV1MarketingCampaignsByIdRequest {
+export interface MarketingApiPutMarketingCampaignsByIdRequest {
     /**
      * ID is the server-assigned campaign id (\&quot;camp_\&quot; + 128 random bits).
      * @type {string}
-     * @memberof MarketingApiPutV1MarketingCampaignsById
+     * @memberof MarketingApiPutMarketingCampaignsById
      */
     readonly id: string
 
     /**
      * 
      * @type {Campaign}
-     * @memberof MarketingApiPutV1MarketingCampaignsById
+     * @memberof MarketingApiPutMarketingCampaignsById
      */
     readonly campaign: Campaign
 }
@@ -2829,133 +2829,133 @@ export class MarketingApi extends BaseAPI {
     /**
      * Removes one of the caller org\'s audiences and answers 204. It deletes the saved filter only — no customer, event or enrollment is touched.
      * @summary Removes one of the caller org\'s audiences and answers 204.
-     * @param {MarketingApiDeleteV1MarketingAudiencesByIdRequest} requestParameters Request parameters.
+     * @param {MarketingApiDeleteMarketingAudiencesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public deleteV1MarketingAudiencesById(requestParameters: MarketingApiDeleteV1MarketingAudiencesByIdRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).deleteV1MarketingAudiencesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteMarketingAudiencesById(requestParameters: MarketingApiDeleteMarketingAudiencesByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).deleteMarketingAudiencesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one of the caller org\'s posts and answers 204. A post already published is deleted from the calendar only — nothing is retracted from the network it went out on.
      * @summary Removes one of the caller org\'s posts and answers 204.
-     * @param {MarketingApiDeleteV1MarketingCalendarByIdRequest} requestParameters Request parameters.
+     * @param {MarketingApiDeleteMarketingCalendarByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public deleteV1MarketingCalendarById(requestParameters: MarketingApiDeleteV1MarketingCalendarByIdRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).deleteV1MarketingCalendarById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteMarketingCalendarById(requestParameters: MarketingApiDeleteMarketingCalendarByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).deleteMarketingCalendarById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one of the caller org\'s campaigns and answers 204. A campaign belonging to another org reads as not found and is left untouched.
      * @summary Removes one of the caller org\'s campaigns and answers 204.
-     * @param {MarketingApiDeleteV1MarketingCampaignsByIdRequest} requestParameters Request parameters.
+     * @param {MarketingApiDeleteMarketingCampaignsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public deleteV1MarketingCampaignsById(requestParameters: MarketingApiDeleteV1MarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).deleteV1MarketingCampaignsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteMarketingCampaignsById(requestParameters: MarketingApiDeleteMarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).deleteMarketingCampaignsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Re-subscribes an address on one channel and answers 204. An address that is not on the list reads as not found.
      * @summary Re-subscribes an address on one channel and answers 204.
-     * @param {MarketingApiDeleteV1MarketingSuppressionsRequest} requestParameters Request parameters.
+     * @param {MarketingApiDeleteMarketingSuppressionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public deleteV1MarketingSuppressions(requestParameters: MarketingApiDeleteV1MarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).deleteV1MarketingSuppressions(requestParameters.channel, requestParameters.address, requestParameters.reason, requestParameters.createdAt, options).then((request) => request(this.axios, this.basePath));
+    public deleteMarketingSuppressions(requestParameters: MarketingApiDeleteMarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).deleteMarketingSuppressions(requestParameters.channel, requestParameters.address, requestParameters.reason, requestParameters.createdAt, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the org\'s saved audiences, most recently updated first.
      * @summary Returns the org\'s saved audiences, most recently updated first.
-     * @param {MarketingApiGetV1MarketingAudiencesRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingAudiencesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingAudiences(requestParameters: MarketingApiGetV1MarketingAudiencesRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingAudiences(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingAudiences(requestParameters: MarketingApiGetMarketingAudiencesRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingAudiences(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one of the caller org\'s saved audiences. An audience belonging to another org reads as not found.
      * @summary Returns one of the caller org\'s saved audiences.
-     * @param {MarketingApiGetV1MarketingAudiencesByIdRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingAudiencesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingAudiencesById(requestParameters: MarketingApiGetV1MarketingAudiencesByIdRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingAudiencesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingAudiencesById(requestParameters: MarketingApiGetMarketingAudiencesByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingAudiencesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Evaluates the cohort LIVE — the same resolution an enrollment would run — and reports how big it is and how many real mailboxes it reaches. It is the honest answer to \"is this send worth making\": a cohort of 500 that mails 3 says so, in deliverable and unmatched. Nothing is sent.
      * @summary Evaluates the cohort LIVE — the same resolution an enrollment would run — and reports how big it is and how many real mailboxes it reaches.
-     * @param {MarketingApiGetV1MarketingAudiencesByIdPreviewRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingAudiencesByIdPreviewRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingAudiencesByIdPreview(requestParameters: MarketingApiGetV1MarketingAudiencesByIdPreviewRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingAudiencesByIdPreview(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingAudiencesByIdPreview(requestParameters: MarketingApiGetMarketingAudiencesByIdPreviewRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingAudiencesByIdPreview(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
      * @summary Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
-     * @param {MarketingApiGetV1MarketingCalendarRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingCalendarRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingCalendar(requestParameters: MarketingApiGetV1MarketingCalendarRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingCalendar(requestParameters.status, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingCalendar(requestParameters: MarketingApiGetMarketingCalendarRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingCalendar(requestParameters.status, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one of the caller org\'s posts, including the exact error behind a failed publish. A post belonging to another org reads as not found.
      * @summary Returns one of the caller org\'s posts, including the exact error behind a failed publish.
-     * @param {MarketingApiGetV1MarketingCalendarByIdRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingCalendarByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingCalendarById(requestParameters: MarketingApiGetV1MarketingCalendarByIdRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingCalendarById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingCalendarById(requestParameters: MarketingApiGetMarketingCalendarByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingCalendarById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the org\'s campaigns, most recently updated first, optionally narrowed to one lifecycle status.
      * @summary Returns the org\'s campaigns, most recently updated first, optionally narrowed to one lifecycle status.
-     * @param {MarketingApiGetV1MarketingCampaignsRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingCampaignsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingCampaigns(requestParameters: MarketingApiGetV1MarketingCampaignsRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingCampaigns(requestParameters.status, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingCampaigns(requestParameters: MarketingApiGetMarketingCampaignsRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingCampaigns(requestParameters.status, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one of the caller org\'s campaigns. A campaign belonging to another org reads as not found.
      * @summary Returns one of the caller org\'s campaigns.
-     * @param {MarketingApiGetV1MarketingCampaignsByIdRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingCampaignsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingCampaignsById(requestParameters: MarketingApiGetV1MarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingCampaignsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingCampaignsById(requestParameters: MarketingApiGetMarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingCampaignsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2965,80 +2965,80 @@ export class MarketingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingPromos(options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingPromos(options).then((request) => request(this.axios, this.basePath));
+    public getMarketingPromos(options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingPromos(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Prices a promo against a plan and seat count. It is PURE: nothing is redeemed, credited or counted, so it is safe to call from a pricing page on every keystroke. An inactive promo or an exhausted cap quotes ineligible with the reason rather than erroring.
      * @summary Prices a promo against a plan and seat count.
-     * @param {MarketingApiGetV1MarketingPromosByCodeEligibilityRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingPromosByCodeEligibilityRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingPromosByCodeEligibility(requestParameters: MarketingApiGetV1MarketingPromosByCodeEligibilityRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingPromosByCodeEligibility(requestParameters.code, requestParameters.plan, requestParameters.seats, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingPromosByCodeEligibility(requestParameters: MarketingApiGetMarketingPromosByCodeEligibilityRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingPromosByCodeEligibility(requestParameters.code, requestParameters.plan, requestParameters.seats, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s OWN redemption of a promo — an org-scoped read, so it can never surface another tenant\'s. Not found when this org has not redeemed it.
      * @summary Returns the caller org\'s OWN redemption of a promo — an org-scoped read, so it can never surface another tenant\'s.
-     * @param {MarketingApiGetV1MarketingPromosByCodeRedemptionRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingPromosByCodeRedemptionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingPromosByCodeRedemption(requestParameters: MarketingApiGetV1MarketingPromosByCodeRedemptionRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingPromosByCodeRedemption(requestParameters.code, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingPromosByCodeRedemption(requestParameters: MarketingApiGetMarketingPromosByCodeRedemptionRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingPromosByCodeRedemption(requestParameters.code, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the org\'s drip sequences, most recently updated first.
      * @summary Returns the org\'s drip sequences, most recently updated first.
-     * @param {MarketingApiGetV1MarketingSequencesRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingSequencesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingSequences(requestParameters: MarketingApiGetV1MarketingSequencesRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingSequences(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingSequences(requestParameters: MarketingApiGetMarketingSequencesRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingSequences(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one of the caller org\'s sequences together with its steps in send order. A sequence belonging to another org reads as not found.
      * @summary Returns one of the caller org\'s sequences together with its steps in send order.
-     * @param {MarketingApiGetV1MarketingSequencesByIdRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingSequencesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingSequencesById(requestParameters: MarketingApiGetV1MarketingSequencesByIdRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingSequencesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingSequencesById(requestParameters: MarketingApiGetMarketingSequencesByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingSequencesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns who is walking one sequence, most recently enrolled first, with each walk\'s current step and next due time.
      * @summary Returns who is walking one sequence, most recently enrolled first, with each walk\'s current step and next due time.
-     * @param {MarketingApiGetV1MarketingSequencesByIdEnrollmentsRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingSequencesByIdEnrollmentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingSequencesByIdEnrollments(requestParameters: MarketingApiGetV1MarketingSequencesByIdEnrollmentsRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingSequencesByIdEnrollments(requestParameters.id, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingSequencesByIdEnrollments(requestParameters: MarketingApiGetMarketingSequencesByIdEnrollmentsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingSequencesByIdEnrollments(requestParameters.id, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one sequence\'s steps in send order.
      * @summary Returns one sequence\'s steps in send order.
-     * @param {MarketingApiGetV1MarketingSequencesByIdStepsRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingSequencesByIdStepsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingSequencesByIdSteps(requestParameters: MarketingApiGetV1MarketingSequencesByIdStepsRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingSequencesByIdSteps(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingSequencesByIdSteps(requestParameters: MarketingApiGetMarketingSequencesByIdStepsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingSequencesByIdSteps(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3048,200 +3048,200 @@ export class MarketingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingSummary(options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingSummary(options).then((request) => request(this.axios, this.basePath));
+    public getMarketingSummary(options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingSummary(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
      * @summary Returns the org\'s opt-out list, newest first — everyone the send gate will refuse to deliver to.
-     * @param {MarketingApiGetV1MarketingSuppressionsRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingSuppressionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingSuppressions(requestParameters: MarketingApiGetV1MarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingSuppressions(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingSuppressions(requestParameters: MarketingApiGetMarketingSuppressionsRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingSuppressions(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer. The token binds (org, channel, address), so a caller can only opt OUT exactly the tuple it was minted for — never another address and never another org. An invalid token is refused, and a deployment with no KMS-sealed key refuses rather than accepting anything.
      * @summary Is the PUBLIC one-click endpoint (no principal): a recipient clicks the signed link in an email footer.
-     * @param {MarketingApiGetV1MarketingUnsubscribeRequest} requestParameters Request parameters.
+     * @param {MarketingApiGetMarketingUnsubscribeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public getV1MarketingUnsubscribe(requestParameters: MarketingApiGetV1MarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).getV1MarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    public getMarketingUnsubscribe(requestParameters: MarketingApiGetMarketingUnsubscribeRequest = {}, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).getMarketingUnsubscribe(requestParameters.org, requestParameters.channel, requestParameters.address, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Saves a cohort filter for the caller\'s org. Name is required. Omitting event saves the WHOLE-ORG audience — every mailable customer — which needs no analytics warehouse; naming one narrows that roster to the customers who fired it within windowDays.
      * @summary Saves a cohort filter for the caller\'s org.
-     * @param {MarketingApiPostV1MarketingAudiencesRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingAudiencesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingAudiences(requestParameters: MarketingApiPostV1MarketingAudiencesRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingAudiences(requestParameters.audience, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingAudiences(requestParameters: MarketingApiPostMarketingAudiencesRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingAudiences(requestParameters.audience, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds a post to the content calendar. Channel and body are required. A scheduledAt in the future makes the post \"scheduled\" and the durable sweep publishes it when it comes due — claimed once, so a post publishes at most once; without one it stays a draft.
      * @summary Adds a post to the content calendar.
-     * @param {MarketingApiPostV1MarketingCalendarRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingCalendarRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingCalendar(requestParameters: MarketingApiPostV1MarketingCalendarRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingCalendar(requestParameters.calendarPost, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingCalendar(requestParameters: MarketingApiPostMarketingCalendarRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingCalendar(requestParameters.calendarPost, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Publishes a post NOW, synchronously, whatever its schedule. No social connector is wired today, so every channel answers an honest 501 naming the seam a real one would plug into, and the post is recorded failed with that exact reason — never a faked \"published\".
      * @summary Publishes a post NOW, synchronously, whatever its schedule.
-     * @param {MarketingApiPostV1MarketingCalendarByIdPublishRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingCalendarByIdPublishRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingCalendarByIdPublish(requestParameters: MarketingApiPostV1MarketingCalendarByIdPublishRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingCalendarByIdPublish(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingCalendarByIdPublish(requestParameters: MarketingApiPostMarketingCalendarByIdPublishRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingCalendarByIdPublish(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Registers a campaign in the caller\'s org. Name is required; channel defaults to email and status to draft, and a future scheduledAt with no explicit status makes the campaign \"scheduled\". Budget and spend are cents and are clamped to >= 0. The id, createdAt and updatedAt of the input are ignored — the server assigns them.
      * @summary Registers a campaign in the caller\'s org.
-     * @param {MarketingApiPostV1MarketingCampaignsRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingCampaignsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingCampaigns(requestParameters: MarketingApiPostV1MarketingCampaignsRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingCampaigns(requestParameters.campaign, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingCampaigns(requestParameters: MarketingApiPostMarketingCampaignsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingCampaigns(requestParameters.campaign, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets a campaign\'s send time and moves it to \"scheduled\". A scheduledAt of 0 clears the schedule and returns it to \"draft\".
      * @summary Sets a campaign\'s send time and moves it to \"scheduled\".
-     * @param {MarketingApiPostV1MarketingCampaignsByIdScheduleRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingCampaignsByIdScheduleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingCampaignsByIdSchedule(requestParameters: MarketingApiPostV1MarketingCampaignsByIdScheduleRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingCampaignsByIdSchedule(requestParameters.id, requestParameters.scheduleInput, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingCampaignsByIdSchedule(requestParameters: MarketingApiPostMarketingCampaignsByIdScheduleRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingCampaignsByIdSchedule(requestParameters.id, requestParameters.scheduleInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records the caller org\'s claim on a promo. NOTHING IS CREDITED: the redemption is a row, and credit into an org is an admin decision made on the admin surface against an auditable ledger.  The plan is DERIVED from the org\'s live ACTIVE/TRIALING paid subscription and can never be named by the caller — an org with no qualifying subscription is refused, and so is one whose subscription cannot be read. The seat count is the single-seat floor (claimSeats), so the recorded figure has no input that can inflate it.  Guards run under one lock so the cap cannot be raced past: the fleet-wide redemption cap, one redemption per org, one per payment instrument (REQUIRED), and the per-redemption ceiling.  It is IDEMPOTENT: an org that already redeemed gets its original redemption back with alreadyRedeemed true.
      * @summary Records the caller org\'s claim on a promo.
-     * @param {MarketingApiPostV1MarketingPromosByCodeRedeemRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingPromosByCodeRedeemRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingPromosByCodeRedeem(requestParameters: MarketingApiPostV1MarketingPromosByCodeRedeemRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingPromosByCodeRedeem(requestParameters.code, requestParameters.redeemInput, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingPromosByCodeRedeem(requestParameters: MarketingApiPostMarketingPromosByCodeRedeemRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingPromosByCodeRedeem(requestParameters.code, requestParameters.redeemInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Registers a drip sequence in the caller\'s org. Name is required; status defaults to draft, and a sequence must be ACTIVE before it will accept enrollments. The id, createdAt and updatedAt of the input are ignored — the server assigns them.
      * @summary Registers a drip sequence in the caller\'s org.
-     * @param {MarketingApiPostV1MarketingSequencesRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingSequencesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingSequences(requestParameters: MarketingApiPostV1MarketingSequencesRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingSequences(requestParameters.sequence, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingSequences(requestParameters: MarketingApiPostMarketingSequencesRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingSequences(requestParameters.sequence, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds one contact or a whole audience to a sequence and schedules the first step for each. The sequence must be ACTIVE (a draft sends nothing), and the request must name exactly one of address or audienceId.  Enrolling is ALL this does: the message itself is sent later by the drip engine, through the suppression gate, so an opted-out customer can be enrolled here and still never be mailed. Re-posting is safe — an address this sequence already took is counted in alreadyEnrolled and never double-dripped — which is what makes retrying a partially-applied announcement a resume rather than a second send.
      * @summary Adds one contact or a whole audience to a sequence and schedules the first step for each.
-     * @param {MarketingApiPostV1MarketingSequencesByIdEnrollRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingSequencesByIdEnrollRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingSequencesByIdEnroll(requestParameters: MarketingApiPostV1MarketingSequencesByIdEnrollRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingSequencesByIdEnroll(requestParameters.id, requestParameters.enrollInput, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingSequencesByIdEnroll(requestParameters: MarketingApiPostMarketingSequencesByIdEnrollRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingSequencesByIdEnroll(requestParameters.id, requestParameters.enrollInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled. Only an ACTIVE enrollment can be canceled — one already completed or canceled reads as not found.
      * @summary Stops one walk mid-sequence and answers 204: no further step is sent, and steps already delivered are not recalled.
-     * @param {MarketingApiPostV1MarketingSequencesByIdEnrollmentsByEidCancelRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingSequencesByIdEnrollmentsByEidCancelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingSequencesByIdEnrollmentsByEidCancel(requestParameters: MarketingApiPostV1MarketingSequencesByIdEnrollmentsByEidCancelRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingSequencesByIdEnrollmentsByEidCancel(requestParameters.id, requestParameters.eid, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingSequencesByIdEnrollmentsByEidCancel(requestParameters: MarketingApiPostMarketingSequencesByIdEnrollmentsByEidCancelRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingSequencesByIdEnrollmentsByEidCancel(requestParameters.id, requestParameters.eid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments. It does not touch enrollments already walking: archiving stops new ones, not in-flight ones.
      * @summary Flips draft/active/archived — the activation gate for sending, since only an active sequence accepts enrollments.
-     * @param {MarketingApiPostV1MarketingSequencesByIdStatusRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingSequencesByIdStatusRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingSequencesByIdStatus(requestParameters: MarketingApiPostV1MarketingSequencesByIdStatusRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingSequencesByIdStatus(requestParameters.id, requestParameters.sequenceStatus, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingSequencesByIdStatus(requestParameters: MarketingApiPostMarketingSequencesByIdStatusRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingSequencesByIdStatus(requestParameters.id, requestParameters.sequenceStatus, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added. Body is required and delaySeconds must be >= 0. Adding a step does not disturb enrollments already walking — one that has passed this index simply never sees it.
      * @summary Appends a message to the END of a sequence: the new step\'s idx is one past the last, so steps arrive in the order they are added.
-     * @param {MarketingApiPostV1MarketingSequencesByIdStepsRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingSequencesByIdStepsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingSequencesByIdSteps(requestParameters: MarketingApiPostV1MarketingSequencesByIdStepsRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingSequencesByIdSteps(requestParameters.id, requestParameters.stepInput, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingSequencesByIdSteps(requestParameters: MarketingApiPostMarketingSequencesByIdStepsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingSequencesByIdSteps(requestParameters.id, requestParameters.stepInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records an opt-out for the org (admin / self-service management). Address is required; channel defaults to email. It is idempotent: re-suppressing the same tuple keeps the original record rather than erroring. From here on the ONE send gate refuses that recipient on that channel.
      * @summary Records an opt-out for the org (admin / self-service management).
-     * @param {MarketingApiPostV1MarketingSuppressionsRequest} requestParameters Request parameters.
+     * @param {MarketingApiPostMarketingSuppressionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public postV1MarketingSuppressions(requestParameters: MarketingApiPostV1MarketingSuppressionsRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).postV1MarketingSuppressions(requestParameters.suppression, options).then((request) => request(this.axios, this.basePath));
+    public postMarketingSuppressions(requestParameters: MarketingApiPostMarketingSuppressionsRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).postMarketingSuppressions(requestParameters.suppression, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces a post\'s editable fields. It is a full write, not a patch, and it RESETS the lifecycle from the schedule: a scheduledAt makes the post \"scheduled\" again and none makes it a draft — so editing a failed post requeues it rather than leaving it stuck.
      * @summary Replaces a post\'s editable fields.
-     * @param {MarketingApiPutV1MarketingCalendarByIdRequest} requestParameters Request parameters.
+     * @param {MarketingApiPutMarketingCalendarByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public putV1MarketingCalendarById(requestParameters: MarketingApiPutV1MarketingCalendarByIdRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).putV1MarketingCalendarById(requestParameters.id, requestParameters.calendarPost, options).then((request) => request(this.axios, this.basePath));
+    public putMarketingCalendarById(requestParameters: MarketingApiPutMarketingCalendarByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).putMarketingCalendarById(requestParameters.id, requestParameters.calendarPost, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces a campaign\'s editable fields. It is a full write, not a patch: every field takes the value in the body, and an omitted one is cleared. The id comes from the path — the body cannot retarget another campaign — and createdAt is never rewritten.
      * @summary Replaces a campaign\'s editable fields.
-     * @param {MarketingApiPutV1MarketingCampaignsByIdRequest} requestParameters Request parameters.
+     * @param {MarketingApiPutMarketingCampaignsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketingApi
      */
-    public putV1MarketingCampaignsById(requestParameters: MarketingApiPutV1MarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
-        return MarketingApiFp(this.configuration).putV1MarketingCampaignsById(requestParameters.id, requestParameters.campaign, options).then((request) => request(this.axios, this.basePath));
+    public putMarketingCampaignsById(requestParameters: MarketingApiPutMarketingCampaignsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketingApiFp(this.configuration).putMarketingCampaignsById(requestParameters.id, requestParameters.campaign, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

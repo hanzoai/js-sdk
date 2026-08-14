@@ -33,7 +33,7 @@ export const GenerateTextToSpeechAudioStreamApiAxiosParamCreator = function (con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GenerateTextToSpeechAudioStream: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGenerateTextToSpeechAudioStream: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/generate-text-to-speech-audio-stream`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const GenerateTextToSpeechAudioStreamApiFp = function(configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GenerateTextToSpeechAudioStream(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GenerateTextToSpeechAudioStream(options);
+        async getGenerateTextToSpeechAudioStream(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGenerateTextToSpeechAudioStream(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GenerateTextToSpeechAudioStreamApi.getV1GenerateTextToSpeechAudioStream']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GenerateTextToSpeechAudioStreamApi.getGenerateTextToSpeechAudioStream']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const GenerateTextToSpeechAudioStreamApiFactory = function (configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GenerateTextToSpeechAudioStream(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1GenerateTextToSpeechAudioStream(options).then((request) => request(axios, basePath));
+        getGenerateTextToSpeechAudioStream(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getGenerateTextToSpeechAudioStream(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class GenerateTextToSpeechAudioStreamApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GenerateTextToSpeechAudioStreamApi
      */
-    public getV1GenerateTextToSpeechAudioStream(options?: RawAxiosRequestConfig) {
-        return GenerateTextToSpeechAudioStreamApiFp(this.configuration).getV1GenerateTextToSpeechAudioStream(options).then((request) => request(this.axios, this.basePath));
+    public getGenerateTextToSpeechAudioStream(options?: RawAxiosRequestConfig) {
+        return GenerateTextToSpeechAudioStreamApiFp(this.configuration).getGenerateTextToSpeechAudioStream(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

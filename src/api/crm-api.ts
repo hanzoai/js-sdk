@@ -60,9 +60,9 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CrmCompaniesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCrmCompaniesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1CrmCompaniesById', 'id', id)
+            assertParamExists('deleteCrmCompaniesById', 'id', id)
             const localVarPath = `/v1/crm/companies/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -94,9 +94,9 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CrmContactsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCrmContactsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1CrmContactsById', 'id', id)
+            assertParamExists('deleteCrmContactsById', 'id', id)
             const localVarPath = `/v1/crm/contacts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -128,9 +128,9 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CrmOpportunitiesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCrmOpportunitiesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1CrmOpportunitiesById', 'id', id)
+            assertParamExists('deleteCrmOpportunitiesById', 'id', id)
             const localVarPath = `/v1/crm/opportunities/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -163,7 +163,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmApplications: async (stage?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCrmApplications: async (stage?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/crm/applications`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -202,9 +202,9 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmApplicationsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCrmApplicationsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1CrmApplicationsById', 'id', id)
+            assertParamExists('getCrmApplicationsById', 'id', id)
             const localVarPath = `/v1/crm/applications/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -236,7 +236,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmCompanies: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCrmCompanies: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/crm/companies`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -271,9 +271,9 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmCompaniesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCrmCompaniesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1CrmCompaniesById', 'id', id)
+            assertParamExists('getCrmCompaniesById', 'id', id)
             const localVarPath = `/v1/crm/companies/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -306,7 +306,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmContacts: async (companyId?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCrmContacts: async (companyId?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/crm/contacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -345,9 +345,9 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmContactsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCrmContactsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1CrmContactsById', 'id', id)
+            assertParamExists('getCrmContactsById', 'id', id)
             const localVarPath = `/v1/crm/contacts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -380,7 +380,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmOpportunities: async (stage?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCrmOpportunities: async (stage?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/crm/opportunities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -419,9 +419,9 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmOpportunitiesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCrmOpportunitiesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1CrmOpportunitiesById', 'id', id)
+            assertParamExists('getCrmOpportunitiesById', 'id', id)
             const localVarPath = `/v1/crm/opportunities/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -452,7 +452,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCrmSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/crm/summary`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -484,11 +484,11 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CrmApplicationsById: async (id: string, patchApplicationIn: PatchApplicationIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCrmApplicationsById: async (id: string, patchApplicationIn: PatchApplicationIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchV1CrmApplicationsById', 'id', id)
+            assertParamExists('patchCrmApplicationsById', 'id', id)
             // verify required parameter 'patchApplicationIn' is not null or undefined
-            assertParamExists('patchV1CrmApplicationsById', 'patchApplicationIn', patchApplicationIn)
+            assertParamExists('patchCrmApplicationsById', 'patchApplicationIn', patchApplicationIn)
             const localVarPath = `/v1/crm/applications/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -522,7 +522,7 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CrmApplications: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCrmApplications: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/crm/applications`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -553,9 +553,9 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CrmCompanies: async (companyReq: CompanyReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCrmCompanies: async (companyReq: CompanyReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'companyReq' is not null or undefined
-            assertParamExists('postV1CrmCompanies', 'companyReq', companyReq)
+            assertParamExists('postCrmCompanies', 'companyReq', companyReq)
             const localVarPath = `/v1/crm/companies`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -589,9 +589,9 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CrmContacts: async (contactReq: ContactReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCrmContacts: async (contactReq: ContactReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'contactReq' is not null or undefined
-            assertParamExists('postV1CrmContacts', 'contactReq', contactReq)
+            assertParamExists('postCrmContacts', 'contactReq', contactReq)
             const localVarPath = `/v1/crm/contacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -625,9 +625,9 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CrmOpportunities: async (oppReq: OppReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCrmOpportunities: async (oppReq: OppReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'oppReq' is not null or undefined
-            assertParamExists('postV1CrmOpportunities', 'oppReq', oppReq)
+            assertParamExists('postCrmOpportunities', 'oppReq', oppReq)
             const localVarPath = `/v1/crm/opportunities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -662,11 +662,11 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CrmCompaniesById: async (id: string, companyReq: CompanyReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCrmCompaniesById: async (id: string, companyReq: CompanyReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1CrmCompaniesById', 'id', id)
+            assertParamExists('putCrmCompaniesById', 'id', id)
             // verify required parameter 'companyReq' is not null or undefined
-            assertParamExists('putV1CrmCompaniesById', 'companyReq', companyReq)
+            assertParamExists('putCrmCompaniesById', 'companyReq', companyReq)
             const localVarPath = `/v1/crm/companies/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -702,11 +702,11 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CrmContactsById: async (id: string, contactReq: ContactReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCrmContactsById: async (id: string, contactReq: ContactReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1CrmContactsById', 'id', id)
+            assertParamExists('putCrmContactsById', 'id', id)
             // verify required parameter 'contactReq' is not null or undefined
-            assertParamExists('putV1CrmContactsById', 'contactReq', contactReq)
+            assertParamExists('putCrmContactsById', 'contactReq', contactReq)
             const localVarPath = `/v1/crm/contacts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -742,11 +742,11 @@ export const CrmApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CrmOpportunitiesById: async (id: string, oppReq: OppReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCrmOpportunitiesById: async (id: string, oppReq: OppReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('putV1CrmOpportunitiesById', 'id', id)
+            assertParamExists('putCrmOpportunitiesById', 'id', id)
             // verify required parameter 'oppReq' is not null or undefined
-            assertParamExists('putV1CrmOpportunitiesById', 'oppReq', oppReq)
+            assertParamExists('putCrmOpportunitiesById', 'oppReq', oppReq)
             const localVarPath = `/v1/crm/opportunities/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -791,10 +791,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CrmCompaniesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CrmCompaniesById(id, options);
+        async deleteCrmCompaniesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCrmCompaniesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.deleteV1CrmCompaniesById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.deleteCrmCompaniesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -804,10 +804,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CrmContactsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CrmContactsById(id, options);
+        async deleteCrmContactsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCrmContactsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.deleteV1CrmContactsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.deleteCrmContactsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -817,10 +817,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CrmOpportunitiesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CrmOpportunitiesById(id, options);
+        async deleteCrmOpportunitiesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCrmOpportunitiesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.deleteV1CrmOpportunitiesById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.deleteCrmOpportunitiesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -831,10 +831,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CrmApplications(stage?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CrmApplications(stage, limit, options);
+        async getCrmApplications(stage?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApplicationList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCrmApplications(stage, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.getV1CrmApplications']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.getCrmApplications']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -844,10 +844,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CrmApplicationsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProgramApplication>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CrmApplicationsById(id, options);
+        async getCrmApplicationsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProgramApplication>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCrmApplicationsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.getV1CrmApplicationsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.getCrmApplicationsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -857,10 +857,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CrmCompanies(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CrmCompanies(limit, options);
+        async getCrmCompanies(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCrmCompanies(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.getV1CrmCompanies']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.getCrmCompanies']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -870,10 +870,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CrmCompaniesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Company>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CrmCompaniesById(id, options);
+        async getCrmCompaniesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Company>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCrmCompaniesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.getV1CrmCompaniesById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.getCrmCompaniesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -884,10 +884,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CrmContacts(companyId?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CrmContacts(companyId, limit, options);
+        async getCrmContacts(companyId?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCrmContacts(companyId, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.getV1CrmContacts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.getCrmContacts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -897,10 +897,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CrmContactsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CrmContactsById(id, options);
+        async getCrmContactsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCrmContactsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.getV1CrmContactsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.getCrmContactsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -911,10 +911,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CrmOpportunities(stage?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OppList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CrmOpportunities(stage, limit, options);
+        async getCrmOpportunities(stage?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OppList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCrmOpportunities(stage, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.getV1CrmOpportunities']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.getCrmOpportunities']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -924,10 +924,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CrmOpportunitiesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Opportunity>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CrmOpportunitiesById(id, options);
+        async getCrmOpportunitiesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Opportunity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCrmOpportunitiesById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.getV1CrmOpportunitiesById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.getCrmOpportunitiesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -936,10 +936,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CrmSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CrmSummary>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CrmSummary(options);
+        async getCrmSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CrmSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCrmSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.getV1CrmSummary']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.getCrmSummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -950,10 +950,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CrmApplicationsById(id: string, patchApplicationIn: PatchApplicationIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProgramApplication>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CrmApplicationsById(id, patchApplicationIn, options);
+        async patchCrmApplicationsById(id: string, patchApplicationIn: PatchApplicationIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProgramApplication>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCrmApplicationsById(id, patchApplicationIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.patchV1CrmApplicationsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.patchCrmApplicationsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -962,10 +962,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CrmApplications(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CrmApplications(options);
+        async postCrmApplications(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCrmApplications(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.postV1CrmApplications']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.postCrmApplications']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -975,10 +975,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CrmCompanies(companyReq: CompanyReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Company>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CrmCompanies(companyReq, options);
+        async postCrmCompanies(companyReq: CompanyReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Company>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCrmCompanies(companyReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.postV1CrmCompanies']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.postCrmCompanies']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -988,10 +988,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CrmContacts(contactReq: ContactReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CrmContacts(contactReq, options);
+        async postCrmContacts(contactReq: ContactReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCrmContacts(contactReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.postV1CrmContacts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.postCrmContacts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1001,10 +1001,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CrmOpportunities(oppReq: OppReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Opportunity>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CrmOpportunities(oppReq, options);
+        async postCrmOpportunities(oppReq: OppReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Opportunity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCrmOpportunities(oppReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.postV1CrmOpportunities']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.postCrmOpportunities']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1015,10 +1015,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CrmCompaniesById(id: string, companyReq: CompanyReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Company>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CrmCompaniesById(id, companyReq, options);
+        async putCrmCompaniesById(id: string, companyReq: CompanyReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Company>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCrmCompaniesById(id, companyReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.putV1CrmCompaniesById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.putCrmCompaniesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1029,10 +1029,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CrmContactsById(id: string, contactReq: ContactReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CrmContactsById(id, contactReq, options);
+        async putCrmContactsById(id: string, contactReq: ContactReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Contact>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCrmContactsById(id, contactReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.putV1CrmContactsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.putCrmContactsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1043,10 +1043,10 @@ export const CrmApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CrmOpportunitiesById(id: string, oppReq: OppReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Opportunity>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CrmOpportunitiesById(id, oppReq, options);
+        async putCrmOpportunitiesById(id: string, oppReq: OppReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Opportunity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCrmOpportunitiesById(id, oppReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CrmApi.putV1CrmOpportunitiesById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CrmApi.putCrmOpportunitiesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1062,112 +1062,112 @@ export const CrmApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Removes one of the caller org\'s companies and answers 204. Any contact or opportunity in the org that referenced it keeps existing with the reference cleared, so nothing is left pointing at a company that is gone.
          * @summary Removes one of the caller org\'s companies and answers 204.
-         * @param {CrmApiDeleteV1CrmCompaniesByIdRequest} requestParameters Request parameters.
+         * @param {CrmApiDeleteCrmCompaniesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CrmCompaniesById(requestParameters: CrmApiDeleteV1CrmCompaniesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CrmCompaniesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteCrmCompaniesById(requestParameters: CrmApiDeleteCrmCompaniesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCrmCompaniesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller org\'s contacts and answers 204. Any opportunity in the org that named it point of contact keeps existing with that reference cleared.
          * @summary Removes one of the caller org\'s contacts and answers 204.
-         * @param {CrmApiDeleteV1CrmContactsByIdRequest} requestParameters Request parameters.
+         * @param {CrmApiDeleteCrmContactsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CrmContactsById(requestParameters: CrmApiDeleteV1CrmContactsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CrmContactsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteCrmContactsById(requestParameters: CrmApiDeleteCrmContactsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCrmContactsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one of the caller org\'s deals and answers 204.
          * @summary Removes one of the caller org\'s deals and answers 204.
-         * @param {CrmApiDeleteV1CrmOpportunitiesByIdRequest} requestParameters Request parameters.
+         * @param {CrmApiDeleteCrmOpportunitiesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CrmOpportunitiesById(requestParameters: CrmApiDeleteV1CrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CrmOpportunitiesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteCrmOpportunitiesById(requestParameters: CrmApiDeleteCrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCrmOpportunitiesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s Startup Program applications, newest first. Each carries its AI screen and its stage history; a stage narrows the page to one pipeline stage.
          * @summary Returns the org\'s Startup Program applications, newest first.
-         * @param {CrmApiGetV1CrmApplicationsRequest} requestParameters Request parameters.
+         * @param {CrmApiGetCrmApplicationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmApplications(requestParameters: CrmApiGetV1CrmApplicationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationList> {
-            return localVarFp.getV1CrmApplications(requestParameters.stage, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getCrmApplications(requestParameters: CrmApiGetCrmApplicationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ApplicationList> {
+            return localVarFp.getCrmApplications(requestParameters.stage, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one Startup Program application with its AI screen and stage history. An id belonging to another org reads as not found.
          * @summary Returns one Startup Program application with its AI screen and stage history.
-         * @param {CrmApiGetV1CrmApplicationsByIdRequest} requestParameters Request parameters.
+         * @param {CrmApiGetCrmApplicationsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmApplicationsById(requestParameters: CrmApiGetV1CrmApplicationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProgramApplication> {
-            return localVarFp.getV1CrmApplicationsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getCrmApplicationsById(requestParameters: CrmApiGetCrmApplicationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProgramApplication> {
+            return localVarFp.getCrmApplicationsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s companies, most recently updated first.
          * @summary Returns the caller org\'s companies, most recently updated first.
-         * @param {CrmApiGetV1CrmCompaniesRequest} requestParameters Request parameters.
+         * @param {CrmApiGetCrmCompaniesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmCompanies(requestParameters: CrmApiGetV1CrmCompaniesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CompanyList> {
-            return localVarFp.getV1CrmCompanies(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getCrmCompanies(requestParameters: CrmApiGetCrmCompaniesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CompanyList> {
+            return localVarFp.getCrmCompanies(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the caller org\'s companies. An id belonging to another org reads as not found.
          * @summary Returns one of the caller org\'s companies.
-         * @param {CrmApiGetV1CrmCompaniesByIdRequest} requestParameters Request parameters.
+         * @param {CrmApiGetCrmCompaniesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmCompaniesById(requestParameters: CrmApiGetV1CrmCompaniesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Company> {
-            return localVarFp.getV1CrmCompaniesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getCrmCompaniesById(requestParameters: CrmApiGetCrmCompaniesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Company> {
+            return localVarFp.getCrmCompaniesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s contacts, most recently updated first. A companyId narrows the page to the people at that company.
          * @summary Returns the caller org\'s contacts, most recently updated first.
-         * @param {CrmApiGetV1CrmContactsRequest} requestParameters Request parameters.
+         * @param {CrmApiGetCrmContactsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmContacts(requestParameters: CrmApiGetV1CrmContactsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ContactList> {
-            return localVarFp.getV1CrmContacts(requestParameters.companyId, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getCrmContacts(requestParameters: CrmApiGetCrmContactsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ContactList> {
+            return localVarFp.getCrmContacts(requestParameters.companyId, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the caller org\'s contacts. An id belonging to another org reads as not found.
          * @summary Returns one of the caller org\'s contacts.
-         * @param {CrmApiGetV1CrmContactsByIdRequest} requestParameters Request parameters.
+         * @param {CrmApiGetCrmContactsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmContactsById(requestParameters: CrmApiGetV1CrmContactsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Contact> {
-            return localVarFp.getV1CrmContactsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getCrmContactsById(requestParameters: CrmApiGetCrmContactsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Contact> {
+            return localVarFp.getCrmContactsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s deals, most recently updated first. A stage narrows the page to one pipeline stage.
          * @summary Returns the caller org\'s deals, most recently updated first.
-         * @param {CrmApiGetV1CrmOpportunitiesRequest} requestParameters Request parameters.
+         * @param {CrmApiGetCrmOpportunitiesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmOpportunities(requestParameters: CrmApiGetV1CrmOpportunitiesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<OppList> {
-            return localVarFp.getV1CrmOpportunities(requestParameters.stage, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getCrmOpportunities(requestParameters: CrmApiGetCrmOpportunitiesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<OppList> {
+            return localVarFp.getCrmOpportunities(requestParameters.stage, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one of the caller org\'s deals. An id belonging to another org reads as not found.
          * @summary Returns one of the caller org\'s deals.
-         * @param {CrmApiGetV1CrmOpportunitiesByIdRequest} requestParameters Request parameters.
+         * @param {CrmApiGetCrmOpportunitiesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmOpportunitiesById(requestParameters: CrmApiGetV1CrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Opportunity> {
-            return localVarFp.getV1CrmOpportunitiesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getCrmOpportunitiesById(requestParameters: CrmApiGetCrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Opportunity> {
+            return localVarFp.getCrmOpportunitiesById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Summary counts the caller org\'s CRM records: companies, contacts, opportunities.
@@ -1175,18 +1175,18 @@ export const CrmApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CrmSummary(options?: RawAxiosRequestConfig): AxiosPromise<CrmSummary> {
-            return localVarFp.getV1CrmSummary(options).then((request) => request(axios, basePath));
+        getCrmSummary(options?: RawAxiosRequestConfig): AxiosPromise<CrmSummary> {
+            return localVarFp.getCrmSummary(options).then((request) => request(axios, basePath));
         },
         /**
          * Moves one Startup Program application through the pipeline. The move is recorded on the application\'s timeline, attributed to the calling staff user: it may advance exactly one stage, go back to any earlier stage, reject from any non-rejected stage, or reopen a rejected application to `applied`; anything else is refused. Rejecting requires a reason. A note with no stage change is still recorded.
          * @summary Moves one Startup Program application through the pipeline.
-         * @param {CrmApiPatchV1CrmApplicationsByIdRequest} requestParameters Request parameters.
+         * @param {CrmApiPatchCrmApplicationsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CrmApplicationsById(requestParameters: CrmApiPatchV1CrmApplicationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProgramApplication> {
-            return localVarFp.patchV1CrmApplicationsById(requestParameters.id, requestParameters.patchApplicationIn, options).then((request) => request(axios, basePath));
+        patchCrmApplicationsById(requestParameters: CrmApiPatchCrmApplicationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProgramApplication> {
+            return localVarFp.patchCrmApplicationsById(requestParameters.id, requestParameters.patchApplicationIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Files an application to the Startup Program and answers the id and pipeline stage it landed at.  This is the ONE unauthenticated route in crm. It takes no principal and never reads a caller org: the application is filed against the DEPLOYMENT\'s own program org — the brand, hanzo unless white-labelled — so there is no tenant to name and none to leak. Reading the application back is staff-only and lives elsewhere.  company, contactName and a parseable email are required; everything else is optional context. Re-submitting the same (email, company) REFRESHES the existing application instead of filing a second one, so an impatient applicant cannot duplicate their own lead — that is a 200 where a first submission is a 201. A filled `hp` honeypot field is answered exactly like a success and stored nowhere, so a bot cannot tell a drop from an accept.  Filing is not screening: the application lands at stage `applied` with its AI screen still pending, and the screen runs afterwards on its own clock. A company and contact are also projected into the program org\'s ordinary CRM lists, best-effort — that projection failing does not fail the application. Bodies over 64 KiB are refused, and submissions are rate-limited.
@@ -1194,369 +1194,369 @@ export const CrmApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CrmApplications(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CrmApplications(options).then((request) => request(axios, basePath));
+        postCrmApplications(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCrmApplications(options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a company to the caller\'s org and answers 201 with the stored record. A name is required; an empty currency defaults to USD.
          * @summary Adds a company to the caller\'s org and answers 201 with the stored record.
-         * @param {CrmApiPostV1CrmCompaniesRequest} requestParameters Request parameters.
+         * @param {CrmApiPostCrmCompaniesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CrmCompanies(requestParameters: CrmApiPostV1CrmCompaniesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Company> {
-            return localVarFp.postV1CrmCompanies(requestParameters.companyReq, options).then((request) => request(axios, basePath));
+        postCrmCompanies(requestParameters: CrmApiPostCrmCompaniesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Company> {
+            return localVarFp.postCrmCompanies(requestParameters.companyReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a person to the caller\'s org and answers 201 with the stored record. One of firstName, lastName or email is required, and a companyId must name a company in the same org.
          * @summary Adds a person to the caller\'s org and answers 201 with the stored record.
-         * @param {CrmApiPostV1CrmContactsRequest} requestParameters Request parameters.
+         * @param {CrmApiPostCrmContactsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CrmContacts(requestParameters: CrmApiPostV1CrmContactsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Contact> {
-            return localVarFp.postV1CrmContacts(requestParameters.contactReq, options).then((request) => request(axios, basePath));
+        postCrmContacts(requestParameters: CrmApiPostCrmContactsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Contact> {
+            return localVarFp.postCrmContacts(requestParameters.contactReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a deal to the caller\'s org and answers 201 with the stored record. A name is required; the stage defaults to NEW; companyId and pointOfContactId must name records in the same org.
          * @summary Adds a deal to the caller\'s org and answers 201 with the stored record.
-         * @param {CrmApiPostV1CrmOpportunitiesRequest} requestParameters Request parameters.
+         * @param {CrmApiPostCrmOpportunitiesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CrmOpportunities(requestParameters: CrmApiPostV1CrmOpportunitiesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Opportunity> {
-            return localVarFp.postV1CrmOpportunities(requestParameters.oppReq, options).then((request) => request(axios, basePath));
+        postCrmOpportunities(requestParameters: CrmApiPostCrmOpportunitiesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Opportunity> {
+            return localVarFp.postCrmOpportunities(requestParameters.oppReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces one of the caller org\'s companies. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. A name is required.
          * @summary Replaces one of the caller org\'s companies.
-         * @param {CrmApiPutV1CrmCompaniesByIdRequest} requestParameters Request parameters.
+         * @param {CrmApiPutCrmCompaniesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CrmCompaniesById(requestParameters: CrmApiPutV1CrmCompaniesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Company> {
-            return localVarFp.putV1CrmCompaniesById(requestParameters.id, requestParameters.companyReq, options).then((request) => request(axios, basePath));
+        putCrmCompaniesById(requestParameters: CrmApiPutCrmCompaniesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Company> {
+            return localVarFp.putCrmCompaniesById(requestParameters.id, requestParameters.companyReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces one of the caller org\'s contacts. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. One of firstName, lastName or email is required.
          * @summary Replaces one of the caller org\'s contacts.
-         * @param {CrmApiPutV1CrmContactsByIdRequest} requestParameters Request parameters.
+         * @param {CrmApiPutCrmContactsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CrmContactsById(requestParameters: CrmApiPutV1CrmContactsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Contact> {
-            return localVarFp.putV1CrmContactsById(requestParameters.id, requestParameters.contactReq, options).then((request) => request(axios, basePath));
+        putCrmContactsById(requestParameters: CrmApiPutCrmContactsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Contact> {
+            return localVarFp.putCrmContactsById(requestParameters.id, requestParameters.contactReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces one of the caller org\'s deals. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. A name is required and the stage must be a pipeline stage.
          * @summary Replaces one of the caller org\'s deals.
-         * @param {CrmApiPutV1CrmOpportunitiesByIdRequest} requestParameters Request parameters.
+         * @param {CrmApiPutCrmOpportunitiesByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CrmOpportunitiesById(requestParameters: CrmApiPutV1CrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Opportunity> {
-            return localVarFp.putV1CrmOpportunitiesById(requestParameters.id, requestParameters.oppReq, options).then((request) => request(axios, basePath));
+        putCrmOpportunitiesById(requestParameters: CrmApiPutCrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Opportunity> {
+            return localVarFp.putCrmOpportunitiesById(requestParameters.id, requestParameters.oppReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1CrmCompaniesById operation in CrmApi.
+ * Request parameters for deleteCrmCompaniesById operation in CrmApi.
  * @export
- * @interface CrmApiDeleteV1CrmCompaniesByIdRequest
+ * @interface CrmApiDeleteCrmCompaniesByIdRequest
  */
-export interface CrmApiDeleteV1CrmCompaniesByIdRequest {
+export interface CrmApiDeleteCrmCompaniesByIdRequest {
     /**
      * ID is the record to act on, from the path.
      * @type {string}
-     * @memberof CrmApiDeleteV1CrmCompaniesById
+     * @memberof CrmApiDeleteCrmCompaniesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1CrmContactsById operation in CrmApi.
+ * Request parameters for deleteCrmContactsById operation in CrmApi.
  * @export
- * @interface CrmApiDeleteV1CrmContactsByIdRequest
+ * @interface CrmApiDeleteCrmContactsByIdRequest
  */
-export interface CrmApiDeleteV1CrmContactsByIdRequest {
+export interface CrmApiDeleteCrmContactsByIdRequest {
     /**
      * ID is the record to act on, from the path.
      * @type {string}
-     * @memberof CrmApiDeleteV1CrmContactsById
+     * @memberof CrmApiDeleteCrmContactsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for deleteV1CrmOpportunitiesById operation in CrmApi.
+ * Request parameters for deleteCrmOpportunitiesById operation in CrmApi.
  * @export
- * @interface CrmApiDeleteV1CrmOpportunitiesByIdRequest
+ * @interface CrmApiDeleteCrmOpportunitiesByIdRequest
  */
-export interface CrmApiDeleteV1CrmOpportunitiesByIdRequest {
+export interface CrmApiDeleteCrmOpportunitiesByIdRequest {
     /**
      * ID is the record to act on, from the path.
      * @type {string}
-     * @memberof CrmApiDeleteV1CrmOpportunitiesById
+     * @memberof CrmApiDeleteCrmOpportunitiesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1CrmApplications operation in CrmApi.
+ * Request parameters for getCrmApplications operation in CrmApi.
  * @export
- * @interface CrmApiGetV1CrmApplicationsRequest
+ * @interface CrmApiGetCrmApplicationsRequest
  */
-export interface CrmApiGetV1CrmApplicationsRequest {
+export interface CrmApiGetCrmApplicationsRequest {
     /**
      * Stage returns only the applications at that pipeline stage when set: applied, screened, qualified, credits-offered, onboarded or rejected.
      * @type {string}
-     * @memberof CrmApiGetV1CrmApplications
+     * @memberof CrmApiGetCrmApplications
      */
     readonly stage?: string
 
     /**
      * Limit caps the rows returned: 200 by default, 1000 at most.
      * @type {number}
-     * @memberof CrmApiGetV1CrmApplications
+     * @memberof CrmApiGetCrmApplications
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1CrmApplicationsById operation in CrmApi.
+ * Request parameters for getCrmApplicationsById operation in CrmApi.
  * @export
- * @interface CrmApiGetV1CrmApplicationsByIdRequest
+ * @interface CrmApiGetCrmApplicationsByIdRequest
  */
-export interface CrmApiGetV1CrmApplicationsByIdRequest {
+export interface CrmApiGetCrmApplicationsByIdRequest {
     /**
      * ID is the record to act on, from the path.
      * @type {string}
-     * @memberof CrmApiGetV1CrmApplicationsById
+     * @memberof CrmApiGetCrmApplicationsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1CrmCompanies operation in CrmApi.
+ * Request parameters for getCrmCompanies operation in CrmApi.
  * @export
- * @interface CrmApiGetV1CrmCompaniesRequest
+ * @interface CrmApiGetCrmCompaniesRequest
  */
-export interface CrmApiGetV1CrmCompaniesRequest {
+export interface CrmApiGetCrmCompaniesRequest {
     /**
      * Limit caps the rows returned: 200 by default, 1000 at most.
      * @type {number}
-     * @memberof CrmApiGetV1CrmCompanies
+     * @memberof CrmApiGetCrmCompanies
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1CrmCompaniesById operation in CrmApi.
+ * Request parameters for getCrmCompaniesById operation in CrmApi.
  * @export
- * @interface CrmApiGetV1CrmCompaniesByIdRequest
+ * @interface CrmApiGetCrmCompaniesByIdRequest
  */
-export interface CrmApiGetV1CrmCompaniesByIdRequest {
+export interface CrmApiGetCrmCompaniesByIdRequest {
     /**
      * ID is the record to act on, from the path.
      * @type {string}
-     * @memberof CrmApiGetV1CrmCompaniesById
+     * @memberof CrmApiGetCrmCompaniesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1CrmContacts operation in CrmApi.
+ * Request parameters for getCrmContacts operation in CrmApi.
  * @export
- * @interface CrmApiGetV1CrmContactsRequest
+ * @interface CrmApiGetCrmContactsRequest
  */
-export interface CrmApiGetV1CrmContactsRequest {
+export interface CrmApiGetCrmContactsRequest {
     /**
      * CompanyID returns only the contacts at that company when set.
      * @type {string}
-     * @memberof CrmApiGetV1CrmContacts
+     * @memberof CrmApiGetCrmContacts
      */
     readonly companyId?: string
 
     /**
      * Limit caps the rows returned: 200 by default, 1000 at most.
      * @type {number}
-     * @memberof CrmApiGetV1CrmContacts
+     * @memberof CrmApiGetCrmContacts
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1CrmContactsById operation in CrmApi.
+ * Request parameters for getCrmContactsById operation in CrmApi.
  * @export
- * @interface CrmApiGetV1CrmContactsByIdRequest
+ * @interface CrmApiGetCrmContactsByIdRequest
  */
-export interface CrmApiGetV1CrmContactsByIdRequest {
+export interface CrmApiGetCrmContactsByIdRequest {
     /**
      * ID is the record to act on, from the path.
      * @type {string}
-     * @memberof CrmApiGetV1CrmContactsById
+     * @memberof CrmApiGetCrmContactsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1CrmOpportunities operation in CrmApi.
+ * Request parameters for getCrmOpportunities operation in CrmApi.
  * @export
- * @interface CrmApiGetV1CrmOpportunitiesRequest
+ * @interface CrmApiGetCrmOpportunitiesRequest
  */
-export interface CrmApiGetV1CrmOpportunitiesRequest {
+export interface CrmApiGetCrmOpportunitiesRequest {
     /**
      * Stage returns only the opportunities at that pipeline stage when set (NEW, SCREENING, MEETING, PROPOSAL or CUSTOMER; case-insensitive).
      * @type {string}
-     * @memberof CrmApiGetV1CrmOpportunities
+     * @memberof CrmApiGetCrmOpportunities
      */
     readonly stage?: string
 
     /**
      * Limit caps the rows returned: 200 by default, 1000 at most.
      * @type {number}
-     * @memberof CrmApiGetV1CrmOpportunities
+     * @memberof CrmApiGetCrmOpportunities
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1CrmOpportunitiesById operation in CrmApi.
+ * Request parameters for getCrmOpportunitiesById operation in CrmApi.
  * @export
- * @interface CrmApiGetV1CrmOpportunitiesByIdRequest
+ * @interface CrmApiGetCrmOpportunitiesByIdRequest
  */
-export interface CrmApiGetV1CrmOpportunitiesByIdRequest {
+export interface CrmApiGetCrmOpportunitiesByIdRequest {
     /**
      * ID is the record to act on, from the path.
      * @type {string}
-     * @memberof CrmApiGetV1CrmOpportunitiesById
+     * @memberof CrmApiGetCrmOpportunitiesById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for patchV1CrmApplicationsById operation in CrmApi.
+ * Request parameters for patchCrmApplicationsById operation in CrmApi.
  * @export
- * @interface CrmApiPatchV1CrmApplicationsByIdRequest
+ * @interface CrmApiPatchCrmApplicationsByIdRequest
  */
-export interface CrmApiPatchV1CrmApplicationsByIdRequest {
+export interface CrmApiPatchCrmApplicationsByIdRequest {
     /**
      * ID is the application to move, from the path.
      * @type {string}
-     * @memberof CrmApiPatchV1CrmApplicationsById
+     * @memberof CrmApiPatchCrmApplicationsById
      */
     readonly id: string
 
     /**
      * 
      * @type {PatchApplicationIn}
-     * @memberof CrmApiPatchV1CrmApplicationsById
+     * @memberof CrmApiPatchCrmApplicationsById
      */
     readonly patchApplicationIn: PatchApplicationIn
 }
 
 /**
- * Request parameters for postV1CrmCompanies operation in CrmApi.
+ * Request parameters for postCrmCompanies operation in CrmApi.
  * @export
- * @interface CrmApiPostV1CrmCompaniesRequest
+ * @interface CrmApiPostCrmCompaniesRequest
  */
-export interface CrmApiPostV1CrmCompaniesRequest {
+export interface CrmApiPostCrmCompaniesRequest {
     /**
      * 
      * @type {CompanyReq}
-     * @memberof CrmApiPostV1CrmCompanies
+     * @memberof CrmApiPostCrmCompanies
      */
     readonly companyReq: CompanyReq
 }
 
 /**
- * Request parameters for postV1CrmContacts operation in CrmApi.
+ * Request parameters for postCrmContacts operation in CrmApi.
  * @export
- * @interface CrmApiPostV1CrmContactsRequest
+ * @interface CrmApiPostCrmContactsRequest
  */
-export interface CrmApiPostV1CrmContactsRequest {
+export interface CrmApiPostCrmContactsRequest {
     /**
      * 
      * @type {ContactReq}
-     * @memberof CrmApiPostV1CrmContacts
+     * @memberof CrmApiPostCrmContacts
      */
     readonly contactReq: ContactReq
 }
 
 /**
- * Request parameters for postV1CrmOpportunities operation in CrmApi.
+ * Request parameters for postCrmOpportunities operation in CrmApi.
  * @export
- * @interface CrmApiPostV1CrmOpportunitiesRequest
+ * @interface CrmApiPostCrmOpportunitiesRequest
  */
-export interface CrmApiPostV1CrmOpportunitiesRequest {
+export interface CrmApiPostCrmOpportunitiesRequest {
     /**
      * 
      * @type {OppReq}
-     * @memberof CrmApiPostV1CrmOpportunities
+     * @memberof CrmApiPostCrmOpportunities
      */
     readonly oppReq: OppReq
 }
 
 /**
- * Request parameters for putV1CrmCompaniesById operation in CrmApi.
+ * Request parameters for putCrmCompaniesById operation in CrmApi.
  * @export
- * @interface CrmApiPutV1CrmCompaniesByIdRequest
+ * @interface CrmApiPutCrmCompaniesByIdRequest
  */
-export interface CrmApiPutV1CrmCompaniesByIdRequest {
+export interface CrmApiPutCrmCompaniesByIdRequest {
     /**
      * ID names the company to update and comes from the path. A create ignores it: the server mints the id.
      * @type {string}
-     * @memberof CrmApiPutV1CrmCompaniesById
+     * @memberof CrmApiPutCrmCompaniesById
      */
     readonly id: string
 
     /**
      * 
      * @type {CompanyReq}
-     * @memberof CrmApiPutV1CrmCompaniesById
+     * @memberof CrmApiPutCrmCompaniesById
      */
     readonly companyReq: CompanyReq
 }
 
 /**
- * Request parameters for putV1CrmContactsById operation in CrmApi.
+ * Request parameters for putCrmContactsById operation in CrmApi.
  * @export
- * @interface CrmApiPutV1CrmContactsByIdRequest
+ * @interface CrmApiPutCrmContactsByIdRequest
  */
-export interface CrmApiPutV1CrmContactsByIdRequest {
+export interface CrmApiPutCrmContactsByIdRequest {
     /**
      * ID names the contact to update and comes from the path. A create ignores it: the server mints the id.
      * @type {string}
-     * @memberof CrmApiPutV1CrmContactsById
+     * @memberof CrmApiPutCrmContactsById
      */
     readonly id: string
 
     /**
      * 
      * @type {ContactReq}
-     * @memberof CrmApiPutV1CrmContactsById
+     * @memberof CrmApiPutCrmContactsById
      */
     readonly contactReq: ContactReq
 }
 
 /**
- * Request parameters for putV1CrmOpportunitiesById operation in CrmApi.
+ * Request parameters for putCrmOpportunitiesById operation in CrmApi.
  * @export
- * @interface CrmApiPutV1CrmOpportunitiesByIdRequest
+ * @interface CrmApiPutCrmOpportunitiesByIdRequest
  */
-export interface CrmApiPutV1CrmOpportunitiesByIdRequest {
+export interface CrmApiPutCrmOpportunitiesByIdRequest {
     /**
      * ID names the opportunity to update and comes from the path. A create ignores it: the server mints the id.
      * @type {string}
-     * @memberof CrmApiPutV1CrmOpportunitiesById
+     * @memberof CrmApiPutCrmOpportunitiesById
      */
     readonly id: string
 
     /**
      * 
      * @type {OppReq}
-     * @memberof CrmApiPutV1CrmOpportunitiesById
+     * @memberof CrmApiPutCrmOpportunitiesById
      */
     readonly oppReq: OppReq
 }
@@ -1571,133 +1571,133 @@ export class CrmApi extends BaseAPI {
     /**
      * Removes one of the caller org\'s companies and answers 204. Any contact or opportunity in the org that referenced it keeps existing with the reference cleared, so nothing is left pointing at a company that is gone.
      * @summary Removes one of the caller org\'s companies and answers 204.
-     * @param {CrmApiDeleteV1CrmCompaniesByIdRequest} requestParameters Request parameters.
+     * @param {CrmApiDeleteCrmCompaniesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public deleteV1CrmCompaniesById(requestParameters: CrmApiDeleteV1CrmCompaniesByIdRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).deleteV1CrmCompaniesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteCrmCompaniesById(requestParameters: CrmApiDeleteCrmCompaniesByIdRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).deleteCrmCompaniesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one of the caller org\'s contacts and answers 204. Any opportunity in the org that named it point of contact keeps existing with that reference cleared.
      * @summary Removes one of the caller org\'s contacts and answers 204.
-     * @param {CrmApiDeleteV1CrmContactsByIdRequest} requestParameters Request parameters.
+     * @param {CrmApiDeleteCrmContactsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public deleteV1CrmContactsById(requestParameters: CrmApiDeleteV1CrmContactsByIdRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).deleteV1CrmContactsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteCrmContactsById(requestParameters: CrmApiDeleteCrmContactsByIdRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).deleteCrmContactsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one of the caller org\'s deals and answers 204.
      * @summary Removes one of the caller org\'s deals and answers 204.
-     * @param {CrmApiDeleteV1CrmOpportunitiesByIdRequest} requestParameters Request parameters.
+     * @param {CrmApiDeleteCrmOpportunitiesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public deleteV1CrmOpportunitiesById(requestParameters: CrmApiDeleteV1CrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).deleteV1CrmOpportunitiesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteCrmOpportunitiesById(requestParameters: CrmApiDeleteCrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).deleteCrmOpportunitiesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the org\'s Startup Program applications, newest first. Each carries its AI screen and its stage history; a stage narrows the page to one pipeline stage.
      * @summary Returns the org\'s Startup Program applications, newest first.
-     * @param {CrmApiGetV1CrmApplicationsRequest} requestParameters Request parameters.
+     * @param {CrmApiGetCrmApplicationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public getV1CrmApplications(requestParameters: CrmApiGetV1CrmApplicationsRequest = {}, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).getV1CrmApplications(requestParameters.stage, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getCrmApplications(requestParameters: CrmApiGetCrmApplicationsRequest = {}, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).getCrmApplications(requestParameters.stage, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one Startup Program application with its AI screen and stage history. An id belonging to another org reads as not found.
      * @summary Returns one Startup Program application with its AI screen and stage history.
-     * @param {CrmApiGetV1CrmApplicationsByIdRequest} requestParameters Request parameters.
+     * @param {CrmApiGetCrmApplicationsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public getV1CrmApplicationsById(requestParameters: CrmApiGetV1CrmApplicationsByIdRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).getV1CrmApplicationsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getCrmApplicationsById(requestParameters: CrmApiGetCrmApplicationsByIdRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).getCrmApplicationsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s companies, most recently updated first.
      * @summary Returns the caller org\'s companies, most recently updated first.
-     * @param {CrmApiGetV1CrmCompaniesRequest} requestParameters Request parameters.
+     * @param {CrmApiGetCrmCompaniesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public getV1CrmCompanies(requestParameters: CrmApiGetV1CrmCompaniesRequest = {}, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).getV1CrmCompanies(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getCrmCompanies(requestParameters: CrmApiGetCrmCompaniesRequest = {}, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).getCrmCompanies(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one of the caller org\'s companies. An id belonging to another org reads as not found.
      * @summary Returns one of the caller org\'s companies.
-     * @param {CrmApiGetV1CrmCompaniesByIdRequest} requestParameters Request parameters.
+     * @param {CrmApiGetCrmCompaniesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public getV1CrmCompaniesById(requestParameters: CrmApiGetV1CrmCompaniesByIdRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).getV1CrmCompaniesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getCrmCompaniesById(requestParameters: CrmApiGetCrmCompaniesByIdRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).getCrmCompaniesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s contacts, most recently updated first. A companyId narrows the page to the people at that company.
      * @summary Returns the caller org\'s contacts, most recently updated first.
-     * @param {CrmApiGetV1CrmContactsRequest} requestParameters Request parameters.
+     * @param {CrmApiGetCrmContactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public getV1CrmContacts(requestParameters: CrmApiGetV1CrmContactsRequest = {}, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).getV1CrmContacts(requestParameters.companyId, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getCrmContacts(requestParameters: CrmApiGetCrmContactsRequest = {}, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).getCrmContacts(requestParameters.companyId, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one of the caller org\'s contacts. An id belonging to another org reads as not found.
      * @summary Returns one of the caller org\'s contacts.
-     * @param {CrmApiGetV1CrmContactsByIdRequest} requestParameters Request parameters.
+     * @param {CrmApiGetCrmContactsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public getV1CrmContactsById(requestParameters: CrmApiGetV1CrmContactsByIdRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).getV1CrmContactsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getCrmContactsById(requestParameters: CrmApiGetCrmContactsByIdRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).getCrmContactsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s deals, most recently updated first. A stage narrows the page to one pipeline stage.
      * @summary Returns the caller org\'s deals, most recently updated first.
-     * @param {CrmApiGetV1CrmOpportunitiesRequest} requestParameters Request parameters.
+     * @param {CrmApiGetCrmOpportunitiesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public getV1CrmOpportunities(requestParameters: CrmApiGetV1CrmOpportunitiesRequest = {}, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).getV1CrmOpportunities(requestParameters.stage, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getCrmOpportunities(requestParameters: CrmApiGetCrmOpportunitiesRequest = {}, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).getCrmOpportunities(requestParameters.stage, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one of the caller org\'s deals. An id belonging to another org reads as not found.
      * @summary Returns one of the caller org\'s deals.
-     * @param {CrmApiGetV1CrmOpportunitiesByIdRequest} requestParameters Request parameters.
+     * @param {CrmApiGetCrmOpportunitiesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public getV1CrmOpportunitiesById(requestParameters: CrmApiGetV1CrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).getV1CrmOpportunitiesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getCrmOpportunitiesById(requestParameters: CrmApiGetCrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).getCrmOpportunitiesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1707,20 +1707,20 @@ export class CrmApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public getV1CrmSummary(options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).getV1CrmSummary(options).then((request) => request(this.axios, this.basePath));
+    public getCrmSummary(options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).getCrmSummary(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Moves one Startup Program application through the pipeline. The move is recorded on the application\'s timeline, attributed to the calling staff user: it may advance exactly one stage, go back to any earlier stage, reject from any non-rejected stage, or reopen a rejected application to `applied`; anything else is refused. Rejecting requires a reason. A note with no stage change is still recorded.
      * @summary Moves one Startup Program application through the pipeline.
-     * @param {CrmApiPatchV1CrmApplicationsByIdRequest} requestParameters Request parameters.
+     * @param {CrmApiPatchCrmApplicationsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public patchV1CrmApplicationsById(requestParameters: CrmApiPatchV1CrmApplicationsByIdRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).patchV1CrmApplicationsById(requestParameters.id, requestParameters.patchApplicationIn, options).then((request) => request(this.axios, this.basePath));
+    public patchCrmApplicationsById(requestParameters: CrmApiPatchCrmApplicationsByIdRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).patchCrmApplicationsById(requestParameters.id, requestParameters.patchApplicationIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1730,80 +1730,80 @@ export class CrmApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public postV1CrmApplications(options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).postV1CrmApplications(options).then((request) => request(this.axios, this.basePath));
+    public postCrmApplications(options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).postCrmApplications(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds a company to the caller\'s org and answers 201 with the stored record. A name is required; an empty currency defaults to USD.
      * @summary Adds a company to the caller\'s org and answers 201 with the stored record.
-     * @param {CrmApiPostV1CrmCompaniesRequest} requestParameters Request parameters.
+     * @param {CrmApiPostCrmCompaniesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public postV1CrmCompanies(requestParameters: CrmApiPostV1CrmCompaniesRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).postV1CrmCompanies(requestParameters.companyReq, options).then((request) => request(this.axios, this.basePath));
+    public postCrmCompanies(requestParameters: CrmApiPostCrmCompaniesRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).postCrmCompanies(requestParameters.companyReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds a person to the caller\'s org and answers 201 with the stored record. One of firstName, lastName or email is required, and a companyId must name a company in the same org.
      * @summary Adds a person to the caller\'s org and answers 201 with the stored record.
-     * @param {CrmApiPostV1CrmContactsRequest} requestParameters Request parameters.
+     * @param {CrmApiPostCrmContactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public postV1CrmContacts(requestParameters: CrmApiPostV1CrmContactsRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).postV1CrmContacts(requestParameters.contactReq, options).then((request) => request(this.axios, this.basePath));
+    public postCrmContacts(requestParameters: CrmApiPostCrmContactsRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).postCrmContacts(requestParameters.contactReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds a deal to the caller\'s org and answers 201 with the stored record. A name is required; the stage defaults to NEW; companyId and pointOfContactId must name records in the same org.
      * @summary Adds a deal to the caller\'s org and answers 201 with the stored record.
-     * @param {CrmApiPostV1CrmOpportunitiesRequest} requestParameters Request parameters.
+     * @param {CrmApiPostCrmOpportunitiesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public postV1CrmOpportunities(requestParameters: CrmApiPostV1CrmOpportunitiesRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).postV1CrmOpportunities(requestParameters.oppReq, options).then((request) => request(this.axios, this.basePath));
+    public postCrmOpportunities(requestParameters: CrmApiPostCrmOpportunitiesRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).postCrmOpportunities(requestParameters.oppReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces one of the caller org\'s companies. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. A name is required.
      * @summary Replaces one of the caller org\'s companies.
-     * @param {CrmApiPutV1CrmCompaniesByIdRequest} requestParameters Request parameters.
+     * @param {CrmApiPutCrmCompaniesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public putV1CrmCompaniesById(requestParameters: CrmApiPutV1CrmCompaniesByIdRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).putV1CrmCompaniesById(requestParameters.id, requestParameters.companyReq, options).then((request) => request(this.axios, this.basePath));
+    public putCrmCompaniesById(requestParameters: CrmApiPutCrmCompaniesByIdRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).putCrmCompaniesById(requestParameters.id, requestParameters.companyReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces one of the caller org\'s contacts. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. One of firstName, lastName or email is required.
      * @summary Replaces one of the caller org\'s contacts.
-     * @param {CrmApiPutV1CrmContactsByIdRequest} requestParameters Request parameters.
+     * @param {CrmApiPutCrmContactsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public putV1CrmContactsById(requestParameters: CrmApiPutV1CrmContactsByIdRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).putV1CrmContactsById(requestParameters.id, requestParameters.contactReq, options).then((request) => request(this.axios, this.basePath));
+    public putCrmContactsById(requestParameters: CrmApiPutCrmContactsByIdRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).putCrmContactsById(requestParameters.id, requestParameters.contactReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces one of the caller org\'s deals. Every writable field is taken from the request, so a field the request omits is CLEARED — send the whole record. A name is required and the stage must be a pipeline stage.
      * @summary Replaces one of the caller org\'s deals.
-     * @param {CrmApiPutV1CrmOpportunitiesByIdRequest} requestParameters Request parameters.
+     * @param {CrmApiPutCrmOpportunitiesByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CrmApi
      */
-    public putV1CrmOpportunitiesById(requestParameters: CrmApiPutV1CrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig) {
-        return CrmApiFp(this.configuration).putV1CrmOpportunitiesById(requestParameters.id, requestParameters.oppReq, options).then((request) => request(this.axios, this.basePath));
+    public putCrmOpportunitiesById(requestParameters: CrmApiPutCrmOpportunitiesByIdRequest, options?: RawAxiosRequestConfig) {
+        return CrmApiFp(this.configuration).putCrmOpportunitiesById(requestParameters.id, requestParameters.oppReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

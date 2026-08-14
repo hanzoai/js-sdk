@@ -33,7 +33,7 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LogsHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLogsHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/logs/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LogsQuery: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLogsQuery: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/logs/query`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -93,7 +93,7 @@ export const LogsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LogsWrite: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postLogsWrite: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/logs/write`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -133,10 +133,10 @@ export const LogsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LogsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LogsHealth(options);
+        async getLogsHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLogsHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LogsApi.getV1LogsHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LogsApi.getLogsHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -145,10 +145,10 @@ export const LogsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LogsQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LogsQuery(options);
+        async getLogsQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLogsQuery(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LogsApi.getV1LogsQuery']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LogsApi.getLogsQuery']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -157,10 +157,10 @@ export const LogsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1LogsWrite(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1LogsWrite(options);
+        async postLogsWrite(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLogsWrite(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LogsApi.postV1LogsWrite']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LogsApi.postLogsWrite']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -179,8 +179,8 @@ export const LogsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LogsHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1LogsHealth(options).then((request) => request(axios, basePath));
+        getLogsHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getLogsHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers `{count, records}`, newest first. `match` is the same `k=v,k2=v2` superset label matcher the metrics query uses; `contains` is a case-insensitive substring test against the record body; `start` and `end` are nanosecond bounds.  A bound that is absent, empty or unparseable becomes 0, which means UNBOUNDED — a malformed `start` widens the search rather than failing it. `limit` caps the page and defaults to 100 when absent or non-positive, so an unfiltered read is never the whole ring.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`, so a search can only reach the org the edge asserted.
@@ -188,8 +188,8 @@ export const LogsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LogsQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1LogsQuery(options).then((request) => request(axios, basePath));
+        getLogsQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getLogsQuery(options).then((request) => request(axios, basePath));
         },
         /**
          * Takes `{records:[{t, level, body, labels}]}`, appends each one, and answers `{written}`. Bodies are stored verbatim; `labels` are the indexed dimensions a query filters on, so what you do not label you can only find by substring.  `t` is NANOSECONDS since the Unix epoch. A record sent without one is stored at 0 and then falls outside any query carrying a lower bound — the usual reason a successful write does not read back. Retention is a bounded ring, 1048576 records per org, oldest evicted first. No record is validated or rejected, so `written` is the number of records SENT; only a body that does not decode at all is 400.  The tenant is the gateway-minted `X-Org-Id` header, falling back to the deployment brand and then `default`; each org\'s records live in its own WAL-durable store.
@@ -197,8 +197,8 @@ export const LogsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LogsWrite(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1LogsWrite(options).then((request) => request(axios, basePath));
+        postLogsWrite(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postLogsWrite(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -217,8 +217,8 @@ export class LogsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LogsApi
      */
-    public getV1LogsHealth(options?: RawAxiosRequestConfig) {
-        return LogsApiFp(this.configuration).getV1LogsHealth(options).then((request) => request(this.axios, this.basePath));
+    public getLogsHealth(options?: RawAxiosRequestConfig) {
+        return LogsApiFp(this.configuration).getLogsHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -228,8 +228,8 @@ export class LogsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LogsApi
      */
-    public getV1LogsQuery(options?: RawAxiosRequestConfig) {
-        return LogsApiFp(this.configuration).getV1LogsQuery(options).then((request) => request(this.axios, this.basePath));
+    public getLogsQuery(options?: RawAxiosRequestConfig) {
+        return LogsApiFp(this.configuration).getLogsQuery(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -239,8 +239,8 @@ export class LogsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LogsApi
      */
-    public postV1LogsWrite(options?: RawAxiosRequestConfig) {
-        return LogsApiFp(this.configuration).postV1LogsWrite(options).then((request) => request(this.axios, this.basePath));
+    public postLogsWrite(options?: RawAxiosRequestConfig) {
+        return LogsApiFp(this.configuration).postLogsWrite(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -56,9 +56,9 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1LinksById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteLinksById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1LinksById', 'id', id)
+            assertParamExists('deleteLinksById', 'id', id)
             const localVarPath = `/v1/links/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -89,7 +89,7 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Links: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLinks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/links`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -120,9 +120,9 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLinksById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1LinksById', 'id', id)
+            assertParamExists('getLinksById', 'id', id)
             const localVarPath = `/v1/links/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -154,9 +154,9 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksDevicesByMachine: async (machine: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLinksDevicesByMachine: async (machine: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'machine' is not null or undefined
-            assertParamExists('getV1LinksDevicesByMachine', 'machine', machine)
+            assertParamExists('getLinksDevicesByMachine', 'machine', machine)
             const localVarPath = `/v1/links/devices/{machine}`
                 .replace(`{${"machine"}}`, encodeURIComponent(String(machine)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -187,7 +187,7 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksRoute: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLinksRoute: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/links/route`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -221,7 +221,7 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksUsage: async (provider?: string, account?: string, window?: string, range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLinksUsage: async (provider?: string, account?: string, window?: string, range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/links/usage`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -267,7 +267,7 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksUsageAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLinksUsageAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/links/usage/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -298,7 +298,7 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksUsageSummary: async (range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLinksUsageSummary: async (range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/links/usage/summary`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -333,9 +333,9 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Links: async (enrollReq: EnrollReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postLinks: async (enrollReq: EnrollReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'enrollReq' is not null or undefined
-            assertParamExists('postV1Links', 'enrollReq', enrollReq)
+            assertParamExists('postLinks', 'enrollReq', enrollReq)
             const localVarPath = `/v1/links`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -369,9 +369,9 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LinksDevicesByMachineRevoke: async (machine: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postLinksDevicesByMachineRevoke: async (machine: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'machine' is not null or undefined
-            assertParamExists('postV1LinksDevicesByMachineRevoke', 'machine', machine)
+            assertParamExists('postLinksDevicesByMachineRevoke', 'machine', machine)
             const localVarPath = `/v1/links/devices/{machine}/revoke`
                 .replace(`{${"machine"}}`, encodeURIComponent(String(machine)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -403,9 +403,9 @@ export const LinksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LinksUsage: async (ingestReq: IngestReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postLinksUsage: async (ingestReq: IngestReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ingestReq' is not null or undefined
-            assertParamExists('postV1LinksUsage', 'ingestReq', ingestReq)
+            assertParamExists('postLinksUsage', 'ingestReq', ingestReq)
             const localVarPath = `/v1/links/usage`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -449,10 +449,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1LinksById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1LinksById(id, options);
+        async deleteLinksById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteLinksById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.deleteV1LinksById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.deleteLinksById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -461,10 +461,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Links(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Links(options);
+        async getLinks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLinks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.getV1Links']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.getLinks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -474,10 +474,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LinksById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LinksById(id, options);
+        async getLinksById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLinksById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.getV1LinksById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.getLinksById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -487,10 +487,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LinksDevicesByMachine(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LinksDevicesByMachine(machine, options);
+        async getLinksDevicesByMachine(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLinksDevicesByMachine(machine, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.getV1LinksDevicesByMachine']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.getLinksDevicesByMachine']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -499,10 +499,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LinksRoute(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoutePlan>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LinksRoute(options);
+        async getLinksRoute(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoutePlan>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLinksRoute(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.getV1LinksRoute']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.getLinksRoute']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -515,10 +515,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LinksUsage(provider?: string, account?: string, window?: string, range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BoardResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LinksUsage(provider, account, window, range, options);
+        async getLinksUsage(provider?: string, account?: string, window?: string, range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BoardResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLinksUsage(provider, account, window, range, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.getV1LinksUsage']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.getLinksUsage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -527,10 +527,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LinksUsageAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsUsage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LinksUsageAccounts(options);
+        async getLinksUsageAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsUsage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLinksUsageAccounts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.getV1LinksUsageAccounts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.getLinksUsageAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -540,10 +540,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1LinksUsageSummary(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummaryResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1LinksUsageSummary(range, options);
+        async getLinksUsageSummary(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummaryResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLinksUsageSummary(range, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.getV1LinksUsageSummary']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.getLinksUsageSummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -553,10 +553,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Links(enrollReq: EnrollReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Links(enrollReq, options);
+        async postLinks(enrollReq: EnrollReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLinks(enrollReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.postV1Links']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.postLinks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -566,10 +566,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1LinksDevicesByMachineRevoke(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1LinksDevicesByMachineRevoke(machine, options);
+        async postLinksDevicesByMachineRevoke(machine: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLinksDevicesByMachineRevoke(machine, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.postV1LinksDevicesByMachineRevoke']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.postLinksDevicesByMachineRevoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -579,10 +579,10 @@ export const LinksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1LinksUsage(ingestReq: IngestReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngestResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1LinksUsage(ingestReq, options);
+        async postLinksUsage(ingestReq: IngestReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IngestResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLinksUsage(ingestReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['LinksApi.postV1LinksUsage']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['LinksApi.postLinksUsage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -598,12 +598,12 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
         /**
          * Logs out one account and stops the sessions it was running.  It revokes a single linked account and stops the agent sessions that ran under it, answering with the revoked row and how many sessions stopped. The link is RETAINED with a revoked status rather than deleted, so its usage history and the audit trail survive the log-out — which also means a revoked account still appears in the list, and is excluded from the route plan rather than absent from it. The session stop is narrowed to the revoking user\'s own sessions on that device, provider and account, and a stop that fails does not fail the revoke: the revoked row is the durable truth. An id that does not exist, or belongs to another user or org, is the same 404.
          * @summary Logs out one account and stops the sessions it was running.
-         * @param {LinksApiDeleteV1LinksByIdRequest} requestParameters Request parameters.
+         * @param {LinksApiDeleteLinksByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1LinksById(requestParameters: LinksApiDeleteV1LinksByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<RevokeResp> {
-            return localVarFp.deleteV1LinksById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteLinksById(requestParameters: LinksApiDeleteLinksByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<RevokeResp> {
+            return localVarFp.deleteLinksById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists your linked accounts and the devices they sit on.  It answers the caller\'s own links plus a devices projection of the same rows folded per machine — the cross-machine \"AI Providers / Accounts\" view. A device is a projection, not a stored entity: its labels come from its most-recently-seen account, so there is no device to create and none to garbage-collect. Revoked links are INCLUDED rather than dropped, because a logged-out account keeps its usage history and audit trail. Scoped to the caller: a validated principal and a non-empty org, else 403.
@@ -611,28 +611,28 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Links(options?: RawAxiosRequestConfig): AxiosPromise<LinkList> {
-            return localVarFp.getV1Links(options).then((request) => request(axios, basePath));
+        getLinks(options?: RawAxiosRequestConfig): AxiosPromise<LinkList> {
+            return localVarFp.getLinks(options).then((request) => request(axios, basePath));
         },
         /**
          * Reads one linked account.  It answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence. The static paths on this collection — route, usage, devices — register before this one and win first-match, so a link whose id collided with one of those words could not be addressed here.
          * @summary Reads one linked account.
-         * @param {LinksApiGetV1LinksByIdRequest} requestParameters Request parameters.
+         * @param {LinksApiGetLinksByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksById(requestParameters: LinksApiGetV1LinksByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkView> {
-            return localVarFp.getV1LinksById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getLinksById(requestParameters: LinksApiGetLinksByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkView> {
+            return localVarFp.getLinksById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Shows one machine: its accounts, usage and live sessions.  It answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read.
          * @summary Shows one machine: its accounts, usage and live sessions.
-         * @param {LinksApiGetV1LinksDevicesByMachineRequest} requestParameters Request parameters.
+         * @param {LinksApiGetLinksDevicesByMachineRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksDevicesByMachine(requestParameters: LinksApiGetV1LinksDevicesByMachineRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceView> {
-            return localVarFp.getV1LinksDevicesByMachine(requestParameters.machine, options).then((request) => request(axios, basePath));
+        getLinksDevicesByMachine(requestParameters: LinksApiGetLinksDevicesByMachineRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceView> {
+            return localVarFp.getLinksDevicesByMachine(requestParameters.machine, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets the failover order across your linked accounts.  It answers an ordered redundancy plan over the caller\'s LINKED (not revoked) accounts: each candidate with its remaining rate-limit headroom, whether it is routable right now, how it BILLS (plan or commerce), and a reason when it is not — plus the primary to try first. It is what lets a router fail over from one subscription to another and fall back to the metered API as the always-available backstop, knowing the cost consequence before it dials.  It is POLICY, not execution: the plan is computed purely from the usage snapshots already in the registry, never by probing a provider, so it is a total function of the links and costs nothing to ask for. Actually dialing, detecting a live 429 and advancing to the next candidate belongs to the caller. A link with no snapshot counts as full headroom.
@@ -640,18 +640,18 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksRoute(options?: RawAxiosRequestConfig): AxiosPromise<RoutePlan> {
-            return localVarFp.getV1LinksRoute(options).then((request) => request(axios, basePath));
+        getLinksRoute(options?: RawAxiosRequestConfig): AxiosPromise<RoutePlan> {
+            return localVarFp.getLinksRoute(options).then((request) => request(axios, basePath));
         },
         /**
          * Shows one provider account\'s own usage dashboard.  It answers the time series for a SINGLE provider account — the windows in range plus the currently-open ones — as that provider\'s own meter reported it: \"my plan is 47% through its 6h window, resets at 14:20\". current is the newest instance of each lane (the headline); windows is the history behind it, both computed from ONE deduped read. provider is required; an unknown window class or range is 400, never a quiet fallback to a different one. When no series is available the response is a 200 with available:false and empty lists — an honest \"we have no data\", which is a different claim from zero usage.
          * @summary Shows one provider account\'s own usage dashboard.
-         * @param {LinksApiGetV1LinksUsageRequest} requestParameters Request parameters.
+         * @param {LinksApiGetLinksUsageRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksUsage(requestParameters: LinksApiGetV1LinksUsageRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BoardResp> {
-            return localVarFp.getV1LinksUsage(requestParameters.provider, requestParameters.account, requestParameters.window, requestParameters.range, options).then((request) => request(axios, basePath));
+        getLinksUsage(requestParameters: LinksApiGetLinksUsageRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BoardResp> {
+            return localVarFp.getLinksUsage(requestParameters.provider, requestParameters.account, requestParameters.window, requestParameters.range, options).then((request) => request(axios, basePath));
         },
         /**
          * Breaks down what the gateway routed through each of your accounts.  It answers one row per linked account the GATEWAY actually routed through, plus their total — requests, prompt and completion tokens, and cost. This is the routed ledger, the read twin of the counter the router writes, and it is distinct from both of its neighbours: not the device collector\'s plan snapshots, and not the org money ledger. The source and scope fields on the response say so on every payload. The same shape answers in the billing namespace, from one shaping function, so the two mounts cannot drift.
@@ -659,181 +659,181 @@ export const LinksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksUsageAccounts(options?: RawAxiosRequestConfig): AxiosPromise<AccountsUsage> {
-            return localVarFp.getV1LinksUsageAccounts(options).then((request) => request(axios, basePath));
+        getLinksUsageAccounts(options?: RawAxiosRequestConfig): AxiosPromise<AccountsUsage> {
+            return localVarFp.getLinksUsageAccounts(options).then((request) => request(axios, basePath));
         },
         /**
          * Shows plan consumption and Hanzo spend side by side.  It answers the global usage board over one window: the caller\'s own linked accounts, metered from each provider\'s own login, alongside their org\'s Hanzo-routed inference. These come from different ledgers and mean different things, so every row is LABELLED by source, by scope and by availability, and THE TWO ARE NEVER SUMMED — a plan\'s percentage is not money, and a provider\'s own spend is not a Hanzo charge. The rows sit side by side and say what they are.  One resolver fixes the window for both halves, so the two sets always cover the same period. range is one of 1h, 24h, 7d or 30d and defaults to 24h; anything else is 400 rather than a silent substitution. A ledger that cannot answer reports available:false instead of a zero that would read as \"no usage\".
          * @summary Shows plan consumption and Hanzo spend side by side.
-         * @param {LinksApiGetV1LinksUsageSummaryRequest} requestParameters Request parameters.
+         * @param {LinksApiGetLinksUsageSummaryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1LinksUsageSummary(requestParameters: LinksApiGetV1LinksUsageSummaryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SummaryResp> {
-            return localVarFp.getV1LinksUsageSummary(requestParameters.range, options).then((request) => request(axios, basePath));
+        getLinksUsageSummary(requestParameters: LinksApiGetLinksUsageSummaryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SummaryResp> {
+            return localVarFp.getLinksUsageSummary(requestParameters.range, options).then((request) => request(axios, basePath));
         },
         /**
          * Registers a signed-in AI provider account on a machine.  It records that a developer has signed into one provider account on one machine — a Claude Max or ChatGPT Plus subscription, a Hanzo key, a raw provider key — and answers 201 with the stored link. Re-reporting the same (machine, provider, account) UPDATES that link rather than creating a second, so a collector may call this on every heartbeat. machine and provider are required (400 otherwise), as is a valid kind, and every field is length-bounded. Scoped to the caller: a validated principal and a non-empty org, else 403, so a caller writes only their OWN accounts within their own org.
          * @summary Registers a signed-in AI provider account on a machine.
-         * @param {LinksApiPostV1LinksRequest} requestParameters Request parameters.
+         * @param {LinksApiPostLinksRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Links(requestParameters: LinksApiPostV1LinksRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkView> {
-            return localVarFp.postV1Links(requestParameters.enrollReq, options).then((request) => request(axios, basePath));
+        postLinks(requestParameters: LinksApiPostLinksRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkView> {
+            return localVarFp.postLinks(requestParameters.enrollReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Logs out every account on one machine and stops its sessions.  It revokes every one of the caller\'s accounts on one machine and stops the agent sessions they were running, answering with how many of each. This is the \"I lost that laptop\" button. Revoked links are RETAINED, not deleted, so usage history and the audit trail survive a log-out — the rows come back in the response with their new status. The session stop reaches only the REVOKING user\'s own sessions, so a shared machine name can never be used to stop a co-tenant\'s work, and a stop that fails does not fail the revoke: the revoked row is the durable truth and the count then honestly reports fewer. A machine with nothing left to revoke is 404.
          * @summary Logs out every account on one machine and stops its sessions.
-         * @param {LinksApiPostV1LinksDevicesByMachineRevokeRequest} requestParameters Request parameters.
+         * @param {LinksApiPostLinksDevicesByMachineRevokeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LinksDevicesByMachineRevoke(requestParameters: LinksApiPostV1LinksDevicesByMachineRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<RevokeResp> {
-            return localVarFp.postV1LinksDevicesByMachineRevoke(requestParameters.machine, options).then((request) => request(axios, basePath));
+        postLinksDevicesByMachineRevoke(requestParameters: LinksApiPostLinksDevicesByMachineRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<RevokeResp> {
+            return localVarFp.postLinksDevicesByMachineRevoke(requestParameters.machine, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports usage samples from the device collector.  It ingests a batch of usage samples and answers with how many were accepted, whether history was durably stored, and the links they refreshed. A report also REFRESHES one link per distinct (machine, provider, account) it names, so a running collector keeps the accounts overview current without a separate registration call.  A caller can only ever report for THEMSELVES: org and subject come from the validated bearer, never from the body, so no sample can be attributed to another user or tenant. History is FAIL-SOFT and stored says which happened — a warehouse outage still accepts the report and refreshes the links rather than failing the device, and answers 202 either way. Send either one sample inline or up to 256 in samples; an empty batch or an over-long one is 400, as is a provider, window class or kind outside the closed vocabulary — an unrecognized window is refused rather than rewritten, because a silently reclassified sample would fill a dashboard with a class nobody reported.
          * @summary Reports usage samples from the device collector.
-         * @param {LinksApiPostV1LinksUsageRequest} requestParameters Request parameters.
+         * @param {LinksApiPostLinksUsageRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1LinksUsage(requestParameters: LinksApiPostV1LinksUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngestResp> {
-            return localVarFp.postV1LinksUsage(requestParameters.ingestReq, options).then((request) => request(axios, basePath));
+        postLinksUsage(requestParameters: LinksApiPostLinksUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<IngestResp> {
+            return localVarFp.postLinksUsage(requestParameters.ingestReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1LinksById operation in LinksApi.
+ * Request parameters for deleteLinksById operation in LinksApi.
  * @export
- * @interface LinksApiDeleteV1LinksByIdRequest
+ * @interface LinksApiDeleteLinksByIdRequest
  */
-export interface LinksApiDeleteV1LinksByIdRequest {
+export interface LinksApiDeleteLinksByIdRequest {
     /**
      * ID is the link to act on, from the path. It is scoped to the caller, so another user\&#39;s or org\&#39;s id is a 404.
      * @type {string}
-     * @memberof LinksApiDeleteV1LinksById
+     * @memberof LinksApiDeleteLinksById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1LinksById operation in LinksApi.
+ * Request parameters for getLinksById operation in LinksApi.
  * @export
- * @interface LinksApiGetV1LinksByIdRequest
+ * @interface LinksApiGetLinksByIdRequest
  */
-export interface LinksApiGetV1LinksByIdRequest {
+export interface LinksApiGetLinksByIdRequest {
     /**
      * ID is the link to act on, from the path. It is scoped to the caller, so another user\&#39;s or org\&#39;s id is a 404.
      * @type {string}
-     * @memberof LinksApiGetV1LinksById
+     * @memberof LinksApiGetLinksById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1LinksDevicesByMachine operation in LinksApi.
+ * Request parameters for getLinksDevicesByMachine operation in LinksApi.
  * @export
- * @interface LinksApiGetV1LinksDevicesByMachineRequest
+ * @interface LinksApiGetLinksDevicesByMachineRequest
  */
-export interface LinksApiGetV1LinksDevicesByMachineRequest {
+export interface LinksApiGetLinksDevicesByMachineRequest {
     /**
      * Machine is the machine to act on, from the path. It is scoped to the caller, so a machine with none of the caller\&#39;s accounts is a 404.
      * @type {string}
-     * @memberof LinksApiGetV1LinksDevicesByMachine
+     * @memberof LinksApiGetLinksDevicesByMachine
      */
     readonly machine: string
 }
 
 /**
- * Request parameters for getV1LinksUsage operation in LinksApi.
+ * Request parameters for getLinksUsage operation in LinksApi.
  * @export
- * @interface LinksApiGetV1LinksUsageRequest
+ * @interface LinksApiGetLinksUsageRequest
  */
-export interface LinksApiGetV1LinksUsageRequest {
+export interface LinksApiGetLinksUsageRequest {
     /**
      * Provider is the provider whose meter to read. Required.
      * @type {string}
-     * @memberof LinksApiGetV1LinksUsage
+     * @memberof LinksApiGetLinksUsage
      */
     readonly provider?: string
 
     /**
      * Account narrows to one account when a user has several with the provider.
      * @type {string}
-     * @memberof LinksApiGetV1LinksUsage
+     * @memberof LinksApiGetLinksUsage
      */
     readonly account?: string
 
     /**
      * Window selects a window class: 6h, day, week or month. Empty reads all.
      * @type {string}
-     * @memberof LinksApiGetV1LinksUsage
+     * @memberof LinksApiGetLinksUsage
      */
     readonly window?: string
 
     /**
      * Range is the period, one of 1h, 24h, 7d or 30d; empty means 24h, and an unknown label is 400, never a quiet fallback.
      * @type {string}
-     * @memberof LinksApiGetV1LinksUsage
+     * @memberof LinksApiGetLinksUsage
      */
     readonly range?: string
 }
 
 /**
- * Request parameters for getV1LinksUsageSummary operation in LinksApi.
+ * Request parameters for getLinksUsageSummary operation in LinksApi.
  * @export
- * @interface LinksApiGetV1LinksUsageSummaryRequest
+ * @interface LinksApiGetLinksUsageSummaryRequest
  */
-export interface LinksApiGetV1LinksUsageSummaryRequest {
+export interface LinksApiGetLinksUsageSummaryRequest {
     /**
      * Range is the period, one of 1h, 24h, 7d or 30d; empty means 24h, and an unknown label is 400, never a silent substitution.
      * @type {string}
-     * @memberof LinksApiGetV1LinksUsageSummary
+     * @memberof LinksApiGetLinksUsageSummary
      */
     readonly range?: string
 }
 
 /**
- * Request parameters for postV1Links operation in LinksApi.
+ * Request parameters for postLinks operation in LinksApi.
  * @export
- * @interface LinksApiPostV1LinksRequest
+ * @interface LinksApiPostLinksRequest
  */
-export interface LinksApiPostV1LinksRequest {
+export interface LinksApiPostLinksRequest {
     /**
      * 
      * @type {EnrollReq}
-     * @memberof LinksApiPostV1Links
+     * @memberof LinksApiPostLinks
      */
     readonly enrollReq: EnrollReq
 }
 
 /**
- * Request parameters for postV1LinksDevicesByMachineRevoke operation in LinksApi.
+ * Request parameters for postLinksDevicesByMachineRevoke operation in LinksApi.
  * @export
- * @interface LinksApiPostV1LinksDevicesByMachineRevokeRequest
+ * @interface LinksApiPostLinksDevicesByMachineRevokeRequest
  */
-export interface LinksApiPostV1LinksDevicesByMachineRevokeRequest {
+export interface LinksApiPostLinksDevicesByMachineRevokeRequest {
     /**
      * Machine is the machine to act on, from the path. It is scoped to the caller, so a machine with none of the caller\&#39;s accounts is a 404.
      * @type {string}
-     * @memberof LinksApiPostV1LinksDevicesByMachineRevoke
+     * @memberof LinksApiPostLinksDevicesByMachineRevoke
      */
     readonly machine: string
 }
 
 /**
- * Request parameters for postV1LinksUsage operation in LinksApi.
+ * Request parameters for postLinksUsage operation in LinksApi.
  * @export
- * @interface LinksApiPostV1LinksUsageRequest
+ * @interface LinksApiPostLinksUsageRequest
  */
-export interface LinksApiPostV1LinksUsageRequest {
+export interface LinksApiPostLinksUsageRequest {
     /**
      * 
      * @type {IngestReq}
-     * @memberof LinksApiPostV1LinksUsage
+     * @memberof LinksApiPostLinksUsage
      */
     readonly ingestReq: IngestReq
 }
@@ -848,13 +848,13 @@ export class LinksApi extends BaseAPI {
     /**
      * Logs out one account and stops the sessions it was running.  It revokes a single linked account and stops the agent sessions that ran under it, answering with the revoked row and how many sessions stopped. The link is RETAINED with a revoked status rather than deleted, so its usage history and the audit trail survive the log-out — which also means a revoked account still appears in the list, and is excluded from the route plan rather than absent from it. The session stop is narrowed to the revoking user\'s own sessions on that device, provider and account, and a stop that fails does not fail the revoke: the revoked row is the durable truth. An id that does not exist, or belongs to another user or org, is the same 404.
      * @summary Logs out one account and stops the sessions it was running.
-     * @param {LinksApiDeleteV1LinksByIdRequest} requestParameters Request parameters.
+     * @param {LinksApiDeleteLinksByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public deleteV1LinksById(requestParameters: LinksApiDeleteV1LinksByIdRequest, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).deleteV1LinksById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteLinksById(requestParameters: LinksApiDeleteLinksByIdRequest, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).deleteLinksById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -864,32 +864,32 @@ export class LinksApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public getV1Links(options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).getV1Links(options).then((request) => request(this.axios, this.basePath));
+    public getLinks(options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).getLinks(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reads one linked account.  It answers a single link — its device, provider, account, plan, how it bills, its status and its latest usage snapshot. An id that does not exist, or belongs to another user or org, is the same 404: the scope is a bound predicate on the read, so a wrong id and a foreign id are indistinguishable and neither confirms the other\'s existence. The static paths on this collection — route, usage, devices — register before this one and win first-match, so a link whose id collided with one of those words could not be addressed here.
      * @summary Reads one linked account.
-     * @param {LinksApiGetV1LinksByIdRequest} requestParameters Request parameters.
+     * @param {LinksApiGetLinksByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public getV1LinksById(requestParameters: LinksApiGetV1LinksByIdRequest, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).getV1LinksById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getLinksById(requestParameters: LinksApiGetLinksByIdRequest, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).getLinksById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Shows one machine: its accounts, usage and live sessions.  It answers one device — its host and OS labels, every account the caller has signed in on that machine with its latest usage, and how many agent sessions the caller currently has running on it. The device labels come from the most-recently-seen account, since a device is a projection of its links rather than a row of its own. A machine with none of the caller\'s accounts is 404, which is also the answer when the machine belongs to someone else — the scope makes the two indistinguishable, deliberately. The session count reports 0 where the agent plane is not mounted rather than failing the read.
      * @summary Shows one machine: its accounts, usage and live sessions.
-     * @param {LinksApiGetV1LinksDevicesByMachineRequest} requestParameters Request parameters.
+     * @param {LinksApiGetLinksDevicesByMachineRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public getV1LinksDevicesByMachine(requestParameters: LinksApiGetV1LinksDevicesByMachineRequest, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).getV1LinksDevicesByMachine(requestParameters.machine, options).then((request) => request(this.axios, this.basePath));
+    public getLinksDevicesByMachine(requestParameters: LinksApiGetLinksDevicesByMachineRequest, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).getLinksDevicesByMachine(requestParameters.machine, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -899,20 +899,20 @@ export class LinksApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public getV1LinksRoute(options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).getV1LinksRoute(options).then((request) => request(this.axios, this.basePath));
+    public getLinksRoute(options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).getLinksRoute(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Shows one provider account\'s own usage dashboard.  It answers the time series for a SINGLE provider account — the windows in range plus the currently-open ones — as that provider\'s own meter reported it: \"my plan is 47% through its 6h window, resets at 14:20\". current is the newest instance of each lane (the headline); windows is the history behind it, both computed from ONE deduped read. provider is required; an unknown window class or range is 400, never a quiet fallback to a different one. When no series is available the response is a 200 with available:false and empty lists — an honest \"we have no data\", which is a different claim from zero usage.
      * @summary Shows one provider account\'s own usage dashboard.
-     * @param {LinksApiGetV1LinksUsageRequest} requestParameters Request parameters.
+     * @param {LinksApiGetLinksUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public getV1LinksUsage(requestParameters: LinksApiGetV1LinksUsageRequest = {}, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).getV1LinksUsage(requestParameters.provider, requestParameters.account, requestParameters.window, requestParameters.range, options).then((request) => request(this.axios, this.basePath));
+    public getLinksUsage(requestParameters: LinksApiGetLinksUsageRequest = {}, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).getLinksUsage(requestParameters.provider, requestParameters.account, requestParameters.window, requestParameters.range, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -922,56 +922,56 @@ export class LinksApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public getV1LinksUsageAccounts(options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).getV1LinksUsageAccounts(options).then((request) => request(this.axios, this.basePath));
+    public getLinksUsageAccounts(options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).getLinksUsageAccounts(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Shows plan consumption and Hanzo spend side by side.  It answers the global usage board over one window: the caller\'s own linked accounts, metered from each provider\'s own login, alongside their org\'s Hanzo-routed inference. These come from different ledgers and mean different things, so every row is LABELLED by source, by scope and by availability, and THE TWO ARE NEVER SUMMED — a plan\'s percentage is not money, and a provider\'s own spend is not a Hanzo charge. The rows sit side by side and say what they are.  One resolver fixes the window for both halves, so the two sets always cover the same period. range is one of 1h, 24h, 7d or 30d and defaults to 24h; anything else is 400 rather than a silent substitution. A ledger that cannot answer reports available:false instead of a zero that would read as \"no usage\".
      * @summary Shows plan consumption and Hanzo spend side by side.
-     * @param {LinksApiGetV1LinksUsageSummaryRequest} requestParameters Request parameters.
+     * @param {LinksApiGetLinksUsageSummaryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public getV1LinksUsageSummary(requestParameters: LinksApiGetV1LinksUsageSummaryRequest = {}, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).getV1LinksUsageSummary(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
+    public getLinksUsageSummary(requestParameters: LinksApiGetLinksUsageSummaryRequest = {}, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).getLinksUsageSummary(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Registers a signed-in AI provider account on a machine.  It records that a developer has signed into one provider account on one machine — a Claude Max or ChatGPT Plus subscription, a Hanzo key, a raw provider key — and answers 201 with the stored link. Re-reporting the same (machine, provider, account) UPDATES that link rather than creating a second, so a collector may call this on every heartbeat. machine and provider are required (400 otherwise), as is a valid kind, and every field is length-bounded. Scoped to the caller: a validated principal and a non-empty org, else 403, so a caller writes only their OWN accounts within their own org.
      * @summary Registers a signed-in AI provider account on a machine.
-     * @param {LinksApiPostV1LinksRequest} requestParameters Request parameters.
+     * @param {LinksApiPostLinksRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public postV1Links(requestParameters: LinksApiPostV1LinksRequest, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).postV1Links(requestParameters.enrollReq, options).then((request) => request(this.axios, this.basePath));
+    public postLinks(requestParameters: LinksApiPostLinksRequest, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).postLinks(requestParameters.enrollReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Logs out every account on one machine and stops its sessions.  It revokes every one of the caller\'s accounts on one machine and stops the agent sessions they were running, answering with how many of each. This is the \"I lost that laptop\" button. Revoked links are RETAINED, not deleted, so usage history and the audit trail survive a log-out — the rows come back in the response with their new status. The session stop reaches only the REVOKING user\'s own sessions, so a shared machine name can never be used to stop a co-tenant\'s work, and a stop that fails does not fail the revoke: the revoked row is the durable truth and the count then honestly reports fewer. A machine with nothing left to revoke is 404.
      * @summary Logs out every account on one machine and stops its sessions.
-     * @param {LinksApiPostV1LinksDevicesByMachineRevokeRequest} requestParameters Request parameters.
+     * @param {LinksApiPostLinksDevicesByMachineRevokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public postV1LinksDevicesByMachineRevoke(requestParameters: LinksApiPostV1LinksDevicesByMachineRevokeRequest, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).postV1LinksDevicesByMachineRevoke(requestParameters.machine, options).then((request) => request(this.axios, this.basePath));
+    public postLinksDevicesByMachineRevoke(requestParameters: LinksApiPostLinksDevicesByMachineRevokeRequest, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).postLinksDevicesByMachineRevoke(requestParameters.machine, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reports usage samples from the device collector.  It ingests a batch of usage samples and answers with how many were accepted, whether history was durably stored, and the links they refreshed. A report also REFRESHES one link per distinct (machine, provider, account) it names, so a running collector keeps the accounts overview current without a separate registration call.  A caller can only ever report for THEMSELVES: org and subject come from the validated bearer, never from the body, so no sample can be attributed to another user or tenant. History is FAIL-SOFT and stored says which happened — a warehouse outage still accepts the report and refreshes the links rather than failing the device, and answers 202 either way. Send either one sample inline or up to 256 in samples; an empty batch or an over-long one is 400, as is a provider, window class or kind outside the closed vocabulary — an unrecognized window is refused rather than rewritten, because a silently reclassified sample would fill a dashboard with a class nobody reported.
      * @summary Reports usage samples from the device collector.
-     * @param {LinksApiPostV1LinksUsageRequest} requestParameters Request parameters.
+     * @param {LinksApiPostLinksUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LinksApi
      */
-    public postV1LinksUsage(requestParameters: LinksApiPostV1LinksUsageRequest, options?: RawAxiosRequestConfig) {
-        return LinksApiFp(this.configuration).postV1LinksUsage(requestParameters.ingestReq, options).then((request) => request(this.axios, this.basePath));
+    public postLinksUsage(requestParameters: LinksApiPostLinksUsageRequest, options?: RawAxiosRequestConfig) {
+        return LinksApiFp(this.configuration).postLinksUsage(requestParameters.ingestReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

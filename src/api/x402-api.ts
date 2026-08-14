@@ -36,9 +36,9 @@ export const X402ApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1X402SettlementsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getX402SettlementsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1X402SettlementsById', 'id', id)
+            assertParamExists('getX402SettlementsById', 'id', id)
             const localVarPath = `/v1/x402/settlements/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -80,10 +80,10 @@ export const X402ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1X402SettlementsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Receipt>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1X402SettlementsById(id, options);
+        async getX402SettlementsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Receipt>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getX402SettlementsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['X402Api.getV1X402SettlementsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['X402Api.getX402SettlementsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -99,26 +99,26 @@ export const X402ApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Settlement reads one x402 payment receipt by id.  It is scoped to the caller\'s PAYER org — the ledger that was debited — so one tenant can never read another\'s settlement, and an id that exists but belongs to somebody else is a 404 exactly like one that does not exist. A caller with no billable identity is refused outright.
          * @summary Settlement reads one x402 payment receipt by id.
-         * @param {X402ApiGetV1X402SettlementsByIdRequest} requestParameters Request parameters.
+         * @param {X402ApiGetX402SettlementsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1X402SettlementsById(requestParameters: X402ApiGetV1X402SettlementsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Receipt> {
-            return localVarFp.getV1X402SettlementsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getX402SettlementsById(requestParameters: X402ApiGetX402SettlementsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Receipt> {
+            return localVarFp.getX402SettlementsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1X402SettlementsById operation in X402Api.
+ * Request parameters for getX402SettlementsById operation in X402Api.
  * @export
- * @interface X402ApiGetV1X402SettlementsByIdRequest
+ * @interface X402ApiGetX402SettlementsByIdRequest
  */
-export interface X402ApiGetV1X402SettlementsByIdRequest {
+export interface X402ApiGetX402SettlementsByIdRequest {
     /**
      * ID is the settlement id from the URL — the deterministic keccak(from|nonce) key an x402 receipt is issued under (the &#x60;id&#x60; field of a Receipt, and the &#x60;transaction&#x60; of the SettlementResponse on the PAYMENT-RESPONSE header a paid request answers with).
      * @type {string}
-     * @memberof X402ApiGetV1X402SettlementsById
+     * @memberof X402ApiGetX402SettlementsById
      */
     readonly id: string
 }
@@ -133,13 +133,13 @@ export class X402Api extends BaseAPI {
     /**
      * Settlement reads one x402 payment receipt by id.  It is scoped to the caller\'s PAYER org — the ledger that was debited — so one tenant can never read another\'s settlement, and an id that exists but belongs to somebody else is a 404 exactly like one that does not exist. A caller with no billable identity is refused outright.
      * @summary Settlement reads one x402 payment receipt by id.
-     * @param {X402ApiGetV1X402SettlementsByIdRequest} requestParameters Request parameters.
+     * @param {X402ApiGetX402SettlementsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof X402Api
      */
-    public getV1X402SettlementsById(requestParameters: X402ApiGetV1X402SettlementsByIdRequest, options?: RawAxiosRequestConfig) {
-        return X402ApiFp(this.configuration).getV1X402SettlementsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getX402SettlementsById(requestParameters: X402ApiGetX402SettlementsByIdRequest, options?: RawAxiosRequestConfig) {
+        return X402ApiFp(this.configuration).getX402SettlementsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

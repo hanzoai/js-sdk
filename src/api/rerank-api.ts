@@ -33,7 +33,7 @@ export const RerankApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Rerank: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRerank: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/rerank`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const RerankApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Rerank(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Rerank(options);
+        async postRerank(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRerank(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RerankApi.postV1Rerank']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RerankApi.postRerank']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const RerankApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Rerank(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Rerank(options).then((request) => request(axios, basePath));
+        postRerank(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postRerank(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class RerankApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RerankApi
      */
-    public postV1Rerank(options?: RawAxiosRequestConfig) {
-        return RerankApiFp(this.configuration).postV1Rerank(options).then((request) => request(this.axios, this.basePath));
+    public postRerank(options?: RawAxiosRequestConfig) {
+        return RerankApiFp(this.configuration).postRerank(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

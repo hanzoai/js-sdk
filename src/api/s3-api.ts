@@ -42,9 +42,9 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1S3BucketsByBucket: async (bucket: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteS3BucketsByBucket: async (bucket: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('deleteV1S3BucketsByBucket', 'bucket', bucket)
+            assertParamExists('deleteS3BucketsByBucket', 'bucket', bucket)
             const localVarPath = `/v1/s3/buckets/{bucket}`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -77,11 +77,11 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1S3BucketsByBucketObjectsByWildcard1: async (bucket: string, wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteS3BucketsByBucketObjectsByWildcard1: async (bucket: string, wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('deleteV1S3BucketsByBucketObjectsByWildcard1', 'bucket', bucket)
+            assertParamExists('deleteS3BucketsByBucketObjectsByWildcard1', 'bucket', bucket)
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('deleteV1S3BucketsByBucketObjectsByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('deleteS3BucketsByBucketObjectsByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/s3/buckets/{bucket}/objects/{wildcard1}`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
@@ -114,9 +114,9 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1S3ByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteS3ByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1S3ByName', 'name', name)
+            assertParamExists('deleteS3ByName', 'name', name)
             const localVarPath = `/v1/s3/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -147,7 +147,7 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getS3: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/s3`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -177,7 +177,7 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3Buckets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getS3Buckets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/s3/buckets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -208,9 +208,9 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3BucketsByBucketObjects: async (bucket: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getS3BucketsByBucketObjects: async (bucket: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('getV1S3BucketsByBucketObjects', 'bucket', bucket)
+            assertParamExists('getS3BucketsByBucketObjects', 'bucket', bucket)
             const localVarPath = `/v1/s3/buckets/{bucket}/objects`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -243,11 +243,11 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3BucketsByBucketObjectsByWildcard1: async (bucket: string, wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getS3BucketsByBucketObjectsByWildcard1: async (bucket: string, wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('getV1S3BucketsByBucketObjectsByWildcard1', 'bucket', bucket)
+            assertParamExists('getS3BucketsByBucketObjectsByWildcard1', 'bucket', bucket)
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getV1S3BucketsByBucketObjectsByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('getS3BucketsByBucketObjectsByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/s3/buckets/{bucket}/objects/{wildcard1}`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
@@ -280,9 +280,9 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3ByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getS3ByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1S3ByName', 'name', name)
+            assertParamExists('getS3ByName', 'name', name)
             const localVarPath = `/v1/s3/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -313,7 +313,7 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3Health: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getS3Health: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/s3/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -344,7 +344,7 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1S3: async (provisionRequest?: ProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postS3: async (provisionRequest?: ProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/s3`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -377,7 +377,7 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1S3Buckets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postS3Buckets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/s3/buckets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -408,9 +408,9 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1S3BucketsByBucketObjects: async (bucket: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postS3BucketsByBucketObjects: async (bucket: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('postV1S3BucketsByBucketObjects', 'bucket', bucket)
+            assertParamExists('postS3BucketsByBucketObjects', 'bucket', bucket)
             const localVarPath = `/v1/s3/buckets/{bucket}/objects`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -452,10 +452,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1S3BucketsByBucket(bucket: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1S3BucketsByBucket(bucket, options);
+        async deleteS3BucketsByBucket(bucket: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteS3BucketsByBucket(bucket, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.deleteV1S3BucketsByBucket']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.deleteS3BucketsByBucket']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -466,10 +466,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1S3BucketsByBucketObjectsByWildcard1(bucket: string, wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1S3BucketsByBucketObjectsByWildcard1(bucket, wildcard1, options);
+        async deleteS3BucketsByBucketObjectsByWildcard1(bucket: string, wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteS3BucketsByBucketObjectsByWildcard1(bucket, wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.deleteV1S3BucketsByBucketObjectsByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.deleteS3BucketsByBucketObjectsByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -479,10 +479,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1S3ByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1S3ByName(name, options);
+        async deleteS3ByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteS3ByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.deleteV1S3ByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.deleteS3ByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -491,10 +491,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1S3(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisionedSummary>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1S3(options);
+        async getS3(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisionedSummary>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getS3(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.getV1S3']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.getS3']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -503,10 +503,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1S3Buckets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1S3Buckets(options);
+        async getS3Buckets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getS3Buckets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.getV1S3Buckets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.getS3Buckets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -516,10 +516,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1S3BucketsByBucketObjects(bucket: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1S3BucketsByBucketObjects(bucket, options);
+        async getS3BucketsByBucketObjects(bucket: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getS3BucketsByBucketObjects(bucket, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.getV1S3BucketsByBucketObjects']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.getS3BucketsByBucketObjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -530,10 +530,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1S3BucketsByBucketObjectsByWildcard1(bucket: string, wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1S3BucketsByBucketObjectsByWildcard1(bucket, wildcard1, options);
+        async getS3BucketsByBucketObjectsByWildcard1(bucket: string, wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getS3BucketsByBucketObjectsByWildcard1(bucket, wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.getV1S3BucketsByBucketObjectsByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.getS3BucketsByBucketObjectsByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -543,10 +543,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1S3ByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1S3ByName(name, options);
+        async getS3ByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getS3ByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.getV1S3ByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.getS3ByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -555,10 +555,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1S3Health(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1S3Health(options);
+        async getS3Health(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getS3Health(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.getV1S3Health']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.getS3Health']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -568,10 +568,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1S3(provisionRequest?: ProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1S3(provisionRequest, options);
+        async postS3(provisionRequest?: ProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3(provisionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.postV1S3']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.postS3']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -580,10 +580,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1S3Buckets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1S3Buckets(options);
+        async postS3Buckets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3Buckets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.postV1S3Buckets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.postS3Buckets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -593,10 +593,10 @@ export const S3ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1S3BucketsByBucketObjects(bucket: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1S3BucketsByBucketObjects(bucket, options);
+        async postS3BucketsByBucketObjects(bucket: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3BucketsByBucketObjects(bucket, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.postV1S3BucketsByBucketObjects']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['S3Api.postS3BucketsByBucketObjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -612,32 +612,32 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * Removes one of the caller\'s buckets, and only when it is already EMPTY — a bucket with objects in it answers 409 instead.  That refusal is deliberate rather than a limitation: this API does not cascade a delete of a tenant\'s objects behind a single bucket call, so emptying the bucket stays an explicit act. A bucket that does not exist is 404, and a successful delete answers 204 with no body.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
          * @summary Delete an empty bucket
-         * @param {S3ApiDeleteV1S3BucketsByBucketRequest} requestParameters Request parameters.
+         * @param {S3ApiDeleteS3BucketsByBucketRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1S3BucketsByBucket(requestParameters: S3ApiDeleteV1S3BucketsByBucketRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1S3BucketsByBucket(requestParameters.bucket, options).then((request) => request(axios, basePath));
+        deleteS3BucketsByBucket(requestParameters: S3ApiDeleteS3BucketsByBucketRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteS3BucketsByBucket(requestParameters.bucket, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes the single object at the trailing path from one of the caller\'s buckets and answers 204 with no body. The key is path-cleaned first, so the delete cannot reach outside the bucket it names.  It removes one object and never a prefix: a trailing path that looks like a folder deletes the placeholder at that key, not the objects beneath it.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
          * @summary Delete one object
-         * @param {S3ApiDeleteV1S3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
+         * @param {S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1S3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiDeleteV1S3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1S3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        deleteS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes one bucket from the shared object store and removes its metadata row. Answers 204 with no body; a second call is a 404.
          * @summary Deletes one bucket from the shared object store and removes its metadata row.
-         * @param {S3ApiDeleteV1S3ByNameRequest} requestParameters Request parameters.
+         * @param {S3ApiDeleteS3ByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1S3ByName(requestParameters: S3ApiDeleteV1S3ByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1S3ByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteS3ByName(requestParameters: S3ApiDeleteS3ByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteS3ByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller org\'s object-storage buckets. A bucket lives in an already-live shared object store and is reached through the public gateway. The names here are the friendly ones the org provisioned; the physical bucket is org-namespaced underneath, which is what keeps two tenants\' buckets distinct.
@@ -645,8 +645,8 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisionedSummary>> {
-            return localVarFp.getV1S3(options).then((request) => request(axios, basePath));
+        getS3(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisionedSummary>> {
+            return localVarFp.getS3(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller\'s own buckets under the friendly names they were created with, each with its creation time.  Another tenant\'s bucket is not refused, it is INVISIBLE — a bucket outside the caller\'s namespace is skipped during the listing rather than reported, so the operation cannot be used to discover that a name is taken elsewhere.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
@@ -654,38 +654,38 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3Buckets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1S3Buckets(options).then((request) => request(axios, basePath));
+        getS3Buckets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getS3Buckets(options).then((request) => request(axios, basePath));
         },
         /**
          * Lists one folder level of a bucket: each entry\'s key, whether it is a folder, its size, last-modified time and ETag. `prefix` scopes the read to a sub-folder.  Keys come back RELATIVE to the requested prefix, not absolute, which is what lets a client render a breadcrumb without re-deriving it. The default is the folder view — sub-prefixes are returned as directory entries — and `recursive=true` flattens it to every key beneath the prefix instead.  The listing is bounded at 1000 entries so a large bucket cannot exhaust memory; treat a full page as \"there may be more\" rather than as the whole bucket.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
          * @summary Browse one level of a bucket
-         * @param {S3ApiGetV1S3BucketsByBucketObjectsRequest} requestParameters Request parameters.
+         * @param {S3ApiGetS3BucketsByBucketObjectsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3BucketsByBucketObjects(requestParameters: S3ApiGetV1S3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1S3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(axios, basePath));
+        getS3BucketsByBucketObjects(requestParameters: S3ApiGetS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getS3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a short-lived presigned GET URL for the object at the trailing path, with the method, the key and its remaining lifetime. As with upload, the client fetches from that URL directly and the storage credential stays on the server.  The URL carries a content disposition of attachment with the object\'s file name, so a browser following it downloads the object rather than rendering it in place. Signed against the public host, scoped to the one bucket and key, and good for five minutes; a deployment with no public storage endpoint answers 503.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
          * @summary Get a URL to download one object directly
-         * @param {S3ApiGetV1S3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
+         * @param {S3ApiGetS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiGetV1S3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1S3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        getS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiGetS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one bucket\'s metadata. It carries the bucket\'s status and the gateway address it is reached at, and no username: the object store authenticates with a shared, out-of-band key rather than a per-bucket credential.
          * @summary Returns one bucket\'s metadata.
-         * @param {S3ApiGetV1S3ByNameRequest} requestParameters Request parameters.
+         * @param {S3ApiGetS3ByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3ByName(requestParameters: S3ApiGetV1S3ByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
-            return localVarFp.getV1S3ByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getS3ByName(requestParameters: S3ApiGetS3ByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
+            return localVarFp.getS3ByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * A real readiness probe rather than a liveness stub: 200 only when the storage credentials are present, and it additionally reports whether presigning is available — the capability the two URL-issuing operations need and refuse without.  An unconfigured deployment answers 503 with `ready:false` and the reason, which is the same state in which every data-plane operation here refuses. Not token-gated, so the platform can probe it without a credential, and it carries no credential, bucket or tenant detail.
@@ -693,18 +693,18 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1S3Health(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1S3Health(options).then((request) => request(axios, basePath));
+        getS3Health(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getS3Health(options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an S3-compatible bucket inside the already-running shared object store and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
          * @summary Provision an object storage bucket for your org
-         * @param {S3ApiPostV1S3Request} requestParameters Request parameters.
+         * @param {S3ApiPostS3Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1S3(requestParameters: S3ApiPostV1S3Request = {}, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionResult> {
-            return localVarFp.postV1S3(requestParameters.provisionRequest, options).then((request) => request(axios, basePath));
+        postS3(requestParameters: S3ApiPostS3Request = {}, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionResult> {
+            return localVarFp.postS3(requestParameters.provisionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a new bucket in the caller\'s own namespace and answers 201 with its friendly name and creation time.  The name is validated exactly as sent and never quietly normalised: it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, so a mixed-case name is a clean 400 rather than a bucket created as `photos` that the caller keeps asking for as `Photos`. A name already in use in the caller\'s own namespace is 409.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
@@ -712,144 +712,144 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1S3Buckets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1S3Buckets(options).then((request) => request(axios, basePath));
+        postS3Buckets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postS3Buckets(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a short-lived presigned PUT URL, with the method, the cleaned key and the seconds until it expires. The client uploads to that URL DIRECTLY — the bytes never pass through this API, and the storage credential never leaves the server.  The URL is signed against the public storage host and scoped to exactly one bucket and key, and it expires five minutes after it is issued. The key is path-cleaned before signing, so a traversal cannot escape the bucket. A deployment with no public storage endpoint answers 503, because there is no host to sign a browser-followable URL against.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
          * @summary Get a URL to upload one object directly
-         * @param {S3ApiPostV1S3BucketsByBucketObjectsRequest} requestParameters Request parameters.
+         * @param {S3ApiPostS3BucketsByBucketObjectsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1S3BucketsByBucketObjects(requestParameters: S3ApiPostV1S3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1S3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(axios, basePath));
+        postS3BucketsByBucketObjects(requestParameters: S3ApiPostS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postS3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1S3BucketsByBucket operation in S3Api.
+ * Request parameters for deleteS3BucketsByBucket operation in S3Api.
  * @export
- * @interface S3ApiDeleteV1S3BucketsByBucketRequest
+ * @interface S3ApiDeleteS3BucketsByBucketRequest
  */
-export interface S3ApiDeleteV1S3BucketsByBucketRequest {
+export interface S3ApiDeleteS3BucketsByBucketRequest {
     /**
      * 
      * @type {string}
-     * @memberof S3ApiDeleteV1S3BucketsByBucket
+     * @memberof S3ApiDeleteS3BucketsByBucket
      */
     readonly bucket: string
 }
 
 /**
- * Request parameters for deleteV1S3BucketsByBucketObjectsByWildcard1 operation in S3Api.
+ * Request parameters for deleteS3BucketsByBucketObjectsByWildcard1 operation in S3Api.
  * @export
- * @interface S3ApiDeleteV1S3BucketsByBucketObjectsByWildcard1Request
+ * @interface S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request
  */
-export interface S3ApiDeleteV1S3BucketsByBucketObjectsByWildcard1Request {
+export interface S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof S3ApiDeleteV1S3BucketsByBucketObjectsByWildcard1
+     * @memberof S3ApiDeleteS3BucketsByBucketObjectsByWildcard1
      */
     readonly bucket: string
 
     /**
      * 
      * @type {string}
-     * @memberof S3ApiDeleteV1S3BucketsByBucketObjectsByWildcard1
+     * @memberof S3ApiDeleteS3BucketsByBucketObjectsByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for deleteV1S3ByName operation in S3Api.
+ * Request parameters for deleteS3ByName operation in S3Api.
  * @export
- * @interface S3ApiDeleteV1S3ByNameRequest
+ * @interface S3ApiDeleteS3ByNameRequest
  */
-export interface S3ApiDeleteV1S3ByNameRequest {
+export interface S3ApiDeleteS3ByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof S3ApiDeleteV1S3ByName
+     * @memberof S3ApiDeleteS3ByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1S3BucketsByBucketObjects operation in S3Api.
+ * Request parameters for getS3BucketsByBucketObjects operation in S3Api.
  * @export
- * @interface S3ApiGetV1S3BucketsByBucketObjectsRequest
+ * @interface S3ApiGetS3BucketsByBucketObjectsRequest
  */
-export interface S3ApiGetV1S3BucketsByBucketObjectsRequest {
+export interface S3ApiGetS3BucketsByBucketObjectsRequest {
     /**
      * 
      * @type {string}
-     * @memberof S3ApiGetV1S3BucketsByBucketObjects
+     * @memberof S3ApiGetS3BucketsByBucketObjects
      */
     readonly bucket: string
 }
 
 /**
- * Request parameters for getV1S3BucketsByBucketObjectsByWildcard1 operation in S3Api.
+ * Request parameters for getS3BucketsByBucketObjectsByWildcard1 operation in S3Api.
  * @export
- * @interface S3ApiGetV1S3BucketsByBucketObjectsByWildcard1Request
+ * @interface S3ApiGetS3BucketsByBucketObjectsByWildcard1Request
  */
-export interface S3ApiGetV1S3BucketsByBucketObjectsByWildcard1Request {
+export interface S3ApiGetS3BucketsByBucketObjectsByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof S3ApiGetV1S3BucketsByBucketObjectsByWildcard1
+     * @memberof S3ApiGetS3BucketsByBucketObjectsByWildcard1
      */
     readonly bucket: string
 
     /**
      * 
      * @type {string}
-     * @memberof S3ApiGetV1S3BucketsByBucketObjectsByWildcard1
+     * @memberof S3ApiGetS3BucketsByBucketObjectsByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for getV1S3ByName operation in S3Api.
+ * Request parameters for getS3ByName operation in S3Api.
  * @export
- * @interface S3ApiGetV1S3ByNameRequest
+ * @interface S3ApiGetS3ByNameRequest
  */
-export interface S3ApiGetV1S3ByNameRequest {
+export interface S3ApiGetS3ByNameRequest {
     /**
      * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
      * @type {string}
-     * @memberof S3ApiGetV1S3ByName
+     * @memberof S3ApiGetS3ByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for postV1S3 operation in S3Api.
+ * Request parameters for postS3 operation in S3Api.
  * @export
- * @interface S3ApiPostV1S3Request
+ * @interface S3ApiPostS3Request
  */
-export interface S3ApiPostV1S3Request {
+export interface S3ApiPostS3Request {
     /**
      * 
      * @type {ProvisionRequest}
-     * @memberof S3ApiPostV1S3
+     * @memberof S3ApiPostS3
      */
     readonly provisionRequest?: ProvisionRequest
 }
 
 /**
- * Request parameters for postV1S3BucketsByBucketObjects operation in S3Api.
+ * Request parameters for postS3BucketsByBucketObjects operation in S3Api.
  * @export
- * @interface S3ApiPostV1S3BucketsByBucketObjectsRequest
+ * @interface S3ApiPostS3BucketsByBucketObjectsRequest
  */
-export interface S3ApiPostV1S3BucketsByBucketObjectsRequest {
+export interface S3ApiPostS3BucketsByBucketObjectsRequest {
     /**
      * 
      * @type {string}
-     * @memberof S3ApiPostV1S3BucketsByBucketObjects
+     * @memberof S3ApiPostS3BucketsByBucketObjects
      */
     readonly bucket: string
 }
@@ -864,37 +864,37 @@ export class S3Api extends BaseAPI {
     /**
      * Removes one of the caller\'s buckets, and only when it is already EMPTY — a bucket with objects in it answers 409 instead.  That refusal is deliberate rather than a limitation: this API does not cascade a delete of a tenant\'s objects behind a single bucket call, so emptying the bucket stays an explicit act. A bucket that does not exist is 404, and a successful delete answers 204 with no body.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
      * @summary Delete an empty bucket
-     * @param {S3ApiDeleteV1S3BucketsByBucketRequest} requestParameters Request parameters.
+     * @param {S3ApiDeleteS3BucketsByBucketRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public deleteV1S3BucketsByBucket(requestParameters: S3ApiDeleteV1S3BucketsByBucketRequest, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).deleteV1S3BucketsByBucket(requestParameters.bucket, options).then((request) => request(this.axios, this.basePath));
+    public deleteS3BucketsByBucket(requestParameters: S3ApiDeleteS3BucketsByBucketRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).deleteS3BucketsByBucket(requestParameters.bucket, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes the single object at the trailing path from one of the caller\'s buckets and answers 204 with no body. The key is path-cleaned first, so the delete cannot reach outside the bucket it names.  It removes one object and never a prefix: a trailing path that looks like a folder deletes the placeholder at that key, not the objects beneath it.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
      * @summary Delete one object
-     * @param {S3ApiDeleteV1S3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
+     * @param {S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public deleteV1S3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiDeleteV1S3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).deleteV1S3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public deleteS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).deleteS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Deletes one bucket from the shared object store and removes its metadata row. Answers 204 with no body; a second call is a 404.
      * @summary Deletes one bucket from the shared object store and removes its metadata row.
-     * @param {S3ApiDeleteV1S3ByNameRequest} requestParameters Request parameters.
+     * @param {S3ApiDeleteS3ByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public deleteV1S3ByName(requestParameters: S3ApiDeleteV1S3ByNameRequest, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).deleteV1S3ByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteS3ByName(requestParameters: S3ApiDeleteS3ByNameRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).deleteS3ByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -904,8 +904,8 @@ export class S3Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public getV1S3(options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).getV1S3(options).then((request) => request(this.axios, this.basePath));
+    public getS3(options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).getS3(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -915,44 +915,44 @@ export class S3Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public getV1S3Buckets(options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).getV1S3Buckets(options).then((request) => request(this.axios, this.basePath));
+    public getS3Buckets(options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).getS3Buckets(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Lists one folder level of a bucket: each entry\'s key, whether it is a folder, its size, last-modified time and ETag. `prefix` scopes the read to a sub-folder.  Keys come back RELATIVE to the requested prefix, not absolute, which is what lets a client render a breadcrumb without re-deriving it. The default is the folder view — sub-prefixes are returned as directory entries — and `recursive=true` flattens it to every key beneath the prefix instead.  The listing is bounded at 1000 entries so a large bucket cannot exhaust memory; treat a full page as \"there may be more\" rather than as the whole bucket.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
      * @summary Browse one level of a bucket
-     * @param {S3ApiGetV1S3BucketsByBucketObjectsRequest} requestParameters Request parameters.
+     * @param {S3ApiGetS3BucketsByBucketObjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public getV1S3BucketsByBucketObjects(requestParameters: S3ApiGetV1S3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).getV1S3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(this.axios, this.basePath));
+    public getS3BucketsByBucketObjects(requestParameters: S3ApiGetS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).getS3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns a short-lived presigned GET URL for the object at the trailing path, with the method, the key and its remaining lifetime. As with upload, the client fetches from that URL directly and the storage credential stays on the server.  The URL carries a content disposition of attachment with the object\'s file name, so a browser following it downloads the object rather than rendering it in place. Signed against the public host, scoped to the one bucket and key, and good for five minutes; a deployment with no public storage endpoint answers 503.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
      * @summary Get a URL to download one object directly
-     * @param {S3ApiGetV1S3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
+     * @param {S3ApiGetS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public getV1S3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiGetV1S3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).getV1S3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public getS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiGetS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).getS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one bucket\'s metadata. It carries the bucket\'s status and the gateway address it is reached at, and no username: the object store authenticates with a shared, out-of-band key rather than a per-bucket credential.
      * @summary Returns one bucket\'s metadata.
-     * @param {S3ApiGetV1S3ByNameRequest} requestParameters Request parameters.
+     * @param {S3ApiGetS3ByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public getV1S3ByName(requestParameters: S3ApiGetV1S3ByNameRequest, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).getV1S3ByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getS3ByName(requestParameters: S3ApiGetS3ByNameRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).getS3ByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -962,20 +962,20 @@ export class S3Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public getV1S3Health(options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).getV1S3Health(options).then((request) => request(this.axios, this.basePath));
+    public getS3Health(options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).getS3Health(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates an S3-compatible bucket inside the already-running shared object store and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
      * @summary Provision an object storage bucket for your org
-     * @param {S3ApiPostV1S3Request} requestParameters Request parameters.
+     * @param {S3ApiPostS3Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public postV1S3(requestParameters: S3ApiPostV1S3Request = {}, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).postV1S3(requestParameters.provisionRequest, options).then((request) => request(this.axios, this.basePath));
+    public postS3(requestParameters: S3ApiPostS3Request = {}, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).postS3(requestParameters.provisionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -985,20 +985,20 @@ export class S3Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public postV1S3Buckets(options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).postV1S3Buckets(options).then((request) => request(this.axios, this.basePath));
+    public postS3Buckets(options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).postS3Buckets(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns a short-lived presigned PUT URL, with the method, the cleaned key and the seconds until it expires. The client uploads to that URL DIRECTLY — the bytes never pass through this API, and the storage credential never leaves the server.  The URL is signed against the public storage host and scoped to exactly one bucket and key, and it expires five minutes after it is issued. The key is path-cleaned before signing, so a traversal cannot escape the bucket. A deployment with no public storage endpoint answers 503, because there is no host to sign a browser-followable URL against.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
      * @summary Get a URL to upload one object directly
-     * @param {S3ApiPostV1S3BucketsByBucketObjectsRequest} requestParameters Request parameters.
+     * @param {S3ApiPostS3BucketsByBucketObjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public postV1S3BucketsByBucketObjects(requestParameters: S3ApiPostV1S3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).postV1S3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(this.axios, this.basePath));
+    public postS3BucketsByBucketObjects(requestParameters: S3ApiPostS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).postS3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

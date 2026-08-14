@@ -33,7 +33,7 @@ export const ImagesApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ImagesGenerations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postImagesGenerations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/images/generations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const ImagesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ImagesGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ImagesGenerations(options);
+        async postImagesGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postImagesGenerations(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ImagesApi.postV1ImagesGenerations']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ImagesApi.postImagesGenerations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const ImagesApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ImagesGenerations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1ImagesGenerations(options).then((request) => request(axios, basePath));
+        postImagesGenerations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postImagesGenerations(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class ImagesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ImagesApi
      */
-    public postV1ImagesGenerations(options?: RawAxiosRequestConfig) {
-        return ImagesApiFp(this.configuration).postV1ImagesGenerations(options).then((request) => request(this.axios, this.basePath));
+    public postImagesGenerations(options?: RawAxiosRequestConfig) {
+        return ImagesApiFp(this.configuration).postImagesGenerations(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

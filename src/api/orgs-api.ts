@@ -42,9 +42,9 @@ export const OrgsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1OrgsByOrgEntitlements: async (org: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrgsByOrgEntitlements: async (org: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'org' is not null or undefined
-            assertParamExists('getV1OrgsByOrgEntitlements', 'org', org)
+            assertParamExists('getOrgsByOrgEntitlements', 'org', org)
             const localVarPath = `/v1/orgs/{org}/entitlements`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -76,9 +76,9 @@ export const OrgsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Orgs: async (onboardReq: OnboardReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postOrgs: async (onboardReq: OnboardReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'onboardReq' is not null or undefined
-            assertParamExists('postV1Orgs', 'onboardReq', onboardReq)
+            assertParamExists('postOrgs', 'onboardReq', onboardReq)
             const localVarPath = `/v1/orgs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -113,11 +113,11 @@ export const OrgsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1OrgsByOrgEntitlements: async (org: string, mutateReq: MutateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postOrgsByOrgEntitlements: async (org: string, mutateReq: MutateReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'org' is not null or undefined
-            assertParamExists('postV1OrgsByOrgEntitlements', 'org', org)
+            assertParamExists('postOrgsByOrgEntitlements', 'org', org)
             // verify required parameter 'mutateReq' is not null or undefined
-            assertParamExists('postV1OrgsByOrgEntitlements', 'mutateReq', mutateReq)
+            assertParamExists('postOrgsByOrgEntitlements', 'mutateReq', mutateReq)
             const localVarPath = `/v1/orgs/{org}/entitlements`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -162,10 +162,10 @@ export const OrgsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1OrgsByOrgEntitlements(org: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EntitlementsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1OrgsByOrgEntitlements(org, options);
+        async getOrgsByOrgEntitlements(org: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EntitlementsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrgsByOrgEntitlements(org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgsApi.getV1OrgsByOrgEntitlements']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgsApi.getOrgsByOrgEntitlements']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -175,10 +175,10 @@ export const OrgsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Orgs(onboardReq: OnboardReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OnboardResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Orgs(onboardReq, options);
+        async postOrgs(onboardReq: OnboardReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OnboardResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postOrgs(onboardReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgsApi.postV1Orgs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgsApi.postOrgs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -189,10 +189,10 @@ export const OrgsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1OrgsByOrgEntitlements(org: string, mutateReq: MutateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EntitlementsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1OrgsByOrgEntitlements(org, mutateReq, options);
+        async postOrgsByOrgEntitlements(org: string, mutateReq: MutateReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EntitlementsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postOrgsByOrgEntitlements(org, mutateReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgsApi.postV1OrgsByOrgEntitlements']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgsApi.postOrgsByOrgEntitlements']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -208,81 +208,81 @@ export const OrgsApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show. It is distinct from what the org\'s plan ENTITLES it to (that is GET /v1/entitlements, resolved from commerce).  A caller may only read its OWN org\'s row; a platform super admin may read any.
          * @summary Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show.
-         * @param {OrgsApiGetV1OrgsByOrgEntitlementsRequest} requestParameters Request parameters.
+         * @param {OrgsApiGetOrgsByOrgEntitlementsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1OrgsByOrgEntitlements(requestParameters: OrgsApiGetV1OrgsByOrgEntitlementsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EntitlementsView> {
-            return localVarFp.getV1OrgsByOrgEntitlements(requestParameters.org, options).then((request) => request(axios, basePath));
+        getOrgsByOrgEntitlements(requestParameters: OrgsApiGetOrgsByOrgEntitlementsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EntitlementsView> {
+            return localVarFp.getOrgsByOrgEntitlements(requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
          * Onboard creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
          * @summary Onboard creates the caller\'s organization.
-         * @param {OrgsApiPostV1OrgsRequest} requestParameters Request parameters.
+         * @param {OrgsApiPostOrgsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Orgs(requestParameters: OrgsApiPostV1OrgsRequest, options?: RawAxiosRequestConfig): AxiosPromise<OnboardResp> {
-            return localVarFp.postV1Orgs(requestParameters.onboardReq, options).then((request) => request(axios, basePath));
+        postOrgs(requestParameters: OrgsApiPostOrgsRequest, options?: RawAxiosRequestConfig): AxiosPromise<OnboardResp> {
+            return localVarFp.postOrgs(requestParameters.onboardReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Post turns products on or off for an org and returns the enabled set afterwards.  A product may only be ENABLED if the org\'s plan already ENTITLES it, so enabling never spends new money — a product the plan does not grant answers 402 and the console routes that to an upgrade prompt. DISABLING is never gated. A platform super admin bypasses the plan check (operator comp/grant) and may target any org; everyone else may only change their own. Commerce unreachable is a 503, never an implicit yes.
          * @summary Post turns products on or off for an org and returns the enabled set afterwards.
-         * @param {OrgsApiPostV1OrgsByOrgEntitlementsRequest} requestParameters Request parameters.
+         * @param {OrgsApiPostOrgsByOrgEntitlementsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1OrgsByOrgEntitlements(requestParameters: OrgsApiPostV1OrgsByOrgEntitlementsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EntitlementsView> {
-            return localVarFp.postV1OrgsByOrgEntitlements(requestParameters.org, requestParameters.mutateReq, options).then((request) => request(axios, basePath));
+        postOrgsByOrgEntitlements(requestParameters: OrgsApiPostOrgsByOrgEntitlementsRequest, options?: RawAxiosRequestConfig): AxiosPromise<EntitlementsView> {
+            return localVarFp.postOrgsByOrgEntitlements(requestParameters.org, requestParameters.mutateReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1OrgsByOrgEntitlements operation in OrgsApi.
+ * Request parameters for getOrgsByOrgEntitlements operation in OrgsApi.
  * @export
- * @interface OrgsApiGetV1OrgsByOrgEntitlementsRequest
+ * @interface OrgsApiGetOrgsByOrgEntitlementsRequest
  */
-export interface OrgsApiGetV1OrgsByOrgEntitlementsRequest {
+export interface OrgsApiGetOrgsByOrgEntitlementsRequest {
     /**
      * 
      * @type {string}
-     * @memberof OrgsApiGetV1OrgsByOrgEntitlements
+     * @memberof OrgsApiGetOrgsByOrgEntitlements
      */
     readonly org: string
 }
 
 /**
- * Request parameters for postV1Orgs operation in OrgsApi.
+ * Request parameters for postOrgs operation in OrgsApi.
  * @export
- * @interface OrgsApiPostV1OrgsRequest
+ * @interface OrgsApiPostOrgsRequest
  */
-export interface OrgsApiPostV1OrgsRequest {
+export interface OrgsApiPostOrgsRequest {
     /**
      * 
      * @type {OnboardReq}
-     * @memberof OrgsApiPostV1Orgs
+     * @memberof OrgsApiPostOrgs
      */
     readonly onboardReq: OnboardReq
 }
 
 /**
- * Request parameters for postV1OrgsByOrgEntitlements operation in OrgsApi.
+ * Request parameters for postOrgsByOrgEntitlements operation in OrgsApi.
  * @export
- * @interface OrgsApiPostV1OrgsByOrgEntitlementsRequest
+ * @interface OrgsApiPostOrgsByOrgEntitlementsRequest
  */
-export interface OrgsApiPostV1OrgsByOrgEntitlementsRequest {
+export interface OrgsApiPostOrgsByOrgEntitlementsRequest {
     /**
      * 
      * @type {string}
-     * @memberof OrgsApiPostV1OrgsByOrgEntitlements
+     * @memberof OrgsApiPostOrgsByOrgEntitlements
      */
     readonly org: string
 
     /**
      * 
      * @type {MutateReq}
-     * @memberof OrgsApiPostV1OrgsByOrgEntitlements
+     * @memberof OrgsApiPostOrgsByOrgEntitlements
      */
     readonly mutateReq: MutateReq
 }
@@ -297,37 +297,37 @@ export class OrgsApi extends BaseAPI {
     /**
      * Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show. It is distinct from what the org\'s plan ENTITLES it to (that is GET /v1/entitlements, resolved from commerce).  A caller may only read its OWN org\'s row; a platform super admin may read any.
      * @summary Get lists the products an org has ENABLED — its own intent, which the console\'s paid-product sidebar reads to decide what to show.
-     * @param {OrgsApiGetV1OrgsByOrgEntitlementsRequest} requestParameters Request parameters.
+     * @param {OrgsApiGetOrgsByOrgEntitlementsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrgsApi
      */
-    public getV1OrgsByOrgEntitlements(requestParameters: OrgsApiGetV1OrgsByOrgEntitlementsRequest, options?: RawAxiosRequestConfig) {
-        return OrgsApiFp(this.configuration).getV1OrgsByOrgEntitlements(requestParameters.org, options).then((request) => request(this.axios, this.basePath));
+    public getOrgsByOrgEntitlements(requestParameters: OrgsApiGetOrgsByOrgEntitlementsRequest, options?: RawAxiosRequestConfig) {
+        return OrgsApiFp(this.configuration).getOrgsByOrgEntitlements(requestParameters.org, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Onboard creates the caller\'s organization. Two flows, keyed on whether the caller already has a home org (mirrors app/onboard/route.ts):    - FIRST-RUN (no home org): create + MOVE the user in as admin, so their next     JWT carries the new owner and the cloud scopes everything to it. This is the     path a fresh OAuth sign-up takes, from the sign-up application\'s org.   - ADDITIONAL (owner set): create the org but do NOT move the user — a move     changes their IAM owner (stripping a SuperAdmin\'s status + orphaning their     current org). They reach the new org via the OrgSwitcher, which re-scopes     X-Org-Id without touching IAM membership. A personal-org request from someone     who already has an org is meaningless → 409.
      * @summary Onboard creates the caller\'s organization.
-     * @param {OrgsApiPostV1OrgsRequest} requestParameters Request parameters.
+     * @param {OrgsApiPostOrgsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrgsApi
      */
-    public postV1Orgs(requestParameters: OrgsApiPostV1OrgsRequest, options?: RawAxiosRequestConfig) {
-        return OrgsApiFp(this.configuration).postV1Orgs(requestParameters.onboardReq, options).then((request) => request(this.axios, this.basePath));
+    public postOrgs(requestParameters: OrgsApiPostOrgsRequest, options?: RawAxiosRequestConfig) {
+        return OrgsApiFp(this.configuration).postOrgs(requestParameters.onboardReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Post turns products on or off for an org and returns the enabled set afterwards.  A product may only be ENABLED if the org\'s plan already ENTITLES it, so enabling never spends new money — a product the plan does not grant answers 402 and the console routes that to an upgrade prompt. DISABLING is never gated. A platform super admin bypasses the plan check (operator comp/grant) and may target any org; everyone else may only change their own. Commerce unreachable is a 503, never an implicit yes.
      * @summary Post turns products on or off for an org and returns the enabled set afterwards.
-     * @param {OrgsApiPostV1OrgsByOrgEntitlementsRequest} requestParameters Request parameters.
+     * @param {OrgsApiPostOrgsByOrgEntitlementsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrgsApi
      */
-    public postV1OrgsByOrgEntitlements(requestParameters: OrgsApiPostV1OrgsByOrgEntitlementsRequest, options?: RawAxiosRequestConfig) {
-        return OrgsApiFp(this.configuration).postV1OrgsByOrgEntitlements(requestParameters.org, requestParameters.mutateReq, options).then((request) => request(this.axios, this.basePath));
+    public postOrgsByOrgEntitlements(requestParameters: OrgsApiPostOrgsByOrgEntitlementsRequest, options?: RawAxiosRequestConfig) {
+        return OrgsApiFp(this.configuration).postOrgsByOrgEntitlements(requestParameters.org, requestParameters.mutateReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

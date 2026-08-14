@@ -34,9 +34,9 @@ export const FilesApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FilesBySid: async (sid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFilesBySid: async (sid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'sid' is not null or undefined
-            assertParamExists('getV1FilesBySid', 'sid', sid)
+            assertParamExists('getFilesBySid', 'sid', sid)
             const localVarPath = `/v1/files/{sid}`
                 .replace(`{${"sid"}}`, encodeURIComponent(String(sid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -78,10 +78,10 @@ export const FilesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FilesBySid(sid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FilesBySid(sid, options);
+        async getFilesBySid(sid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFilesBySid(sid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FilesApi.getV1FilesBySid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FilesApi.getFilesBySid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,26 +97,26 @@ export const FilesApiFactory = function (configuration?: Configuration, basePath
         /**
          * Lists what a session\'s sandbox holds — the uploads a run can read and the artifacts it produced — each then fetched from /v1/download.  It answers a BARE JSON ARRAY of {name, lastModified}, where `name` is the same {session_id}/{fileId} identifier download takes, because that is what the client matches on. An object wrapper would be a wire change, which is why this is not a typed operation.
          * @summary List the files in an execution session
-         * @param {FilesApiGetV1FilesBySidRequest} requestParameters Request parameters.
+         * @param {FilesApiGetFilesBySidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FilesBySid(requestParameters: FilesApiGetV1FilesBySidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1FilesBySid(requestParameters.sid, options).then((request) => request(axios, basePath));
+        getFilesBySid(requestParameters: FilesApiGetFilesBySidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getFilesBySid(requestParameters.sid, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1FilesBySid operation in FilesApi.
+ * Request parameters for getFilesBySid operation in FilesApi.
  * @export
- * @interface FilesApiGetV1FilesBySidRequest
+ * @interface FilesApiGetFilesBySidRequest
  */
-export interface FilesApiGetV1FilesBySidRequest {
+export interface FilesApiGetFilesBySidRequest {
     /**
      * 
      * @type {string}
-     * @memberof FilesApiGetV1FilesBySid
+     * @memberof FilesApiGetFilesBySid
      */
     readonly sid: string
 }
@@ -131,13 +131,13 @@ export class FilesApi extends BaseAPI {
     /**
      * Lists what a session\'s sandbox holds — the uploads a run can read and the artifacts it produced — each then fetched from /v1/download.  It answers a BARE JSON ARRAY of {name, lastModified}, where `name` is the same {session_id}/{fileId} identifier download takes, because that is what the client matches on. An object wrapper would be a wire change, which is why this is not a typed operation.
      * @summary List the files in an execution session
-     * @param {FilesApiGetV1FilesBySidRequest} requestParameters Request parameters.
+     * @param {FilesApiGetFilesBySidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FilesApi
      */
-    public getV1FilesBySid(requestParameters: FilesApiGetV1FilesBySidRequest, options?: RawAxiosRequestConfig) {
-        return FilesApiFp(this.configuration).getV1FilesBySid(requestParameters.sid, options).then((request) => request(this.axios, this.basePath));
+    public getFilesBySid(requestParameters: FilesApiGetFilesBySidRequest, options?: RawAxiosRequestConfig) {
+        return FilesApiFp(this.configuration).getFilesBySid(requestParameters.sid, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

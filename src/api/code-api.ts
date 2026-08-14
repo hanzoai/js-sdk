@@ -57,7 +57,7 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CodeAsk: async (q?: string, repo?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCodeAsk: async (q?: string, repo?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/code/ask`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -97,7 +97,7 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CodeFile: async (path?: string, repo?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCodeFile: async (path?: string, repo?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/code/file`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -139,7 +139,7 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CodeSearch: async (q?: string, type?: string, repo?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCodeSearch: async (q?: string, type?: string, repo?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/code/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -186,7 +186,7 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CodeTree: async (repo?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCodeTree: async (repo?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/code/tree`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -221,9 +221,9 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeAsk: async (askPostIn: AskPostIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCodeAsk: async (askPostIn: AskPostIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'askPostIn' is not null or undefined
-            assertParamExists('postV1CodeAsk', 'askPostIn', askPostIn)
+            assertParamExists('postCodeAsk', 'askPostIn', askPostIn)
             const localVarPath = `/v1/code/ask`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -257,9 +257,9 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeContext: async (contextIn: ContextIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCodeContext: async (contextIn: ContextIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'contextIn' is not null or undefined
-            assertParamExists('postV1CodeContext', 'contextIn', contextIn)
+            assertParamExists('postCodeContext', 'contextIn', contextIn)
             const localVarPath = `/v1/code/context`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -293,9 +293,9 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeIndex: async (indexIn: IndexIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCodeIndex: async (indexIn: IndexIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'indexIn' is not null or undefined
-            assertParamExists('postV1CodeIndex', 'indexIn', indexIn)
+            assertParamExists('postCodeIndex', 'indexIn', indexIn)
             const localVarPath = `/v1/code/index`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -329,9 +329,9 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeLspComplete: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCodeLspComplete: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'query' is not null or undefined
-            assertParamExists('postV1CodeLspComplete', 'query', query)
+            assertParamExists('postCodeLspComplete', 'query', query)
             const localVarPath = `/v1/code/lsp/complete`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -365,9 +365,9 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeLspDiagnostics: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCodeLspDiagnostics: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'query' is not null or undefined
-            assertParamExists('postV1CodeLspDiagnostics', 'query', query)
+            assertParamExists('postCodeLspDiagnostics', 'query', query)
             const localVarPath = `/v1/code/lsp/diagnostics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -401,9 +401,9 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeLspHover: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCodeLspHover: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'query' is not null or undefined
-            assertParamExists('postV1CodeLspHover', 'query', query)
+            assertParamExists('postCodeLspHover', 'query', query)
             const localVarPath = `/v1/code/lsp/hover`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -437,9 +437,9 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeLspLocate: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCodeLspLocate: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'query' is not null or undefined
-            assertParamExists('postV1CodeLspLocate', 'query', query)
+            assertParamExists('postCodeLspLocate', 'query', query)
             const localVarPath = `/v1/code/lsp/locate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -473,9 +473,9 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeLspSymbols: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCodeLspSymbols: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'query' is not null or undefined
-            assertParamExists('postV1CodeLspSymbols', 'query', query)
+            assertParamExists('postCodeLspSymbols', 'query', query)
             const localVarPath = `/v1/code/lsp/symbols`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -520,10 +520,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CodeAsk(q?: string, repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AskAnswer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CodeAsk(q, repo, options);
+        async getCodeAsk(q?: string, repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AskAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCodeAsk(q, repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.getV1CodeAsk']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.getCodeAsk']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -534,10 +534,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CodeFile(path?: string, repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileContent>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CodeFile(path, repo, options);
+        async getCodeFile(path?: string, repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileContent>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCodeFile(path, repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.getV1CodeFile']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.getCodeFile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -550,10 +550,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CodeSearch(q?: string, type?: string, repo?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchResults>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CodeSearch(q, type, repo, limit, options);
+        async getCodeSearch(q?: string, type?: string, repo?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchResults>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCodeSearch(q, type, repo, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.getV1CodeSearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.getCodeSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -563,10 +563,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CodeTree(repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoTree>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CodeTree(repo, options);
+        async getCodeTree(repo?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepoTree>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCodeTree(repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.getV1CodeTree']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.getCodeTree']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -576,10 +576,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CodeAsk(askPostIn: AskPostIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AskAnswer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CodeAsk(askPostIn, options);
+        async postCodeAsk(askPostIn: AskPostIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AskAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeAsk(askPostIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postV1CodeAsk']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeAsk']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -589,10 +589,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CodeContext(contextIn: ContextIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContextBundle>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CodeContext(contextIn, options);
+        async postCodeContext(contextIn: ContextIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContextBundle>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeContext(contextIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postV1CodeContext']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeContext']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -602,10 +602,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CodeIndex(indexIn: IndexIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CodeIndex(indexIn, options);
+        async postCodeIndex(indexIn: IndexIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeIndex(indexIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postV1CodeIndex']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeIndex']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -615,10 +615,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CodeLspComplete(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CodeLspComplete(query, options);
+        async postCodeLspComplete(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeLspComplete(query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postV1CodeLspComplete']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeLspComplete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -628,10 +628,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CodeLspDiagnostics(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CodeLspDiagnostics(query, options);
+        async postCodeLspDiagnostics(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeLspDiagnostics(query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postV1CodeLspDiagnostics']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeLspDiagnostics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -641,10 +641,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CodeLspHover(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CodeLspHover(query, options);
+        async postCodeLspHover(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeLspHover(query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postV1CodeLspHover']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeLspHover']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -654,10 +654,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CodeLspLocate(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CodeLspLocate(query, options);
+        async postCodeLspLocate(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeLspLocate(query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postV1CodeLspLocate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeLspLocate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -667,10 +667,10 @@ export const CodeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CodeLspSymbols(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CodeLspSymbols(query, options);
+        async postCodeLspSymbols(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeLspSymbols(query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postV1CodeLspSymbols']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeLspSymbols']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -686,325 +686,325 @@ export const CodeApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Answers a question about the caller org\'s code with a CITED answer: retrieval packs grounding context, then the synthesizer writes the answer over exactly those spans, which come back alongside it. It never answers without grounding — with no matched code the answer is empty and says so, and with no synthesizer available the citations still come back with \"degraded\": true so the caller can reason over the spans itself.
          * @summary Answers a question about the caller org\'s code with a CITED answer: retrieval packs grounding context, then the synthesizer writes the answer over exactly those spans, which come back alongside it.
-         * @param {CodeApiGetV1CodeAskRequest} requestParameters Request parameters.
+         * @param {CodeApiGetCodeAskRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CodeAsk(requestParameters: CodeApiGetV1CodeAskRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AskAnswer> {
-            return localVarFp.getV1CodeAsk(requestParameters.q, requestParameters.repo, options).then((request) => request(axios, basePath));
+        getCodeAsk(requestParameters: CodeApiGetCodeAskRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AskAnswer> {
+            return localVarFp.getCodeAsk(requestParameters.q, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the INDEXED content of one file — read_file over the chunks the search tiers hold, for pulling up code an agent just found. It is NOT byte-verbatim: the git object plane is the source of record for exact bytes, history and blame. A file absent from the index is a 404, so an agent can tell \"not indexed\" from \"empty file\".
          * @summary Returns the INDEXED content of one file — read_file over the chunks the search tiers hold, for pulling up code an agent just found.
-         * @param {CodeApiGetV1CodeFileRequest} requestParameters Request parameters.
+         * @param {CodeApiGetCodeFileRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CodeFile(requestParameters: CodeApiGetV1CodeFileRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FileContent> {
-            return localVarFp.getV1CodeFile(requestParameters.path, requestParameters.repo, options).then((request) => request(axios, basePath));
+        getCodeFile(requestParameters: CodeApiGetCodeFileRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FileContent> {
+            return localVarFp.getCodeFile(requestParameters.path, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
          * Finds code in the caller org\'s index across three orthogonal retrieval tiers fused by reciprocal-rank fusion: lexical (FTS5 trigram over code-tokenized text), symbolic (real definition and reference edges), and semantic (embedding cosine over AST-boundary chunks). Pick one tier with `type`, or leave it to run all three as hybrid, which is what a coding agent usually wants. It is FAIL-HONEST: a retrieval outage answers 200 with an empty result set and \"degraded\": true rather than a 5xx, so an agent degrades instead of stalling. A malformed regex is a 400.
          * @summary Finds code in the caller org\'s index across three orthogonal retrieval tiers fused by reciprocal-rank fusion: lexical (FTS5 trigram over code-tokenized text), symbolic (real definition and reference edges), and semantic (embedding cosine over AST-boundary chunks).
-         * @param {CodeApiGetV1CodeSearchRequest} requestParameters Request parameters.
+         * @param {CodeApiGetCodeSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CodeSearch(requestParameters: CodeApiGetV1CodeSearchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SearchResults> {
-            return localVarFp.getV1CodeSearch(requestParameters.q, requestParameters.type, requestParameters.repo, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getCodeSearch(requestParameters: CodeApiGetCodeSearchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SearchResults> {
+            return localVarFp.getCodeSearch(requestParameters.q, requestParameters.type, requestParameters.repo, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one repository\'s file structure with a per-file symbol count — get_repo_structure over the org\'s own index, with no git checkout involved. A repository that has not been indexed answers an empty tree rather than an error, so an agent can tell \"nothing here\" without handling a failure.
          * @summary Returns one repository\'s file structure with a per-file symbol count — get_repo_structure over the org\'s own index, with no git checkout involved.
-         * @param {CodeApiGetV1CodeTreeRequest} requestParameters Request parameters.
+         * @param {CodeApiGetCodeTreeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CodeTree(requestParameters: CodeApiGetV1CodeTreeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RepoTree> {
-            return localVarFp.getV1CodeTree(requestParameters.repo, options).then((request) => request(axios, basePath));
+        getCodeTree(requestParameters: CodeApiGetCodeTreeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RepoTree> {
+            return localVarFp.getCodeTree(requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
          * Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL. `query` and `repo` in the body take precedence over `?q=` and `?repo=`; either source works alone.
          * @summary Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL.
-         * @param {CodeApiPostV1CodeAskRequest} requestParameters Request parameters.
+         * @param {CodeApiPostCodeAskRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeAsk(requestParameters: CodeApiPostV1CodeAskRequest, options?: RawAxiosRequestConfig): AxiosPromise<AskAnswer> {
-            return localVarFp.postV1CodeAsk(requestParameters.askPostIn, options).then((request) => request(axios, basePath));
+        postCodeAsk(requestParameters: CodeApiPostCodeAskRequest, options?: RawAxiosRequestConfig): AxiosPromise<AskAnswer> {
+            return localVarFp.postCodeAsk(requestParameters.askPostIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Packs the most relevant code for a query into a token budget — THE primitive for a coding agent that has to decide what to put in a prompt. It retrieves seed spans, expands each with the definitions it calls and its key callers, then greedily fills the budget, so the answer is a coherent slice of the codebase rather than a list of disconnected matches. The top match is always included, truncated if it alone overflows, so a matched query never comes back empty. A retrieval outage answers 200 with an empty bundle rather than a 5xx.
          * @summary Packs the most relevant code for a query into a token budget — THE primitive for a coding agent that has to decide what to put in a prompt.
-         * @param {CodeApiPostV1CodeContextRequest} requestParameters Request parameters.
+         * @param {CodeApiPostCodeContextRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeContext(requestParameters: CodeApiPostV1CodeContextRequest, options?: RawAxiosRequestConfig): AxiosPromise<ContextBundle> {
-            return localVarFp.postV1CodeContext(requestParameters.contextIn, options).then((request) => request(axios, basePath));
+        postCodeContext(requestParameters: CodeApiPostCodeContextRequest, options?: RawAxiosRequestConfig): AxiosPromise<ContextBundle> {
+            return localVarFp.postCodeContext(requestParameters.contextIn, options).then((request) => request(axios, basePath));
         },
         /**
          * (re)indexes a repository for the caller\'s org, incrementally: files whose content hash is unchanged are skipped, so re-sending a whole tree is cheap. Each file is parsed for symbols, split at AST boundaries and — when the semantic tier is available — embedded, which is what makes it searchable across all three retrieval tiers. Pass `prune` to also DELETE indexed files absent from the request, which turns the call into a full sync; without it the call is an upsert. The index is written to the caller org\'s own physically separate database.
          * @summary (re)indexes a repository for the caller\'s org, incrementally: files whose content hash is unchanged are skipped, so re-sending a whole tree is cheap.
-         * @param {CodeApiPostV1CodeIndexRequest} requestParameters Request parameters.
+         * @param {CodeApiPostCodeIndexRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeIndex(requestParameters: CodeApiPostV1CodeIndexRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexResult> {
-            return localVarFp.postV1CodeIndex(requestParameters.indexIn, options).then((request) => request(axios, basePath));
+        postCodeIndex(requestParameters: CodeApiPostCodeIndexRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexResult> {
+            return localVarFp.postCodeIndex(requestParameters.indexIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
          * @summary Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-         * @param {CodeApiPostV1CodeLspCompleteRequest} requestParameters Request parameters.
+         * @param {CodeApiPostCodeLspCompleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeLspComplete(requestParameters: CodeApiPostV1CodeLspCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postV1CodeLspComplete(requestParameters.query, options).then((request) => request(axios, basePath));
+        postCodeLspComplete(requestParameters: CodeApiPostCodeLspCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
+            return localVarFp.postCodeLspComplete(requestParameters.query, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint). The position is ignored.
          * @summary Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint).
-         * @param {CodeApiPostV1CodeLspDiagnosticsRequest} requestParameters Request parameters.
+         * @param {CodeApiPostCodeLspDiagnosticsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeLspDiagnostics(requestParameters: CodeApiPostV1CodeLspDiagnosticsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postV1CodeLspDiagnostics(requestParameters.query, options).then((request) => request(axios, basePath));
+        postCodeLspDiagnostics(requestParameters: CodeApiPostCodeLspDiagnosticsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
+            return localVarFp.postCodeLspDiagnostics(requestParameters.query, options).then((request) => request(axios, basePath));
         },
         /**
          * Renders the type and documentation of the symbol at a position, as the language server itself renders it.  Positions are the LSP\'s: line and character are 0-BASED and character counts UTF-16 code units, so an editor\'s 1-based line must have 1 subtracted before it is sent. The repository is named by slug and is always one in the caller\'s own org; rev pins a branch, tag or commit sha, and empty means the default branch.
          * @summary Renders the type and documentation of the symbol at a position, as the language server itself renders it.
-         * @param {CodeApiPostV1CodeLspHoverRequest} requestParameters Request parameters.
+         * @param {CodeApiPostCodeLspHoverRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeLspHover(requestParameters: CodeApiPostV1CodeLspHoverRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postV1CodeLspHover(requestParameters.query, options).then((request) => request(axios, basePath));
+        postCodeLspHover(requestParameters: CodeApiPostCodeLspHoverRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
+            return localVarFp.postCodeLspHover(requestParameters.query, options).then((request) => request(axios, basePath));
         },
         /**
          * Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).  It resolves THROUGH dependencies. An answer whose external flag is set left the repository, and its path is then the module coordinate it landed in — which is the question a static index cannot answer and this service exists for.
          * @summary Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).
-         * @param {CodeApiPostV1CodeLspLocateRequest} requestParameters Request parameters.
+         * @param {CodeApiPostCodeLspLocateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeLspLocate(requestParameters: CodeApiPostV1CodeLspLocateRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postV1CodeLspLocate(requestParameters.query, options).then((request) => request(axios, basePath));
+        postCodeLspLocate(requestParameters: CodeApiPostCodeLspLocateRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
+            return localVarFp.postCodeLspLocate(requestParameters.query, options).then((request) => request(axios, basePath));
         },
         /**
          * Outlines one file: every declaration in it, with its kind and its span. The position is ignored — the answer is the whole file.
          * @summary Outlines one file: every declaration in it, with its kind and its span.
-         * @param {CodeApiPostV1CodeLspSymbolsRequest} requestParameters Request parameters.
+         * @param {CodeApiPostCodeLspSymbolsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CodeLspSymbols(requestParameters: CodeApiPostV1CodeLspSymbolsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postV1CodeLspSymbols(requestParameters.query, options).then((request) => request(axios, basePath));
+        postCodeLspSymbols(requestParameters: CodeApiPostCodeLspSymbolsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
+            return localVarFp.postCodeLspSymbols(requestParameters.query, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1CodeAsk operation in CodeApi.
+ * Request parameters for getCodeAsk operation in CodeApi.
  * @export
- * @interface CodeApiGetV1CodeAskRequest
+ * @interface CodeApiGetCodeAskRequest
  */
-export interface CodeApiGetV1CodeAskRequest {
+export interface CodeApiGetCodeAskRequest {
     /**
      * Q is the question to answer. Required, max 4000 bytes.
      * @type {string}
-     * @memberof CodeApiGetV1CodeAsk
+     * @memberof CodeApiGetCodeAsk
      */
     readonly q?: string
 
     /**
      * Repo narrows retrieval to one repository. Empty searches every repo the org has indexed.
      * @type {string}
-     * @memberof CodeApiGetV1CodeAsk
+     * @memberof CodeApiGetCodeAsk
      */
     readonly repo?: string
 }
 
 /**
- * Request parameters for getV1CodeFile operation in CodeApi.
+ * Request parameters for getCodeFile operation in CodeApi.
  * @export
- * @interface CodeApiGetV1CodeFileRequest
+ * @interface CodeApiGetCodeFileRequest
  */
-export interface CodeApiGetV1CodeFileRequest {
+export interface CodeApiGetCodeFileRequest {
     /**
      * Path is the file\&#39;s repo-relative path. Required.
      * @type {string}
-     * @memberof CodeApiGetV1CodeFile
+     * @memberof CodeApiGetCodeFile
      */
     readonly path?: string
 
     /**
      * Repo is the repository the file belongs to. REQUIRED.
      * @type {string}
-     * @memberof CodeApiGetV1CodeFile
+     * @memberof CodeApiGetCodeFile
      */
     readonly repo?: string
 }
 
 /**
- * Request parameters for getV1CodeSearch operation in CodeApi.
+ * Request parameters for getCodeSearch operation in CodeApi.
  * @export
- * @interface CodeApiGetV1CodeSearchRequest
+ * @interface CodeApiGetCodeSearchRequest
  */
-export interface CodeApiGetV1CodeSearchRequest {
+export interface CodeApiGetCodeSearchRequest {
     /**
      * Q is the search query. Required, max 4000 bytes. For type&#x3D;regex it is a regular expression; for type&#x3D;symbol it is a symbol name.
      * @type {string}
-     * @memberof CodeApiGetV1CodeSearch
+     * @memberof CodeApiGetCodeSearch
      */
     readonly q?: string
 
     /**
      * Type selects the retrieval tier: \&quot;text\&quot; (FTS5 trigram), \&quot;regex\&quot;, \&quot;symbol\&quot; (definitions), \&quot;semantic\&quot; (embeddings) or \&quot;hybrid\&quot;. Anything else — including empty — reads as hybrid.
      * @type {string}
-     * @memberof CodeApiGetV1CodeSearch
+     * @memberof CodeApiGetCodeSearch
      */
     readonly type?: string
 
     /**
      * Repo narrows to one repository. Empty searches every repo the org has indexed.
      * @type {string}
-     * @memberof CodeApiGetV1CodeSearch
+     * @memberof CodeApiGetCodeSearch
      */
     readonly repo?: string
 
     /**
      * Limit caps how many spans come back: default 20, maximum 100. A value that is not a positive integer reads as the default.
      * @type {number}
-     * @memberof CodeApiGetV1CodeSearch
+     * @memberof CodeApiGetCodeSearch
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1CodeTree operation in CodeApi.
+ * Request parameters for getCodeTree operation in CodeApi.
  * @export
- * @interface CodeApiGetV1CodeTreeRequest
+ * @interface CodeApiGetCodeTreeRequest
  */
-export interface CodeApiGetV1CodeTreeRequest {
+export interface CodeApiGetCodeTreeRequest {
     /**
      * Repo is the repository to walk. REQUIRED — a tree is repo-scoped.
      * @type {string}
-     * @memberof CodeApiGetV1CodeTree
+     * @memberof CodeApiGetCodeTree
      */
     readonly repo?: string
 }
 
 /**
- * Request parameters for postV1CodeAsk operation in CodeApi.
+ * Request parameters for postCodeAsk operation in CodeApi.
  * @export
- * @interface CodeApiPostV1CodeAskRequest
+ * @interface CodeApiPostCodeAskRequest
  */
-export interface CodeApiPostV1CodeAskRequest {
+export interface CodeApiPostCodeAskRequest {
     /**
      * 
      * @type {AskPostIn}
-     * @memberof CodeApiPostV1CodeAsk
+     * @memberof CodeApiPostCodeAsk
      */
     readonly askPostIn: AskPostIn
 }
 
 /**
- * Request parameters for postV1CodeContext operation in CodeApi.
+ * Request parameters for postCodeContext operation in CodeApi.
  * @export
- * @interface CodeApiPostV1CodeContextRequest
+ * @interface CodeApiPostCodeContextRequest
  */
-export interface CodeApiPostV1CodeContextRequest {
+export interface CodeApiPostCodeContextRequest {
     /**
      * 
      * @type {ContextIn}
-     * @memberof CodeApiPostV1CodeContext
+     * @memberof CodeApiPostCodeContext
      */
     readonly contextIn: ContextIn
 }
 
 /**
- * Request parameters for postV1CodeIndex operation in CodeApi.
+ * Request parameters for postCodeIndex operation in CodeApi.
  * @export
- * @interface CodeApiPostV1CodeIndexRequest
+ * @interface CodeApiPostCodeIndexRequest
  */
-export interface CodeApiPostV1CodeIndexRequest {
+export interface CodeApiPostCodeIndexRequest {
     /**
      * 
      * @type {IndexIn}
-     * @memberof CodeApiPostV1CodeIndex
+     * @memberof CodeApiPostCodeIndex
      */
     readonly indexIn: IndexIn
 }
 
 /**
- * Request parameters for postV1CodeLspComplete operation in CodeApi.
+ * Request parameters for postCodeLspComplete operation in CodeApi.
  * @export
- * @interface CodeApiPostV1CodeLspCompleteRequest
+ * @interface CodeApiPostCodeLspCompleteRequest
  */
-export interface CodeApiPostV1CodeLspCompleteRequest {
+export interface CodeApiPostCodeLspCompleteRequest {
     /**
      * 
      * @type {Query}
-     * @memberof CodeApiPostV1CodeLspComplete
+     * @memberof CodeApiPostCodeLspComplete
      */
     readonly query: Query
 }
 
 /**
- * Request parameters for postV1CodeLspDiagnostics operation in CodeApi.
+ * Request parameters for postCodeLspDiagnostics operation in CodeApi.
  * @export
- * @interface CodeApiPostV1CodeLspDiagnosticsRequest
+ * @interface CodeApiPostCodeLspDiagnosticsRequest
  */
-export interface CodeApiPostV1CodeLspDiagnosticsRequest {
+export interface CodeApiPostCodeLspDiagnosticsRequest {
     /**
      * 
      * @type {Query}
-     * @memberof CodeApiPostV1CodeLspDiagnostics
+     * @memberof CodeApiPostCodeLspDiagnostics
      */
     readonly query: Query
 }
 
 /**
- * Request parameters for postV1CodeLspHover operation in CodeApi.
+ * Request parameters for postCodeLspHover operation in CodeApi.
  * @export
- * @interface CodeApiPostV1CodeLspHoverRequest
+ * @interface CodeApiPostCodeLspHoverRequest
  */
-export interface CodeApiPostV1CodeLspHoverRequest {
+export interface CodeApiPostCodeLspHoverRequest {
     /**
      * 
      * @type {Query}
-     * @memberof CodeApiPostV1CodeLspHover
+     * @memberof CodeApiPostCodeLspHover
      */
     readonly query: Query
 }
 
 /**
- * Request parameters for postV1CodeLspLocate operation in CodeApi.
+ * Request parameters for postCodeLspLocate operation in CodeApi.
  * @export
- * @interface CodeApiPostV1CodeLspLocateRequest
+ * @interface CodeApiPostCodeLspLocateRequest
  */
-export interface CodeApiPostV1CodeLspLocateRequest {
+export interface CodeApiPostCodeLspLocateRequest {
     /**
      * 
      * @type {Query}
-     * @memberof CodeApiPostV1CodeLspLocate
+     * @memberof CodeApiPostCodeLspLocate
      */
     readonly query: Query
 }
 
 /**
- * Request parameters for postV1CodeLspSymbols operation in CodeApi.
+ * Request parameters for postCodeLspSymbols operation in CodeApi.
  * @export
- * @interface CodeApiPostV1CodeLspSymbolsRequest
+ * @interface CodeApiPostCodeLspSymbolsRequest
  */
-export interface CodeApiPostV1CodeLspSymbolsRequest {
+export interface CodeApiPostCodeLspSymbolsRequest {
     /**
      * 
      * @type {Query}
-     * @memberof CodeApiPostV1CodeLspSymbols
+     * @memberof CodeApiPostCodeLspSymbols
      */
     readonly query: Query
 }
@@ -1019,145 +1019,145 @@ export class CodeApi extends BaseAPI {
     /**
      * Answers a question about the caller org\'s code with a CITED answer: retrieval packs grounding context, then the synthesizer writes the answer over exactly those spans, which come back alongside it. It never answers without grounding — with no matched code the answer is empty and says so, and with no synthesizer available the citations still come back with \"degraded\": true so the caller can reason over the spans itself.
      * @summary Answers a question about the caller org\'s code with a CITED answer: retrieval packs grounding context, then the synthesizer writes the answer over exactly those spans, which come back alongside it.
-     * @param {CodeApiGetV1CodeAskRequest} requestParameters Request parameters.
+     * @param {CodeApiGetCodeAskRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public getV1CodeAsk(requestParameters: CodeApiGetV1CodeAskRequest = {}, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).getV1CodeAsk(requestParameters.q, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    public getCodeAsk(requestParameters: CodeApiGetCodeAskRequest = {}, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).getCodeAsk(requestParameters.q, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the INDEXED content of one file — read_file over the chunks the search tiers hold, for pulling up code an agent just found. It is NOT byte-verbatim: the git object plane is the source of record for exact bytes, history and blame. A file absent from the index is a 404, so an agent can tell \"not indexed\" from \"empty file\".
      * @summary Returns the INDEXED content of one file — read_file over the chunks the search tiers hold, for pulling up code an agent just found.
-     * @param {CodeApiGetV1CodeFileRequest} requestParameters Request parameters.
+     * @param {CodeApiGetCodeFileRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public getV1CodeFile(requestParameters: CodeApiGetV1CodeFileRequest = {}, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).getV1CodeFile(requestParameters.path, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    public getCodeFile(requestParameters: CodeApiGetCodeFileRequest = {}, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).getCodeFile(requestParameters.path, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Finds code in the caller org\'s index across three orthogonal retrieval tiers fused by reciprocal-rank fusion: lexical (FTS5 trigram over code-tokenized text), symbolic (real definition and reference edges), and semantic (embedding cosine over AST-boundary chunks). Pick one tier with `type`, or leave it to run all three as hybrid, which is what a coding agent usually wants. It is FAIL-HONEST: a retrieval outage answers 200 with an empty result set and \"degraded\": true rather than a 5xx, so an agent degrades instead of stalling. A malformed regex is a 400.
      * @summary Finds code in the caller org\'s index across three orthogonal retrieval tiers fused by reciprocal-rank fusion: lexical (FTS5 trigram over code-tokenized text), symbolic (real definition and reference edges), and semantic (embedding cosine over AST-boundary chunks).
-     * @param {CodeApiGetV1CodeSearchRequest} requestParameters Request parameters.
+     * @param {CodeApiGetCodeSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public getV1CodeSearch(requestParameters: CodeApiGetV1CodeSearchRequest = {}, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).getV1CodeSearch(requestParameters.q, requestParameters.type, requestParameters.repo, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getCodeSearch(requestParameters: CodeApiGetCodeSearchRequest = {}, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).getCodeSearch(requestParameters.q, requestParameters.type, requestParameters.repo, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one repository\'s file structure with a per-file symbol count — get_repo_structure over the org\'s own index, with no git checkout involved. A repository that has not been indexed answers an empty tree rather than an error, so an agent can tell \"nothing here\" without handling a failure.
      * @summary Returns one repository\'s file structure with a per-file symbol count — get_repo_structure over the org\'s own index, with no git checkout involved.
-     * @param {CodeApiGetV1CodeTreeRequest} requestParameters Request parameters.
+     * @param {CodeApiGetCodeTreeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public getV1CodeTree(requestParameters: CodeApiGetV1CodeTreeRequest = {}, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).getV1CodeTree(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    public getCodeTree(requestParameters: CodeApiGetCodeTreeRequest = {}, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).getCodeTree(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL. `query` and `repo` in the body take precedence over `?q=` and `?repo=`; either source works alone.
      * @summary Is askGet with the question in the request BODY, for a question too long or too awkward to put in a URL.
-     * @param {CodeApiPostV1CodeAskRequest} requestParameters Request parameters.
+     * @param {CodeApiPostCodeAskRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public postV1CodeAsk(requestParameters: CodeApiPostV1CodeAskRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postV1CodeAsk(requestParameters.askPostIn, options).then((request) => request(this.axios, this.basePath));
+    public postCodeAsk(requestParameters: CodeApiPostCodeAskRequest, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).postCodeAsk(requestParameters.askPostIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Packs the most relevant code for a query into a token budget — THE primitive for a coding agent that has to decide what to put in a prompt. It retrieves seed spans, expands each with the definitions it calls and its key callers, then greedily fills the budget, so the answer is a coherent slice of the codebase rather than a list of disconnected matches. The top match is always included, truncated if it alone overflows, so a matched query never comes back empty. A retrieval outage answers 200 with an empty bundle rather than a 5xx.
      * @summary Packs the most relevant code for a query into a token budget — THE primitive for a coding agent that has to decide what to put in a prompt.
-     * @param {CodeApiPostV1CodeContextRequest} requestParameters Request parameters.
+     * @param {CodeApiPostCodeContextRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public postV1CodeContext(requestParameters: CodeApiPostV1CodeContextRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postV1CodeContext(requestParameters.contextIn, options).then((request) => request(this.axios, this.basePath));
+    public postCodeContext(requestParameters: CodeApiPostCodeContextRequest, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).postCodeContext(requestParameters.contextIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * (re)indexes a repository for the caller\'s org, incrementally: files whose content hash is unchanged are skipped, so re-sending a whole tree is cheap. Each file is parsed for symbols, split at AST boundaries and — when the semantic tier is available — embedded, which is what makes it searchable across all three retrieval tiers. Pass `prune` to also DELETE indexed files absent from the request, which turns the call into a full sync; without it the call is an upsert. The index is written to the caller org\'s own physically separate database.
      * @summary (re)indexes a repository for the caller\'s org, incrementally: files whose content hash is unchanged are skipped, so re-sending a whole tree is cheap.
-     * @param {CodeApiPostV1CodeIndexRequest} requestParameters Request parameters.
+     * @param {CodeApiPostCodeIndexRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public postV1CodeIndex(requestParameters: CodeApiPostV1CodeIndexRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postV1CodeIndex(requestParameters.indexIn, options).then((request) => request(this.axios, this.basePath));
+    public postCodeIndex(requestParameters: CodeApiPostCodeIndexRequest, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).postCodeIndex(requestParameters.indexIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
      * @summary Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-     * @param {CodeApiPostV1CodeLspCompleteRequest} requestParameters Request parameters.
+     * @param {CodeApiPostCodeLspCompleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public postV1CodeLspComplete(requestParameters: CodeApiPostV1CodeLspCompleteRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postV1CodeLspComplete(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+    public postCodeLspComplete(requestParameters: CodeApiPostCodeLspCompleteRequest, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).postCodeLspComplete(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint). The position is ignored.
      * @summary Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint).
-     * @param {CodeApiPostV1CodeLspDiagnosticsRequest} requestParameters Request parameters.
+     * @param {CodeApiPostCodeLspDiagnosticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public postV1CodeLspDiagnostics(requestParameters: CodeApiPostV1CodeLspDiagnosticsRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postV1CodeLspDiagnostics(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+    public postCodeLspDiagnostics(requestParameters: CodeApiPostCodeLspDiagnosticsRequest, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).postCodeLspDiagnostics(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Renders the type and documentation of the symbol at a position, as the language server itself renders it.  Positions are the LSP\'s: line and character are 0-BASED and character counts UTF-16 code units, so an editor\'s 1-based line must have 1 subtracted before it is sent. The repository is named by slug and is always one in the caller\'s own org; rev pins a branch, tag or commit sha, and empty means the default branch.
      * @summary Renders the type and documentation of the symbol at a position, as the language server itself renders it.
-     * @param {CodeApiPostV1CodeLspHoverRequest} requestParameters Request parameters.
+     * @param {CodeApiPostCodeLspHoverRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public postV1CodeLspHover(requestParameters: CodeApiPostV1CodeLspHoverRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postV1CodeLspHover(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+    public postCodeLspHover(requestParameters: CodeApiPostCodeLspHoverRequest, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).postCodeLspHover(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).  It resolves THROUGH dependencies. An answer whose external flag is set left the repository, and its path is then the module coordinate it landed in — which is the question a static index cannot answer and this service exists for.
      * @summary Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).
-     * @param {CodeApiPostV1CodeLspLocateRequest} requestParameters Request parameters.
+     * @param {CodeApiPostCodeLspLocateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public postV1CodeLspLocate(requestParameters: CodeApiPostV1CodeLspLocateRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postV1CodeLspLocate(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+    public postCodeLspLocate(requestParameters: CodeApiPostCodeLspLocateRequest, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).postCodeLspLocate(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Outlines one file: every declaration in it, with its kind and its span. The position is ignored — the answer is the whole file.
      * @summary Outlines one file: every declaration in it, with its kind and its span.
-     * @param {CodeApiPostV1CodeLspSymbolsRequest} requestParameters Request parameters.
+     * @param {CodeApiPostCodeLspSymbolsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CodeApi
      */
-    public postV1CodeLspSymbols(requestParameters: CodeApiPostV1CodeLspSymbolsRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postV1CodeLspSymbols(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
+    public postCodeLspSymbols(requestParameters: CodeApiPostCodeLspSymbolsRequest, options?: RawAxiosRequestConfig) {
+        return CodeApiFp(this.configuration).postCodeLspSymbols(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

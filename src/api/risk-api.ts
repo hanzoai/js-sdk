@@ -113,7 +113,7 @@ export const RiskApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RiskHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRiskHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/risk/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1257,10 +1257,10 @@ export const RiskApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RiskHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RiskHealth(options);
+        async getRiskHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRiskHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RiskApi.getV1RiskHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RiskApi.getRiskHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1679,8 +1679,8 @@ export const RiskApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RiskHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1RiskHealth(options).then((request) => request(axios, basePath));
+        getRiskHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getRiskHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Puts one of your organisation\'s OWN PUBLISHED VALUES in force, by name — which is what an instant rollback is, what promoting a challenger is, and what installing the shape a search found is.  IT TAKES AN ADDRESS AND NEVER STATE. The masses are read from your own store, so nothing about your model has to be held by whatever is making this call. That closes the sharpest edge the previous shape had: a body of counters is something a caller can COMPOSE, and a region filled until activity inside it reads as ordinary is a model that has been shaped rather than learned. The engine\'s mass invariant was the only thing standing between a composed body and the model; with an address there is no body to compose.  IT ADOPTS THE SHAPE, NOT ONLY THE MASSES. A value records the model space its masses were taken in, and a value whose space differs from the one in force REPLANTS your model into that space before restoring them. That is what makes POST /v1/risk/search actionable: a search answers with the shape that fits your own history best and publishes it fitted, and its address is what you name here. Before this, a winning shape was advice nobody could take — the adoption path refused every shape change, and a winner is a different shape by definition.  WHAT ADOPTING A SEARCHED SHAPE COSTS, SAID PLAINLY: the value a search fits has learned the window the search replayed and nothing older, so installing it trades history for fit. Your appetite is untouched — that is your policy record\'s, with its own versions — and so is the geometry, which stays your own.  An address your organisation has not published is NOT FOUND. That includes one another organisation published, and it is not a lookup that failed: the store is per organisation and the address is a name, never an authority.
@@ -2441,8 +2441,8 @@ export class RiskApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RiskApi
      */
-    public getV1RiskHealth(options?: RawAxiosRequestConfig) {
-        return RiskApiFp(this.configuration).getV1RiskHealth(options).then((request) => request(this.axios, this.basePath));
+    public getRiskHealth(options?: RawAxiosRequestConfig) {
+        return RiskApiFp(this.configuration).getRiskHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
