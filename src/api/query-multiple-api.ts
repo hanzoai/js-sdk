@@ -33,7 +33,7 @@ export const QueryMultipleApiAxiosParamCreator = function (configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1QueryMultiple: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postQueryMultiple: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/query_multiple`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const QueryMultipleApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1QueryMultiple(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1QueryMultiple(options);
+        async postQueryMultiple(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postQueryMultiple(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['QueryMultipleApi.postV1QueryMultiple']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['QueryMultipleApi.postQueryMultiple']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const QueryMultipleApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1QueryMultiple(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1QueryMultiple(options).then((request) => request(axios, basePath));
+        postQueryMultiple(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postQueryMultiple(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class QueryMultipleApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof QueryMultipleApi
      */
-    public postV1QueryMultiple(options?: RawAxiosRequestConfig) {
-        return QueryMultipleApiFp(this.configuration).postV1QueryMultiple(options).then((request) => request(this.axios, this.basePath));
+    public postQueryMultiple(options?: RawAxiosRequestConfig) {
+        return QueryMultipleApiFp(this.configuration).postQueryMultiple(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

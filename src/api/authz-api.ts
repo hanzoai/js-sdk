@@ -33,7 +33,7 @@ export const AuthzApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AuthzHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAuthzHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/authz/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const AuthzApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AuthzReadyz: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAuthzReadyz: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/authz/readyz`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -93,7 +93,7 @@ export const AuthzApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AuthzCheck: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAuthzCheck: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/authz/check`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -133,10 +133,10 @@ export const AuthzApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AuthzHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AuthzHealth(options);
+        async getAuthzHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAuthzHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthzApi.getV1AuthzHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuthzApi.getAuthzHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -145,10 +145,10 @@ export const AuthzApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AuthzReadyz(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AuthzReadyz(options);
+        async getAuthzReadyz(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAuthzReadyz(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthzApi.getV1AuthzReadyz']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuthzApi.getAuthzReadyz']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -157,10 +157,10 @@ export const AuthzApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AuthzCheck(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AuthzCheck(options);
+        async postAuthzCheck(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAuthzCheck(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthzApi.postV1AuthzCheck']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuthzApi.postAuthzCheck']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -179,8 +179,8 @@ export const AuthzApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AuthzHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1AuthzHealth(options).then((request) => request(axios, basePath));
+        getAuthzHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getAuthzHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Reports that the authz process is ready to serve decisions. Unauthenticated and not org-scoped, for the same reason health is: readiness is a property of this process, not of any one tenant\'s policy set.
@@ -188,8 +188,8 @@ export const AuthzApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AuthzReadyz(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1AuthzReadyz(options).then((request) => request(axios, basePath));
+        getAuthzReadyz(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getAuthzReadyz(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers one policy question — may this subject take this action on this object — against the CALLER\'S OWN org policy set, and answers it with a bare allow/deny.  The org comes from the gateway-minted X-Org-Id and picks the per-org enforcer, so a decision is always rendered by that tenant\'s policies and never by another\'s. A request carrying no org is refused rather than answered from a shared or default set: collapsing tenants together is the one failure a policy engine must not have.  Body: {sub, obj, act}, all three required. The reply echoes them beside `allow` so a cached or logged decision carries the question it answered.
@@ -197,8 +197,8 @@ export const AuthzApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AuthzCheck(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AuthzCheck(options).then((request) => request(axios, basePath));
+        postAuthzCheck(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAuthzCheck(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -217,8 +217,8 @@ export class AuthzApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AuthzApi
      */
-    public getV1AuthzHealth(options?: RawAxiosRequestConfig) {
-        return AuthzApiFp(this.configuration).getV1AuthzHealth(options).then((request) => request(this.axios, this.basePath));
+    public getAuthzHealth(options?: RawAxiosRequestConfig) {
+        return AuthzApiFp(this.configuration).getAuthzHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -228,8 +228,8 @@ export class AuthzApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AuthzApi
      */
-    public getV1AuthzReadyz(options?: RawAxiosRequestConfig) {
-        return AuthzApiFp(this.configuration).getV1AuthzReadyz(options).then((request) => request(this.axios, this.basePath));
+    public getAuthzReadyz(options?: RawAxiosRequestConfig) {
+        return AuthzApiFp(this.configuration).getAuthzReadyz(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -239,8 +239,8 @@ export class AuthzApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AuthzApi
      */
-    public postV1AuthzCheck(options?: RawAxiosRequestConfig) {
-        return AuthzApiFp(this.configuration).postV1AuthzCheck(options).then((request) => request(this.axios, this.basePath));
+    public postAuthzCheck(options?: RawAxiosRequestConfig) {
+        return AuthzApiFp(this.configuration).postAuthzCheck(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -34,9 +34,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceCollectionByCollectionid: async (collectionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceCollectionByCollectionid: async (collectionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'collectionid' is not null or undefined
-            assertParamExists('deleteV1CommerceCollectionByCollectionid', 'collectionid', collectionid)
+            assertParamExists('deleteCommerceCollectionByCollectionid', 'collectionid', collectionid)
             const localVarPath = `/v1/commerce/collection/{collectionid}`
                 .replace(`{${"collectionid"}}`, encodeURIComponent(String(collectionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -68,9 +68,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceDisclosureByDisclosureid: async (disclosureid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceDisclosureByDisclosureid: async (disclosureid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'disclosureid' is not null or undefined
-            assertParamExists('deleteV1CommerceDisclosureByDisclosureid', 'disclosureid', disclosureid)
+            assertParamExists('deleteCommerceDisclosureByDisclosureid', 'disclosureid', disclosureid)
             const localVarPath = `/v1/commerce/disclosure/{disclosureid}`
                 .replace(`{${"disclosureid"}}`, encodeURIComponent(String(disclosureid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -102,9 +102,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceDiscountByDiscountid: async (discountid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceDiscountByDiscountid: async (discountid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'discountid' is not null or undefined
-            assertParamExists('deleteV1CommerceDiscountByDiscountid', 'discountid', discountid)
+            assertParamExists('deleteCommerceDiscountByDiscountid', 'discountid', discountid)
             const localVarPath = `/v1/commerce/discount/{discountid}`
                 .replace(`{${"discountid"}}`, encodeURIComponent(String(discountid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -136,9 +136,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceMovieByMovieid: async (movieid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceMovieByMovieid: async (movieid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'movieid' is not null or undefined
-            assertParamExists('deleteV1CommerceMovieByMovieid', 'movieid', movieid)
+            assertParamExists('deleteCommerceMovieByMovieid', 'movieid', movieid)
             const localVarPath = `/v1/commerce/movie/{movieid}`
                 .replace(`{${"movieid"}}`, encodeURIComponent(String(movieid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -170,9 +170,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceNoteByNoteid: async (noteid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceNoteByNoteid: async (noteid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'noteid' is not null or undefined
-            assertParamExists('deleteV1CommerceNoteByNoteid', 'noteid', noteid)
+            assertParamExists('deleteCommerceNoteByNoteid', 'noteid', noteid)
             const localVarPath = `/v1/commerce/note/{noteid}`
                 .replace(`{${"noteid"}}`, encodeURIComponent(String(noteid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -204,9 +204,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceProductByProductid: async (productid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceProductByProductid: async (productid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'productid' is not null or undefined
-            assertParamExists('deleteV1CommerceProductByProductid', 'productid', productid)
+            assertParamExists('deleteCommerceProductByProductid', 'productid', productid)
             const localVarPath = `/v1/commerce/product/{productid}`
                 .replace(`{${"productid"}}`, encodeURIComponent(String(productid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -238,9 +238,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceReturnByReturnid: async (returnid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceReturnByReturnid: async (returnid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'returnid' is not null or undefined
-            assertParamExists('deleteV1CommerceReturnByReturnid', 'returnid', returnid)
+            assertParamExists('deleteCommerceReturnByReturnid', 'returnid', returnid)
             const localVarPath = `/v1/commerce/return/{returnid}`
                 .replace(`{${"returnid"}}`, encodeURIComponent(String(returnid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -272,9 +272,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceSaleschannelBySaleschannelid: async (saleschannelid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceSaleschannelBySaleschannelid: async (saleschannelid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'saleschannelid' is not null or undefined
-            assertParamExists('deleteV1CommerceSaleschannelBySaleschannelid', 'saleschannelid', saleschannelid)
+            assertParamExists('deleteCommerceSaleschannelBySaleschannelid', 'saleschannelid', saleschannelid)
             const localVarPath = `/v1/commerce/saleschannel/{saleschannelid}`
                 .replace(`{${"saleschannelid"}}`, encodeURIComponent(String(saleschannelid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -306,9 +306,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceStocklocationByStocklocationid: async (stocklocationid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceStocklocationByStocklocationid: async (stocklocationid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stocklocationid' is not null or undefined
-            assertParamExists('deleteV1CommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
+            assertParamExists('deleteCommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
             const localVarPath = `/v1/commerce/stocklocation/{stocklocationid}`
                 .replace(`{${"stocklocationid"}}`, encodeURIComponent(String(stocklocationid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -340,9 +340,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceSubmissionBySubmissionid: async (submissionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceSubmissionBySubmissionid: async (submissionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionid' is not null or undefined
-            assertParamExists('deleteV1CommerceSubmissionBySubmissionid', 'submissionid', submissionid)
+            assertParamExists('deleteCommerceSubmissionBySubmissionid', 'submissionid', submissionid)
             const localVarPath = `/v1/commerce/submission/{submissionid}`
                 .replace(`{${"submissionid"}}`, encodeURIComponent(String(submissionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -374,9 +374,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceSubscriberBySubscriberid: async (subscriberid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceSubscriberBySubscriberid: async (subscriberid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'subscriberid' is not null or undefined
-            assertParamExists('deleteV1CommerceSubscriberBySubscriberid', 'subscriberid', subscriberid)
+            assertParamExists('deleteCommerceSubscriberBySubscriberid', 'subscriberid', subscriberid)
             const localVarPath = `/v1/commerce/subscriber/{subscriberid}`
                 .replace(`{${"subscriberid"}}`, encodeURIComponent(String(subscriberid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -408,9 +408,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceTokentransactionByTokentransactionid: async (tokentransactionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceTokentransactionByTokentransactionid: async (tokentransactionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'tokentransactionid' is not null or undefined
-            assertParamExists('deleteV1CommerceTokentransactionByTokentransactionid', 'tokentransactionid', tokentransactionid)
+            assertParamExists('deleteCommerceTokentransactionByTokentransactionid', 'tokentransactionid', tokentransactionid)
             const localVarPath = `/v1/commerce/tokentransaction/{tokentransactionid}`
                 .replace(`{${"tokentransactionid"}}`, encodeURIComponent(String(tokentransactionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -442,9 +442,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceTransferByTransferid: async (transferid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceTransferByTransferid: async (transferid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'transferid' is not null or undefined
-            assertParamExists('deleteV1CommerceTransferByTransferid', 'transferid', transferid)
+            assertParamExists('deleteCommerceTransferByTransferid', 'transferid', transferid)
             const localVarPath = `/v1/commerce/transfer/{transferid}`
                 .replace(`{${"transferid"}}`, encodeURIComponent(String(transferid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -476,9 +476,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceVariantByVariantid: async (variantid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceVariantByVariantid: async (variantid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'variantid' is not null or undefined
-            assertParamExists('deleteV1CommerceVariantByVariantid', 'variantid', variantid)
+            assertParamExists('deleteCommerceVariantByVariantid', 'variantid', variantid)
             const localVarPath = `/v1/commerce/variant/{variantid}`
                 .replace(`{${"variantid"}}`, encodeURIComponent(String(variantid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -510,9 +510,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceWalletByWalletid: async (walletid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceWalletByWalletid: async (walletid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletid' is not null or undefined
-            assertParamExists('deleteV1CommerceWalletByWalletid', 'walletid', walletid)
+            assertParamExists('deleteCommerceWalletByWalletid', 'walletid', walletid)
             const localVarPath = `/v1/commerce/wallet/{walletid}`
                 .replace(`{${"walletid"}}`, encodeURIComponent(String(walletid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -544,9 +544,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceWatchlistByWatchlistid: async (watchlistid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceWatchlistByWatchlistid: async (watchlistid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'watchlistid' is not null or undefined
-            assertParamExists('deleteV1CommerceWatchlistByWatchlistid', 'watchlistid', watchlistid)
+            assertParamExists('deleteCommerceWatchlistByWatchlistid', 'watchlistid', watchlistid)
             const localVarPath = `/v1/commerce/watchlist/{watchlistid}`
                 .replace(`{${"watchlistid"}}`, encodeURIComponent(String(watchlistid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -578,9 +578,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'webhookid' is not null or undefined
-            assertParamExists('deleteV1CommerceWebhookByWebhookid', 'webhookid', webhookid)
+            assertParamExists('deleteCommerceWebhookByWebhookid', 'webhookid', webhookid)
             const localVarPath = `/v1/commerce/webhook/{webhookid}`
                 .replace(`{${"webhookid"}}`, encodeURIComponent(String(webhookid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -611,7 +611,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceAdminCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceAdminCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/admin/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -641,7 +641,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -671,7 +671,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceCollection: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceCollection: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/collection/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -702,9 +702,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceCollectionByCollectionid: async (collectionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceCollectionByCollectionid: async (collectionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'collectionid' is not null or undefined
-            assertParamExists('getV1CommerceCollectionByCollectionid', 'collectionid', collectionid)
+            assertParamExists('getCommerceCollectionByCollectionid', 'collectionid', collectionid)
             const localVarPath = `/v1/commerce/collection/{collectionid}`
                 .replace(`{${"collectionid"}}`, encodeURIComponent(String(collectionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -735,7 +735,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceCurrencies: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceCurrencies: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/currencies`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -765,7 +765,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceDisclosure: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceDisclosure: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/disclosure/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -796,9 +796,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceDisclosureByDisclosureid: async (disclosureid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceDisclosureByDisclosureid: async (disclosureid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'disclosureid' is not null or undefined
-            assertParamExists('getV1CommerceDisclosureByDisclosureid', 'disclosureid', disclosureid)
+            assertParamExists('getCommerceDisclosureByDisclosureid', 'disclosureid', disclosureid)
             const localVarPath = `/v1/commerce/disclosure/{disclosureid}`
                 .replace(`{${"disclosureid"}}`, encodeURIComponent(String(disclosureid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -829,7 +829,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceDiscount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceDiscount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/discount/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -860,9 +860,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceDiscountByDiscountid: async (discountid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceDiscountByDiscountid: async (discountid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'discountid' is not null or undefined
-            assertParamExists('getV1CommerceDiscountByDiscountid', 'discountid', discountid)
+            assertParamExists('getCommerceDiscountByDiscountid', 'discountid', discountid)
             const localVarPath = `/v1/commerce/discount/{discountid}`
                 .replace(`{${"discountid"}}`, encodeURIComponent(String(discountid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -893,7 +893,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceMovie: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceMovie: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/movie/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -924,9 +924,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceMovieByMovieid: async (movieid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceMovieByMovieid: async (movieid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'movieid' is not null or undefined
-            assertParamExists('getV1CommerceMovieByMovieid', 'movieid', movieid)
+            assertParamExists('getCommerceMovieByMovieid', 'movieid', movieid)
             const localVarPath = `/v1/commerce/movie/{movieid}`
                 .replace(`{${"movieid"}}`, encodeURIComponent(String(movieid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -957,7 +957,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceNote: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceNote: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/note/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -988,9 +988,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceNoteByNoteid: async (noteid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceNoteByNoteid: async (noteid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'noteid' is not null or undefined
-            assertParamExists('getV1CommerceNoteByNoteid', 'noteid', noteid)
+            assertParamExists('getCommerceNoteByNoteid', 'noteid', noteid)
             const localVarPath = `/v1/commerce/note/{noteid}`
                 .replace(`{${"noteid"}}`, encodeURIComponent(String(noteid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1021,7 +1021,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceOrg: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceOrg: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/org`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1051,7 +1051,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceProduct: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceProduct: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/product/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1082,9 +1082,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceProductByProductid: async (productid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceProductByProductid: async (productid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'productid' is not null or undefined
-            assertParamExists('getV1CommerceProductByProductid', 'productid', productid)
+            assertParamExists('getCommerceProductByProductid', 'productid', productid)
             const localVarPath = `/v1/commerce/product/{productid}`
                 .replace(`{${"productid"}}`, encodeURIComponent(String(productid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1115,7 +1115,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceReturn: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceReturn: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/return/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1146,9 +1146,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceReturnByReturnid: async (returnid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceReturnByReturnid: async (returnid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'returnid' is not null or undefined
-            assertParamExists('getV1CommerceReturnByReturnid', 'returnid', returnid)
+            assertParamExists('getCommerceReturnByReturnid', 'returnid', returnid)
             const localVarPath = `/v1/commerce/return/{returnid}`
                 .replace(`{${"returnid"}}`, encodeURIComponent(String(returnid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1179,7 +1179,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSaleschannel: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceSaleschannel: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/saleschannel/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1210,9 +1210,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSaleschannelBySaleschannelid: async (saleschannelid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceSaleschannelBySaleschannelid: async (saleschannelid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'saleschannelid' is not null or undefined
-            assertParamExists('getV1CommerceSaleschannelBySaleschannelid', 'saleschannelid', saleschannelid)
+            assertParamExists('getCommerceSaleschannelBySaleschannelid', 'saleschannelid', saleschannelid)
             const localVarPath = `/v1/commerce/saleschannel/{saleschannelid}`
                 .replace(`{${"saleschannelid"}}`, encodeURIComponent(String(saleschannelid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1243,7 +1243,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceStocklocation: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceStocklocation: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/stocklocation/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1274,9 +1274,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceStocklocationByStocklocationid: async (stocklocationid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceStocklocationByStocklocationid: async (stocklocationid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stocklocationid' is not null or undefined
-            assertParamExists('getV1CommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
+            assertParamExists('getCommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
             const localVarPath = `/v1/commerce/stocklocation/{stocklocationid}`
                 .replace(`{${"stocklocationid"}}`, encodeURIComponent(String(stocklocationid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1307,7 +1307,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSubmission: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceSubmission: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/submission/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1338,9 +1338,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSubmissionBySubmissionid: async (submissionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceSubmissionBySubmissionid: async (submissionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionid' is not null or undefined
-            assertParamExists('getV1CommerceSubmissionBySubmissionid', 'submissionid', submissionid)
+            assertParamExists('getCommerceSubmissionBySubmissionid', 'submissionid', submissionid)
             const localVarPath = `/v1/commerce/submission/{submissionid}`
                 .replace(`{${"submissionid"}}`, encodeURIComponent(String(submissionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1371,7 +1371,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSubscriber: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceSubscriber: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/subscriber/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1402,9 +1402,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSubscriberBySubscriberid: async (subscriberid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceSubscriberBySubscriberid: async (subscriberid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'subscriberid' is not null or undefined
-            assertParamExists('getV1CommerceSubscriberBySubscriberid', 'subscriberid', subscriberid)
+            assertParamExists('getCommerceSubscriberBySubscriberid', 'subscriberid', subscriberid)
             const localVarPath = `/v1/commerce/subscriber/{subscriberid}`
                 .replace(`{${"subscriberid"}}`, encodeURIComponent(String(subscriberid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1435,7 +1435,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceTokentransaction: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceTokentransaction: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/tokentransaction/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1466,9 +1466,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceTokentransactionByTokentransactionid: async (tokentransactionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceTokentransactionByTokentransactionid: async (tokentransactionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'tokentransactionid' is not null or undefined
-            assertParamExists('getV1CommerceTokentransactionByTokentransactionid', 'tokentransactionid', tokentransactionid)
+            assertParamExists('getCommerceTokentransactionByTokentransactionid', 'tokentransactionid', tokentransactionid)
             const localVarPath = `/v1/commerce/tokentransaction/{tokentransactionid}`
                 .replace(`{${"tokentransactionid"}}`, encodeURIComponent(String(tokentransactionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1499,7 +1499,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceTransfer: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceTransfer: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/transfer/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1530,9 +1530,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceTransferByTransferid: async (transferid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceTransferByTransferid: async (transferid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'transferid' is not null or undefined
-            assertParamExists('getV1CommerceTransferByTransferid', 'transferid', transferid)
+            assertParamExists('getCommerceTransferByTransferid', 'transferid', transferid)
             const localVarPath = `/v1/commerce/transfer/{transferid}`
                 .replace(`{${"transferid"}}`, encodeURIComponent(String(transferid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1563,7 +1563,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceVariant: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceVariant: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/variant/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1594,9 +1594,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceVariantByVariantid: async (variantid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceVariantByVariantid: async (variantid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'variantid' is not null or undefined
-            assertParamExists('getV1CommerceVariantByVariantid', 'variantid', variantid)
+            assertParamExists('getCommerceVariantByVariantid', 'variantid', variantid)
             const localVarPath = `/v1/commerce/variant/{variantid}`
                 .replace(`{${"variantid"}}`, encodeURIComponent(String(variantid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1627,7 +1627,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWallet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceWallet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/wallet/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1658,9 +1658,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWalletByWalletid: async (walletid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceWalletByWalletid: async (walletid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletid' is not null or undefined
-            assertParamExists('getV1CommerceWalletByWalletid', 'walletid', walletid)
+            assertParamExists('getCommerceWalletByWalletid', 'walletid', walletid)
             const localVarPath = `/v1/commerce/wallet/{walletid}`
                 .replace(`{${"walletid"}}`, encodeURIComponent(String(walletid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1691,7 +1691,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWatchlist: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceWatchlist: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/watchlist/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1722,9 +1722,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWatchlistByWatchlistid: async (watchlistid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceWatchlistByWatchlistid: async (watchlistid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'watchlistid' is not null or undefined
-            assertParamExists('getV1CommerceWatchlistByWatchlistid', 'watchlistid', watchlistid)
+            assertParamExists('getCommerceWatchlistByWatchlistid', 'watchlistid', watchlistid)
             const localVarPath = `/v1/commerce/watchlist/{watchlistid}`
                 .replace(`{${"watchlistid"}}`, encodeURIComponent(String(watchlistid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1755,7 +1755,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/webhook/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1786,9 +1786,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'webhookid' is not null or undefined
-            assertParamExists('getV1CommerceWebhookByWebhookid', 'webhookid', webhookid)
+            assertParamExists('getCommerceWebhookByWebhookid', 'webhookid', webhookid)
             const localVarPath = `/v1/commerce/webhook/{webhookid}`
                 .replace(`{${"webhookid"}}`, encodeURIComponent(String(webhookid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1820,9 +1820,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceCollectionByCollectionid: async (collectionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceCollectionByCollectionid: async (collectionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'collectionid' is not null or undefined
-            assertParamExists('patchV1CommerceCollectionByCollectionid', 'collectionid', collectionid)
+            assertParamExists('patchCommerceCollectionByCollectionid', 'collectionid', collectionid)
             const localVarPath = `/v1/commerce/collection/{collectionid}`
                 .replace(`{${"collectionid"}}`, encodeURIComponent(String(collectionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1854,9 +1854,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceDisclosureByDisclosureid: async (disclosureid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceDisclosureByDisclosureid: async (disclosureid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'disclosureid' is not null or undefined
-            assertParamExists('patchV1CommerceDisclosureByDisclosureid', 'disclosureid', disclosureid)
+            assertParamExists('patchCommerceDisclosureByDisclosureid', 'disclosureid', disclosureid)
             const localVarPath = `/v1/commerce/disclosure/{disclosureid}`
                 .replace(`{${"disclosureid"}}`, encodeURIComponent(String(disclosureid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1888,9 +1888,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceDiscountByDiscountid: async (discountid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceDiscountByDiscountid: async (discountid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'discountid' is not null or undefined
-            assertParamExists('patchV1CommerceDiscountByDiscountid', 'discountid', discountid)
+            assertParamExists('patchCommerceDiscountByDiscountid', 'discountid', discountid)
             const localVarPath = `/v1/commerce/discount/{discountid}`
                 .replace(`{${"discountid"}}`, encodeURIComponent(String(discountid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1922,9 +1922,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceMovieByMovieid: async (movieid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceMovieByMovieid: async (movieid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'movieid' is not null or undefined
-            assertParamExists('patchV1CommerceMovieByMovieid', 'movieid', movieid)
+            assertParamExists('patchCommerceMovieByMovieid', 'movieid', movieid)
             const localVarPath = `/v1/commerce/movie/{movieid}`
                 .replace(`{${"movieid"}}`, encodeURIComponent(String(movieid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1956,9 +1956,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceNoteByNoteid: async (noteid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceNoteByNoteid: async (noteid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'noteid' is not null or undefined
-            assertParamExists('patchV1CommerceNoteByNoteid', 'noteid', noteid)
+            assertParamExists('patchCommerceNoteByNoteid', 'noteid', noteid)
             const localVarPath = `/v1/commerce/note/{noteid}`
                 .replace(`{${"noteid"}}`, encodeURIComponent(String(noteid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1990,9 +1990,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceProductByProductid: async (productid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceProductByProductid: async (productid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'productid' is not null or undefined
-            assertParamExists('patchV1CommerceProductByProductid', 'productid', productid)
+            assertParamExists('patchCommerceProductByProductid', 'productid', productid)
             const localVarPath = `/v1/commerce/product/{productid}`
                 .replace(`{${"productid"}}`, encodeURIComponent(String(productid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2024,9 +2024,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceReturnByReturnid: async (returnid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceReturnByReturnid: async (returnid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'returnid' is not null or undefined
-            assertParamExists('patchV1CommerceReturnByReturnid', 'returnid', returnid)
+            assertParamExists('patchCommerceReturnByReturnid', 'returnid', returnid)
             const localVarPath = `/v1/commerce/return/{returnid}`
                 .replace(`{${"returnid"}}`, encodeURIComponent(String(returnid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2058,9 +2058,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceSaleschannelBySaleschannelid: async (saleschannelid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceSaleschannelBySaleschannelid: async (saleschannelid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'saleschannelid' is not null or undefined
-            assertParamExists('patchV1CommerceSaleschannelBySaleschannelid', 'saleschannelid', saleschannelid)
+            assertParamExists('patchCommerceSaleschannelBySaleschannelid', 'saleschannelid', saleschannelid)
             const localVarPath = `/v1/commerce/saleschannel/{saleschannelid}`
                 .replace(`{${"saleschannelid"}}`, encodeURIComponent(String(saleschannelid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2092,9 +2092,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceStocklocationByStocklocationid: async (stocklocationid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceStocklocationByStocklocationid: async (stocklocationid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stocklocationid' is not null or undefined
-            assertParamExists('patchV1CommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
+            assertParamExists('patchCommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
             const localVarPath = `/v1/commerce/stocklocation/{stocklocationid}`
                 .replace(`{${"stocklocationid"}}`, encodeURIComponent(String(stocklocationid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2126,9 +2126,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceSubmissionBySubmissionid: async (submissionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceSubmissionBySubmissionid: async (submissionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionid' is not null or undefined
-            assertParamExists('patchV1CommerceSubmissionBySubmissionid', 'submissionid', submissionid)
+            assertParamExists('patchCommerceSubmissionBySubmissionid', 'submissionid', submissionid)
             const localVarPath = `/v1/commerce/submission/{submissionid}`
                 .replace(`{${"submissionid"}}`, encodeURIComponent(String(submissionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2160,9 +2160,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceSubscriberBySubscriberid: async (subscriberid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceSubscriberBySubscriberid: async (subscriberid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'subscriberid' is not null or undefined
-            assertParamExists('patchV1CommerceSubscriberBySubscriberid', 'subscriberid', subscriberid)
+            assertParamExists('patchCommerceSubscriberBySubscriberid', 'subscriberid', subscriberid)
             const localVarPath = `/v1/commerce/subscriber/{subscriberid}`
                 .replace(`{${"subscriberid"}}`, encodeURIComponent(String(subscriberid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2194,9 +2194,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceTokentransactionByTokentransactionid: async (tokentransactionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceTokentransactionByTokentransactionid: async (tokentransactionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'tokentransactionid' is not null or undefined
-            assertParamExists('patchV1CommerceTokentransactionByTokentransactionid', 'tokentransactionid', tokentransactionid)
+            assertParamExists('patchCommerceTokentransactionByTokentransactionid', 'tokentransactionid', tokentransactionid)
             const localVarPath = `/v1/commerce/tokentransaction/{tokentransactionid}`
                 .replace(`{${"tokentransactionid"}}`, encodeURIComponent(String(tokentransactionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2228,9 +2228,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceTransferByTransferid: async (transferid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceTransferByTransferid: async (transferid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'transferid' is not null or undefined
-            assertParamExists('patchV1CommerceTransferByTransferid', 'transferid', transferid)
+            assertParamExists('patchCommerceTransferByTransferid', 'transferid', transferid)
             const localVarPath = `/v1/commerce/transfer/{transferid}`
                 .replace(`{${"transferid"}}`, encodeURIComponent(String(transferid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2262,9 +2262,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceVariantByVariantid: async (variantid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceVariantByVariantid: async (variantid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'variantid' is not null or undefined
-            assertParamExists('patchV1CommerceVariantByVariantid', 'variantid', variantid)
+            assertParamExists('patchCommerceVariantByVariantid', 'variantid', variantid)
             const localVarPath = `/v1/commerce/variant/{variantid}`
                 .replace(`{${"variantid"}}`, encodeURIComponent(String(variantid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2296,9 +2296,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceWalletByWalletid: async (walletid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceWalletByWalletid: async (walletid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletid' is not null or undefined
-            assertParamExists('patchV1CommerceWalletByWalletid', 'walletid', walletid)
+            assertParamExists('patchCommerceWalletByWalletid', 'walletid', walletid)
             const localVarPath = `/v1/commerce/wallet/{walletid}`
                 .replace(`{${"walletid"}}`, encodeURIComponent(String(walletid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2330,9 +2330,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceWatchlistByWatchlistid: async (watchlistid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceWatchlistByWatchlistid: async (watchlistid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'watchlistid' is not null or undefined
-            assertParamExists('patchV1CommerceWatchlistByWatchlistid', 'watchlistid', watchlistid)
+            assertParamExists('patchCommerceWatchlistByWatchlistid', 'watchlistid', watchlistid)
             const localVarPath = `/v1/commerce/watchlist/{watchlistid}`
                 .replace(`{${"watchlistid"}}`, encodeURIComponent(String(watchlistid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2364,9 +2364,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchCommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'webhookid' is not null or undefined
-            assertParamExists('patchV1CommerceWebhookByWebhookid', 'webhookid', webhookid)
+            assertParamExists('patchCommerceWebhookByWebhookid', 'webhookid', webhookid)
             const localVarPath = `/v1/commerce/webhook/{webhookid}`
                 .replace(`{${"webhookid"}}`, encodeURIComponent(String(webhookid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2397,7 +2397,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceCollection: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceCollection: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/collection/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2428,9 +2428,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceCollectionByCollectionid: async (collectionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceCollectionByCollectionid: async (collectionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'collectionid' is not null or undefined
-            assertParamExists('postV1CommerceCollectionByCollectionid', 'collectionid', collectionid)
+            assertParamExists('postCommerceCollectionByCollectionid', 'collectionid', collectionid)
             const localVarPath = `/v1/commerce/collection/{collectionid}`
                 .replace(`{${"collectionid"}}`, encodeURIComponent(String(collectionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2461,7 +2461,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceDisclosure: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceDisclosure: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/disclosure/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2492,9 +2492,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceDisclosureByDisclosureid: async (disclosureid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceDisclosureByDisclosureid: async (disclosureid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'disclosureid' is not null or undefined
-            assertParamExists('postV1CommerceDisclosureByDisclosureid', 'disclosureid', disclosureid)
+            assertParamExists('postCommerceDisclosureByDisclosureid', 'disclosureid', disclosureid)
             const localVarPath = `/v1/commerce/disclosure/{disclosureid}`
                 .replace(`{${"disclosureid"}}`, encodeURIComponent(String(disclosureid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2525,7 +2525,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceDiscount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceDiscount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/discount/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2556,9 +2556,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceDiscountByDiscountid: async (discountid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceDiscountByDiscountid: async (discountid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'discountid' is not null or undefined
-            assertParamExists('postV1CommerceDiscountByDiscountid', 'discountid', discountid)
+            assertParamExists('postCommerceDiscountByDiscountid', 'discountid', discountid)
             const localVarPath = `/v1/commerce/discount/{discountid}`
                 .replace(`{${"discountid"}}`, encodeURIComponent(String(discountid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2589,7 +2589,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceMovie: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceMovie: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/movie/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2620,9 +2620,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceMovieByMovieid: async (movieid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceMovieByMovieid: async (movieid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'movieid' is not null or undefined
-            assertParamExists('postV1CommerceMovieByMovieid', 'movieid', movieid)
+            assertParamExists('postCommerceMovieByMovieid', 'movieid', movieid)
             const localVarPath = `/v1/commerce/movie/{movieid}`
                 .replace(`{${"movieid"}}`, encodeURIComponent(String(movieid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2653,7 +2653,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceNote: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceNote: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/note/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2684,9 +2684,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceNoteByNoteid: async (noteid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceNoteByNoteid: async (noteid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'noteid' is not null or undefined
-            assertParamExists('postV1CommerceNoteByNoteid', 'noteid', noteid)
+            assertParamExists('postCommerceNoteByNoteid', 'noteid', noteid)
             const localVarPath = `/v1/commerce/note/{noteid}`
                 .replace(`{${"noteid"}}`, encodeURIComponent(String(noteid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2717,7 +2717,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceProduct: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceProduct: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/product/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2748,9 +2748,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceProductByProductid: async (productid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceProductByProductid: async (productid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'productid' is not null or undefined
-            assertParamExists('postV1CommerceProductByProductid', 'productid', productid)
+            assertParamExists('postCommerceProductByProductid', 'productid', productid)
             const localVarPath = `/v1/commerce/product/{productid}`
                 .replace(`{${"productid"}}`, encodeURIComponent(String(productid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2781,7 +2781,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceReturn: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceReturn: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/return/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2812,9 +2812,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceReturnByReturnid: async (returnid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceReturnByReturnid: async (returnid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'returnid' is not null or undefined
-            assertParamExists('postV1CommerceReturnByReturnid', 'returnid', returnid)
+            assertParamExists('postCommerceReturnByReturnid', 'returnid', returnid)
             const localVarPath = `/v1/commerce/return/{returnid}`
                 .replace(`{${"returnid"}}`, encodeURIComponent(String(returnid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2845,7 +2845,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSaleschannel: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceSaleschannel: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/saleschannel/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2876,9 +2876,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSaleschannelBySaleschannelid: async (saleschannelid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceSaleschannelBySaleschannelid: async (saleschannelid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'saleschannelid' is not null or undefined
-            assertParamExists('postV1CommerceSaleschannelBySaleschannelid', 'saleschannelid', saleschannelid)
+            assertParamExists('postCommerceSaleschannelBySaleschannelid', 'saleschannelid', saleschannelid)
             const localVarPath = `/v1/commerce/saleschannel/{saleschannelid}`
                 .replace(`{${"saleschannelid"}}`, encodeURIComponent(String(saleschannelid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2909,7 +2909,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceStocklocation: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceStocklocation: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/stocklocation/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2940,9 +2940,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceStocklocationByStocklocationid: async (stocklocationid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceStocklocationByStocklocationid: async (stocklocationid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stocklocationid' is not null or undefined
-            assertParamExists('postV1CommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
+            assertParamExists('postCommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
             const localVarPath = `/v1/commerce/stocklocation/{stocklocationid}`
                 .replace(`{${"stocklocationid"}}`, encodeURIComponent(String(stocklocationid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2973,7 +2973,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSubmission: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceSubmission: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/submission/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3004,9 +3004,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSubmissionBySubmissionid: async (submissionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceSubmissionBySubmissionid: async (submissionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionid' is not null or undefined
-            assertParamExists('postV1CommerceSubmissionBySubmissionid', 'submissionid', submissionid)
+            assertParamExists('postCommerceSubmissionBySubmissionid', 'submissionid', submissionid)
             const localVarPath = `/v1/commerce/submission/{submissionid}`
                 .replace(`{${"submissionid"}}`, encodeURIComponent(String(submissionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3037,7 +3037,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSubscriber: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceSubscriber: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/subscriber/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3068,9 +3068,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSubscriberBySubscriberid: async (subscriberid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceSubscriberBySubscriberid: async (subscriberid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'subscriberid' is not null or undefined
-            assertParamExists('postV1CommerceSubscriberBySubscriberid', 'subscriberid', subscriberid)
+            assertParamExists('postCommerceSubscriberBySubscriberid', 'subscriberid', subscriberid)
             const localVarPath = `/v1/commerce/subscriber/{subscriberid}`
                 .replace(`{${"subscriberid"}}`, encodeURIComponent(String(subscriberid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3101,7 +3101,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceTokentransaction: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceTokentransaction: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/tokentransaction/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3132,9 +3132,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceTokentransactionByTokentransactionid: async (tokentransactionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceTokentransactionByTokentransactionid: async (tokentransactionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'tokentransactionid' is not null or undefined
-            assertParamExists('postV1CommerceTokentransactionByTokentransactionid', 'tokentransactionid', tokentransactionid)
+            assertParamExists('postCommerceTokentransactionByTokentransactionid', 'tokentransactionid', tokentransactionid)
             const localVarPath = `/v1/commerce/tokentransaction/{tokentransactionid}`
                 .replace(`{${"tokentransactionid"}}`, encodeURIComponent(String(tokentransactionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3165,7 +3165,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceTransfer: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceTransfer: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/transfer/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3196,9 +3196,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceTransferByTransferid: async (transferid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceTransferByTransferid: async (transferid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'transferid' is not null or undefined
-            assertParamExists('postV1CommerceTransferByTransferid', 'transferid', transferid)
+            assertParamExists('postCommerceTransferByTransferid', 'transferid', transferid)
             const localVarPath = `/v1/commerce/transfer/{transferid}`
                 .replace(`{${"transferid"}}`, encodeURIComponent(String(transferid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3229,7 +3229,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceVariant: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceVariant: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/variant/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3260,9 +3260,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceVariantByVariantid: async (variantid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceVariantByVariantid: async (variantid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'variantid' is not null or undefined
-            assertParamExists('postV1CommerceVariantByVariantid', 'variantid', variantid)
+            assertParamExists('postCommerceVariantByVariantid', 'variantid', variantid)
             const localVarPath = `/v1/commerce/variant/{variantid}`
                 .replace(`{${"variantid"}}`, encodeURIComponent(String(variantid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3293,7 +3293,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWallet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceWallet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/wallet/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3324,9 +3324,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWalletByWalletid: async (walletid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceWalletByWalletid: async (walletid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletid' is not null or undefined
-            assertParamExists('postV1CommerceWalletByWalletid', 'walletid', walletid)
+            assertParamExists('postCommerceWalletByWalletid', 'walletid', walletid)
             const localVarPath = `/v1/commerce/wallet/{walletid}`
                 .replace(`{${"walletid"}}`, encodeURIComponent(String(walletid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3357,7 +3357,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWatchlist: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceWatchlist: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/watchlist/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3388,9 +3388,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWatchlistByWatchlistid: async (watchlistid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceWatchlistByWatchlistid: async (watchlistid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'watchlistid' is not null or undefined
-            assertParamExists('postV1CommerceWatchlistByWatchlistid', 'watchlistid', watchlistid)
+            assertParamExists('postCommerceWatchlistByWatchlistid', 'watchlistid', watchlistid)
             const localVarPath = `/v1/commerce/watchlist/{watchlistid}`
                 .replace(`{${"watchlistid"}}`, encodeURIComponent(String(watchlistid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3421,7 +3421,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/webhook/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3452,9 +3452,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'webhookid' is not null or undefined
-            assertParamExists('postV1CommerceWebhookByWebhookid', 'webhookid', webhookid)
+            assertParamExists('postCommerceWebhookByWebhookid', 'webhookid', webhookid)
             const localVarPath = `/v1/commerce/webhook/{webhookid}`
                 .replace(`{${"webhookid"}}`, encodeURIComponent(String(webhookid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3486,9 +3486,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceCollectionByCollectionid: async (collectionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceCollectionByCollectionid: async (collectionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'collectionid' is not null or undefined
-            assertParamExists('putV1CommerceCollectionByCollectionid', 'collectionid', collectionid)
+            assertParamExists('putCommerceCollectionByCollectionid', 'collectionid', collectionid)
             const localVarPath = `/v1/commerce/collection/{collectionid}`
                 .replace(`{${"collectionid"}}`, encodeURIComponent(String(collectionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3520,9 +3520,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceDisclosureByDisclosureid: async (disclosureid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceDisclosureByDisclosureid: async (disclosureid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'disclosureid' is not null or undefined
-            assertParamExists('putV1CommerceDisclosureByDisclosureid', 'disclosureid', disclosureid)
+            assertParamExists('putCommerceDisclosureByDisclosureid', 'disclosureid', disclosureid)
             const localVarPath = `/v1/commerce/disclosure/{disclosureid}`
                 .replace(`{${"disclosureid"}}`, encodeURIComponent(String(disclosureid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3554,9 +3554,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceDiscountByDiscountid: async (discountid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceDiscountByDiscountid: async (discountid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'discountid' is not null or undefined
-            assertParamExists('putV1CommerceDiscountByDiscountid', 'discountid', discountid)
+            assertParamExists('putCommerceDiscountByDiscountid', 'discountid', discountid)
             const localVarPath = `/v1/commerce/discount/{discountid}`
                 .replace(`{${"discountid"}}`, encodeURIComponent(String(discountid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3588,9 +3588,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceMovieByMovieid: async (movieid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceMovieByMovieid: async (movieid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'movieid' is not null or undefined
-            assertParamExists('putV1CommerceMovieByMovieid', 'movieid', movieid)
+            assertParamExists('putCommerceMovieByMovieid', 'movieid', movieid)
             const localVarPath = `/v1/commerce/movie/{movieid}`
                 .replace(`{${"movieid"}}`, encodeURIComponent(String(movieid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3622,9 +3622,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceNoteByNoteid: async (noteid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceNoteByNoteid: async (noteid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'noteid' is not null or undefined
-            assertParamExists('putV1CommerceNoteByNoteid', 'noteid', noteid)
+            assertParamExists('putCommerceNoteByNoteid', 'noteid', noteid)
             const localVarPath = `/v1/commerce/note/{noteid}`
                 .replace(`{${"noteid"}}`, encodeURIComponent(String(noteid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3656,9 +3656,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceProductByProductid: async (productid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceProductByProductid: async (productid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'productid' is not null or undefined
-            assertParamExists('putV1CommerceProductByProductid', 'productid', productid)
+            assertParamExists('putCommerceProductByProductid', 'productid', productid)
             const localVarPath = `/v1/commerce/product/{productid}`
                 .replace(`{${"productid"}}`, encodeURIComponent(String(productid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3690,9 +3690,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceReturnByReturnid: async (returnid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceReturnByReturnid: async (returnid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'returnid' is not null or undefined
-            assertParamExists('putV1CommerceReturnByReturnid', 'returnid', returnid)
+            assertParamExists('putCommerceReturnByReturnid', 'returnid', returnid)
             const localVarPath = `/v1/commerce/return/{returnid}`
                 .replace(`{${"returnid"}}`, encodeURIComponent(String(returnid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3724,9 +3724,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceSaleschannelBySaleschannelid: async (saleschannelid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceSaleschannelBySaleschannelid: async (saleschannelid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'saleschannelid' is not null or undefined
-            assertParamExists('putV1CommerceSaleschannelBySaleschannelid', 'saleschannelid', saleschannelid)
+            assertParamExists('putCommerceSaleschannelBySaleschannelid', 'saleschannelid', saleschannelid)
             const localVarPath = `/v1/commerce/saleschannel/{saleschannelid}`
                 .replace(`{${"saleschannelid"}}`, encodeURIComponent(String(saleschannelid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3758,9 +3758,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceStocklocationByStocklocationid: async (stocklocationid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceStocklocationByStocklocationid: async (stocklocationid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stocklocationid' is not null or undefined
-            assertParamExists('putV1CommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
+            assertParamExists('putCommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
             const localVarPath = `/v1/commerce/stocklocation/{stocklocationid}`
                 .replace(`{${"stocklocationid"}}`, encodeURIComponent(String(stocklocationid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3792,9 +3792,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceSubmissionBySubmissionid: async (submissionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceSubmissionBySubmissionid: async (submissionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submissionid' is not null or undefined
-            assertParamExists('putV1CommerceSubmissionBySubmissionid', 'submissionid', submissionid)
+            assertParamExists('putCommerceSubmissionBySubmissionid', 'submissionid', submissionid)
             const localVarPath = `/v1/commerce/submission/{submissionid}`
                 .replace(`{${"submissionid"}}`, encodeURIComponent(String(submissionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3826,9 +3826,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceSubscriberBySubscriberid: async (subscriberid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceSubscriberBySubscriberid: async (subscriberid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'subscriberid' is not null or undefined
-            assertParamExists('putV1CommerceSubscriberBySubscriberid', 'subscriberid', subscriberid)
+            assertParamExists('putCommerceSubscriberBySubscriberid', 'subscriberid', subscriberid)
             const localVarPath = `/v1/commerce/subscriber/{subscriberid}`
                 .replace(`{${"subscriberid"}}`, encodeURIComponent(String(subscriberid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3860,9 +3860,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceTokentransactionByTokentransactionid: async (tokentransactionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceTokentransactionByTokentransactionid: async (tokentransactionid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'tokentransactionid' is not null or undefined
-            assertParamExists('putV1CommerceTokentransactionByTokentransactionid', 'tokentransactionid', tokentransactionid)
+            assertParamExists('putCommerceTokentransactionByTokentransactionid', 'tokentransactionid', tokentransactionid)
             const localVarPath = `/v1/commerce/tokentransaction/{tokentransactionid}`
                 .replace(`{${"tokentransactionid"}}`, encodeURIComponent(String(tokentransactionid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3894,9 +3894,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceTransferByTransferid: async (transferid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceTransferByTransferid: async (transferid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'transferid' is not null or undefined
-            assertParamExists('putV1CommerceTransferByTransferid', 'transferid', transferid)
+            assertParamExists('putCommerceTransferByTransferid', 'transferid', transferid)
             const localVarPath = `/v1/commerce/transfer/{transferid}`
                 .replace(`{${"transferid"}}`, encodeURIComponent(String(transferid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3928,9 +3928,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceVariantByVariantid: async (variantid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceVariantByVariantid: async (variantid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'variantid' is not null or undefined
-            assertParamExists('putV1CommerceVariantByVariantid', 'variantid', variantid)
+            assertParamExists('putCommerceVariantByVariantid', 'variantid', variantid)
             const localVarPath = `/v1/commerce/variant/{variantid}`
                 .replace(`{${"variantid"}}`, encodeURIComponent(String(variantid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3962,9 +3962,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceWalletByWalletid: async (walletid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceWalletByWalletid: async (walletid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletid' is not null or undefined
-            assertParamExists('putV1CommerceWalletByWalletid', 'walletid', walletid)
+            assertParamExists('putCommerceWalletByWalletid', 'walletid', walletid)
             const localVarPath = `/v1/commerce/wallet/{walletid}`
                 .replace(`{${"walletid"}}`, encodeURIComponent(String(walletid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3996,9 +3996,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceWatchlistByWatchlistid: async (watchlistid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceWatchlistByWatchlistid: async (watchlistid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'watchlistid' is not null or undefined
-            assertParamExists('putV1CommerceWatchlistByWatchlistid', 'watchlistid', watchlistid)
+            assertParamExists('putCommerceWatchlistByWatchlistid', 'watchlistid', watchlistid)
             const localVarPath = `/v1/commerce/watchlist/{watchlistid}`
                 .replace(`{${"watchlistid"}}`, encodeURIComponent(String(watchlistid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -4030,9 +4030,9 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCommerceWebhookByWebhookid: async (webhookid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'webhookid' is not null or undefined
-            assertParamExists('putV1CommerceWebhookByWebhookid', 'webhookid', webhookid)
+            assertParamExists('putCommerceWebhookByWebhookid', 'webhookid', webhookid)
             const localVarPath = `/v1/commerce/webhook/{webhookid}`
                 .replace(`{${"webhookid"}}`, encodeURIComponent(String(webhookid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -4074,10 +4074,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceCollectionByCollectionid(collectionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceCollectionByCollectionid(collectionid, options);
+        async deleteCommerceCollectionByCollectionid(collectionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceCollectionByCollectionid(collectionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceCollectionByCollectionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceCollectionByCollectionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4087,10 +4087,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceDisclosureByDisclosureid(disclosureid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceDisclosureByDisclosureid(disclosureid, options);
+        async deleteCommerceDisclosureByDisclosureid(disclosureid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceDisclosureByDisclosureid(disclosureid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceDisclosureByDisclosureid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceDisclosureByDisclosureid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4100,10 +4100,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceDiscountByDiscountid(discountid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceDiscountByDiscountid(discountid, options);
+        async deleteCommerceDiscountByDiscountid(discountid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceDiscountByDiscountid(discountid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceDiscountByDiscountid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceDiscountByDiscountid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4113,10 +4113,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceMovieByMovieid(movieid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceMovieByMovieid(movieid, options);
+        async deleteCommerceMovieByMovieid(movieid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceMovieByMovieid(movieid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceMovieByMovieid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceMovieByMovieid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4126,10 +4126,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceNoteByNoteid(noteid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceNoteByNoteid(noteid, options);
+        async deleteCommerceNoteByNoteid(noteid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceNoteByNoteid(noteid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceNoteByNoteid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceNoteByNoteid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4139,10 +4139,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceProductByProductid(productid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceProductByProductid(productid, options);
+        async deleteCommerceProductByProductid(productid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceProductByProductid(productid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4152,10 +4152,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceReturnByReturnid(returnid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceReturnByReturnid(returnid, options);
+        async deleteCommerceReturnByReturnid(returnid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceReturnByReturnid(returnid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceReturnByReturnid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceReturnByReturnid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4165,10 +4165,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceSaleschannelBySaleschannelid(saleschannelid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceSaleschannelBySaleschannelid(saleschannelid, options);
+        async deleteCommerceSaleschannelBySaleschannelid(saleschannelid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceSaleschannelBySaleschannelid(saleschannelid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceSaleschannelBySaleschannelid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceSaleschannelBySaleschannelid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4178,10 +4178,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceStocklocationByStocklocationid(stocklocationid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceStocklocationByStocklocationid(stocklocationid, options);
+        async deleteCommerceStocklocationByStocklocationid(stocklocationid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceStocklocationByStocklocationid(stocklocationid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4191,10 +4191,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceSubmissionBySubmissionid(submissionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceSubmissionBySubmissionid(submissionid, options);
+        async deleteCommerceSubmissionBySubmissionid(submissionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceSubmissionBySubmissionid(submissionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceSubmissionBySubmissionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceSubmissionBySubmissionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4204,10 +4204,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceSubscriberBySubscriberid(subscriberid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceSubscriberBySubscriberid(subscriberid, options);
+        async deleteCommerceSubscriberBySubscriberid(subscriberid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceSubscriberBySubscriberid(subscriberid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceSubscriberBySubscriberid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceSubscriberBySubscriberid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4217,10 +4217,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceTokentransactionByTokentransactionid(tokentransactionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceTokentransactionByTokentransactionid(tokentransactionid, options);
+        async deleteCommerceTokentransactionByTokentransactionid(tokentransactionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceTokentransactionByTokentransactionid(tokentransactionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceTokentransactionByTokentransactionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceTokentransactionByTokentransactionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4230,10 +4230,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceTransferByTransferid(transferid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceTransferByTransferid(transferid, options);
+        async deleteCommerceTransferByTransferid(transferid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceTransferByTransferid(transferid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceTransferByTransferid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceTransferByTransferid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4243,10 +4243,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceVariantByVariantid(variantid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceVariantByVariantid(variantid, options);
+        async deleteCommerceVariantByVariantid(variantid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceVariantByVariantid(variantid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceVariantByVariantid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceVariantByVariantid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4256,10 +4256,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceWalletByWalletid(walletid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceWalletByWalletid(walletid, options);
+        async deleteCommerceWalletByWalletid(walletid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceWalletByWalletid(walletid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceWalletByWalletid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceWalletByWalletid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4269,10 +4269,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceWatchlistByWatchlistid(watchlistid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceWatchlistByWatchlistid(watchlistid, options);
+        async deleteCommerceWatchlistByWatchlistid(watchlistid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceWatchlistByWatchlistid(watchlistid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4282,10 +4282,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CommerceWebhookByWebhookid(webhookid, options);
+        async deleteCommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceWebhookByWebhookid(webhookid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteV1CommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4294,10 +4294,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceAdminCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceAdminCatalog(options);
+        async getCommerceAdminCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceAdminCatalog(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceAdminCatalog']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceAdminCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4306,10 +4306,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceCatalog(options);
+        async getCommerceCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceCatalog(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceCatalog']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4318,10 +4318,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceCollection(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceCollection(options);
+        async getCommerceCollection(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceCollection(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceCollection']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceCollection']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4331,10 +4331,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceCollectionByCollectionid(collectionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceCollectionByCollectionid(collectionid, options);
+        async getCommerceCollectionByCollectionid(collectionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceCollectionByCollectionid(collectionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceCollectionByCollectionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceCollectionByCollectionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4343,10 +4343,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceCurrencies(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceCurrencies(options);
+        async getCommerceCurrencies(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceCurrencies(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceCurrencies']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceCurrencies']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4355,10 +4355,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceDisclosure(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceDisclosure(options);
+        async getCommerceDisclosure(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceDisclosure(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceDisclosure']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceDisclosure']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4368,10 +4368,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceDisclosureByDisclosureid(disclosureid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceDisclosureByDisclosureid(disclosureid, options);
+        async getCommerceDisclosureByDisclosureid(disclosureid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceDisclosureByDisclosureid(disclosureid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceDisclosureByDisclosureid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceDisclosureByDisclosureid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4380,10 +4380,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceDiscount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceDiscount(options);
+        async getCommerceDiscount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceDiscount(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceDiscount']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceDiscount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4393,10 +4393,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceDiscountByDiscountid(discountid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceDiscountByDiscountid(discountid, options);
+        async getCommerceDiscountByDiscountid(discountid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceDiscountByDiscountid(discountid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceDiscountByDiscountid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceDiscountByDiscountid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4405,10 +4405,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceMovie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceMovie(options);
+        async getCommerceMovie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceMovie(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceMovie']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceMovie']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4418,10 +4418,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceMovieByMovieid(movieid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceMovieByMovieid(movieid, options);
+        async getCommerceMovieByMovieid(movieid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceMovieByMovieid(movieid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceMovieByMovieid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceMovieByMovieid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4430,10 +4430,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceNote(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceNote(options);
+        async getCommerceNote(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceNote(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceNote']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceNote']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4443,10 +4443,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceNoteByNoteid(noteid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceNoteByNoteid(noteid, options);
+        async getCommerceNoteByNoteid(noteid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceNoteByNoteid(noteid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceNoteByNoteid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceNoteByNoteid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4455,10 +4455,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceOrg(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceOrg(options);
+        async getCommerceOrg(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceOrg(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceOrg']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceOrg']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4467,10 +4467,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceProduct(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceProduct(options);
+        async getCommerceProduct(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceProduct(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceProduct']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceProduct']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4480,10 +4480,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceProductByProductid(productid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceProductByProductid(productid, options);
+        async getCommerceProductByProductid(productid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceProductByProductid(productid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4492,10 +4492,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceReturn(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceReturn(options);
+        async getCommerceReturn(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceReturn(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceReturn']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceReturn']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4505,10 +4505,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceReturnByReturnid(returnid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceReturnByReturnid(returnid, options);
+        async getCommerceReturnByReturnid(returnid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceReturnByReturnid(returnid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceReturnByReturnid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceReturnByReturnid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4517,10 +4517,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceSaleschannel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceSaleschannel(options);
+        async getCommerceSaleschannel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceSaleschannel(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceSaleschannel']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceSaleschannel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4530,10 +4530,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceSaleschannelBySaleschannelid(saleschannelid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceSaleschannelBySaleschannelid(saleschannelid, options);
+        async getCommerceSaleschannelBySaleschannelid(saleschannelid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceSaleschannelBySaleschannelid(saleschannelid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceSaleschannelBySaleschannelid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceSaleschannelBySaleschannelid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4542,10 +4542,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceStocklocation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceStocklocation(options);
+        async getCommerceStocklocation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStocklocation(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceStocklocation']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStocklocation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4555,10 +4555,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceStocklocationByStocklocationid(stocklocationid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceStocklocationByStocklocationid(stocklocationid, options);
+        async getCommerceStocklocationByStocklocationid(stocklocationid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStocklocationByStocklocationid(stocklocationid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4567,10 +4567,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceSubmission(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceSubmission(options);
+        async getCommerceSubmission(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceSubmission(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceSubmission']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceSubmission']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4580,10 +4580,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceSubmissionBySubmissionid(submissionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceSubmissionBySubmissionid(submissionid, options);
+        async getCommerceSubmissionBySubmissionid(submissionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceSubmissionBySubmissionid(submissionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceSubmissionBySubmissionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceSubmissionBySubmissionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4592,10 +4592,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceSubscriber(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceSubscriber(options);
+        async getCommerceSubscriber(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceSubscriber(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceSubscriber']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceSubscriber']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4605,10 +4605,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceSubscriberBySubscriberid(subscriberid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceSubscriberBySubscriberid(subscriberid, options);
+        async getCommerceSubscriberBySubscriberid(subscriberid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceSubscriberBySubscriberid(subscriberid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceSubscriberBySubscriberid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceSubscriberBySubscriberid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4617,10 +4617,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceTokentransaction(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceTokentransaction(options);
+        async getCommerceTokentransaction(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceTokentransaction(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceTokentransaction']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceTokentransaction']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4630,10 +4630,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceTokentransactionByTokentransactionid(tokentransactionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceTokentransactionByTokentransactionid(tokentransactionid, options);
+        async getCommerceTokentransactionByTokentransactionid(tokentransactionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceTokentransactionByTokentransactionid(tokentransactionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceTokentransactionByTokentransactionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceTokentransactionByTokentransactionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4642,10 +4642,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceTransfer(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceTransfer(options);
+        async getCommerceTransfer(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceTransfer(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceTransfer']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceTransfer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4655,10 +4655,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceTransferByTransferid(transferid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceTransferByTransferid(transferid, options);
+        async getCommerceTransferByTransferid(transferid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceTransferByTransferid(transferid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceTransferByTransferid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceTransferByTransferid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4667,10 +4667,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceVariant(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceVariant(options);
+        async getCommerceVariant(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceVariant(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceVariant']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceVariant']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4680,10 +4680,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceVariantByVariantid(variantid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceVariantByVariantid(variantid, options);
+        async getCommerceVariantByVariantid(variantid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceVariantByVariantid(variantid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceVariantByVariantid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceVariantByVariantid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4692,10 +4692,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceWallet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceWallet(options);
+        async getCommerceWallet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceWallet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceWallet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceWallet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4705,10 +4705,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceWalletByWalletid(walletid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceWalletByWalletid(walletid, options);
+        async getCommerceWalletByWalletid(walletid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceWalletByWalletid(walletid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceWalletByWalletid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceWalletByWalletid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4717,10 +4717,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceWatchlist(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceWatchlist(options);
+        async getCommerceWatchlist(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceWatchlist(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceWatchlist']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceWatchlist']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4730,10 +4730,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceWatchlistByWatchlistid(watchlistid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceWatchlistByWatchlistid(watchlistid, options);
+        async getCommerceWatchlistByWatchlistid(watchlistid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceWatchlistByWatchlistid(watchlistid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4742,10 +4742,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceWebhook(options);
+        async getCommerceWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceWebhook(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceWebhook']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceWebhook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4755,10 +4755,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CommerceWebhookByWebhookid(webhookid, options);
+        async getCommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceWebhookByWebhookid(webhookid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getV1CommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4768,10 +4768,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceCollectionByCollectionid(collectionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceCollectionByCollectionid(collectionid, options);
+        async patchCommerceCollectionByCollectionid(collectionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceCollectionByCollectionid(collectionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceCollectionByCollectionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceCollectionByCollectionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4781,10 +4781,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceDisclosureByDisclosureid(disclosureid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceDisclosureByDisclosureid(disclosureid, options);
+        async patchCommerceDisclosureByDisclosureid(disclosureid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceDisclosureByDisclosureid(disclosureid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceDisclosureByDisclosureid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceDisclosureByDisclosureid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4794,10 +4794,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceDiscountByDiscountid(discountid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceDiscountByDiscountid(discountid, options);
+        async patchCommerceDiscountByDiscountid(discountid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceDiscountByDiscountid(discountid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceDiscountByDiscountid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceDiscountByDiscountid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4807,10 +4807,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceMovieByMovieid(movieid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceMovieByMovieid(movieid, options);
+        async patchCommerceMovieByMovieid(movieid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceMovieByMovieid(movieid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceMovieByMovieid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceMovieByMovieid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4820,10 +4820,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceNoteByNoteid(noteid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceNoteByNoteid(noteid, options);
+        async patchCommerceNoteByNoteid(noteid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceNoteByNoteid(noteid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceNoteByNoteid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceNoteByNoteid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4833,10 +4833,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceProductByProductid(productid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceProductByProductid(productid, options);
+        async patchCommerceProductByProductid(productid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceProductByProductid(productid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4846,10 +4846,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceReturnByReturnid(returnid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceReturnByReturnid(returnid, options);
+        async patchCommerceReturnByReturnid(returnid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceReturnByReturnid(returnid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceReturnByReturnid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceReturnByReturnid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4859,10 +4859,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceSaleschannelBySaleschannelid(saleschannelid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceSaleschannelBySaleschannelid(saleschannelid, options);
+        async patchCommerceSaleschannelBySaleschannelid(saleschannelid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceSaleschannelBySaleschannelid(saleschannelid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceSaleschannelBySaleschannelid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceSaleschannelBySaleschannelid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4872,10 +4872,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceStocklocationByStocklocationid(stocklocationid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceStocklocationByStocklocationid(stocklocationid, options);
+        async patchCommerceStocklocationByStocklocationid(stocklocationid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceStocklocationByStocklocationid(stocklocationid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4885,10 +4885,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceSubmissionBySubmissionid(submissionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceSubmissionBySubmissionid(submissionid, options);
+        async patchCommerceSubmissionBySubmissionid(submissionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceSubmissionBySubmissionid(submissionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceSubmissionBySubmissionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceSubmissionBySubmissionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4898,10 +4898,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceSubscriberBySubscriberid(subscriberid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceSubscriberBySubscriberid(subscriberid, options);
+        async patchCommerceSubscriberBySubscriberid(subscriberid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceSubscriberBySubscriberid(subscriberid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceSubscriberBySubscriberid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceSubscriberBySubscriberid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4911,10 +4911,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceTokentransactionByTokentransactionid(tokentransactionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceTokentransactionByTokentransactionid(tokentransactionid, options);
+        async patchCommerceTokentransactionByTokentransactionid(tokentransactionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceTokentransactionByTokentransactionid(tokentransactionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceTokentransactionByTokentransactionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceTokentransactionByTokentransactionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4924,10 +4924,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceTransferByTransferid(transferid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceTransferByTransferid(transferid, options);
+        async patchCommerceTransferByTransferid(transferid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceTransferByTransferid(transferid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceTransferByTransferid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceTransferByTransferid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4937,10 +4937,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceVariantByVariantid(variantid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceVariantByVariantid(variantid, options);
+        async patchCommerceVariantByVariantid(variantid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceVariantByVariantid(variantid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceVariantByVariantid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceVariantByVariantid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4950,10 +4950,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceWalletByWalletid(walletid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceWalletByWalletid(walletid, options);
+        async patchCommerceWalletByWalletid(walletid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceWalletByWalletid(walletid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceWalletByWalletid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceWalletByWalletid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4963,10 +4963,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceWatchlistByWatchlistid(watchlistid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceWatchlistByWatchlistid(watchlistid, options);
+        async patchCommerceWatchlistByWatchlistid(watchlistid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceWatchlistByWatchlistid(watchlistid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4976,10 +4976,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1CommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1CommerceWebhookByWebhookid(webhookid, options);
+        async patchCommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceWebhookByWebhookid(webhookid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchV1CommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4988,10 +4988,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceCollection(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceCollection(options);
+        async postCommerceCollection(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceCollection(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceCollection']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceCollection']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5001,10 +5001,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceCollectionByCollectionid(collectionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceCollectionByCollectionid(collectionid, options);
+        async postCommerceCollectionByCollectionid(collectionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceCollectionByCollectionid(collectionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceCollectionByCollectionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceCollectionByCollectionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5013,10 +5013,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceDisclosure(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceDisclosure(options);
+        async postCommerceDisclosure(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceDisclosure(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceDisclosure']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceDisclosure']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5026,10 +5026,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceDisclosureByDisclosureid(disclosureid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceDisclosureByDisclosureid(disclosureid, options);
+        async postCommerceDisclosureByDisclosureid(disclosureid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceDisclosureByDisclosureid(disclosureid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceDisclosureByDisclosureid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceDisclosureByDisclosureid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5038,10 +5038,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceDiscount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceDiscount(options);
+        async postCommerceDiscount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceDiscount(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceDiscount']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceDiscount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5051,10 +5051,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceDiscountByDiscountid(discountid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceDiscountByDiscountid(discountid, options);
+        async postCommerceDiscountByDiscountid(discountid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceDiscountByDiscountid(discountid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceDiscountByDiscountid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceDiscountByDiscountid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5063,10 +5063,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceMovie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceMovie(options);
+        async postCommerceMovie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceMovie(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceMovie']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceMovie']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5076,10 +5076,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceMovieByMovieid(movieid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceMovieByMovieid(movieid, options);
+        async postCommerceMovieByMovieid(movieid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceMovieByMovieid(movieid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceMovieByMovieid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceMovieByMovieid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5088,10 +5088,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceNote(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceNote(options);
+        async postCommerceNote(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceNote(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceNote']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceNote']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5101,10 +5101,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceNoteByNoteid(noteid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceNoteByNoteid(noteid, options);
+        async postCommerceNoteByNoteid(noteid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceNoteByNoteid(noteid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceNoteByNoteid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceNoteByNoteid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5113,10 +5113,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceProduct(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceProduct(options);
+        async postCommerceProduct(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceProduct(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceProduct']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceProduct']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5126,10 +5126,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceProductByProductid(productid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceProductByProductid(productid, options);
+        async postCommerceProductByProductid(productid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceProductByProductid(productid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5138,10 +5138,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceReturn(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceReturn(options);
+        async postCommerceReturn(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceReturn(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceReturn']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceReturn']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5151,10 +5151,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceReturnByReturnid(returnid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceReturnByReturnid(returnid, options);
+        async postCommerceReturnByReturnid(returnid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceReturnByReturnid(returnid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceReturnByReturnid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceReturnByReturnid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5163,10 +5163,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceSaleschannel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceSaleschannel(options);
+        async postCommerceSaleschannel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceSaleschannel(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceSaleschannel']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceSaleschannel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5176,10 +5176,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceSaleschannelBySaleschannelid(saleschannelid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceSaleschannelBySaleschannelid(saleschannelid, options);
+        async postCommerceSaleschannelBySaleschannelid(saleschannelid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceSaleschannelBySaleschannelid(saleschannelid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceSaleschannelBySaleschannelid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceSaleschannelBySaleschannelid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5188,10 +5188,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceStocklocation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceStocklocation(options);
+        async postCommerceStocklocation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStocklocation(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceStocklocation']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStocklocation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5201,10 +5201,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceStocklocationByStocklocationid(stocklocationid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceStocklocationByStocklocationid(stocklocationid, options);
+        async postCommerceStocklocationByStocklocationid(stocklocationid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStocklocationByStocklocationid(stocklocationid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5213,10 +5213,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceSubmission(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceSubmission(options);
+        async postCommerceSubmission(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceSubmission(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceSubmission']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceSubmission']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5226,10 +5226,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceSubmissionBySubmissionid(submissionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceSubmissionBySubmissionid(submissionid, options);
+        async postCommerceSubmissionBySubmissionid(submissionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceSubmissionBySubmissionid(submissionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceSubmissionBySubmissionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceSubmissionBySubmissionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5238,10 +5238,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceSubscriber(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceSubscriber(options);
+        async postCommerceSubscriber(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceSubscriber(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceSubscriber']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceSubscriber']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5251,10 +5251,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceSubscriberBySubscriberid(subscriberid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceSubscriberBySubscriberid(subscriberid, options);
+        async postCommerceSubscriberBySubscriberid(subscriberid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceSubscriberBySubscriberid(subscriberid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceSubscriberBySubscriberid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceSubscriberBySubscriberid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5263,10 +5263,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceTokentransaction(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceTokentransaction(options);
+        async postCommerceTokentransaction(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceTokentransaction(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceTokentransaction']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceTokentransaction']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5276,10 +5276,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceTokentransactionByTokentransactionid(tokentransactionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceTokentransactionByTokentransactionid(tokentransactionid, options);
+        async postCommerceTokentransactionByTokentransactionid(tokentransactionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceTokentransactionByTokentransactionid(tokentransactionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceTokentransactionByTokentransactionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceTokentransactionByTokentransactionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5288,10 +5288,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceTransfer(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceTransfer(options);
+        async postCommerceTransfer(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceTransfer(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceTransfer']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceTransfer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5301,10 +5301,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceTransferByTransferid(transferid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceTransferByTransferid(transferid, options);
+        async postCommerceTransferByTransferid(transferid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceTransferByTransferid(transferid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceTransferByTransferid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceTransferByTransferid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5313,10 +5313,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceVariant(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceVariant(options);
+        async postCommerceVariant(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceVariant(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceVariant']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceVariant']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5326,10 +5326,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceVariantByVariantid(variantid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceVariantByVariantid(variantid, options);
+        async postCommerceVariantByVariantid(variantid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceVariantByVariantid(variantid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceVariantByVariantid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceVariantByVariantid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5338,10 +5338,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceWallet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceWallet(options);
+        async postCommerceWallet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceWallet(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceWallet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceWallet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5351,10 +5351,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceWalletByWalletid(walletid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceWalletByWalletid(walletid, options);
+        async postCommerceWalletByWalletid(walletid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceWalletByWalletid(walletid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceWalletByWalletid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceWalletByWalletid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5363,10 +5363,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceWatchlist(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceWatchlist(options);
+        async postCommerceWatchlist(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceWatchlist(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceWatchlist']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceWatchlist']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5376,10 +5376,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceWatchlistByWatchlistid(watchlistid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceWatchlistByWatchlistid(watchlistid, options);
+        async postCommerceWatchlistByWatchlistid(watchlistid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceWatchlistByWatchlistid(watchlistid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5388,10 +5388,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceWebhook(options);
+        async postCommerceWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceWebhook(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceWebhook']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceWebhook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5401,10 +5401,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CommerceWebhookByWebhookid(webhookid, options);
+        async postCommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceWebhookByWebhookid(webhookid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postV1CommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5414,10 +5414,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceCollectionByCollectionid(collectionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceCollectionByCollectionid(collectionid, options);
+        async putCommerceCollectionByCollectionid(collectionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceCollectionByCollectionid(collectionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceCollectionByCollectionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceCollectionByCollectionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5427,10 +5427,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceDisclosureByDisclosureid(disclosureid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceDisclosureByDisclosureid(disclosureid, options);
+        async putCommerceDisclosureByDisclosureid(disclosureid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceDisclosureByDisclosureid(disclosureid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceDisclosureByDisclosureid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceDisclosureByDisclosureid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5440,10 +5440,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceDiscountByDiscountid(discountid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceDiscountByDiscountid(discountid, options);
+        async putCommerceDiscountByDiscountid(discountid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceDiscountByDiscountid(discountid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceDiscountByDiscountid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceDiscountByDiscountid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5453,10 +5453,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceMovieByMovieid(movieid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceMovieByMovieid(movieid, options);
+        async putCommerceMovieByMovieid(movieid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceMovieByMovieid(movieid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceMovieByMovieid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceMovieByMovieid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5466,10 +5466,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceNoteByNoteid(noteid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceNoteByNoteid(noteid, options);
+        async putCommerceNoteByNoteid(noteid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceNoteByNoteid(noteid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceNoteByNoteid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceNoteByNoteid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5479,10 +5479,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceProductByProductid(productid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceProductByProductid(productid, options);
+        async putCommerceProductByProductid(productid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceProductByProductid(productid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5492,10 +5492,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceReturnByReturnid(returnid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceReturnByReturnid(returnid, options);
+        async putCommerceReturnByReturnid(returnid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceReturnByReturnid(returnid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceReturnByReturnid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceReturnByReturnid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5505,10 +5505,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceSaleschannelBySaleschannelid(saleschannelid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceSaleschannelBySaleschannelid(saleschannelid, options);
+        async putCommerceSaleschannelBySaleschannelid(saleschannelid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceSaleschannelBySaleschannelid(saleschannelid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceSaleschannelBySaleschannelid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceSaleschannelBySaleschannelid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5518,10 +5518,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceStocklocationByStocklocationid(stocklocationid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceStocklocationByStocklocationid(stocklocationid, options);
+        async putCommerceStocklocationByStocklocationid(stocklocationid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceStocklocationByStocklocationid(stocklocationid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5531,10 +5531,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceSubmissionBySubmissionid(submissionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceSubmissionBySubmissionid(submissionid, options);
+        async putCommerceSubmissionBySubmissionid(submissionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceSubmissionBySubmissionid(submissionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceSubmissionBySubmissionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceSubmissionBySubmissionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5544,10 +5544,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceSubscriberBySubscriberid(subscriberid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceSubscriberBySubscriberid(subscriberid, options);
+        async putCommerceSubscriberBySubscriberid(subscriberid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceSubscriberBySubscriberid(subscriberid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceSubscriberBySubscriberid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceSubscriberBySubscriberid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5557,10 +5557,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceTokentransactionByTokentransactionid(tokentransactionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceTokentransactionByTokentransactionid(tokentransactionid, options);
+        async putCommerceTokentransactionByTokentransactionid(tokentransactionid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceTokentransactionByTokentransactionid(tokentransactionid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceTokentransactionByTokentransactionid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceTokentransactionByTokentransactionid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5570,10 +5570,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceTransferByTransferid(transferid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceTransferByTransferid(transferid, options);
+        async putCommerceTransferByTransferid(transferid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceTransferByTransferid(transferid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceTransferByTransferid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceTransferByTransferid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5583,10 +5583,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceVariantByVariantid(variantid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceVariantByVariantid(variantid, options);
+        async putCommerceVariantByVariantid(variantid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceVariantByVariantid(variantid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceVariantByVariantid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceVariantByVariantid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5596,10 +5596,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceWalletByWalletid(walletid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceWalletByWalletid(walletid, options);
+        async putCommerceWalletByWalletid(walletid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceWalletByWalletid(walletid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceWalletByWalletid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceWalletByWalletid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5609,10 +5609,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceWatchlistByWatchlistid(watchlistid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceWatchlistByWatchlistid(watchlistid, options);
+        async putCommerceWatchlistByWatchlistid(watchlistid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceWatchlistByWatchlistid(watchlistid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceWatchlistByWatchlistid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5622,10 +5622,10 @@ export const CommerceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CommerceWebhookByWebhookid(webhookid, options);
+        async putCommerceWebhookByWebhookid(webhookid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceWebhookByWebhookid(webhookid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putV1CommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -5641,172 +5641,172 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
         /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteCollection.
          * @summary Delete a collection, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceCollectionByCollectionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceCollectionByCollectionid(requestParameters: CommerceApiDeleteV1CommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(axios, basePath));
+        deleteCommerceCollectionByCollectionid(requestParameters: CommerceApiDeleteCommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for disclosure, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a disclosure, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceDisclosureByDisclosureid(requestParameters: CommerceApiDeleteV1CommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(axios, basePath));
+        deleteCommerceDisclosureByDisclosureid(requestParameters: CommerceApiDeleteCommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(axios, basePath));
         },
         /**
          * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for discount, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a discount, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceDiscountByDiscountidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceDiscountByDiscountidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceDiscountByDiscountid(requestParameters: CommerceApiDeleteV1CommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(axios, basePath));
+        deleteCommerceDiscountByDiscountid(requestParameters: CommerceApiDeleteCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(axios, basePath));
         },
         /**
          * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for movie, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a movie, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceMovieByMovieidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceMovieByMovieidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceMovieByMovieid(requestParameters: CommerceApiDeleteV1CommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(axios, basePath));
+        deleteCommerceMovieByMovieid(requestParameters: CommerceApiDeleteCommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(axios, basePath));
         },
         /**
          * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for note, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a note, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceNoteByNoteidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceNoteByNoteidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceNoteByNoteid(requestParameters: CommerceApiDeleteV1CommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
+        deleteCommerceNoteByNoteid(requestParameters: CommerceApiDeleteCommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
         },
         /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteProduct.
          * @summary Delete a product, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceProductByProductidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceProductByProductidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceProductByProductid(requestParameters: CommerceApiDeleteV1CommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
+        deleteCommerceProductByProductid(requestParameters: CommerceApiDeleteCommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The token must also carry Admin or WriteReturn.
          * @summary Delete a return, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceReturnByReturnidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceReturnByReturnidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceReturnByReturnid(requestParameters: CommerceApiDeleteV1CommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(axios, basePath));
+        deleteCommerceReturnByReturnid(requestParameters: CommerceApiDeleteCommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(axios, basePath));
         },
         /**
          * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for saleschannel, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a sales channel, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiDeleteV1CommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(axios, basePath));
+        deleteCommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiDeleteCommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(axios, basePath));
         },
         /**
          * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for stocklocation, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a stock location, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceStocklocationByStocklocationid(requestParameters: CommerceApiDeleteV1CommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
+        deleteCommerceStocklocationByStocklocationid(requestParameters: CommerceApiDeleteCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
         },
         /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a submission, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceSubmissionBySubmissionid(requestParameters: CommerceApiDeleteV1CommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(axios, basePath));
+        deleteCommerceSubmissionBySubmissionid(requestParameters: CommerceApiDeleteCommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The token must also carry Admin or WriteSubscriber.
          * @summary Delete a subscriber, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceSubscriberBySubscriberid(requestParameters: CommerceApiDeleteV1CommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(axios, basePath));
+        deleteCommerceSubscriberBySubscriberid(requestParameters: CommerceApiDeleteCommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(axios, basePath));
         },
         /**
          * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for tokentransaction, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a token transaction, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiDeleteV1CommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(axios, basePath));
+        deleteCommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiDeleteCommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for transfer, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a transfer, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceTransferByTransferidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceTransferByTransferidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceTransferByTransferid(requestParameters: CommerceApiDeleteV1CommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(axios, basePath));
+        deleteCommerceTransferByTransferid(requestParameters: CommerceApiDeleteCommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(axios, basePath));
         },
         /**
          * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteVariant.
          * @summary Delete a variant, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceVariantByVariantidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceVariantByVariantidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceVariantByVariantid(requestParameters: CommerceApiDeleteV1CommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(axios, basePath));
+        deleteCommerceVariantByVariantid(requestParameters: CommerceApiDeleteCommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(axios, basePath));
         },
         /**
          * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for wallet, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a wallet, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceWalletByWalletidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceWalletByWalletidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceWalletByWalletid(requestParameters: CommerceApiDeleteV1CommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(axios, basePath));
+        deleteCommerceWalletByWalletid(requestParameters: CommerceApiDeleteCommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(axios, basePath));
         },
         /**
          * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for watchlist, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a watchlist, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceWatchlistByWatchlistid(requestParameters: CommerceApiDeleteV1CommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
+        deleteCommerceWatchlistByWatchlistid(requestParameters: CommerceApiDeleteCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
         },
         /**
          * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Delete a webhook, keeping a recoverable copy
-         * @param {CommerceApiDeleteV1CommerceWebhookByWebhookidRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CommerceWebhookByWebhookid(requestParameters: CommerceApiDeleteV1CommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
+        deleteCommerceWebhookByWebhookid(requestParameters: CommerceApiDeleteCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the brand-scoped catalog carrying the administrative economics the public projection withholds — upstream cost and margin percentage — for the margin surface the platform console administrates. The brand comes from the query and defaults to hanzo. PLATFORM admin only, enforced by the handler on top of the route\'s IAM gate: an ORG-level admin is refused 403 precisely so upstream cost and margin never reach a tenant.
@@ -5814,8 +5814,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceAdminCatalog(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceAdminCatalog(options).then((request) => request(axios, basePath));
+        getCommerceAdminCatalog(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceAdminCatalog(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the brand\'s published catalog — the shared source docs, the console sidebar and the pricing pages all read — with the brand taken from the query and defaulting to hanzo. It is public and cacheable, and it is the projection that deliberately omits cost and margin; those live only on the platform-admin projection.
@@ -5823,8 +5823,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceCatalog(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceCatalog(options).then((request) => request(axios, basePath));
+        getCommerceCatalog(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceCatalog(options).then((request) => request(axios, basePath));
         },
         /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the slug and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or the Collection list scope.
@@ -5832,18 +5832,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceCollection(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceCollection(options).then((request) => request(axios, basePath));
+        getCommerceCollection(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceCollection(options).then((request) => request(axios, basePath));
         },
         /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or ReadCollection.
          * @summary Fetch one collection
-         * @param {CommerceApiGetV1CommerceCollectionByCollectionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceCollectionByCollectionid(requestParameters: CommerceApiGetV1CommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(axios, basePath));
+        getCommerceCollectionByCollectionid(requestParameters: CommerceApiGetCommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every reference currency as one global list, so a store settings form or a product price picker binds real rows instead of a hardcoded array. It is a default-namespace read shared by every tenant rather than per-org data, and it is public and cacheable.
@@ -5851,8 +5851,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceCurrencies(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceCurrencies(options).then((request) => request(axios, basePath));
+        getCommerceCurrencies(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceCurrencies(options).then((request) => request(axios, basePath));
         },
         /**
          * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The per-kind permission table has no entry for disclosure, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -5860,18 +5860,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceDisclosure(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceDisclosure(options).then((request) => request(axios, basePath));
+        getCommerceDisclosure(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceDisclosure(options).then((request) => request(axios, basePath));
         },
         /**
          * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for disclosure, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one disclosure
-         * @param {CommerceApiGetV1CommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceDisclosureByDisclosureid(requestParameters: CommerceApiGetV1CommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(axios, basePath));
+        getCommerceDisclosureByDisclosureid(requestParameters: CommerceApiGetCommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(axios, basePath));
         },
         /**
          * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for discount, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -5879,18 +5879,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceDiscount(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceDiscount(options).then((request) => request(axios, basePath));
+        getCommerceDiscount(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceDiscount(options).then((request) => request(axios, basePath));
         },
         /**
          * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for discount, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one discount
-         * @param {CommerceApiGetV1CommerceDiscountByDiscountidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceDiscountByDiscountidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceDiscountByDiscountid(requestParameters: CommerceApiGetV1CommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(axios, basePath));
+        getCommerceDiscountByDiscountid(requestParameters: CommerceApiGetCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(axios, basePath));
         },
         /**
          * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the slug and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The per-kind permission table has no entry for movie, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -5898,18 +5898,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceMovie(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceMovie(options).then((request) => request(axios, basePath));
+        getCommerceMovie(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceMovie(options).then((request) => request(axios, basePath));
         },
         /**
          * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for movie, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one movie
-         * @param {CommerceApiGetV1CommerceMovieByMovieidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceMovieByMovieidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceMovieByMovieid(requestParameters: CommerceApiGetV1CommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(axios, basePath));
+        getCommerceMovieByMovieid(requestParameters: CommerceApiGetCommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(axios, basePath));
         },
         /**
          * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The per-kind permission table has no entry for note, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -5917,18 +5917,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceNote(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceNote(options).then((request) => request(axios, basePath));
+        getCommerceNote(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceNote(options).then((request) => request(axios, basePath));
         },
         /**
          * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for note, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one note
-         * @param {CommerceApiGetV1CommerceNoteByNoteidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceNoteByNoteidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceNoteByNoteid(requestParameters: CommerceApiGetV1CommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
+        getCommerceNoteByNoteid(requestParameters: CommerceApiGetCommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the branding, identity issuer and client id, identity-verification config, enabled payment providers, return-URL allowlist and public payment application config for the org the request HOST resolves to. It is genuinely public and unauthenticated — a checkout page calls it before anyone has signed in — and it carries the same public payment config the authenticated config read does, so the card iframe can never initialize against a different application than the one that will be charged. Only ENABLED providers are listed and no credential path is ever projected. An unresolvable host answers a constant 404 that does not echo the host, so the endpoint cannot be used to enumerate orgs; a successful answer is cacheable for a minute.
@@ -5936,8 +5936,8 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceOrg(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceOrg(options).then((request) => request(axios, basePath));
+        getCommerceOrg(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceOrg(options).then((request) => request(axios, basePath));
         },
         /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the slug and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or the Product list scope.
@@ -5945,18 +5945,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceProduct(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceProduct(options).then((request) => request(axios, basePath));
+        getCommerceProduct(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceProduct(options).then((request) => request(axios, basePath));
         },
         /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or ReadProduct.
          * @summary Fetch one product
-         * @param {CommerceApiGetV1CommerceProductByProductidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceProductByProductidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceProductByProductid(requestParameters: CommerceApiGetV1CommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
+        getCommerceProductByProductid(requestParameters: CommerceApiGetCommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The token must also carry Admin or the Return list scope.
@@ -5964,18 +5964,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceReturn(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceReturn(options).then((request) => request(axios, basePath));
+        getCommerceReturn(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceReturn(options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The token must also carry Admin or ReadReturn.
          * @summary Fetch one return
-         * @param {CommerceApiGetV1CommerceReturnByReturnidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceReturnByReturnidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceReturnByReturnid(requestParameters: CommerceApiGetV1CommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(axios, basePath));
+        getCommerceReturnByReturnid(requestParameters: CommerceApiGetCommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(axios, basePath));
         },
         /**
          * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for saleschannel, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -5983,18 +5983,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSaleschannel(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceSaleschannel(options).then((request) => request(axios, basePath));
+        getCommerceSaleschannel(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceSaleschannel(options).then((request) => request(axios, basePath));
         },
         /**
          * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for saleschannel, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one sales channel
-         * @param {CommerceApiGetV1CommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiGetV1CommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(axios, basePath));
+        getCommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiGetCommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(axios, basePath));
         },
         /**
          * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for stocklocation, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6002,18 +6002,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceStocklocation(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceStocklocation(options).then((request) => request(axios, basePath));
+        getCommerceStocklocation(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceStocklocation(options).then((request) => request(axios, basePath));
         },
         /**
          * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for stocklocation, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one stock location
-         * @param {CommerceApiGetV1CommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceStocklocationByStocklocationid(requestParameters: CommerceApiGetV1CommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
+        getCommerceStocklocationByStocklocationid(requestParameters: CommerceApiGetCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
         },
         /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6021,18 +6021,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSubmission(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceSubmission(options).then((request) => request(axios, basePath));
+        getCommerceSubmission(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceSubmission(options).then((request) => request(axios, basePath));
         },
         /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one submission
-         * @param {CommerceApiGetV1CommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSubmissionBySubmissionid(requestParameters: CommerceApiGetV1CommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(axios, basePath));
+        getCommerceSubmissionBySubmissionid(requestParameters: CommerceApiGetCommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The token must also carry Admin or the Subscriber list scope.
@@ -6040,18 +6040,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSubscriber(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceSubscriber(options).then((request) => request(axios, basePath));
+        getCommerceSubscriber(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceSubscriber(options).then((request) => request(axios, basePath));
         },
         /**
          * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The token must also carry Admin or ReadSubscriber.
          * @summary Fetch one subscriber
-         * @param {CommerceApiGetV1CommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceSubscriberBySubscriberid(requestParameters: CommerceApiGetV1CommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(axios, basePath));
+        getCommerceSubscriberBySubscriberid(requestParameters: CommerceApiGetCommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(axios, basePath));
         },
         /**
          * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The per-kind permission table has no entry for tokentransaction, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6059,18 +6059,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceTokentransaction(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceTokentransaction(options).then((request) => request(axios, basePath));
+        getCommerceTokentransaction(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceTokentransaction(options).then((request) => request(axios, basePath));
         },
         /**
          * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for tokentransaction, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one token transaction
-         * @param {CommerceApiGetV1CommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiGetV1CommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(axios, basePath));
+        getCommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiGetCommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for transfer, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6078,18 +6078,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceTransfer(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceTransfer(options).then((request) => request(axios, basePath));
+        getCommerceTransfer(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceTransfer(options).then((request) => request(axios, basePath));
         },
         /**
          * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for transfer, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one transfer
-         * @param {CommerceApiGetV1CommerceTransferByTransferidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceTransferByTransferidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceTransferByTransferid(requestParameters: CommerceApiGetV1CommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(axios, basePath));
+        getCommerceTransferByTransferid(requestParameters: CommerceApiGetCommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(axios, basePath));
         },
         /**
          * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the SKU and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or the Variant list scope.
@@ -6097,18 +6097,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceVariant(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceVariant(options).then((request) => request(axios, basePath));
+        getCommerceVariant(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceVariant(options).then((request) => request(axios, basePath));
         },
         /**
          * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or ReadVariant.
          * @summary Fetch one variant
-         * @param {CommerceApiGetV1CommerceVariantByVariantidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceVariantByVariantidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceVariantByVariantid(requestParameters: CommerceApiGetV1CommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(axios, basePath));
+        getCommerceVariantByVariantid(requestParameters: CommerceApiGetCommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(axios, basePath));
         },
         /**
          * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for wallet, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6116,18 +6116,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWallet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceWallet(options).then((request) => request(axios, basePath));
+        getCommerceWallet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceWallet(options).then((request) => request(axios, basePath));
         },
         /**
          * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for wallet, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one wallet
-         * @param {CommerceApiGetV1CommerceWalletByWalletidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceWalletByWalletidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWalletByWalletid(requestParameters: CommerceApiGetV1CommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(axios, basePath));
+        getCommerceWalletByWalletid(requestParameters: CommerceApiGetCommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(axios, basePath));
         },
         /**
          * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The per-kind permission table has no entry for watchlist, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6135,18 +6135,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWatchlist(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceWatchlist(options).then((request) => request(axios, basePath));
+        getCommerceWatchlist(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceWatchlist(options).then((request) => request(axios, basePath));
         },
         /**
          * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for watchlist, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one watchlist
-         * @param {CommerceApiGetV1CommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWatchlistByWatchlistid(requestParameters: CommerceApiGetV1CommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
+        getCommerceWatchlistByWatchlistid(requestParameters: CommerceApiGetCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
         },
         /**
          * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6154,188 +6154,188 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceWebhook(options).then((request) => request(axios, basePath));
+        getCommerceWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceWebhook(options).then((request) => request(axios, basePath));
         },
         /**
          * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Fetch one webhook
-         * @param {CommerceApiGetV1CommerceWebhookByWebhookidRequest} requestParameters Request parameters.
+         * @param {CommerceApiGetCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CommerceWebhookByWebhookid(requestParameters: CommerceApiGetV1CommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
+        getCommerceWebhookByWebhookid(requestParameters: CommerceApiGetCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
         /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
          * @summary Change part of a collection
-         * @param {CommerceApiPatchV1CommerceCollectionByCollectionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceCollectionByCollectionid(requestParameters: CommerceApiPatchV1CommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(axios, basePath));
+        patchCommerceCollectionByCollectionid(requestParameters: CommerceApiPatchCommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for disclosure, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a disclosure
-         * @param {CommerceApiPatchV1CommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceDisclosureByDisclosureid(requestParameters: CommerceApiPatchV1CommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(axios, basePath));
+        patchCommerceDisclosureByDisclosureid(requestParameters: CommerceApiPatchCommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(axios, basePath));
         },
         /**
          * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for discount, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a discount
-         * @param {CommerceApiPatchV1CommerceDiscountByDiscountidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceDiscountByDiscountidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceDiscountByDiscountid(requestParameters: CommerceApiPatchV1CommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(axios, basePath));
+        patchCommerceDiscountByDiscountid(requestParameters: CommerceApiPatchCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(axios, basePath));
         },
         /**
          * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for movie, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a movie
-         * @param {CommerceApiPatchV1CommerceMovieByMovieidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceMovieByMovieidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceMovieByMovieid(requestParameters: CommerceApiPatchV1CommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(axios, basePath));
+        patchCommerceMovieByMovieid(requestParameters: CommerceApiPatchCommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(axios, basePath));
         },
         /**
          * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for note, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a note
-         * @param {CommerceApiPatchV1CommerceNoteByNoteidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceNoteByNoteidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceNoteByNoteid(requestParameters: CommerceApiPatchV1CommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
+        patchCommerceNoteByNoteid(requestParameters: CommerceApiPatchCommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
         },
         /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadProduct and WriteProduct together.
          * @summary Change part of a product
-         * @param {CommerceApiPatchV1CommerceProductByProductidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceProductByProductidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceProductByProductid(requestParameters: CommerceApiPatchV1CommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
+        patchCommerceProductByProductid(requestParameters: CommerceApiPatchCommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The token must also carry Admin, or ReadReturn and WriteReturn together.
          * @summary Change part of a return
-         * @param {CommerceApiPatchV1CommerceReturnByReturnidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceReturnByReturnidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceReturnByReturnid(requestParameters: CommerceApiPatchV1CommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(axios, basePath));
+        patchCommerceReturnByReturnid(requestParameters: CommerceApiPatchCommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(axios, basePath));
         },
         /**
          * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for saleschannel, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a sales channel
-         * @param {CommerceApiPatchV1CommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPatchV1CommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(axios, basePath));
+        patchCommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPatchCommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(axios, basePath));
         },
         /**
          * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for stocklocation, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a stock location
-         * @param {CommerceApiPatchV1CommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceStocklocationByStocklocationid(requestParameters: CommerceApiPatchV1CommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
+        patchCommerceStocklocationByStocklocationid(requestParameters: CommerceApiPatchCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
         },
         /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a submission
-         * @param {CommerceApiPatchV1CommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceSubmissionBySubmissionid(requestParameters: CommerceApiPatchV1CommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(axios, basePath));
+        patchCommerceSubmissionBySubmissionid(requestParameters: CommerceApiPatchCommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The token must also carry Admin, or ReadSubscriber and WriteSubscriber together.
          * @summary Change part of a subscriber
-         * @param {CommerceApiPatchV1CommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceSubscriberBySubscriberid(requestParameters: CommerceApiPatchV1CommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(axios, basePath));
+        patchCommerceSubscriberBySubscriberid(requestParameters: CommerceApiPatchCommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(axios, basePath));
         },
         /**
          * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for tokentransaction, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a token transaction
-         * @param {CommerceApiPatchV1CommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPatchV1CommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(axios, basePath));
+        patchCommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPatchCommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for transfer, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a transfer
-         * @param {CommerceApiPatchV1CommerceTransferByTransferidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceTransferByTransferidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceTransferByTransferid(requestParameters: CommerceApiPatchV1CommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(axios, basePath));
+        patchCommerceTransferByTransferid(requestParameters: CommerceApiPatchCommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(axios, basePath));
         },
         /**
          * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadVariant and WriteVariant together.
          * @summary Change part of a variant
-         * @param {CommerceApiPatchV1CommerceVariantByVariantidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceVariantByVariantidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceVariantByVariantid(requestParameters: CommerceApiPatchV1CommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(axios, basePath));
+        patchCommerceVariantByVariantid(requestParameters: CommerceApiPatchCommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(axios, basePath));
         },
         /**
          * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for wallet, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a wallet
-         * @param {CommerceApiPatchV1CommerceWalletByWalletidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceWalletByWalletidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceWalletByWalletid(requestParameters: CommerceApiPatchV1CommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(axios, basePath));
+        patchCommerceWalletByWalletid(requestParameters: CommerceApiPatchCommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(axios, basePath));
         },
         /**
          * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for watchlist, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a watchlist
-         * @param {CommerceApiPatchV1CommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceWatchlistByWatchlistid(requestParameters: CommerceApiPatchV1CommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
+        patchCommerceWatchlistByWatchlistid(requestParameters: CommerceApiPatchCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
         },
         /**
          * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a webhook
-         * @param {CommerceApiPatchV1CommerceWebhookByWebhookidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPatchCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1CommerceWebhookByWebhookid(requestParameters: CommerceApiPatchV1CommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1CommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
+        patchCommerceWebhookByWebhookid(requestParameters: CommerceApiPatchCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
         /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteCollection.
@@ -6343,18 +6343,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceCollection(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceCollection(options).then((request) => request(axios, basePath));
+        postCommerceCollection(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceCollection(options).then((request) => request(axios, basePath));
         },
         /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
          * @summary Method-override tunnel for a collection — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceCollectionByCollectionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceCollectionByCollectionid(requestParameters: CommerceApiPostV1CommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(axios, basePath));
+        postCommerceCollectionByCollectionid(requestParameters: CommerceApiPostCommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The per-kind permission table has no entry for disclosure, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6362,18 +6362,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceDisclosure(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceDisclosure(options).then((request) => request(axios, basePath));
+        postCommerceDisclosure(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceDisclosure(options).then((request) => request(axios, basePath));
         },
         /**
          * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
          * @summary Method-override tunnel for a disclosure — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceDisclosureByDisclosureid(requestParameters: CommerceApiPostV1CommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(axios, basePath));
+        postCommerceDisclosureByDisclosureid(requestParameters: CommerceApiPostCommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(axios, basePath));
         },
         /**
          * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for discount, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6381,18 +6381,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceDiscount(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceDiscount(options).then((request) => request(axios, basePath));
+        postCommerceDiscount(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceDiscount(options).then((request) => request(axios, basePath));
         },
         /**
          * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
          * @summary Method-override tunnel for a discount — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceDiscountByDiscountidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceDiscountByDiscountidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceDiscountByDiscountid(requestParameters: CommerceApiPostV1CommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(axios, basePath));
+        postCommerceDiscountByDiscountid(requestParameters: CommerceApiPostCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(axios, basePath));
         },
         /**
          * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The per-kind permission table has no entry for movie, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6400,18 +6400,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceMovie(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceMovie(options).then((request) => request(axios, basePath));
+        postCommerceMovie(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceMovie(options).then((request) => request(axios, basePath));
         },
         /**
          * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
          * @summary Method-override tunnel for a movie — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceMovieByMovieidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceMovieByMovieidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceMovieByMovieid(requestParameters: CommerceApiPostV1CommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(axios, basePath));
+        postCommerceMovieByMovieid(requestParameters: CommerceApiPostCommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(axios, basePath));
         },
         /**
          * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The per-kind permission table has no entry for note, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6419,18 +6419,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceNote(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceNote(options).then((request) => request(axios, basePath));
+        postCommerceNote(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceNote(options).then((request) => request(axios, basePath));
         },
         /**
          * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
          * @summary Method-override tunnel for a note — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceNoteByNoteidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceNoteByNoteidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceNoteByNoteid(requestParameters: CommerceApiPostV1CommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
+        postCommerceNoteByNoteid(requestParameters: CommerceApiPostCommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
         },
         /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteProduct.
@@ -6438,18 +6438,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceProduct(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceProduct(options).then((request) => request(axios, basePath));
+        postCommerceProduct(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceProduct(options).then((request) => request(axios, basePath));
         },
         /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
          * @summary Method-override tunnel for a product — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceProductByProductidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceProductByProductidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceProductByProductid(requestParameters: CommerceApiPostV1CommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
+        postCommerceProductByProductid(requestParameters: CommerceApiPostCommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The token must also carry Admin or WriteReturn.
@@ -6457,18 +6457,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceReturn(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceReturn(options).then((request) => request(axios, basePath));
+        postCommerceReturn(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceReturn(options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
          * @summary Method-override tunnel for a return — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceReturnByReturnidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceReturnByReturnidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceReturnByReturnid(requestParameters: CommerceApiPostV1CommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(axios, basePath));
+        postCommerceReturnByReturnid(requestParameters: CommerceApiPostCommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(axios, basePath));
         },
         /**
          * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for saleschannel, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6476,18 +6476,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSaleschannel(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceSaleschannel(options).then((request) => request(axios, basePath));
+        postCommerceSaleschannel(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceSaleschannel(options).then((request) => request(axios, basePath));
         },
         /**
          * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
          * @summary Method-override tunnel for a sales channel — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPostV1CommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(axios, basePath));
+        postCommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPostCommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(axios, basePath));
         },
         /**
          * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for stocklocation, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6495,18 +6495,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceStocklocation(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceStocklocation(options).then((request) => request(axios, basePath));
+        postCommerceStocklocation(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStocklocation(options).then((request) => request(axios, basePath));
         },
         /**
          * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
          * @summary Method-override tunnel for a stock location — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceStocklocationByStocklocationid(requestParameters: CommerceApiPostV1CommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
+        postCommerceStocklocationByStocklocationid(requestParameters: CommerceApiPostCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
         },
         /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6514,18 +6514,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSubmission(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceSubmission(options).then((request) => request(axios, basePath));
+        postCommerceSubmission(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceSubmission(options).then((request) => request(axios, basePath));
         },
         /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
          * @summary Method-override tunnel for a submission — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSubmissionBySubmissionid(requestParameters: CommerceApiPostV1CommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(axios, basePath));
+        postCommerceSubmissionBySubmissionid(requestParameters: CommerceApiPostCommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The token must also carry Admin or WriteSubscriber.
@@ -6533,18 +6533,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSubscriber(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceSubscriber(options).then((request) => request(axios, basePath));
+        postCommerceSubscriber(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceSubscriber(options).then((request) => request(axios, basePath));
         },
         /**
          * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
          * @summary Method-override tunnel for a subscriber — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceSubscriberBySubscriberid(requestParameters: CommerceApiPostV1CommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(axios, basePath));
+        postCommerceSubscriberBySubscriberid(requestParameters: CommerceApiPostCommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(axios, basePath));
         },
         /**
          * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The per-kind permission table has no entry for tokentransaction, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6552,18 +6552,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceTokentransaction(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceTokentransaction(options).then((request) => request(axios, basePath));
+        postCommerceTokentransaction(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceTokentransaction(options).then((request) => request(axios, basePath));
         },
         /**
          * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
          * @summary Method-override tunnel for a token transaction — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPostV1CommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(axios, basePath));
+        postCommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPostCommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for transfer, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6571,18 +6571,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceTransfer(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceTransfer(options).then((request) => request(axios, basePath));
+        postCommerceTransfer(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceTransfer(options).then((request) => request(axios, basePath));
         },
         /**
          * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. The token must carry the ADMIN permission; an ordinary access token is refused.
          * @summary Method-override tunnel for a transfer — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceTransferByTransferidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceTransferByTransferidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceTransferByTransferid(requestParameters: CommerceApiPostV1CommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(axios, basePath));
+        postCommerceTransferByTransferid(requestParameters: CommerceApiPostCommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(axios, basePath));
         },
         /**
          * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteVariant.
@@ -6590,18 +6590,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceVariant(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceVariant(options).then((request) => request(axios, basePath));
+        postCommerceVariant(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceVariant(options).then((request) => request(axios, basePath));
         },
         /**
          * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
          * @summary Method-override tunnel for a variant — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceVariantByVariantidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceVariantByVariantidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceVariantByVariantid(requestParameters: CommerceApiPostV1CommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(axios, basePath));
+        postCommerceVariantByVariantid(requestParameters: CommerceApiPostCommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(axios, basePath));
         },
         /**
          * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for wallet, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6609,18 +6609,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWallet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceWallet(options).then((request) => request(axios, basePath));
+        postCommerceWallet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceWallet(options).then((request) => request(axios, basePath));
         },
         /**
          * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. The token must carry the ADMIN permission; an ordinary access token is refused.
          * @summary Method-override tunnel for a wallet — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceWalletByWalletidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceWalletByWalletidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWalletByWalletid(requestParameters: CommerceApiPostV1CommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(axios, basePath));
+        postCommerceWalletByWalletid(requestParameters: CommerceApiPostCommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(axios, basePath));
         },
         /**
          * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The per-kind permission table has no entry for watchlist, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6628,18 +6628,18 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWatchlist(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceWatchlist(options).then((request) => request(axios, basePath));
+        postCommerceWatchlist(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceWatchlist(options).then((request) => request(axios, basePath));
         },
         /**
          * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
          * @summary Method-override tunnel for a watchlist — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWatchlistByWatchlistid(requestParameters: CommerceApiPostV1CommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
+        postCommerceWatchlistByWatchlistid(requestParameters: CommerceApiPostCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
         },
         /**
          * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6647,1378 +6647,1378 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceWebhook(options).then((request) => request(axios, basePath));
+        postCommerceWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceWebhook(options).then((request) => request(axios, basePath));
         },
         /**
          * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. The token must carry the ADMIN permission; an ordinary access token is refused.
          * @summary Method-override tunnel for a webhook — for clients that cannot send PUT, PATCH or DELETE
-         * @param {CommerceApiPostV1CommerceWebhookByWebhookidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPostCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CommerceWebhookByWebhookid(requestParameters: CommerceApiPostV1CommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
+        postCommerceWebhookByWebhookid(requestParameters: CommerceApiPostCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
         /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
          * @summary Replace a collection outright
-         * @param {CommerceApiPutV1CommerceCollectionByCollectionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceCollectionByCollectionid(requestParameters: CommerceApiPutV1CommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(axios, basePath));
+        putCommerceCollectionByCollectionid(requestParameters: CommerceApiPutCommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for disclosure, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a disclosure outright
-         * @param {CommerceApiPutV1CommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceDisclosureByDisclosureid(requestParameters: CommerceApiPutV1CommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(axios, basePath));
+        putCommerceDisclosureByDisclosureid(requestParameters: CommerceApiPutCommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(axios, basePath));
         },
         /**
          * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for discount, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a discount outright
-         * @param {CommerceApiPutV1CommerceDiscountByDiscountidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceDiscountByDiscountidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceDiscountByDiscountid(requestParameters: CommerceApiPutV1CommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(axios, basePath));
+        putCommerceDiscountByDiscountid(requestParameters: CommerceApiPutCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(axios, basePath));
         },
         /**
          * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for movie, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a movie outright
-         * @param {CommerceApiPutV1CommerceMovieByMovieidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceMovieByMovieidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceMovieByMovieid(requestParameters: CommerceApiPutV1CommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(axios, basePath));
+        putCommerceMovieByMovieid(requestParameters: CommerceApiPutCommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(axios, basePath));
         },
         /**
          * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for note, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a note outright
-         * @param {CommerceApiPutV1CommerceNoteByNoteidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceNoteByNoteidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceNoteByNoteid(requestParameters: CommerceApiPutV1CommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
+        putCommerceNoteByNoteid(requestParameters: CommerceApiPutCommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
         },
         /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadProduct and WriteProduct together.
          * @summary Replace a product outright
-         * @param {CommerceApiPutV1CommerceProductByProductidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceProductByProductidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceProductByProductid(requestParameters: CommerceApiPutV1CommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
+        putCommerceProductByProductid(requestParameters: CommerceApiPutCommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The token must also carry Admin, or ReadReturn and WriteReturn together.
          * @summary Replace a return outright
-         * @param {CommerceApiPutV1CommerceReturnByReturnidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceReturnByReturnidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceReturnByReturnid(requestParameters: CommerceApiPutV1CommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(axios, basePath));
+        putCommerceReturnByReturnid(requestParameters: CommerceApiPutCommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(axios, basePath));
         },
         /**
          * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for saleschannel, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a sales channel outright
-         * @param {CommerceApiPutV1CommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPutV1CommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(axios, basePath));
+        putCommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPutCommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(axios, basePath));
         },
         /**
          * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for stocklocation, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a stock location outright
-         * @param {CommerceApiPutV1CommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceStocklocationByStocklocationid(requestParameters: CommerceApiPutV1CommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
+        putCommerceStocklocationByStocklocationid(requestParameters: CommerceApiPutCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
         },
         /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a submission outright
-         * @param {CommerceApiPutV1CommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceSubmissionBySubmissionid(requestParameters: CommerceApiPutV1CommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(axios, basePath));
+        putCommerceSubmissionBySubmissionid(requestParameters: CommerceApiPutCommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The token must also carry Admin, or ReadSubscriber and WriteSubscriber together.
          * @summary Replace a subscriber outright
-         * @param {CommerceApiPutV1CommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceSubscriberBySubscriberid(requestParameters: CommerceApiPutV1CommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(axios, basePath));
+        putCommerceSubscriberBySubscriberid(requestParameters: CommerceApiPutCommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(axios, basePath));
         },
         /**
          * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for tokentransaction, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a token transaction outright
-         * @param {CommerceApiPutV1CommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPutV1CommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(axios, basePath));
+        putCommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPutCommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(axios, basePath));
         },
         /**
          * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for transfer, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a transfer outright
-         * @param {CommerceApiPutV1CommerceTransferByTransferidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceTransferByTransferidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceTransferByTransferid(requestParameters: CommerceApiPutV1CommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(axios, basePath));
+        putCommerceTransferByTransferid(requestParameters: CommerceApiPutCommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(axios, basePath));
         },
         /**
          * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadVariant and WriteVariant together.
          * @summary Replace a variant outright
-         * @param {CommerceApiPutV1CommerceVariantByVariantidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceVariantByVariantidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceVariantByVariantid(requestParameters: CommerceApiPutV1CommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(axios, basePath));
+        putCommerceVariantByVariantid(requestParameters: CommerceApiPutCommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(axios, basePath));
         },
         /**
          * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for wallet, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a wallet outright
-         * @param {CommerceApiPutV1CommerceWalletByWalletidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceWalletByWalletidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceWalletByWalletid(requestParameters: CommerceApiPutV1CommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(axios, basePath));
+        putCommerceWalletByWalletid(requestParameters: CommerceApiPutCommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(axios, basePath));
         },
         /**
          * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for watchlist, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a watchlist outright
-         * @param {CommerceApiPutV1CommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceWatchlistByWatchlistid(requestParameters: CommerceApiPutV1CommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
+        putCommerceWatchlistByWatchlistid(requestParameters: CommerceApiPutCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(axios, basePath));
         },
         /**
          * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Replace a webhook outright
-         * @param {CommerceApiPutV1CommerceWebhookByWebhookidRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CommerceWebhookByWebhookid(requestParameters: CommerceApiPutV1CommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
+        putCommerceWebhookByWebhookid(requestParameters: CommerceApiPutCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1CommerceCollectionByCollectionid operation in CommerceApi.
+ * Request parameters for deleteCommerceCollectionByCollectionid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceCollectionByCollectionidRequest
+ * @interface CommerceApiDeleteCommerceCollectionByCollectionidRequest
  */
-export interface CommerceApiDeleteV1CommerceCollectionByCollectionidRequest {
+export interface CommerceApiDeleteCommerceCollectionByCollectionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceCollectionByCollectionid
+     * @memberof CommerceApiDeleteCommerceCollectionByCollectionid
      */
     readonly collectionid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceDisclosureByDisclosureid operation in CommerceApi.
+ * Request parameters for deleteCommerceDisclosureByDisclosureid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceDisclosureByDisclosureidRequest
+ * @interface CommerceApiDeleteCommerceDisclosureByDisclosureidRequest
  */
-export interface CommerceApiDeleteV1CommerceDisclosureByDisclosureidRequest {
+export interface CommerceApiDeleteCommerceDisclosureByDisclosureidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceDisclosureByDisclosureid
+     * @memberof CommerceApiDeleteCommerceDisclosureByDisclosureid
      */
     readonly disclosureid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceDiscountByDiscountid operation in CommerceApi.
+ * Request parameters for deleteCommerceDiscountByDiscountid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceDiscountByDiscountidRequest
+ * @interface CommerceApiDeleteCommerceDiscountByDiscountidRequest
  */
-export interface CommerceApiDeleteV1CommerceDiscountByDiscountidRequest {
+export interface CommerceApiDeleteCommerceDiscountByDiscountidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceDiscountByDiscountid
+     * @memberof CommerceApiDeleteCommerceDiscountByDiscountid
      */
     readonly discountid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceMovieByMovieid operation in CommerceApi.
+ * Request parameters for deleteCommerceMovieByMovieid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceMovieByMovieidRequest
+ * @interface CommerceApiDeleteCommerceMovieByMovieidRequest
  */
-export interface CommerceApiDeleteV1CommerceMovieByMovieidRequest {
+export interface CommerceApiDeleteCommerceMovieByMovieidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceMovieByMovieid
+     * @memberof CommerceApiDeleteCommerceMovieByMovieid
      */
     readonly movieid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceNoteByNoteid operation in CommerceApi.
+ * Request parameters for deleteCommerceNoteByNoteid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceNoteByNoteidRequest
+ * @interface CommerceApiDeleteCommerceNoteByNoteidRequest
  */
-export interface CommerceApiDeleteV1CommerceNoteByNoteidRequest {
+export interface CommerceApiDeleteCommerceNoteByNoteidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceNoteByNoteid
+     * @memberof CommerceApiDeleteCommerceNoteByNoteid
      */
     readonly noteid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceProductByProductid operation in CommerceApi.
+ * Request parameters for deleteCommerceProductByProductid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceProductByProductidRequest
+ * @interface CommerceApiDeleteCommerceProductByProductidRequest
  */
-export interface CommerceApiDeleteV1CommerceProductByProductidRequest {
+export interface CommerceApiDeleteCommerceProductByProductidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceProductByProductid
+     * @memberof CommerceApiDeleteCommerceProductByProductid
      */
     readonly productid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceReturnByReturnid operation in CommerceApi.
+ * Request parameters for deleteCommerceReturnByReturnid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceReturnByReturnidRequest
+ * @interface CommerceApiDeleteCommerceReturnByReturnidRequest
  */
-export interface CommerceApiDeleteV1CommerceReturnByReturnidRequest {
+export interface CommerceApiDeleteCommerceReturnByReturnidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceReturnByReturnid
+     * @memberof CommerceApiDeleteCommerceReturnByReturnid
      */
     readonly returnid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceSaleschannelBySaleschannelid operation in CommerceApi.
+ * Request parameters for deleteCommerceSaleschannelBySaleschannelid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceSaleschannelBySaleschannelidRequest
+ * @interface CommerceApiDeleteCommerceSaleschannelBySaleschannelidRequest
  */
-export interface CommerceApiDeleteV1CommerceSaleschannelBySaleschannelidRequest {
+export interface CommerceApiDeleteCommerceSaleschannelBySaleschannelidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceSaleschannelBySaleschannelid
+     * @memberof CommerceApiDeleteCommerceSaleschannelBySaleschannelid
      */
     readonly saleschannelid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceStocklocationByStocklocationid operation in CommerceApi.
+ * Request parameters for deleteCommerceStocklocationByStocklocationid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceStocklocationByStocklocationidRequest
+ * @interface CommerceApiDeleteCommerceStocklocationByStocklocationidRequest
  */
-export interface CommerceApiDeleteV1CommerceStocklocationByStocklocationidRequest {
+export interface CommerceApiDeleteCommerceStocklocationByStocklocationidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceStocklocationByStocklocationid
+     * @memberof CommerceApiDeleteCommerceStocklocationByStocklocationid
      */
     readonly stocklocationid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceSubmissionBySubmissionid operation in CommerceApi.
+ * Request parameters for deleteCommerceSubmissionBySubmissionid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceSubmissionBySubmissionidRequest
+ * @interface CommerceApiDeleteCommerceSubmissionBySubmissionidRequest
  */
-export interface CommerceApiDeleteV1CommerceSubmissionBySubmissionidRequest {
+export interface CommerceApiDeleteCommerceSubmissionBySubmissionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceSubmissionBySubmissionid
+     * @memberof CommerceApiDeleteCommerceSubmissionBySubmissionid
      */
     readonly submissionid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceSubscriberBySubscriberid operation in CommerceApi.
+ * Request parameters for deleteCommerceSubscriberBySubscriberid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceSubscriberBySubscriberidRequest
+ * @interface CommerceApiDeleteCommerceSubscriberBySubscriberidRequest
  */
-export interface CommerceApiDeleteV1CommerceSubscriberBySubscriberidRequest {
+export interface CommerceApiDeleteCommerceSubscriberBySubscriberidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceSubscriberBySubscriberid
+     * @memberof CommerceApiDeleteCommerceSubscriberBySubscriberid
      */
     readonly subscriberid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceTokentransactionByTokentransactionid operation in CommerceApi.
+ * Request parameters for deleteCommerceTokentransactionByTokentransactionid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceTokentransactionByTokentransactionidRequest
+ * @interface CommerceApiDeleteCommerceTokentransactionByTokentransactionidRequest
  */
-export interface CommerceApiDeleteV1CommerceTokentransactionByTokentransactionidRequest {
+export interface CommerceApiDeleteCommerceTokentransactionByTokentransactionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceTokentransactionByTokentransactionid
+     * @memberof CommerceApiDeleteCommerceTokentransactionByTokentransactionid
      */
     readonly tokentransactionid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceTransferByTransferid operation in CommerceApi.
+ * Request parameters for deleteCommerceTransferByTransferid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceTransferByTransferidRequest
+ * @interface CommerceApiDeleteCommerceTransferByTransferidRequest
  */
-export interface CommerceApiDeleteV1CommerceTransferByTransferidRequest {
+export interface CommerceApiDeleteCommerceTransferByTransferidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceTransferByTransferid
+     * @memberof CommerceApiDeleteCommerceTransferByTransferid
      */
     readonly transferid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceVariantByVariantid operation in CommerceApi.
+ * Request parameters for deleteCommerceVariantByVariantid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceVariantByVariantidRequest
+ * @interface CommerceApiDeleteCommerceVariantByVariantidRequest
  */
-export interface CommerceApiDeleteV1CommerceVariantByVariantidRequest {
+export interface CommerceApiDeleteCommerceVariantByVariantidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceVariantByVariantid
+     * @memberof CommerceApiDeleteCommerceVariantByVariantid
      */
     readonly variantid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceWalletByWalletid operation in CommerceApi.
+ * Request parameters for deleteCommerceWalletByWalletid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceWalletByWalletidRequest
+ * @interface CommerceApiDeleteCommerceWalletByWalletidRequest
  */
-export interface CommerceApiDeleteV1CommerceWalletByWalletidRequest {
+export interface CommerceApiDeleteCommerceWalletByWalletidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceWalletByWalletid
+     * @memberof CommerceApiDeleteCommerceWalletByWalletid
      */
     readonly walletid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceWatchlistByWatchlistid operation in CommerceApi.
+ * Request parameters for deleteCommerceWatchlistByWatchlistid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceWatchlistByWatchlistidRequest
+ * @interface CommerceApiDeleteCommerceWatchlistByWatchlistidRequest
  */
-export interface CommerceApiDeleteV1CommerceWatchlistByWatchlistidRequest {
+export interface CommerceApiDeleteCommerceWatchlistByWatchlistidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceWatchlistByWatchlistid
+     * @memberof CommerceApiDeleteCommerceWatchlistByWatchlistid
      */
     readonly watchlistid: string
 }
 
 /**
- * Request parameters for deleteV1CommerceWebhookByWebhookid operation in CommerceApi.
+ * Request parameters for deleteCommerceWebhookByWebhookid operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteV1CommerceWebhookByWebhookidRequest
+ * @interface CommerceApiDeleteCommerceWebhookByWebhookidRequest
  */
-export interface CommerceApiDeleteV1CommerceWebhookByWebhookidRequest {
+export interface CommerceApiDeleteCommerceWebhookByWebhookidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteV1CommerceWebhookByWebhookid
+     * @memberof CommerceApiDeleteCommerceWebhookByWebhookid
      */
     readonly webhookid: string
 }
 
 /**
- * Request parameters for getV1CommerceCollectionByCollectionid operation in CommerceApi.
+ * Request parameters for getCommerceCollectionByCollectionid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceCollectionByCollectionidRequest
+ * @interface CommerceApiGetCommerceCollectionByCollectionidRequest
  */
-export interface CommerceApiGetV1CommerceCollectionByCollectionidRequest {
+export interface CommerceApiGetCommerceCollectionByCollectionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceCollectionByCollectionid
+     * @memberof CommerceApiGetCommerceCollectionByCollectionid
      */
     readonly collectionid: string
 }
 
 /**
- * Request parameters for getV1CommerceDisclosureByDisclosureid operation in CommerceApi.
+ * Request parameters for getCommerceDisclosureByDisclosureid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceDisclosureByDisclosureidRequest
+ * @interface CommerceApiGetCommerceDisclosureByDisclosureidRequest
  */
-export interface CommerceApiGetV1CommerceDisclosureByDisclosureidRequest {
+export interface CommerceApiGetCommerceDisclosureByDisclosureidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceDisclosureByDisclosureid
+     * @memberof CommerceApiGetCommerceDisclosureByDisclosureid
      */
     readonly disclosureid: string
 }
 
 /**
- * Request parameters for getV1CommerceDiscountByDiscountid operation in CommerceApi.
+ * Request parameters for getCommerceDiscountByDiscountid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceDiscountByDiscountidRequest
+ * @interface CommerceApiGetCommerceDiscountByDiscountidRequest
  */
-export interface CommerceApiGetV1CommerceDiscountByDiscountidRequest {
+export interface CommerceApiGetCommerceDiscountByDiscountidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceDiscountByDiscountid
+     * @memberof CommerceApiGetCommerceDiscountByDiscountid
      */
     readonly discountid: string
 }
 
 /**
- * Request parameters for getV1CommerceMovieByMovieid operation in CommerceApi.
+ * Request parameters for getCommerceMovieByMovieid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceMovieByMovieidRequest
+ * @interface CommerceApiGetCommerceMovieByMovieidRequest
  */
-export interface CommerceApiGetV1CommerceMovieByMovieidRequest {
+export interface CommerceApiGetCommerceMovieByMovieidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceMovieByMovieid
+     * @memberof CommerceApiGetCommerceMovieByMovieid
      */
     readonly movieid: string
 }
 
 /**
- * Request parameters for getV1CommerceNoteByNoteid operation in CommerceApi.
+ * Request parameters for getCommerceNoteByNoteid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceNoteByNoteidRequest
+ * @interface CommerceApiGetCommerceNoteByNoteidRequest
  */
-export interface CommerceApiGetV1CommerceNoteByNoteidRequest {
+export interface CommerceApiGetCommerceNoteByNoteidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceNoteByNoteid
+     * @memberof CommerceApiGetCommerceNoteByNoteid
      */
     readonly noteid: string
 }
 
 /**
- * Request parameters for getV1CommerceProductByProductid operation in CommerceApi.
+ * Request parameters for getCommerceProductByProductid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceProductByProductidRequest
+ * @interface CommerceApiGetCommerceProductByProductidRequest
  */
-export interface CommerceApiGetV1CommerceProductByProductidRequest {
+export interface CommerceApiGetCommerceProductByProductidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceProductByProductid
+     * @memberof CommerceApiGetCommerceProductByProductid
      */
     readonly productid: string
 }
 
 /**
- * Request parameters for getV1CommerceReturnByReturnid operation in CommerceApi.
+ * Request parameters for getCommerceReturnByReturnid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceReturnByReturnidRequest
+ * @interface CommerceApiGetCommerceReturnByReturnidRequest
  */
-export interface CommerceApiGetV1CommerceReturnByReturnidRequest {
+export interface CommerceApiGetCommerceReturnByReturnidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceReturnByReturnid
+     * @memberof CommerceApiGetCommerceReturnByReturnid
      */
     readonly returnid: string
 }
 
 /**
- * Request parameters for getV1CommerceSaleschannelBySaleschannelid operation in CommerceApi.
+ * Request parameters for getCommerceSaleschannelBySaleschannelid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceSaleschannelBySaleschannelidRequest
+ * @interface CommerceApiGetCommerceSaleschannelBySaleschannelidRequest
  */
-export interface CommerceApiGetV1CommerceSaleschannelBySaleschannelidRequest {
+export interface CommerceApiGetCommerceSaleschannelBySaleschannelidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceSaleschannelBySaleschannelid
+     * @memberof CommerceApiGetCommerceSaleschannelBySaleschannelid
      */
     readonly saleschannelid: string
 }
 
 /**
- * Request parameters for getV1CommerceStocklocationByStocklocationid operation in CommerceApi.
+ * Request parameters for getCommerceStocklocationByStocklocationid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceStocklocationByStocklocationidRequest
+ * @interface CommerceApiGetCommerceStocklocationByStocklocationidRequest
  */
-export interface CommerceApiGetV1CommerceStocklocationByStocklocationidRequest {
+export interface CommerceApiGetCommerceStocklocationByStocklocationidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceStocklocationByStocklocationid
+     * @memberof CommerceApiGetCommerceStocklocationByStocklocationid
      */
     readonly stocklocationid: string
 }
 
 /**
- * Request parameters for getV1CommerceSubmissionBySubmissionid operation in CommerceApi.
+ * Request parameters for getCommerceSubmissionBySubmissionid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceSubmissionBySubmissionidRequest
+ * @interface CommerceApiGetCommerceSubmissionBySubmissionidRequest
  */
-export interface CommerceApiGetV1CommerceSubmissionBySubmissionidRequest {
+export interface CommerceApiGetCommerceSubmissionBySubmissionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceSubmissionBySubmissionid
+     * @memberof CommerceApiGetCommerceSubmissionBySubmissionid
      */
     readonly submissionid: string
 }
 
 /**
- * Request parameters for getV1CommerceSubscriberBySubscriberid operation in CommerceApi.
+ * Request parameters for getCommerceSubscriberBySubscriberid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceSubscriberBySubscriberidRequest
+ * @interface CommerceApiGetCommerceSubscriberBySubscriberidRequest
  */
-export interface CommerceApiGetV1CommerceSubscriberBySubscriberidRequest {
+export interface CommerceApiGetCommerceSubscriberBySubscriberidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceSubscriberBySubscriberid
+     * @memberof CommerceApiGetCommerceSubscriberBySubscriberid
      */
     readonly subscriberid: string
 }
 
 /**
- * Request parameters for getV1CommerceTokentransactionByTokentransactionid operation in CommerceApi.
+ * Request parameters for getCommerceTokentransactionByTokentransactionid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceTokentransactionByTokentransactionidRequest
+ * @interface CommerceApiGetCommerceTokentransactionByTokentransactionidRequest
  */
-export interface CommerceApiGetV1CommerceTokentransactionByTokentransactionidRequest {
+export interface CommerceApiGetCommerceTokentransactionByTokentransactionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceTokentransactionByTokentransactionid
+     * @memberof CommerceApiGetCommerceTokentransactionByTokentransactionid
      */
     readonly tokentransactionid: string
 }
 
 /**
- * Request parameters for getV1CommerceTransferByTransferid operation in CommerceApi.
+ * Request parameters for getCommerceTransferByTransferid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceTransferByTransferidRequest
+ * @interface CommerceApiGetCommerceTransferByTransferidRequest
  */
-export interface CommerceApiGetV1CommerceTransferByTransferidRequest {
+export interface CommerceApiGetCommerceTransferByTransferidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceTransferByTransferid
+     * @memberof CommerceApiGetCommerceTransferByTransferid
      */
     readonly transferid: string
 }
 
 /**
- * Request parameters for getV1CommerceVariantByVariantid operation in CommerceApi.
+ * Request parameters for getCommerceVariantByVariantid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceVariantByVariantidRequest
+ * @interface CommerceApiGetCommerceVariantByVariantidRequest
  */
-export interface CommerceApiGetV1CommerceVariantByVariantidRequest {
+export interface CommerceApiGetCommerceVariantByVariantidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceVariantByVariantid
+     * @memberof CommerceApiGetCommerceVariantByVariantid
      */
     readonly variantid: string
 }
 
 /**
- * Request parameters for getV1CommerceWalletByWalletid operation in CommerceApi.
+ * Request parameters for getCommerceWalletByWalletid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceWalletByWalletidRequest
+ * @interface CommerceApiGetCommerceWalletByWalletidRequest
  */
-export interface CommerceApiGetV1CommerceWalletByWalletidRequest {
+export interface CommerceApiGetCommerceWalletByWalletidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceWalletByWalletid
+     * @memberof CommerceApiGetCommerceWalletByWalletid
      */
     readonly walletid: string
 }
 
 /**
- * Request parameters for getV1CommerceWatchlistByWatchlistid operation in CommerceApi.
+ * Request parameters for getCommerceWatchlistByWatchlistid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceWatchlistByWatchlistidRequest
+ * @interface CommerceApiGetCommerceWatchlistByWatchlistidRequest
  */
-export interface CommerceApiGetV1CommerceWatchlistByWatchlistidRequest {
+export interface CommerceApiGetCommerceWatchlistByWatchlistidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceWatchlistByWatchlistid
+     * @memberof CommerceApiGetCommerceWatchlistByWatchlistid
      */
     readonly watchlistid: string
 }
 
 /**
- * Request parameters for getV1CommerceWebhookByWebhookid operation in CommerceApi.
+ * Request parameters for getCommerceWebhookByWebhookid operation in CommerceApi.
  * @export
- * @interface CommerceApiGetV1CommerceWebhookByWebhookidRequest
+ * @interface CommerceApiGetCommerceWebhookByWebhookidRequest
  */
-export interface CommerceApiGetV1CommerceWebhookByWebhookidRequest {
+export interface CommerceApiGetCommerceWebhookByWebhookidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiGetV1CommerceWebhookByWebhookid
+     * @memberof CommerceApiGetCommerceWebhookByWebhookid
      */
     readonly webhookid: string
 }
 
 /**
- * Request parameters for patchV1CommerceCollectionByCollectionid operation in CommerceApi.
+ * Request parameters for patchCommerceCollectionByCollectionid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceCollectionByCollectionidRequest
+ * @interface CommerceApiPatchCommerceCollectionByCollectionidRequest
  */
-export interface CommerceApiPatchV1CommerceCollectionByCollectionidRequest {
+export interface CommerceApiPatchCommerceCollectionByCollectionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceCollectionByCollectionid
+     * @memberof CommerceApiPatchCommerceCollectionByCollectionid
      */
     readonly collectionid: string
 }
 
 /**
- * Request parameters for patchV1CommerceDisclosureByDisclosureid operation in CommerceApi.
+ * Request parameters for patchCommerceDisclosureByDisclosureid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceDisclosureByDisclosureidRequest
+ * @interface CommerceApiPatchCommerceDisclosureByDisclosureidRequest
  */
-export interface CommerceApiPatchV1CommerceDisclosureByDisclosureidRequest {
+export interface CommerceApiPatchCommerceDisclosureByDisclosureidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceDisclosureByDisclosureid
+     * @memberof CommerceApiPatchCommerceDisclosureByDisclosureid
      */
     readonly disclosureid: string
 }
 
 /**
- * Request parameters for patchV1CommerceDiscountByDiscountid operation in CommerceApi.
+ * Request parameters for patchCommerceDiscountByDiscountid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceDiscountByDiscountidRequest
+ * @interface CommerceApiPatchCommerceDiscountByDiscountidRequest
  */
-export interface CommerceApiPatchV1CommerceDiscountByDiscountidRequest {
+export interface CommerceApiPatchCommerceDiscountByDiscountidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceDiscountByDiscountid
+     * @memberof CommerceApiPatchCommerceDiscountByDiscountid
      */
     readonly discountid: string
 }
 
 /**
- * Request parameters for patchV1CommerceMovieByMovieid operation in CommerceApi.
+ * Request parameters for patchCommerceMovieByMovieid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceMovieByMovieidRequest
+ * @interface CommerceApiPatchCommerceMovieByMovieidRequest
  */
-export interface CommerceApiPatchV1CommerceMovieByMovieidRequest {
+export interface CommerceApiPatchCommerceMovieByMovieidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceMovieByMovieid
+     * @memberof CommerceApiPatchCommerceMovieByMovieid
      */
     readonly movieid: string
 }
 
 /**
- * Request parameters for patchV1CommerceNoteByNoteid operation in CommerceApi.
+ * Request parameters for patchCommerceNoteByNoteid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceNoteByNoteidRequest
+ * @interface CommerceApiPatchCommerceNoteByNoteidRequest
  */
-export interface CommerceApiPatchV1CommerceNoteByNoteidRequest {
+export interface CommerceApiPatchCommerceNoteByNoteidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceNoteByNoteid
+     * @memberof CommerceApiPatchCommerceNoteByNoteid
      */
     readonly noteid: string
 }
 
 /**
- * Request parameters for patchV1CommerceProductByProductid operation in CommerceApi.
+ * Request parameters for patchCommerceProductByProductid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceProductByProductidRequest
+ * @interface CommerceApiPatchCommerceProductByProductidRequest
  */
-export interface CommerceApiPatchV1CommerceProductByProductidRequest {
+export interface CommerceApiPatchCommerceProductByProductidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceProductByProductid
+     * @memberof CommerceApiPatchCommerceProductByProductid
      */
     readonly productid: string
 }
 
 /**
- * Request parameters for patchV1CommerceReturnByReturnid operation in CommerceApi.
+ * Request parameters for patchCommerceReturnByReturnid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceReturnByReturnidRequest
+ * @interface CommerceApiPatchCommerceReturnByReturnidRequest
  */
-export interface CommerceApiPatchV1CommerceReturnByReturnidRequest {
+export interface CommerceApiPatchCommerceReturnByReturnidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceReturnByReturnid
+     * @memberof CommerceApiPatchCommerceReturnByReturnid
      */
     readonly returnid: string
 }
 
 /**
- * Request parameters for patchV1CommerceSaleschannelBySaleschannelid operation in CommerceApi.
+ * Request parameters for patchCommerceSaleschannelBySaleschannelid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceSaleschannelBySaleschannelidRequest
+ * @interface CommerceApiPatchCommerceSaleschannelBySaleschannelidRequest
  */
-export interface CommerceApiPatchV1CommerceSaleschannelBySaleschannelidRequest {
+export interface CommerceApiPatchCommerceSaleschannelBySaleschannelidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceSaleschannelBySaleschannelid
+     * @memberof CommerceApiPatchCommerceSaleschannelBySaleschannelid
      */
     readonly saleschannelid: string
 }
 
 /**
- * Request parameters for patchV1CommerceStocklocationByStocklocationid operation in CommerceApi.
+ * Request parameters for patchCommerceStocklocationByStocklocationid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceStocklocationByStocklocationidRequest
+ * @interface CommerceApiPatchCommerceStocklocationByStocklocationidRequest
  */
-export interface CommerceApiPatchV1CommerceStocklocationByStocklocationidRequest {
+export interface CommerceApiPatchCommerceStocklocationByStocklocationidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceStocklocationByStocklocationid
+     * @memberof CommerceApiPatchCommerceStocklocationByStocklocationid
      */
     readonly stocklocationid: string
 }
 
 /**
- * Request parameters for patchV1CommerceSubmissionBySubmissionid operation in CommerceApi.
+ * Request parameters for patchCommerceSubmissionBySubmissionid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceSubmissionBySubmissionidRequest
+ * @interface CommerceApiPatchCommerceSubmissionBySubmissionidRequest
  */
-export interface CommerceApiPatchV1CommerceSubmissionBySubmissionidRequest {
+export interface CommerceApiPatchCommerceSubmissionBySubmissionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceSubmissionBySubmissionid
+     * @memberof CommerceApiPatchCommerceSubmissionBySubmissionid
      */
     readonly submissionid: string
 }
 
 /**
- * Request parameters for patchV1CommerceSubscriberBySubscriberid operation in CommerceApi.
+ * Request parameters for patchCommerceSubscriberBySubscriberid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceSubscriberBySubscriberidRequest
+ * @interface CommerceApiPatchCommerceSubscriberBySubscriberidRequest
  */
-export interface CommerceApiPatchV1CommerceSubscriberBySubscriberidRequest {
+export interface CommerceApiPatchCommerceSubscriberBySubscriberidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceSubscriberBySubscriberid
+     * @memberof CommerceApiPatchCommerceSubscriberBySubscriberid
      */
     readonly subscriberid: string
 }
 
 /**
- * Request parameters for patchV1CommerceTokentransactionByTokentransactionid operation in CommerceApi.
+ * Request parameters for patchCommerceTokentransactionByTokentransactionid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceTokentransactionByTokentransactionidRequest
+ * @interface CommerceApiPatchCommerceTokentransactionByTokentransactionidRequest
  */
-export interface CommerceApiPatchV1CommerceTokentransactionByTokentransactionidRequest {
+export interface CommerceApiPatchCommerceTokentransactionByTokentransactionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceTokentransactionByTokentransactionid
+     * @memberof CommerceApiPatchCommerceTokentransactionByTokentransactionid
      */
     readonly tokentransactionid: string
 }
 
 /**
- * Request parameters for patchV1CommerceTransferByTransferid operation in CommerceApi.
+ * Request parameters for patchCommerceTransferByTransferid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceTransferByTransferidRequest
+ * @interface CommerceApiPatchCommerceTransferByTransferidRequest
  */
-export interface CommerceApiPatchV1CommerceTransferByTransferidRequest {
+export interface CommerceApiPatchCommerceTransferByTransferidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceTransferByTransferid
+     * @memberof CommerceApiPatchCommerceTransferByTransferid
      */
     readonly transferid: string
 }
 
 /**
- * Request parameters for patchV1CommerceVariantByVariantid operation in CommerceApi.
+ * Request parameters for patchCommerceVariantByVariantid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceVariantByVariantidRequest
+ * @interface CommerceApiPatchCommerceVariantByVariantidRequest
  */
-export interface CommerceApiPatchV1CommerceVariantByVariantidRequest {
+export interface CommerceApiPatchCommerceVariantByVariantidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceVariantByVariantid
+     * @memberof CommerceApiPatchCommerceVariantByVariantid
      */
     readonly variantid: string
 }
 
 /**
- * Request parameters for patchV1CommerceWalletByWalletid operation in CommerceApi.
+ * Request parameters for patchCommerceWalletByWalletid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceWalletByWalletidRequest
+ * @interface CommerceApiPatchCommerceWalletByWalletidRequest
  */
-export interface CommerceApiPatchV1CommerceWalletByWalletidRequest {
+export interface CommerceApiPatchCommerceWalletByWalletidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceWalletByWalletid
+     * @memberof CommerceApiPatchCommerceWalletByWalletid
      */
     readonly walletid: string
 }
 
 /**
- * Request parameters for patchV1CommerceWatchlistByWatchlistid operation in CommerceApi.
+ * Request parameters for patchCommerceWatchlistByWatchlistid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceWatchlistByWatchlistidRequest
+ * @interface CommerceApiPatchCommerceWatchlistByWatchlistidRequest
  */
-export interface CommerceApiPatchV1CommerceWatchlistByWatchlistidRequest {
+export interface CommerceApiPatchCommerceWatchlistByWatchlistidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceWatchlistByWatchlistid
+     * @memberof CommerceApiPatchCommerceWatchlistByWatchlistid
      */
     readonly watchlistid: string
 }
 
 /**
- * Request parameters for patchV1CommerceWebhookByWebhookid operation in CommerceApi.
+ * Request parameters for patchCommerceWebhookByWebhookid operation in CommerceApi.
  * @export
- * @interface CommerceApiPatchV1CommerceWebhookByWebhookidRequest
+ * @interface CommerceApiPatchCommerceWebhookByWebhookidRequest
  */
-export interface CommerceApiPatchV1CommerceWebhookByWebhookidRequest {
+export interface CommerceApiPatchCommerceWebhookByWebhookidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPatchV1CommerceWebhookByWebhookid
+     * @memberof CommerceApiPatchCommerceWebhookByWebhookid
      */
     readonly webhookid: string
 }
 
 /**
- * Request parameters for postV1CommerceCollectionByCollectionid operation in CommerceApi.
+ * Request parameters for postCommerceCollectionByCollectionid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceCollectionByCollectionidRequest
+ * @interface CommerceApiPostCommerceCollectionByCollectionidRequest
  */
-export interface CommerceApiPostV1CommerceCollectionByCollectionidRequest {
+export interface CommerceApiPostCommerceCollectionByCollectionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceCollectionByCollectionid
+     * @memberof CommerceApiPostCommerceCollectionByCollectionid
      */
     readonly collectionid: string
 }
 
 /**
- * Request parameters for postV1CommerceDisclosureByDisclosureid operation in CommerceApi.
+ * Request parameters for postCommerceDisclosureByDisclosureid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceDisclosureByDisclosureidRequest
+ * @interface CommerceApiPostCommerceDisclosureByDisclosureidRequest
  */
-export interface CommerceApiPostV1CommerceDisclosureByDisclosureidRequest {
+export interface CommerceApiPostCommerceDisclosureByDisclosureidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceDisclosureByDisclosureid
+     * @memberof CommerceApiPostCommerceDisclosureByDisclosureid
      */
     readonly disclosureid: string
 }
 
 /**
- * Request parameters for postV1CommerceDiscountByDiscountid operation in CommerceApi.
+ * Request parameters for postCommerceDiscountByDiscountid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceDiscountByDiscountidRequest
+ * @interface CommerceApiPostCommerceDiscountByDiscountidRequest
  */
-export interface CommerceApiPostV1CommerceDiscountByDiscountidRequest {
+export interface CommerceApiPostCommerceDiscountByDiscountidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceDiscountByDiscountid
+     * @memberof CommerceApiPostCommerceDiscountByDiscountid
      */
     readonly discountid: string
 }
 
 /**
- * Request parameters for postV1CommerceMovieByMovieid operation in CommerceApi.
+ * Request parameters for postCommerceMovieByMovieid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceMovieByMovieidRequest
+ * @interface CommerceApiPostCommerceMovieByMovieidRequest
  */
-export interface CommerceApiPostV1CommerceMovieByMovieidRequest {
+export interface CommerceApiPostCommerceMovieByMovieidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceMovieByMovieid
+     * @memberof CommerceApiPostCommerceMovieByMovieid
      */
     readonly movieid: string
 }
 
 /**
- * Request parameters for postV1CommerceNoteByNoteid operation in CommerceApi.
+ * Request parameters for postCommerceNoteByNoteid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceNoteByNoteidRequest
+ * @interface CommerceApiPostCommerceNoteByNoteidRequest
  */
-export interface CommerceApiPostV1CommerceNoteByNoteidRequest {
+export interface CommerceApiPostCommerceNoteByNoteidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceNoteByNoteid
+     * @memberof CommerceApiPostCommerceNoteByNoteid
      */
     readonly noteid: string
 }
 
 /**
- * Request parameters for postV1CommerceProductByProductid operation in CommerceApi.
+ * Request parameters for postCommerceProductByProductid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceProductByProductidRequest
+ * @interface CommerceApiPostCommerceProductByProductidRequest
  */
-export interface CommerceApiPostV1CommerceProductByProductidRequest {
+export interface CommerceApiPostCommerceProductByProductidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceProductByProductid
+     * @memberof CommerceApiPostCommerceProductByProductid
      */
     readonly productid: string
 }
 
 /**
- * Request parameters for postV1CommerceReturnByReturnid operation in CommerceApi.
+ * Request parameters for postCommerceReturnByReturnid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceReturnByReturnidRequest
+ * @interface CommerceApiPostCommerceReturnByReturnidRequest
  */
-export interface CommerceApiPostV1CommerceReturnByReturnidRequest {
+export interface CommerceApiPostCommerceReturnByReturnidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceReturnByReturnid
+     * @memberof CommerceApiPostCommerceReturnByReturnid
      */
     readonly returnid: string
 }
 
 /**
- * Request parameters for postV1CommerceSaleschannelBySaleschannelid operation in CommerceApi.
+ * Request parameters for postCommerceSaleschannelBySaleschannelid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceSaleschannelBySaleschannelidRequest
+ * @interface CommerceApiPostCommerceSaleschannelBySaleschannelidRequest
  */
-export interface CommerceApiPostV1CommerceSaleschannelBySaleschannelidRequest {
+export interface CommerceApiPostCommerceSaleschannelBySaleschannelidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceSaleschannelBySaleschannelid
+     * @memberof CommerceApiPostCommerceSaleschannelBySaleschannelid
      */
     readonly saleschannelid: string
 }
 
 /**
- * Request parameters for postV1CommerceStocklocationByStocklocationid operation in CommerceApi.
+ * Request parameters for postCommerceStocklocationByStocklocationid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceStocklocationByStocklocationidRequest
+ * @interface CommerceApiPostCommerceStocklocationByStocklocationidRequest
  */
-export interface CommerceApiPostV1CommerceStocklocationByStocklocationidRequest {
+export interface CommerceApiPostCommerceStocklocationByStocklocationidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceStocklocationByStocklocationid
+     * @memberof CommerceApiPostCommerceStocklocationByStocklocationid
      */
     readonly stocklocationid: string
 }
 
 /**
- * Request parameters for postV1CommerceSubmissionBySubmissionid operation in CommerceApi.
+ * Request parameters for postCommerceSubmissionBySubmissionid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceSubmissionBySubmissionidRequest
+ * @interface CommerceApiPostCommerceSubmissionBySubmissionidRequest
  */
-export interface CommerceApiPostV1CommerceSubmissionBySubmissionidRequest {
+export interface CommerceApiPostCommerceSubmissionBySubmissionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceSubmissionBySubmissionid
+     * @memberof CommerceApiPostCommerceSubmissionBySubmissionid
      */
     readonly submissionid: string
 }
 
 /**
- * Request parameters for postV1CommerceSubscriberBySubscriberid operation in CommerceApi.
+ * Request parameters for postCommerceSubscriberBySubscriberid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceSubscriberBySubscriberidRequest
+ * @interface CommerceApiPostCommerceSubscriberBySubscriberidRequest
  */
-export interface CommerceApiPostV1CommerceSubscriberBySubscriberidRequest {
+export interface CommerceApiPostCommerceSubscriberBySubscriberidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceSubscriberBySubscriberid
+     * @memberof CommerceApiPostCommerceSubscriberBySubscriberid
      */
     readonly subscriberid: string
 }
 
 /**
- * Request parameters for postV1CommerceTokentransactionByTokentransactionid operation in CommerceApi.
+ * Request parameters for postCommerceTokentransactionByTokentransactionid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceTokentransactionByTokentransactionidRequest
+ * @interface CommerceApiPostCommerceTokentransactionByTokentransactionidRequest
  */
-export interface CommerceApiPostV1CommerceTokentransactionByTokentransactionidRequest {
+export interface CommerceApiPostCommerceTokentransactionByTokentransactionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceTokentransactionByTokentransactionid
+     * @memberof CommerceApiPostCommerceTokentransactionByTokentransactionid
      */
     readonly tokentransactionid: string
 }
 
 /**
- * Request parameters for postV1CommerceTransferByTransferid operation in CommerceApi.
+ * Request parameters for postCommerceTransferByTransferid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceTransferByTransferidRequest
+ * @interface CommerceApiPostCommerceTransferByTransferidRequest
  */
-export interface CommerceApiPostV1CommerceTransferByTransferidRequest {
+export interface CommerceApiPostCommerceTransferByTransferidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceTransferByTransferid
+     * @memberof CommerceApiPostCommerceTransferByTransferid
      */
     readonly transferid: string
 }
 
 /**
- * Request parameters for postV1CommerceVariantByVariantid operation in CommerceApi.
+ * Request parameters for postCommerceVariantByVariantid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceVariantByVariantidRequest
+ * @interface CommerceApiPostCommerceVariantByVariantidRequest
  */
-export interface CommerceApiPostV1CommerceVariantByVariantidRequest {
+export interface CommerceApiPostCommerceVariantByVariantidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceVariantByVariantid
+     * @memberof CommerceApiPostCommerceVariantByVariantid
      */
     readonly variantid: string
 }
 
 /**
- * Request parameters for postV1CommerceWalletByWalletid operation in CommerceApi.
+ * Request parameters for postCommerceWalletByWalletid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceWalletByWalletidRequest
+ * @interface CommerceApiPostCommerceWalletByWalletidRequest
  */
-export interface CommerceApiPostV1CommerceWalletByWalletidRequest {
+export interface CommerceApiPostCommerceWalletByWalletidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceWalletByWalletid
+     * @memberof CommerceApiPostCommerceWalletByWalletid
      */
     readonly walletid: string
 }
 
 /**
- * Request parameters for postV1CommerceWatchlistByWatchlistid operation in CommerceApi.
+ * Request parameters for postCommerceWatchlistByWatchlistid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceWatchlistByWatchlistidRequest
+ * @interface CommerceApiPostCommerceWatchlistByWatchlistidRequest
  */
-export interface CommerceApiPostV1CommerceWatchlistByWatchlistidRequest {
+export interface CommerceApiPostCommerceWatchlistByWatchlistidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceWatchlistByWatchlistid
+     * @memberof CommerceApiPostCommerceWatchlistByWatchlistid
      */
     readonly watchlistid: string
 }
 
 /**
- * Request parameters for postV1CommerceWebhookByWebhookid operation in CommerceApi.
+ * Request parameters for postCommerceWebhookByWebhookid operation in CommerceApi.
  * @export
- * @interface CommerceApiPostV1CommerceWebhookByWebhookidRequest
+ * @interface CommerceApiPostCommerceWebhookByWebhookidRequest
  */
-export interface CommerceApiPostV1CommerceWebhookByWebhookidRequest {
+export interface CommerceApiPostCommerceWebhookByWebhookidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPostV1CommerceWebhookByWebhookid
+     * @memberof CommerceApiPostCommerceWebhookByWebhookid
      */
     readonly webhookid: string
 }
 
 /**
- * Request parameters for putV1CommerceCollectionByCollectionid operation in CommerceApi.
+ * Request parameters for putCommerceCollectionByCollectionid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceCollectionByCollectionidRequest
+ * @interface CommerceApiPutCommerceCollectionByCollectionidRequest
  */
-export interface CommerceApiPutV1CommerceCollectionByCollectionidRequest {
+export interface CommerceApiPutCommerceCollectionByCollectionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceCollectionByCollectionid
+     * @memberof CommerceApiPutCommerceCollectionByCollectionid
      */
     readonly collectionid: string
 }
 
 /**
- * Request parameters for putV1CommerceDisclosureByDisclosureid operation in CommerceApi.
+ * Request parameters for putCommerceDisclosureByDisclosureid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceDisclosureByDisclosureidRequest
+ * @interface CommerceApiPutCommerceDisclosureByDisclosureidRequest
  */
-export interface CommerceApiPutV1CommerceDisclosureByDisclosureidRequest {
+export interface CommerceApiPutCommerceDisclosureByDisclosureidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceDisclosureByDisclosureid
+     * @memberof CommerceApiPutCommerceDisclosureByDisclosureid
      */
     readonly disclosureid: string
 }
 
 /**
- * Request parameters for putV1CommerceDiscountByDiscountid operation in CommerceApi.
+ * Request parameters for putCommerceDiscountByDiscountid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceDiscountByDiscountidRequest
+ * @interface CommerceApiPutCommerceDiscountByDiscountidRequest
  */
-export interface CommerceApiPutV1CommerceDiscountByDiscountidRequest {
+export interface CommerceApiPutCommerceDiscountByDiscountidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceDiscountByDiscountid
+     * @memberof CommerceApiPutCommerceDiscountByDiscountid
      */
     readonly discountid: string
 }
 
 /**
- * Request parameters for putV1CommerceMovieByMovieid operation in CommerceApi.
+ * Request parameters for putCommerceMovieByMovieid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceMovieByMovieidRequest
+ * @interface CommerceApiPutCommerceMovieByMovieidRequest
  */
-export interface CommerceApiPutV1CommerceMovieByMovieidRequest {
+export interface CommerceApiPutCommerceMovieByMovieidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceMovieByMovieid
+     * @memberof CommerceApiPutCommerceMovieByMovieid
      */
     readonly movieid: string
 }
 
 /**
- * Request parameters for putV1CommerceNoteByNoteid operation in CommerceApi.
+ * Request parameters for putCommerceNoteByNoteid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceNoteByNoteidRequest
+ * @interface CommerceApiPutCommerceNoteByNoteidRequest
  */
-export interface CommerceApiPutV1CommerceNoteByNoteidRequest {
+export interface CommerceApiPutCommerceNoteByNoteidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceNoteByNoteid
+     * @memberof CommerceApiPutCommerceNoteByNoteid
      */
     readonly noteid: string
 }
 
 /**
- * Request parameters for putV1CommerceProductByProductid operation in CommerceApi.
+ * Request parameters for putCommerceProductByProductid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceProductByProductidRequest
+ * @interface CommerceApiPutCommerceProductByProductidRequest
  */
-export interface CommerceApiPutV1CommerceProductByProductidRequest {
+export interface CommerceApiPutCommerceProductByProductidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceProductByProductid
+     * @memberof CommerceApiPutCommerceProductByProductid
      */
     readonly productid: string
 }
 
 /**
- * Request parameters for putV1CommerceReturnByReturnid operation in CommerceApi.
+ * Request parameters for putCommerceReturnByReturnid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceReturnByReturnidRequest
+ * @interface CommerceApiPutCommerceReturnByReturnidRequest
  */
-export interface CommerceApiPutV1CommerceReturnByReturnidRequest {
+export interface CommerceApiPutCommerceReturnByReturnidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceReturnByReturnid
+     * @memberof CommerceApiPutCommerceReturnByReturnid
      */
     readonly returnid: string
 }
 
 /**
- * Request parameters for putV1CommerceSaleschannelBySaleschannelid operation in CommerceApi.
+ * Request parameters for putCommerceSaleschannelBySaleschannelid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceSaleschannelBySaleschannelidRequest
+ * @interface CommerceApiPutCommerceSaleschannelBySaleschannelidRequest
  */
-export interface CommerceApiPutV1CommerceSaleschannelBySaleschannelidRequest {
+export interface CommerceApiPutCommerceSaleschannelBySaleschannelidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceSaleschannelBySaleschannelid
+     * @memberof CommerceApiPutCommerceSaleschannelBySaleschannelid
      */
     readonly saleschannelid: string
 }
 
 /**
- * Request parameters for putV1CommerceStocklocationByStocklocationid operation in CommerceApi.
+ * Request parameters for putCommerceStocklocationByStocklocationid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceStocklocationByStocklocationidRequest
+ * @interface CommerceApiPutCommerceStocklocationByStocklocationidRequest
  */
-export interface CommerceApiPutV1CommerceStocklocationByStocklocationidRequest {
+export interface CommerceApiPutCommerceStocklocationByStocklocationidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceStocklocationByStocklocationid
+     * @memberof CommerceApiPutCommerceStocklocationByStocklocationid
      */
     readonly stocklocationid: string
 }
 
 /**
- * Request parameters for putV1CommerceSubmissionBySubmissionid operation in CommerceApi.
+ * Request parameters for putCommerceSubmissionBySubmissionid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceSubmissionBySubmissionidRequest
+ * @interface CommerceApiPutCommerceSubmissionBySubmissionidRequest
  */
-export interface CommerceApiPutV1CommerceSubmissionBySubmissionidRequest {
+export interface CommerceApiPutCommerceSubmissionBySubmissionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceSubmissionBySubmissionid
+     * @memberof CommerceApiPutCommerceSubmissionBySubmissionid
      */
     readonly submissionid: string
 }
 
 /**
- * Request parameters for putV1CommerceSubscriberBySubscriberid operation in CommerceApi.
+ * Request parameters for putCommerceSubscriberBySubscriberid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceSubscriberBySubscriberidRequest
+ * @interface CommerceApiPutCommerceSubscriberBySubscriberidRequest
  */
-export interface CommerceApiPutV1CommerceSubscriberBySubscriberidRequest {
+export interface CommerceApiPutCommerceSubscriberBySubscriberidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceSubscriberBySubscriberid
+     * @memberof CommerceApiPutCommerceSubscriberBySubscriberid
      */
     readonly subscriberid: string
 }
 
 /**
- * Request parameters for putV1CommerceTokentransactionByTokentransactionid operation in CommerceApi.
+ * Request parameters for putCommerceTokentransactionByTokentransactionid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceTokentransactionByTokentransactionidRequest
+ * @interface CommerceApiPutCommerceTokentransactionByTokentransactionidRequest
  */
-export interface CommerceApiPutV1CommerceTokentransactionByTokentransactionidRequest {
+export interface CommerceApiPutCommerceTokentransactionByTokentransactionidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceTokentransactionByTokentransactionid
+     * @memberof CommerceApiPutCommerceTokentransactionByTokentransactionid
      */
     readonly tokentransactionid: string
 }
 
 /**
- * Request parameters for putV1CommerceTransferByTransferid operation in CommerceApi.
+ * Request parameters for putCommerceTransferByTransferid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceTransferByTransferidRequest
+ * @interface CommerceApiPutCommerceTransferByTransferidRequest
  */
-export interface CommerceApiPutV1CommerceTransferByTransferidRequest {
+export interface CommerceApiPutCommerceTransferByTransferidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceTransferByTransferid
+     * @memberof CommerceApiPutCommerceTransferByTransferid
      */
     readonly transferid: string
 }
 
 /**
- * Request parameters for putV1CommerceVariantByVariantid operation in CommerceApi.
+ * Request parameters for putCommerceVariantByVariantid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceVariantByVariantidRequest
+ * @interface CommerceApiPutCommerceVariantByVariantidRequest
  */
-export interface CommerceApiPutV1CommerceVariantByVariantidRequest {
+export interface CommerceApiPutCommerceVariantByVariantidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceVariantByVariantid
+     * @memberof CommerceApiPutCommerceVariantByVariantid
      */
     readonly variantid: string
 }
 
 /**
- * Request parameters for putV1CommerceWalletByWalletid operation in CommerceApi.
+ * Request parameters for putCommerceWalletByWalletid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceWalletByWalletidRequest
+ * @interface CommerceApiPutCommerceWalletByWalletidRequest
  */
-export interface CommerceApiPutV1CommerceWalletByWalletidRequest {
+export interface CommerceApiPutCommerceWalletByWalletidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceWalletByWalletid
+     * @memberof CommerceApiPutCommerceWalletByWalletid
      */
     readonly walletid: string
 }
 
 /**
- * Request parameters for putV1CommerceWatchlistByWatchlistid operation in CommerceApi.
+ * Request parameters for putCommerceWatchlistByWatchlistid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceWatchlistByWatchlistidRequest
+ * @interface CommerceApiPutCommerceWatchlistByWatchlistidRequest
  */
-export interface CommerceApiPutV1CommerceWatchlistByWatchlistidRequest {
+export interface CommerceApiPutCommerceWatchlistByWatchlistidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceWatchlistByWatchlistid
+     * @memberof CommerceApiPutCommerceWatchlistByWatchlistid
      */
     readonly watchlistid: string
 }
 
 /**
- * Request parameters for putV1CommerceWebhookByWebhookid operation in CommerceApi.
+ * Request parameters for putCommerceWebhookByWebhookid operation in CommerceApi.
  * @export
- * @interface CommerceApiPutV1CommerceWebhookByWebhookidRequest
+ * @interface CommerceApiPutCommerceWebhookByWebhookidRequest
  */
-export interface CommerceApiPutV1CommerceWebhookByWebhookidRequest {
+export interface CommerceApiPutCommerceWebhookByWebhookidRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutV1CommerceWebhookByWebhookid
+     * @memberof CommerceApiPutCommerceWebhookByWebhookid
      */
     readonly webhookid: string
 }
@@ -8033,205 +8033,205 @@ export class CommerceApi extends BaseAPI {
     /**
      * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteCollection.
      * @summary Delete a collection, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceCollectionByCollectionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceCollectionByCollectionid(requestParameters: CommerceApiDeleteV1CommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceCollectionByCollectionid(requestParameters: CommerceApiDeleteCommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for disclosure, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a disclosure, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceDisclosureByDisclosureid(requestParameters: CommerceApiDeleteV1CommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceDisclosureByDisclosureid(requestParameters: CommerceApiDeleteCommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for discount, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a discount, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceDiscountByDiscountidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceDiscountByDiscountidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceDiscountByDiscountid(requestParameters: CommerceApiDeleteV1CommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceDiscountByDiscountid(requestParameters: CommerceApiDeleteCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for movie, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a movie, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceMovieByMovieidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceMovieByMovieidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceMovieByMovieid(requestParameters: CommerceApiDeleteV1CommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceMovieByMovieid(requestParameters: CommerceApiDeleteCommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for note, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a note, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceNoteByNoteidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceNoteByNoteidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceNoteByNoteid(requestParameters: CommerceApiDeleteV1CommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceNoteByNoteid(requestParameters: CommerceApiDeleteCommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteProduct.
      * @summary Delete a product, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceProductByProductidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceProductByProductidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceProductByProductid(requestParameters: CommerceApiDeleteV1CommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceProductByProductid(requestParameters: CommerceApiDeleteCommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The token must also carry Admin or WriteReturn.
      * @summary Delete a return, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceReturnByReturnidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceReturnByReturnidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceReturnByReturnid(requestParameters: CommerceApiDeleteV1CommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceReturnByReturnid(requestParameters: CommerceApiDeleteCommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for saleschannel, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a sales channel, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiDeleteV1CommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiDeleteCommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for stocklocation, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a stock location, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceStocklocationByStocklocationid(requestParameters: CommerceApiDeleteV1CommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceStocklocationByStocklocationid(requestParameters: CommerceApiDeleteCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a submission, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceSubmissionBySubmissionid(requestParameters: CommerceApiDeleteV1CommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceSubmissionBySubmissionid(requestParameters: CommerceApiDeleteCommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The token must also carry Admin or WriteSubscriber.
      * @summary Delete a subscriber, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceSubscriberBySubscriberid(requestParameters: CommerceApiDeleteV1CommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceSubscriberBySubscriberid(requestParameters: CommerceApiDeleteCommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for tokentransaction, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a token transaction, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiDeleteV1CommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiDeleteCommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for transfer, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a transfer, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceTransferByTransferidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceTransferByTransferidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceTransferByTransferid(requestParameters: CommerceApiDeleteV1CommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceTransferByTransferid(requestParameters: CommerceApiDeleteCommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteVariant.
      * @summary Delete a variant, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceVariantByVariantidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceVariantByVariantidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceVariantByVariantid(requestParameters: CommerceApiDeleteV1CommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceVariantByVariantid(requestParameters: CommerceApiDeleteCommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for wallet, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a wallet, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceWalletByWalletidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceWalletByWalletidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceWalletByWalletid(requestParameters: CommerceApiDeleteV1CommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceWalletByWalletid(requestParameters: CommerceApiDeleteCommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for watchlist, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a watchlist, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceWatchlistByWatchlistid(requestParameters: CommerceApiDeleteV1CommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceWatchlistByWatchlistid(requestParameters: CommerceApiDeleteCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Delete a webhook, keeping a recoverable copy
-     * @param {CommerceApiDeleteV1CommerceWebhookByWebhookidRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteV1CommerceWebhookByWebhookid(requestParameters: CommerceApiDeleteV1CommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteV1CommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceWebhookByWebhookid(requestParameters: CommerceApiDeleteCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8241,8 +8241,8 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceAdminCatalog(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceAdminCatalog(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceAdminCatalog(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceAdminCatalog(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8252,8 +8252,8 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceCatalog(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceCatalog(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceCatalog(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceCatalog(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8263,20 +8263,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceCollection(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceCollection(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceCollection(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceCollection(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or ReadCollection.
      * @summary Fetch one collection
-     * @param {CommerceApiGetV1CommerceCollectionByCollectionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceCollectionByCollectionid(requestParameters: CommerceApiGetV1CommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceCollectionByCollectionid(requestParameters: CommerceApiGetCommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8286,8 +8286,8 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceCurrencies(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceCurrencies(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceCurrencies(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceCurrencies(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8297,20 +8297,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceDisclosure(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceDisclosure(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceDisclosure(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceDisclosure(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for disclosure, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one disclosure
-     * @param {CommerceApiGetV1CommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceDisclosureByDisclosureid(requestParameters: CommerceApiGetV1CommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceDisclosureByDisclosureid(requestParameters: CommerceApiGetCommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8320,20 +8320,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceDiscount(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceDiscount(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceDiscount(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceDiscount(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for discount, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one discount
-     * @param {CommerceApiGetV1CommerceDiscountByDiscountidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceDiscountByDiscountidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceDiscountByDiscountid(requestParameters: CommerceApiGetV1CommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceDiscountByDiscountid(requestParameters: CommerceApiGetCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8343,20 +8343,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceMovie(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceMovie(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceMovie(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceMovie(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for movie, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one movie
-     * @param {CommerceApiGetV1CommerceMovieByMovieidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceMovieByMovieidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceMovieByMovieid(requestParameters: CommerceApiGetV1CommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceMovieByMovieid(requestParameters: CommerceApiGetCommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8366,20 +8366,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceNote(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceNote(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceNote(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceNote(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for note, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one note
-     * @param {CommerceApiGetV1CommerceNoteByNoteidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceNoteByNoteidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceNoteByNoteid(requestParameters: CommerceApiGetV1CommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceNoteByNoteid(requestParameters: CommerceApiGetCommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8389,8 +8389,8 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceOrg(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceOrg(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceOrg(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceOrg(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8400,20 +8400,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceProduct(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceProduct(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceProduct(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceProduct(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or ReadProduct.
      * @summary Fetch one product
-     * @param {CommerceApiGetV1CommerceProductByProductidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceProductByProductidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceProductByProductid(requestParameters: CommerceApiGetV1CommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceProductByProductid(requestParameters: CommerceApiGetCommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8423,20 +8423,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceReturn(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceReturn(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceReturn(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceReturn(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The token must also carry Admin or ReadReturn.
      * @summary Fetch one return
-     * @param {CommerceApiGetV1CommerceReturnByReturnidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceReturnByReturnidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceReturnByReturnid(requestParameters: CommerceApiGetV1CommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceReturnByReturnid(requestParameters: CommerceApiGetCommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8446,20 +8446,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceSaleschannel(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceSaleschannel(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceSaleschannel(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceSaleschannel(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for saleschannel, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one sales channel
-     * @param {CommerceApiGetV1CommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiGetV1CommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiGetCommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8469,20 +8469,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceStocklocation(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceStocklocation(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceStocklocation(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceStocklocation(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for stocklocation, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one stock location
-     * @param {CommerceApiGetV1CommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceStocklocationByStocklocationid(requestParameters: CommerceApiGetV1CommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceStocklocationByStocklocationid(requestParameters: CommerceApiGetCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8492,20 +8492,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceSubmission(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceSubmission(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceSubmission(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceSubmission(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one submission
-     * @param {CommerceApiGetV1CommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceSubmissionBySubmissionid(requestParameters: CommerceApiGetV1CommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceSubmissionBySubmissionid(requestParameters: CommerceApiGetCommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8515,20 +8515,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceSubscriber(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceSubscriber(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceSubscriber(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceSubscriber(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The token must also carry Admin or ReadSubscriber.
      * @summary Fetch one subscriber
-     * @param {CommerceApiGetV1CommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceSubscriberBySubscriberid(requestParameters: CommerceApiGetV1CommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceSubscriberBySubscriberid(requestParameters: CommerceApiGetCommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8538,20 +8538,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceTokentransaction(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceTokentransaction(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceTokentransaction(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceTokentransaction(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for tokentransaction, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one token transaction
-     * @param {CommerceApiGetV1CommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiGetV1CommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiGetCommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8561,20 +8561,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceTransfer(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceTransfer(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceTransfer(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceTransfer(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for transfer, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one transfer
-     * @param {CommerceApiGetV1CommerceTransferByTransferidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceTransferByTransferidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceTransferByTransferid(requestParameters: CommerceApiGetV1CommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceTransferByTransferid(requestParameters: CommerceApiGetCommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8584,20 +8584,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceVariant(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceVariant(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceVariant(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceVariant(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or ReadVariant.
      * @summary Fetch one variant
-     * @param {CommerceApiGetV1CommerceVariantByVariantidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceVariantByVariantidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceVariantByVariantid(requestParameters: CommerceApiGetV1CommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceVariantByVariantid(requestParameters: CommerceApiGetCommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8607,20 +8607,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceWallet(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceWallet(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceWallet(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceWallet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for wallet, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one wallet
-     * @param {CommerceApiGetV1CommerceWalletByWalletidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceWalletByWalletidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceWalletByWalletid(requestParameters: CommerceApiGetV1CommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceWalletByWalletid(requestParameters: CommerceApiGetCommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8630,20 +8630,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceWatchlist(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceWatchlist(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceWatchlist(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceWatchlist(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. Any valid access token reaches it. The per-kind permission table has no entry for watchlist, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one watchlist
-     * @param {CommerceApiGetV1CommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceWatchlistByWatchlistid(requestParameters: CommerceApiGetV1CommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceWatchlistByWatchlistid(requestParameters: CommerceApiGetCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8653,224 +8653,224 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceWebhook(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceWebhook(options).then((request) => request(this.axios, this.basePath));
+    public getCommerceWebhook(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceWebhook(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Reads the addressed row from the caller org\'s own namespaced store. An id that is not there is 404 — and another tenant\'s id is not there by construction, so it reads exactly like a typo instead of confirming the row exists somewhere else. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Fetch one webhook
-     * @param {CommerceApiGetV1CommerceWebhookByWebhookidRequest} requestParameters Request parameters.
+     * @param {CommerceApiGetCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public getV1CommerceWebhookByWebhookid(requestParameters: CommerceApiGetV1CommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getV1CommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
+    public getCommerceWebhookByWebhookid(requestParameters: CommerceApiGetCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
      * @summary Change part of a collection
-     * @param {CommerceApiPatchV1CommerceCollectionByCollectionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceCollectionByCollectionid(requestParameters: CommerceApiPatchV1CommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceCollectionByCollectionid(requestParameters: CommerceApiPatchCommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for disclosure, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a disclosure
-     * @param {CommerceApiPatchV1CommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceDisclosureByDisclosureid(requestParameters: CommerceApiPatchV1CommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceDisclosureByDisclosureid(requestParameters: CommerceApiPatchCommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for discount, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a discount
-     * @param {CommerceApiPatchV1CommerceDiscountByDiscountidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceDiscountByDiscountidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceDiscountByDiscountid(requestParameters: CommerceApiPatchV1CommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceDiscountByDiscountid(requestParameters: CommerceApiPatchCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for movie, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a movie
-     * @param {CommerceApiPatchV1CommerceMovieByMovieidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceMovieByMovieidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceMovieByMovieid(requestParameters: CommerceApiPatchV1CommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceMovieByMovieid(requestParameters: CommerceApiPatchCommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for note, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a note
-     * @param {CommerceApiPatchV1CommerceNoteByNoteidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceNoteByNoteidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceNoteByNoteid(requestParameters: CommerceApiPatchV1CommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceNoteByNoteid(requestParameters: CommerceApiPatchCommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadProduct and WriteProduct together.
      * @summary Change part of a product
-     * @param {CommerceApiPatchV1CommerceProductByProductidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceProductByProductidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceProductByProductid(requestParameters: CommerceApiPatchV1CommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceProductByProductid(requestParameters: CommerceApiPatchCommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The token must also carry Admin, or ReadReturn and WriteReturn together.
      * @summary Change part of a return
-     * @param {CommerceApiPatchV1CommerceReturnByReturnidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceReturnByReturnidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceReturnByReturnid(requestParameters: CommerceApiPatchV1CommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceReturnByReturnid(requestParameters: CommerceApiPatchCommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for saleschannel, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a sales channel
-     * @param {CommerceApiPatchV1CommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPatchV1CommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPatchCommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for stocklocation, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a stock location
-     * @param {CommerceApiPatchV1CommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceStocklocationByStocklocationid(requestParameters: CommerceApiPatchV1CommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceStocklocationByStocklocationid(requestParameters: CommerceApiPatchCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a submission
-     * @param {CommerceApiPatchV1CommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceSubmissionBySubmissionid(requestParameters: CommerceApiPatchV1CommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceSubmissionBySubmissionid(requestParameters: CommerceApiPatchCommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The token must also carry Admin, or ReadSubscriber and WriteSubscriber together.
      * @summary Change part of a subscriber
-     * @param {CommerceApiPatchV1CommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceSubscriberBySubscriberid(requestParameters: CommerceApiPatchV1CommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceSubscriberBySubscriberid(requestParameters: CommerceApiPatchCommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for tokentransaction, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a token transaction
-     * @param {CommerceApiPatchV1CommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPatchV1CommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPatchCommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for transfer, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a transfer
-     * @param {CommerceApiPatchV1CommerceTransferByTransferidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceTransferByTransferidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceTransferByTransferid(requestParameters: CommerceApiPatchV1CommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceTransferByTransferid(requestParameters: CommerceApiPatchCommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadVariant and WriteVariant together.
      * @summary Change part of a variant
-     * @param {CommerceApiPatchV1CommerceVariantByVariantidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceVariantByVariantidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceVariantByVariantid(requestParameters: CommerceApiPatchV1CommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceVariantByVariantid(requestParameters: CommerceApiPatchCommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for wallet, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a wallet
-     * @param {CommerceApiPatchV1CommerceWalletByWalletidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceWalletByWalletidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceWalletByWalletid(requestParameters: CommerceApiPatchV1CommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceWalletByWalletid(requestParameters: CommerceApiPatchCommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for watchlist, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a watchlist
-     * @param {CommerceApiPatchV1CommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceWatchlistByWatchlistid(requestParameters: CommerceApiPatchV1CommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceWatchlistByWatchlistid(requestParameters: CommerceApiPatchCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a webhook
-     * @param {CommerceApiPatchV1CommerceWebhookByWebhookidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPatchCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public patchV1CommerceWebhookByWebhookid(requestParameters: CommerceApiPatchV1CommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).patchV1CommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
+    public patchCommerceWebhookByWebhookid(requestParameters: CommerceApiPatchCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8880,20 +8880,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceCollection(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceCollection(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceCollection(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceCollection(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
      * @summary Method-override tunnel for a collection — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceCollectionByCollectionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceCollectionByCollectionid(requestParameters: CommerceApiPostV1CommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceCollectionByCollectionid(requestParameters: CommerceApiPostCommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8903,20 +8903,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceDisclosure(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceDisclosure(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceDisclosure(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceDisclosure(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
      * @summary Method-override tunnel for a disclosure — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceDisclosureByDisclosureid(requestParameters: CommerceApiPostV1CommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceDisclosureByDisclosureid(requestParameters: CommerceApiPostCommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8926,20 +8926,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceDiscount(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceDiscount(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceDiscount(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceDiscount(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
      * @summary Method-override tunnel for a discount — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceDiscountByDiscountidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceDiscountByDiscountidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceDiscountByDiscountid(requestParameters: CommerceApiPostV1CommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceDiscountByDiscountid(requestParameters: CommerceApiPostCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8949,20 +8949,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceMovie(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceMovie(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceMovie(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceMovie(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
      * @summary Method-override tunnel for a movie — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceMovieByMovieidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceMovieByMovieidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceMovieByMovieid(requestParameters: CommerceApiPostV1CommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceMovieByMovieid(requestParameters: CommerceApiPostCommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8972,20 +8972,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceNote(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceNote(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceNote(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceNote(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
      * @summary Method-override tunnel for a note — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceNoteByNoteidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceNoteByNoteidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceNoteByNoteid(requestParameters: CommerceApiPostV1CommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceNoteByNoteid(requestParameters: CommerceApiPostCommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8995,20 +8995,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceProduct(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceProduct(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceProduct(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceProduct(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
      * @summary Method-override tunnel for a product — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceProductByProductidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceProductByProductidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceProductByProductid(requestParameters: CommerceApiPostV1CommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceProductByProductid(requestParameters: CommerceApiPostCommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9018,20 +9018,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceReturn(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceReturn(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceReturn(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceReturn(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
      * @summary Method-override tunnel for a return — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceReturnByReturnidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceReturnByReturnidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceReturnByReturnid(requestParameters: CommerceApiPostV1CommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceReturnByReturnid(requestParameters: CommerceApiPostCommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9041,20 +9041,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceSaleschannel(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceSaleschannel(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceSaleschannel(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceSaleschannel(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
      * @summary Method-override tunnel for a sales channel — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPostV1CommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPostCommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9064,20 +9064,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceStocklocation(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceStocklocation(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceStocklocation(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStocklocation(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
      * @summary Method-override tunnel for a stock location — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceStocklocationByStocklocationid(requestParameters: CommerceApiPostV1CommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceStocklocationByStocklocationid(requestParameters: CommerceApiPostCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9087,20 +9087,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceSubmission(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceSubmission(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceSubmission(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceSubmission(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
      * @summary Method-override tunnel for a submission — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceSubmissionBySubmissionid(requestParameters: CommerceApiPostV1CommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceSubmissionBySubmissionid(requestParameters: CommerceApiPostCommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9110,20 +9110,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceSubscriber(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceSubscriber(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceSubscriber(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceSubscriber(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
      * @summary Method-override tunnel for a subscriber — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceSubscriberBySubscriberid(requestParameters: CommerceApiPostV1CommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceSubscriberBySubscriberid(requestParameters: CommerceApiPostCommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9133,20 +9133,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceTokentransaction(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceTokentransaction(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceTokentransaction(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceTokentransaction(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
      * @summary Method-override tunnel for a token transaction — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPostV1CommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPostCommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9156,20 +9156,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceTransfer(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceTransfer(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceTransfer(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceTransfer(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. The token must carry the ADMIN permission; an ordinary access token is refused.
      * @summary Method-override tunnel for a transfer — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceTransferByTransferidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceTransferByTransferidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceTransferByTransferid(requestParameters: CommerceApiPostV1CommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceTransferByTransferid(requestParameters: CommerceApiPostCommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9179,20 +9179,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceVariant(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceVariant(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceVariant(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceVariant(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through.
      * @summary Method-override tunnel for a variant — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceVariantByVariantidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceVariantByVariantidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceVariantByVariantid(requestParameters: CommerceApiPostV1CommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceVariantByVariantid(requestParameters: CommerceApiPostCommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9202,20 +9202,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceWallet(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceWallet(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceWallet(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceWallet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. The token must carry the ADMIN permission; an ordinary access token is refused.
      * @summary Method-override tunnel for a wallet — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceWalletByWalletidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceWalletByWalletidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceWalletByWalletid(requestParameters: CommerceApiPostV1CommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceWalletByWalletid(requestParameters: CommerceApiPostCommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9225,20 +9225,20 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceWatchlist(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceWatchlist(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceWatchlist(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceWatchlist(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. Any valid access token reaches it.
      * @summary Method-override tunnel for a watchlist — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceWatchlistByWatchlistid(requestParameters: CommerceApiPostV1CommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceWatchlistByWatchlistid(requestParameters: CommerceApiPostCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9248,224 +9248,224 @@ export class CommerceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceWebhook(options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceWebhook(options).then((request) => request(this.axios, this.basePath));
+    public postCommerceWebhook(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceWebhook(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header. PUT replaces the row, PATCH changes part of it, DELETE removes it, and anything else is 405. The trap is the DEFAULT: naming no override at all leaves the method POST, which this tunnel maps to the PARTIAL UPDATE — it is never a create, and creating is the collection root\'s job. Behaviour and authorization are the underlying operation\'s, since the real handler runs. The token must carry the ADMIN permission; an ordinary access token is refused.
      * @summary Method-override tunnel for a webhook — for clients that cannot send PUT, PATCH or DELETE
-     * @param {CommerceApiPostV1CommerceWebhookByWebhookidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPostCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public postV1CommerceWebhookByWebhookid(requestParameters: CommerceApiPostV1CommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).postV1CommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
+    public postCommerceWebhookByWebhookid(requestParameters: CommerceApiPostCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
      * @summary Replace a collection outright
-     * @param {CommerceApiPutV1CommerceCollectionByCollectionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceCollectionByCollectionid(requestParameters: CommerceApiPutV1CommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceCollectionByCollectionid(requestParameters: CommerceApiPutCommerceCollectionByCollectionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceCollectionByCollectionid(requestParameters.collectionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for disclosure, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a disclosure outright
-     * @param {CommerceApiPutV1CommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceDisclosureByDisclosureidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceDisclosureByDisclosureid(requestParameters: CommerceApiPutV1CommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceDisclosureByDisclosureid(requestParameters: CommerceApiPutCommerceDisclosureByDisclosureidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceDisclosureByDisclosureid(requestParameters.disclosureid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A discount is a price rule: a type (flat, percent, free-shipping, free-item or bulk), a window, a scope naming the store, collection, product or variant it applies to, a target, and rules pairing a trigger — a price or quantity threshold — with an action, an amount off or a percentage. It is ENABLED BY DEFAULT, so a bare create makes a live discount rather than a draft. The rule engine caches per replica for about thirty seconds, so a discount switched off here can keep applying briefly on other replicas. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for discount, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a discount outright
-     * @param {CommerceApiPutV1CommerceDiscountByDiscountidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceDiscountByDiscountidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceDiscountByDiscountid(requestParameters: CommerceApiPutV1CommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceDiscountByDiscountid(requestParameters: CommerceApiPutCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for movie, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a movie outright
-     * @param {CommerceApiPutV1CommerceMovieByMovieidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceMovieByMovieidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceMovieByMovieid(requestParameters: CommerceApiPutV1CommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceMovieByMovieid(requestParameters: CommerceApiPutCommerceMovieByMovieidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceMovieByMovieid(requestParameters.movieid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A note is a timestamped free-text log line — a caller-supplied time, a source, a message and an enabled flag. That time is the caller\'s own field and is distinct from the row\'s creation stamp; the note search filters on it, so a note written without one is a zero-time note the ops log will never surface. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for note, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a note outright
-     * @param {CommerceApiPutV1CommerceNoteByNoteidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceNoteByNoteidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceNoteByNoteid(requestParameters: CommerceApiPutV1CommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceNoteByNoteid(requestParameters: CommerceApiPutCommerceNoteByNoteidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadProduct and WriteProduct together.
      * @summary Replace a product outright
-     * @param {CommerceApiPutV1CommerceProductByProductidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceProductByProductidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceProductByProductid(requestParameters: CommerceApiPutV1CommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceProductByProductid(requestParameters: CommerceApiPutCommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The token must also carry Admin, or ReadReturn and WriteReturn together.
      * @summary Replace a return outright
-     * @param {CommerceApiPutV1CommerceReturnByReturnidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceReturnByReturnidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceReturnByReturnid(requestParameters: CommerceApiPutV1CommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceReturnByReturnid(requestParameters: CommerceApiPutCommerceReturnByReturnidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceReturnByReturnid(requestParameters.returnid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A sales channel is a named selling surface — a name, a description, a disabled flag and metadata. The flag is NEGATIVE, so a channel created from an empty body is enabled. Nothing on this row links products, prices or stock to the channel; here it is a label other surfaces scope themselves by. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for saleschannel, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a sales channel outright
-     * @param {CommerceApiPutV1CommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceSaleschannelBySaleschannelidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPutV1CommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceSaleschannelBySaleschannelid(requestParameters: CommerceApiPutCommerceSaleschannelBySaleschannelidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceSaleschannelBySaleschannelid(requestParameters.saleschannelid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A stock location is a physical address inventory can be held at — a name, street lines, city, province, country, postal code and a phone. None of it is validated, there are no coordinates, and the row carries no enabled flag and no inventory link, so deleting it is the only way to retire one. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The per-kind permission table has no entry for stocklocation, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a stock location outright
-     * @param {CommerceApiPutV1CommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceStocklocationByStocklocationidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceStocklocationByStocklocationid(requestParameters: CommerceApiPutV1CommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceStocklocationByStocklocationid(requestParameters: CommerceApiPutCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a submission outright
-     * @param {CommerceApiPutV1CommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceSubmissionBySubmissionid(requestParameters: CommerceApiPutV1CommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceSubmissionBySubmissionid(requestParameters: CommerceApiPutCommerceSubmissionBySubmissionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceSubmissionBySubmissionid(requestParameters.submissionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A subscriber is a mailing-list member — name, email, the form id that captured them, unsubscribed state and date, client details, tags and metadata. Writing one FIRES A WEBHOOK: subscriber.created on create and subscriber.updated on replace or patch, emitted BEFORE the write is known to have succeeded and carrying the row as sent, so the payload holds the raw email rather than the normalized one that gets stored. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The token must also carry Admin, or ReadSubscriber and WriteSubscriber together.
      * @summary Replace a subscriber outright
-     * @param {CommerceApiPutV1CommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceSubscriberBySubscriberidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceSubscriberBySubscriberid(requestParameters: CommerceApiPutV1CommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceSubscriberBySubscriberid(requestParameters: CommerceApiPutCommerceSubscriberBySubscriberidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceSubscriberBySubscriberid(requestParameters.subscriberid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A token transaction records a transfer between two identified parties — amount and fees, a timestamp, sending and receiving addresses, names, user ids, states and countries, a flag per side, a protocol name and a transaction hash. Nothing here touches a chain: the hash is an unvalidated string and the flags are plain writable booleans with no screening behind them. Amounts are floating-point rather than the exact minor units every real money field in commerce uses, and there is no currency field at all — this kind lives in commerce\'s demo tree, so it is a live writable resource in your tenant\'s store that nothing else in commerce reads, and it must never carry real money. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for tokentransaction, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a token transaction outright
-     * @param {CommerceApiPutV1CommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceTokentransactionByTokentransactionidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPutV1CommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceTokentransactionByTokentransactionid(requestParameters: CommerceApiPutCommerceTokentransactionByTokentransactionidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceTokentransactionByTokentransactionid(requestParameters.tokentransactionid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A transfer records that a payable WAS PAID — the annotation a human writes after paying out of band. Commerce executes no payout: creating one moves no money, and it marks the referenced payable settled. It carries the payable and payee ids, the amount it settles and the amount actually sent (which may be a different asset), a type of eth, wire or other, the transaction hash or wire reference, when it was paid and who recorded it; amounts are exact decimal strings with an asset, not cents. It is admin-gated because writing one settles money we owe, and nothing enforces uniqueness on the reference — so posting the same transfer twice settles the payable twice. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for transfer, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a transfer outright
-     * @param {CommerceApiPutV1CommerceTransferByTransferidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceTransferByTransferidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceTransferByTransferid(requestParameters: CommerceApiPutV1CommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceTransferByTransferid(requestParameters: CommerceApiPutCommerceTransferByTransferidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceTransferByTransferid(requestParameters.transferid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A variant is one purchasable SKU of a product — its product id, SKU and UPC, name, media, availability, the option name and value pairs that distinguish it, a sold counter, and its own money and stock: currency, price, MSRP, inventory cost, inventory count and taxability. Inventory and sold are plain writable numbers with no decrement logic behind them here. The same variant also exists as a JSON copy inside its product, and writing one does not update the other. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadVariant and WriteVariant together.
      * @summary Replace a variant outright
-     * @param {CommerceApiPutV1CommerceVariantByVariantidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceVariantByVariantidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceVariantByVariantid(requestParameters: CommerceApiPutV1CommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceVariantByVariantid(requestParameters: CommerceApiPutCommerceVariantByVariantidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceVariantByVariantid(requestParameters.variantid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A wallet is a container of custodial blockchain accounts, and its only field is that account list — each account carrying a name, an address, a chain type, and the ENCRYPTED private key with its salt. Creating a wallet through this table generates NO KEYS: key generation lives on the account routes, so a wallet made here is an empty shell and an account posted into one is stored exactly as sent, with no key generation and no validation behind it. Know what a read renders: the plaintext private key is never marshalled and never stored, but the encrypted blob and its salt ARE returned, so whoever can read a wallet can attack it offline down to the strength of the owner\'s passphrase. That is why this kind is admin-gated. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for wallet, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a wallet outright
-     * @param {CommerceApiPutV1CommerceWalletByWalletidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceWalletByWalletidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceWalletByWalletid(requestParameters: CommerceApiPutV1CommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceWalletByWalletid(requestParameters: CommerceApiPutCommerceWalletByWalletidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceWalletByWalletid(requestParameters.walletid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A watchlist is a viewer\'s saved list of movies — a user id, an email, and the movies themselves. It stores WHOLE MOVIE SNAPSHOTS rather than movie ids, so a list goes stale the moment a film record changes and grows without bound as it fills. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for watchlist, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a watchlist outright
-     * @param {CommerceApiPutV1CommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceWatchlistByWatchlistidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceWatchlistByWatchlistid(requestParameters: CommerceApiPutV1CommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceWatchlistByWatchlistid(requestParameters: CommerceApiPutCommerceWatchlistByWatchlistidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceWatchlistByWatchlistid(requestParameters.watchlistid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * A webhook is a merchant-registered endpoint that receives commerce event callbacks — a name, a URL, live and all flags, a per-event map, an enabled flag, and the shared access token each delivery posts IN THE BODY. Two things to know before registering one: that token is a plainly readable field, so anyone who may read webhooks reads every endpoint\'s secret, and delivery consults only the all flag and the event map — it does NOT consult enabled or live, so setting enabled false does not stop delivery and deleting the row is the only thing that does. Delivery is a single POST with a twenty-second timeout and no retry. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. The token must carry the ADMIN permission; an ordinary access token is refused. The per-kind permission table has no entry for webhook, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Replace a webhook outright
-     * @param {CommerceApiPutV1CommerceWebhookByWebhookidRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceWebhookByWebhookidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putV1CommerceWebhookByWebhookid(requestParameters: CommerceApiPutV1CommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putV1CommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceWebhookByWebhookid(requestParameters: CommerceApiPutCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

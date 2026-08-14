@@ -38,9 +38,9 @@ export const RunApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Run: async (runReq: RunReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRun: async (runReq: RunReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'runReq' is not null or undefined
-            assertParamExists('postV1Run', 'runReq', runReq)
+            assertParamExists('postRun', 'runReq', runReq)
             const localVarPath = `/v1/run`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -84,10 +84,10 @@ export const RunApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Run(runReq: RunReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Run(runReq, options);
+        async postRun(runReq: RunReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRun(runReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RunApi.postV1Run']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RunApi.postRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -103,26 +103,26 @@ export const RunApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 403 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
          * @summary Runs a container image and gives back a URL.
-         * @param {RunApiPostV1RunRequest} requestParameters Request parameters.
+         * @param {RunApiPostRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Run(requestParameters: RunApiPostV1RunRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunView> {
-            return localVarFp.postV1Run(requestParameters.runReq, options).then((request) => request(axios, basePath));
+        postRun(requestParameters: RunApiPostRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunView> {
+            return localVarFp.postRun(requestParameters.runReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for postV1Run operation in RunApi.
+ * Request parameters for postRun operation in RunApi.
  * @export
- * @interface RunApiPostV1RunRequest
+ * @interface RunApiPostRunRequest
  */
-export interface RunApiPostV1RunRequest {
+export interface RunApiPostRunRequest {
     /**
      * 
      * @type {RunReq}
-     * @memberof RunApiPostV1Run
+     * @memberof RunApiPostRun
      */
     readonly runReq: RunReq
 }
@@ -137,13 +137,13 @@ export class RunApi extends BaseAPI {
     /**
      * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 403 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
      * @summary Runs a container image and gives back a URL.
-     * @param {RunApiPostV1RunRequest} requestParameters Request parameters.
+     * @param {RunApiPostRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunApi
      */
-    public postV1Run(requestParameters: RunApiPostV1RunRequest, options?: RawAxiosRequestConfig) {
-        return RunApiFp(this.configuration).postV1Run(requestParameters.runReq, options).then((request) => request(this.axios, this.basePath));
+    public postRun(requestParameters: RunApiPostRunRequest, options?: RawAxiosRequestConfig) {
+        return RunApiFp(this.configuration).postRun(requestParameters.runReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

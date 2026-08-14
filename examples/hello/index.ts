@@ -35,7 +35,7 @@ type UserInfo = {
 
 async function main() {
   const iam = new IamApi(config());
-  const { data } = await iam.getV1IamOauthUserinfo();
+  const { data } = await iam.getIamOauthUserinfo();
   const me = data as unknown as UserInfo;
 
   console.log(`hello from ${basePath}`);

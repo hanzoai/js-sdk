@@ -33,7 +33,7 @@ export const ProcessSpeechToTextApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ProcessSpeechToText: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postProcessSpeechToText: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/process-speech-to-text`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const ProcessSpeechToTextApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ProcessSpeechToText(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ProcessSpeechToText(options);
+        async postProcessSpeechToText(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProcessSpeechToText(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProcessSpeechToTextApi.postV1ProcessSpeechToText']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ProcessSpeechToTextApi.postProcessSpeechToText']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const ProcessSpeechToTextApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ProcessSpeechToText(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1ProcessSpeechToText(options).then((request) => request(axios, basePath));
+        postProcessSpeechToText(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postProcessSpeechToText(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class ProcessSpeechToTextApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProcessSpeechToTextApi
      */
-    public postV1ProcessSpeechToText(options?: RawAxiosRequestConfig) {
-        return ProcessSpeechToTextApiFp(this.configuration).postV1ProcessSpeechToText(options).then((request) => request(this.axios, this.basePath));
+    public postProcessSpeechToText(options?: RawAxiosRequestConfig) {
+        return ProcessSpeechToTextApiFp(this.configuration).postProcessSpeechToText(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

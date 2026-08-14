@@ -42,9 +42,9 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AutoFlowsByFlow: async (flow: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteAutoFlowsByFlow: async (flow: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'flow' is not null or undefined
-            assertParamExists('deleteV1AutoFlowsByFlow', 'flow', flow)
+            assertParamExists('deleteAutoFlowsByFlow', 'flow', flow)
             const localVarPath = `/v1/auto/flows/{flow}`
                 .replace(`{${"flow"}}`, encodeURIComponent(String(flow)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -75,7 +75,7 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoFlows: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutoFlows: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/auto/flows`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -106,9 +106,9 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoFlowsByFlow: async (flow: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutoFlowsByFlow: async (flow: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'flow' is not null or undefined
-            assertParamExists('getV1AutoFlowsByFlow', 'flow', flow)
+            assertParamExists('getAutoFlowsByFlow', 'flow', flow)
             const localVarPath = `/v1/auto/flows/{flow}`
                 .replace(`{${"flow"}}`, encodeURIComponent(String(flow)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -139,7 +139,7 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoPieces: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutoPieces: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/auto/pieces`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -170,7 +170,7 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoRuns: async (flow?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutoRuns: async (flow?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/auto/runs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -205,9 +205,9 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoRunsByRun: async (run: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutoRunsByRun: async (run: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'run' is not null or undefined
-            assertParamExists('getV1AutoRunsByRun', 'run', run)
+            assertParamExists('getAutoRunsByRun', 'run', run)
             const localVarPath = `/v1/auto/runs/{run}`
                 .replace(`{${"run"}}`, encodeURIComponent(String(run)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -238,7 +238,7 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoStatus: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutoStatus: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/auto/status`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -270,11 +270,11 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AutoFlowsByFlow: async (flow: string, autoUpdate: AutoUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAutoFlowsByFlow: async (flow: string, autoUpdate: AutoUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'flow' is not null or undefined
-            assertParamExists('patchV1AutoFlowsByFlow', 'flow', flow)
+            assertParamExists('patchAutoFlowsByFlow', 'flow', flow)
             // verify required parameter 'autoUpdate' is not null or undefined
-            assertParamExists('patchV1AutoFlowsByFlow', 'autoUpdate', autoUpdate)
+            assertParamExists('patchAutoFlowsByFlow', 'autoUpdate', autoUpdate)
             const localVarPath = `/v1/auto/flows/{flow}`
                 .replace(`{${"flow"}}`, encodeURIComponent(String(flow)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -309,9 +309,9 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutoFlows: async (autoCreate: AutoCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutoFlows: async (autoCreate: AutoCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'autoCreate' is not null or undefined
-            assertParamExists('postV1AutoFlows', 'autoCreate', autoCreate)
+            assertParamExists('postAutoFlows', 'autoCreate', autoCreate)
             const localVarPath = `/v1/auto/flows`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -345,9 +345,9 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutoFlowsByFlowPublish: async (flow: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutoFlowsByFlowPublish: async (flow: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'flow' is not null or undefined
-            assertParamExists('postV1AutoFlowsByFlowPublish', 'flow', flow)
+            assertParamExists('postAutoFlowsByFlowPublish', 'flow', flow)
             const localVarPath = `/v1/auto/flows/{flow}/publish`
                 .replace(`{${"flow"}}`, encodeURIComponent(String(flow)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -379,9 +379,9 @@ export const AutoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutoRuns: async (autoStart: AutoStart, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutoRuns: async (autoStart: AutoStart, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'autoStart' is not null or undefined
-            assertParamExists('postV1AutoRuns', 'autoStart', autoStart)
+            assertParamExists('postAutoRuns', 'autoStart', autoStart)
             const localVarPath = `/v1/auto/runs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -425,10 +425,10 @@ export const AutoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AutoFlowsByFlow(flow: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AutoFlowsByFlow(flow, options);
+        async deleteAutoFlowsByFlow(flow: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAutoFlowsByFlow(flow, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutoApi.deleteV1AutoFlowsByFlow']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.deleteAutoFlowsByFlow']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -437,10 +437,10 @@ export const AutoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutoFlows(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutoFlows(options);
+        async getAutoFlows(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoFlows(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutoApi.getV1AutoFlows']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.getAutoFlows']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -450,10 +450,10 @@ export const AutoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutoFlowsByFlow(flow: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutoFlowsByFlow(flow, options);
+        async getAutoFlowsByFlow(flow: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoFlowsByFlow(flow, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutoApi.getV1AutoFlowsByFlow']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.getAutoFlowsByFlow']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -462,10 +462,10 @@ export const AutoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutoPieces(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutoPieces(options);
+        async getAutoPieces(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoPieces(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutoApi.getV1AutoPieces']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.getAutoPieces']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -475,10 +475,10 @@ export const AutoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutoRuns(flow?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutoRuns(flow, options);
+        async getAutoRuns(flow?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoRuns(flow, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutoApi.getV1AutoRuns']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.getAutoRuns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -488,10 +488,10 @@ export const AutoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutoRunsByRun(run: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutoRunsByRun(run, options);
+        async getAutoRunsByRun(run: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoRunsByRun(run, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutoApi.getV1AutoRunsByRun']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.getAutoRunsByRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -500,10 +500,10 @@ export const AutoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutoStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoStatus>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutoStatus(options);
+        async getAutoStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutoStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutoStatus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutoApi.getV1AutoStatus']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.getAutoStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -514,10 +514,10 @@ export const AutoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AutoFlowsByFlow(flow: string, autoUpdate: AutoUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AutoFlowsByFlow(flow, autoUpdate, options);
+        async patchAutoFlowsByFlow(flow: string, autoUpdate: AutoUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAutoFlowsByFlow(flow, autoUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutoApi.patchV1AutoFlowsByFlow']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.patchAutoFlowsByFlow']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -527,10 +527,10 @@ export const AutoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutoFlows(autoCreate: AutoCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutoFlows(autoCreate, options);
+        async postAutoFlows(autoCreate: AutoCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutoFlows(autoCreate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutoApi.postV1AutoFlows']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.postAutoFlows']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -540,10 +540,10 @@ export const AutoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutoFlowsByFlowPublish(flow: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutoFlowsByFlowPublish(flow, options);
+        async postAutoFlowsByFlowPublish(flow: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutoFlowsByFlowPublish(flow, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutoApi.postV1AutoFlowsByFlowPublish']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.postAutoFlowsByFlowPublish']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -553,10 +553,10 @@ export const AutoApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutoRuns(autoStart: AutoStart, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutoRuns(autoStart, options);
+        async postAutoRuns(autoStart: AutoStart, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutoRuns(autoStart, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutoApi.postV1AutoRuns']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutoApi.postAutoRuns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -572,12 +572,12 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Deletes one of the caller\'s flows. A foreign id answers 404 and deletes nothing.
          * @summary Deletes one of the caller\'s flows.
-         * @param {AutoApiDeleteV1AutoFlowsByFlowRequest} requestParameters Request parameters.
+         * @param {AutoApiDeleteAutoFlowsByFlowRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AutoFlowsByFlow(requestParameters: AutoApiDeleteV1AutoFlowsByFlowRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.deleteV1AutoFlowsByFlow(requestParameters.flow, options).then((request) => request(axios, basePath));
+        deleteAutoFlowsByFlow(requestParameters: AutoApiDeleteAutoFlowsByFlowRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.deleteAutoFlowsByFlow(requestParameters.flow, options).then((request) => request(axios, basePath));
         },
         /**
          * Flows lists the caller\'s flows, newest first. The list is scoped by the product to the caller\'s org — it can only ever hold the caller\'s own flows.
@@ -585,18 +585,18 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoFlows(options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.getV1AutoFlows(options).then((request) => request(axios, basePath));
+        getAutoFlows(options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.getAutoFlows(options).then((request) => request(axios, basePath));
         },
         /**
          * Flow reads one of the caller\'s flows — the full record, graph included. A flow outside the caller\'s org answers 404, indistinguishable from one that does not exist.
          * @summary Flow reads one of the caller\'s flows — the full record, graph included.
-         * @param {AutoApiGetV1AutoFlowsByFlowRequest} requestParameters Request parameters.
+         * @param {AutoApiGetAutoFlowsByFlowRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoFlowsByFlow(requestParameters: AutoApiGetV1AutoFlowsByFlowRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.getV1AutoFlowsByFlow(requestParameters.flow, options).then((request) => request(axios, basePath));
+        getAutoFlowsByFlow(requestParameters: AutoApiGetAutoFlowsByFlowRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.getAutoFlowsByFlow(requestParameters.flow, options).then((request) => request(axios, basePath));
         },
         /**
          * Pieces lists the product\'s built-in piece catalog: the trigger and action types a flow\'s nodes can use (webhook, schedule, http, set, branch), each with its input descriptors. The catalog is compiled into the product — adding a piece is a product release, not a platform call.
@@ -604,28 +604,28 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoPieces(options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.getV1AutoPieces(options).then((request) => request(axios, basePath));
+        getAutoPieces(options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.getAutoPieces(options).then((request) => request(axios, basePath));
         },
         /**
          * Runs lists the caller\'s run records, newest first — optionally one flow\'s. Each record carries the run\'s status (queued, running, completed, failed), its input, and its output once the run finished.
          * @summary Runs lists the caller\'s run records, newest first — optionally one flow\'s.
-         * @param {AutoApiGetV1AutoRunsRequest} requestParameters Request parameters.
+         * @param {AutoApiGetAutoRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoRuns(requestParameters: AutoApiGetV1AutoRunsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.getV1AutoRuns(requestParameters.flow, options).then((request) => request(axios, basePath));
+        getAutoRuns(requestParameters: AutoApiGetAutoRunsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.getAutoRuns(requestParameters.flow, options).then((request) => request(axios, basePath));
         },
         /**
          * Run reads one run record: status, input, output (each executed node\'s result keyed by node id once completed), error detail if it failed, and timestamps. A run outside the caller\'s org answers 404.
          * @summary Run reads one run record: status, input, output (each executed node\'s result keyed by node id once completed), error detail if it failed, and timestamps.
-         * @param {AutoApiGetV1AutoRunsByRunRequest} requestParameters Request parameters.
+         * @param {AutoApiGetAutoRunsByRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoRunsByRun(requestParameters: AutoApiGetV1AutoRunsByRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.getV1AutoRunsByRun(requestParameters.run, options).then((request) => request(axios, basePath));
+        getAutoRunsByRun(requestParameters: AutoApiGetAutoRunsByRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.getAutoRunsByRun(requestParameters.run, options).then((request) => request(axios, basePath));
         },
         /**
          * Status reports whether the auto service is reachable — its own health endpoint as an honest lens for \"is the automation plane up\".
@@ -633,167 +633,167 @@ export const AutoApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutoStatus(options?: RawAxiosRequestConfig): AxiosPromise<AutoStatus> {
-            return localVarFp.getV1AutoStatus(options).then((request) => request(axios, basePath));
+        getAutoStatus(options?: RawAxiosRequestConfig): AxiosPromise<AutoStatus> {
+            return localVarFp.getAutoStatus(options).then((request) => request(axios, basePath));
         },
         /**
          * Patches one of the caller\'s flows: the name, the graph, or both — only the stated fields move.
          * @summary Patches one of the caller\'s flows: the name, the graph, or both — only the stated fields move.
-         * @param {AutoApiPatchV1AutoFlowsByFlowRequest} requestParameters Request parameters.
+         * @param {AutoApiPatchAutoFlowsByFlowRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AutoFlowsByFlow(requestParameters: AutoApiPatchV1AutoFlowsByFlowRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.patchV1AutoFlowsByFlow(requestParameters.flow, requestParameters.autoUpdate, options).then((request) => request(axios, basePath));
+        patchAutoFlowsByFlow(requestParameters: AutoApiPatchAutoFlowsByFlowRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.patchAutoFlowsByFlow(requestParameters.flow, requestParameters.autoUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a flow in the caller\'s org. The org is stamped server-side from the validated principal — there is no field by which a caller could place a flow in another org.
          * @summary Creates a flow in the caller\'s org.
-         * @param {AutoApiPostV1AutoFlowsRequest} requestParameters Request parameters.
+         * @param {AutoApiPostAutoFlowsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutoFlows(requestParameters: AutoApiPostV1AutoFlowsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postV1AutoFlows(requestParameters.autoCreate, options).then((request) => request(axios, basePath));
+        postAutoFlows(requestParameters: AutoApiPostAutoFlowsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.postAutoFlows(requestParameters.autoCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * Publish snapshots the flow\'s current graph as its next immutable version and arms the flow\'s triggers. Past versions stay addressable in the product for rollback; runs always execute the graph as it was dispatched.
          * @summary Publish snapshots the flow\'s current graph as its next immutable version and arms the flow\'s triggers.
-         * @param {AutoApiPostV1AutoFlowsByFlowPublishRequest} requestParameters Request parameters.
+         * @param {AutoApiPostAutoFlowsByFlowPublishRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutoFlowsByFlowPublish(requestParameters: AutoApiPostV1AutoFlowsByFlowPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postV1AutoFlowsByFlowPublish(requestParameters.flow, options).then((request) => request(axios, basePath));
+        postAutoFlowsByFlowPublish(requestParameters: AutoApiPostAutoFlowsByFlowPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.postAutoFlowsByFlowPublish(requestParameters.flow, options).then((request) => request(axios, basePath));
         },
         /**
          * Start begins one asynchronous run of a flow: the product dispatches the graph to its durable execution engine (the hanzo tasks plane) and answers immediately with the run record in status running. Poll the run until it reaches completed — its output then holds each node\'s result keyed by node id — or failed, with the error. A flow whose engine is unreachable answers the product\'s 503: dispatch is real or it is refused, never queued into the void.
          * @summary Start begins one asynchronous run of a flow: the product dispatches the graph to its durable execution engine (the hanzo tasks plane) and answers immediately with the run record in status running.
-         * @param {AutoApiPostV1AutoRunsRequest} requestParameters Request parameters.
+         * @param {AutoApiPostAutoRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutoRuns(requestParameters: AutoApiPostV1AutoRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
-            return localVarFp.postV1AutoRuns(requestParameters.autoStart, options).then((request) => request(axios, basePath));
+        postAutoRuns(requestParameters: AutoApiPostAutoRunsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
+            return localVarFp.postAutoRuns(requestParameters.autoStart, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1AutoFlowsByFlow operation in AutoApi.
+ * Request parameters for deleteAutoFlowsByFlow operation in AutoApi.
  * @export
- * @interface AutoApiDeleteV1AutoFlowsByFlowRequest
+ * @interface AutoApiDeleteAutoFlowsByFlowRequest
  */
-export interface AutoApiDeleteV1AutoFlowsByFlowRequest {
+export interface AutoApiDeleteAutoFlowsByFlowRequest {
     /**
      * Flow is the flow\&#39;s id, taken from the path.
      * @type {string}
-     * @memberof AutoApiDeleteV1AutoFlowsByFlow
+     * @memberof AutoApiDeleteAutoFlowsByFlow
      */
     readonly flow: string
 }
 
 /**
- * Request parameters for getV1AutoFlowsByFlow operation in AutoApi.
+ * Request parameters for getAutoFlowsByFlow operation in AutoApi.
  * @export
- * @interface AutoApiGetV1AutoFlowsByFlowRequest
+ * @interface AutoApiGetAutoFlowsByFlowRequest
  */
-export interface AutoApiGetV1AutoFlowsByFlowRequest {
+export interface AutoApiGetAutoFlowsByFlowRequest {
     /**
      * Flow is the flow\&#39;s id, taken from the path.
      * @type {string}
-     * @memberof AutoApiGetV1AutoFlowsByFlow
+     * @memberof AutoApiGetAutoFlowsByFlow
      */
     readonly flow: string
 }
 
 /**
- * Request parameters for getV1AutoRuns operation in AutoApi.
+ * Request parameters for getAutoRuns operation in AutoApi.
  * @export
- * @interface AutoApiGetV1AutoRunsRequest
+ * @interface AutoApiGetAutoRunsRequest
  */
-export interface AutoApiGetV1AutoRunsRequest {
+export interface AutoApiGetAutoRunsRequest {
     /**
      * Flow narrows the list to one flow\&#39;s runs when present.
      * @type {string}
-     * @memberof AutoApiGetV1AutoRuns
+     * @memberof AutoApiGetAutoRuns
      */
     readonly flow?: string
 }
 
 /**
- * Request parameters for getV1AutoRunsByRun operation in AutoApi.
+ * Request parameters for getAutoRunsByRun operation in AutoApi.
  * @export
- * @interface AutoApiGetV1AutoRunsByRunRequest
+ * @interface AutoApiGetAutoRunsByRunRequest
  */
-export interface AutoApiGetV1AutoRunsByRunRequest {
+export interface AutoApiGetAutoRunsByRunRequest {
     /**
      * Run is the run\&#39;s id, taken from the path.
      * @type {string}
-     * @memberof AutoApiGetV1AutoRunsByRun
+     * @memberof AutoApiGetAutoRunsByRun
      */
     readonly run: string
 }
 
 /**
- * Request parameters for patchV1AutoFlowsByFlow operation in AutoApi.
+ * Request parameters for patchAutoFlowsByFlow operation in AutoApi.
  * @export
- * @interface AutoApiPatchV1AutoFlowsByFlowRequest
+ * @interface AutoApiPatchAutoFlowsByFlowRequest
  */
-export interface AutoApiPatchV1AutoFlowsByFlowRequest {
+export interface AutoApiPatchAutoFlowsByFlowRequest {
     /**
      * Flow is the flow\&#39;s id, taken from the path.
      * @type {string}
-     * @memberof AutoApiPatchV1AutoFlowsByFlow
+     * @memberof AutoApiPatchAutoFlowsByFlow
      */
     readonly flow: string
 
     /**
      * 
      * @type {AutoUpdate}
-     * @memberof AutoApiPatchV1AutoFlowsByFlow
+     * @memberof AutoApiPatchAutoFlowsByFlow
      */
     readonly autoUpdate: AutoUpdate
 }
 
 /**
- * Request parameters for postV1AutoFlows operation in AutoApi.
+ * Request parameters for postAutoFlows operation in AutoApi.
  * @export
- * @interface AutoApiPostV1AutoFlowsRequest
+ * @interface AutoApiPostAutoFlowsRequest
  */
-export interface AutoApiPostV1AutoFlowsRequest {
+export interface AutoApiPostAutoFlowsRequest {
     /**
      * 
      * @type {AutoCreate}
-     * @memberof AutoApiPostV1AutoFlows
+     * @memberof AutoApiPostAutoFlows
      */
     readonly autoCreate: AutoCreate
 }
 
 /**
- * Request parameters for postV1AutoFlowsByFlowPublish operation in AutoApi.
+ * Request parameters for postAutoFlowsByFlowPublish operation in AutoApi.
  * @export
- * @interface AutoApiPostV1AutoFlowsByFlowPublishRequest
+ * @interface AutoApiPostAutoFlowsByFlowPublishRequest
  */
-export interface AutoApiPostV1AutoFlowsByFlowPublishRequest {
+export interface AutoApiPostAutoFlowsByFlowPublishRequest {
     /**
      * Flow is the flow\&#39;s id, taken from the path.
      * @type {string}
-     * @memberof AutoApiPostV1AutoFlowsByFlowPublish
+     * @memberof AutoApiPostAutoFlowsByFlowPublish
      */
     readonly flow: string
 }
 
 /**
- * Request parameters for postV1AutoRuns operation in AutoApi.
+ * Request parameters for postAutoRuns operation in AutoApi.
  * @export
- * @interface AutoApiPostV1AutoRunsRequest
+ * @interface AutoApiPostAutoRunsRequest
  */
-export interface AutoApiPostV1AutoRunsRequest {
+export interface AutoApiPostAutoRunsRequest {
     /**
      * 
      * @type {AutoStart}
-     * @memberof AutoApiPostV1AutoRuns
+     * @memberof AutoApiPostAutoRuns
      */
     readonly autoStart: AutoStart
 }
@@ -808,13 +808,13 @@ export class AutoApi extends BaseAPI {
     /**
      * Deletes one of the caller\'s flows. A foreign id answers 404 and deletes nothing.
      * @summary Deletes one of the caller\'s flows.
-     * @param {AutoApiDeleteV1AutoFlowsByFlowRequest} requestParameters Request parameters.
+     * @param {AutoApiDeleteAutoFlowsByFlowRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutoApi
      */
-    public deleteV1AutoFlowsByFlow(requestParameters: AutoApiDeleteV1AutoFlowsByFlowRequest, options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).deleteV1AutoFlowsByFlow(requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
+    public deleteAutoFlowsByFlow(requestParameters: AutoApiDeleteAutoFlowsByFlowRequest, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).deleteAutoFlowsByFlow(requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -824,20 +824,20 @@ export class AutoApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AutoApi
      */
-    public getV1AutoFlows(options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).getV1AutoFlows(options).then((request) => request(this.axios, this.basePath));
+    public getAutoFlows(options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).getAutoFlows(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Flow reads one of the caller\'s flows — the full record, graph included. A flow outside the caller\'s org answers 404, indistinguishable from one that does not exist.
      * @summary Flow reads one of the caller\'s flows — the full record, graph included.
-     * @param {AutoApiGetV1AutoFlowsByFlowRequest} requestParameters Request parameters.
+     * @param {AutoApiGetAutoFlowsByFlowRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutoApi
      */
-    public getV1AutoFlowsByFlow(requestParameters: AutoApiGetV1AutoFlowsByFlowRequest, options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).getV1AutoFlowsByFlow(requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
+    public getAutoFlowsByFlow(requestParameters: AutoApiGetAutoFlowsByFlowRequest, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).getAutoFlowsByFlow(requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -847,32 +847,32 @@ export class AutoApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AutoApi
      */
-    public getV1AutoPieces(options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).getV1AutoPieces(options).then((request) => request(this.axios, this.basePath));
+    public getAutoPieces(options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).getAutoPieces(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Runs lists the caller\'s run records, newest first — optionally one flow\'s. Each record carries the run\'s status (queued, running, completed, failed), its input, and its output once the run finished.
      * @summary Runs lists the caller\'s run records, newest first — optionally one flow\'s.
-     * @param {AutoApiGetV1AutoRunsRequest} requestParameters Request parameters.
+     * @param {AutoApiGetAutoRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutoApi
      */
-    public getV1AutoRuns(requestParameters: AutoApiGetV1AutoRunsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).getV1AutoRuns(requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
+    public getAutoRuns(requestParameters: AutoApiGetAutoRunsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).getAutoRuns(requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Run reads one run record: status, input, output (each executed node\'s result keyed by node id once completed), error detail if it failed, and timestamps. A run outside the caller\'s org answers 404.
      * @summary Run reads one run record: status, input, output (each executed node\'s result keyed by node id once completed), error detail if it failed, and timestamps.
-     * @param {AutoApiGetV1AutoRunsByRunRequest} requestParameters Request parameters.
+     * @param {AutoApiGetAutoRunsByRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutoApi
      */
-    public getV1AutoRunsByRun(requestParameters: AutoApiGetV1AutoRunsByRunRequest, options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).getV1AutoRunsByRun(requestParameters.run, options).then((request) => request(this.axios, this.basePath));
+    public getAutoRunsByRun(requestParameters: AutoApiGetAutoRunsByRunRequest, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).getAutoRunsByRun(requestParameters.run, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -882,56 +882,56 @@ export class AutoApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AutoApi
      */
-    public getV1AutoStatus(options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).getV1AutoStatus(options).then((request) => request(this.axios, this.basePath));
+    public getAutoStatus(options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).getAutoStatus(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Patches one of the caller\'s flows: the name, the graph, or both — only the stated fields move.
      * @summary Patches one of the caller\'s flows: the name, the graph, or both — only the stated fields move.
-     * @param {AutoApiPatchV1AutoFlowsByFlowRequest} requestParameters Request parameters.
+     * @param {AutoApiPatchAutoFlowsByFlowRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutoApi
      */
-    public patchV1AutoFlowsByFlow(requestParameters: AutoApiPatchV1AutoFlowsByFlowRequest, options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).patchV1AutoFlowsByFlow(requestParameters.flow, requestParameters.autoUpdate, options).then((request) => request(this.axios, this.basePath));
+    public patchAutoFlowsByFlow(requestParameters: AutoApiPatchAutoFlowsByFlowRequest, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).patchAutoFlowsByFlow(requestParameters.flow, requestParameters.autoUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a flow in the caller\'s org. The org is stamped server-side from the validated principal — there is no field by which a caller could place a flow in another org.
      * @summary Creates a flow in the caller\'s org.
-     * @param {AutoApiPostV1AutoFlowsRequest} requestParameters Request parameters.
+     * @param {AutoApiPostAutoFlowsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutoApi
      */
-    public postV1AutoFlows(requestParameters: AutoApiPostV1AutoFlowsRequest, options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).postV1AutoFlows(requestParameters.autoCreate, options).then((request) => request(this.axios, this.basePath));
+    public postAutoFlows(requestParameters: AutoApiPostAutoFlowsRequest, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).postAutoFlows(requestParameters.autoCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Publish snapshots the flow\'s current graph as its next immutable version and arms the flow\'s triggers. Past versions stay addressable in the product for rollback; runs always execute the graph as it was dispatched.
      * @summary Publish snapshots the flow\'s current graph as its next immutable version and arms the flow\'s triggers.
-     * @param {AutoApiPostV1AutoFlowsByFlowPublishRequest} requestParameters Request parameters.
+     * @param {AutoApiPostAutoFlowsByFlowPublishRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutoApi
      */
-    public postV1AutoFlowsByFlowPublish(requestParameters: AutoApiPostV1AutoFlowsByFlowPublishRequest, options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).postV1AutoFlowsByFlowPublish(requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
+    public postAutoFlowsByFlowPublish(requestParameters: AutoApiPostAutoFlowsByFlowPublishRequest, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).postAutoFlowsByFlowPublish(requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Start begins one asynchronous run of a flow: the product dispatches the graph to its durable execution engine (the hanzo tasks plane) and answers immediately with the run record in status running. Poll the run until it reaches completed — its output then holds each node\'s result keyed by node id — or failed, with the error. A flow whose engine is unreachable answers the product\'s 503: dispatch is real or it is refused, never queued into the void.
      * @summary Start begins one asynchronous run of a flow: the product dispatches the graph to its durable execution engine (the hanzo tasks plane) and answers immediately with the run record in status running.
-     * @param {AutoApiPostV1AutoRunsRequest} requestParameters Request parameters.
+     * @param {AutoApiPostAutoRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutoApi
      */
-    public postV1AutoRuns(requestParameters: AutoApiPostV1AutoRunsRequest, options?: RawAxiosRequestConfig) {
-        return AutoApiFp(this.configuration).postV1AutoRuns(requestParameters.autoStart, options).then((request) => request(this.axios, this.basePath));
+    public postAutoRuns(requestParameters: AutoApiPostAutoRunsRequest, options?: RawAxiosRequestConfig) {
+        return AutoApiFp(this.configuration).postAutoRuns(requestParameters.autoStart, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

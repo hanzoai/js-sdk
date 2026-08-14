@@ -15,6 +15,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import type { AimActorStat } from './aim-actor-stat';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { AimEvals } from './aim-evals';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -98,6 +101,12 @@ export interface AiMetrics {
      * @memberof AiMetrics
      */
     'start'?: string;
+    /**
+     * TopActors is per-PRINCIPAL spend from the same ledger — whose bill it is, which the per-model board cannot answer.
+     * @type {Array<AimActorStat>}
+     * @memberof AiMetrics
+     */
+    'topActors'?: Array<AimActorStat>;
     /**
      * cloud_usage per-model (populated today)
      * @type {Array<AimModelStat>}

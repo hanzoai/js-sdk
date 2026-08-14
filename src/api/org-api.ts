@@ -33,7 +33,7 @@ export const OrgApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1OrgSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteOrgSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/org/settings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const OrgApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1OrgSettingsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteOrgSettingsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/org/settings/list`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -93,7 +93,7 @@ export const OrgApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1OrgSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrgSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/org/settings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -123,7 +123,7 @@ export const OrgApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1OrgSettingsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOrgSettingsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/org/settings/list`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -153,7 +153,7 @@ export const OrgApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1OrgSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchOrgSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/org/settings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -183,7 +183,7 @@ export const OrgApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1OrgSettingsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchOrgSettingsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/org/settings/list`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -213,7 +213,7 @@ export const OrgApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1OrgSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postOrgSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/org/settings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -243,7 +243,7 @@ export const OrgApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1OrgSettingsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postOrgSettingsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/org/settings/list`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -273,7 +273,7 @@ export const OrgApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1OrgSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putOrgSettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/org/settings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -303,7 +303,7 @@ export const OrgApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1OrgSettingsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putOrgSettingsList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/org/settings/list`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -343,10 +343,10 @@ export const OrgApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1OrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1OrgSettings(options);
+        async deleteOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrgSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgApi.deleteV1OrgSettings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgApi.deleteOrgSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -355,10 +355,10 @@ export const OrgApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1OrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1OrgSettingsList(options);
+        async deleteOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrgSettingsList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgApi.deleteV1OrgSettingsList']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgApi.deleteOrgSettingsList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -367,10 +367,10 @@ export const OrgApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1OrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1OrgSettings(options);
+        async getOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrgSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgApi.getV1OrgSettings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgApi.getOrgSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -379,10 +379,10 @@ export const OrgApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1OrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1OrgSettingsList(options);
+        async getOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrgSettingsList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgApi.getV1OrgSettingsList']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgApi.getOrgSettingsList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -391,10 +391,10 @@ export const OrgApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1OrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1OrgSettings(options);
+        async patchOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchOrgSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgApi.patchV1OrgSettings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgApi.patchOrgSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -403,10 +403,10 @@ export const OrgApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1OrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1OrgSettingsList(options);
+        async patchOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchOrgSettingsList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgApi.patchV1OrgSettingsList']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgApi.patchOrgSettingsList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -415,10 +415,10 @@ export const OrgApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1OrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1OrgSettings(options);
+        async postOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postOrgSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgApi.postV1OrgSettings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgApi.postOrgSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -427,10 +427,10 @@ export const OrgApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1OrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1OrgSettingsList(options);
+        async postOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postOrgSettingsList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgApi.postV1OrgSettingsList']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgApi.postOrgSettingsList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -439,10 +439,10 @@ export const OrgApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1OrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1OrgSettings(options);
+        async putOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putOrgSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgApi.putV1OrgSettings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgApi.putOrgSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -451,10 +451,10 @@ export const OrgApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1OrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1OrgSettingsList(options);
+        async putOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putOrgSettingsList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OrgApi.putV1OrgSettingsList']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OrgApi.putOrgSettingsList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -473,8 +473,8 @@ export const OrgApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1OrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1OrgSettings(options).then((request) => request(axios, basePath));
+        deleteOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteOrgSettings(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -482,8 +482,8 @@ export const OrgApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1OrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1OrgSettingsList(options).then((request) => request(axios, basePath));
+        deleteOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteOrgSettingsList(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -491,8 +491,8 @@ export const OrgApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1OrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1OrgSettings(options).then((request) => request(axios, basePath));
+        getOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getOrgSettings(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -500,8 +500,8 @@ export const OrgApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1OrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1OrgSettingsList(options).then((request) => request(axios, basePath));
+        getOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getOrgSettingsList(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -509,8 +509,8 @@ export const OrgApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1OrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1OrgSettings(options).then((request) => request(axios, basePath));
+        patchOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchOrgSettings(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -518,8 +518,8 @@ export const OrgApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1OrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1OrgSettingsList(options).then((request) => request(axios, basePath));
+        patchOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchOrgSettingsList(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -527,8 +527,8 @@ export const OrgApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1OrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1OrgSettings(options).then((request) => request(axios, basePath));
+        postOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postOrgSettings(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -536,8 +536,8 @@ export const OrgApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1OrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1OrgSettingsList(options).then((request) => request(axios, basePath));
+        postOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postOrgSettingsList(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -545,8 +545,8 @@ export const OrgApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1OrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1OrgSettings(options).then((request) => request(axios, basePath));
+        putOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putOrgSettings(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -554,8 +554,8 @@ export const OrgApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1OrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1OrgSettingsList(options).then((request) => request(axios, basePath));
+        putOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putOrgSettingsList(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -574,8 +574,8 @@ export class OrgApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrgApi
      */
-    public deleteV1OrgSettings(options?: RawAxiosRequestConfig) {
-        return OrgApiFp(this.configuration).deleteV1OrgSettings(options).then((request) => request(this.axios, this.basePath));
+    public deleteOrgSettings(options?: RawAxiosRequestConfig) {
+        return OrgApiFp(this.configuration).deleteOrgSettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -585,8 +585,8 @@ export class OrgApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrgApi
      */
-    public deleteV1OrgSettingsList(options?: RawAxiosRequestConfig) {
-        return OrgApiFp(this.configuration).deleteV1OrgSettingsList(options).then((request) => request(this.axios, this.basePath));
+    public deleteOrgSettingsList(options?: RawAxiosRequestConfig) {
+        return OrgApiFp(this.configuration).deleteOrgSettingsList(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -596,8 +596,8 @@ export class OrgApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrgApi
      */
-    public getV1OrgSettings(options?: RawAxiosRequestConfig) {
-        return OrgApiFp(this.configuration).getV1OrgSettings(options).then((request) => request(this.axios, this.basePath));
+    public getOrgSettings(options?: RawAxiosRequestConfig) {
+        return OrgApiFp(this.configuration).getOrgSettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -607,8 +607,8 @@ export class OrgApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrgApi
      */
-    public getV1OrgSettingsList(options?: RawAxiosRequestConfig) {
-        return OrgApiFp(this.configuration).getV1OrgSettingsList(options).then((request) => request(this.axios, this.basePath));
+    public getOrgSettingsList(options?: RawAxiosRequestConfig) {
+        return OrgApiFp(this.configuration).getOrgSettingsList(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -618,8 +618,8 @@ export class OrgApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrgApi
      */
-    public patchV1OrgSettings(options?: RawAxiosRequestConfig) {
-        return OrgApiFp(this.configuration).patchV1OrgSettings(options).then((request) => request(this.axios, this.basePath));
+    public patchOrgSettings(options?: RawAxiosRequestConfig) {
+        return OrgApiFp(this.configuration).patchOrgSettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -629,8 +629,8 @@ export class OrgApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrgApi
      */
-    public patchV1OrgSettingsList(options?: RawAxiosRequestConfig) {
-        return OrgApiFp(this.configuration).patchV1OrgSettingsList(options).then((request) => request(this.axios, this.basePath));
+    public patchOrgSettingsList(options?: RawAxiosRequestConfig) {
+        return OrgApiFp(this.configuration).patchOrgSettingsList(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -640,8 +640,8 @@ export class OrgApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrgApi
      */
-    public postV1OrgSettings(options?: RawAxiosRequestConfig) {
-        return OrgApiFp(this.configuration).postV1OrgSettings(options).then((request) => request(this.axios, this.basePath));
+    public postOrgSettings(options?: RawAxiosRequestConfig) {
+        return OrgApiFp(this.configuration).postOrgSettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -651,8 +651,8 @@ export class OrgApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrgApi
      */
-    public postV1OrgSettingsList(options?: RawAxiosRequestConfig) {
-        return OrgApiFp(this.configuration).postV1OrgSettingsList(options).then((request) => request(this.axios, this.basePath));
+    public postOrgSettingsList(options?: RawAxiosRequestConfig) {
+        return OrgApiFp(this.configuration).postOrgSettingsList(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -662,8 +662,8 @@ export class OrgApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrgApi
      */
-    public putV1OrgSettings(options?: RawAxiosRequestConfig) {
-        return OrgApiFp(this.configuration).putV1OrgSettings(options).then((request) => request(this.axios, this.basePath));
+    public putOrgSettings(options?: RawAxiosRequestConfig) {
+        return OrgApiFp(this.configuration).putOrgSettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -673,8 +673,8 @@ export class OrgApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrgApi
      */
-    public putV1OrgSettingsList(options?: RawAxiosRequestConfig) {
-        return OrgApiFp(this.configuration).putV1OrgSettingsList(options).then((request) => request(this.axios, this.basePath));
+    public putOrgSettingsList(options?: RawAxiosRequestConfig) {
+        return OrgApiFp(this.configuration).putOrgSettingsList(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

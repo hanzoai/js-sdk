@@ -33,7 +33,7 @@ export const VideosApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1VideosById: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getVideosById: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/videos/{id}`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const VideosApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1VideosByIdContent: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getVideosByIdContent: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/videos/{id}/content`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -93,7 +93,7 @@ export const VideosApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1VideosGenerations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postVideosGenerations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/videos/generations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -133,10 +133,10 @@ export const VideosApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1VideosById(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1VideosById(options);
+        async getVideosById(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getVideosById(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VideosApi.getV1VideosById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['VideosApi.getVideosById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -145,10 +145,10 @@ export const VideosApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1VideosByIdContent(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1VideosByIdContent(options);
+        async getVideosByIdContent(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getVideosByIdContent(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VideosApi.getV1VideosByIdContent']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['VideosApi.getVideosByIdContent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -157,10 +157,10 @@ export const VideosApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1VideosGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1VideosGenerations(options);
+        async postVideosGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postVideosGenerations(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VideosApi.postV1VideosGenerations']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['VideosApi.postVideosGenerations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -179,8 +179,8 @@ export const VideosApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1VideosById(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1VideosById(options).then((request) => request(axios, basePath));
+        getVideosById(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getVideosById(options).then((request) => request(axios, basePath));
         },
         /**
          * Implements GET /v1/videos/{id}/content — download the finished MP4.  It authenticates + ownership-checks the caller, then proxies the upstream /content endpoint (bounded by the download concurrency ceiling) and streams the raw video bytes back inline. A successful download also bills the job once (for the client that downloads without first polling to completion) — idempotent with the poll path via job.markCompleted.
@@ -188,8 +188,8 @@ export const VideosApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1VideosByIdContent(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1VideosByIdContent(options).then((request) => request(axios, basePath));
+        getVideosByIdContent(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getVideosByIdContent(options).then((request) => request(axios, basePath));
         },
         /**
          * Implements POST /v1/videos/generations — the ASYNC create.  Body: {\"model\": \"...\", \"prompt\": \"...\", \"size\"?: \"1280x720\", \"seconds\"?: int}  It authenticates the caller, resolves the model to its upstream provider via the shared routing table (zen3-video* / wan2-2-t2v-a14b → the spark-video backend), reserves the per-video budget (the balance gate), creates ONE upstream job, registers it in the in-pod store, and returns the OpenAI-shaped video object with status \"queued\" IMMEDIATELY. The client then polls GET /v1/videos/{id} and downloads GET /v1/videos/{id}/content. Nothing is billed here — the debit lands on completion.
@@ -197,8 +197,8 @@ export const VideosApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1VideosGenerations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1VideosGenerations(options).then((request) => request(axios, basePath));
+        postVideosGenerations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postVideosGenerations(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -217,8 +217,8 @@ export class VideosApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof VideosApi
      */
-    public getV1VideosById(options?: RawAxiosRequestConfig) {
-        return VideosApiFp(this.configuration).getV1VideosById(options).then((request) => request(this.axios, this.basePath));
+    public getVideosById(options?: RawAxiosRequestConfig) {
+        return VideosApiFp(this.configuration).getVideosById(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -228,8 +228,8 @@ export class VideosApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof VideosApi
      */
-    public getV1VideosByIdContent(options?: RawAxiosRequestConfig) {
-        return VideosApiFp(this.configuration).getV1VideosByIdContent(options).then((request) => request(this.axios, this.basePath));
+    public getVideosByIdContent(options?: RawAxiosRequestConfig) {
+        return VideosApiFp(this.configuration).getVideosByIdContent(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -239,8 +239,8 @@ export class VideosApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof VideosApi
      */
-    public postV1VideosGenerations(options?: RawAxiosRequestConfig) {
-        return VideosApiFp(this.configuration).postV1VideosGenerations(options).then((request) => request(this.axios, this.basePath));
+    public postVideosGenerations(options?: RawAxiosRequestConfig) {
+        return VideosApiFp(this.configuration).postVideosGenerations(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -56,9 +56,9 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployAccountCanIByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployAccountCanIByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getV1DeployAccountCanIByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('getDeployAccountCanIByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/deploy/account/can-i/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -89,7 +89,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployApplications: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployApplications: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/applications`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -120,9 +120,9 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployApplicationsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployApplicationsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1DeployApplicationsByName', 'name', name)
+            assertParamExists('getDeployApplicationsByName', 'name', name)
             const localVarPath = `/v1/deploy/applications/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -154,9 +154,9 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployApplicationsByNameResourceTree: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployApplicationsByNameResourceTree: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1DeployApplicationsByNameResourceTree', 'name', name)
+            assertParamExists('getDeployApplicationsByNameResourceTree', 'name', name)
             const localVarPath = `/v1/deploy/applications/{name}/resource-tree`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -189,11 +189,11 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployApplicationsByNameRevisionsByRevisionMetadata: async (name: string, revision: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployApplicationsByNameRevisionsByRevisionMetadata: async (name: string, revision: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1DeployApplicationsByNameRevisionsByRevisionMetadata', 'name', name)
+            assertParamExists('getDeployApplicationsByNameRevisionsByRevisionMetadata', 'name', name)
             // verify required parameter 'revision' is not null or undefined
-            assertParamExists('getV1DeployApplicationsByNameRevisionsByRevisionMetadata', 'revision', revision)
+            assertParamExists('getDeployApplicationsByNameRevisionsByRevisionMetadata', 'revision', revision)
             const localVarPath = `/v1/deploy/applications/{name}/revisions/{revision}/metadata`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)))
                 .replace(`{${"revision"}}`, encodeURIComponent(String(revision)));
@@ -226,9 +226,9 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployApplicationsByNameSyncwindows: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployApplicationsByNameSyncwindows: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1DeployApplicationsByNameSyncwindows', 'name', name)
+            assertParamExists('getDeployApplicationsByNameSyncwindows', 'name', name)
             const localVarPath = `/v1/deploy/applications/{name}/syncwindows`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -259,7 +259,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/callback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -289,7 +289,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployClusters: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployClusters: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/clusters`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -319,7 +319,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployGitops: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployGitops: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/gitops`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -349,7 +349,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -379,7 +379,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployLogin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployLogin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -409,7 +409,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -439,7 +439,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeploySessionUserinfo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeploySessionUserinfo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/session/userinfo`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -469,7 +469,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeploySettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeploySettings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/settings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -499,7 +499,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployStreamApplications: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployStreamApplications: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/stream/applications`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -530,9 +530,9 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployStreamApplicationsByNameResourceTree: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployStreamApplicationsByNameResourceTree: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1DeployStreamApplicationsByNameResourceTree', 'name', name)
+            assertParamExists('getDeployStreamApplicationsByNameResourceTree', 'name', name)
             const localVarPath = `/v1/deploy/stream/applications/{name}/resource-tree`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -563,7 +563,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployVersion: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDeployVersion: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/version`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -594,9 +594,9 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DeployApplicationsByNameRollback: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postDeployApplicationsByNameRollback: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1DeployApplicationsByNameRollback', 'name', name)
+            assertParamExists('postDeployApplicationsByNameRollback', 'name', name)
             const localVarPath = `/v1/deploy/applications/{name}/rollback`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -628,9 +628,9 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DeployApplicationsByNameSync: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postDeployApplicationsByNameSync: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1DeployApplicationsByNameSync', 'name', name)
+            assertParamExists('postDeployApplicationsByNameSync', 'name', name)
             const localVarPath = `/v1/deploy/applications/{name}/sync`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -661,7 +661,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DeployLogout: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postDeployLogout: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/logout`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -691,7 +691,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DeployReconcile: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postDeployReconcile: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deploy/reconcile`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -732,10 +732,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployAccountCanIByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployAccountCanIByWildcard1(wildcard1, options);
+        async getDeployAccountCanIByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployAccountCanIByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployAccountCanIByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployAccountCanIByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -744,10 +744,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployApplications(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoAppList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployApplications(options);
+        async getDeployApplications(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoAppList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployApplications(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployApplications']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployApplications']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -757,10 +757,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployApplicationsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoApp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployApplicationsByName(name, options);
+        async getDeployApplicationsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoApp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployApplicationsByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployApplicationsByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployApplicationsByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -770,10 +770,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployApplicationsByNameResourceTree(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoTree>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployApplicationsByNameResourceTree(name, options);
+        async getDeployApplicationsByNameResourceTree(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoTree>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployApplicationsByNameResourceTree(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployApplicationsByNameResourceTree']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployApplicationsByNameResourceTree']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -784,10 +784,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployApplicationsByNameRevisionsByRevisionMetadata(name: string, revision: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoRevisionMetadata>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployApplicationsByNameRevisionsByRevisionMetadata(name, revision, options);
+        async getDeployApplicationsByNameRevisionsByRevisionMetadata(name: string, revision: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoRevisionMetadata>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployApplicationsByNameRevisionsByRevisionMetadata(name, revision, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployApplicationsByNameRevisionsByRevisionMetadata']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployApplicationsByNameRevisionsByRevisionMetadata']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -797,10 +797,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployApplicationsByNameSyncwindows(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoSyncWindows>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployApplicationsByNameSyncwindows(name, options);
+        async getDeployApplicationsByNameSyncwindows(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoSyncWindows>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployApplicationsByNameSyncwindows(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployApplicationsByNameSyncwindows']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployApplicationsByNameSyncwindows']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -809,10 +809,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployCallback(options);
+        async getDeployCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployCallback(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployCallback']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -821,10 +821,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployClusters(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoClusterList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployClusters(options);
+        async getDeployClusters(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoClusterList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployClusters(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployClusters']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployClusters']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -833,10 +833,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployGitops(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitOpsPlane>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployGitops(options);
+        async getDeployGitops(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitOpsPlane>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployGitops(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployGitops']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployGitops']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -845,10 +845,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployHealth(options);
+        async getDeployHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -857,10 +857,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployLogin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployLogin(options);
+        async getDeployLogin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployLogin(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployLogin']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployLogin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -869,10 +869,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoProjectList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployProjects(options);
+        async getDeployProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoProjectList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployProjects(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployProjects']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployProjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -881,10 +881,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeploySessionUserinfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionUser>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeploySessionUserinfo(options);
+        async getDeploySessionUserinfo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeploySessionUserinfo(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeploySessionUserinfo']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeploySessionUserinfo']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -893,10 +893,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeploySettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsoleSettings>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeploySettings(options);
+        async getDeploySettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsoleSettings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeploySettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeploySettings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeploySettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -905,10 +905,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployStreamApplications(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployStreamApplications(options);
+        async getDeployStreamApplications(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployStreamApplications(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployStreamApplications']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployStreamApplications']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -918,10 +918,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployStreamApplicationsByNameResourceTree(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployStreamApplicationsByNameResourceTree(name, options);
+        async getDeployStreamApplicationsByNameResourceTree(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployStreamApplicationsByNameResourceTree(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployStreamApplicationsByNameResourceTree']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployStreamApplicationsByNameResourceTree']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -930,10 +930,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DeployVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VersionMessage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DeployVersion(options);
+        async getDeployVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VersionMessage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployVersion(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getV1DeployVersion']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployVersion']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -943,10 +943,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DeployApplicationsByNameRollback(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DeployApplicationsByNameRollback(name, options);
+        async postDeployApplicationsByNameRollback(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployApplicationsByNameRollback(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.postV1DeployApplicationsByNameRollback']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployApplicationsByNameRollback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -956,10 +956,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DeployApplicationsByNameSync(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DeployApplicationsByNameSync(name, options);
+        async postDeployApplicationsByNameSync(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployApplicationsByNameSync(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.postV1DeployApplicationsByNameSync']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployApplicationsByNameSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -968,10 +968,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DeployLogout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DeployLogout(options);
+        async postDeployLogout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployLogout(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.postV1DeployLogout']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployLogout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -980,10 +980,10 @@ export const DeployApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1DeployReconcile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1DeployReconcile(options);
+        async postDeployReconcile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployReconcile(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.postV1DeployReconcile']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployReconcile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -999,12 +999,12 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
         /**
          * Always answers `yes`, whatever resource, action or subresource the path names. It exists for the ArgoCD-compatible console, which asks this before enabling a control, and it is NOT the authorization decision: nothing downstream consults it, and every route that returns fleet data or mutates a CR carries its own gate. Reaching it at all already requires SuperAdmin, so a caller who can read the `yes` is one for whom it is true.
          * @summary Compatibility answer the console UI asks before enabling its buttons
-         * @param {DeployApiGetV1DeployAccountCanIByWildcard1Request} requestParameters Request parameters.
+         * @param {DeployApiGetDeployAccountCanIByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployAccountCanIByWildcard1(requestParameters: DeployApiGetV1DeployAccountCanIByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1DeployAccountCanIByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        getDeployAccountCanIByWildcard1(requestParameters: DeployApiGetDeployAccountCanIByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDeployAccountCanIByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the fleet as an argocd ApplicationList: one projected Application per operator App CR, carrying the image tag the CR DECLARES, the tag actually RUNNING in the cluster\'s Deployment, the reconciled health, and the sync verdict those two produce (declared == running ⇒ Synced, both known and different ⇒ OutOfSync, either unknown ⇒ Unknown).  It is TENANT-SCOPED: a platform SuperAdmin reads every platform namespace, a validated org member reads only its own org\'s tenant namespace and only the App CRs labelled with its org, and anyone else is refused. A cross-tenant CR is never projected into an answer.
@@ -1012,48 +1012,48 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployApplications(options?: RawAxiosRequestConfig): AxiosPromise<ArgoAppList> {
-            return localVarFp.getV1DeployApplications(options).then((request) => request(axios, basePath));
+        getDeployApplications(options?: RawAxiosRequestConfig): AxiosPromise<ArgoAppList> {
+            return localVarFp.getDeployApplications(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns ONE projected argocd Application by name, with status.resources filled in from its reconciled resource tree — which is what makes it the detail view rather than a row of the list.  It is TENANT-SCOPED, and a name that belongs to another org is reported NOT FOUND rather than refused: a 403 would confirm the application exists, so the route would become a cross-tenant existence oracle. A name that is not a DNS-1123 label is a 400 before any cluster read.
          * @summary Returns ONE projected argocd Application by name, with status.resources filled in from its reconciled resource tree — which is what makes it the detail view rather than a row of the list.
-         * @param {DeployApiGetV1DeployApplicationsByNameRequest} requestParameters Request parameters.
+         * @param {DeployApiGetDeployApplicationsByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployApplicationsByName(requestParameters: DeployApiGetV1DeployApplicationsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoApp> {
-            return localVarFp.getV1DeployApplicationsByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getDeployApplicationsByName(requestParameters: DeployApiGetDeployApplicationsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoApp> {
+            return localVarFp.getDeployApplicationsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one application\'s argocd ApplicationTree: the objects the operator reconciled from its App CR, reached by ownerRef — the Deployment and, under it, the ReplicaSet and Pods, plus the Service, Ingress, HorizontalPodAutoscaler, PodDisruptionBudget and ConfigMaps it owns — each node carrying its parent edges and its health.  Secrets are DELIBERATELY not walked, so no materialized environment can ever appear in the tree. Tenant-scoped exactly like the application read: another org\'s name is not found, a malformed name is a 400.
          * @summary Returns one application\'s argocd ApplicationTree: the objects the operator reconciled from its App CR, reached by ownerRef — the Deployment and, under it, the ReplicaSet and Pods, plus the Service, Ingress, HorizontalPodAutoscaler, PodDisruptionBudget and ConfigMaps it owns — each node carrying its parent edges and its health.
-         * @param {DeployApiGetV1DeployApplicationsByNameResourceTreeRequest} requestParameters Request parameters.
+         * @param {DeployApiGetDeployApplicationsByNameResourceTreeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployApplicationsByNameResourceTree(requestParameters: DeployApiGetV1DeployApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoTree> {
-            return localVarFp.getV1DeployApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(axios, basePath));
+        getDeployApplicationsByNameResourceTree(requestParameters: DeployApiGetDeployApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoTree> {
+            return localVarFp.getDeployApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the argocd RevisionMetadata for one revision of one application — what the detail view shows beside a revision.  An App CR is IMAGE-pinned rather than commit-pinned: the deploy names an image tag, and the git source this projection reports is the display-only manifest repo, not the application\'s own source. Nothing in this process can read a commit\'s author or message for an arbitrary revision. So rather than 404 (which the SPA turns into an error toast) or invent a git author, it answers the HONEST minimum: date is when the App CR was created, message is the revision asked for — with the empty revision and \"HEAD\" resolving to the image tag the CR declares — and author is empty. An over-long revision is truncated before it is echoed back.  Tenant-scoped exactly like the application read.
          * @summary Returns the argocd RevisionMetadata for one revision of one application — what the detail view shows beside a revision.
-         * @param {DeployApiGetV1DeployApplicationsByNameRevisionsByRevisionMetadataRequest} requestParameters Request parameters.
+         * @param {DeployApiGetDeployApplicationsByNameRevisionsByRevisionMetadataRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployApplicationsByNameRevisionsByRevisionMetadata(requestParameters: DeployApiGetV1DeployApplicationsByNameRevisionsByRevisionMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoRevisionMetadata> {
-            return localVarFp.getV1DeployApplicationsByNameRevisionsByRevisionMetadata(requestParameters.name, requestParameters.revision, options).then((request) => request(axios, basePath));
+        getDeployApplicationsByNameRevisionsByRevisionMetadata(requestParameters: DeployApiGetDeployApplicationsByNameRevisionsByRevisionMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoRevisionMetadata> {
+            return localVarFp.getDeployApplicationsByNameRevisionsByRevisionMetadata(requestParameters.name, requestParameters.revision, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one application\'s argocd ApplicationSyncWindowState — the answer to \"is anything blocking a sync of this application right now?\".  This platform runs NO sync windows, so the answer is always the permissive empty one: canSync true, with no active and no assigned windows. The application is still resolved first, so a name that is not the caller\'s is not found rather than handed the static body — the endpoint discloses nothing about another tenant\'s fleet.
          * @summary Returns one application\'s argocd ApplicationSyncWindowState — the answer to \"is anything blocking a sync of this application right now?\".
-         * @param {DeployApiGetV1DeployApplicationsByNameSyncwindowsRequest} requestParameters Request parameters.
+         * @param {DeployApiGetDeployApplicationsByNameSyncwindowsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployApplicationsByNameSyncwindows(requestParameters: DeployApiGetV1DeployApplicationsByNameSyncwindowsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoSyncWindows> {
-            return localVarFp.getV1DeployApplicationsByNameSyncwindows(requestParameters.name, options).then((request) => request(axios, basePath));
+        getDeployApplicationsByNameSyncwindows(requestParameters: DeployApiGetDeployApplicationsByNameSyncwindowsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoSyncWindows> {
+            return localVarFp.getDeployApplicationsByNameSyncwindows(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Completes the redirect from IAM: it validates `state` against the single-use flow cookie in constant time, redeems the authorization code with the PKCE verifier, and then VERIFIES the resulting token exactly as this deployment\'s identity boundary will on every later request — so a token that would be refused next request fails here with the real reason instead of producing a sign-in loop. On success it sets the session cookie, bounded by the token\'s own expiry, and redirects to the validated return path.  It fails closed, and closes on the ADMIN ORG: a principal whose verified owner claim is not the reserved admin org is told plainly that it lacks the role (403) and no cookie is minted for it. That check is not the authorization decision — every gated route re-derives SuperAdmin from the verified JWT — it exists so nobody is handed a session that silently 403s everything. No flow in progress, or a mismatched `state`, is a 400; a refused or unexchangeable code is a 401.
@@ -1061,8 +1061,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1DeployCallback(options).then((request) => request(axios, basePath));
+        getDeployCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDeployCallback(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the argocd ClusterList of the destinations the caller\'s applications reconcile into: one entry per distinct destination server, carrying the count of applications reconciling into it. The in-cluster destination is always present, so an empty fleet still answers one cluster, and no cluster credential can appear — the projected type physically has no config field.  It is TENANT-SCOPED and reads the SAME App CRs the applications list reads: a platform SuperAdmin counts the whole fleet, a validated org member counts only its own org\'s applications, anyone else is refused.
@@ -1070,8 +1070,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployClusters(options?: RawAxiosRequestConfig): AxiosPromise<ArgoClusterList> {
-            return localVarFp.getV1DeployClusters(options).then((request) => request(axios, basePath));
+        getDeployClusters(options?: RawAxiosRequestConfig): AxiosPromise<ArgoClusterList> {
+            return localVarFp.getDeployClusters(options).then((request) => request(axios, basePath));
         },
         /**
          * Lists every Hanzo CD Application in the cluster: the git source each one polls, the commit it last APPLIED, how its last sync operation ended, and its recent deploy history — newest deploy first, ordered by namespace then name.  This is the layer ABOVE the application board, and the two disagree in exactly the case an operator most needs to see: main carries a new image pin, CD has not applied that commit yet, so every App CR still declares the old tag and the application board is legitimately \"Synced\" while the deploy has not landed. Only the applied revision here can show that.  installed is false — with a reason and an empty list — when the CD CRD is not served in this cluster. That is a FACT about the cluster rather than a failure of the request, so the caller can say \"no CD plane here\" instead of rendering an error it cannot act on; a genuine transport or RBAC failure still errors.  Read-only, and platform SuperAdmin only: the CD plane is fleet infrastructure with no tenant dimension. This view observes CD and never drives it — the sync policy is automated with self-heal, and the actionable verb an operator has is the per-application reconcile at POST /v1/deploy/applications/{name}/sync.
@@ -1079,8 +1079,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployGitops(options?: RawAxiosRequestConfig): AxiosPromise<GitOpsPlane> {
-            return localVarFp.getV1DeployGitops(options).then((request) => request(axios, basePath));
+        getDeployGitops(options?: RawAxiosRequestConfig): AxiosPromise<GitOpsPlane> {
+            return localVarFp.getDeployGitops(options).then((request) => request(axios, basePath));
         },
         /**
          * Reports the plane\'s real reachability: 200 only when the Kubernetes API server answers AND the App CRD is served, 503 with the same body shape otherwise, so a caller reads the same `k8s` and `crd` booleans either way rather than parsing an error envelope. It is a genuine dependency probe, not a process liveness ping — a running plane with no cluster behind it reports degraded.  This is the ONE unauthenticated route that reports state, because liveness must be probe-able without a JWT. It therefore discloses booleans only: the underlying failure — the API server address, an RBAC refusal — is logged server-side and never put on the wire.
@@ -1088,8 +1088,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1DeployHealth(options).then((request) => request(axios, basePath));
+        getDeployHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDeployHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Redirects the browser to IAM\'s authorize endpoint, having minted a nonce and a PKCE verifier into a short-lived, single-use flow cookie. The nonce comes back as `state` and is what proves the code belongs to the round trip THIS browser started; the verifier never appears in the address bar.  Necessarily public — this is how a browser gets a principal for this host in the first place — and it grants nothing by itself. An optional `returnTo` names where to land afterwards and is run through the open-redirect guard, so only a same-host path survives. A deployment with no sign-in configured answers 503 rather than redirecting nowhere.
@@ -1097,8 +1097,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployLogin(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1DeployLogin(options).then((request) => request(axios, basePath));
+        getDeployLogin(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDeployLogin(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the argocd AppProjectList this console groups and filters applications by. Projects are owned by Hanzo IAM rather than by argocd, so they are REFLECTED read-only from the IAM project store and nothing is persisted here: a validated org member gets its own organization\'s projects and a platform SuperAdmin gets every organization\'s.  A SuperAdmin whose IAM store is not reachable falls back to the real argoproj.io AppProject CRs when that CRD is served, and otherwise to one permissive synthesized project per distinct project name the App CRs declare. A project named \"default\" is always present, because that is what an App CR carrying no project label projects to.
@@ -1106,8 +1106,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployProjects(options?: RawAxiosRequestConfig): AxiosPromise<ArgoProjectList> {
-            return localVarFp.getV1DeployProjects(options).then((request) => request(axios, basePath));
+        getDeployProjects(options?: RawAxiosRequestConfig): AxiosPromise<ArgoProjectList> {
+            return localVarFp.getDeployProjects(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers \"is this browser signed in, and if not where does it sign in?\" — the dashboard SPA\'s bootstrap question, and the only route on this plane that answers for an anonymous caller.  The anonymous answer carries loggedIn:false and a URL and NOTHING else: no username, no org, no groups, no issuer, no hint about who the caller might be or what exists in the cluster. Answering it costs nothing (the caller already knows whether it holds a cookie) and withholding it costs the whole sign-in journey.  The predicate is the platform SuperAdmin fact — the SAME one every other route here gates on, minted from a validated principal whose org is the reserved admin org — so a validated-but-not-SuperAdmin caller is reported as NOT signed in, which is the truth as this console defines it: they cannot use it.
@@ -1115,8 +1115,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeploySessionUserinfo(options?: RawAxiosRequestConfig): AxiosPromise<SessionUser> {
-            return localVarFp.getV1DeploySessionUserinfo(options).then((request) => request(axios, basePath));
+        getDeploySessionUserinfo(options?: RawAxiosRequestConfig): AxiosPromise<SessionUser> {
+            return localVarFp.getDeploySessionUserinfo(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the argocd AuthSettings object the dashboard SPA awaits before its first render.  Every value is a CONSTANT of this projection rather than configuration read from anywhere: the SPA\'s own login form is reported disabled and its OIDC config null because Hanzo IAM owns identity at the edge and this console\'s sign-in is GET /v1/deploy/login, and every argocd feature the projection does not implement — status badges, Dex connectors, config-management plugins, kustomize versions, the exec terminal, apps-in-any-namespace, the hydrator, sync-with-replace — is reported off. Platform SuperAdmin only.
@@ -1124,8 +1124,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeploySettings(options?: RawAxiosRequestConfig): AxiosPromise<ConsoleSettings> {
-            return localVarFp.getV1DeploySettings(options).then((request) => request(axios, basePath));
+        getDeploySettings(options?: RawAxiosRequestConfig): AxiosPromise<ConsoleSettings> {
+            return localVarFp.getDeploySettings(options).then((request) => request(axios, basePath));
         },
         /**
          * Holds the connection open as text/event-stream and pushes one watch event per application change. It opens with an `ADDED` frame for every application currently present — the same projection the applications list serves, so a client renders a complete fleet from the stream alone — and then forwards `ADDED`, `MODIFIED` and `DELETED` as they happen, with a keep-alive every 25 seconds that is also how a vanished client is noticed and its watch torn down.  Read-only and TENANT-SCOPED, fail-closed: a platform SuperAdmin streams the whole fleet, a validated org member streams only its own org\'s applications, anyone else gets 403 and no stream. No cluster client configured is 503. If the deployment is not granted the watch verb the stream degrades to keep-alives only — the initial state still renders, it simply stops updating — rather than failing the connection.
@@ -1133,18 +1133,18 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployStreamApplications(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1DeployStreamApplications(options).then((request) => request(axios, basePath));
+        getDeployStreamApplications(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDeployStreamApplications(options).then((request) => request(axios, basePath));
         },
         /**
          * Holds the connection open as text/event-stream and pushes the application\'s whole resource tree — its live child objects and each one\'s derived health — once immediately and again on every keep-alive tick, so a client always has a current picture without polling. The refresh IS the keep-alive: it is a cheap rebuild rather than a watch, so there is no multi-resource watch to leak.  TENANT-SCOPED and fail-closed BEFORE the stream opens, which is the rule that matters: the caller\'s scope and the application\'s namespace are resolved first, so an unvalidated caller gets a plain 403 and an application belonging to another tenant gets a plain 404 — never an opened stream that emits nothing. A SuperAdmin reaches the whole fleet, an org member only its own org\'s applications. No cluster client configured is 503.
          * @summary Live resource tree for one application, as Server-Sent Events
-         * @param {DeployApiGetV1DeployStreamApplicationsByNameResourceTreeRequest} requestParameters Request parameters.
+         * @param {DeployApiGetDeployStreamApplicationsByNameResourceTreeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployStreamApplicationsByNameResourceTree(requestParameters: DeployApiGetV1DeployStreamApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1DeployStreamApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(axios, basePath));
+        getDeployStreamApplicationsByNameResourceTree(requestParameters: DeployApiGetDeployStreamApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDeployStreamApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the argocd VersionMessage the dashboard SPA reads at bootstrap. There is no argocd binary behind this plane — it is a projection over operator App CRs — so the fields say so rather than describing a build: Version names the projection, BuildDate is the moment this response was generated, and Compiler/Platform/GoVersion are the constants the SPA tolerates rather than facts about this process. Platform SuperAdmin only.
@@ -1152,28 +1152,28 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DeployVersion(options?: RawAxiosRequestConfig): AxiosPromise<VersionMessage> {
-            return localVarFp.getV1DeployVersion(options).then((request) => request(axios, basePath));
+        getDeployVersion(options?: RawAxiosRequestConfig): AxiosPromise<VersionMessage> {
+            return localVarFp.getDeployVersion(options).then((request) => request(axios, basePath));
         },
         /**
          * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release seam, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
          * @summary The console\'s rollback control — today it requests a reconcile, nothing more
-         * @param {DeployApiPostV1DeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
+         * @param {DeployApiPostDeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DeployApplicationsByNameRollback(requestParameters: DeployApiPostV1DeployApplicationsByNameRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1DeployApplicationsByNameRollback(requestParameters.name, options).then((request) => request(axios, basePath));
+        postDeployApplicationsByNameRollback(requestParameters: DeployApiPostDeployApplicationsByNameRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postDeployApplicationsByNameRollback(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Requests an immediate reconcile of one application by stamping a sync-requested timestamp onto its App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator performs the reconcile on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does. The CR is the desired source today, so this is a nudge; when git becomes the source the same address becomes apply-from-git.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or patched, and the write surface stays admin-only while the tenant surface is read-only reflection. It reads no request body. An unknown application name is a 404; no cluster client configured is a 503.
          * @summary Ask the operator to reconcile one application now
-         * @param {DeployApiPostV1DeployApplicationsByNameSyncRequest} requestParameters Request parameters.
+         * @param {DeployApiPostDeployApplicationsByNameSyncRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DeployApplicationsByNameSync(requestParameters: DeployApiPostV1DeployApplicationsByNameSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1DeployApplicationsByNameSync(requestParameters.name, options).then((request) => request(axios, basePath));
+        postDeployApplicationsByNameSync(requestParameters: DeployApiPostDeployApplicationsByNameSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postDeployApplicationsByNameSync(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it changes state. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie.
@@ -1181,8 +1181,8 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DeployLogout(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1DeployLogout(options).then((request) => request(axios, basePath));
+        postDeployLogout(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postDeployLogout(options).then((request) => request(axios, basePath));
         },
         /**
          * Runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or touched. The git source is read AS THE CALLER, so the source plane scopes the answer itself rather than trusting this one to have scoped it. It reads no request body; the source is configuration, not a parameter. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
@@ -1190,127 +1190,127 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1DeployReconcile(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1DeployReconcile(options).then((request) => request(axios, basePath));
+        postDeployReconcile(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postDeployReconcile(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1DeployAccountCanIByWildcard1 operation in DeployApi.
+ * Request parameters for getDeployAccountCanIByWildcard1 operation in DeployApi.
  * @export
- * @interface DeployApiGetV1DeployAccountCanIByWildcard1Request
+ * @interface DeployApiGetDeployAccountCanIByWildcard1Request
  */
-export interface DeployApiGetV1DeployAccountCanIByWildcard1Request {
+export interface DeployApiGetDeployAccountCanIByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof DeployApiGetV1DeployAccountCanIByWildcard1
+     * @memberof DeployApiGetDeployAccountCanIByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for getV1DeployApplicationsByName operation in DeployApi.
+ * Request parameters for getDeployApplicationsByName operation in DeployApi.
  * @export
- * @interface DeployApiGetV1DeployApplicationsByNameRequest
+ * @interface DeployApiGetDeployApplicationsByNameRequest
  */
-export interface DeployApiGetV1DeployApplicationsByNameRequest {
+export interface DeployApiGetDeployApplicationsByNameRequest {
     /**
      * Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
      * @type {string}
-     * @memberof DeployApiGetV1DeployApplicationsByName
+     * @memberof DeployApiGetDeployApplicationsByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1DeployApplicationsByNameResourceTree operation in DeployApi.
+ * Request parameters for getDeployApplicationsByNameResourceTree operation in DeployApi.
  * @export
- * @interface DeployApiGetV1DeployApplicationsByNameResourceTreeRequest
+ * @interface DeployApiGetDeployApplicationsByNameResourceTreeRequest
  */
-export interface DeployApiGetV1DeployApplicationsByNameResourceTreeRequest {
+export interface DeployApiGetDeployApplicationsByNameResourceTreeRequest {
     /**
      * Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
      * @type {string}
-     * @memberof DeployApiGetV1DeployApplicationsByNameResourceTree
+     * @memberof DeployApiGetDeployApplicationsByNameResourceTree
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1DeployApplicationsByNameRevisionsByRevisionMetadata operation in DeployApi.
+ * Request parameters for getDeployApplicationsByNameRevisionsByRevisionMetadata operation in DeployApi.
  * @export
- * @interface DeployApiGetV1DeployApplicationsByNameRevisionsByRevisionMetadataRequest
+ * @interface DeployApiGetDeployApplicationsByNameRevisionsByRevisionMetadataRequest
  */
-export interface DeployApiGetV1DeployApplicationsByNameRevisionsByRevisionMetadataRequest {
+export interface DeployApiGetDeployApplicationsByNameRevisionsByRevisionMetadataRequest {
     /**
      * Name is the application to read, from the path. It must be a DNS-1123 label.
      * @type {string}
-     * @memberof DeployApiGetV1DeployApplicationsByNameRevisionsByRevisionMetadata
+     * @memberof DeployApiGetDeployApplicationsByNameRevisionsByRevisionMetadata
      */
     readonly name: string
 
     /**
      * Revision is the revision to describe, from the path. The empty revision and \&quot;HEAD\&quot; both mean \&quot;whatever this application currently declares\&quot;.
      * @type {string}
-     * @memberof DeployApiGetV1DeployApplicationsByNameRevisionsByRevisionMetadata
+     * @memberof DeployApiGetDeployApplicationsByNameRevisionsByRevisionMetadata
      */
     readonly revision: string
 }
 
 /**
- * Request parameters for getV1DeployApplicationsByNameSyncwindows operation in DeployApi.
+ * Request parameters for getDeployApplicationsByNameSyncwindows operation in DeployApi.
  * @export
- * @interface DeployApiGetV1DeployApplicationsByNameSyncwindowsRequest
+ * @interface DeployApiGetDeployApplicationsByNameSyncwindowsRequest
  */
-export interface DeployApiGetV1DeployApplicationsByNameSyncwindowsRequest {
+export interface DeployApiGetDeployApplicationsByNameSyncwindowsRequest {
     /**
      * Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
      * @type {string}
-     * @memberof DeployApiGetV1DeployApplicationsByNameSyncwindows
+     * @memberof DeployApiGetDeployApplicationsByNameSyncwindows
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1DeployStreamApplicationsByNameResourceTree operation in DeployApi.
+ * Request parameters for getDeployStreamApplicationsByNameResourceTree operation in DeployApi.
  * @export
- * @interface DeployApiGetV1DeployStreamApplicationsByNameResourceTreeRequest
+ * @interface DeployApiGetDeployStreamApplicationsByNameResourceTreeRequest
  */
-export interface DeployApiGetV1DeployStreamApplicationsByNameResourceTreeRequest {
+export interface DeployApiGetDeployStreamApplicationsByNameResourceTreeRequest {
     /**
      * 
      * @type {string}
-     * @memberof DeployApiGetV1DeployStreamApplicationsByNameResourceTree
+     * @memberof DeployApiGetDeployStreamApplicationsByNameResourceTree
      */
     readonly name: string
 }
 
 /**
- * Request parameters for postV1DeployApplicationsByNameRollback operation in DeployApi.
+ * Request parameters for postDeployApplicationsByNameRollback operation in DeployApi.
  * @export
- * @interface DeployApiPostV1DeployApplicationsByNameRollbackRequest
+ * @interface DeployApiPostDeployApplicationsByNameRollbackRequest
  */
-export interface DeployApiPostV1DeployApplicationsByNameRollbackRequest {
+export interface DeployApiPostDeployApplicationsByNameRollbackRequest {
     /**
      * 
      * @type {string}
-     * @memberof DeployApiPostV1DeployApplicationsByNameRollback
+     * @memberof DeployApiPostDeployApplicationsByNameRollback
      */
     readonly name: string
 }
 
 /**
- * Request parameters for postV1DeployApplicationsByNameSync operation in DeployApi.
+ * Request parameters for postDeployApplicationsByNameSync operation in DeployApi.
  * @export
- * @interface DeployApiPostV1DeployApplicationsByNameSyncRequest
+ * @interface DeployApiPostDeployApplicationsByNameSyncRequest
  */
-export interface DeployApiPostV1DeployApplicationsByNameSyncRequest {
+export interface DeployApiPostDeployApplicationsByNameSyncRequest {
     /**
      * 
      * @type {string}
-     * @memberof DeployApiPostV1DeployApplicationsByNameSync
+     * @memberof DeployApiPostDeployApplicationsByNameSync
      */
     readonly name: string
 }
@@ -1325,13 +1325,13 @@ export class DeployApi extends BaseAPI {
     /**
      * Always answers `yes`, whatever resource, action or subresource the path names. It exists for the ArgoCD-compatible console, which asks this before enabling a control, and it is NOT the authorization decision: nothing downstream consults it, and every route that returns fleet data or mutates a CR carries its own gate. Reaching it at all already requires SuperAdmin, so a caller who can read the `yes` is one for whom it is true.
      * @summary Compatibility answer the console UI asks before enabling its buttons
-     * @param {DeployApiGetV1DeployAccountCanIByWildcard1Request} requestParameters Request parameters.
+     * @param {DeployApiGetDeployAccountCanIByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployAccountCanIByWildcard1(requestParameters: DeployApiGetV1DeployAccountCanIByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployAccountCanIByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public getDeployAccountCanIByWildcard1(requestParameters: DeployApiGetDeployAccountCanIByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployAccountCanIByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1341,56 +1341,56 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployApplications(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployApplications(options).then((request) => request(this.axios, this.basePath));
+    public getDeployApplications(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployApplications(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns ONE projected argocd Application by name, with status.resources filled in from its reconciled resource tree — which is what makes it the detail view rather than a row of the list.  It is TENANT-SCOPED, and a name that belongs to another org is reported NOT FOUND rather than refused: a 403 would confirm the application exists, so the route would become a cross-tenant existence oracle. A name that is not a DNS-1123 label is a 400 before any cluster read.
      * @summary Returns ONE projected argocd Application by name, with status.resources filled in from its reconciled resource tree — which is what makes it the detail view rather than a row of the list.
-     * @param {DeployApiGetV1DeployApplicationsByNameRequest} requestParameters Request parameters.
+     * @param {DeployApiGetDeployApplicationsByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployApplicationsByName(requestParameters: DeployApiGetV1DeployApplicationsByNameRequest, options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployApplicationsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getDeployApplicationsByName(requestParameters: DeployApiGetDeployApplicationsByNameRequest, options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployApplicationsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one application\'s argocd ApplicationTree: the objects the operator reconciled from its App CR, reached by ownerRef — the Deployment and, under it, the ReplicaSet and Pods, plus the Service, Ingress, HorizontalPodAutoscaler, PodDisruptionBudget and ConfigMaps it owns — each node carrying its parent edges and its health.  Secrets are DELIBERATELY not walked, so no materialized environment can ever appear in the tree. Tenant-scoped exactly like the application read: another org\'s name is not found, a malformed name is a 400.
      * @summary Returns one application\'s argocd ApplicationTree: the objects the operator reconciled from its App CR, reached by ownerRef — the Deployment and, under it, the ReplicaSet and Pods, plus the Service, Ingress, HorizontalPodAutoscaler, PodDisruptionBudget and ConfigMaps it owns — each node carrying its parent edges and its health.
-     * @param {DeployApiGetV1DeployApplicationsByNameResourceTreeRequest} requestParameters Request parameters.
+     * @param {DeployApiGetDeployApplicationsByNameResourceTreeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployApplicationsByNameResourceTree(requestParameters: DeployApiGetV1DeployApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getDeployApplicationsByNameResourceTree(requestParameters: DeployApiGetDeployApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the argocd RevisionMetadata for one revision of one application — what the detail view shows beside a revision.  An App CR is IMAGE-pinned rather than commit-pinned: the deploy names an image tag, and the git source this projection reports is the display-only manifest repo, not the application\'s own source. Nothing in this process can read a commit\'s author or message for an arbitrary revision. So rather than 404 (which the SPA turns into an error toast) or invent a git author, it answers the HONEST minimum: date is when the App CR was created, message is the revision asked for — with the empty revision and \"HEAD\" resolving to the image tag the CR declares — and author is empty. An over-long revision is truncated before it is echoed back.  Tenant-scoped exactly like the application read.
      * @summary Returns the argocd RevisionMetadata for one revision of one application — what the detail view shows beside a revision.
-     * @param {DeployApiGetV1DeployApplicationsByNameRevisionsByRevisionMetadataRequest} requestParameters Request parameters.
+     * @param {DeployApiGetDeployApplicationsByNameRevisionsByRevisionMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployApplicationsByNameRevisionsByRevisionMetadata(requestParameters: DeployApiGetV1DeployApplicationsByNameRevisionsByRevisionMetadataRequest, options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployApplicationsByNameRevisionsByRevisionMetadata(requestParameters.name, requestParameters.revision, options).then((request) => request(this.axios, this.basePath));
+    public getDeployApplicationsByNameRevisionsByRevisionMetadata(requestParameters: DeployApiGetDeployApplicationsByNameRevisionsByRevisionMetadataRequest, options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployApplicationsByNameRevisionsByRevisionMetadata(requestParameters.name, requestParameters.revision, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one application\'s argocd ApplicationSyncWindowState — the answer to \"is anything blocking a sync of this application right now?\".  This platform runs NO sync windows, so the answer is always the permissive empty one: canSync true, with no active and no assigned windows. The application is still resolved first, so a name that is not the caller\'s is not found rather than handed the static body — the endpoint discloses nothing about another tenant\'s fleet.
      * @summary Returns one application\'s argocd ApplicationSyncWindowState — the answer to \"is anything blocking a sync of this application right now?\".
-     * @param {DeployApiGetV1DeployApplicationsByNameSyncwindowsRequest} requestParameters Request parameters.
+     * @param {DeployApiGetDeployApplicationsByNameSyncwindowsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployApplicationsByNameSyncwindows(requestParameters: DeployApiGetV1DeployApplicationsByNameSyncwindowsRequest, options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployApplicationsByNameSyncwindows(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getDeployApplicationsByNameSyncwindows(requestParameters: DeployApiGetDeployApplicationsByNameSyncwindowsRequest, options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployApplicationsByNameSyncwindows(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1400,8 +1400,8 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployCallback(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployCallback(options).then((request) => request(this.axios, this.basePath));
+    public getDeployCallback(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployCallback(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1411,8 +1411,8 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployClusters(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployClusters(options).then((request) => request(this.axios, this.basePath));
+    public getDeployClusters(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployClusters(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1422,8 +1422,8 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployGitops(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployGitops(options).then((request) => request(this.axios, this.basePath));
+    public getDeployGitops(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployGitops(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1433,8 +1433,8 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployHealth(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployHealth(options).then((request) => request(this.axios, this.basePath));
+    public getDeployHealth(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1444,8 +1444,8 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployLogin(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployLogin(options).then((request) => request(this.axios, this.basePath));
+    public getDeployLogin(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployLogin(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1455,8 +1455,8 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployProjects(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployProjects(options).then((request) => request(this.axios, this.basePath));
+    public getDeployProjects(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployProjects(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1466,8 +1466,8 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeploySessionUserinfo(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeploySessionUserinfo(options).then((request) => request(this.axios, this.basePath));
+    public getDeploySessionUserinfo(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeploySessionUserinfo(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1477,8 +1477,8 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeploySettings(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeploySettings(options).then((request) => request(this.axios, this.basePath));
+    public getDeploySettings(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeploySettings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1488,20 +1488,20 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployStreamApplications(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployStreamApplications(options).then((request) => request(this.axios, this.basePath));
+    public getDeployStreamApplications(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployStreamApplications(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Holds the connection open as text/event-stream and pushes the application\'s whole resource tree — its live child objects and each one\'s derived health — once immediately and again on every keep-alive tick, so a client always has a current picture without polling. The refresh IS the keep-alive: it is a cheap rebuild rather than a watch, so there is no multi-resource watch to leak.  TENANT-SCOPED and fail-closed BEFORE the stream opens, which is the rule that matters: the caller\'s scope and the application\'s namespace are resolved first, so an unvalidated caller gets a plain 403 and an application belonging to another tenant gets a plain 404 — never an opened stream that emits nothing. A SuperAdmin reaches the whole fleet, an org member only its own org\'s applications. No cluster client configured is 503.
      * @summary Live resource tree for one application, as Server-Sent Events
-     * @param {DeployApiGetV1DeployStreamApplicationsByNameResourceTreeRequest} requestParameters Request parameters.
+     * @param {DeployApiGetDeployStreamApplicationsByNameResourceTreeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployStreamApplicationsByNameResourceTree(requestParameters: DeployApiGetV1DeployStreamApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployStreamApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getDeployStreamApplicationsByNameResourceTree(requestParameters: DeployApiGetDeployStreamApplicationsByNameResourceTreeRequest, options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployStreamApplicationsByNameResourceTree(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1511,32 +1511,32 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public getV1DeployVersion(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getV1DeployVersion(options).then((request) => request(this.axios, this.basePath));
+    public getDeployVersion(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).getDeployVersion(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release seam, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
      * @summary The console\'s rollback control — today it requests a reconcile, nothing more
-     * @param {DeployApiPostV1DeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
+     * @param {DeployApiPostDeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public postV1DeployApplicationsByNameRollback(requestParameters: DeployApiPostV1DeployApplicationsByNameRollbackRequest, options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).postV1DeployApplicationsByNameRollback(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public postDeployApplicationsByNameRollback(requestParameters: DeployApiPostDeployApplicationsByNameRollbackRequest, options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).postDeployApplicationsByNameRollback(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Requests an immediate reconcile of one application by stamping a sync-requested timestamp onto its App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator performs the reconcile on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does. The CR is the desired source today, so this is a nudge; when git becomes the source the same address becomes apply-from-git.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or patched, and the write surface stays admin-only while the tenant surface is read-only reflection. It reads no request body. An unknown application name is a 404; no cluster client configured is a 503.
      * @summary Ask the operator to reconcile one application now
-     * @param {DeployApiPostV1DeployApplicationsByNameSyncRequest} requestParameters Request parameters.
+     * @param {DeployApiPostDeployApplicationsByNameSyncRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public postV1DeployApplicationsByNameSync(requestParameters: DeployApiPostV1DeployApplicationsByNameSyncRequest, options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).postV1DeployApplicationsByNameSync(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public postDeployApplicationsByNameSync(requestParameters: DeployApiPostDeployApplicationsByNameSyncRequest, options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).postDeployApplicationsByNameSync(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1546,8 +1546,8 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public postV1DeployLogout(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).postV1DeployLogout(options).then((request) => request(this.axios, this.basePath));
+    public postDeployLogout(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).postDeployLogout(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1557,8 +1557,8 @@ export class DeployApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DeployApi
      */
-    public postV1DeployReconcile(options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).postV1DeployReconcile(options).then((request) => request(this.axios, this.basePath));
+    public postDeployReconcile(options?: RawAxiosRequestConfig) {
+        return DeployApiFp(this.configuration).postDeployReconcile(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -33,7 +33,7 @@ export const DocumentsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1Documents: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteDocuments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/documents`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const DocumentsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DocumentsByFileIdContext: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDocumentsByFileIdContext: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/documents/{file_id}/context`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -103,10 +103,10 @@ export const DocumentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1Documents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1Documents(options);
+        async deleteDocuments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDocuments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DocumentsApi.deleteV1Documents']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DocumentsApi.deleteDocuments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -115,10 +115,10 @@ export const DocumentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DocumentsByFileIdContext(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DocumentsByFileIdContext(options);
+        async getDocumentsByFileIdContext(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDocumentsByFileIdContext(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DocumentsApi.getV1DocumentsByFileIdContext']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DocumentsApi.getDocumentsByFileIdContext']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -137,8 +137,8 @@ export const DocumentsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1Documents(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1Documents(options).then((request) => request(axios, basePath));
+        deleteDocuments(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteDocuments(options).then((request) => request(axios, basePath));
         },
         /**
          * Handles GET /v1/documents/:file_id/context — every chunk of a file, as LangChain Documents (used when RAG_USE_FULL_CONTEXT is on).
@@ -146,8 +146,8 @@ export const DocumentsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DocumentsByFileIdContext(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1DocumentsByFileIdContext(options).then((request) => request(axios, basePath));
+        getDocumentsByFileIdContext(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDocumentsByFileIdContext(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -166,8 +166,8 @@ export class DocumentsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    public deleteV1Documents(options?: RawAxiosRequestConfig) {
-        return DocumentsApiFp(this.configuration).deleteV1Documents(options).then((request) => request(this.axios, this.basePath));
+    public deleteDocuments(options?: RawAxiosRequestConfig) {
+        return DocumentsApiFp(this.configuration).deleteDocuments(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -177,8 +177,8 @@ export class DocumentsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    public getV1DocumentsByFileIdContext(options?: RawAxiosRequestConfig) {
-        return DocumentsApiFp(this.configuration).getV1DocumentsByFileIdContext(options).then((request) => request(this.axios, this.basePath));
+    public getDocumentsByFileIdContext(options?: RawAxiosRequestConfig) {
+        return DocumentsApiFp(this.configuration).getDocumentsByFileIdContext(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

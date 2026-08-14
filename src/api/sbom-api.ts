@@ -40,9 +40,9 @@ export const SbomApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SbomByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSbomByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getV1SbomByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('getSbomByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/sbom/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -73,7 +73,7 @@ export const SbomApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SbomHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSbomHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/sbom/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -104,9 +104,9 @@ export const SbomApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Sbom: async (sbomIngest: SbomIngest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSbom: async (sbomIngest: SbomIngest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'sbomIngest' is not null or undefined
-            assertParamExists('postV1Sbom', 'sbomIngest', sbomIngest)
+            assertParamExists('postSbom', 'sbomIngest', sbomIngest)
             const localVarPath = `/v1/sbom`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -150,10 +150,10 @@ export const SbomApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SbomByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SbomByWildcard1(wildcard1, options);
+        async getSbomByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSbomByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SbomApi.getV1SbomByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SbomApi.getSbomByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -162,10 +162,10 @@ export const SbomApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SbomHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SbomHealth>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SbomHealth(options);
+        async getSbomHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SbomHealth>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSbomHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SbomApi.getV1SbomHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SbomApi.getSbomHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -175,10 +175,10 @@ export const SbomApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Sbom(sbomIngest: SbomIngest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SbomIngested>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Sbom(sbomIngest, options);
+        async postSbom(sbomIngest: SbomIngest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SbomIngested>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSbom(sbomIngest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SbomApi.postV1Sbom']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SbomApi.postSbom']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -194,12 +194,12 @@ export const SbomApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Answers with the component set of one container image — each component\'s name, version, type, package URL and license — addressed by either the image digest or the image ref. The captured segment is greedy and percent-decoded, so a ref carrying slashes and a tag is passed whole.  This read is GLOBAL, not tenant-scoped, and deliberately so: a bill of materials belongs to a content-addressed digest rather than to an org, so every caller deploying the same image resolves the same components, and nothing tenant-owned is exposed by it. Ingest is the gated half of the pair.  A miss is not the end of the lookup. The registry is the source of truth, so an unmaterialized ref is pulled from the SBOM attached to that image, persisted, and answered from the store — the first read of a freshly built image pays for the pull, later ones do not. A bare digest with no repository is not pullable and answers an honest 404, as does a ref with no attached document. Repeated ingests collapse to the latest, components come back ordered by type then name, and a result over 5000 components is capped with `truncated` set. When the datastore is not connected the answer is 503 rather than a fabricated empty image.
          * @summary Resolve everything inside a container image
-         * @param {SbomApiGetV1SbomByWildcard1Request} requestParameters Request parameters.
+         * @param {SbomApiGetSbomByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SbomByWildcard1(requestParameters: SbomApiGetV1SbomByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1SbomByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        getSbomByWildcard1(requestParameters: SbomApiGetSbomByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getSbomByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Health is a pure liveness probe: the service is up; datastore reflects whether the datastore store is connected. Not JWT-gated, always 200 (a disconnected datastore is degraded-but-alive; the data endpoints report that as 503).
@@ -207,46 +207,46 @@ export const SbomApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SbomHealth(options?: RawAxiosRequestConfig): AxiosPromise<SbomHealth> {
-            return localVarFp.getV1SbomHealth(options).then((request) => request(axios, basePath));
+        getSbomHealth(options?: RawAxiosRequestConfig): AxiosPromise<SbomHealth> {
+            return localVarFp.getSbomHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Ingest persists a CycloneDX SBOM\'s components keyed by image digest. Gated to a validated SuperAdmin (owner == AdminOrg) — the canonical cloud super-admin check, which the build fleet / CI carries. Re-ingest is idempotent: rows share the (digest, name, version, purl) ORDER BY, so ReplacingMergeTree keeps the latest by ingested_at (and resolve reads FINAL).
          * @summary Ingest persists a CycloneDX SBOM\'s components keyed by image digest.
-         * @param {SbomApiPostV1SbomRequest} requestParameters Request parameters.
+         * @param {SbomApiPostSbomRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Sbom(requestParameters: SbomApiPostV1SbomRequest, options?: RawAxiosRequestConfig): AxiosPromise<SbomIngested> {
-            return localVarFp.postV1Sbom(requestParameters.sbomIngest, options).then((request) => request(axios, basePath));
+        postSbom(requestParameters: SbomApiPostSbomRequest, options?: RawAxiosRequestConfig): AxiosPromise<SbomIngested> {
+            return localVarFp.postSbom(requestParameters.sbomIngest, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1SbomByWildcard1 operation in SbomApi.
+ * Request parameters for getSbomByWildcard1 operation in SbomApi.
  * @export
- * @interface SbomApiGetV1SbomByWildcard1Request
+ * @interface SbomApiGetSbomByWildcard1Request
  */
-export interface SbomApiGetV1SbomByWildcard1Request {
+export interface SbomApiGetSbomByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof SbomApiGetV1SbomByWildcard1
+     * @memberof SbomApiGetSbomByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for postV1Sbom operation in SbomApi.
+ * Request parameters for postSbom operation in SbomApi.
  * @export
- * @interface SbomApiPostV1SbomRequest
+ * @interface SbomApiPostSbomRequest
  */
-export interface SbomApiPostV1SbomRequest {
+export interface SbomApiPostSbomRequest {
     /**
      * 
      * @type {SbomIngest}
-     * @memberof SbomApiPostV1Sbom
+     * @memberof SbomApiPostSbom
      */
     readonly sbomIngest: SbomIngest
 }
@@ -261,13 +261,13 @@ export class SbomApi extends BaseAPI {
     /**
      * Answers with the component set of one container image — each component\'s name, version, type, package URL and license — addressed by either the image digest or the image ref. The captured segment is greedy and percent-decoded, so a ref carrying slashes and a tag is passed whole.  This read is GLOBAL, not tenant-scoped, and deliberately so: a bill of materials belongs to a content-addressed digest rather than to an org, so every caller deploying the same image resolves the same components, and nothing tenant-owned is exposed by it. Ingest is the gated half of the pair.  A miss is not the end of the lookup. The registry is the source of truth, so an unmaterialized ref is pulled from the SBOM attached to that image, persisted, and answered from the store — the first read of a freshly built image pays for the pull, later ones do not. A bare digest with no repository is not pullable and answers an honest 404, as does a ref with no attached document. Repeated ingests collapse to the latest, components come back ordered by type then name, and a result over 5000 components is capped with `truncated` set. When the datastore is not connected the answer is 503 rather than a fabricated empty image.
      * @summary Resolve everything inside a container image
-     * @param {SbomApiGetV1SbomByWildcard1Request} requestParameters Request parameters.
+     * @param {SbomApiGetSbomByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SbomApi
      */
-    public getV1SbomByWildcard1(requestParameters: SbomApiGetV1SbomByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return SbomApiFp(this.configuration).getV1SbomByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public getSbomByWildcard1(requestParameters: SbomApiGetSbomByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return SbomApiFp(this.configuration).getSbomByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -277,20 +277,20 @@ export class SbomApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SbomApi
      */
-    public getV1SbomHealth(options?: RawAxiosRequestConfig) {
-        return SbomApiFp(this.configuration).getV1SbomHealth(options).then((request) => request(this.axios, this.basePath));
+    public getSbomHealth(options?: RawAxiosRequestConfig) {
+        return SbomApiFp(this.configuration).getSbomHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Ingest persists a CycloneDX SBOM\'s components keyed by image digest. Gated to a validated SuperAdmin (owner == AdminOrg) — the canonical cloud super-admin check, which the build fleet / CI carries. Re-ingest is idempotent: rows share the (digest, name, version, purl) ORDER BY, so ReplacingMergeTree keeps the latest by ingested_at (and resolve reads FINAL).
      * @summary Ingest persists a CycloneDX SBOM\'s components keyed by image digest.
-     * @param {SbomApiPostV1SbomRequest} requestParameters Request parameters.
+     * @param {SbomApiPostSbomRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SbomApi
      */
-    public postV1Sbom(requestParameters: SbomApiPostV1SbomRequest, options?: RawAxiosRequestConfig) {
-        return SbomApiFp(this.configuration).postV1Sbom(requestParameters.sbomIngest, options).then((request) => request(this.axios, this.basePath));
+    public postSbom(requestParameters: SbomApiPostSbomRequest, options?: RawAxiosRequestConfig) {
+        return SbomApiFp(this.configuration).postSbom(requestParameters.sbomIngest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

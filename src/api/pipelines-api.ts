@@ -35,7 +35,7 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Pipelines: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPipelines: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pipelines`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const PipelinesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Pipelines(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineBoard>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Pipelines(options);
+        async getPipelines(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPipelines(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PipelinesApi.getV1Pipelines']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PipelinesApi.getPipelines']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const PipelinesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Pipelines(options?: RawAxiosRequestConfig): AxiosPromise<PipelineBoard> {
-            return localVarFp.getV1Pipelines(options).then((request) => request(axios, basePath));
+        getPipelines(options?: RawAxiosRequestConfig): AxiosPromise<PipelineBoard> {
+            return localVarFp.getPipelines(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class PipelinesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PipelinesApi
      */
-    public getV1Pipelines(options?: RawAxiosRequestConfig) {
-        return PipelinesApiFp(this.configuration).getV1Pipelines(options).then((request) => request(this.axios, this.basePath));
+    public getPipelines(options?: RawAxiosRequestConfig) {
+        return PipelinesApiFp(this.configuration).getPipelines(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

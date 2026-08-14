@@ -44,9 +44,9 @@ export const PluginsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PluginsAuthoredById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePluginsAuthoredById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1PluginsAuthoredById', 'id', id)
+            assertParamExists('deletePluginsAuthoredById', 'id', id)
             const localVarPath = `/v1/plugins/authored/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -78,7 +78,7 @@ export const PluginsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Plugins: async (all?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlugins: async (all?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/plugins`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -112,7 +112,7 @@ export const PluginsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PluginsAuthored: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPluginsAuthored: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/plugins/authored`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -143,7 +143,7 @@ export const PluginsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PluginsBuild: async (buildRequest?: BuildRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPluginsBuild: async (buildRequest?: BuildRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/plugins/build`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -187,10 +187,10 @@ export const PluginsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1PluginsAuthoredById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PluginDeleted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PluginsAuthoredById(id, options);
+        async deletePluginsAuthoredById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PluginDeleted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePluginsAuthoredById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PluginsApi.deleteV1PluginsAuthoredById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PluginsApi.deletePluginsAuthoredById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -200,10 +200,10 @@ export const PluginsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Plugins(all?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PluginMountList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Plugins(all, options);
+        async getPlugins(all?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PluginMountList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlugins(all, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PluginsApi.getV1Plugins']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PluginsApi.getPlugins']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -212,10 +212,10 @@ export const PluginsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PluginsAuthored(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthoredPluginList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PluginsAuthored(options);
+        async getPluginsAuthored(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthoredPluginList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPluginsAuthored(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PluginsApi.getV1PluginsAuthored']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PluginsApi.getPluginsAuthored']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -225,10 +225,10 @@ export const PluginsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PluginsBuild(buildRequest?: BuildRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PluginsBuild(buildRequest, options);
+        async postPluginsBuild(buildRequest?: BuildRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPluginsBuild(buildRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PluginsApi.postV1PluginsBuild']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PluginsApi.postPluginsBuild']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -244,22 +244,22 @@ export const PluginsApiFactory = function (configuration?: Configuration, basePa
         /**
          * Removes one of the caller org\'s built plugins, so the runtime can no longer load it. Scoped to the caller\'s org, so an id belonging to another tenant answers 404 and is not deleted.
          * @summary Removes one of the caller org\'s built plugins, so the runtime can no longer load it.
-         * @param {PluginsApiDeleteV1PluginsAuthoredByIdRequest} requestParameters Request parameters.
+         * @param {PluginsApiDeletePluginsAuthoredByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PluginsAuthoredById(requestParameters: PluginsApiDeleteV1PluginsAuthoredByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PluginDeleted> {
-            return localVarFp.deleteV1PluginsAuthoredById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deletePluginsAuthoredById(requestParameters: PluginsApiDeletePluginsAuthoredByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PluginDeleted> {
+            return localVarFp.deletePluginsAuthoredById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports what this deployment actually mounted: every subsystem the composition root declared and whether it is switched on. A plugin here is MOUNTED CODE that extends the deployment\'s own surface — not a tool an agent calls — so this is an inventory and not a tool source. It is read off the same boot snapshot every traced request resolves its subsystem label against, so it cannot drift from what is serving. Enabled-only by default, because a caller asking what this deployment can do wants what is running; ?all=true adds the configured-but-off ones.
          * @summary Reports what this deployment actually mounted: every subsystem the composition root declared and whether it is switched on.
-         * @param {PluginsApiGetV1PluginsRequest} requestParameters Request parameters.
+         * @param {PluginsApiGetPluginsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Plugins(requestParameters: PluginsApiGetV1PluginsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PluginMountList> {
-            return localVarFp.getV1Plugins(requestParameters.all, options).then((request) => request(axios, basePath));
+        getPlugins(requestParameters: PluginsApiGetPluginsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PluginMountList> {
+            return localVarFp.getPlugins(requestParameters.all, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the plugins the caller\'s org BUILT, newest first, each with the TypeScript as authored. That is a different set with a different lifecycle from GET /v1/plugins, which reports the subsystems this deployment mounted. The bundled CommonJS the runtime executes is never included, and neither is any credential — a plugin names the connectors provider it needs and reads the credential from ctx.auth at run time.
@@ -267,60 +267,60 @@ export const PluginsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PluginsAuthored(options?: RawAxiosRequestConfig): AxiosPromise<AuthoredPluginList> {
-            return localVarFp.getV1PluginsAuthored(options).then((request) => request(axios, basePath));
+        getPluginsAuthored(options?: RawAxiosRequestConfig): AxiosPromise<AuthoredPluginList> {
+            return localVarFp.getPluginsAuthored(options).then((request) => request(axios, basePath));
         },
         /**
          * Builds one plugin for the caller\'s org and answers 201 with the bundle\'s size, whether a model wrote the source, and the plugin as stored. Post `source` to build TypeScript as-is, or `spec` — an OpenAPI document or plain prose describing the endpoints — to have one generated; the generated source comes back in the answer, so a caller reads what will run before it runs. Exactly one of the two, and `name` must be one lowercase path segment; both or neither is 400.  COMPILING IS THE GATE. The source goes through the same pipeline the committed connectors do — esbuild to one CommonJS program, then compiled in the goja runtime that will actually execute it — and anything that fails is rejected and NEVER stored. So a plugin in the store is one this deployment has already loaded once, not one a model claimed was fine. A failed build answers 422 carrying the diagnostics a caller needs to fix it: the bundler\'s error, the source that failed, and whether the model wrote it — a body outside the declared success shape.  CREDENTIALS ARE NOT PART OF A PLUGIN. A plugin names the connectors `provider` it needs and reads that credential from `ctx.auth` at run time, under KMS custody. Source that contains something shaped like a key is REFUSED rather than silently scrubbed, so a caller who pasted one finds out instead of shipping it — register it as a connector instead.  Requires a validated principal; 403 without one. The plugin is stored under that principal\'s org and is what `/v1/plugins/authored` lists — never `/v1/plugins`, which is this deployment\'s mounted-subsystem inventory. Source over 512 KiB or a spec over 256 KiB is refused. Posting a `spec` to a deployment with no AI client configured is 503, and a generation that fails upstream is 502.
          * @summary Build a plugin for your org from TypeScript, or from an API spec a model writes it from
-         * @param {PluginsApiPostV1PluginsBuildRequest} requestParameters Request parameters.
+         * @param {PluginsApiPostPluginsBuildRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PluginsBuild(requestParameters: PluginsApiPostV1PluginsBuildRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BuildOut> {
-            return localVarFp.postV1PluginsBuild(requestParameters.buildRequest, options).then((request) => request(axios, basePath));
+        postPluginsBuild(requestParameters: PluginsApiPostPluginsBuildRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BuildOut> {
+            return localVarFp.postPluginsBuild(requestParameters.buildRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1PluginsAuthoredById operation in PluginsApi.
+ * Request parameters for deletePluginsAuthoredById operation in PluginsApi.
  * @export
- * @interface PluginsApiDeleteV1PluginsAuthoredByIdRequest
+ * @interface PluginsApiDeletePluginsAuthoredByIdRequest
  */
-export interface PluginsApiDeleteV1PluginsAuthoredByIdRequest {
+export interface PluginsApiDeletePluginsAuthoredByIdRequest {
     /**
      * ID is the plugin to remove, from the path.
      * @type {string}
-     * @memberof PluginsApiDeleteV1PluginsAuthoredById
+     * @memberof PluginsApiDeletePluginsAuthoredById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1Plugins operation in PluginsApi.
+ * Request parameters for getPlugins operation in PluginsApi.
  * @export
- * @interface PluginsApiGetV1PluginsRequest
+ * @interface PluginsApiGetPluginsRequest
  */
-export interface PluginsApiGetV1PluginsRequest {
+export interface PluginsApiGetPluginsRequest {
     /**
      * All includes the configured-but-disabled subsystems too, but only when it is exactly the string \&quot;true\&quot;. Otherwise only the running ones are reported.
      * @type {string}
-     * @memberof PluginsApiGetV1Plugins
+     * @memberof PluginsApiGetPlugins
      */
     readonly all?: string
 }
 
 /**
- * Request parameters for postV1PluginsBuild operation in PluginsApi.
+ * Request parameters for postPluginsBuild operation in PluginsApi.
  * @export
- * @interface PluginsApiPostV1PluginsBuildRequest
+ * @interface PluginsApiPostPluginsBuildRequest
  */
-export interface PluginsApiPostV1PluginsBuildRequest {
+export interface PluginsApiPostPluginsBuildRequest {
     /**
      * 
      * @type {BuildRequest}
-     * @memberof PluginsApiPostV1PluginsBuild
+     * @memberof PluginsApiPostPluginsBuild
      */
     readonly buildRequest?: BuildRequest
 }
@@ -335,25 +335,25 @@ export class PluginsApi extends BaseAPI {
     /**
      * Removes one of the caller org\'s built plugins, so the runtime can no longer load it. Scoped to the caller\'s org, so an id belonging to another tenant answers 404 and is not deleted.
      * @summary Removes one of the caller org\'s built plugins, so the runtime can no longer load it.
-     * @param {PluginsApiDeleteV1PluginsAuthoredByIdRequest} requestParameters Request parameters.
+     * @param {PluginsApiDeletePluginsAuthoredByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PluginsApi
      */
-    public deleteV1PluginsAuthoredById(requestParameters: PluginsApiDeleteV1PluginsAuthoredByIdRequest, options?: RawAxiosRequestConfig) {
-        return PluginsApiFp(this.configuration).deleteV1PluginsAuthoredById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deletePluginsAuthoredById(requestParameters: PluginsApiDeletePluginsAuthoredByIdRequest, options?: RawAxiosRequestConfig) {
+        return PluginsApiFp(this.configuration).deletePluginsAuthoredById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reports what this deployment actually mounted: every subsystem the composition root declared and whether it is switched on. A plugin here is MOUNTED CODE that extends the deployment\'s own surface — not a tool an agent calls — so this is an inventory and not a tool source. It is read off the same boot snapshot every traced request resolves its subsystem label against, so it cannot drift from what is serving. Enabled-only by default, because a caller asking what this deployment can do wants what is running; ?all=true adds the configured-but-off ones.
      * @summary Reports what this deployment actually mounted: every subsystem the composition root declared and whether it is switched on.
-     * @param {PluginsApiGetV1PluginsRequest} requestParameters Request parameters.
+     * @param {PluginsApiGetPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PluginsApi
      */
-    public getV1Plugins(requestParameters: PluginsApiGetV1PluginsRequest = {}, options?: RawAxiosRequestConfig) {
-        return PluginsApiFp(this.configuration).getV1Plugins(requestParameters.all, options).then((request) => request(this.axios, this.basePath));
+    public getPlugins(requestParameters: PluginsApiGetPluginsRequest = {}, options?: RawAxiosRequestConfig) {
+        return PluginsApiFp(this.configuration).getPlugins(requestParameters.all, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -363,20 +363,20 @@ export class PluginsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PluginsApi
      */
-    public getV1PluginsAuthored(options?: RawAxiosRequestConfig) {
-        return PluginsApiFp(this.configuration).getV1PluginsAuthored(options).then((request) => request(this.axios, this.basePath));
+    public getPluginsAuthored(options?: RawAxiosRequestConfig) {
+        return PluginsApiFp(this.configuration).getPluginsAuthored(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Builds one plugin for the caller\'s org and answers 201 with the bundle\'s size, whether a model wrote the source, and the plugin as stored. Post `source` to build TypeScript as-is, or `spec` — an OpenAPI document or plain prose describing the endpoints — to have one generated; the generated source comes back in the answer, so a caller reads what will run before it runs. Exactly one of the two, and `name` must be one lowercase path segment; both or neither is 400.  COMPILING IS THE GATE. The source goes through the same pipeline the committed connectors do — esbuild to one CommonJS program, then compiled in the goja runtime that will actually execute it — and anything that fails is rejected and NEVER stored. So a plugin in the store is one this deployment has already loaded once, not one a model claimed was fine. A failed build answers 422 carrying the diagnostics a caller needs to fix it: the bundler\'s error, the source that failed, and whether the model wrote it — a body outside the declared success shape.  CREDENTIALS ARE NOT PART OF A PLUGIN. A plugin names the connectors `provider` it needs and reads that credential from `ctx.auth` at run time, under KMS custody. Source that contains something shaped like a key is REFUSED rather than silently scrubbed, so a caller who pasted one finds out instead of shipping it — register it as a connector instead.  Requires a validated principal; 403 without one. The plugin is stored under that principal\'s org and is what `/v1/plugins/authored` lists — never `/v1/plugins`, which is this deployment\'s mounted-subsystem inventory. Source over 512 KiB or a spec over 256 KiB is refused. Posting a `spec` to a deployment with no AI client configured is 503, and a generation that fails upstream is 502.
      * @summary Build a plugin for your org from TypeScript, or from an API spec a model writes it from
-     * @param {PluginsApiPostV1PluginsBuildRequest} requestParameters Request parameters.
+     * @param {PluginsApiPostPluginsBuildRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PluginsApi
      */
-    public postV1PluginsBuild(requestParameters: PluginsApiPostV1PluginsBuildRequest = {}, options?: RawAxiosRequestConfig) {
-        return PluginsApiFp(this.configuration).postV1PluginsBuild(requestParameters.buildRequest, options).then((request) => request(this.axios, this.basePath));
+    public postPluginsBuild(requestParameters: PluginsApiPostPluginsBuildRequest = {}, options?: RawAxiosRequestConfig) {
+        return PluginsApiFp(this.configuration).postPluginsBuild(requestParameters.buildRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

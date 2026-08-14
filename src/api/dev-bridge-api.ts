@@ -33,7 +33,7 @@ export const DevBridgeApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DevBridge: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDevBridge: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/dev-bridge`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const DevBridgeApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1DevBridge(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1DevBridge(options);
+        async getDevBridge(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDevBridge(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DevBridgeApi.getV1DevBridge']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DevBridgeApi.getDevBridge']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const DevBridgeApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1DevBridge(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1DevBridge(options).then((request) => request(axios, basePath));
+        getDevBridge(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDevBridge(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class DevBridgeApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DevBridgeApi
      */
-    public getV1DevBridge(options?: RawAxiosRequestConfig) {
-        return DevBridgeApiFp(this.configuration).getV1DevBridge(options).then((request) => request(this.axios, this.basePath));
+    public getDevBridge(options?: RawAxiosRequestConfig) {
+        return DevBridgeApiFp(this.configuration).getDevBridge(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

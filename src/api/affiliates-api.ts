@@ -63,7 +63,7 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Affiliates: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAffiliates: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/affiliates`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -93,7 +93,7 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AffiliatesLeaderboard: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAffiliatesLeaderboard: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/affiliates/leaderboard`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -123,7 +123,7 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AffiliatesMe: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAffiliatesMe: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/affiliates/me`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -153,7 +153,7 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AffiliatesMeEarnings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAffiliatesMeEarnings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/affiliates/me/earnings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -183,7 +183,7 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AffiliatesMeLinks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAffiliatesMeLinks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/affiliates/me/links`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -214,9 +214,9 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AffiliatesApply: async (applyRequest: ApplyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAffiliatesApply: async (applyRequest: ApplyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'applyRequest' is not null or undefined
-            assertParamExists('postV1AffiliatesApply', 'applyRequest', applyRequest)
+            assertParamExists('postAffiliatesApply', 'applyRequest', applyRequest)
             const localVarPath = `/v1/affiliates/apply`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -250,9 +250,9 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AffiliatesAttribute: async (attributeRequest: AttributeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAffiliatesAttribute: async (attributeRequest: AttributeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'attributeRequest' is not null or undefined
-            assertParamExists('postV1AffiliatesAttribute', 'attributeRequest', attributeRequest)
+            assertParamExists('postAffiliatesAttribute', 'attributeRequest', attributeRequest)
             const localVarPath = `/v1/affiliates/attribute`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -286,9 +286,9 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AffiliatesClick: async (clickRequest: ClickRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAffiliatesClick: async (clickRequest: ClickRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'clickRequest' is not null or undefined
-            assertParamExists('postV1AffiliatesClick', 'clickRequest', clickRequest)
+            assertParamExists('postAffiliatesClick', 'clickRequest', clickRequest)
             const localVarPath = `/v1/affiliates/click`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -322,9 +322,9 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AffiliatesMeHandle: async (handleRequest: HandleRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAffiliatesMeHandle: async (handleRequest: HandleRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'handleRequest' is not null or undefined
-            assertParamExists('postV1AffiliatesMeHandle', 'handleRequest', handleRequest)
+            assertParamExists('postAffiliatesMeHandle', 'handleRequest', handleRequest)
             const localVarPath = `/v1/affiliates/me/handle`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -358,9 +358,9 @@ export const AffiliatesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AffiliatesMeLinks: async (createLinkRequest: CreateLinkRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAffiliatesMeLinks: async (createLinkRequest: CreateLinkRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createLinkRequest' is not null or undefined
-            assertParamExists('postV1AffiliatesMeLinks', 'createLinkRequest', createLinkRequest)
+            assertParamExists('postAffiliatesMeLinks', 'createLinkRequest', createLinkRequest)
             const localVarPath = `/v1/affiliates/me/links`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -403,10 +403,10 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Affiliates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateStanding>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Affiliates(options);
+        async getAffiliates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateStanding>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAffiliates(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.getV1Affiliates']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.getAffiliates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -415,10 +415,10 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AffiliatesLeaderboard(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateBoard>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AffiliatesLeaderboard(options);
+        async getAffiliatesLeaderboard(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAffiliatesLeaderboard(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.getV1AffiliatesLeaderboard']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.getAffiliatesLeaderboard']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -427,10 +427,10 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AffiliatesMe(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateSelf>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AffiliatesMe(options);
+        async getAffiliatesMe(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateSelf>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAffiliatesMe(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.getV1AffiliatesMe']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.getAffiliatesMe']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -439,10 +439,10 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AffiliatesMeEarnings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateEarnings>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AffiliatesMeEarnings(options);
+        async getAffiliatesMeEarnings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateEarnings>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAffiliatesMeEarnings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.getV1AffiliatesMeEarnings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.getAffiliatesMeEarnings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -451,10 +451,10 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AffiliatesMeLinks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateLinks>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AffiliatesMeLinks(options);
+        async getAffiliatesMeLinks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateLinks>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAffiliatesMeLinks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.getV1AffiliatesMeLinks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.getAffiliatesMeLinks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -464,10 +464,10 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AffiliatesApply(applyRequest: ApplyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Application>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AffiliatesApply(applyRequest, options);
+        async postAffiliatesApply(applyRequest: ApplyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Application>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAffiliatesApply(applyRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.postV1AffiliatesApply']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.postAffiliatesApply']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -477,10 +477,10 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AffiliatesAttribute(attributeRequest: AttributeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Attribution>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AffiliatesAttribute(attributeRequest, options);
+        async postAffiliatesAttribute(attributeRequest: AttributeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Attribution>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAffiliatesAttribute(attributeRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.postV1AffiliatesAttribute']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.postAffiliatesAttribute']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -490,10 +490,10 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AffiliatesClick(clickRequest: ClickRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClickCount>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AffiliatesClick(clickRequest, options);
+        async postAffiliatesClick(clickRequest: ClickRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClickCount>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAffiliatesClick(clickRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.postV1AffiliatesClick']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.postAffiliatesClick']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -503,10 +503,10 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AffiliatesMeHandle(handleRequest: HandleRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HandleSet>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AffiliatesMeHandle(handleRequest, options);
+        async postAffiliatesMeHandle(handleRequest: HandleRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HandleSet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAffiliatesMeHandle(handleRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.postV1AffiliatesMeHandle']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.postAffiliatesMeHandle']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -516,10 +516,10 @@ export const AffiliatesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AffiliatesMeLinks(createLinkRequest: CreateLinkRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkMint>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AffiliatesMeLinks(createLinkRequest, options);
+        async postAffiliatesMeLinks(createLinkRequest: CreateLinkRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LinkMint>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAffiliatesMeLinks(createLinkRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.postV1AffiliatesMeLinks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AffiliatesApi.postAffiliatesMeLinks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -538,8 +538,8 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Affiliates(options?: RawAxiosRequestConfig): AxiosPromise<AffiliateStanding> {
-            return localVarFp.getV1Affiliates(options).then((request) => request(axios, basePath));
+        getAffiliates(options?: RawAxiosRequestConfig): AxiosPromise<AffiliateStanding> {
+            return localVarFp.getAffiliates(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the top affiliates by lifetime accrued commission, shown by OPT-IN HANDLE with aggregate figures only, plus the caller\'s own exact rank.  It never discloses an org identity and never a referred org\'s usage. An affiliate that has set no handle still OCCUPIES its rank but is not listed — so opting out hides the name, not the position, and the visible board must not be read as a complete roster.  The caller\'s own row carries its exact GLOBAL rank, computed over the whole approved set rather than over the page, so it is right well outside the top of the board. Only an approved affiliate has a rank. Requires a validated principal; a signed-in non-affiliate may read the board but gets no personal row.
@@ -547,8 +547,8 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AffiliatesLeaderboard(options?: RawAxiosRequestConfig): AxiosPromise<AffiliateBoard> {
-            return localVarFp.getV1AffiliatesLeaderboard(options).then((request) => request(axios, basePath));
+        getAffiliatesLeaderboard(options?: RawAxiosRequestConfig): AxiosPromise<AffiliateBoard> {
+            return localVarFp.getAffiliatesLeaderboard(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the richer self-view: the same lifetime accrued, pending and paid commission and payout history, plus the caller\'s downline broken out by upline LEVEL — direct, second, third — each with the rate paid at that level and how many orgs sit there.  Commission is MULTI-LEVEL: a referred org\'s spend pays up its referral chain, three levels deep and no further. The direct level is the affiliate\'s own negotiated rate; the second and third are platform-wide switches, read live, so the schedule shown is the one actually in force rather than one compiled in. A caller that has not applied still gets that schedule alongside `isAffiliate:false`, so the console can show what it would earn.  Scoped to the validated org and nothing else, and refused without a principal. A PURE READ — it reports the downline but accrues nothing.
@@ -556,8 +556,8 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AffiliatesMe(options?: RawAxiosRequestConfig): AxiosPromise<AffiliateSelf> {
-            return localVarFp.getV1AffiliatesMe(options).then((request) => request(axios, basePath));
+        getAffiliatesMe(options?: RawAxiosRequestConfig): AxiosPromise<AffiliateSelf> {
+            return localVarFp.getAffiliatesMe(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the caller\'s own commission ledger: per period, the margin it earned against and the commission taken from that margin; and per referred org, that referral\'s aggregate contribution. Integer cents throughout.  The per-org view deliberately carries the affiliate\'s OWN earned share and NOT the referred org\'s spend or margin. An affiliate is entitled to what it earned, not to a restatement of its customer\'s usage — the period view is where the margin base appears, aggregated across every referral.  Scoped server-side to the validated caller\'s affiliate; a caller that is not one gets `isAffiliate:false`.
@@ -565,8 +565,8 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AffiliatesMeEarnings(options?: RawAxiosRequestConfig): AxiosPromise<AffiliateEarnings> {
-            return localVarFp.getV1AffiliatesMeEarnings(options).then((request) => request(axios, basePath));
+        getAffiliatesMeEarnings(options?: RawAxiosRequestConfig): AxiosPromise<AffiliateEarnings> {
+            return localVarFp.getAffiliatesMeEarnings(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the caller\'s share links, each with its URL and its funnel: clicks tracked, signups — orgs attributed with that code — and conversions, meaning how many of those signups have actually produced commission.  Signups and conversions are DERIVED from the commission ledger and never stored, so they cannot drift from the money. Clicks are the one stored counter and the one that is pure vanity.  Any pending public click pings are folded into the store before the read, in one batch — which is how the counters stay current without a database write per click. Scoped to the validated caller\'s own affiliate; a non-affiliate gets `isAffiliate:false` and the link cap.
@@ -574,128 +574,128 @@ export const AffiliatesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AffiliatesMeLinks(options?: RawAxiosRequestConfig): AxiosPromise<AffiliateLinks> {
-            return localVarFp.getV1AffiliatesMeLinks(options).then((request) => request(axios, basePath));
+        getAffiliatesMeLinks(options?: RawAxiosRequestConfig): AxiosPromise<AffiliateLinks> {
+            return localVarFp.getAffiliatesMeLinks(options).then((request) => request(axios, basePath));
         },
         /**
          * Enrolls the caller\'s OWN org as an affiliate at status `applied`, optionally requesting a vanity code, and answers the record — 201 on the first apply, 200 with `created:false` afterwards.  IDEMPOTENT, first apply wins: one affiliate per org, so re-applying never creates a second row and never resets an existing approval. Applying is not joining — no code is minted and nothing accrues until staff approve, which is where both the code and the commission rate come from.  The org is the validated caller\'s, never a field. A malformed vanity code is refused up front; the code is only REQUESTED here, and approval may mint a different one if the requested code is taken.
          * @summary Enrolls the caller\'s OWN org as an affiliate at status `applied`, optionally requesting a vanity code, and answers the record — 201 on the first apply, 200 with `created:false` afterwards.
-         * @param {AffiliatesApiPostV1AffiliatesApplyRequest} requestParameters Request parameters.
+         * @param {AffiliatesApiPostAffiliatesApplyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AffiliatesApply(requestParameters: AffiliatesApiPostV1AffiliatesApplyRequest, options?: RawAxiosRequestConfig): AxiosPromise<Application> {
-            return localVarFp.postV1AffiliatesApply(requestParameters.applyRequest, options).then((request) => request(axios, basePath));
+        postAffiliatesApply(requestParameters: AffiliatesApiPostAffiliatesApplyRequest, options?: RawAxiosRequestConfig): AxiosPromise<Application> {
+            return localVarFp.postAffiliatesApply(requestParameters.applyRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Records the first-touch edge every later commission is computed from: the caller\'s org was referred by the affiliate that owns this code.  The REFERRED org is the validated caller, never a field. A caller that could name the referred org could attach itself to somebody else\'s revenue. The affiliate is resolved from the code, and only an APPROVED affiliate\'s code resolves.  FIRST TOUCH WINS, set once: one affiliate per referred org, so a re-post answers the existing edge with `created:false` rather than moving the attribution. Self-attribution is refused, and so is a code that would make a cycle in the upline chain. An unknown code is a 404, deliberately: an affiliate code IS a public shareable link, so whether one is real is public by design, and the caller legitimately needs to know its link resolved.  A user-level mirror of the edge is written best-effort; a conflict there never fails the org attribution, which is the money-bearing one.
          * @summary Records the first-touch edge every later commission is computed from: the caller\'s org was referred by the affiliate that owns this code.
-         * @param {AffiliatesApiPostV1AffiliatesAttributeRequest} requestParameters Request parameters.
+         * @param {AffiliatesApiPostAffiliatesAttributeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AffiliatesAttribute(requestParameters: AffiliatesApiPostV1AffiliatesAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<Attribution> {
-            return localVarFp.postV1AffiliatesAttribute(requestParameters.attributeRequest, options).then((request) => request(axios, basePath));
+        postAffiliatesAttribute(requestParameters: AffiliatesApiPostAffiliatesAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<Attribution> {
+            return localVarFp.postAffiliatesAttribute(requestParameters.attributeRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Counts a click on a share link. PUBLIC — it takes no principal, because a visitor clicking a shareable link has no session yet.  The ping folds into an in-memory buffer and NEVER writes the money database synchronously, so a click flood cannot contend with the accrual and payout write path; tallies are flushed in one batch on the next authenticated links read and at shutdown. Clicks are a vanity metric: no accrual and no payout ever reads them — those key on real metered spend — so click inflation cannot move money.  Any well-formed code is accepted WITHOUT checking that it exists, deliberately: this is not a code-existence oracle. `counted` reports that the buffer took the ping, not that the code is real; an unknown code simply no-ops at flush time.
          * @summary Counts a click on a share link.
-         * @param {AffiliatesApiPostV1AffiliatesClickRequest} requestParameters Request parameters.
+         * @param {AffiliatesApiPostAffiliatesClickRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AffiliatesClick(requestParameters: AffiliatesApiPostV1AffiliatesClickRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClickCount> {
-            return localVarFp.postV1AffiliatesClick(requestParameters.clickRequest, options).then((request) => request(axios, basePath));
+        postAffiliatesClick(requestParameters: AffiliatesApiPostAffiliatesClickRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClickCount> {
+            return localVarFp.postAffiliatesClick(requestParameters.clickRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets the caller\'s public leaderboard display name, or clears it.  The handle IS the opt-in. An empty handle opts out: the affiliate keeps its rank and can still see its own row, it simply stops being listed to anyone else. That is the whole privacy control — there is no separate visibility flag, and no way to be listed without choosing a name.  Requires a validated principal and an existing affiliate record; apply first. The handle is bounded and restricted to letters, digits, space, hyphen, underscore and dot.
          * @summary Sets the caller\'s public leaderboard display name, or clears it.
-         * @param {AffiliatesApiPostV1AffiliatesMeHandleRequest} requestParameters Request parameters.
+         * @param {AffiliatesApiPostAffiliatesMeHandleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AffiliatesMeHandle(requestParameters: AffiliatesApiPostV1AffiliatesMeHandleRequest, options?: RawAxiosRequestConfig): AxiosPromise<HandleSet> {
-            return localVarFp.postV1AffiliatesMeHandle(requestParameters.handleRequest, options).then((request) => request(axios, basePath));
+        postAffiliatesMeHandle(requestParameters: AffiliatesApiPostAffiliatesMeHandleRequest, options?: RawAxiosRequestConfig): AxiosPromise<HandleSet> {
+            return localVarFp.postAffiliatesMeHandle(requestParameters.handleRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Mints a new share link for the caller\'s own affiliate and answers it with its full URL, 201.  APPROVAL IS REQUIRED: an org that has applied but is not approved is refused, because a link that cannot accrue is a link that quietly loses the referral. A requested vanity code must be valid and free across the WHOLE directory — codes are one global namespace, so a taken code is a 409 rather than a silent alias. Omit the code and a random one is minted.  Bounded per affiliate. The label is cosmetic: it is trimmed, stripped of control characters and capped, and it is never part of a code.
          * @summary Mints a new share link for the caller\'s own affiliate and answers it with its full URL, 201.
-         * @param {AffiliatesApiPostV1AffiliatesMeLinksRequest} requestParameters Request parameters.
+         * @param {AffiliatesApiPostAffiliatesMeLinksRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AffiliatesMeLinks(requestParameters: AffiliatesApiPostV1AffiliatesMeLinksRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkMint> {
-            return localVarFp.postV1AffiliatesMeLinks(requestParameters.createLinkRequest, options).then((request) => request(axios, basePath));
+        postAffiliatesMeLinks(requestParameters: AffiliatesApiPostAffiliatesMeLinksRequest, options?: RawAxiosRequestConfig): AxiosPromise<LinkMint> {
+            return localVarFp.postAffiliatesMeLinks(requestParameters.createLinkRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for postV1AffiliatesApply operation in AffiliatesApi.
+ * Request parameters for postAffiliatesApply operation in AffiliatesApi.
  * @export
- * @interface AffiliatesApiPostV1AffiliatesApplyRequest
+ * @interface AffiliatesApiPostAffiliatesApplyRequest
  */
-export interface AffiliatesApiPostV1AffiliatesApplyRequest {
+export interface AffiliatesApiPostAffiliatesApplyRequest {
     /**
      * 
      * @type {ApplyRequest}
-     * @memberof AffiliatesApiPostV1AffiliatesApply
+     * @memberof AffiliatesApiPostAffiliatesApply
      */
     readonly applyRequest: ApplyRequest
 }
 
 /**
- * Request parameters for postV1AffiliatesAttribute operation in AffiliatesApi.
+ * Request parameters for postAffiliatesAttribute operation in AffiliatesApi.
  * @export
- * @interface AffiliatesApiPostV1AffiliatesAttributeRequest
+ * @interface AffiliatesApiPostAffiliatesAttributeRequest
  */
-export interface AffiliatesApiPostV1AffiliatesAttributeRequest {
+export interface AffiliatesApiPostAffiliatesAttributeRequest {
     /**
      * 
      * @type {AttributeRequest}
-     * @memberof AffiliatesApiPostV1AffiliatesAttribute
+     * @memberof AffiliatesApiPostAffiliatesAttribute
      */
     readonly attributeRequest: AttributeRequest
 }
 
 /**
- * Request parameters for postV1AffiliatesClick operation in AffiliatesApi.
+ * Request parameters for postAffiliatesClick operation in AffiliatesApi.
  * @export
- * @interface AffiliatesApiPostV1AffiliatesClickRequest
+ * @interface AffiliatesApiPostAffiliatesClickRequest
  */
-export interface AffiliatesApiPostV1AffiliatesClickRequest {
+export interface AffiliatesApiPostAffiliatesClickRequest {
     /**
      * 
      * @type {ClickRequest}
-     * @memberof AffiliatesApiPostV1AffiliatesClick
+     * @memberof AffiliatesApiPostAffiliatesClick
      */
     readonly clickRequest: ClickRequest
 }
 
 /**
- * Request parameters for postV1AffiliatesMeHandle operation in AffiliatesApi.
+ * Request parameters for postAffiliatesMeHandle operation in AffiliatesApi.
  * @export
- * @interface AffiliatesApiPostV1AffiliatesMeHandleRequest
+ * @interface AffiliatesApiPostAffiliatesMeHandleRequest
  */
-export interface AffiliatesApiPostV1AffiliatesMeHandleRequest {
+export interface AffiliatesApiPostAffiliatesMeHandleRequest {
     /**
      * 
      * @type {HandleRequest}
-     * @memberof AffiliatesApiPostV1AffiliatesMeHandle
+     * @memberof AffiliatesApiPostAffiliatesMeHandle
      */
     readonly handleRequest: HandleRequest
 }
 
 /**
- * Request parameters for postV1AffiliatesMeLinks operation in AffiliatesApi.
+ * Request parameters for postAffiliatesMeLinks operation in AffiliatesApi.
  * @export
- * @interface AffiliatesApiPostV1AffiliatesMeLinksRequest
+ * @interface AffiliatesApiPostAffiliatesMeLinksRequest
  */
-export interface AffiliatesApiPostV1AffiliatesMeLinksRequest {
+export interface AffiliatesApiPostAffiliatesMeLinksRequest {
     /**
      * 
      * @type {CreateLinkRequest}
-     * @memberof AffiliatesApiPostV1AffiliatesMeLinks
+     * @memberof AffiliatesApiPostAffiliatesMeLinks
      */
     readonly createLinkRequest: CreateLinkRequest
 }
@@ -714,8 +714,8 @@ export class AffiliatesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public getV1Affiliates(options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).getV1Affiliates(options).then((request) => request(this.axios, this.basePath));
+    public getAffiliates(options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).getAffiliates(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -725,8 +725,8 @@ export class AffiliatesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public getV1AffiliatesLeaderboard(options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).getV1AffiliatesLeaderboard(options).then((request) => request(this.axios, this.basePath));
+    public getAffiliatesLeaderboard(options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).getAffiliatesLeaderboard(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -736,8 +736,8 @@ export class AffiliatesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public getV1AffiliatesMe(options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).getV1AffiliatesMe(options).then((request) => request(this.axios, this.basePath));
+    public getAffiliatesMe(options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).getAffiliatesMe(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -747,8 +747,8 @@ export class AffiliatesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public getV1AffiliatesMeEarnings(options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).getV1AffiliatesMeEarnings(options).then((request) => request(this.axios, this.basePath));
+    public getAffiliatesMeEarnings(options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).getAffiliatesMeEarnings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -758,68 +758,68 @@ export class AffiliatesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public getV1AffiliatesMeLinks(options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).getV1AffiliatesMeLinks(options).then((request) => request(this.axios, this.basePath));
+    public getAffiliatesMeLinks(options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).getAffiliatesMeLinks(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Enrolls the caller\'s OWN org as an affiliate at status `applied`, optionally requesting a vanity code, and answers the record — 201 on the first apply, 200 with `created:false` afterwards.  IDEMPOTENT, first apply wins: one affiliate per org, so re-applying never creates a second row and never resets an existing approval. Applying is not joining — no code is minted and nothing accrues until staff approve, which is where both the code and the commission rate come from.  The org is the validated caller\'s, never a field. A malformed vanity code is refused up front; the code is only REQUESTED here, and approval may mint a different one if the requested code is taken.
      * @summary Enrolls the caller\'s OWN org as an affiliate at status `applied`, optionally requesting a vanity code, and answers the record — 201 on the first apply, 200 with `created:false` afterwards.
-     * @param {AffiliatesApiPostV1AffiliatesApplyRequest} requestParameters Request parameters.
+     * @param {AffiliatesApiPostAffiliatesApplyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public postV1AffiliatesApply(requestParameters: AffiliatesApiPostV1AffiliatesApplyRequest, options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).postV1AffiliatesApply(requestParameters.applyRequest, options).then((request) => request(this.axios, this.basePath));
+    public postAffiliatesApply(requestParameters: AffiliatesApiPostAffiliatesApplyRequest, options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).postAffiliatesApply(requestParameters.applyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records the first-touch edge every later commission is computed from: the caller\'s org was referred by the affiliate that owns this code.  The REFERRED org is the validated caller, never a field. A caller that could name the referred org could attach itself to somebody else\'s revenue. The affiliate is resolved from the code, and only an APPROVED affiliate\'s code resolves.  FIRST TOUCH WINS, set once: one affiliate per referred org, so a re-post answers the existing edge with `created:false` rather than moving the attribution. Self-attribution is refused, and so is a code that would make a cycle in the upline chain. An unknown code is a 404, deliberately: an affiliate code IS a public shareable link, so whether one is real is public by design, and the caller legitimately needs to know its link resolved.  A user-level mirror of the edge is written best-effort; a conflict there never fails the org attribution, which is the money-bearing one.
      * @summary Records the first-touch edge every later commission is computed from: the caller\'s org was referred by the affiliate that owns this code.
-     * @param {AffiliatesApiPostV1AffiliatesAttributeRequest} requestParameters Request parameters.
+     * @param {AffiliatesApiPostAffiliatesAttributeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public postV1AffiliatesAttribute(requestParameters: AffiliatesApiPostV1AffiliatesAttributeRequest, options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).postV1AffiliatesAttribute(requestParameters.attributeRequest, options).then((request) => request(this.axios, this.basePath));
+    public postAffiliatesAttribute(requestParameters: AffiliatesApiPostAffiliatesAttributeRequest, options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).postAffiliatesAttribute(requestParameters.attributeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Counts a click on a share link. PUBLIC — it takes no principal, because a visitor clicking a shareable link has no session yet.  The ping folds into an in-memory buffer and NEVER writes the money database synchronously, so a click flood cannot contend with the accrual and payout write path; tallies are flushed in one batch on the next authenticated links read and at shutdown. Clicks are a vanity metric: no accrual and no payout ever reads them — those key on real metered spend — so click inflation cannot move money.  Any well-formed code is accepted WITHOUT checking that it exists, deliberately: this is not a code-existence oracle. `counted` reports that the buffer took the ping, not that the code is real; an unknown code simply no-ops at flush time.
      * @summary Counts a click on a share link.
-     * @param {AffiliatesApiPostV1AffiliatesClickRequest} requestParameters Request parameters.
+     * @param {AffiliatesApiPostAffiliatesClickRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public postV1AffiliatesClick(requestParameters: AffiliatesApiPostV1AffiliatesClickRequest, options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).postV1AffiliatesClick(requestParameters.clickRequest, options).then((request) => request(this.axios, this.basePath));
+    public postAffiliatesClick(requestParameters: AffiliatesApiPostAffiliatesClickRequest, options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).postAffiliatesClick(requestParameters.clickRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets the caller\'s public leaderboard display name, or clears it.  The handle IS the opt-in. An empty handle opts out: the affiliate keeps its rank and can still see its own row, it simply stops being listed to anyone else. That is the whole privacy control — there is no separate visibility flag, and no way to be listed without choosing a name.  Requires a validated principal and an existing affiliate record; apply first. The handle is bounded and restricted to letters, digits, space, hyphen, underscore and dot.
      * @summary Sets the caller\'s public leaderboard display name, or clears it.
-     * @param {AffiliatesApiPostV1AffiliatesMeHandleRequest} requestParameters Request parameters.
+     * @param {AffiliatesApiPostAffiliatesMeHandleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public postV1AffiliatesMeHandle(requestParameters: AffiliatesApiPostV1AffiliatesMeHandleRequest, options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).postV1AffiliatesMeHandle(requestParameters.handleRequest, options).then((request) => request(this.axios, this.basePath));
+    public postAffiliatesMeHandle(requestParameters: AffiliatesApiPostAffiliatesMeHandleRequest, options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).postAffiliatesMeHandle(requestParameters.handleRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Mints a new share link for the caller\'s own affiliate and answers it with its full URL, 201.  APPROVAL IS REQUIRED: an org that has applied but is not approved is refused, because a link that cannot accrue is a link that quietly loses the referral. A requested vanity code must be valid and free across the WHOLE directory — codes are one global namespace, so a taken code is a 409 rather than a silent alias. Omit the code and a random one is minted.  Bounded per affiliate. The label is cosmetic: it is trimmed, stripped of control characters and capped, and it is never part of a code.
      * @summary Mints a new share link for the caller\'s own affiliate and answers it with its full URL, 201.
-     * @param {AffiliatesApiPostV1AffiliatesMeLinksRequest} requestParameters Request parameters.
+     * @param {AffiliatesApiPostAffiliatesMeLinksRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AffiliatesApi
      */
-    public postV1AffiliatesMeLinks(requestParameters: AffiliatesApiPostV1AffiliatesMeLinksRequest, options?: RawAxiosRequestConfig) {
-        return AffiliatesApiFp(this.configuration).postV1AffiliatesMeLinks(requestParameters.createLinkRequest, options).then((request) => request(this.axios, this.basePath));
+    public postAffiliatesMeLinks(requestParameters: AffiliatesApiPostAffiliatesMeLinksRequest, options?: RawAxiosRequestConfig) {
+        return AffiliatesApiFp(this.configuration).postAffiliatesMeLinks(requestParameters.createLinkRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

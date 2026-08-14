@@ -36,7 +36,7 @@ export const EmbedApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Embed: async (app?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEmbed: async (app?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/embed`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -81,10 +81,10 @@ export const EmbedApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Embed(app?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmbedStatusResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Embed(app, options);
+        async getEmbed(app?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmbedStatusResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEmbed(app, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EmbedApi.getV1Embed']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EmbedApi.getEmbed']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -100,26 +100,26 @@ export const EmbedApiFactory = function (configuration?: Configuration, basePath
         /**
          * Reports whether one of this brand\'s shared embedded apps (cms, erp, help) may be framed by the caller and is actually running, so a console module can choose between the embed and the provision panel.  It answers two questions the browser cannot answer for itself. ENTITLEMENT is server-authoritative: each app is a single shared per-BRAND instance, so only a member of the owning brand org — or a SuperAdmin — is given the embed URL; every other caller gets phase \"not-entitled\" and no URL. REACHABILITY is a probe of that origin, which a cross-origin page cannot read for itself.  The probed host is always <app>.<this deployment\'s own brand domain>: no part of it comes from the request, so this can never be steered into probing an arbitrary origin.
          * @summary Reports whether one of this brand\'s shared embedded apps (cms, erp, help) may be framed by the caller and is actually running, so a console module can choose between the embed and the provision panel.
-         * @param {EmbedApiGetV1EmbedRequest} requestParameters Request parameters.
+         * @param {EmbedApiGetEmbedRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Embed(requestParameters: EmbedApiGetV1EmbedRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EmbedStatusResp> {
-            return localVarFp.getV1Embed(requestParameters.app, options).then((request) => request(axios, basePath));
+        getEmbed(requestParameters: EmbedApiGetEmbedRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<EmbedStatusResp> {
+            return localVarFp.getEmbed(requestParameters.app, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1Embed operation in EmbedApi.
+ * Request parameters for getEmbed operation in EmbedApi.
  * @export
- * @interface EmbedApiGetV1EmbedRequest
+ * @interface EmbedApiGetEmbedRequest
  */
-export interface EmbedApiGetV1EmbedRequest {
+export interface EmbedApiGetEmbedRequest {
     /**
      * App is the embedded app to report on: cms (Content Studio), erp or help.
      * @type {string}
-     * @memberof EmbedApiGetV1Embed
+     * @memberof EmbedApiGetEmbed
      */
     readonly app?: string
 }
@@ -134,13 +134,13 @@ export class EmbedApi extends BaseAPI {
     /**
      * Reports whether one of this brand\'s shared embedded apps (cms, erp, help) may be framed by the caller and is actually running, so a console module can choose between the embed and the provision panel.  It answers two questions the browser cannot answer for itself. ENTITLEMENT is server-authoritative: each app is a single shared per-BRAND instance, so only a member of the owning brand org — or a SuperAdmin — is given the embed URL; every other caller gets phase \"not-entitled\" and no URL. REACHABILITY is a probe of that origin, which a cross-origin page cannot read for itself.  The probed host is always <app>.<this deployment\'s own brand domain>: no part of it comes from the request, so this can never be steered into probing an arbitrary origin.
      * @summary Reports whether one of this brand\'s shared embedded apps (cms, erp, help) may be framed by the caller and is actually running, so a console module can choose between the embed and the provision panel.
-     * @param {EmbedApiGetV1EmbedRequest} requestParameters Request parameters.
+     * @param {EmbedApiGetEmbedRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmbedApi
      */
-    public getV1Embed(requestParameters: EmbedApiGetV1EmbedRequest = {}, options?: RawAxiosRequestConfig) {
-        return EmbedApiFp(this.configuration).getV1Embed(requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+    public getEmbed(requestParameters: EmbedApiGetEmbedRequest = {}, options?: RawAxiosRequestConfig) {
+        return EmbedApiFp(this.configuration).getEmbed(requestParameters.app, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

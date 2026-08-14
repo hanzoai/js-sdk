@@ -33,7 +33,7 @@ export const FeedbackApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Feedback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFeedback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/feedback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const FeedbackApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Feedback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Feedback(options);
+        async postFeedback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFeedback(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FeedbackApi.postV1Feedback']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FeedbackApi.postFeedback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const FeedbackApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Feedback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Feedback(options).then((request) => request(axios, basePath));
+        postFeedback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postFeedback(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class FeedbackApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FeedbackApi
      */
-    public postV1Feedback(options?: RawAxiosRequestConfig) {
-        return FeedbackApiFp(this.configuration).postV1Feedback(options).then((request) => request(this.axios, this.basePath));
+    public postFeedback(options?: RawAxiosRequestConfig) {
+        return FeedbackApiFp(this.configuration).postFeedback(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

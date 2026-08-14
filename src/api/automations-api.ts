@@ -60,9 +60,9 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AutomationsFlowsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteAutomationsFlowsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1AutomationsFlowsById', 'id', id)
+            assertParamExists('deleteAutomationsFlowsById', 'id', id)
             const localVarPath = `/v1/automations/flows/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -93,7 +93,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsConnectors: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutomationsConnectors: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/automations/connectors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -124,7 +124,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsFlows: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutomationsFlows: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/automations/flows`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -159,9 +159,9 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsFlowsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutomationsFlowsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1AutomationsFlowsById', 'id', id)
+            assertParamExists('getAutomationsFlowsById', 'id', id)
             const localVarPath = `/v1/automations/flows/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -194,9 +194,9 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsFlowsByIdVersions: async (id: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutomationsFlowsByIdVersions: async (id: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1AutomationsFlowsByIdVersions', 'id', id)
+            assertParamExists('getAutomationsFlowsByIdVersions', 'id', id)
             const localVarPath = `/v1/automations/flows/{id}/versions`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -231,7 +231,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsPieces: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutomationsPieces: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/automations/pieces`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -263,7 +263,7 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsRuns: async (flowId?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutomationsRuns: async (flowId?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/automations/runs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -302,9 +302,9 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsRunsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAutomationsRunsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1AutomationsRunsById', 'id', id)
+            assertParamExists('getAutomationsRunsById', 'id', id)
             const localVarPath = `/v1/automations/runs/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -337,11 +337,11 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AutomationsFlowsById: async (id: string, patchFlowIn: PatchFlowIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAutomationsFlowsById: async (id: string, patchFlowIn: PatchFlowIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchV1AutomationsFlowsById', 'id', id)
+            assertParamExists('patchAutomationsFlowsById', 'id', id)
             // verify required parameter 'patchFlowIn' is not null or undefined
-            assertParamExists('patchV1AutomationsFlowsById', 'patchFlowIn', patchFlowIn)
+            assertParamExists('patchAutomationsFlowsById', 'patchFlowIn', patchFlowIn)
             const localVarPath = `/v1/automations/flows/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -377,11 +377,11 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsConnectorsByIdRun: async (id: string, runIn: RunIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutomationsConnectorsByIdRun: async (id: string, runIn: RunIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AutomationsConnectorsByIdRun', 'id', id)
+            assertParamExists('postAutomationsConnectorsByIdRun', 'id', id)
             // verify required parameter 'runIn' is not null or undefined
-            assertParamExists('postV1AutomationsConnectorsByIdRun', 'runIn', runIn)
+            assertParamExists('postAutomationsConnectorsByIdRun', 'runIn', runIn)
             const localVarPath = `/v1/automations/connectors/{id}/run`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -416,9 +416,9 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlows: async (createFlowReq: CreateFlowReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutomationsFlows: async (createFlowReq: CreateFlowReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createFlowReq' is not null or undefined
-            assertParamExists('postV1AutomationsFlows', 'createFlowReq', createFlowReq)
+            assertParamExists('postAutomationsFlows', 'createFlowReq', createFlowReq)
             const localVarPath = `/v1/automations/flows`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -452,9 +452,9 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlowsByIdDisable: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutomationsFlowsByIdDisable: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AutomationsFlowsByIdDisable', 'id', id)
+            assertParamExists('postAutomationsFlowsByIdDisable', 'id', id)
             const localVarPath = `/v1/automations/flows/{id}/disable`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -486,9 +486,9 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlowsByIdEnable: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutomationsFlowsByIdEnable: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AutomationsFlowsByIdEnable', 'id', id)
+            assertParamExists('postAutomationsFlowsByIdEnable', 'id', id)
             const localVarPath = `/v1/automations/flows/{id}/enable`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -520,9 +520,9 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlowsByIdOperations: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutomationsFlowsByIdOperations: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AutomationsFlowsByIdOperations', 'id', id)
+            assertParamExists('postAutomationsFlowsByIdOperations', 'id', id)
             const localVarPath = `/v1/automations/flows/{id}/operations`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -554,9 +554,9 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlowsByIdRun: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutomationsFlowsByIdRun: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AutomationsFlowsByIdRun', 'id', id)
+            assertParamExists('postAutomationsFlowsByIdRun', 'id', id)
             const localVarPath = `/v1/automations/flows/{id}/run`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -589,11 +589,11 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlowsByIdVersions: async (id: string, createVersionIn: CreateVersionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutomationsFlowsByIdVersions: async (id: string, createVersionIn: CreateVersionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AutomationsFlowsByIdVersions', 'id', id)
+            assertParamExists('postAutomationsFlowsByIdVersions', 'id', id)
             // verify required parameter 'createVersionIn' is not null or undefined
-            assertParamExists('postV1AutomationsFlowsByIdVersions', 'createVersionIn', createVersionIn)
+            assertParamExists('postAutomationsFlowsByIdVersions', 'createVersionIn', createVersionIn)
             const localVarPath = `/v1/automations/flows/{id}/versions`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -629,11 +629,11 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsHooksBySourceByEvent: async (source: string, event: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutomationsHooksBySourceByEvent: async (source: string, event: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'source' is not null or undefined
-            assertParamExists('postV1AutomationsHooksBySourceByEvent', 'source', source)
+            assertParamExists('postAutomationsHooksBySourceByEvent', 'source', source)
             // verify required parameter 'event' is not null or undefined
-            assertParamExists('postV1AutomationsHooksBySourceByEvent', 'event', event)
+            assertParamExists('postAutomationsHooksBySourceByEvent', 'event', event)
             const localVarPath = `/v1/automations/hooks/{source}/{event}`
                 .replace(`{${"source"}}`, encodeURIComponent(String(source)))
                 .replace(`{${"event"}}`, encodeURIComponent(String(event)));
@@ -666,9 +666,9 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsRunsByIdResume: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAutomationsRunsByIdResume: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AutomationsRunsByIdResume', 'id', id)
+            assertParamExists('postAutomationsRunsByIdResume', 'id', id)
             const localVarPath = `/v1/automations/runs/{id}/resume`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -710,10 +710,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1AutomationsFlowsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1AutomationsFlowsById(id, options);
+        async deleteAutomationsFlowsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAutomationsFlowsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.deleteV1AutomationsFlowsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.deleteAutomationsFlowsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -722,10 +722,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutomationsConnectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Catalog>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutomationsConnectors(options);
+        async getAutomationsConnectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Catalog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutomationsConnectors(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getV1AutomationsConnectors']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getAutomationsConnectors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -735,10 +735,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutomationsFlows(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutomationsFlows(limit, options);
+        async getAutomationsFlows(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutomationsFlows(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getV1AutomationsFlows']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getAutomationsFlows']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -748,10 +748,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutomationsFlowsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PopulatedFlow>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutomationsFlowsById(id, options);
+        async getAutomationsFlowsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PopulatedFlow>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutomationsFlowsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getV1AutomationsFlowsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getAutomationsFlowsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -762,10 +762,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutomationsFlowsByIdVersions(id: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VersionPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutomationsFlowsByIdVersions(id, limit, options);
+        async getAutomationsFlowsByIdVersions(id: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VersionPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutomationsFlowsByIdVersions(id, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getV1AutomationsFlowsByIdVersions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getAutomationsFlowsByIdVersions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -774,10 +774,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutomationsPieces(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Catalog>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutomationsPieces(options);
+        async getAutomationsPieces(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Catalog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutomationsPieces(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getV1AutomationsPieces']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getAutomationsPieces']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -788,10 +788,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutomationsRuns(flowId?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutomationsRuns(flowId, limit, options);
+        async getAutomationsRuns(flowId?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutomationsRuns(flowId, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getV1AutomationsRuns']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getAutomationsRuns']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -801,10 +801,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AutomationsRunsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowRun>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AutomationsRunsById(id, options);
+        async getAutomationsRunsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowRun>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAutomationsRunsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getV1AutomationsRunsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.getAutomationsRunsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -815,10 +815,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AutomationsFlowsById(id: string, patchFlowIn: PatchFlowIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Flow>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AutomationsFlowsById(id, patchFlowIn, options);
+        async patchAutomationsFlowsById(id: string, patchFlowIn: PatchFlowIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Flow>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAutomationsFlowsById(id, patchFlowIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.patchV1AutomationsFlowsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.patchAutomationsFlowsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -829,10 +829,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutomationsConnectorsByIdRun(id: string, runIn: RunIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutomationsConnectorsByIdRun(id, runIn, options);
+        async postAutomationsConnectorsByIdRun(id: string, runIn: RunIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutomationsConnectorsByIdRun(id, runIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postV1AutomationsConnectorsByIdRun']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postAutomationsConnectorsByIdRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -842,10 +842,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutomationsFlows(createFlowReq: CreateFlowReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PopulatedFlow>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutomationsFlows(createFlowReq, options);
+        async postAutomationsFlows(createFlowReq: CreateFlowReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PopulatedFlow>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutomationsFlows(createFlowReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postV1AutomationsFlows']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postAutomationsFlows']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -855,10 +855,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutomationsFlowsByIdDisable(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Flow>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutomationsFlowsByIdDisable(id, options);
+        async postAutomationsFlowsByIdDisable(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Flow>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutomationsFlowsByIdDisable(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postV1AutomationsFlowsByIdDisable']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postAutomationsFlowsByIdDisable']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -868,10 +868,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutomationsFlowsByIdEnable(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Flow>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutomationsFlowsByIdEnable(id, options);
+        async postAutomationsFlowsByIdEnable(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Flow>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutomationsFlowsByIdEnable(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postV1AutomationsFlowsByIdEnable']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postAutomationsFlowsByIdEnable']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -881,10 +881,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutomationsFlowsByIdOperations(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutomationsFlowsByIdOperations(id, options);
+        async postAutomationsFlowsByIdOperations(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutomationsFlowsByIdOperations(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postV1AutomationsFlowsByIdOperations']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postAutomationsFlowsByIdOperations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -894,10 +894,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutomationsFlowsByIdRun(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowRun>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutomationsFlowsByIdRun(id, options);
+        async postAutomationsFlowsByIdRun(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowRun>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutomationsFlowsByIdRun(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postV1AutomationsFlowsByIdRun']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postAutomationsFlowsByIdRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -908,10 +908,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutomationsFlowsByIdVersions(id: string, createVersionIn: CreateVersionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowVersion>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutomationsFlowsByIdVersions(id, createVersionIn, options);
+        async postAutomationsFlowsByIdVersions(id: string, createVersionIn: CreateVersionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlowVersion>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutomationsFlowsByIdVersions(id, createVersionIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postV1AutomationsFlowsByIdVersions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postAutomationsFlowsByIdVersions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -922,10 +922,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutomationsHooksBySourceByEvent(source: string, event: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutomationsHooksBySourceByEvent(source, event, options);
+        async postAutomationsHooksBySourceByEvent(source: string, event: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutomationsHooksBySourceByEvent(source, event, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postV1AutomationsHooksBySourceByEvent']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postAutomationsHooksBySourceByEvent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -935,10 +935,10 @@ export const AutomationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AutomationsRunsByIdResume(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AutomationsRunsByIdResume(id, options);
+        async postAutomationsRunsByIdResume(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAutomationsRunsByIdResume(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postV1AutomationsRunsByIdResume']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AutomationsApi.postAutomationsRunsByIdResume']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -954,12 +954,12 @@ export const AutomationsApiFactory = function (configuration?: Configuration, ba
         /**
          * Deletes one automation, its versions and its run history. It answers no content, and a flow of another org answers not-found.
          * @summary Deletes one automation, its versions and its run history.
-         * @param {AutomationsApiDeleteV1AutomationsFlowsByIdRequest} requestParameters Request parameters.
+         * @param {AutomationsApiDeleteAutomationsFlowsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1AutomationsFlowsById(requestParameters: AutomationsApiDeleteV1AutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1AutomationsFlowsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteAutomationsFlowsById(requestParameters: AutomationsApiDeleteAutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteAutomationsFlowsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Connectors returns the connector catalogue. Each entry is an external service a flow step can invoke, carrying its auth descriptor and the input properties of its actions and triggers. The catalogue is the same for every tenant, so the gate is a validated principal rather than a per-org view.
@@ -967,38 +967,38 @@ export const AutomationsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsConnectors(options?: RawAxiosRequestConfig): AxiosPromise<Catalog> {
-            return localVarFp.getV1AutomationsConnectors(options).then((request) => request(axios, basePath));
+        getAutomationsConnectors(options?: RawAxiosRequestConfig): AxiosPromise<Catalog> {
+            return localVarFp.getAutomationsConnectors(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s automations, most-recently-updated first. The optional `limit` query bounds the page.
          * @summary Returns the caller org\'s automations, most-recently-updated first.
-         * @param {AutomationsApiGetV1AutomationsFlowsRequest} requestParameters Request parameters.
+         * @param {AutomationsApiGetAutomationsFlowsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsFlows(requestParameters: AutomationsApiGetV1AutomationsFlowsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FlowPage> {
-            return localVarFp.getV1AutomationsFlows(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getAutomationsFlows(requestParameters: AutomationsApiGetAutomationsFlowsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FlowPage> {
+            return localVarFp.getAutomationsFlows(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one automation and its latest version. That is the flow record plus the step tree the builder edits; a flow of another org answers not-found.
          * @summary Returns one automation and its latest version.
-         * @param {AutomationsApiGetV1AutomationsFlowsByIdRequest} requestParameters Request parameters.
+         * @param {AutomationsApiGetAutomationsFlowsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsFlowsById(requestParameters: AutomationsApiGetV1AutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PopulatedFlow> {
-            return localVarFp.getV1AutomationsFlowsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getAutomationsFlowsById(requestParameters: AutomationsApiGetAutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<PopulatedFlow> {
+            return localVarFp.getAutomationsFlowsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one flow\'s versions, newest first. The optional `limit` query bounds the page.
          * @summary Returns one flow\'s versions, newest first.
-         * @param {AutomationsApiGetV1AutomationsFlowsByIdVersionsRequest} requestParameters Request parameters.
+         * @param {AutomationsApiGetAutomationsFlowsByIdVersionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsFlowsByIdVersions(requestParameters: AutomationsApiGetV1AutomationsFlowsByIdVersionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<VersionPage> {
-            return localVarFp.getV1AutomationsFlowsByIdVersions(requestParameters.id, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getAutomationsFlowsByIdVersions(requestParameters: AutomationsApiGetAutomationsFlowsByIdVersionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<VersionPage> {
+            return localVarFp.getAutomationsFlowsByIdVersions(requestParameters.id, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Pieces is the retired-name alias of the connector catalogue. It serves exactly what GET /v1/automations/connectors serves, under the name this surface used before \"piece\" (the ActivePieces term) became \"connector\", and stays valid for clients pinned to the old path. Prefer /connectors.
@@ -1006,394 +1006,394 @@ export const AutomationsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsPieces(options?: RawAxiosRequestConfig): AxiosPromise<Catalog> {
-            return localVarFp.getV1AutomationsPieces(options).then((request) => request(axios, basePath));
+        getAutomationsPieces(options?: RawAxiosRequestConfig): AxiosPromise<Catalog> {
+            return localVarFp.getAutomationsPieces(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s run history, newest first. The optional `flowId` query narrows it to one flow and `limit` bounds the page.
          * @summary Returns the caller org\'s run history, newest first.
-         * @param {AutomationsApiGetV1AutomationsRunsRequest} requestParameters Request parameters.
+         * @param {AutomationsApiGetAutomationsRunsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsRuns(requestParameters: AutomationsApiGetV1AutomationsRunsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RunPage> {
-            return localVarFp.getV1AutomationsRuns(requestParameters.flowId, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getAutomationsRuns(requestParameters: AutomationsApiGetAutomationsRunsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<RunPage> {
+            return localVarFp.getAutomationsRuns(requestParameters.flowId, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one run. A run that has not reached a terminal status is refreshed from the durable engine first — scoped to the org\'s own namespace — so the caller sees live progress rather than the last status that happened to be persisted.
          * @summary Returns one run.
-         * @param {AutomationsApiGetV1AutomationsRunsByIdRequest} requestParameters Request parameters.
+         * @param {AutomationsApiGetAutomationsRunsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AutomationsRunsById(requestParameters: AutomationsApiGetV1AutomationsRunsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlowRun> {
-            return localVarFp.getV1AutomationsRunsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getAutomationsRunsById(requestParameters: AutomationsApiGetAutomationsRunsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlowRun> {
+            return localVarFp.getAutomationsRunsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates one automation\'s metadata in place. Every field is optional; a field the request omits is left alone. Publishing a version pins which one runs, and is refused unless that version belongs to this flow.
          * @summary Updates one automation\'s metadata in place.
-         * @param {AutomationsApiPatchV1AutomationsFlowsByIdRequest} requestParameters Request parameters.
+         * @param {AutomationsApiPatchAutomationsFlowsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AutomationsFlowsById(requestParameters: AutomationsApiPatchV1AutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Flow> {
-            return localVarFp.patchV1AutomationsFlowsById(requestParameters.id, requestParameters.patchFlowIn, options).then((request) => request(axios, basePath));
+        patchAutomationsFlowsById(requestParameters: AutomationsApiPatchAutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Flow> {
+            return localVarFp.patchAutomationsFlowsById(requestParameters.id, requestParameters.patchFlowIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Run executes one connector action in-process and answers the outcome. The caller\'s resolved credential travels in `auth`, delivered to the action verbatim — the runtime resolves no credential itself. An action that ran and failed (or an action name the connector does not have) answers ok:false with the failure message, not an HTTP error; an unknown connector is 404 and a missing action 422.
          * @summary Run executes one connector action in-process and answers the outcome.
-         * @param {AutomationsApiPostV1AutomationsConnectorsByIdRunRequest} requestParameters Request parameters.
+         * @param {AutomationsApiPostAutomationsConnectorsByIdRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsConnectorsByIdRun(requestParameters: AutomationsApiPostV1AutomationsConnectorsByIdRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunResp> {
-            return localVarFp.postV1AutomationsConnectorsByIdRun(requestParameters.id, requestParameters.runIn, options).then((request) => request(axios, basePath));
+        postAutomationsConnectorsByIdRun(requestParameters: AutomationsApiPostAutomationsConnectorsByIdRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunResp> {
+            return localVarFp.postAutomationsConnectorsByIdRun(requestParameters.id, requestParameters.runIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an automation and its initial DRAFT version in one call. The new flow is DISABLED — creating it does not arm its trigger; POST /v1/automations/flows/{id}/enable does that.
          * @summary Creates an automation and its initial DRAFT version in one call.
-         * @param {AutomationsApiPostV1AutomationsFlowsRequest} requestParameters Request parameters.
+         * @param {AutomationsApiPostAutomationsFlowsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlows(requestParameters: AutomationsApiPostV1AutomationsFlowsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PopulatedFlow> {
-            return localVarFp.postV1AutomationsFlows(requestParameters.createFlowReq, options).then((request) => request(axios, basePath));
+        postAutomationsFlows(requestParameters: AutomationsApiPostAutomationsFlowsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PopulatedFlow> {
+            return localVarFp.postAutomationsFlows(requestParameters.createFlowReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Disarms a flow\'s trigger and marks it DISABLED. Its schedule and its event subscriptions are dropped, so a disabled flow is never a live target; runs already in flight are unaffected, and it can still be started on demand.
          * @summary Disarms a flow\'s trigger and marks it DISABLED.
-         * @param {AutomationsApiPostV1AutomationsFlowsByIdDisableRequest} requestParameters Request parameters.
+         * @param {AutomationsApiPostAutomationsFlowsByIdDisableRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlowsByIdDisable(requestParameters: AutomationsApiPostV1AutomationsFlowsByIdDisableRequest, options?: RawAxiosRequestConfig): AxiosPromise<Flow> {
-            return localVarFp.postV1AutomationsFlowsByIdDisable(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAutomationsFlowsByIdDisable(requestParameters: AutomationsApiPostAutomationsFlowsByIdDisableRequest, options?: RawAxiosRequestConfig): AxiosPromise<Flow> {
+            return localVarFp.postAutomationsFlowsByIdDisable(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Arms a flow\'s trigger and marks it ENABLED. A POLLING trigger gets a cron schedule on the durable engine; a WEBHOOK trigger gets a subscription in the routing index, so an inbound event starts it; a MANUAL trigger arms nothing and still runs on demand.
          * @summary Arms a flow\'s trigger and marks it ENABLED.
-         * @param {AutomationsApiPostV1AutomationsFlowsByIdEnableRequest} requestParameters Request parameters.
+         * @param {AutomationsApiPostAutomationsFlowsByIdEnableRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlowsByIdEnable(requestParameters: AutomationsApiPostV1AutomationsFlowsByIdEnableRequest, options?: RawAxiosRequestConfig): AxiosPromise<Flow> {
-            return localVarFp.postV1AutomationsFlowsByIdEnable(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAutomationsFlowsByIdEnable(requestParameters: AutomationsApiPostAutomationsFlowsByIdEnableRequest, options?: RawAxiosRequestConfig): AxiosPromise<Flow> {
+            return localVarFp.postAutomationsFlowsByIdEnable(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Applies ONE flow operation and answers the thing it changed. The operation is named by `type`, with its arguments under `request`: `CHANGE_NAME`, `UPDATE_TRIGGER`, `ADD_ACTION`, `UPDATE_ACTION`, `MOVE_ACTION`, `DELETE_ACTION` edit the flow\'s LATEST version and answer with that version, and `CHANGE_STATUS` instead enables or disables the flow and answers with the FLOW. Two response shapes on one address is the rule a reader would otherwise get wrong, and it is why this route is not a typed op.  Edits land on the latest version only — the published version a run executes is untouched until it is republished — and the whole resulting step tree is re-validated against the step-count and size caps after every operation, so a long sequence of `ADD_ACTION` calls cannot grow a flow past a bound one step at a time (422 when it would). Org-scoped and fails closed: a validated principal is required (403 without one), the flow and its version are read under the caller\'s OWN org so another tenant\'s id is a 404, and an operation whose `request` does not decode is a 400.
          * @summary Edit a flow — rename it, retarget its trigger, or add, move and delete steps
-         * @param {AutomationsApiPostV1AutomationsFlowsByIdOperationsRequest} requestParameters Request parameters.
+         * @param {AutomationsApiPostAutomationsFlowsByIdOperationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlowsByIdOperations(requestParameters: AutomationsApiPostV1AutomationsFlowsByIdOperationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AutomationsFlowsByIdOperations(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAutomationsFlowsByIdOperations(requestParameters: AutomationsApiPostAutomationsFlowsByIdOperationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAutomationsFlowsByIdOperations(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Starts one durable run of a flow now. It runs the flow\'s published version if one is pinned, else its latest, and answers the run record it created. The run is bounded by the org\'s per-minute run-start budget and its in-flight concurrency ceiling; over either, or with the engine not ready, no run is started and no run id is burned.
          * @summary Starts one durable run of a flow now.
-         * @param {AutomationsApiPostV1AutomationsFlowsByIdRunRequest} requestParameters Request parameters.
+         * @param {AutomationsApiPostAutomationsFlowsByIdRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlowsByIdRun(requestParameters: AutomationsApiPostV1AutomationsFlowsByIdRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlowRun> {
-            return localVarFp.postV1AutomationsFlowsByIdRun(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAutomationsFlowsByIdRun(requestParameters: AutomationsApiPostAutomationsFlowsByIdRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlowRun> {
+            return localVarFp.postAutomationsFlowsByIdRun(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a new DRAFT version to a flow. The version is created invalid unless it carries a trigger, and it does not become the running version until it is published (PATCH the flow\'s publishedVersionId) or becomes the latest.
          * @summary Adds a new DRAFT version to a flow.
-         * @param {AutomationsApiPostV1AutomationsFlowsByIdVersionsRequest} requestParameters Request parameters.
+         * @param {AutomationsApiPostAutomationsFlowsByIdVersionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsFlowsByIdVersions(requestParameters: AutomationsApiPostV1AutomationsFlowsByIdVersionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlowVersion> {
-            return localVarFp.postV1AutomationsFlowsByIdVersions(requestParameters.id, requestParameters.createVersionIn, options).then((request) => request(axios, basePath));
+        postAutomationsFlowsByIdVersions(requestParameters: AutomationsApiPostAutomationsFlowsByIdVersionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<FlowVersion> {
+            return localVarFp.postAutomationsFlowsByIdVersions(requestParameters.id, requestParameters.createVersionIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Delivers one event to the org\'s automation triggers and answers `{matched:n}` — how many enabled flows had a webhook trigger on this `(source, event)` key and were started by it. A zero match is a success, not an error: nothing was subscribed.  The path is the trigger key and the JSON object body is the event payload, threaded into each started run as `{{trigger.*}}` with all of its keys intact — which is why this is not a typed op, since a declared input struct would silently DISCARD every payload key it had no field for. Re-delivery is a no-op: an `X-Idempotency-Key` header dedupes, and with none the body is content-hashed instead, so a hammer of identical posts collapses to ONE run rather than minting a fresh one per post. An in-platform producer may propagate `X-Causation-Depth` so a firing that a flow caused is bounded against a loop; an absent or invalid header reads as depth 0, an external origin.  Authenticated and org-scoped, unlike a provider\'s public webhook URL: a validated principal is required (403 without one) and the org is that principal\'s, never the body\'s, so a producer can only fire into its own tenant\'s flows. Both path segments are required (400) and a payload over the size limit is a 413.
          * @summary Fire an event that starts every enabled flow subscribed to it
-         * @param {AutomationsApiPostV1AutomationsHooksBySourceByEventRequest} requestParameters Request parameters.
+         * @param {AutomationsApiPostAutomationsHooksBySourceByEventRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsHooksBySourceByEvent(requestParameters: AutomationsApiPostV1AutomationsHooksBySourceByEventRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AutomationsHooksBySourceByEvent(requestParameters.source, requestParameters.event, options).then((request) => request(axios, basePath));
+        postAutomationsHooksBySourceByEvent(requestParameters: AutomationsApiPostAutomationsHooksBySourceByEventRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAutomationsHooksBySourceByEvent(requestParameters.source, requestParameters.event, options).then((request) => request(axios, basePath));
         },
         /**
          * Delivers the durable `resume` signal to a run parked on a `wait_for_approval` waitpoint and answers `{resumed:true}` once the engine has taken it.  The body is an ARBITRARY JSON value — object, array, string, number — delivered VERBATIM into the workflow as that waitpoint\'s output, so it is what the steps after the approval read as their input. An empty body resumes with no payload. That open shape is why this route is not a typed op: an operation\'s input can carry the payload or the run address, never both.  Org-scoped and fails closed: a validated principal is required (403 without one), the run is read under the caller\'s OWN org so another tenant\'s run id is a 404, a body that is not JSON is a 400, and a payload over the size limit is a 413 — it becomes durable engine state, so it is bounded here rather than after it lands. The resume is audited as `automations.run.resume`.
          * @summary Release a run waiting at an approval step, with the approval payload
-         * @param {AutomationsApiPostV1AutomationsRunsByIdResumeRequest} requestParameters Request parameters.
+         * @param {AutomationsApiPostAutomationsRunsByIdResumeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AutomationsRunsByIdResume(requestParameters: AutomationsApiPostV1AutomationsRunsByIdResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1AutomationsRunsByIdResume(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAutomationsRunsByIdResume(requestParameters: AutomationsApiPostAutomationsRunsByIdResumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAutomationsRunsByIdResume(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1AutomationsFlowsById operation in AutomationsApi.
+ * Request parameters for deleteAutomationsFlowsById operation in AutomationsApi.
  * @export
- * @interface AutomationsApiDeleteV1AutomationsFlowsByIdRequest
+ * @interface AutomationsApiDeleteAutomationsFlowsByIdRequest
  */
-export interface AutomationsApiDeleteV1AutomationsFlowsByIdRequest {
+export interface AutomationsApiDeleteAutomationsFlowsByIdRequest {
     /**
      * ID is the flow to act on, from the path.
      * @type {string}
-     * @memberof AutomationsApiDeleteV1AutomationsFlowsById
+     * @memberof AutomationsApiDeleteAutomationsFlowsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1AutomationsFlows operation in AutomationsApi.
+ * Request parameters for getAutomationsFlows operation in AutomationsApi.
  * @export
- * @interface AutomationsApiGetV1AutomationsFlowsRequest
+ * @interface AutomationsApiGetAutomationsFlowsRequest
  */
-export interface AutomationsApiGetV1AutomationsFlowsRequest {
+export interface AutomationsApiGetAutomationsFlowsRequest {
     /**
      * Limit bounds the page (default 200, maximum 1000).
      * @type {number}
-     * @memberof AutomationsApiGetV1AutomationsFlows
+     * @memberof AutomationsApiGetAutomationsFlows
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1AutomationsFlowsById operation in AutomationsApi.
+ * Request parameters for getAutomationsFlowsById operation in AutomationsApi.
  * @export
- * @interface AutomationsApiGetV1AutomationsFlowsByIdRequest
+ * @interface AutomationsApiGetAutomationsFlowsByIdRequest
  */
-export interface AutomationsApiGetV1AutomationsFlowsByIdRequest {
+export interface AutomationsApiGetAutomationsFlowsByIdRequest {
     /**
      * ID is the flow to act on, from the path.
      * @type {string}
-     * @memberof AutomationsApiGetV1AutomationsFlowsById
+     * @memberof AutomationsApiGetAutomationsFlowsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1AutomationsFlowsByIdVersions operation in AutomationsApi.
+ * Request parameters for getAutomationsFlowsByIdVersions operation in AutomationsApi.
  * @export
- * @interface AutomationsApiGetV1AutomationsFlowsByIdVersionsRequest
+ * @interface AutomationsApiGetAutomationsFlowsByIdVersionsRequest
  */
-export interface AutomationsApiGetV1AutomationsFlowsByIdVersionsRequest {
+export interface AutomationsApiGetAutomationsFlowsByIdVersionsRequest {
     /**
      * ID is the flow whose versions to list, from the path.
      * @type {string}
-     * @memberof AutomationsApiGetV1AutomationsFlowsByIdVersions
+     * @memberof AutomationsApiGetAutomationsFlowsByIdVersions
      */
     readonly id: string
 
     /**
      * Limit bounds the page (default 200, maximum 1000).
      * @type {number}
-     * @memberof AutomationsApiGetV1AutomationsFlowsByIdVersions
+     * @memberof AutomationsApiGetAutomationsFlowsByIdVersions
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1AutomationsRuns operation in AutomationsApi.
+ * Request parameters for getAutomationsRuns operation in AutomationsApi.
  * @export
- * @interface AutomationsApiGetV1AutomationsRunsRequest
+ * @interface AutomationsApiGetAutomationsRunsRequest
  */
-export interface AutomationsApiGetV1AutomationsRunsRequest {
+export interface AutomationsApiGetAutomationsRunsRequest {
     /**
      * FlowID narrows the history to one flow. Omit it for the whole org\&#39;s runs.
      * @type {string}
-     * @memberof AutomationsApiGetV1AutomationsRuns
+     * @memberof AutomationsApiGetAutomationsRuns
      */
     readonly flowId?: string
 
     /**
      * Limit bounds the page (default 200, maximum 1000).
      * @type {number}
-     * @memberof AutomationsApiGetV1AutomationsRuns
+     * @memberof AutomationsApiGetAutomationsRuns
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1AutomationsRunsById operation in AutomationsApi.
+ * Request parameters for getAutomationsRunsById operation in AutomationsApi.
  * @export
- * @interface AutomationsApiGetV1AutomationsRunsByIdRequest
+ * @interface AutomationsApiGetAutomationsRunsByIdRequest
  */
-export interface AutomationsApiGetV1AutomationsRunsByIdRequest {
+export interface AutomationsApiGetAutomationsRunsByIdRequest {
     /**
      * ID is the run to read, from the path.
      * @type {string}
-     * @memberof AutomationsApiGetV1AutomationsRunsById
+     * @memberof AutomationsApiGetAutomationsRunsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for patchV1AutomationsFlowsById operation in AutomationsApi.
+ * Request parameters for patchAutomationsFlowsById operation in AutomationsApi.
  * @export
- * @interface AutomationsApiPatchV1AutomationsFlowsByIdRequest
+ * @interface AutomationsApiPatchAutomationsFlowsByIdRequest
  */
-export interface AutomationsApiPatchV1AutomationsFlowsByIdRequest {
+export interface AutomationsApiPatchAutomationsFlowsByIdRequest {
     /**
      * ID is the flow to update, from the path.
      * @type {string}
-     * @memberof AutomationsApiPatchV1AutomationsFlowsById
+     * @memberof AutomationsApiPatchAutomationsFlowsById
      */
     readonly id: string
 
     /**
      * 
      * @type {PatchFlowIn}
-     * @memberof AutomationsApiPatchV1AutomationsFlowsById
+     * @memberof AutomationsApiPatchAutomationsFlowsById
      */
     readonly patchFlowIn: PatchFlowIn
 }
 
 /**
- * Request parameters for postV1AutomationsConnectorsByIdRun operation in AutomationsApi.
+ * Request parameters for postAutomationsConnectorsByIdRun operation in AutomationsApi.
  * @export
- * @interface AutomationsApiPostV1AutomationsConnectorsByIdRunRequest
+ * @interface AutomationsApiPostAutomationsConnectorsByIdRunRequest
  */
-export interface AutomationsApiPostV1AutomationsConnectorsByIdRunRequest {
+export interface AutomationsApiPostAutomationsConnectorsByIdRunRequest {
     /**
      * ID is the connector to run, from the path.
      * @type {string}
-     * @memberof AutomationsApiPostV1AutomationsConnectorsByIdRun
+     * @memberof AutomationsApiPostAutomationsConnectorsByIdRun
      */
     readonly id: string
 
     /**
      * 
      * @type {RunIn}
-     * @memberof AutomationsApiPostV1AutomationsConnectorsByIdRun
+     * @memberof AutomationsApiPostAutomationsConnectorsByIdRun
      */
     readonly runIn: RunIn
 }
 
 /**
- * Request parameters for postV1AutomationsFlows operation in AutomationsApi.
+ * Request parameters for postAutomationsFlows operation in AutomationsApi.
  * @export
- * @interface AutomationsApiPostV1AutomationsFlowsRequest
+ * @interface AutomationsApiPostAutomationsFlowsRequest
  */
-export interface AutomationsApiPostV1AutomationsFlowsRequest {
+export interface AutomationsApiPostAutomationsFlowsRequest {
     /**
      * 
      * @type {CreateFlowReq}
-     * @memberof AutomationsApiPostV1AutomationsFlows
+     * @memberof AutomationsApiPostAutomationsFlows
      */
     readonly createFlowReq: CreateFlowReq
 }
 
 /**
- * Request parameters for postV1AutomationsFlowsByIdDisable operation in AutomationsApi.
+ * Request parameters for postAutomationsFlowsByIdDisable operation in AutomationsApi.
  * @export
- * @interface AutomationsApiPostV1AutomationsFlowsByIdDisableRequest
+ * @interface AutomationsApiPostAutomationsFlowsByIdDisableRequest
  */
-export interface AutomationsApiPostV1AutomationsFlowsByIdDisableRequest {
+export interface AutomationsApiPostAutomationsFlowsByIdDisableRequest {
     /**
      * ID is the flow to act on, from the path.
      * @type {string}
-     * @memberof AutomationsApiPostV1AutomationsFlowsByIdDisable
+     * @memberof AutomationsApiPostAutomationsFlowsByIdDisable
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AutomationsFlowsByIdEnable operation in AutomationsApi.
+ * Request parameters for postAutomationsFlowsByIdEnable operation in AutomationsApi.
  * @export
- * @interface AutomationsApiPostV1AutomationsFlowsByIdEnableRequest
+ * @interface AutomationsApiPostAutomationsFlowsByIdEnableRequest
  */
-export interface AutomationsApiPostV1AutomationsFlowsByIdEnableRequest {
+export interface AutomationsApiPostAutomationsFlowsByIdEnableRequest {
     /**
      * ID is the flow to act on, from the path.
      * @type {string}
-     * @memberof AutomationsApiPostV1AutomationsFlowsByIdEnable
+     * @memberof AutomationsApiPostAutomationsFlowsByIdEnable
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AutomationsFlowsByIdOperations operation in AutomationsApi.
+ * Request parameters for postAutomationsFlowsByIdOperations operation in AutomationsApi.
  * @export
- * @interface AutomationsApiPostV1AutomationsFlowsByIdOperationsRequest
+ * @interface AutomationsApiPostAutomationsFlowsByIdOperationsRequest
  */
-export interface AutomationsApiPostV1AutomationsFlowsByIdOperationsRequest {
+export interface AutomationsApiPostAutomationsFlowsByIdOperationsRequest {
     /**
      * 
      * @type {string}
-     * @memberof AutomationsApiPostV1AutomationsFlowsByIdOperations
+     * @memberof AutomationsApiPostAutomationsFlowsByIdOperations
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AutomationsFlowsByIdRun operation in AutomationsApi.
+ * Request parameters for postAutomationsFlowsByIdRun operation in AutomationsApi.
  * @export
- * @interface AutomationsApiPostV1AutomationsFlowsByIdRunRequest
+ * @interface AutomationsApiPostAutomationsFlowsByIdRunRequest
  */
-export interface AutomationsApiPostV1AutomationsFlowsByIdRunRequest {
+export interface AutomationsApiPostAutomationsFlowsByIdRunRequest {
     /**
      * ID is the flow to act on, from the path.
      * @type {string}
-     * @memberof AutomationsApiPostV1AutomationsFlowsByIdRun
+     * @memberof AutomationsApiPostAutomationsFlowsByIdRun
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AutomationsFlowsByIdVersions operation in AutomationsApi.
+ * Request parameters for postAutomationsFlowsByIdVersions operation in AutomationsApi.
  * @export
- * @interface AutomationsApiPostV1AutomationsFlowsByIdVersionsRequest
+ * @interface AutomationsApiPostAutomationsFlowsByIdVersionsRequest
  */
-export interface AutomationsApiPostV1AutomationsFlowsByIdVersionsRequest {
+export interface AutomationsApiPostAutomationsFlowsByIdVersionsRequest {
     /**
      * ID is the flow to add a version to, from the path.
      * @type {string}
-     * @memberof AutomationsApiPostV1AutomationsFlowsByIdVersions
+     * @memberof AutomationsApiPostAutomationsFlowsByIdVersions
      */
     readonly id: string
 
     /**
      * 
      * @type {CreateVersionIn}
-     * @memberof AutomationsApiPostV1AutomationsFlowsByIdVersions
+     * @memberof AutomationsApiPostAutomationsFlowsByIdVersions
      */
     readonly createVersionIn: CreateVersionIn
 }
 
 /**
- * Request parameters for postV1AutomationsHooksBySourceByEvent operation in AutomationsApi.
+ * Request parameters for postAutomationsHooksBySourceByEvent operation in AutomationsApi.
  * @export
- * @interface AutomationsApiPostV1AutomationsHooksBySourceByEventRequest
+ * @interface AutomationsApiPostAutomationsHooksBySourceByEventRequest
  */
-export interface AutomationsApiPostV1AutomationsHooksBySourceByEventRequest {
+export interface AutomationsApiPostAutomationsHooksBySourceByEventRequest {
     /**
      * 
      * @type {string}
-     * @memberof AutomationsApiPostV1AutomationsHooksBySourceByEvent
+     * @memberof AutomationsApiPostAutomationsHooksBySourceByEvent
      */
     readonly source: string
 
     /**
      * 
      * @type {string}
-     * @memberof AutomationsApiPostV1AutomationsHooksBySourceByEvent
+     * @memberof AutomationsApiPostAutomationsHooksBySourceByEvent
      */
     readonly event: string
 }
 
 /**
- * Request parameters for postV1AutomationsRunsByIdResume operation in AutomationsApi.
+ * Request parameters for postAutomationsRunsByIdResume operation in AutomationsApi.
  * @export
- * @interface AutomationsApiPostV1AutomationsRunsByIdResumeRequest
+ * @interface AutomationsApiPostAutomationsRunsByIdResumeRequest
  */
-export interface AutomationsApiPostV1AutomationsRunsByIdResumeRequest {
+export interface AutomationsApiPostAutomationsRunsByIdResumeRequest {
     /**
      * 
      * @type {string}
-     * @memberof AutomationsApiPostV1AutomationsRunsByIdResume
+     * @memberof AutomationsApiPostAutomationsRunsByIdResume
      */
     readonly id: string
 }
@@ -1408,13 +1408,13 @@ export class AutomationsApi extends BaseAPI {
     /**
      * Deletes one automation, its versions and its run history. It answers no content, and a flow of another org answers not-found.
      * @summary Deletes one automation, its versions and its run history.
-     * @param {AutomationsApiDeleteV1AutomationsFlowsByIdRequest} requestParameters Request parameters.
+     * @param {AutomationsApiDeleteAutomationsFlowsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public deleteV1AutomationsFlowsById(requestParameters: AutomationsApiDeleteV1AutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).deleteV1AutomationsFlowsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteAutomationsFlowsById(requestParameters: AutomationsApiDeleteAutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).deleteAutomationsFlowsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1424,44 +1424,44 @@ export class AutomationsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public getV1AutomationsConnectors(options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).getV1AutomationsConnectors(options).then((request) => request(this.axios, this.basePath));
+    public getAutomationsConnectors(options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).getAutomationsConnectors(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s automations, most-recently-updated first. The optional `limit` query bounds the page.
      * @summary Returns the caller org\'s automations, most-recently-updated first.
-     * @param {AutomationsApiGetV1AutomationsFlowsRequest} requestParameters Request parameters.
+     * @param {AutomationsApiGetAutomationsFlowsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public getV1AutomationsFlows(requestParameters: AutomationsApiGetV1AutomationsFlowsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).getV1AutomationsFlows(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getAutomationsFlows(requestParameters: AutomationsApiGetAutomationsFlowsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).getAutomationsFlows(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one automation and its latest version. That is the flow record plus the step tree the builder edits; a flow of another org answers not-found.
      * @summary Returns one automation and its latest version.
-     * @param {AutomationsApiGetV1AutomationsFlowsByIdRequest} requestParameters Request parameters.
+     * @param {AutomationsApiGetAutomationsFlowsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public getV1AutomationsFlowsById(requestParameters: AutomationsApiGetV1AutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).getV1AutomationsFlowsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getAutomationsFlowsById(requestParameters: AutomationsApiGetAutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).getAutomationsFlowsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one flow\'s versions, newest first. The optional `limit` query bounds the page.
      * @summary Returns one flow\'s versions, newest first.
-     * @param {AutomationsApiGetV1AutomationsFlowsByIdVersionsRequest} requestParameters Request parameters.
+     * @param {AutomationsApiGetAutomationsFlowsByIdVersionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public getV1AutomationsFlowsByIdVersions(requestParameters: AutomationsApiGetV1AutomationsFlowsByIdVersionsRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).getV1AutomationsFlowsByIdVersions(requestParameters.id, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getAutomationsFlowsByIdVersions(requestParameters: AutomationsApiGetAutomationsFlowsByIdVersionsRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).getAutomationsFlowsByIdVersions(requestParameters.id, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1471,152 +1471,152 @@ export class AutomationsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public getV1AutomationsPieces(options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).getV1AutomationsPieces(options).then((request) => request(this.axios, this.basePath));
+    public getAutomationsPieces(options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).getAutomationsPieces(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s run history, newest first. The optional `flowId` query narrows it to one flow and `limit` bounds the page.
      * @summary Returns the caller org\'s run history, newest first.
-     * @param {AutomationsApiGetV1AutomationsRunsRequest} requestParameters Request parameters.
+     * @param {AutomationsApiGetAutomationsRunsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public getV1AutomationsRuns(requestParameters: AutomationsApiGetV1AutomationsRunsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).getV1AutomationsRuns(requestParameters.flowId, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getAutomationsRuns(requestParameters: AutomationsApiGetAutomationsRunsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).getAutomationsRuns(requestParameters.flowId, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one run. A run that has not reached a terminal status is refreshed from the durable engine first — scoped to the org\'s own namespace — so the caller sees live progress rather than the last status that happened to be persisted.
      * @summary Returns one run.
-     * @param {AutomationsApiGetV1AutomationsRunsByIdRequest} requestParameters Request parameters.
+     * @param {AutomationsApiGetAutomationsRunsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public getV1AutomationsRunsById(requestParameters: AutomationsApiGetV1AutomationsRunsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).getV1AutomationsRunsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getAutomationsRunsById(requestParameters: AutomationsApiGetAutomationsRunsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).getAutomationsRunsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Updates one automation\'s metadata in place. Every field is optional; a field the request omits is left alone. Publishing a version pins which one runs, and is refused unless that version belongs to this flow.
      * @summary Updates one automation\'s metadata in place.
-     * @param {AutomationsApiPatchV1AutomationsFlowsByIdRequest} requestParameters Request parameters.
+     * @param {AutomationsApiPatchAutomationsFlowsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public patchV1AutomationsFlowsById(requestParameters: AutomationsApiPatchV1AutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).patchV1AutomationsFlowsById(requestParameters.id, requestParameters.patchFlowIn, options).then((request) => request(this.axios, this.basePath));
+    public patchAutomationsFlowsById(requestParameters: AutomationsApiPatchAutomationsFlowsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).patchAutomationsFlowsById(requestParameters.id, requestParameters.patchFlowIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Run executes one connector action in-process and answers the outcome. The caller\'s resolved credential travels in `auth`, delivered to the action verbatim — the runtime resolves no credential itself. An action that ran and failed (or an action name the connector does not have) answers ok:false with the failure message, not an HTTP error; an unknown connector is 404 and a missing action 422.
      * @summary Run executes one connector action in-process and answers the outcome.
-     * @param {AutomationsApiPostV1AutomationsConnectorsByIdRunRequest} requestParameters Request parameters.
+     * @param {AutomationsApiPostAutomationsConnectorsByIdRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public postV1AutomationsConnectorsByIdRun(requestParameters: AutomationsApiPostV1AutomationsConnectorsByIdRunRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).postV1AutomationsConnectorsByIdRun(requestParameters.id, requestParameters.runIn, options).then((request) => request(this.axios, this.basePath));
+    public postAutomationsConnectorsByIdRun(requestParameters: AutomationsApiPostAutomationsConnectorsByIdRunRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).postAutomationsConnectorsByIdRun(requestParameters.id, requestParameters.runIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates an automation and its initial DRAFT version in one call. The new flow is DISABLED — creating it does not arm its trigger; POST /v1/automations/flows/{id}/enable does that.
      * @summary Creates an automation and its initial DRAFT version in one call.
-     * @param {AutomationsApiPostV1AutomationsFlowsRequest} requestParameters Request parameters.
+     * @param {AutomationsApiPostAutomationsFlowsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public postV1AutomationsFlows(requestParameters: AutomationsApiPostV1AutomationsFlowsRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).postV1AutomationsFlows(requestParameters.createFlowReq, options).then((request) => request(this.axios, this.basePath));
+    public postAutomationsFlows(requestParameters: AutomationsApiPostAutomationsFlowsRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).postAutomationsFlows(requestParameters.createFlowReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Disarms a flow\'s trigger and marks it DISABLED. Its schedule and its event subscriptions are dropped, so a disabled flow is never a live target; runs already in flight are unaffected, and it can still be started on demand.
      * @summary Disarms a flow\'s trigger and marks it DISABLED.
-     * @param {AutomationsApiPostV1AutomationsFlowsByIdDisableRequest} requestParameters Request parameters.
+     * @param {AutomationsApiPostAutomationsFlowsByIdDisableRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public postV1AutomationsFlowsByIdDisable(requestParameters: AutomationsApiPostV1AutomationsFlowsByIdDisableRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).postV1AutomationsFlowsByIdDisable(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAutomationsFlowsByIdDisable(requestParameters: AutomationsApiPostAutomationsFlowsByIdDisableRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).postAutomationsFlowsByIdDisable(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Arms a flow\'s trigger and marks it ENABLED. A POLLING trigger gets a cron schedule on the durable engine; a WEBHOOK trigger gets a subscription in the routing index, so an inbound event starts it; a MANUAL trigger arms nothing and still runs on demand.
      * @summary Arms a flow\'s trigger and marks it ENABLED.
-     * @param {AutomationsApiPostV1AutomationsFlowsByIdEnableRequest} requestParameters Request parameters.
+     * @param {AutomationsApiPostAutomationsFlowsByIdEnableRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public postV1AutomationsFlowsByIdEnable(requestParameters: AutomationsApiPostV1AutomationsFlowsByIdEnableRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).postV1AutomationsFlowsByIdEnable(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAutomationsFlowsByIdEnable(requestParameters: AutomationsApiPostAutomationsFlowsByIdEnableRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).postAutomationsFlowsByIdEnable(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Applies ONE flow operation and answers the thing it changed. The operation is named by `type`, with its arguments under `request`: `CHANGE_NAME`, `UPDATE_TRIGGER`, `ADD_ACTION`, `UPDATE_ACTION`, `MOVE_ACTION`, `DELETE_ACTION` edit the flow\'s LATEST version and answer with that version, and `CHANGE_STATUS` instead enables or disables the flow and answers with the FLOW. Two response shapes on one address is the rule a reader would otherwise get wrong, and it is why this route is not a typed op.  Edits land on the latest version only — the published version a run executes is untouched until it is republished — and the whole resulting step tree is re-validated against the step-count and size caps after every operation, so a long sequence of `ADD_ACTION` calls cannot grow a flow past a bound one step at a time (422 when it would). Org-scoped and fails closed: a validated principal is required (403 without one), the flow and its version are read under the caller\'s OWN org so another tenant\'s id is a 404, and an operation whose `request` does not decode is a 400.
      * @summary Edit a flow — rename it, retarget its trigger, or add, move and delete steps
-     * @param {AutomationsApiPostV1AutomationsFlowsByIdOperationsRequest} requestParameters Request parameters.
+     * @param {AutomationsApiPostAutomationsFlowsByIdOperationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public postV1AutomationsFlowsByIdOperations(requestParameters: AutomationsApiPostV1AutomationsFlowsByIdOperationsRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).postV1AutomationsFlowsByIdOperations(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAutomationsFlowsByIdOperations(requestParameters: AutomationsApiPostAutomationsFlowsByIdOperationsRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).postAutomationsFlowsByIdOperations(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Starts one durable run of a flow now. It runs the flow\'s published version if one is pinned, else its latest, and answers the run record it created. The run is bounded by the org\'s per-minute run-start budget and its in-flight concurrency ceiling; over either, or with the engine not ready, no run is started and no run id is burned.
      * @summary Starts one durable run of a flow now.
-     * @param {AutomationsApiPostV1AutomationsFlowsByIdRunRequest} requestParameters Request parameters.
+     * @param {AutomationsApiPostAutomationsFlowsByIdRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public postV1AutomationsFlowsByIdRun(requestParameters: AutomationsApiPostV1AutomationsFlowsByIdRunRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).postV1AutomationsFlowsByIdRun(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAutomationsFlowsByIdRun(requestParameters: AutomationsApiPostAutomationsFlowsByIdRunRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).postAutomationsFlowsByIdRun(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds a new DRAFT version to a flow. The version is created invalid unless it carries a trigger, and it does not become the running version until it is published (PATCH the flow\'s publishedVersionId) or becomes the latest.
      * @summary Adds a new DRAFT version to a flow.
-     * @param {AutomationsApiPostV1AutomationsFlowsByIdVersionsRequest} requestParameters Request parameters.
+     * @param {AutomationsApiPostAutomationsFlowsByIdVersionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public postV1AutomationsFlowsByIdVersions(requestParameters: AutomationsApiPostV1AutomationsFlowsByIdVersionsRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).postV1AutomationsFlowsByIdVersions(requestParameters.id, requestParameters.createVersionIn, options).then((request) => request(this.axios, this.basePath));
+    public postAutomationsFlowsByIdVersions(requestParameters: AutomationsApiPostAutomationsFlowsByIdVersionsRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).postAutomationsFlowsByIdVersions(requestParameters.id, requestParameters.createVersionIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Delivers one event to the org\'s automation triggers and answers `{matched:n}` — how many enabled flows had a webhook trigger on this `(source, event)` key and were started by it. A zero match is a success, not an error: nothing was subscribed.  The path is the trigger key and the JSON object body is the event payload, threaded into each started run as `{{trigger.*}}` with all of its keys intact — which is why this is not a typed op, since a declared input struct would silently DISCARD every payload key it had no field for. Re-delivery is a no-op: an `X-Idempotency-Key` header dedupes, and with none the body is content-hashed instead, so a hammer of identical posts collapses to ONE run rather than minting a fresh one per post. An in-platform producer may propagate `X-Causation-Depth` so a firing that a flow caused is bounded against a loop; an absent or invalid header reads as depth 0, an external origin.  Authenticated and org-scoped, unlike a provider\'s public webhook URL: a validated principal is required (403 without one) and the org is that principal\'s, never the body\'s, so a producer can only fire into its own tenant\'s flows. Both path segments are required (400) and a payload over the size limit is a 413.
      * @summary Fire an event that starts every enabled flow subscribed to it
-     * @param {AutomationsApiPostV1AutomationsHooksBySourceByEventRequest} requestParameters Request parameters.
+     * @param {AutomationsApiPostAutomationsHooksBySourceByEventRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public postV1AutomationsHooksBySourceByEvent(requestParameters: AutomationsApiPostV1AutomationsHooksBySourceByEventRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).postV1AutomationsHooksBySourceByEvent(requestParameters.source, requestParameters.event, options).then((request) => request(this.axios, this.basePath));
+    public postAutomationsHooksBySourceByEvent(requestParameters: AutomationsApiPostAutomationsHooksBySourceByEventRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).postAutomationsHooksBySourceByEvent(requestParameters.source, requestParameters.event, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Delivers the durable `resume` signal to a run parked on a `wait_for_approval` waitpoint and answers `{resumed:true}` once the engine has taken it.  The body is an ARBITRARY JSON value — object, array, string, number — delivered VERBATIM into the workflow as that waitpoint\'s output, so it is what the steps after the approval read as their input. An empty body resumes with no payload. That open shape is why this route is not a typed op: an operation\'s input can carry the payload or the run address, never both.  Org-scoped and fails closed: a validated principal is required (403 without one), the run is read under the caller\'s OWN org so another tenant\'s run id is a 404, a body that is not JSON is a 400, and a payload over the size limit is a 413 — it becomes durable engine state, so it is bounded here rather than after it lands. The resume is audited as `automations.run.resume`.
      * @summary Release a run waiting at an approval step, with the approval payload
-     * @param {AutomationsApiPostV1AutomationsRunsByIdResumeRequest} requestParameters Request parameters.
+     * @param {AutomationsApiPostAutomationsRunsByIdResumeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AutomationsApi
      */
-    public postV1AutomationsRunsByIdResume(requestParameters: AutomationsApiPostV1AutomationsRunsByIdResumeRequest, options?: RawAxiosRequestConfig) {
-        return AutomationsApiFp(this.configuration).postV1AutomationsRunsByIdResume(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAutomationsRunsByIdResume(requestParameters: AutomationsApiPostAutomationsRunsByIdResumeRequest, options?: RawAxiosRequestConfig) {
+        return AutomationsApiFp(this.configuration).postAutomationsRunsByIdResume(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

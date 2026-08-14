@@ -33,7 +33,7 @@ export const ResponsesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Responses: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postResponses: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/responses`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const ResponsesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Responses(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Responses(options);
+        async postResponses(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postResponses(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ResponsesApi.postV1Responses']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ResponsesApi.postResponses']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const ResponsesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Responses(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Responses(options).then((request) => request(axios, basePath));
+        postResponses(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postResponses(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class ResponsesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ResponsesApi
      */
-    public postV1Responses(options?: RawAxiosRequestConfig) {
-        return ResponsesApiFp(this.configuration).postV1Responses(options).then((request) => request(this.axios, this.basePath));
+    public postResponses(options?: RawAxiosRequestConfig) {
+        return ResponsesApiFp(this.configuration).postResponses(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -39,7 +39,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMeet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMeetApp: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/meet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -70,9 +70,9 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMeetByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMeetAppAssets: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('deleteMeetByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('deleteMeetAppAssets', 'wildcard1', wildcard1)
             const localVarPath = `/meet/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -103,7 +103,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteTasksApp: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -134,74 +134,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteTasksAppAssets: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('deleteTasksByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('deleteTasksAppAssets', 'wildcard1', wildcard1)
             const localVarPath = `/tasks/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteTracker: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/tracker`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteTrackerByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('deleteTrackerByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/tracker/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -586,6 +522,36 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
+         * @summary The Hanzo event tag — the one-line install for a surface with no bundler
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEventJs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/event.js`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
          * @summary Discover public repositories across every org
          * @param {*} [options] Override http request option.
@@ -841,7 +807,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMeet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMeetApp: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/meet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -872,11 +838,41 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMeetByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMeetAppAssets: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getMeetByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('getMeetAppAssets', 'wildcard1', wildcard1)
             const localVarPath = `/meet/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
+         * @summary The API description this SDK was generated from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOpenapiJson: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/openapi.json`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -905,7 +901,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTasksApp: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -936,135 +932,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTasksAppAssets: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getTasksByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('getTasksAppAssets', 'wildcard1', wildcard1)
             const localVarPath = `/tasks/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tracker/.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-         * @summary The tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTracker: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/tracker`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tracker/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-         * @summary The tracker board\'s assets and client-side routes
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTrackerByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getTrackerByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/tracker/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
-         * @summary The Hanzo event tag — the one-line install for a surface with no bundler
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1EventJs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/event.js`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
-         * @summary The API description this SDK was generated from
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1OpenapiJson: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/openapi.json`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1277,7 +1149,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchMeet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchMeetApp: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/meet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1308,9 +1180,9 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchMeetByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchMeetAppAssets: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('patchMeetByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('patchMeetAppAssets', 'wildcard1', wildcard1)
             const localVarPath = `/meet/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1341,7 +1213,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchTasksApp: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1372,74 +1244,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchTasksAppAssets: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('patchTasksByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('patchTasksAppAssets', 'wildcard1', wildcard1)
             const localVarPath = `/tasks/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchTracker: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/tracker`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchTrackerByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('patchTrackerByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/tracker/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1685,7 +1493,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMeet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMeetApp: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/meet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1716,9 +1524,9 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMeetByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMeetAppAssets: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('postMeetByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('postMeetAppAssets', 'wildcard1', wildcard1)
             const localVarPath = `/meet/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1749,7 +1557,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTasksApp: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1780,74 +1588,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTasksAppAssets: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('postTasksByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('postTasksAppAssets', 'wildcard1', wildcard1)
             const localVarPath = `/tasks/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postTracker: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/tracker`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postTrackerByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('postTrackerByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/tracker/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1877,7 +1621,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putMeet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putMeetApp: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/meet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1908,9 +1652,9 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putMeetByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putMeetAppAssets: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('putMeetByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('putMeetAppAssets', 'wildcard1', wildcard1)
             const localVarPath = `/meet/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1941,7 +1685,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putTasksApp: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1972,74 +1716,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putTasksAppAssets: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('putTasksByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('putTasksAppAssets', 'wildcard1', wildcard1)
             const localVarPath = `/tasks/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putTracker: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/tracker`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putTrackerByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('putTrackerByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/tracker/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2079,10 +1759,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteMeet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMeet(options);
+        async deleteMeetApp(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMeetApp(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteMeet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteMeetApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2092,10 +1772,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteMeetByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMeetByWildcard1(wildcard1, options);
+        async deleteMeetAppAssets(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMeetAppAssets(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteMeetByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteMeetAppAssets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2104,10 +1784,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTasks(options);
+        async deleteTasksApp(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTasksApp(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteTasks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteTasksApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2117,35 +1797,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTasksByWildcard1(wildcard1, options);
+        async deleteTasksAppAssets(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTasksAppAssets(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteTracker(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTracker(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteTracker']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteTrackerByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTrackerByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteTrackerByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.deleteTasksAppAssets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2284,6 +1939,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
+         * @summary The Hanzo event tag — the one-line install for a surface with no bundler
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEventJs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEventJs(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getEventJs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
          * @summary Discover public repositories across every org
          * @param {*} [options] Override http request option.
@@ -2383,10 +2050,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMeet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMeet(options);
+        async getMeetApp(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMeetApp(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getMeet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getMeetApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2396,10 +2063,22 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMeetByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMeetByWildcard1(wildcard1, options);
+        async getMeetAppAssets(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMeetAppAssets(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getMeetByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getMeetAppAssets']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
+         * @summary The API description this SDK was generated from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOpenapiJson(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOpenapiJson(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getOpenapiJson']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2408,10 +2087,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTasks(options);
+        async getTasksApp(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTasksApp(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getTasks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getTasksApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2421,59 +2100,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTasksByWildcard1(wildcard1, options);
+        async getTasksAppAssets(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTasksAppAssets(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tracker/.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-         * @summary The tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getTracker(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTracker(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getTracker']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tracker/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-         * @summary The tracker board\'s assets and client-side routes
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getTrackerByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTrackerByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getTrackerByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
-         * @summary The Hanzo event tag — the one-line install for a surface with no bundler
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1EventJs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1EventJs(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getV1EventJs']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
-         * @summary The API description this SDK was generated from
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getV1OpenapiJson(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1OpenapiJson(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getV1OpenapiJson']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getTasksAppAssets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2555,10 +2185,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchMeet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchMeet(options);
+        async patchMeetApp(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchMeetApp(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchMeet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchMeetApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2568,10 +2198,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchMeetByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchMeetByWildcard1(wildcard1, options);
+        async patchMeetAppAssets(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchMeetAppAssets(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchMeetByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchMeetAppAssets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2580,10 +2210,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTasks(options);
+        async patchTasksApp(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTasksApp(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchTasks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchTasksApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2593,35 +2223,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTasksByWildcard1(wildcard1, options);
+        async patchTasksAppAssets(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTasksAppAssets(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async patchTracker(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTracker(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchTracker']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async patchTrackerByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTrackerByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchTrackerByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.patchTasksAppAssets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2706,10 +2311,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMeet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMeet(options);
+        async postMeetApp(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMeetApp(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postMeet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postMeetApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2719,10 +2324,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMeetByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMeetByWildcard1(wildcard1, options);
+        async postMeetAppAssets(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMeetAppAssets(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postMeetByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postMeetAppAssets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2731,10 +2336,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTasks(options);
+        async postTasksApp(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTasksApp(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postTasks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postTasksApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2744,35 +2349,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTasksByWildcard1(wildcard1, options);
+        async postTasksAppAssets(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTasksAppAssets(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postTracker(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTracker(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postTracker']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postTrackerByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTrackerByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postTrackerByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.postTasksAppAssets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2781,10 +2361,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putMeet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putMeet(options);
+        async putMeetApp(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMeetApp(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putMeet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putMeetApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2794,10 +2374,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putMeetByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putMeetByWildcard1(wildcard1, options);
+        async putMeetAppAssets(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMeetAppAssets(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putMeetByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putMeetAppAssets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2806,10 +2386,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putTasks(options);
+        async putTasksApp(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTasksApp(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putTasks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putTasksApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2819,35 +2399,10 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putTasksByWildcard1(wildcard1, options);
+        async putTasksAppAssets(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTasksAppAssets(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async putTracker(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putTracker(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putTracker']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async putTrackerByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putTrackerByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putTrackerByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.putTasksAppAssets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -2866,18 +2421,18 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMeet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteMeet(options).then((request) => request(axios, basePath));
+        deleteMeetApp(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMeetApp(options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
          * @summary Not served by the call client
-         * @param {DefaultApiDeleteMeetByWildcard1Request} requestParameters Request parameters.
+         * @param {DefaultApiDeleteMeetAppAssetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMeetByWildcard1(requestParameters: DefaultApiDeleteMeetByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        deleteMeetAppAssets(requestParameters: DefaultApiDeleteMeetAppAssetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMeetAppAssets(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
@@ -2885,37 +2440,18 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteTasks(options).then((request) => request(axios, basePath));
+        deleteTasksApp(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTasksApp(options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
          * @summary Not served by the tasks console
-         * @param {DefaultApiDeleteTasksByWildcard1Request} requestParameters Request parameters.
+         * @param {DefaultApiDeleteTasksAppAssetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTasksByWildcard1(requestParameters: DefaultApiDeleteTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteTracker(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteTracker(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {DefaultApiDeleteTrackerByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteTrackerByWildcard1(requestParameters: DefaultApiDeleteTrackerByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        deleteTasksAppAssets(requestParameters: DefaultApiDeleteTasksAppAssetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTasksAppAssets(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
@@ -3014,6 +2550,15 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getCommerceHealthz(options).then((request) => request(axios, basePath));
         },
         /**
+         * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
+         * @summary The Hanzo event tag — the one-line install for a surface with no bundler
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEventJs(options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.getEventJs(options).then((request) => request(axios, basePath));
+        },
+        /**
          * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
          * @summary Discover public repositories across every org
          * @param {*} [options] Override http request option.
@@ -3086,65 +2631,18 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMeet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getMeet(options).then((request) => request(axios, basePath));
+        getMeetApp(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMeetApp(options).then((request) => request(axios, basePath));
         },
         /**
          * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /meet/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the call client itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
          * @summary The call client\'s assets and client-side routes
-         * @param {DefaultApiGetMeetByWildcard1Request} requestParameters Request parameters.
+         * @param {DefaultApiGetMeetAppAssetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMeetByWildcard1(requestParameters: DefaultApiGetMeetByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-         * @summary The tasks console
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getTasks(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tasks/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-         * @summary The tasks console\'s assets and client-side routes
-         * @param {DefaultApiGetTasksByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTasksByWildcard1(requestParameters: DefaultApiGetTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tracker/.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-         * @summary The tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTracker(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getTracker(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tracker/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-         * @summary The tracker board\'s assets and client-side routes
-         * @param {DefaultApiGetTrackerByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTrackerByWildcard1(requestParameters: DefaultApiGetTrackerByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
-         * @summary The Hanzo event tag — the one-line install for a surface with no bundler
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getV1EventJs(options?: RawAxiosRequestConfig): AxiosPromise<File> {
-            return localVarFp.getV1EventJs(options).then((request) => request(axios, basePath));
+        getMeetAppAssets(requestParameters: DefaultApiGetMeetAppAssetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMeetAppAssets(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
@@ -3152,8 +2650,27 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1OpenapiJson(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1OpenapiJson(options).then((request) => request(axios, basePath));
+        getOpenapiJson(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getOpenapiJson(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The tasks console
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTasksApp(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTasksApp(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tasks/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+         * @summary The tasks console\'s assets and client-side routes
+         * @param {DefaultApiGetTasksAppAssetsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTasksAppAssets(requestParameters: DefaultApiGetTasksAppAssetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTasksAppAssets(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Serves a single agent skill\'s SKILL.md as text/markdown — the instructions a client follows once index.json has told it the skill exists, and byte for byte the document that index.json\'s sha256 for that skill was computed over.  The skill segment is a flat, service-prefixed id (`ai_models`): one path segment with no separators, so a request can never address anything outside the embedded catalogue. An id of any other shape, or a skill the serving brand does not carry, is `{\"error\":…}` at 404 — the same answer, so a probe learns nothing about which is which.  Brand resolution and caching are index.json\'s: the Host picks the catalogue, and the response is `Cache-Control: public, max-age=300`. Public — no bearer, no tenant scope.
@@ -3216,18 +2733,18 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchMeet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchMeet(options).then((request) => request(axios, basePath));
+        patchMeetApp(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchMeetApp(options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
          * @summary Not served by the call client
-         * @param {DefaultApiPatchMeetByWildcard1Request} requestParameters Request parameters.
+         * @param {DefaultApiPatchMeetAppAssetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchMeetByWildcard1(requestParameters: DefaultApiPatchMeetByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        patchMeetAppAssets(requestParameters: DefaultApiPatchMeetAppAssetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchMeetAppAssets(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
@@ -3235,37 +2752,18 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchTasks(options).then((request) => request(axios, basePath));
+        patchTasksApp(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchTasksApp(options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
          * @summary Not served by the tasks console
-         * @param {DefaultApiPatchTasksByWildcard1Request} requestParameters Request parameters.
+         * @param {DefaultApiPatchTasksAppAssetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchTasksByWildcard1(requestParameters: DefaultApiPatchTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchTracker(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchTracker(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {DefaultApiPatchTrackerByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchTrackerByWildcard1(requestParameters: DefaultApiPatchTrackerByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        patchTasksAppAssets(requestParameters: DefaultApiPatchTasksAppAssetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchTasksAppAssets(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * The pack-transfer phase of a push, and the point at which a push becomes an EVENT. NEVER ANONYMOUS: a push always requires an authenticated org, and the org in the path must equal it.  Once the pack is on disk the repository\'s storage usage is metered and a build is fired for every branch whose tip actually moved, computed from the before/after branch diff rather than from what the client claimed. That runs on a cancel-immune context, so a client that hangs up the moment its push lands still gets its build, and it runs even when git itself exited non-zero — the refs on disk are the ground truth. Repacking housekeeping is detached and never blocks the response.  A Content-Type other than `application/x-git-receive-pack-request` is 400. Addressed at the git host\'s root with the PROJECT as a middle path segment — the canonical-URL form of the project-scoped remote, since a git client has no header to carry a project. Served only on the dedicated git host; elsewhere it falls through. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
@@ -3323,18 +2821,18 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMeet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postMeet(options).then((request) => request(axios, basePath));
+        postMeetApp(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMeetApp(options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
          * @summary Not served by the call client
-         * @param {DefaultApiPostMeetByWildcard1Request} requestParameters Request parameters.
+         * @param {DefaultApiPostMeetAppAssetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMeetByWildcard1(requestParameters: DefaultApiPostMeetByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        postMeetAppAssets(requestParameters: DefaultApiPostMeetAppAssetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMeetAppAssets(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
@@ -3342,37 +2840,18 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postTasks(options).then((request) => request(axios, basePath));
+        postTasksApp(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postTasksApp(options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
          * @summary Not served by the tasks console
-         * @param {DefaultApiPostTasksByWildcard1Request} requestParameters Request parameters.
+         * @param {DefaultApiPostTasksAppAssetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTasksByWildcard1(requestParameters: DefaultApiPostTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postTracker(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postTracker(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {DefaultApiPostTrackerByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postTrackerByWildcard1(requestParameters: DefaultApiPostTrackerByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        postTasksAppAssets(requestParameters: DefaultApiPostTasksAppAssetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postTasksAppAssets(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
@@ -3380,18 +2859,18 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putMeet(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putMeet(options).then((request) => request(axios, basePath));
+        putMeetApp(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putMeetApp(options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
          * @summary Not served by the call client
-         * @param {DefaultApiPutMeetByWildcard1Request} requestParameters Request parameters.
+         * @param {DefaultApiPutMeetAppAssetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putMeetByWildcard1(requestParameters: DefaultApiPutMeetByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        putMeetAppAssets(requestParameters: DefaultApiPutMeetAppAssetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putMeetAppAssets(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
@@ -3399,79 +2878,46 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putTasks(options).then((request) => request(axios, basePath));
+        putTasksApp(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putTasksApp(options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
          * @summary Not served by the tasks console
-         * @param {DefaultApiPutTasksByWildcard1Request} requestParameters Request parameters.
+         * @param {DefaultApiPutTasksAppAssetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTasksByWildcard1(requestParameters: DefaultApiPutTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putTracker(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putTracker(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-         * @summary Not served by the tracker board
-         * @param {DefaultApiPutTrackerByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putTrackerByWildcard1(requestParameters: DefaultApiPutTrackerByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        putTasksAppAssets(requestParameters: DefaultApiPutTasksAppAssetsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putTasksAppAssets(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteMeetByWildcard1 operation in DefaultApi.
+ * Request parameters for deleteMeetAppAssets operation in DefaultApi.
  * @export
- * @interface DefaultApiDeleteMeetByWildcard1Request
+ * @interface DefaultApiDeleteMeetAppAssetsRequest
  */
-export interface DefaultApiDeleteMeetByWildcard1Request {
+export interface DefaultApiDeleteMeetAppAssetsRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiDeleteMeetByWildcard1
+     * @memberof DefaultApiDeleteMeetAppAssets
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for deleteTasksByWildcard1 operation in DefaultApi.
+ * Request parameters for deleteTasksAppAssets operation in DefaultApi.
  * @export
- * @interface DefaultApiDeleteTasksByWildcard1Request
+ * @interface DefaultApiDeleteTasksAppAssetsRequest
  */
-export interface DefaultApiDeleteTasksByWildcard1Request {
+export interface DefaultApiDeleteTasksAppAssetsRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiDeleteTasksByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for deleteTrackerByWildcard1 operation in DefaultApi.
- * @export
- * @interface DefaultApiDeleteTrackerByWildcard1Request
- */
-export interface DefaultApiDeleteTrackerByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof DefaultApiDeleteTrackerByWildcard1
+     * @memberof DefaultApiDeleteTasksAppAssets
      */
     readonly wildcard1: string
 }
@@ -3722,43 +3168,29 @@ export interface DefaultApiGetGitByOrgByRepoTreeByWildcard1Request {
 }
 
 /**
- * Request parameters for getMeetByWildcard1 operation in DefaultApi.
+ * Request parameters for getMeetAppAssets operation in DefaultApi.
  * @export
- * @interface DefaultApiGetMeetByWildcard1Request
+ * @interface DefaultApiGetMeetAppAssetsRequest
  */
-export interface DefaultApiGetMeetByWildcard1Request {
+export interface DefaultApiGetMeetAppAssetsRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiGetMeetByWildcard1
+     * @memberof DefaultApiGetMeetAppAssets
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for getTasksByWildcard1 operation in DefaultApi.
+ * Request parameters for getTasksAppAssets operation in DefaultApi.
  * @export
- * @interface DefaultApiGetTasksByWildcard1Request
+ * @interface DefaultApiGetTasksAppAssetsRequest
  */
-export interface DefaultApiGetTasksByWildcard1Request {
+export interface DefaultApiGetTasksAppAssetsRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiGetTasksByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for getTrackerByWildcard1 operation in DefaultApi.
- * @export
- * @interface DefaultApiGetTrackerByWildcard1Request
- */
-export interface DefaultApiGetTrackerByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof DefaultApiGetTrackerByWildcard1
+     * @memberof DefaultApiGetTasksAppAssets
      */
     readonly wildcard1: string
 }
@@ -3778,43 +3210,29 @@ export interface DefaultApiGetWellKnownAgentSkillsBySkillSkillMdRequest {
 }
 
 /**
- * Request parameters for patchMeetByWildcard1 operation in DefaultApi.
+ * Request parameters for patchMeetAppAssets operation in DefaultApi.
  * @export
- * @interface DefaultApiPatchMeetByWildcard1Request
+ * @interface DefaultApiPatchMeetAppAssetsRequest
  */
-export interface DefaultApiPatchMeetByWildcard1Request {
+export interface DefaultApiPatchMeetAppAssetsRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiPatchMeetByWildcard1
+     * @memberof DefaultApiPatchMeetAppAssets
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for patchTasksByWildcard1 operation in DefaultApi.
+ * Request parameters for patchTasksAppAssets operation in DefaultApi.
  * @export
- * @interface DefaultApiPatchTasksByWildcard1Request
+ * @interface DefaultApiPatchTasksAppAssetsRequest
  */
-export interface DefaultApiPatchTasksByWildcard1Request {
+export interface DefaultApiPatchTasksAppAssetsRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiPatchTasksByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for patchTrackerByWildcard1 operation in DefaultApi.
- * @export
- * @interface DefaultApiPatchTrackerByWildcard1Request
- */
-export interface DefaultApiPatchTrackerByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof DefaultApiPatchTrackerByWildcard1
+     * @memberof DefaultApiPatchTasksAppAssets
      */
     readonly wildcard1: string
 }
@@ -3967,85 +3385,57 @@ export interface DefaultApiPostCollaboratorRpcByDocumentidRequest {
 }
 
 /**
- * Request parameters for postMeetByWildcard1 operation in DefaultApi.
+ * Request parameters for postMeetAppAssets operation in DefaultApi.
  * @export
- * @interface DefaultApiPostMeetByWildcard1Request
+ * @interface DefaultApiPostMeetAppAssetsRequest
  */
-export interface DefaultApiPostMeetByWildcard1Request {
+export interface DefaultApiPostMeetAppAssetsRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiPostMeetByWildcard1
+     * @memberof DefaultApiPostMeetAppAssets
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for postTasksByWildcard1 operation in DefaultApi.
+ * Request parameters for postTasksAppAssets operation in DefaultApi.
  * @export
- * @interface DefaultApiPostTasksByWildcard1Request
+ * @interface DefaultApiPostTasksAppAssetsRequest
  */
-export interface DefaultApiPostTasksByWildcard1Request {
+export interface DefaultApiPostTasksAppAssetsRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiPostTasksByWildcard1
+     * @memberof DefaultApiPostTasksAppAssets
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for postTrackerByWildcard1 operation in DefaultApi.
+ * Request parameters for putMeetAppAssets operation in DefaultApi.
  * @export
- * @interface DefaultApiPostTrackerByWildcard1Request
+ * @interface DefaultApiPutMeetAppAssetsRequest
  */
-export interface DefaultApiPostTrackerByWildcard1Request {
+export interface DefaultApiPutMeetAppAssetsRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiPostTrackerByWildcard1
+     * @memberof DefaultApiPutMeetAppAssets
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for putMeetByWildcard1 operation in DefaultApi.
+ * Request parameters for putTasksAppAssets operation in DefaultApi.
  * @export
- * @interface DefaultApiPutMeetByWildcard1Request
+ * @interface DefaultApiPutTasksAppAssetsRequest
  */
-export interface DefaultApiPutMeetByWildcard1Request {
+export interface DefaultApiPutTasksAppAssetsRequest {
     /**
      * 
      * @type {string}
-     * @memberof DefaultApiPutMeetByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for putTasksByWildcard1 operation in DefaultApi.
- * @export
- * @interface DefaultApiPutTasksByWildcard1Request
- */
-export interface DefaultApiPutTasksByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof DefaultApiPutTasksByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
- * Request parameters for putTrackerByWildcard1 operation in DefaultApi.
- * @export
- * @interface DefaultApiPutTrackerByWildcard1Request
- */
-export interface DefaultApiPutTrackerByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof DefaultApiPutTrackerByWildcard1
+     * @memberof DefaultApiPutTasksAppAssets
      */
     readonly wildcard1: string
 }
@@ -4064,20 +3454,20 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public deleteMeet(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).deleteMeet(options).then((request) => request(this.axios, this.basePath));
+    public deleteMeetApp(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteMeetApp(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
      * @summary Not served by the call client
-     * @param {DefaultApiDeleteMeetByWildcard1Request} requestParameters Request parameters.
+     * @param {DefaultApiDeleteMeetAppAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public deleteMeetByWildcard1(requestParameters: DefaultApiDeleteMeetByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).deleteMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public deleteMeetAppAssets(requestParameters: DefaultApiDeleteMeetAppAssetsRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteMeetAppAssets(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4087,43 +3477,20 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public deleteTasks(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).deleteTasks(options).then((request) => request(this.axios, this.basePath));
+    public deleteTasksApp(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteTasksApp(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
      * @summary Not served by the tasks console
-     * @param {DefaultApiDeleteTasksByWildcard1Request} requestParameters Request parameters.
+     * @param {DefaultApiDeleteTasksAppAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public deleteTasksByWildcard1(requestParameters: DefaultApiDeleteTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).deleteTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-     * @summary Not served by the tracker board
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public deleteTracker(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).deleteTracker(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-     * @summary Not served by the tracker board
-     * @param {DefaultApiDeleteTrackerByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public deleteTrackerByWildcard1(requestParameters: DefaultApiDeleteTrackerByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).deleteTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public deleteTasksAppAssets(requestParameters: DefaultApiDeleteTasksAppAssetsRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).deleteTasksAppAssets(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4243,6 +3610,17 @@ export class DefaultApi extends BaseAPI {
     }
 
     /**
+     * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
+     * @summary The Hanzo event tag — the one-line install for a surface with no bundler
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getEventJs(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getEventJs(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML. Served only on the dedicated git host, where a browse URL matches the clone URL; on the API and console hosts it falls through to their own routes, so it can never shadow them.
      * @summary Discover public repositories across every org
      * @param {*} [options] Override http request option.
@@ -4330,77 +3708,20 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public getMeet(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getMeet(options).then((request) => request(this.axios, this.basePath));
+    public getMeetApp(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getMeetApp(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /meet/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the call client itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
      * @summary The call client\'s assets and client-side routes
-     * @param {DefaultApiGetMeetByWildcard1Request} requestParameters Request parameters.
+     * @param {DefaultApiGetMeetAppAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public getMeetByWildcard1(requestParameters: DefaultApiGetMeetByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-     * @summary The tasks console
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getTasks(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getTasks(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tasks/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-     * @summary The tasks console\'s assets and client-side routes
-     * @param {DefaultApiGetTasksByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getTasksByWildcard1(requestParameters: DefaultApiGetTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tracker/.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-     * @summary The tracker board
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getTracker(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getTracker(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tracker/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tracker board itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
-     * @summary The tracker board\'s assets and client-side routes
-     * @param {DefaultApiGetTrackerByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getTrackerByWildcard1(requestParameters: DefaultApiGetTrackerByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Serves the browser tag that autocaptures pageviews (initial and SPA) and uncaught errors onto the canonical wire at POST /v1/event.  Install is one line, and it is the same line for a Hanzo property and for a customer\'s own page:      <script defer src=\"https://api.hanzo.ai/v1/event.js\" data-key=\"pk-…\"></script>  `data-key` is the publishable key the project mints; `data-product` optionally names the emitting surface. The key may also ride the src as `?key=` for a host that strips data attributes.  WITHOUT A KEY THE TAG SENDS NOTHING. A keyless beacon is accepted 200 into $public, a reserved tenant the owning org cannot read — so silence is the honest failure, and the tag picks it rather than reporting success into a tenant nobody reads.
-     * @summary The Hanzo event tag — the one-line install for a surface with no bundler
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getV1EventJs(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getV1EventJs(options).then((request) => request(this.axios, this.basePath));
+    public getMeetAppAssets(requestParameters: DefaultApiGetMeetAppAssetsRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getMeetAppAssets(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4410,8 +3731,31 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public getV1OpenapiJson(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).getV1OpenapiJson(options).then((request) => request(this.axios, this.basePath));
+    public getOpenapiJson(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getOpenapiJson(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Serves the application shell on GET, which is the entry point a browser loads before it calls anything under /v1/tasks/.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+     * @summary The tasks console
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getTasksApp(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getTasksApp(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Serves the static assets on GET, and returns the application shell for any path that is not a file — client-side routing means a deep link is a shell load, not a 404.  The one exception is /tasks/assets/, which holds only content-addressed build output: a name that is not there is a purged chunk, never a route, and answers 404. Everywhere else a path that looks like a missing file answers 200 with the shell, so read the content type rather than the status when a resource seems to be missing.  A bundle that was never built answers 503 under its own name on every path, which is a failed deploy rather than a missing page.  This is the tasks console itself — HTML and hashed assets, not an API. Only GET and HEAD are served; every other method is refused 405. Hashed assets are returned immutable and cached for a year, while the shell is always revalidated, so a new deployment replaces a stale one on the next request.
+     * @summary The tasks console\'s assets and client-side routes
+     * @param {DefaultApiGetTasksAppAssetsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getTasksAppAssets(requestParameters: DefaultApiGetTasksAppAssetsRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getTasksAppAssets(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4488,20 +3832,20 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public patchMeet(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).patchMeet(options).then((request) => request(this.axios, this.basePath));
+    public patchMeetApp(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).patchMeetApp(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
      * @summary Not served by the call client
-     * @param {DefaultApiPatchMeetByWildcard1Request} requestParameters Request parameters.
+     * @param {DefaultApiPatchMeetAppAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public patchMeetByWildcard1(requestParameters: DefaultApiPatchMeetByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).patchMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public patchMeetAppAssets(requestParameters: DefaultApiPatchMeetAppAssetsRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).patchMeetAppAssets(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4511,43 +3855,20 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public patchTasks(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).patchTasks(options).then((request) => request(this.axios, this.basePath));
+    public patchTasksApp(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).patchTasksApp(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
      * @summary Not served by the tasks console
-     * @param {DefaultApiPatchTasksByWildcard1Request} requestParameters Request parameters.
+     * @param {DefaultApiPatchTasksAppAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public patchTasksByWildcard1(requestParameters: DefaultApiPatchTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).patchTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-     * @summary Not served by the tracker board
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public patchTracker(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).patchTracker(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-     * @summary Not served by the tracker board
-     * @param {DefaultApiPatchTrackerByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public patchTrackerByWildcard1(requestParameters: DefaultApiPatchTrackerByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).patchTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public patchTasksAppAssets(requestParameters: DefaultApiPatchTasksAppAssetsRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).patchTasksAppAssets(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4617,20 +3938,20 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public postMeet(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).postMeet(options).then((request) => request(this.axios, this.basePath));
+    public postMeetApp(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).postMeetApp(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
      * @summary Not served by the call client
-     * @param {DefaultApiPostMeetByWildcard1Request} requestParameters Request parameters.
+     * @param {DefaultApiPostMeetAppAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public postMeetByWildcard1(requestParameters: DefaultApiPostMeetByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).postMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public postMeetAppAssets(requestParameters: DefaultApiPostMeetAppAssetsRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).postMeetAppAssets(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4640,43 +3961,20 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public postTasks(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).postTasks(options).then((request) => request(this.axios, this.basePath));
+    public postTasksApp(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).postTasksApp(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
      * @summary Not served by the tasks console
-     * @param {DefaultApiPostTasksByWildcard1Request} requestParameters Request parameters.
+     * @param {DefaultApiPostTasksAppAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public postTasksByWildcard1(requestParameters: DefaultApiPostTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).postTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-     * @summary Not served by the tracker board
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public postTracker(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).postTracker(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-     * @summary Not served by the tracker board
-     * @param {DefaultApiPostTrackerByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public postTrackerByWildcard1(requestParameters: DefaultApiPostTrackerByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).postTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public postTasksAppAssets(requestParameters: DefaultApiPostTasksAppAssetsRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).postTasksAppAssets(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4686,20 +3984,20 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public putMeet(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).putMeet(options).then((request) => request(this.axios, this.basePath));
+    public putMeetApp(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).putMeetApp(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
      * @summary Not served by the call client
-     * @param {DefaultApiPutMeetByWildcard1Request} requestParameters Request parameters.
+     * @param {DefaultApiPutMeetAppAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public putMeetByWildcard1(requestParameters: DefaultApiPutMeetByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).putMeetByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public putMeetAppAssets(requestParameters: DefaultApiPutMeetAppAssetsRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).putMeetAppAssets(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4709,43 +4007,20 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public putTasks(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).putTasks(options).then((request) => request(this.axios, this.basePath));
+    public putTasksApp(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).putTasksApp(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
      * @summary Not served by the tasks console
-     * @param {DefaultApiPutTasksByWildcard1Request} requestParameters Request parameters.
+     * @param {DefaultApiPutTasksAppAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public putTasksByWildcard1(requestParameters: DefaultApiPutTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).putTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-     * @summary Not served by the tracker board
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public putTracker(options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).putTracker(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Published because this address accepts every method, but a static bundle has no writes: the request is refused 405 and nothing is read or changed.
-     * @summary Not served by the tracker board
-     * @param {DefaultApiPutTrackerByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public putTrackerByWildcard1(requestParameters: DefaultApiPutTrackerByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).putTrackerByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public putTasksAppAssets(requestParameters: DefaultApiPutTasksAppAssetsRequest, options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).putTasksAppAssets(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

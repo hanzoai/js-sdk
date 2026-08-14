@@ -33,7 +33,7 @@ export const MemoryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MemoryFacts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMemoryFacts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/memory/facts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const MemoryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MemoryList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMemoryList: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/memory/list`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -93,7 +93,7 @@ export const MemoryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MemoryRecall: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMemoryRecall: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/memory/recall`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -123,7 +123,7 @@ export const MemoryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MemorySearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMemorySearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/memory/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -153,7 +153,7 @@ export const MemoryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MemoryDelete: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMemoryDelete: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/memory/delete`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -183,7 +183,7 @@ export const MemoryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MemoryRemember: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMemoryRemember: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/memory/remember`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -213,7 +213,7 @@ export const MemoryApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MemoryUpdate: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMemoryUpdate: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/memory/update`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -253,10 +253,10 @@ export const MemoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MemoryFacts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MemoryFacts(options);
+        async getMemoryFacts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMemoryFacts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MemoryApi.getV1MemoryFacts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MemoryApi.getMemoryFacts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -265,10 +265,10 @@ export const MemoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MemoryList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MemoryList(options);
+        async getMemoryList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMemoryList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MemoryApi.getV1MemoryList']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MemoryApi.getMemoryList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -277,10 +277,10 @@ export const MemoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MemoryRecall(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MemoryRecall(options);
+        async getMemoryRecall(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMemoryRecall(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MemoryApi.getV1MemoryRecall']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MemoryApi.getMemoryRecall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -289,10 +289,10 @@ export const MemoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MemorySearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MemorySearch(options);
+        async getMemorySearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMemorySearch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MemoryApi.getV1MemorySearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MemoryApi.getMemorySearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -301,10 +301,10 @@ export const MemoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MemoryDelete(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MemoryDelete(options);
+        async postMemoryDelete(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMemoryDelete(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MemoryApi.postV1MemoryDelete']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MemoryApi.postMemoryDelete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -313,10 +313,10 @@ export const MemoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MemoryRemember(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MemoryRemember(options);
+        async postMemoryRemember(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMemoryRemember(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MemoryApi.postV1MemoryRemember']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MemoryApi.postMemoryRemember']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -325,10 +325,10 @@ export const MemoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MemoryUpdate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MemoryUpdate(options);
+        async postMemoryUpdate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMemoryUpdate(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MemoryApi.postV1MemoryUpdate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MemoryApi.postMemoryUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -347,8 +347,8 @@ export const MemoryApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MemoryFacts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1MemoryFacts(options).then((request) => request(axios, basePath));
+        getMemoryFacts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMemoryFacts(options).then((request) => request(axios, basePath));
         },
         /**
          * List the authenticated user\'s memories, newest first
@@ -356,8 +356,8 @@ export const MemoryApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MemoryList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1MemoryList(options).then((request) => request(axios, basePath));
+        getMemoryList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMemoryList(options).then((request) => request(axios, basePath));
         },
         /**
          * Recall recent/relevant memories for context injection; with q it ranks semantically, without q it returns the most recent
@@ -365,8 +365,8 @@ export const MemoryApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MemoryRecall(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1MemoryRecall(options).then((request) => request(axios, basePath));
+        getMemoryRecall(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMemoryRecall(options).then((request) => request(axios, basePath));
         },
         /**
          * Search the authenticated user\'s memories (semantic, text fallback)
@@ -374,8 +374,8 @@ export const MemoryApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MemorySearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1MemorySearch(options).then((request) => request(axios, basePath));
+        getMemorySearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getMemorySearch(options).then((request) => request(axios, basePath));
         },
         /**
          * Delete one of the authenticated user\'s memories
@@ -383,8 +383,8 @@ export const MemoryApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MemoryDelete(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1MemoryDelete(options).then((request) => request(axios, basePath));
+        postMemoryDelete(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMemoryDelete(options).then((request) => request(axios, basePath));
         },
         /**
          * Store a memory for the authenticated user
@@ -392,8 +392,8 @@ export const MemoryApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MemoryRemember(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1MemoryRemember(options).then((request) => request(axios, basePath));
+        postMemoryRemember(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMemoryRemember(options).then((request) => request(axios, basePath));
         },
         /**
          * Update one of the authenticated user\'s memories
@@ -401,8 +401,8 @@ export const MemoryApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MemoryUpdate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1MemoryUpdate(options).then((request) => request(axios, basePath));
+        postMemoryUpdate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMemoryUpdate(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -421,8 +421,8 @@ export class MemoryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MemoryApi
      */
-    public getV1MemoryFacts(options?: RawAxiosRequestConfig) {
-        return MemoryApiFp(this.configuration).getV1MemoryFacts(options).then((request) => request(this.axios, this.basePath));
+    public getMemoryFacts(options?: RawAxiosRequestConfig) {
+        return MemoryApiFp(this.configuration).getMemoryFacts(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -432,8 +432,8 @@ export class MemoryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MemoryApi
      */
-    public getV1MemoryList(options?: RawAxiosRequestConfig) {
-        return MemoryApiFp(this.configuration).getV1MemoryList(options).then((request) => request(this.axios, this.basePath));
+    public getMemoryList(options?: RawAxiosRequestConfig) {
+        return MemoryApiFp(this.configuration).getMemoryList(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -443,8 +443,8 @@ export class MemoryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MemoryApi
      */
-    public getV1MemoryRecall(options?: RawAxiosRequestConfig) {
-        return MemoryApiFp(this.configuration).getV1MemoryRecall(options).then((request) => request(this.axios, this.basePath));
+    public getMemoryRecall(options?: RawAxiosRequestConfig) {
+        return MemoryApiFp(this.configuration).getMemoryRecall(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -454,8 +454,8 @@ export class MemoryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MemoryApi
      */
-    public getV1MemorySearch(options?: RawAxiosRequestConfig) {
-        return MemoryApiFp(this.configuration).getV1MemorySearch(options).then((request) => request(this.axios, this.basePath));
+    public getMemorySearch(options?: RawAxiosRequestConfig) {
+        return MemoryApiFp(this.configuration).getMemorySearch(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -465,8 +465,8 @@ export class MemoryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MemoryApi
      */
-    public postV1MemoryDelete(options?: RawAxiosRequestConfig) {
-        return MemoryApiFp(this.configuration).postV1MemoryDelete(options).then((request) => request(this.axios, this.basePath));
+    public postMemoryDelete(options?: RawAxiosRequestConfig) {
+        return MemoryApiFp(this.configuration).postMemoryDelete(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -476,8 +476,8 @@ export class MemoryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MemoryApi
      */
-    public postV1MemoryRemember(options?: RawAxiosRequestConfig) {
-        return MemoryApiFp(this.configuration).postV1MemoryRemember(options).then((request) => request(this.axios, this.basePath));
+    public postMemoryRemember(options?: RawAxiosRequestConfig) {
+        return MemoryApiFp(this.configuration).postMemoryRemember(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -487,8 +487,8 @@ export class MemoryApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MemoryApi
      */
-    public postV1MemoryUpdate(options?: RawAxiosRequestConfig) {
-        return MemoryApiFp(this.configuration).postV1MemoryUpdate(options).then((request) => request(this.axios, this.basePath));
+    public postMemoryUpdate(options?: RawAxiosRequestConfig) {
+        return MemoryApiFp(this.configuration).postMemoryUpdate(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -52,7 +52,7 @@ export const SecurityApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityFindings: async (scanId?: string, minSeverity?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSecurityFindings: async (scanId?: string, minSeverity?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/security/findings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -95,9 +95,9 @@ export const SecurityApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityFindingsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSecurityFindingsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SecurityFindingsById', 'id', id)
+            assertParamExists('getSecurityFindingsById', 'id', id)
             const localVarPath = `/v1/security/findings/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -128,7 +128,7 @@ export const SecurityApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSecurityHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/security/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -158,7 +158,7 @@ export const SecurityApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityRules: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSecurityRules: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/security/rules`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -189,7 +189,7 @@ export const SecurityApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityScans: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSecurityScans: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/security/scans`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -224,9 +224,9 @@ export const SecurityApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityScansById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSecurityScansById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1SecurityScansById', 'id', id)
+            assertParamExists('getSecurityScansById', 'id', id)
             const localVarPath = `/v1/security/scans/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -258,9 +258,9 @@ export const SecurityApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SecurityScans: async (submitReq: SubmitReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSecurityScans: async (submitReq: SubmitReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'submitReq' is not null or undefined
-            assertParamExists('postV1SecurityScans', 'submitReq', submitReq)
+            assertParamExists('postSecurityScans', 'submitReq', submitReq)
             const localVarPath = `/v1/security/scans`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -306,10 +306,10 @@ export const SecurityApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SecurityFindings(scanId?: string, minSeverity?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindingList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SecurityFindings(scanId, minSeverity, limit, options);
+        async getSecurityFindings(scanId?: string, minSeverity?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindingList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSecurityFindings(scanId, minSeverity, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getV1SecurityFindings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getSecurityFindings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -319,10 +319,10 @@ export const SecurityApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SecurityFindingsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindingView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SecurityFindingsById(id, options);
+        async getSecurityFindingsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindingView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSecurityFindingsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getV1SecurityFindingsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getSecurityFindingsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -331,10 +331,10 @@ export const SecurityApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SecurityHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Ruleset>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SecurityHealth(options);
+        async getSecurityHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Ruleset>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSecurityHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getV1SecurityHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getSecurityHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -343,10 +343,10 @@ export const SecurityApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SecurityRules(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RuleList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SecurityRules(options);
+        async getSecurityRules(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RuleList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSecurityRules(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getV1SecurityRules']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getSecurityRules']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -356,10 +356,10 @@ export const SecurityApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SecurityScans(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScanList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SecurityScans(limit, options);
+        async getSecurityScans(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScanList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSecurityScans(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getV1SecurityScans']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getSecurityScans']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -369,10 +369,10 @@ export const SecurityApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SecurityScansById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScanDetail>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SecurityScansById(id, options);
+        async getSecurityScansById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScanDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSecurityScansById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getV1SecurityScansById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SecurityApi.getSecurityScansById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -382,10 +382,10 @@ export const SecurityApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1SecurityScans(submitReq: SubmitReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScanView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1SecurityScans(submitReq, options);
+        async postSecurityScans(submitReq: SubmitReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ScanView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSecurityScans(submitReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SecurityApi.postV1SecurityScans']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SecurityApi.postSecurityScans']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -401,22 +401,22 @@ export const SecurityApiFactory = function (configuration?: Configuration, baseP
         /**
          * Is the org\'s findings — rule, severity, path, line, masked preview and fingerprint — newest first, across scans or within one.  A minSeverity outside critical|high|medium|low is refused rather than quietly ignored, so a filter typo cannot read as \"no findings\". Strictly org-scoped, and a caller with no validated org is refused.
          * @summary Is the org\'s findings — rule, severity, path, line, masked preview and fingerprint — newest first, across scans or within one.
-         * @param {SecurityApiGetV1SecurityFindingsRequest} requestParameters Request parameters.
+         * @param {SecurityApiGetSecurityFindingsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityFindings(requestParameters: SecurityApiGetV1SecurityFindingsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FindingList> {
-            return localVarFp.getV1SecurityFindings(requestParameters.scanId, requestParameters.minSeverity, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getSecurityFindings(requestParameters: SecurityApiGetSecurityFindingsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FindingList> {
+            return localVarFp.getSecurityFindings(requestParameters.scanId, requestParameters.minSeverity, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a single finding: which rule fired, where (path and line), the masked preview and the SHA-256 fingerprint of the secret — the raw secret is not stored and cannot be read back.  Scoped to the caller\'s org, and a finding belonging to another org is the same 404 as one that never existed.
          * @summary Returns a single finding: which rule fired, where (path and line), the masked preview and the SHA-256 fingerprint of the secret — the raw secret is not stored and cannot be read back.
-         * @param {SecurityApiGetV1SecurityFindingsByIdRequest} requestParameters Request parameters.
+         * @param {SecurityApiGetSecurityFindingsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityFindingsById(requestParameters: SecurityApiGetV1SecurityFindingsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<FindingView> {
-            return localVarFp.getV1SecurityFindingsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getSecurityFindingsById(requestParameters: SecurityApiGetSecurityFindingsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<FindingView> {
+            return localVarFp.getSecurityFindingsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports that the scanning subsystem is serving and how many secret-detection rules the engine holds.  It has no external dependency — the answer is ok whenever the findings store opened — so it measures this process rather than anything downstream. It reads no tenant: a prober that sends no principal is answered, not refused.
@@ -424,8 +424,8 @@ export const SecurityApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityHealth(options?: RawAxiosRequestConfig): AxiosPromise<Ruleset> {
-            return localVarFp.getV1SecurityHealth(options).then((request) => request(axios, basePath));
+        getSecurityHealth(options?: RawAxiosRequestConfig): AxiosPromise<Ruleset> {
+            return localVarFp.getSecurityHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Is the secret-detection catalog the engine scans with.  It returns every rule a scan can fire — the id, name and severity a finding cites — so a caller can render or triage results without hard-coding the catalog. It is the same for everyone and discloses nothing tenant-specific, so it carries no org scope.
@@ -433,122 +433,122 @@ export const SecurityApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityRules(options?: RawAxiosRequestConfig): AxiosPromise<RuleList> {
-            return localVarFp.getV1SecurityRules(options).then((request) => request(axios, basePath));
+        getSecurityRules(options?: RawAxiosRequestConfig): AxiosPromise<RuleList> {
+            return localVarFp.getSecurityRules(options).then((request) => request(axios, basePath));
         },
         /**
          * Is the org\'s scan history, newest first, each as the same summary the submission answered — files read, findings fired, tally by severity.  Strictly org-scoped: a caller only ever sees its own scans, and one with no validated org is refused.
          * @summary Is the org\'s scan history, newest first, each as the same summary the submission answered — files read, findings fired, tally by severity.
-         * @param {SecurityApiGetV1SecurityScansRequest} requestParameters Request parameters.
+         * @param {SecurityApiGetSecurityScansRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityScans(requestParameters: SecurityApiGetV1SecurityScansRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ScanList> {
-            return localVarFp.getV1SecurityScans(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getSecurityScans(requestParameters: SecurityApiGetSecurityScansRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ScanList> {
+            return localVarFp.getSecurityScans(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one scan together with every finding on it, so the detail view is one round-trip rather than a list call per scan. The findings carry masked previews and fingerprints, never secrets.  Scoped to the caller\'s org: a scan id belonging to another org is the same 404 as an id that never existed, so a ruleset learns nothing about what exists elsewhere. No validated org is refused.
          * @summary Returns one scan together with every finding on it, so the detail view is one round-trip rather than a list call per scan.
-         * @param {SecurityApiGetV1SecurityScansByIdRequest} requestParameters Request parameters.
+         * @param {SecurityApiGetSecurityScansByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SecurityScansById(requestParameters: SecurityApiGetV1SecurityScansByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ScanDetail> {
-            return localVarFp.getV1SecurityScansById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getSecurityScansById(requestParameters: SecurityApiGetSecurityScansByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ScanDetail> {
+            return localVarFp.getSecurityScansById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs the detection engine over a batch of files and answers 201 with the scan summary: how many files were read, how many findings fired, and the tally by severity.  THE SUBMITTED CONTENT IS NEVER STORED. It is scanned in memory; what persists is the finding — its rule, its path and line, a MASKED preview (first and last characters kept, the middle starred) and the SHA-256 fingerprint of the raw secret. The fingerprint is what makes the same secret recognisable across scans and after rotation without the secret ever being written down.  It requires a validated org, which scopes the stored scan and every finding on it; a caller with no org is refused. Bounded at 500 files and 8 MiB of total content per submission — split a larger tree across scans. One scan is one metered unit, and the scan is recorded in the audit log with its tally, never with its findings.
          * @summary Runs the detection engine over a batch of files and answers 201 with the scan summary: how many files were read, how many findings fired, and the tally by severity.
-         * @param {SecurityApiPostV1SecurityScansRequest} requestParameters Request parameters.
+         * @param {SecurityApiPostSecurityScansRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1SecurityScans(requestParameters: SecurityApiPostV1SecurityScansRequest, options?: RawAxiosRequestConfig): AxiosPromise<ScanView> {
-            return localVarFp.postV1SecurityScans(requestParameters.submitReq, options).then((request) => request(axios, basePath));
+        postSecurityScans(requestParameters: SecurityApiPostSecurityScansRequest, options?: RawAxiosRequestConfig): AxiosPromise<ScanView> {
+            return localVarFp.postSecurityScans(requestParameters.submitReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1SecurityFindings operation in SecurityApi.
+ * Request parameters for getSecurityFindings operation in SecurityApi.
  * @export
- * @interface SecurityApiGetV1SecurityFindingsRequest
+ * @interface SecurityApiGetSecurityFindingsRequest
  */
-export interface SecurityApiGetV1SecurityFindingsRequest {
+export interface SecurityApiGetSecurityFindingsRequest {
     /**
      * ScanID narrows to a single scan.
      * @type {string}
-     * @memberof SecurityApiGetV1SecurityFindings
+     * @memberof SecurityApiGetSecurityFindings
      */
     readonly scanId?: string
 
     /**
      * MinSeverity drops everything below that rank: critical, high, medium or low. A value outside that set is refused rather than quietly ignored, so a filter typo cannot read as \&quot;no findings\&quot;.
      * @type {string}
-     * @memberof SecurityApiGetV1SecurityFindings
+     * @memberof SecurityApiGetSecurityFindings
      */
     readonly minSeverity?: string
 
     /**
      * Limit caps the page.
      * @type {number}
-     * @memberof SecurityApiGetV1SecurityFindings
+     * @memberof SecurityApiGetSecurityFindings
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1SecurityFindingsById operation in SecurityApi.
+ * Request parameters for getSecurityFindingsById operation in SecurityApi.
  * @export
- * @interface SecurityApiGetV1SecurityFindingsByIdRequest
+ * @interface SecurityApiGetSecurityFindingsByIdRequest
  */
-export interface SecurityApiGetV1SecurityFindingsByIdRequest {
+export interface SecurityApiGetSecurityFindingsByIdRequest {
     /**
      * ID is the finding the URL names.
      * @type {string}
-     * @memberof SecurityApiGetV1SecurityFindingsById
+     * @memberof SecurityApiGetSecurityFindingsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1SecurityScans operation in SecurityApi.
+ * Request parameters for getSecurityScans operation in SecurityApi.
  * @export
- * @interface SecurityApiGetV1SecurityScansRequest
+ * @interface SecurityApiGetSecurityScansRequest
  */
-export interface SecurityApiGetV1SecurityScansRequest {
+export interface SecurityApiGetSecurityScansRequest {
     /**
      * Limit caps the page.
      * @type {number}
-     * @memberof SecurityApiGetV1SecurityScans
+     * @memberof SecurityApiGetSecurityScans
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1SecurityScansById operation in SecurityApi.
+ * Request parameters for getSecurityScansById operation in SecurityApi.
  * @export
- * @interface SecurityApiGetV1SecurityScansByIdRequest
+ * @interface SecurityApiGetSecurityScansByIdRequest
  */
-export interface SecurityApiGetV1SecurityScansByIdRequest {
+export interface SecurityApiGetSecurityScansByIdRequest {
     /**
      * ID is the scan the URL names.
      * @type {string}
-     * @memberof SecurityApiGetV1SecurityScansById
+     * @memberof SecurityApiGetSecurityScansById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1SecurityScans operation in SecurityApi.
+ * Request parameters for postSecurityScans operation in SecurityApi.
  * @export
- * @interface SecurityApiPostV1SecurityScansRequest
+ * @interface SecurityApiPostSecurityScansRequest
  */
-export interface SecurityApiPostV1SecurityScansRequest {
+export interface SecurityApiPostSecurityScansRequest {
     /**
      * 
      * @type {SubmitReq}
-     * @memberof SecurityApiPostV1SecurityScans
+     * @memberof SecurityApiPostSecurityScans
      */
     readonly submitReq: SubmitReq
 }
@@ -563,25 +563,25 @@ export class SecurityApi extends BaseAPI {
     /**
      * Is the org\'s findings — rule, severity, path, line, masked preview and fingerprint — newest first, across scans or within one.  A minSeverity outside critical|high|medium|low is refused rather than quietly ignored, so a filter typo cannot read as \"no findings\". Strictly org-scoped, and a caller with no validated org is refused.
      * @summary Is the org\'s findings — rule, severity, path, line, masked preview and fingerprint — newest first, across scans or within one.
-     * @param {SecurityApiGetV1SecurityFindingsRequest} requestParameters Request parameters.
+     * @param {SecurityApiGetSecurityFindingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SecurityApi
      */
-    public getV1SecurityFindings(requestParameters: SecurityApiGetV1SecurityFindingsRequest = {}, options?: RawAxiosRequestConfig) {
-        return SecurityApiFp(this.configuration).getV1SecurityFindings(requestParameters.scanId, requestParameters.minSeverity, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getSecurityFindings(requestParameters: SecurityApiGetSecurityFindingsRequest = {}, options?: RawAxiosRequestConfig) {
+        return SecurityApiFp(this.configuration).getSecurityFindings(requestParameters.scanId, requestParameters.minSeverity, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns a single finding: which rule fired, where (path and line), the masked preview and the SHA-256 fingerprint of the secret — the raw secret is not stored and cannot be read back.  Scoped to the caller\'s org, and a finding belonging to another org is the same 404 as one that never existed.
      * @summary Returns a single finding: which rule fired, where (path and line), the masked preview and the SHA-256 fingerprint of the secret — the raw secret is not stored and cannot be read back.
-     * @param {SecurityApiGetV1SecurityFindingsByIdRequest} requestParameters Request parameters.
+     * @param {SecurityApiGetSecurityFindingsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SecurityApi
      */
-    public getV1SecurityFindingsById(requestParameters: SecurityApiGetV1SecurityFindingsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SecurityApiFp(this.configuration).getV1SecurityFindingsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getSecurityFindingsById(requestParameters: SecurityApiGetSecurityFindingsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SecurityApiFp(this.configuration).getSecurityFindingsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -591,8 +591,8 @@ export class SecurityApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SecurityApi
      */
-    public getV1SecurityHealth(options?: RawAxiosRequestConfig) {
-        return SecurityApiFp(this.configuration).getV1SecurityHealth(options).then((request) => request(this.axios, this.basePath));
+    public getSecurityHealth(options?: RawAxiosRequestConfig) {
+        return SecurityApiFp(this.configuration).getSecurityHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -602,44 +602,44 @@ export class SecurityApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SecurityApi
      */
-    public getV1SecurityRules(options?: RawAxiosRequestConfig) {
-        return SecurityApiFp(this.configuration).getV1SecurityRules(options).then((request) => request(this.axios, this.basePath));
+    public getSecurityRules(options?: RawAxiosRequestConfig) {
+        return SecurityApiFp(this.configuration).getSecurityRules(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is the org\'s scan history, newest first, each as the same summary the submission answered — files read, findings fired, tally by severity.  Strictly org-scoped: a caller only ever sees its own scans, and one with no validated org is refused.
      * @summary Is the org\'s scan history, newest first, each as the same summary the submission answered — files read, findings fired, tally by severity.
-     * @param {SecurityApiGetV1SecurityScansRequest} requestParameters Request parameters.
+     * @param {SecurityApiGetSecurityScansRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SecurityApi
      */
-    public getV1SecurityScans(requestParameters: SecurityApiGetV1SecurityScansRequest = {}, options?: RawAxiosRequestConfig) {
-        return SecurityApiFp(this.configuration).getV1SecurityScans(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getSecurityScans(requestParameters: SecurityApiGetSecurityScansRequest = {}, options?: RawAxiosRequestConfig) {
+        return SecurityApiFp(this.configuration).getSecurityScans(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one scan together with every finding on it, so the detail view is one round-trip rather than a list call per scan. The findings carry masked previews and fingerprints, never secrets.  Scoped to the caller\'s org: a scan id belonging to another org is the same 404 as an id that never existed, so a ruleset learns nothing about what exists elsewhere. No validated org is refused.
      * @summary Returns one scan together with every finding on it, so the detail view is one round-trip rather than a list call per scan.
-     * @param {SecurityApiGetV1SecurityScansByIdRequest} requestParameters Request parameters.
+     * @param {SecurityApiGetSecurityScansByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SecurityApi
      */
-    public getV1SecurityScansById(requestParameters: SecurityApiGetV1SecurityScansByIdRequest, options?: RawAxiosRequestConfig) {
-        return SecurityApiFp(this.configuration).getV1SecurityScansById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getSecurityScansById(requestParameters: SecurityApiGetSecurityScansByIdRequest, options?: RawAxiosRequestConfig) {
+        return SecurityApiFp(this.configuration).getSecurityScansById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Runs the detection engine over a batch of files and answers 201 with the scan summary: how many files were read, how many findings fired, and the tally by severity.  THE SUBMITTED CONTENT IS NEVER STORED. It is scanned in memory; what persists is the finding — its rule, its path and line, a MASKED preview (first and last characters kept, the middle starred) and the SHA-256 fingerprint of the raw secret. The fingerprint is what makes the same secret recognisable across scans and after rotation without the secret ever being written down.  It requires a validated org, which scopes the stored scan and every finding on it; a caller with no org is refused. Bounded at 500 files and 8 MiB of total content per submission — split a larger tree across scans. One scan is one metered unit, and the scan is recorded in the audit log with its tally, never with its findings.
      * @summary Runs the detection engine over a batch of files and answers 201 with the scan summary: how many files were read, how many findings fired, and the tally by severity.
-     * @param {SecurityApiPostV1SecurityScansRequest} requestParameters Request parameters.
+     * @param {SecurityApiPostSecurityScansRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SecurityApi
      */
-    public postV1SecurityScans(requestParameters: SecurityApiPostV1SecurityScansRequest, options?: RawAxiosRequestConfig) {
-        return SecurityApiFp(this.configuration).postV1SecurityScans(requestParameters.submitReq, options).then((request) => request(this.axios, this.basePath));
+    public postSecurityScans(requestParameters: SecurityApiPostSecurityScansRequest, options?: RawAxiosRequestConfig) {
+        return SecurityApiFp(this.configuration).postSecurityScans(requestParameters.submitReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

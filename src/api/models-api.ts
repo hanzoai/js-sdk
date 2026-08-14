@@ -33,7 +33,7 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Models: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -64,9 +64,9 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ModelsByModelAccess: async (model: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getModelsByModelAccess: async (model: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'model' is not null or undefined
-            assertParamExists('getV1ModelsByModelAccess', 'model', model)
+            assertParamExists('getModelsByModelAccess', 'model', model)
             const localVarPath = `/v1/models/{model}/access`
                 .replace(`{${"model"}}`, encodeURIComponent(String(model)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -97,7 +97,7 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ModelsProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getModelsProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/models/providers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -128,9 +128,9 @@ export const ModelsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ModelsByModelAccess: async (model: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postModelsByModelAccess: async (model: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'model' is not null or undefined
-            assertParamExists('postV1ModelsByModelAccess', 'model', model)
+            assertParamExists('postModelsByModelAccess', 'model', model)
             const localVarPath = `/v1/models/{model}/access`
                 .replace(`{${"model"}}`, encodeURIComponent(String(model)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -171,10 +171,10 @@ export const ModelsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Models(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Models(options);
+        async getModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getModels(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ModelsApi.getV1Models']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ModelsApi.getModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -184,10 +184,10 @@ export const ModelsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ModelsByModelAccess(model: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ModelsByModelAccess(model, options);
+        async getModelsByModelAccess(model: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getModelsByModelAccess(model, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ModelsApi.getV1ModelsByModelAccess']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ModelsApi.getModelsByModelAccess']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -196,10 +196,10 @@ export const ModelsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ModelsProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ModelsProviders(options);
+        async getModelsProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getModelsProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ModelsApi.getV1ModelsProviders']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ModelsApi.getModelsProviders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -209,10 +209,10 @@ export const ModelsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ModelsByModelAccess(model: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ModelsByModelAccess(model, options);
+        async postModelsByModelAccess(model: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postModelsByModelAccess(model, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ModelsApi.postV1ModelsByModelAccess']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ModelsApi.postModelsByModelAccess']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -231,18 +231,18 @@ export const ModelsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Models(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1Models(options).then((request) => request(axios, basePath));
+        getModels(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getModels(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller\'s own standing for a gated model: \"granted\", \"requested\", or empty when they have never asked.
          * @summary Returns the caller\'s own standing for a gated model: \"granted\", \"requested\", or empty when they have never asked.
-         * @param {ModelsApiGetV1ModelsByModelAccessRequest} requestParameters Request parameters.
+         * @param {ModelsApiGetModelsByModelAccessRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ModelsByModelAccess(requestParameters: ModelsApiGetV1ModelsByModelAccessRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1ModelsByModelAccess(requestParameters.model, options).then((request) => request(axios, basePath));
+        getModelsByModelAccess(requestParameters: ModelsApiGetModelsByModelAccessRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getModelsByModelAccess(requestParameters.model, options).then((request) => request(axios, basePath));
         },
         /**
          * Public, secret-free list of the providers serving the models that GET /v1/models lists — the same source, projected. Safe unauthenticated: no keys, URLs, or config are returned, and it reports a SET of names, never which provider serves which model.
@@ -250,46 +250,46 @@ export const ModelsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ModelsProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1ModelsProviders(options).then((request) => request(axios, basePath));
+        getModelsProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getModelsProviders(options).then((request) => request(axios, basePath));
         },
         /**
          * Records the caller\'s waitlist request for a gated model and answers their new standing. Authed, idempotent, and self-scoped: the row is keyed to the caller\'s own org and identity, never to a body-supplied owner.
          * @summary Records the caller\'s waitlist request for a gated model and answers their new standing.
-         * @param {ModelsApiPostV1ModelsByModelAccessRequest} requestParameters Request parameters.
+         * @param {ModelsApiPostModelsByModelAccessRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ModelsByModelAccess(requestParameters: ModelsApiPostV1ModelsByModelAccessRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1ModelsByModelAccess(requestParameters.model, options).then((request) => request(axios, basePath));
+        postModelsByModelAccess(requestParameters: ModelsApiPostModelsByModelAccessRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postModelsByModelAccess(requestParameters.model, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1ModelsByModelAccess operation in ModelsApi.
+ * Request parameters for getModelsByModelAccess operation in ModelsApi.
  * @export
- * @interface ModelsApiGetV1ModelsByModelAccessRequest
+ * @interface ModelsApiGetModelsByModelAccessRequest
  */
-export interface ModelsApiGetV1ModelsByModelAccessRequest {
+export interface ModelsApiGetModelsByModelAccessRequest {
     /**
      * 
      * @type {string}
-     * @memberof ModelsApiGetV1ModelsByModelAccess
+     * @memberof ModelsApiGetModelsByModelAccess
      */
     readonly model: string
 }
 
 /**
- * Request parameters for postV1ModelsByModelAccess operation in ModelsApi.
+ * Request parameters for postModelsByModelAccess operation in ModelsApi.
  * @export
- * @interface ModelsApiPostV1ModelsByModelAccessRequest
+ * @interface ModelsApiPostModelsByModelAccessRequest
  */
-export interface ModelsApiPostV1ModelsByModelAccessRequest {
+export interface ModelsApiPostModelsByModelAccessRequest {
     /**
      * 
      * @type {string}
-     * @memberof ModelsApiPostV1ModelsByModelAccess
+     * @memberof ModelsApiPostModelsByModelAccess
      */
     readonly model: string
 }
@@ -308,20 +308,20 @@ export class ModelsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ModelsApi
      */
-    public getV1Models(options?: RawAxiosRequestConfig) {
-        return ModelsApiFp(this.configuration).getV1Models(options).then((request) => request(this.axios, this.basePath));
+    public getModels(options?: RawAxiosRequestConfig) {
+        return ModelsApiFp(this.configuration).getModels(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller\'s own standing for a gated model: \"granted\", \"requested\", or empty when they have never asked.
      * @summary Returns the caller\'s own standing for a gated model: \"granted\", \"requested\", or empty when they have never asked.
-     * @param {ModelsApiGetV1ModelsByModelAccessRequest} requestParameters Request parameters.
+     * @param {ModelsApiGetModelsByModelAccessRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ModelsApi
      */
-    public getV1ModelsByModelAccess(requestParameters: ModelsApiGetV1ModelsByModelAccessRequest, options?: RawAxiosRequestConfig) {
-        return ModelsApiFp(this.configuration).getV1ModelsByModelAccess(requestParameters.model, options).then((request) => request(this.axios, this.basePath));
+    public getModelsByModelAccess(requestParameters: ModelsApiGetModelsByModelAccessRequest, options?: RawAxiosRequestConfig) {
+        return ModelsApiFp(this.configuration).getModelsByModelAccess(requestParameters.model, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -331,20 +331,20 @@ export class ModelsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ModelsApi
      */
-    public getV1ModelsProviders(options?: RawAxiosRequestConfig) {
-        return ModelsApiFp(this.configuration).getV1ModelsProviders(options).then((request) => request(this.axios, this.basePath));
+    public getModelsProviders(options?: RawAxiosRequestConfig) {
+        return ModelsApiFp(this.configuration).getModelsProviders(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records the caller\'s waitlist request for a gated model and answers their new standing. Authed, idempotent, and self-scoped: the row is keyed to the caller\'s own org and identity, never to a body-supplied owner.
      * @summary Records the caller\'s waitlist request for a gated model and answers their new standing.
-     * @param {ModelsApiPostV1ModelsByModelAccessRequest} requestParameters Request parameters.
+     * @param {ModelsApiPostModelsByModelAccessRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ModelsApi
      */
-    public postV1ModelsByModelAccess(requestParameters: ModelsApiPostV1ModelsByModelAccessRequest, options?: RawAxiosRequestConfig) {
-        return ModelsApiFp(this.configuration).postV1ModelsByModelAccess(requestParameters.model, options).then((request) => request(this.axios, this.basePath));
+    public postModelsByModelAccess(requestParameters: ModelsApiPostModelsByModelAccessRequest, options?: RawAxiosRequestConfig) {
+        return ModelsApiFp(this.configuration).postModelsByModelAccess(requestParameters.model, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

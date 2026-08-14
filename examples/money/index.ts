@@ -25,10 +25,10 @@ import { config, fail } from '../client';
 async function main() {
   const billing = new BillingApi(config());
 
-  const balance = await billing.getV1BillingBalance();
+  const balance = await billing.getBillingBalance();
   console.log('balance:', JSON.stringify(balance.data as unknown, null, 2));
 
-  const usage = await billing.getV1BillingUsage();
+  const usage = await billing.getBillingUsage();
   console.log('usage:', JSON.stringify(usage.data as unknown, null, 2));
 }
 

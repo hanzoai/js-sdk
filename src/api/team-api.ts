@@ -45,7 +45,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TeamAccountCookie: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteTeamAccountCookie: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/account/cookie`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -78,11 +78,11 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TeamFilesByWorkspaceByFilename: async (workspace: string, filename: string, file?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteTeamFilesByWorkspaceByFilename: async (workspace: string, filename: string, file?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'workspace' is not null or undefined
-            assertParamExists('deleteV1TeamFilesByWorkspaceByFilename', 'workspace', workspace)
+            assertParamExists('deleteTeamFilesByWorkspaceByFilename', 'workspace', workspace)
             // verify required parameter 'filename' is not null or undefined
-            assertParamExists('deleteV1TeamFilesByWorkspaceByFilename', 'filename', filename)
+            assertParamExists('deleteTeamFilesByWorkspaceByFilename', 'filename', filename)
             const localVarPath = `/v1/team/files/{workspace}/{filename}`
                 .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
                 .replace(`{${"filename"}}`, encodeURIComponent(String(filename)));
@@ -119,9 +119,9 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamAccountAuthByProvider: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTeamAccountAuthByProvider: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('getV1TeamAccountAuthByProvider', 'provider', provider)
+            assertParamExists('getTeamAccountAuthByProvider', 'provider', provider)
             const localVarPath = `/v1/team/account/auth/{provider}`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -153,9 +153,9 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamAccountAuthByProviderCallback: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTeamAccountAuthByProviderCallback: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'provider' is not null or undefined
-            assertParamExists('getV1TeamAccountAuthByProviderCallback', 'provider', provider)
+            assertParamExists('getTeamAccountAuthByProviderCallback', 'provider', provider)
             const localVarPath = `/v1/team/account/auth/{provider}/callback`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -186,7 +186,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamAccountProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTeamAccountProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/account/providers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -216,7 +216,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamBillingPlan: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTeamBillingPlan: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/billing/plan`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -246,7 +246,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamBillingUi: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTeamBillingUi: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/billing/ui`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -277,9 +277,9 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamBillingUiByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTeamBillingUiByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getV1TeamBillingUiByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('getTeamBillingUiByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/team/billing/ui/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -310,7 +310,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamBots: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTeamBots: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -342,11 +342,11 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamFilesByWorkspaceByFilename: async (workspace: string, filename: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTeamFilesByWorkspaceByFilename: async (workspace: string, filename: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'workspace' is not null or undefined
-            assertParamExists('getV1TeamFilesByWorkspaceByFilename', 'workspace', workspace)
+            assertParamExists('getTeamFilesByWorkspaceByFilename', 'workspace', workspace)
             // verify required parameter 'filename' is not null or undefined
-            assertParamExists('getV1TeamFilesByWorkspaceByFilename', 'filename', filename)
+            assertParamExists('getTeamFilesByWorkspaceByFilename', 'filename', filename)
             const localVarPath = `/v1/team/files/{workspace}/{filename}`
                 .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
                 .replace(`{${"filename"}}`, encodeURIComponent(String(filename)));
@@ -379,7 +379,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamTransactorApiV1Statistics: async (token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTeamTransactorApiV1Statistics: async (token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/transactor/api/v1/statistics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -414,9 +414,9 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamTransactorByToken: async (token: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTeamTransactorByToken: async (token: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'token' is not null or undefined
-            assertParamExists('getV1TeamTransactorByToken', 'token', token)
+            assertParamExists('getTeamTransactorByToken', 'token', token)
             const localVarPath = `/v1/team/transactor/{token}`
                 .replace(`{${"token"}}`, encodeURIComponent(String(token)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -448,7 +448,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamTransactorStatistics: async (token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTeamTransactorStatistics: async (token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/transactor/statistics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -482,7 +482,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1TeamAccount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTeamAccount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/account`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -512,7 +512,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1TeamBotsSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTeamBotsSync: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/bots/sync`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -543,9 +543,9 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1TeamFilesByWorkspace: async (workspace: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTeamFilesByWorkspace: async (workspace: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'workspace' is not null or undefined
-            assertParamExists('postV1TeamFilesByWorkspace', 'workspace', workspace)
+            assertParamExists('postTeamFilesByWorkspace', 'workspace', workspace)
             const localVarPath = `/v1/team/files/{workspace}`
                 .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -576,7 +576,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1TeamAccountCookie: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putTeamAccountCookie: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/team/account/cookie`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -616,10 +616,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1TeamAccountCookie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CookieAck>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1TeamAccountCookie(options);
+        async deleteTeamAccountCookie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CookieAck>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamAccountCookie(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteV1TeamAccountCookie']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteTeamAccountCookie']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -631,10 +631,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1TeamFilesByWorkspaceByFilename(workspace: string, filename: string, file?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1TeamFilesByWorkspaceByFilename(workspace, filename, file, options);
+        async deleteTeamFilesByWorkspaceByFilename(workspace: string, filename: string, file?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamFilesByWorkspaceByFilename(workspace, filename, file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteV1TeamFilesByWorkspaceByFilename']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.deleteTeamFilesByWorkspaceByFilename']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -644,10 +644,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TeamAccountAuthByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TeamAccountAuthByProvider(provider, options);
+        async getTeamAccountAuthByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamAccountAuthByProvider(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getV1TeamAccountAuthByProvider']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamAccountAuthByProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -657,10 +657,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TeamAccountAuthByProviderCallback(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TeamAccountAuthByProviderCallback(provider, options);
+        async getTeamAccountAuthByProviderCallback(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamAccountAuthByProviderCallback(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getV1TeamAccountAuthByProviderCallback']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamAccountAuthByProviderCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -669,10 +669,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TeamAccountProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProviderInfo>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TeamAccountProviders(options);
+        async getTeamAccountProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProviderInfo>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamAccountProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getV1TeamAccountProviders']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamAccountProviders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -681,10 +681,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TeamBillingPlan(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanInfo>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TeamBillingPlan(options);
+        async getTeamBillingPlan(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanInfo>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamBillingPlan(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getV1TeamBillingPlan']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamBillingPlan']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -693,10 +693,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TeamBillingUi(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TeamBillingUi(options);
+        async getTeamBillingUi(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamBillingUi(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getV1TeamBillingUi']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamBillingUi']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -706,10 +706,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TeamBillingUiByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TeamBillingUiByWildcard1(wildcard1, options);
+        async getTeamBillingUiByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamBillingUiByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getV1TeamBillingUiByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamBillingUiByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -718,10 +718,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TeamBots(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotRoster>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TeamBots(options);
+        async getTeamBots(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotRoster>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamBots(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getV1TeamBots']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamBots']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -732,10 +732,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TeamFilesByWorkspaceByFilename(workspace: string, filename: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TeamFilesByWorkspaceByFilename(workspace, filename, options);
+        async getTeamFilesByWorkspaceByFilename(workspace: string, filename: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamFilesByWorkspaceByFilename(workspace, filename, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getV1TeamFilesByWorkspaceByFilename']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamFilesByWorkspaceByFilename']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -745,10 +745,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TeamTransactorApiV1Statistics(token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StatsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TeamTransactorApiV1Statistics(token, options);
+        async getTeamTransactorApiV1Statistics(token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StatsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamTransactorApiV1Statistics(token, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getV1TeamTransactorApiV1Statistics']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamTransactorApiV1Statistics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -758,10 +758,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TeamTransactorByToken(token: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TeamTransactorByToken(token, options);
+        async getTeamTransactorByToken(token: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamTransactorByToken(token, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getV1TeamTransactorByToken']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamTransactorByToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -771,10 +771,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TeamTransactorStatistics(token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StatsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TeamTransactorStatistics(token, options);
+        async getTeamTransactorStatistics(token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StatsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamTransactorStatistics(token, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getV1TeamTransactorStatistics']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamTransactorStatistics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -783,10 +783,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1TeamAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1TeamAccount(options);
+        async postTeamAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamAccount(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.postV1TeamAccount']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamAccount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -795,10 +795,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1TeamBotsSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotSync>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1TeamBotsSync(options);
+        async postTeamBotsSync(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotSync>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamBotsSync(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.postV1TeamBotsSync']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamBotsSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -808,10 +808,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1TeamFilesByWorkspace(workspace: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1TeamFilesByWorkspace(workspace, options);
+        async postTeamFilesByWorkspace(workspace: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamFilesByWorkspace(workspace, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.postV1TeamFilesByWorkspace']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamFilesByWorkspace']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -820,10 +820,10 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1TeamAccountCookie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1TeamAccountCookie(options);
+        async putTeamAccountCookie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTeamAccountCookie(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.putV1TeamAccountCookie']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.putTeamAccountCookie']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -842,38 +842,38 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TeamAccountCookie(options?: RawAxiosRequestConfig): AxiosPromise<CookieAck> {
-            return localVarFp.deleteV1TeamAccountCookie(options).then((request) => request(axios, basePath));
+        deleteTeamAccountCookie(options?: RawAxiosRequestConfig): AxiosPromise<CookieAck> {
+            return localVarFp.deleteTeamAccountCookie(options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one blob from a workspace\'s file store. The caller must hold a verified session AND be a member of the workspace; anything else — an unknown workspace, another tenant\'s workspace, a workspace the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
          * @summary Removes one blob from a workspace\'s file store.
-         * @param {TeamApiDeleteV1TeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
+         * @param {TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TeamFilesByWorkspaceByFilename(requestParameters: TeamApiDeleteV1TeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1TeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, requestParameters.file, options).then((request) => request(axios, basePath));
+        deleteTeamFilesByWorkspaceByFilename(requestParameters: TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, requestParameters.file, options).then((request) => request(axios, basePath));
         },
         /**
          * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second door here.
          * @summary Start a sign-in at hanzo.id
-         * @param {TeamApiGetV1TeamAccountAuthByProviderRequest} requestParameters Request parameters.
+         * @param {TeamApiGetTeamAccountAuthByProviderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamAccountAuthByProvider(requestParameters: TeamApiGetV1TeamAccountAuthByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1TeamAccountAuthByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
+        getTeamAccountAuthByProvider(requestParameters: TeamApiGetTeamAccountAuthByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTeamAccountAuthByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * COMPLETES the OAuth hop: hanzo.id redirects the browser here with ?code and ?state, and the answer is another 302 — back to the client\'s login route carrying the freshly minted team session token in the query. Never JSON, and never a token in this response\'s own body.  THE STATE IS CHECKED FIRST, before the code is even looked at: the flow cookie is read and cleared one-shot, and a callback whose ?state does not equal the nonce it held is bounced with error=state_mismatch and NEVER exchanged. That is what makes a forged or replayed callback inert. Only then is the code exchanged server-side — team is a confidential client with a client_secret, so there is no PKCE and the code never passes through the browser\'s JS.  The tenant is derived from the IAM access token VERIFIED RS256 against the JWKS, the same trust anchor the identity boundary uses; a token whose owner claim is empty fails closed with no login at all. Every org that token proves gets a workspace ensured, so a member of two orgs is a counted seat in both. The IAM access token is also parked in an HttpOnly cookie for the same-origin agents proxy — page JS never reads it.  EVERY failure is a redirect, not a status: a denied consent, a missing code, a failed exchange, an unreadable userinfo, an unverifiable org and a token-mint failure each bounce to the login page with an ?error code naming the step.
          * @summary Complete a sign-in and hand the browser its session
-         * @param {TeamApiGetV1TeamAccountAuthByProviderCallbackRequest} requestParameters Request parameters.
+         * @param {TeamApiGetTeamAccountAuthByProviderCallbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamAccountAuthByProviderCallback(requestParameters: TeamApiGetV1TeamAccountAuthByProviderCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1TeamAccountAuthByProviderCallback(requestParameters.provider, options).then((request) => request(axios, basePath));
+        getTeamAccountAuthByProviderCallback(requestParameters: TeamApiGetTeamAccountAuthByProviderCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTeamAccountAuthByProviderCallback(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the identity providers this deployment starts a login with. It is always exactly one — hanzo.id. Which identities that door accepts (Google, GitHub, passkey, password) is IAM\'s question, answered on IAM\'s own page next to the identity check and the training-data consent that must precede a first session; listing them here would be a second place holding that answer, and the two drift the moment IAM gains or drops one.
@@ -881,8 +881,8 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamAccountProviders(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProviderInfo>> {
-            return localVarFp.getV1TeamAccountProviders(options).then((request) => request(axios, basePath));
+        getTeamAccountProviders(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProviderInfo>> {
+            return localVarFp.getTeamAccountProviders(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the plan and seat counts for the caller\'s OWN org, resolved from the VERIFIED team session token — never a client header. Seats and guests are the org\'s distinct active human members (a bot member is not a seat); the plan comes from the licensing entitlement and is empty when that read is unavailable, so the page shows an honest dash rather than a fabricated tier. A caller with no verified session gets 401, and a real seat-read failure is a 502 rather than a false \"0 members\".
@@ -890,8 +890,8 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamBillingPlan(options?: RawAxiosRequestConfig): AxiosPromise<PlanInfo> {
-            return localVarFp.getV1TeamBillingPlan(options).then((request) => request(axios, basePath));
+        getTeamBillingPlan(options?: RawAxiosRequestConfig): AxiosPromise<PlanInfo> {
+            return localVarFp.getTeamBillingPlan(options).then((request) => request(axios, basePath));
         },
         /**
          * Serves the usage-and-wallet page the Team front links to — HTML, not JSON. It is a static React build compiled into this binary, so there is no upstream to be down and no build step at request time.  SESSION-GATED: without a verified team session token — bearer, else the HttpOnly account cookie — the caller gets 401 and not one byte of the page, so an anonymous browser meets a refusal rather than a shell that then fails to load anything.  The page is markup only. It reads money SAME-ORIGIN from cloud\'s own balance and usage endpoints, which pin the org from the IAM cookie the team OAuth callback set — nothing under this path proxies a money read, so there is no second auth mechanism here to get wrong. A deployment whose page was never built answers 503 naming the missing bundle, never a blank 200.
@@ -899,18 +899,18 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamBillingUi(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1TeamBillingUi(options).then((request) => request(axios, basePath));
+        getTeamBillingUi(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTeamBillingUi(options).then((request) => request(axios, basePath));
         },
         /**
          * Serves one file of the embedded wallet bundle — a content-hashed script or stylesheet under assets/, an icon, or the page shell itself.  A path that names NO REAL FILE falls back to the shell instead of 404ing, which is what makes a deep link into the page\'s own routes survive a hard refresh. So a 200 here is not proof the asset exists — a typo answers HTML.  assets/ is immutable for a year (the names carry the content hash); the shell is no-cache, so a deploy is picked up on the next load. Gated exactly like the page: 401 without a verified session, 503 when the bundle was never built.
          * @summary Load an asset of the wallet page
-         * @param {TeamApiGetV1TeamBillingUiByWildcard1Request} requestParameters Request parameters.
+         * @param {TeamApiGetTeamBillingUiByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamBillingUiByWildcard1(requestParameters: TeamApiGetV1TeamBillingUiByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1TeamBillingUiByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        getTeamBillingUiByWildcard1(requestParameters: TeamApiGetTeamBillingUiByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTeamBillingUiByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
@@ -918,48 +918,48 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamBots(options?: RawAxiosRequestConfig): AxiosPromise<BotRoster> {
-            return localVarFp.getV1TeamBots(options).then((request) => request(axios, basePath));
+        getTeamBots(options?: RawAxiosRequestConfig): AxiosPromise<BotRoster> {
+            return localVarFp.getTeamBots(options).then((request) => request(axios, basePath));
         },
         /**
          * Streams one blob\'s raw BYTES back — this is the read side of the workspace file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the workspace. A genuine miss, another tenant\'s workspace, a workspace the caller is not in, and a blob id belonging to a different workspace are ONE answer — 404 — because the physical key is org- and workspace-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
          * @summary Download a workspace file
-         * @param {TeamApiGetV1TeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
+         * @param {TeamApiGetTeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamFilesByWorkspaceByFilename(requestParameters: TeamApiGetV1TeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1TeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, options).then((request) => request(axios, basePath));
+        getTeamFilesByWorkspaceByFilename(requestParameters: TeamApiGetTeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, options).then((request) => request(axios, basePath));
         },
         /**
          * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
          * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
-         * @param {TeamApiGetV1TeamTransactorApiV1StatisticsRequest} requestParameters Request parameters.
+         * @param {TeamApiGetTeamTransactorApiV1StatisticsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamTransactorApiV1Statistics(requestParameters: TeamApiGetV1TeamTransactorApiV1StatisticsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StatsOut> {
-            return localVarFp.getV1TeamTransactorApiV1Statistics(requestParameters.token, options).then((request) => request(axios, basePath));
+        getTeamTransactorApiV1Statistics(requestParameters: TeamApiGetTeamTransactorApiV1StatisticsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StatsOut> {
+            return localVarFp.getTeamTransactorApiV1Statistics(requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
          * Upgrades to the WebSocket the Team client runs an entire workspace over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the workspace\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the workspace token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a workspace claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another workspace\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the workspace\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as workspace people without a separate sync call.
          * @summary Open the workspace data-plane socket
-         * @param {TeamApiGetV1TeamTransactorByTokenRequest} requestParameters Request parameters.
+         * @param {TeamApiGetTeamTransactorByTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamTransactorByToken(requestParameters: TeamApiGetV1TeamTransactorByTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1TeamTransactorByToken(requestParameters.token, options).then((request) => request(axios, basePath));
+        getTeamTransactorByToken(requestParameters: TeamApiGetTeamTransactorByTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTeamTransactorByToken(requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
          * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
          * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
-         * @param {TeamApiGetV1TeamTransactorStatisticsRequest} requestParameters Request parameters.
+         * @param {TeamApiGetTeamTransactorStatisticsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TeamTransactorStatistics(requestParameters: TeamApiGetV1TeamTransactorStatisticsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StatsOut> {
-            return localVarFp.getV1TeamTransactorStatistics(requestParameters.token, options).then((request) => request(axios, basePath));
+        getTeamTransactorStatistics(requestParameters: TeamApiGetTeamTransactorStatisticsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StatsOut> {
+            return localVarFp.getTeamTransactorStatistics(requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
          * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the door being shut is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
@@ -967,8 +967,8 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1TeamAccount(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1TeamAccount(options).then((request) => request(axios, basePath));
+        postTeamAccount(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postTeamAccount(options).then((request) => request(axios, basePath));
         },
         /**
          * SyncBots re-projects the caller org\'s agents as workspace members into EVERY workspace of the org, and removes the ones whose agent is gone. It is idempotent, and admin only: mutating a workspace\'s roster requires the gateway-minted admin flag, which a client can never forge. It answers how many roster entries the reconcile touched.
@@ -976,18 +976,18 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1TeamBotsSync(options?: RawAxiosRequestConfig): AxiosPromise<BotSync> {
-            return localVarFp.postV1TeamBotsSync(options).then((request) => request(axios, basePath));
+        postTeamBotsSync(options?: RawAxiosRequestConfig): AxiosPromise<BotSync> {
+            return localVarFp.postTeamBotsSync(options).then((request) => request(axios, basePath));
         },
         /**
          * Stores one file in a workspace\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or workspace token AND be a member of the workspace; an unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the workspace, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
          * @summary Upload a file into a workspace
-         * @param {TeamApiPostV1TeamFilesByWorkspaceRequest} requestParameters Request parameters.
+         * @param {TeamApiPostTeamFilesByWorkspaceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1TeamFilesByWorkspace(requestParameters: TeamApiPostV1TeamFilesByWorkspaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1TeamFilesByWorkspace(requestParameters.workspace, options).then((request) => request(axios, basePath));
+        postTeamFilesByWorkspace(requestParameters: TeamApiPostTeamFilesByWorkspaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postTeamFilesByWorkspace(requestParameters.workspace, options).then((request) => request(axios, basePath));
         },
         /**
          * Writes the team session token into the HttpOnly `account-token` cookie — Secure, SameSite=Lax, whole-origin scope, thirty days — and answers {\"result\": true}. This is how the client turns the token it caught off the OAuth bounce into a credential page JS can no longer read, which IS the security property: script that cannot see the cookie cannot exfiltrate it, and every later call on the files, billing and collaborator planes authenticates from it when no bearer is sent.  The token is VERIFIED — signature and expiry, against this service\'s own signing secret — BEFORE it is stored. Anything this service did not sign is 401 and nothing is written; persisting a caller-supplied value unchecked would be a session-fixation door, where an attacker pins a cookie the victim\'s browser then presents as its own.  The token may arrive as `token` in the JSON body or, when the body is absent or unparseable, from the Authorization bearer — an unreadable body is NOT an error here. The sibling DELETE clears this same cookie and signs the browser out of team only: the IAM cookie set alongside it is a different credential with its own lifetime and is left alone.
@@ -995,155 +995,155 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1TeamAccountCookie(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1TeamAccountCookie(options).then((request) => request(axios, basePath));
+        putTeamAccountCookie(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putTeamAccountCookie(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1TeamFilesByWorkspaceByFilename operation in TeamApi.
+ * Request parameters for deleteTeamFilesByWorkspaceByFilename operation in TeamApi.
  * @export
- * @interface TeamApiDeleteV1TeamFilesByWorkspaceByFilenameRequest
+ * @interface TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest
  */
-export interface TeamApiDeleteV1TeamFilesByWorkspaceByFilenameRequest {
+export interface TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest {
     /**
      * Workspace is the workspace uuid the blob belongs to, from the path.
      * @type {string}
-     * @memberof TeamApiDeleteV1TeamFilesByWorkspaceByFilename
+     * @memberof TeamApiDeleteTeamFilesByWorkspaceByFilename
      */
     readonly workspace: string
 
     /**
      * Filename is the last path segment, which the front sets to the blob id when it sends no explicit &#x60;file&#x60;.
      * @type {string}
-     * @memberof TeamApiDeleteV1TeamFilesByWorkspaceByFilename
+     * @memberof TeamApiDeleteTeamFilesByWorkspaceByFilename
      */
     readonly filename: string
 
     /**
      * File is the blob id, and wins over the path segment when both are present.
      * @type {string}
-     * @memberof TeamApiDeleteV1TeamFilesByWorkspaceByFilename
+     * @memberof TeamApiDeleteTeamFilesByWorkspaceByFilename
      */
     readonly file?: string
 }
 
 /**
- * Request parameters for getV1TeamAccountAuthByProvider operation in TeamApi.
+ * Request parameters for getTeamAccountAuthByProvider operation in TeamApi.
  * @export
- * @interface TeamApiGetV1TeamAccountAuthByProviderRequest
+ * @interface TeamApiGetTeamAccountAuthByProviderRequest
  */
-export interface TeamApiGetV1TeamAccountAuthByProviderRequest {
+export interface TeamApiGetTeamAccountAuthByProviderRequest {
     /**
      * 
      * @type {string}
-     * @memberof TeamApiGetV1TeamAccountAuthByProvider
+     * @memberof TeamApiGetTeamAccountAuthByProvider
      */
     readonly provider: string
 }
 
 /**
- * Request parameters for getV1TeamAccountAuthByProviderCallback operation in TeamApi.
+ * Request parameters for getTeamAccountAuthByProviderCallback operation in TeamApi.
  * @export
- * @interface TeamApiGetV1TeamAccountAuthByProviderCallbackRequest
+ * @interface TeamApiGetTeamAccountAuthByProviderCallbackRequest
  */
-export interface TeamApiGetV1TeamAccountAuthByProviderCallbackRequest {
+export interface TeamApiGetTeamAccountAuthByProviderCallbackRequest {
     /**
      * 
      * @type {string}
-     * @memberof TeamApiGetV1TeamAccountAuthByProviderCallback
+     * @memberof TeamApiGetTeamAccountAuthByProviderCallback
      */
     readonly provider: string
 }
 
 /**
- * Request parameters for getV1TeamBillingUiByWildcard1 operation in TeamApi.
+ * Request parameters for getTeamBillingUiByWildcard1 operation in TeamApi.
  * @export
- * @interface TeamApiGetV1TeamBillingUiByWildcard1Request
+ * @interface TeamApiGetTeamBillingUiByWildcard1Request
  */
-export interface TeamApiGetV1TeamBillingUiByWildcard1Request {
+export interface TeamApiGetTeamBillingUiByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof TeamApiGetV1TeamBillingUiByWildcard1
+     * @memberof TeamApiGetTeamBillingUiByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for getV1TeamFilesByWorkspaceByFilename operation in TeamApi.
+ * Request parameters for getTeamFilesByWorkspaceByFilename operation in TeamApi.
  * @export
- * @interface TeamApiGetV1TeamFilesByWorkspaceByFilenameRequest
+ * @interface TeamApiGetTeamFilesByWorkspaceByFilenameRequest
  */
-export interface TeamApiGetV1TeamFilesByWorkspaceByFilenameRequest {
+export interface TeamApiGetTeamFilesByWorkspaceByFilenameRequest {
     /**
      * 
      * @type {string}
-     * @memberof TeamApiGetV1TeamFilesByWorkspaceByFilename
+     * @memberof TeamApiGetTeamFilesByWorkspaceByFilename
      */
     readonly workspace: string
 
     /**
      * 
      * @type {string}
-     * @memberof TeamApiGetV1TeamFilesByWorkspaceByFilename
+     * @memberof TeamApiGetTeamFilesByWorkspaceByFilename
      */
     readonly filename: string
 }
 
 /**
- * Request parameters for getV1TeamTransactorApiV1Statistics operation in TeamApi.
+ * Request parameters for getTeamTransactorApiV1Statistics operation in TeamApi.
  * @export
- * @interface TeamApiGetV1TeamTransactorApiV1StatisticsRequest
+ * @interface TeamApiGetTeamTransactorApiV1StatisticsRequest
  */
-export interface TeamApiGetV1TeamTransactorApiV1StatisticsRequest {
+export interface TeamApiGetTeamTransactorApiV1StatisticsRequest {
     /**
      * Token is the workspace token minted by selectWorkspace.
      * @type {string}
-     * @memberof TeamApiGetV1TeamTransactorApiV1Statistics
+     * @memberof TeamApiGetTeamTransactorApiV1Statistics
      */
     readonly token?: string
 }
 
 /**
- * Request parameters for getV1TeamTransactorByToken operation in TeamApi.
+ * Request parameters for getTeamTransactorByToken operation in TeamApi.
  * @export
- * @interface TeamApiGetV1TeamTransactorByTokenRequest
+ * @interface TeamApiGetTeamTransactorByTokenRequest
  */
-export interface TeamApiGetV1TeamTransactorByTokenRequest {
+export interface TeamApiGetTeamTransactorByTokenRequest {
     /**
      * 
      * @type {string}
-     * @memberof TeamApiGetV1TeamTransactorByToken
+     * @memberof TeamApiGetTeamTransactorByToken
      */
     readonly token: string
 }
 
 /**
- * Request parameters for getV1TeamTransactorStatistics operation in TeamApi.
+ * Request parameters for getTeamTransactorStatistics operation in TeamApi.
  * @export
- * @interface TeamApiGetV1TeamTransactorStatisticsRequest
+ * @interface TeamApiGetTeamTransactorStatisticsRequest
  */
-export interface TeamApiGetV1TeamTransactorStatisticsRequest {
+export interface TeamApiGetTeamTransactorStatisticsRequest {
     /**
      * Token is the workspace token minted by selectWorkspace.
      * @type {string}
-     * @memberof TeamApiGetV1TeamTransactorStatistics
+     * @memberof TeamApiGetTeamTransactorStatistics
      */
     readonly token?: string
 }
 
 /**
- * Request parameters for postV1TeamFilesByWorkspace operation in TeamApi.
+ * Request parameters for postTeamFilesByWorkspace operation in TeamApi.
  * @export
- * @interface TeamApiPostV1TeamFilesByWorkspaceRequest
+ * @interface TeamApiPostTeamFilesByWorkspaceRequest
  */
-export interface TeamApiPostV1TeamFilesByWorkspaceRequest {
+export interface TeamApiPostTeamFilesByWorkspaceRequest {
     /**
      * 
      * @type {string}
-     * @memberof TeamApiPostV1TeamFilesByWorkspace
+     * @memberof TeamApiPostTeamFilesByWorkspace
      */
     readonly workspace: string
 }
@@ -1162,44 +1162,44 @@ export class TeamApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public deleteV1TeamAccountCookie(options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).deleteV1TeamAccountCookie(options).then((request) => request(this.axios, this.basePath));
+    public deleteTeamAccountCookie(options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).deleteTeamAccountCookie(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one blob from a workspace\'s file store. The caller must hold a verified session AND be a member of the workspace; anything else — an unknown workspace, another tenant\'s workspace, a workspace the caller is not in — answers the same 404, so a probe learns nothing about what exists.  It is IDEMPOTENT: deleting a present or an absent blob both answer 204, so a delete never confirms a blob\'s existence and a foreign blob id (a physical key the caller can never name into another tenant\'s box) is a harmless no-op. A storage backend that is unavailable fails closed with 502 rather than lying about success.
      * @summary Removes one blob from a workspace\'s file store.
-     * @param {TeamApiDeleteV1TeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
+     * @param {TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public deleteV1TeamFilesByWorkspaceByFilename(requestParameters: TeamApiDeleteV1TeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).deleteV1TeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, requestParameters.file, options).then((request) => request(this.axios, this.basePath));
+    public deleteTeamFilesByWorkspaceByFilename(requestParameters: TeamApiDeleteTeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).deleteTeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, requestParameters.file, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second door here.
      * @summary Start a sign-in at hanzo.id
-     * @param {TeamApiGetV1TeamAccountAuthByProviderRequest} requestParameters Request parameters.
+     * @param {TeamApiGetTeamAccountAuthByProviderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getV1TeamAccountAuthByProvider(requestParameters: TeamApiGetV1TeamAccountAuthByProviderRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getV1TeamAccountAuthByProvider(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    public getTeamAccountAuthByProvider(requestParameters: TeamApiGetTeamAccountAuthByProviderRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamAccountAuthByProvider(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * COMPLETES the OAuth hop: hanzo.id redirects the browser here with ?code and ?state, and the answer is another 302 — back to the client\'s login route carrying the freshly minted team session token in the query. Never JSON, and never a token in this response\'s own body.  THE STATE IS CHECKED FIRST, before the code is even looked at: the flow cookie is read and cleared one-shot, and a callback whose ?state does not equal the nonce it held is bounced with error=state_mismatch and NEVER exchanged. That is what makes a forged or replayed callback inert. Only then is the code exchanged server-side — team is a confidential client with a client_secret, so there is no PKCE and the code never passes through the browser\'s JS.  The tenant is derived from the IAM access token VERIFIED RS256 against the JWKS, the same trust anchor the identity boundary uses; a token whose owner claim is empty fails closed with no login at all. Every org that token proves gets a workspace ensured, so a member of two orgs is a counted seat in both. The IAM access token is also parked in an HttpOnly cookie for the same-origin agents proxy — page JS never reads it.  EVERY failure is a redirect, not a status: a denied consent, a missing code, a failed exchange, an unreadable userinfo, an unverifiable org and a token-mint failure each bounce to the login page with an ?error code naming the step.
      * @summary Complete a sign-in and hand the browser its session
-     * @param {TeamApiGetV1TeamAccountAuthByProviderCallbackRequest} requestParameters Request parameters.
+     * @param {TeamApiGetTeamAccountAuthByProviderCallbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getV1TeamAccountAuthByProviderCallback(requestParameters: TeamApiGetV1TeamAccountAuthByProviderCallbackRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getV1TeamAccountAuthByProviderCallback(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    public getTeamAccountAuthByProviderCallback(requestParameters: TeamApiGetTeamAccountAuthByProviderCallbackRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamAccountAuthByProviderCallback(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1209,8 +1209,8 @@ export class TeamApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getV1TeamAccountProviders(options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getV1TeamAccountProviders(options).then((request) => request(this.axios, this.basePath));
+    public getTeamAccountProviders(options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamAccountProviders(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1220,8 +1220,8 @@ export class TeamApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getV1TeamBillingPlan(options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getV1TeamBillingPlan(options).then((request) => request(this.axios, this.basePath));
+    public getTeamBillingPlan(options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamBillingPlan(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1231,20 +1231,20 @@ export class TeamApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getV1TeamBillingUi(options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getV1TeamBillingUi(options).then((request) => request(this.axios, this.basePath));
+    public getTeamBillingUi(options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamBillingUi(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Serves one file of the embedded wallet bundle — a content-hashed script or stylesheet under assets/, an icon, or the page shell itself.  A path that names NO REAL FILE falls back to the shell instead of 404ing, which is what makes a deep link into the page\'s own routes survive a hard refresh. So a 200 here is not proof the asset exists — a typo answers HTML.  assets/ is immutable for a year (the names carry the content hash); the shell is no-cache, so a deploy is picked up on the next load. Gated exactly like the page: 401 without a verified session, 503 when the bundle was never built.
      * @summary Load an asset of the wallet page
-     * @param {TeamApiGetV1TeamBillingUiByWildcard1Request} requestParameters Request parameters.
+     * @param {TeamApiGetTeamBillingUiByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getV1TeamBillingUiByWildcard1(requestParameters: TeamApiGetV1TeamBillingUiByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getV1TeamBillingUiByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public getTeamBillingUiByWildcard1(requestParameters: TeamApiGetTeamBillingUiByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamBillingUiByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1254,56 +1254,56 @@ export class TeamApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getV1TeamBots(options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getV1TeamBots(options).then((request) => request(this.axios, this.basePath));
+    public getTeamBots(options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamBots(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Streams one blob\'s raw BYTES back — this is the read side of the workspace file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the workspace. A genuine miss, another tenant\'s workspace, a workspace the caller is not in, and a blob id belonging to a different workspace are ONE answer — 404 — because the physical key is org- and workspace-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
      * @summary Download a workspace file
-     * @param {TeamApiGetV1TeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
+     * @param {TeamApiGetTeamFilesByWorkspaceByFilenameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getV1TeamFilesByWorkspaceByFilename(requestParameters: TeamApiGetV1TeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getV1TeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, options).then((request) => request(this.axios, this.basePath));
+    public getTeamFilesByWorkspaceByFilename(requestParameters: TeamApiGetTeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
      * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
-     * @param {TeamApiGetV1TeamTransactorApiV1StatisticsRequest} requestParameters Request parameters.
+     * @param {TeamApiGetTeamTransactorApiV1StatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getV1TeamTransactorApiV1Statistics(requestParameters: TeamApiGetV1TeamTransactorApiV1StatisticsRequest = {}, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getV1TeamTransactorApiV1Statistics(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    public getTeamTransactorApiV1Statistics(requestParameters: TeamApiGetTeamTransactorApiV1StatisticsRequest = {}, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamTransactorApiV1Statistics(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Upgrades to the WebSocket the Team client runs an entire workspace over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the workspace\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the workspace token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a workspace claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another workspace\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the workspace\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as workspace people without a separate sync call.
      * @summary Open the workspace data-plane socket
-     * @param {TeamApiGetV1TeamTransactorByTokenRequest} requestParameters Request parameters.
+     * @param {TeamApiGetTeamTransactorByTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getV1TeamTransactorByToken(requestParameters: TeamApiGetV1TeamTransactorByTokenRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getV1TeamTransactorByToken(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    public getTeamTransactorByToken(requestParameters: TeamApiGetTeamTransactorByTokenRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamTransactorByToken(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
      * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
-     * @param {TeamApiGetV1TeamTransactorStatisticsRequest} requestParameters Request parameters.
+     * @param {TeamApiGetTeamTransactorStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public getV1TeamTransactorStatistics(requestParameters: TeamApiGetV1TeamTransactorStatisticsRequest = {}, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getV1TeamTransactorStatistics(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    public getTeamTransactorStatistics(requestParameters: TeamApiGetTeamTransactorStatisticsRequest = {}, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamTransactorStatistics(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1313,8 +1313,8 @@ export class TeamApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public postV1TeamAccount(options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).postV1TeamAccount(options).then((request) => request(this.axios, this.basePath));
+    public postTeamAccount(options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamAccount(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1324,20 +1324,20 @@ export class TeamApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public postV1TeamBotsSync(options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).postV1TeamBotsSync(options).then((request) => request(this.axios, this.basePath));
+    public postTeamBotsSync(options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamBotsSync(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Stores one file in a workspace\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or workspace token AND be a member of the workspace; an unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the workspace, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
      * @summary Upload a file into a workspace
-     * @param {TeamApiPostV1TeamFilesByWorkspaceRequest} requestParameters Request parameters.
+     * @param {TeamApiPostTeamFilesByWorkspaceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public postV1TeamFilesByWorkspace(requestParameters: TeamApiPostV1TeamFilesByWorkspaceRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).postV1TeamFilesByWorkspace(requestParameters.workspace, options).then((request) => request(this.axios, this.basePath));
+    public postTeamFilesByWorkspace(requestParameters: TeamApiPostTeamFilesByWorkspaceRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamFilesByWorkspace(requestParameters.workspace, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1347,8 +1347,8 @@ export class TeamApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TeamApi
      */
-    public putV1TeamAccountCookie(options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).putV1TeamAccountCookie(options).then((request) => request(this.axios, this.basePath));
+    public putTeamAccountCookie(options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).putTeamAccountCookie(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

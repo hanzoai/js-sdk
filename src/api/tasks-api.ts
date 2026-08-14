@@ -33,7 +33,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1Tasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -64,9 +64,9 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('deleteV1TasksByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('deleteTasksByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/tasks/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -97,7 +97,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Tasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -128,9 +128,9 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getV1TasksByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('getTasksByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/tasks/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -161,7 +161,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1Tasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -192,9 +192,9 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1TasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('patchV1TasksByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('patchTasksByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/tasks/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -225,7 +225,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Tasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -256,9 +256,9 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1TasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('postV1TasksByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('postTasksByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/tasks/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -289,7 +289,7 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1Tasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putTasks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/tasks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -320,9 +320,9 @@ export const TasksApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1TasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putTasksByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('putV1TasksByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('putTasksByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/tasks/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -363,10 +363,10 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1Tasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1Tasks(options);
+        async deleteTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTasks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.deleteV1Tasks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TasksApi.deleteTasks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -376,10 +376,10 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1TasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1TasksByWildcard1(wildcard1, options);
+        async deleteTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTasksByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.deleteV1TasksByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TasksApi.deleteTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -388,10 +388,10 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Tasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Tasks(options);
+        async getTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTasks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.getV1Tasks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TasksApi.getTasks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -401,10 +401,10 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1TasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1TasksByWildcard1(wildcard1, options);
+        async getTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTasksByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.getV1TasksByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TasksApi.getTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -413,10 +413,10 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1Tasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1Tasks(options);
+        async patchTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTasks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.patchV1Tasks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TasksApi.patchTasks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -426,10 +426,10 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1TasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1TasksByWildcard1(wildcard1, options);
+        async patchTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchTasksByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.patchV1TasksByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TasksApi.patchTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -438,10 +438,10 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Tasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Tasks(options);
+        async postTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTasks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.postV1Tasks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TasksApi.postTasks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -451,10 +451,10 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1TasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1TasksByWildcard1(wildcard1, options);
+        async postTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTasksByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.postV1TasksByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TasksApi.postTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -463,10 +463,10 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1Tasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1Tasks(options);
+        async putTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTasks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.putV1Tasks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TasksApi.putTasks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -476,10 +476,10 @@ export const TasksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1TasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1TasksByWildcard1(wildcard1, options);
+        async putTasksByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTasksByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TasksApi.putV1TasksByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TasksApi.putTasksByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -498,18 +498,18 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1Tasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1Tasks(options).then((request) => request(axios, basePath));
+        deleteTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTasks(options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a resource the engine owns — a namespace and the like — inside the caller\'s own tenant shard.  It is the narrowest of the three working methods: most of the engine\'s surface is read on GET and acted on with POST, so a delete that finds no route for its path answers the same plain-text 404 any unrouted path does.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
          * @summary Delete an engine resource
-         * @param {TasksApiDeleteV1TasksByWildcard1Request} requestParameters Request parameters.
+         * @param {TasksApiDeleteTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1TasksByWildcard1(requestParameters: TasksApiDeleteV1TasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        deleteTasksByWildcard1(requestParameters: TasksApiDeleteTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
@@ -517,18 +517,18 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Tasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1Tasks(options).then((request) => request(axios, basePath));
+        getTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTasks(options).then((request) => request(axios, basePath));
         },
         /**
          * Reads from the durable engine: list namespaces, workflows, schedules, batches, deployments, task queues, workers and search attributes, fetch one workflow with its history, or subscribe to the realtime event stream. The cluster and settings probes are on this method too.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
          * @summary Read workflow state from the durable engine
-         * @param {TasksApiGetV1TasksByWildcard1Request} requestParameters Request parameters.
+         * @param {TasksApiGetTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1TasksByWildcard1(requestParameters: TasksApiGetV1TasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        getTasksByWildcard1(requestParameters: TasksApiGetTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
@@ -536,18 +536,18 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1Tasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1Tasks(options).then((request) => request(axios, basePath));
+        patchTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchTasks(options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but the engine routes no PATCH: the answer is a plain-text 404, not a 405, and no state changes.  There is no partial update on this surface. State advances by appending events, so the operations that change a running workflow — signal, cancel, terminate, reset — are all POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
          * @summary Not served by the engine
-         * @param {TasksApiPatchV1TasksByWildcard1Request} requestParameters Request parameters.
+         * @param {TasksApiPatchTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1TasksByWildcard1(requestParameters: TasksApiPatchV1TasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        patchTasksByWildcard1(requestParameters: TasksApiPatchTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
@@ -555,18 +555,18 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Tasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Tasks(options).then((request) => request(axios, basePath));
+        postTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postTasks(options).then((request) => request(axios, basePath));
         },
         /**
          * Everything that changes the engine\'s state: register a namespace, start a workflow or signal-with-start one, and signal, query, cancel, terminate or reset a workflow that is already running. The MCP tool surface is on this method as well, and is the one part of it that refuses a non-POST with a plain-text 405.  The engine is event-sourced and exactly-once, so an action is durable once it is accepted and survives a process crash — a started workflow resumes rather than restarts.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
          * @summary Start workflows and act on running ones
-         * @param {TasksApiPostV1TasksByWildcard1Request} requestParameters Request parameters.
+         * @param {TasksApiPostTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1TasksByWildcard1(requestParameters: TasksApiPostV1TasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        postTasksByWildcard1(requestParameters: TasksApiPostTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers 307 with Location /v1/tasks/ — this address serves nothing itself. The redirect is a routing fact derived from the engine\'s subtree, decided before any handler runs, so it is the same on every method.  A 307 preserves both the method and the body, so a client that follows redirects re-sends the request unchanged to /v1/tasks/ and nothing is lost. A client that does NOT follow redirects sees only the 307 and performs no work — address /v1/tasks/ directly and the hop disappears.
@@ -574,88 +574,88 @@ export const TasksApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1Tasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1Tasks(options).then((request) => request(axios, basePath));
+        putTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putTasks(options).then((request) => request(axios, basePath));
         },
         /**
          * Published because this address accepts every method, but the engine routes no PUT: the answer is a plain-text 404, not a 405, and no state changes.  Nothing here is updated by replacement. The engine is event-sourced — a workflow is changed by signalling, cancelling, terminating or resetting it, all of which are POST — so a client reaching for PUT wants POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
          * @summary Not served by the engine
-         * @param {TasksApiPutV1TasksByWildcard1Request} requestParameters Request parameters.
+         * @param {TasksApiPutTasksByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1TasksByWildcard1(requestParameters: TasksApiPutV1TasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        putTasksByWildcard1(requestParameters: TasksApiPutTasksByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1TasksByWildcard1 operation in TasksApi.
+ * Request parameters for deleteTasksByWildcard1 operation in TasksApi.
  * @export
- * @interface TasksApiDeleteV1TasksByWildcard1Request
+ * @interface TasksApiDeleteTasksByWildcard1Request
  */
-export interface TasksApiDeleteV1TasksByWildcard1Request {
+export interface TasksApiDeleteTasksByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof TasksApiDeleteV1TasksByWildcard1
+     * @memberof TasksApiDeleteTasksByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for getV1TasksByWildcard1 operation in TasksApi.
+ * Request parameters for getTasksByWildcard1 operation in TasksApi.
  * @export
- * @interface TasksApiGetV1TasksByWildcard1Request
+ * @interface TasksApiGetTasksByWildcard1Request
  */
-export interface TasksApiGetV1TasksByWildcard1Request {
+export interface TasksApiGetTasksByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof TasksApiGetV1TasksByWildcard1
+     * @memberof TasksApiGetTasksByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for patchV1TasksByWildcard1 operation in TasksApi.
+ * Request parameters for patchTasksByWildcard1 operation in TasksApi.
  * @export
- * @interface TasksApiPatchV1TasksByWildcard1Request
+ * @interface TasksApiPatchTasksByWildcard1Request
  */
-export interface TasksApiPatchV1TasksByWildcard1Request {
+export interface TasksApiPatchTasksByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof TasksApiPatchV1TasksByWildcard1
+     * @memberof TasksApiPatchTasksByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for postV1TasksByWildcard1 operation in TasksApi.
+ * Request parameters for postTasksByWildcard1 operation in TasksApi.
  * @export
- * @interface TasksApiPostV1TasksByWildcard1Request
+ * @interface TasksApiPostTasksByWildcard1Request
  */
-export interface TasksApiPostV1TasksByWildcard1Request {
+export interface TasksApiPostTasksByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof TasksApiPostV1TasksByWildcard1
+     * @memberof TasksApiPostTasksByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for putV1TasksByWildcard1 operation in TasksApi.
+ * Request parameters for putTasksByWildcard1 operation in TasksApi.
  * @export
- * @interface TasksApiPutV1TasksByWildcard1Request
+ * @interface TasksApiPutTasksByWildcard1Request
  */
-export interface TasksApiPutV1TasksByWildcard1Request {
+export interface TasksApiPutTasksByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof TasksApiPutV1TasksByWildcard1
+     * @memberof TasksApiPutTasksByWildcard1
      */
     readonly wildcard1: string
 }
@@ -674,20 +674,20 @@ export class TasksApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TasksApi
      */
-    public deleteV1Tasks(options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).deleteV1Tasks(options).then((request) => request(this.axios, this.basePath));
+    public deleteTasks(options?: RawAxiosRequestConfig) {
+        return TasksApiFp(this.configuration).deleteTasks(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes a resource the engine owns — a namespace and the like — inside the caller\'s own tenant shard.  It is the narrowest of the three working methods: most of the engine\'s surface is read on GET and acted on with POST, so a delete that finds no route for its path answers the same plain-text 404 any unrouted path does.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
      * @summary Delete an engine resource
-     * @param {TasksApiDeleteV1TasksByWildcard1Request} requestParameters Request parameters.
+     * @param {TasksApiDeleteTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TasksApi
      */
-    public deleteV1TasksByWildcard1(requestParameters: TasksApiDeleteV1TasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).deleteV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public deleteTasksByWildcard1(requestParameters: TasksApiDeleteTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return TasksApiFp(this.configuration).deleteTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -697,20 +697,20 @@ export class TasksApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TasksApi
      */
-    public getV1Tasks(options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).getV1Tasks(options).then((request) => request(this.axios, this.basePath));
+    public getTasks(options?: RawAxiosRequestConfig) {
+        return TasksApiFp(this.configuration).getTasks(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reads from the durable engine: list namespaces, workflows, schedules, batches, deployments, task queues, workers and search attributes, fetch one workflow with its history, or subscribe to the realtime event stream. The cluster and settings probes are on this method too.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
      * @summary Read workflow state from the durable engine
-     * @param {TasksApiGetV1TasksByWildcard1Request} requestParameters Request parameters.
+     * @param {TasksApiGetTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TasksApi
      */
-    public getV1TasksByWildcard1(requestParameters: TasksApiGetV1TasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).getV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public getTasksByWildcard1(requestParameters: TasksApiGetTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return TasksApiFp(this.configuration).getTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -720,20 +720,20 @@ export class TasksApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TasksApi
      */
-    public patchV1Tasks(options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).patchV1Tasks(options).then((request) => request(this.axios, this.basePath));
+    public patchTasks(options?: RawAxiosRequestConfig) {
+        return TasksApiFp(this.configuration).patchTasks(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Published because this address accepts every method, but the engine routes no PATCH: the answer is a plain-text 404, not a 405, and no state changes.  There is no partial update on this surface. State advances by appending events, so the operations that change a running workflow — signal, cancel, terminate, reset — are all POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
      * @summary Not served by the engine
-     * @param {TasksApiPatchV1TasksByWildcard1Request} requestParameters Request parameters.
+     * @param {TasksApiPatchTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TasksApi
      */
-    public patchV1TasksByWildcard1(requestParameters: TasksApiPatchV1TasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).patchV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public patchTasksByWildcard1(requestParameters: TasksApiPatchTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return TasksApiFp(this.configuration).patchTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -743,20 +743,20 @@ export class TasksApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TasksApi
      */
-    public postV1Tasks(options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).postV1Tasks(options).then((request) => request(this.axios, this.basePath));
+    public postTasks(options?: RawAxiosRequestConfig) {
+        return TasksApiFp(this.configuration).postTasks(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Everything that changes the engine\'s state: register a namespace, start a workflow or signal-with-start one, and signal, query, cancel, terminate or reset a workflow that is already running. The MCP tool surface is on this method as well, and is the one part of it that refuses a non-POST with a plain-text 405.  The engine is event-sourced and exactly-once, so an action is durable once it is accepted and survives a process crash — a started workflow resumes rather than restarts.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
      * @summary Start workflows and act on running ones
-     * @param {TasksApiPostV1TasksByWildcard1Request} requestParameters Request parameters.
+     * @param {TasksApiPostTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TasksApi
      */
-    public postV1TasksByWildcard1(requestParameters: TasksApiPostV1TasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).postV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public postTasksByWildcard1(requestParameters: TasksApiPostTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return TasksApiFp(this.configuration).postTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -766,20 +766,20 @@ export class TasksApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TasksApi
      */
-    public putV1Tasks(options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).putV1Tasks(options).then((request) => request(this.axios, this.basePath));
+    public putTasks(options?: RawAxiosRequestConfig) {
+        return TasksApiFp(this.configuration).putTasks(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Published because this address accepts every method, but the engine routes no PUT: the answer is a plain-text 404, not a 405, and no state changes.  Nothing here is updated by replacement. The engine is event-sourced — a workflow is changed by signalling, cancelling, terminating or resetting it, all of which are POST — so a client reaching for PUT wants POST.  This single address fronts the whole durable-workflow engine — namespaces, workflows, schedules, batches, deployments, nexus, task queues, workers, activities and the rest — matched by path segment inside the engine\'s own router, which is why the document publishes one wildcard rather than sixty-four operations.  Most of it requires a validated principal and is refused 403 otherwise; the settings and cluster probes are open, because capability flags and cluster health carry no tenant data. A principal that is validated but carries NO org is refused too — that request would otherwise read the shared unscoped store instead of anyone\'s shard, so it fails closed. Admitted, the org, project and user are threaded into the engine, and every read and write lands in that tenant\'s own shard.  Two things about the answers differ from the rest of this API and will bite a generic client: errors here carry `code` as a NUMBER rather than the usual `status`, and the address serves several content types — JSON, plain-text refusals, and an event stream at the events path. Until the engine is wired the whole surface answers 503.
      * @summary Not served by the engine
-     * @param {TasksApiPutV1TasksByWildcard1Request} requestParameters Request parameters.
+     * @param {TasksApiPutTasksByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TasksApi
      */
-    public putV1TasksByWildcard1(requestParameters: TasksApiPutV1TasksByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return TasksApiFp(this.configuration).putV1TasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public putTasksByWildcard1(requestParameters: TasksApiPutTasksByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return TasksApiFp(this.configuration).putTasksByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

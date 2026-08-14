@@ -35,7 +35,7 @@ export const ReleasesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Releases: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getReleases: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/releases`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const ReleasesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Releases(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReleaseBoard>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Releases(options);
+        async getReleases(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReleaseBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getReleases(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReleasesApi.getV1Releases']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ReleasesApi.getReleases']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const ReleasesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Releases(options?: RawAxiosRequestConfig): AxiosPromise<ReleaseBoard> {
-            return localVarFp.getV1Releases(options).then((request) => request(axios, basePath));
+        getReleases(options?: RawAxiosRequestConfig): AxiosPromise<ReleaseBoard> {
+            return localVarFp.getReleases(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class ReleasesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReleasesApi
      */
-    public getV1Releases(options?: RawAxiosRequestConfig) {
-        return ReleasesApiFp(this.configuration).getV1Releases(options).then((request) => request(this.axios, this.basePath));
+    public getReleases(options?: RawAxiosRequestConfig) {
+        return ReleasesApiFp(this.configuration).getReleases(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

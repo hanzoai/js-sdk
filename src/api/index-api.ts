@@ -34,9 +34,9 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IndexIndexesByUid: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteIndexIndexesByUid: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('deleteV1IndexIndexesByUid', 'uid', uid)
+            assertParamExists('deleteIndexIndexesByUid', 'uid', uid)
             const localVarPath = `/v1/index/indexes/{uid}`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -69,11 +69,11 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IndexIndexesByUidDocumentsById: async (uid: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteIndexIndexesByUidDocumentsById: async (uid: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('deleteV1IndexIndexesByUidDocumentsById', 'uid', uid)
+            assertParamExists('deleteIndexIndexesByUidDocumentsById', 'uid', uid)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1IndexIndexesByUidDocumentsById', 'id', id)
+            assertParamExists('deleteIndexIndexesByUidDocumentsById', 'id', id)
             const localVarPath = `/v1/index/indexes/{uid}/documents/{id}`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -105,7 +105,7 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIndexHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/index/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -135,7 +135,7 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexIndexes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIndexIndexes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/index/indexes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -166,9 +166,9 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexIndexesByUid: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIndexIndexesByUid: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('getV1IndexIndexesByUid', 'uid', uid)
+            assertParamExists('getIndexIndexesByUid', 'uid', uid)
             const localVarPath = `/v1/index/indexes/{uid}`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -200,9 +200,9 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexIndexesByUidDocuments: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIndexIndexesByUidDocuments: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('getV1IndexIndexesByUidDocuments', 'uid', uid)
+            assertParamExists('getIndexIndexesByUidDocuments', 'uid', uid)
             const localVarPath = `/v1/index/indexes/{uid}/documents`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -235,11 +235,11 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexIndexesByUidDocumentsById: async (uid: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIndexIndexesByUidDocumentsById: async (uid: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('getV1IndexIndexesByUidDocumentsById', 'uid', uid)
+            assertParamExists('getIndexIndexesByUidDocumentsById', 'uid', uid)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1IndexIndexesByUidDocumentsById', 'id', id)
+            assertParamExists('getIndexIndexesByUidDocumentsById', 'id', id)
             const localVarPath = `/v1/index/indexes/{uid}/documents/{id}`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -272,9 +272,9 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexIndexesByUidSettings: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIndexIndexesByUidSettings: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('getV1IndexIndexesByUidSettings', 'uid', uid)
+            assertParamExists('getIndexIndexesByUidSettings', 'uid', uid)
             const localVarPath = `/v1/index/indexes/{uid}/settings`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -305,7 +305,7 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexStats: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIndexStats: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/index/stats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -336,9 +336,9 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexTasksByUid: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIndexTasksByUid: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('getV1IndexTasksByUid', 'uid', uid)
+            assertParamExists('getIndexTasksByUid', 'uid', uid)
             const localVarPath = `/v1/index/tasks/{uid}`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -369,7 +369,7 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexVersion: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIndexVersion: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/index/version`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -400,9 +400,9 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1IndexIndexesByUidSettings: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchIndexIndexesByUidSettings: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('patchV1IndexIndexesByUidSettings', 'uid', uid)
+            assertParamExists('patchIndexIndexesByUidSettings', 'uid', uid)
             const localVarPath = `/v1/index/indexes/{uid}/settings`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -433,7 +433,7 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IndexIndexes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIndexIndexes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/index/indexes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -464,9 +464,9 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IndexIndexesByUidDocuments: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIndexIndexesByUidDocuments: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('postV1IndexIndexesByUidDocuments', 'uid', uid)
+            assertParamExists('postIndexIndexesByUidDocuments', 'uid', uid)
             const localVarPath = `/v1/index/indexes/{uid}/documents`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -498,9 +498,9 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IndexIndexesByUidDocumentsDeleteBatch: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIndexIndexesByUidDocumentsDeleteBatch: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('postV1IndexIndexesByUidDocumentsDeleteBatch', 'uid', uid)
+            assertParamExists('postIndexIndexesByUidDocumentsDeleteBatch', 'uid', uid)
             const localVarPath = `/v1/index/indexes/{uid}/documents/delete-batch`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -532,9 +532,9 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IndexIndexesByUidSearch: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIndexIndexesByUidSearch: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('postV1IndexIndexesByUidSearch', 'uid', uid)
+            assertParamExists('postIndexIndexesByUidSearch', 'uid', uid)
             const localVarPath = `/v1/index/indexes/{uid}/search`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -566,9 +566,9 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IndexIndexesByUidDocuments: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIndexIndexesByUidDocuments: async (uid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
-            assertParamExists('putV1IndexIndexesByUidDocuments', 'uid', uid)
+            assertParamExists('putIndexIndexesByUidDocuments', 'uid', uid)
             const localVarPath = `/v1/index/indexes/{uid}/documents`
                 .replace(`{${"uid"}}`, encodeURIComponent(String(uid)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -610,10 +610,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1IndexIndexesByUid(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1IndexIndexesByUid(uid, options);
+        async deleteIndexIndexesByUid(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIndexIndexesByUid(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.deleteV1IndexIndexesByUid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.deleteIndexIndexesByUid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -624,10 +624,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1IndexIndexesByUidDocumentsById(uid: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1IndexIndexesByUidDocumentsById(uid, id, options);
+        async deleteIndexIndexesByUidDocumentsById(uid: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIndexIndexesByUidDocumentsById(uid, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.deleteV1IndexIndexesByUidDocumentsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.deleteIndexIndexesByUidDocumentsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -636,10 +636,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IndexHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IndexHealth(options);
+        async getIndexHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.getV1IndexHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -648,10 +648,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IndexIndexes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IndexIndexes(options);
+        async getIndexIndexes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexIndexes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.getV1IndexIndexes']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexIndexes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -661,10 +661,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IndexIndexesByUid(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IndexIndexesByUid(uid, options);
+        async getIndexIndexesByUid(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexIndexesByUid(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.getV1IndexIndexesByUid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexIndexesByUid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -674,10 +674,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IndexIndexesByUidDocuments(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IndexIndexesByUidDocuments(uid, options);
+        async getIndexIndexesByUidDocuments(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexIndexesByUidDocuments(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.getV1IndexIndexesByUidDocuments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexIndexesByUidDocuments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -688,10 +688,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IndexIndexesByUidDocumentsById(uid: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IndexIndexesByUidDocumentsById(uid, id, options);
+        async getIndexIndexesByUidDocumentsById(uid: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexIndexesByUidDocumentsById(uid, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.getV1IndexIndexesByUidDocumentsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexIndexesByUidDocumentsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -701,10 +701,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IndexIndexesByUidSettings(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IndexIndexesByUidSettings(uid, options);
+        async getIndexIndexesByUidSettings(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexIndexesByUidSettings(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.getV1IndexIndexesByUidSettings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexIndexesByUidSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -713,10 +713,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IndexStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IndexStats(options);
+        async getIndexStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexStats(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.getV1IndexStats']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexStats']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -726,10 +726,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IndexTasksByUid(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IndexTasksByUid(uid, options);
+        async getIndexTasksByUid(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexTasksByUid(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.getV1IndexTasksByUid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexTasksByUid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -738,10 +738,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IndexVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IndexVersion(options);
+        async getIndexVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIndexVersion(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.getV1IndexVersion']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.getIndexVersion']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -751,10 +751,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1IndexIndexesByUidSettings(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1IndexIndexesByUidSettings(uid, options);
+        async patchIndexIndexesByUidSettings(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchIndexIndexesByUidSettings(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.patchV1IndexIndexesByUidSettings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.patchIndexIndexesByUidSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -763,10 +763,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IndexIndexes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IndexIndexes(options);
+        async postIndexIndexes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIndexIndexes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.postV1IndexIndexes']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.postIndexIndexes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -776,10 +776,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IndexIndexesByUidDocuments(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IndexIndexesByUidDocuments(uid, options);
+        async postIndexIndexesByUidDocuments(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIndexIndexesByUidDocuments(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.postV1IndexIndexesByUidDocuments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.postIndexIndexesByUidDocuments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -789,10 +789,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IndexIndexesByUidDocumentsDeleteBatch(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IndexIndexesByUidDocumentsDeleteBatch(uid, options);
+        async postIndexIndexesByUidDocumentsDeleteBatch(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIndexIndexesByUidDocumentsDeleteBatch(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.postV1IndexIndexesByUidDocumentsDeleteBatch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.postIndexIndexesByUidDocumentsDeleteBatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -802,10 +802,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IndexIndexesByUidSearch(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IndexIndexesByUidSearch(uid, options);
+        async postIndexIndexesByUidSearch(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIndexIndexesByUidSearch(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.postV1IndexIndexesByUidSearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.postIndexIndexesByUidSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -815,10 +815,10 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1IndexIndexesByUidDocuments(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IndexIndexesByUidDocuments(uid, options);
+        async putIndexIndexesByUidDocuments(uid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIndexIndexesByUidDocuments(uid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IndexApi.putV1IndexIndexesByUidDocuments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IndexApi.putIndexIndexesByUidDocuments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -834,22 +834,22 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
         /**
          * Drops one index in the caller\'s org together with all of its documents. This is the only way to retire an index; without it a mistaken uid would be permanent. It is idempotent — dropping an index that is not there still succeeds. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
          * @summary Delete an index and everything in it
-         * @param {IndexApiDeleteV1IndexIndexesByUidRequest} requestParameters Request parameters.
+         * @param {IndexApiDeleteIndexIndexesByUidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IndexIndexesByUid(requestParameters: IndexApiDeleteV1IndexIndexesByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1IndexIndexesByUid(requestParameters.uid, options).then((request) => request(axios, basePath));
+        deleteIndexIndexesByUid(requestParameters: IndexApiDeleteIndexIndexesByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteIndexIndexesByUid(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one document from an index. It is IDEMPOTENT: deleting a key that is not there succeeds rather than 404, so a retry after a lost response is safe. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
          * @summary Delete one document by its primary key
-         * @param {IndexApiDeleteV1IndexIndexesByUidDocumentsByIdRequest} requestParameters Request parameters.
+         * @param {IndexApiDeleteIndexIndexesByUidDocumentsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IndexIndexesByUidDocumentsById(requestParameters: IndexApiDeleteV1IndexIndexesByUidDocumentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1IndexIndexesByUidDocumentsById(requestParameters.uid, requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteIndexIndexesByUidDocumentsById(requestParameters: IndexApiDeleteIndexIndexesByUidDocumentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteIndexIndexesByUidDocumentsById(requestParameters.uid, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers Meilisearch\'s `{\"status\":\"available\"}` when the index store is readable. It FAILS CLOSED — an unreadable store answers 503 and `unavailable` — so a replica whose volume has gone bad stops taking traffic instead of answering every search with nothing found. It touches no tenant data and needs no credential.
@@ -857,8 +857,8 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IndexHealth(options).then((request) => request(axios, basePath));
+        getIndexHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIndexHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers every index in the caller\'s org with its primary key and timestamps. It is the only way to enumerate what an org holds — without it an index whose uid a caller has forgotten is unreachable. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
@@ -866,48 +866,48 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexIndexes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IndexIndexes(options).then((request) => request(axios, basePath));
+        getIndexIndexes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIndexIndexes(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers a single index\'s uid, primary key and timestamps. An index the caller\'s org does not hold is 404 `index_not_found` — which is the same answer another org\'s index gives, since the org is a bound predicate on the read. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
          * @summary Read one index\'s definition
-         * @param {IndexApiGetV1IndexIndexesByUidRequest} requestParameters Request parameters.
+         * @param {IndexApiGetIndexIndexesByUidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexIndexesByUid(requestParameters: IndexApiGetV1IndexIndexesByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IndexIndexesByUid(requestParameters.uid, options).then((request) => request(axios, basePath));
+        getIndexIndexesByUid(requestParameters: IndexApiGetIndexIndexesByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIndexIndexesByUid(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the documents in one index with a total count. `limit` defaults to 20 and is capped at 1000, `offset` pages, and the response echoes both back so a pager knows what it actually got. An index the caller\'s org does not hold is 404 `index_not_found`. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
          * @summary Page through the documents in an index
-         * @param {IndexApiGetV1IndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
+         * @param {IndexApiGetIndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexIndexesByUidDocuments(requestParameters: IndexApiGetV1IndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(axios, basePath));
+        getIndexIndexesByUidDocuments(requestParameters: IndexApiGetIndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the stored document whose primary key matches, exactly as it was written. A missing document is 404 `document_not_found` and a missing index is 404 `index_not_found` — two different codes, because a client that branches on them treats the cases differently. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
          * @summary Read one document by its primary key
-         * @param {IndexApiGetV1IndexIndexesByUidDocumentsByIdRequest} requestParameters Request parameters.
+         * @param {IndexApiGetIndexIndexesByUidDocumentsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexIndexesByUidDocumentsById(requestParameters: IndexApiGetV1IndexIndexesByUidDocumentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IndexIndexesByUidDocumentsById(requestParameters.uid, requestParameters.id, options).then((request) => request(axios, basePath));
+        getIndexIndexesByUidDocumentsById(requestParameters: IndexApiGetIndexIndexesByUidDocumentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIndexIndexesByUidDocumentsById(requestParameters.uid, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the attributes an index allows filtering on. This dialect implements the filterable-attributes setting and no other, so that is the whole of what comes back. An index the caller\'s org does not hold is 404 `index_not_found`. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
          * @summary Read an index\'s filterable attributes
-         * @param {IndexApiGetV1IndexIndexesByUidSettingsRequest} requestParameters Request parameters.
+         * @param {IndexApiGetIndexIndexesByUidSettingsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexIndexesByUidSettings(requestParameters: IndexApiGetV1IndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IndexIndexesByUidSettings(requestParameters.uid, options).then((request) => request(axios, basePath));
+        getIndexIndexesByUidSettings(requestParameters: IndexApiGetIndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIndexIndexesByUidSettings(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers a document count per index for the caller\'s org, plus their sum. `isIndexing` is always false, which is the honest answer here rather than a stub: writes are applied before their response, so there is never a backlog in progress to report. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
@@ -915,18 +915,18 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexStats(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IndexStats(options).then((request) => request(axios, basePath));
+        getIndexStats(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIndexStats(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers `succeeded` for the task id given. It ALWAYS answers succeeded, and that is honest rather than a stub: writes on this surface are applied before their response returns, so by the time any task id exists to ask about, its work is done. It exists so a Meilisearch client\'s waitForTask resolves at once instead of polling forever for a queue that was never there. It requires a validated principal but reads no tenant data.
          * @summary Check a write task, which has already finished
-         * @param {IndexApiGetV1IndexTasksByUidRequest} requestParameters Request parameters.
+         * @param {IndexApiGetIndexTasksByUidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexTasksByUid(requestParameters: IndexApiGetV1IndexTasksByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IndexTasksByUid(requestParameters.uid, options).then((request) => request(axios, basePath));
+        getIndexTasksByUid(requestParameters: IndexApiGetIndexTasksByUidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIndexTasksByUid(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the version shape a Meilisearch client expects. It names THIS implementation rather than a Meilisearch release — the commit field reads `hanzo-cloud` — so a client that logs it records which server actually answered instead of implying a Meilisearch build. Needs no credential.
@@ -934,18 +934,18 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IndexVersion(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1IndexVersion(options).then((request) => request(axios, basePath));
+        getIndexVersion(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIndexVersion(options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces an index\'s filterable attributes with the list in `filterableAttributes`; omitting the field leaves them as they are. The index is CREATED ON DEMAND rather than 404\'d, because a client that configures an index it has just asked for should not have to create it first — this is the one read-shaped path on the surface that writes. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
          * @summary Set which attributes an index can be filtered on
-         * @param {IndexApiPatchV1IndexIndexesByUidSettingsRequest} requestParameters Request parameters.
+         * @param {IndexApiPatchIndexIndexesByUidSettingsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1IndexIndexesByUidSettings(requestParameters: IndexApiPatchV1IndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1IndexIndexesByUidSettings(requestParameters.uid, options).then((request) => request(axios, basePath));
+        patchIndexIndexesByUidSettings(requestParameters: IndexApiPatchIndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchIndexIndexesByUidSettings(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an index named by `uid` in the caller\'s org. `primaryKey` names the document field that identifies a document and defaults to `id`. Creating an index that already exists is not an error — it settles on the existing one, primary key included — so a client that creates before every write is safe to run repeatedly. A missing or over-long uid is 400 `invalid_index_uid`. A new index starts with `user` filterable, which is what lets a multi-user app narrow searches to one end user without configuring anything. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
@@ -953,230 +953,230 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IndexIndexes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1IndexIndexes(options).then((request) => request(axios, basePath));
+        postIndexIndexes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIndexIndexes(options).then((request) => request(axios, basePath));
         },
         /**
          * Upserts documents into one index, keyed by the index\'s primary key: a document whose key is already present is REPLACED, one that is not is added, and it becomes searchable immediately. Send an array, or a single object — a hand-rolled caller sending one document is accepted rather than 400\'d. The index is created on demand, so a first write needs no create call.  This and the PUT on the same path are the SAME operation: both are a whole document upsert, which is what a Meilisearch client\'s addDocuments and updateDocuments both reduce to here. A body that is neither an array nor an object is 400. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
          * @summary Add or replace documents in an index
-         * @param {IndexApiPostV1IndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
+         * @param {IndexApiPostIndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IndexIndexesByUidDocuments(requestParameters: IndexApiPostV1IndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1IndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(axios, basePath));
+        postIndexIndexesByUidDocuments(requestParameters: IndexApiPostIndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes every document named by an array of primary keys. Keys may be sent as strings or numbers — a number keeps its exact decimal form, so an integer key round-trips as `42` and never as scientific notation. Keys that are absent from the index are skipped rather than failing the batch, so this is idempotent. A body that is not an array is 400. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
          * @summary Delete many documents by primary key in one call
-         * @param {IndexApiPostV1IndexIndexesByUidDocumentsDeleteBatchRequest} requestParameters Request parameters.
+         * @param {IndexApiPostIndexIndexesByUidDocumentsDeleteBatchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IndexIndexesByUidDocumentsDeleteBatch(requestParameters: IndexApiPostV1IndexIndexesByUidDocumentsDeleteBatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1IndexIndexesByUidDocumentsDeleteBatch(requestParameters.uid, options).then((request) => request(axios, basePath));
+        postIndexIndexesByUidDocumentsDeleteBatch(requestParameters: IndexApiPostIndexIndexesByUidDocumentsDeleteBatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIndexIndexesByUidDocumentsDeleteBatch(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the documents in one index matching `q`, ranked by how many of the query\'s terms they match, with prefix matching so a partial word still finds its document. `limit` defaults to 20 and is capped at 1000, `offset` pages; a negative value falls back to the default rather than erroring.  `filter` takes a Meilisearch filter expression, or an array of them, and the `user = \"…\"` and `user IN […]` forms are honoured — that is how an app with many end users narrows results to one of them WITHIN the org. `estimatedTotalHits` is exact for the page returned, not an estimate, because every hit is materialised. An index the caller\'s org does not hold is 404 `index_not_found`. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
          * @summary Search an index, forgiving typos
-         * @param {IndexApiPostV1IndexIndexesByUidSearchRequest} requestParameters Request parameters.
+         * @param {IndexApiPostIndexIndexesByUidSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IndexIndexesByUidSearch(requestParameters: IndexApiPostV1IndexIndexesByUidSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1IndexIndexesByUidSearch(requestParameters.uid, options).then((request) => request(axios, basePath));
+        postIndexIndexesByUidSearch(requestParameters: IndexApiPostIndexIndexesByUidSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIndexIndexesByUidSearch(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
         /**
          * Upserts documents into one index, keyed by the index\'s primary key: a document whose key is already present is REPLACED, one that is not is added, and it becomes searchable immediately. Send an array, or a single object — a hand-rolled caller sending one document is accepted rather than 400\'d. The index is created on demand, so a first write needs no create call.  This and the POST on the same path are the SAME operation, served by one handler. Both exist because the Meilisearch dialect has both verbs; there is no partial-update semantics on this one — a document is replaced whole either way. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
          * @summary Add or update documents in an index
-         * @param {IndexApiPutV1IndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
+         * @param {IndexApiPutIndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IndexIndexesByUidDocuments(requestParameters: IndexApiPutV1IndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1IndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(axios, basePath));
+        putIndexIndexesByUidDocuments(requestParameters: IndexApiPutIndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putIndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1IndexIndexesByUid operation in IndexApi.
+ * Request parameters for deleteIndexIndexesByUid operation in IndexApi.
  * @export
- * @interface IndexApiDeleteV1IndexIndexesByUidRequest
+ * @interface IndexApiDeleteIndexIndexesByUidRequest
  */
-export interface IndexApiDeleteV1IndexIndexesByUidRequest {
+export interface IndexApiDeleteIndexIndexesByUidRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiDeleteV1IndexIndexesByUid
+     * @memberof IndexApiDeleteIndexIndexesByUid
      */
     readonly uid: string
 }
 
 /**
- * Request parameters for deleteV1IndexIndexesByUidDocumentsById operation in IndexApi.
+ * Request parameters for deleteIndexIndexesByUidDocumentsById operation in IndexApi.
  * @export
- * @interface IndexApiDeleteV1IndexIndexesByUidDocumentsByIdRequest
+ * @interface IndexApiDeleteIndexIndexesByUidDocumentsByIdRequest
  */
-export interface IndexApiDeleteV1IndexIndexesByUidDocumentsByIdRequest {
+export interface IndexApiDeleteIndexIndexesByUidDocumentsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiDeleteV1IndexIndexesByUidDocumentsById
+     * @memberof IndexApiDeleteIndexIndexesByUidDocumentsById
      */
     readonly uid: string
 
     /**
      * 
      * @type {string}
-     * @memberof IndexApiDeleteV1IndexIndexesByUidDocumentsById
+     * @memberof IndexApiDeleteIndexIndexesByUidDocumentsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1IndexIndexesByUid operation in IndexApi.
+ * Request parameters for getIndexIndexesByUid operation in IndexApi.
  * @export
- * @interface IndexApiGetV1IndexIndexesByUidRequest
+ * @interface IndexApiGetIndexIndexesByUidRequest
  */
-export interface IndexApiGetV1IndexIndexesByUidRequest {
+export interface IndexApiGetIndexIndexesByUidRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiGetV1IndexIndexesByUid
+     * @memberof IndexApiGetIndexIndexesByUid
      */
     readonly uid: string
 }
 
 /**
- * Request parameters for getV1IndexIndexesByUidDocuments operation in IndexApi.
+ * Request parameters for getIndexIndexesByUidDocuments operation in IndexApi.
  * @export
- * @interface IndexApiGetV1IndexIndexesByUidDocumentsRequest
+ * @interface IndexApiGetIndexIndexesByUidDocumentsRequest
  */
-export interface IndexApiGetV1IndexIndexesByUidDocumentsRequest {
+export interface IndexApiGetIndexIndexesByUidDocumentsRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiGetV1IndexIndexesByUidDocuments
+     * @memberof IndexApiGetIndexIndexesByUidDocuments
      */
     readonly uid: string
 }
 
 /**
- * Request parameters for getV1IndexIndexesByUidDocumentsById operation in IndexApi.
+ * Request parameters for getIndexIndexesByUidDocumentsById operation in IndexApi.
  * @export
- * @interface IndexApiGetV1IndexIndexesByUidDocumentsByIdRequest
+ * @interface IndexApiGetIndexIndexesByUidDocumentsByIdRequest
  */
-export interface IndexApiGetV1IndexIndexesByUidDocumentsByIdRequest {
+export interface IndexApiGetIndexIndexesByUidDocumentsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiGetV1IndexIndexesByUidDocumentsById
+     * @memberof IndexApiGetIndexIndexesByUidDocumentsById
      */
     readonly uid: string
 
     /**
      * 
      * @type {string}
-     * @memberof IndexApiGetV1IndexIndexesByUidDocumentsById
+     * @memberof IndexApiGetIndexIndexesByUidDocumentsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1IndexIndexesByUidSettings operation in IndexApi.
+ * Request parameters for getIndexIndexesByUidSettings operation in IndexApi.
  * @export
- * @interface IndexApiGetV1IndexIndexesByUidSettingsRequest
+ * @interface IndexApiGetIndexIndexesByUidSettingsRequest
  */
-export interface IndexApiGetV1IndexIndexesByUidSettingsRequest {
+export interface IndexApiGetIndexIndexesByUidSettingsRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiGetV1IndexIndexesByUidSettings
+     * @memberof IndexApiGetIndexIndexesByUidSettings
      */
     readonly uid: string
 }
 
 /**
- * Request parameters for getV1IndexTasksByUid operation in IndexApi.
+ * Request parameters for getIndexTasksByUid operation in IndexApi.
  * @export
- * @interface IndexApiGetV1IndexTasksByUidRequest
+ * @interface IndexApiGetIndexTasksByUidRequest
  */
-export interface IndexApiGetV1IndexTasksByUidRequest {
+export interface IndexApiGetIndexTasksByUidRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiGetV1IndexTasksByUid
+     * @memberof IndexApiGetIndexTasksByUid
      */
     readonly uid: string
 }
 
 /**
- * Request parameters for patchV1IndexIndexesByUidSettings operation in IndexApi.
+ * Request parameters for patchIndexIndexesByUidSettings operation in IndexApi.
  * @export
- * @interface IndexApiPatchV1IndexIndexesByUidSettingsRequest
+ * @interface IndexApiPatchIndexIndexesByUidSettingsRequest
  */
-export interface IndexApiPatchV1IndexIndexesByUidSettingsRequest {
+export interface IndexApiPatchIndexIndexesByUidSettingsRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiPatchV1IndexIndexesByUidSettings
+     * @memberof IndexApiPatchIndexIndexesByUidSettings
      */
     readonly uid: string
 }
 
 /**
- * Request parameters for postV1IndexIndexesByUidDocuments operation in IndexApi.
+ * Request parameters for postIndexIndexesByUidDocuments operation in IndexApi.
  * @export
- * @interface IndexApiPostV1IndexIndexesByUidDocumentsRequest
+ * @interface IndexApiPostIndexIndexesByUidDocumentsRequest
  */
-export interface IndexApiPostV1IndexIndexesByUidDocumentsRequest {
+export interface IndexApiPostIndexIndexesByUidDocumentsRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiPostV1IndexIndexesByUidDocuments
+     * @memberof IndexApiPostIndexIndexesByUidDocuments
      */
     readonly uid: string
 }
 
 /**
- * Request parameters for postV1IndexIndexesByUidDocumentsDeleteBatch operation in IndexApi.
+ * Request parameters for postIndexIndexesByUidDocumentsDeleteBatch operation in IndexApi.
  * @export
- * @interface IndexApiPostV1IndexIndexesByUidDocumentsDeleteBatchRequest
+ * @interface IndexApiPostIndexIndexesByUidDocumentsDeleteBatchRequest
  */
-export interface IndexApiPostV1IndexIndexesByUidDocumentsDeleteBatchRequest {
+export interface IndexApiPostIndexIndexesByUidDocumentsDeleteBatchRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiPostV1IndexIndexesByUidDocumentsDeleteBatch
+     * @memberof IndexApiPostIndexIndexesByUidDocumentsDeleteBatch
      */
     readonly uid: string
 }
 
 /**
- * Request parameters for postV1IndexIndexesByUidSearch operation in IndexApi.
+ * Request parameters for postIndexIndexesByUidSearch operation in IndexApi.
  * @export
- * @interface IndexApiPostV1IndexIndexesByUidSearchRequest
+ * @interface IndexApiPostIndexIndexesByUidSearchRequest
  */
-export interface IndexApiPostV1IndexIndexesByUidSearchRequest {
+export interface IndexApiPostIndexIndexesByUidSearchRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiPostV1IndexIndexesByUidSearch
+     * @memberof IndexApiPostIndexIndexesByUidSearch
      */
     readonly uid: string
 }
 
 /**
- * Request parameters for putV1IndexIndexesByUidDocuments operation in IndexApi.
+ * Request parameters for putIndexIndexesByUidDocuments operation in IndexApi.
  * @export
- * @interface IndexApiPutV1IndexIndexesByUidDocumentsRequest
+ * @interface IndexApiPutIndexIndexesByUidDocumentsRequest
  */
-export interface IndexApiPutV1IndexIndexesByUidDocumentsRequest {
+export interface IndexApiPutIndexIndexesByUidDocumentsRequest {
     /**
      * 
      * @type {string}
-     * @memberof IndexApiPutV1IndexIndexesByUidDocuments
+     * @memberof IndexApiPutIndexIndexesByUidDocuments
      */
     readonly uid: string
 }
@@ -1191,25 +1191,25 @@ export class IndexApi extends BaseAPI {
     /**
      * Drops one index in the caller\'s org together with all of its documents. This is the only way to retire an index; without it a mistaken uid would be permanent. It is idempotent — dropping an index that is not there still succeeds. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
      * @summary Delete an index and everything in it
-     * @param {IndexApiDeleteV1IndexIndexesByUidRequest} requestParameters Request parameters.
+     * @param {IndexApiDeleteIndexIndexesByUidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public deleteV1IndexIndexesByUid(requestParameters: IndexApiDeleteV1IndexIndexesByUidRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).deleteV1IndexIndexesByUid(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
+    public deleteIndexIndexesByUid(requestParameters: IndexApiDeleteIndexIndexesByUidRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).deleteIndexIndexesByUid(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one document from an index. It is IDEMPOTENT: deleting a key that is not there succeeds rather than 404, so a retry after a lost response is safe. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
      * @summary Delete one document by its primary key
-     * @param {IndexApiDeleteV1IndexIndexesByUidDocumentsByIdRequest} requestParameters Request parameters.
+     * @param {IndexApiDeleteIndexIndexesByUidDocumentsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public deleteV1IndexIndexesByUidDocumentsById(requestParameters: IndexApiDeleteV1IndexIndexesByUidDocumentsByIdRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).deleteV1IndexIndexesByUidDocumentsById(requestParameters.uid, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteIndexIndexesByUidDocumentsById(requestParameters: IndexApiDeleteIndexIndexesByUidDocumentsByIdRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).deleteIndexIndexesByUidDocumentsById(requestParameters.uid, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1219,8 +1219,8 @@ export class IndexApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public getV1IndexHealth(options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).getV1IndexHealth(options).then((request) => request(this.axios, this.basePath));
+    public getIndexHealth(options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).getIndexHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1230,56 +1230,56 @@ export class IndexApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public getV1IndexIndexes(options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).getV1IndexIndexes(options).then((request) => request(this.axios, this.basePath));
+    public getIndexIndexes(options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).getIndexIndexes(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers a single index\'s uid, primary key and timestamps. An index the caller\'s org does not hold is 404 `index_not_found` — which is the same answer another org\'s index gives, since the org is a bound predicate on the read. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
      * @summary Read one index\'s definition
-     * @param {IndexApiGetV1IndexIndexesByUidRequest} requestParameters Request parameters.
+     * @param {IndexApiGetIndexIndexesByUidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public getV1IndexIndexesByUid(requestParameters: IndexApiGetV1IndexIndexesByUidRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).getV1IndexIndexesByUid(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
+    public getIndexIndexesByUid(requestParameters: IndexApiGetIndexIndexesByUidRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).getIndexIndexesByUid(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers the documents in one index with a total count. `limit` defaults to 20 and is capped at 1000, `offset` pages, and the response echoes both back so a pager knows what it actually got. An index the caller\'s org does not hold is 404 `index_not_found`. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
      * @summary Page through the documents in an index
-     * @param {IndexApiGetV1IndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
+     * @param {IndexApiGetIndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public getV1IndexIndexesByUidDocuments(requestParameters: IndexApiGetV1IndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).getV1IndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
+    public getIndexIndexesByUidDocuments(requestParameters: IndexApiGetIndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).getIndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers the stored document whose primary key matches, exactly as it was written. A missing document is 404 `document_not_found` and a missing index is 404 `index_not_found` — two different codes, because a client that branches on them treats the cases differently. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
      * @summary Read one document by its primary key
-     * @param {IndexApiGetV1IndexIndexesByUidDocumentsByIdRequest} requestParameters Request parameters.
+     * @param {IndexApiGetIndexIndexesByUidDocumentsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public getV1IndexIndexesByUidDocumentsById(requestParameters: IndexApiGetV1IndexIndexesByUidDocumentsByIdRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).getV1IndexIndexesByUidDocumentsById(requestParameters.uid, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getIndexIndexesByUidDocumentsById(requestParameters: IndexApiGetIndexIndexesByUidDocumentsByIdRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).getIndexIndexesByUidDocumentsById(requestParameters.uid, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers the attributes an index allows filtering on. This dialect implements the filterable-attributes setting and no other, so that is the whole of what comes back. An index the caller\'s org does not hold is 404 `index_not_found`. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
      * @summary Read an index\'s filterable attributes
-     * @param {IndexApiGetV1IndexIndexesByUidSettingsRequest} requestParameters Request parameters.
+     * @param {IndexApiGetIndexIndexesByUidSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public getV1IndexIndexesByUidSettings(requestParameters: IndexApiGetV1IndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).getV1IndexIndexesByUidSettings(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
+    public getIndexIndexesByUidSettings(requestParameters: IndexApiGetIndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).getIndexIndexesByUidSettings(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1289,20 +1289,20 @@ export class IndexApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public getV1IndexStats(options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).getV1IndexStats(options).then((request) => request(this.axios, this.basePath));
+    public getIndexStats(options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).getIndexStats(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers `succeeded` for the task id given. It ALWAYS answers succeeded, and that is honest rather than a stub: writes on this surface are applied before their response returns, so by the time any task id exists to ask about, its work is done. It exists so a Meilisearch client\'s waitForTask resolves at once instead of polling forever for a queue that was never there. It requires a validated principal but reads no tenant data.
      * @summary Check a write task, which has already finished
-     * @param {IndexApiGetV1IndexTasksByUidRequest} requestParameters Request parameters.
+     * @param {IndexApiGetIndexTasksByUidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public getV1IndexTasksByUid(requestParameters: IndexApiGetV1IndexTasksByUidRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).getV1IndexTasksByUid(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
+    public getIndexTasksByUid(requestParameters: IndexApiGetIndexTasksByUidRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).getIndexTasksByUid(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1312,20 +1312,20 @@ export class IndexApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public getV1IndexVersion(options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).getV1IndexVersion(options).then((request) => request(this.axios, this.basePath));
+    public getIndexVersion(options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).getIndexVersion(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces an index\'s filterable attributes with the list in `filterableAttributes`; omitting the field leaves them as they are. The index is CREATED ON DEMAND rather than 404\'d, because a client that configures an index it has just asked for should not have to create it first — this is the one read-shaped path on the surface that writes. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
      * @summary Set which attributes an index can be filtered on
-     * @param {IndexApiPatchV1IndexIndexesByUidSettingsRequest} requestParameters Request parameters.
+     * @param {IndexApiPatchIndexIndexesByUidSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public patchV1IndexIndexesByUidSettings(requestParameters: IndexApiPatchV1IndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).patchV1IndexIndexesByUidSettings(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
+    public patchIndexIndexesByUidSettings(requestParameters: IndexApiPatchIndexIndexesByUidSettingsRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).patchIndexIndexesByUidSettings(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1335,56 +1335,56 @@ export class IndexApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public postV1IndexIndexes(options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).postV1IndexIndexes(options).then((request) => request(this.axios, this.basePath));
+    public postIndexIndexes(options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).postIndexIndexes(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Upserts documents into one index, keyed by the index\'s primary key: a document whose key is already present is REPLACED, one that is not is added, and it becomes searchable immediately. Send an array, or a single object — a hand-rolled caller sending one document is accepted rather than 400\'d. The index is created on demand, so a first write needs no create call.  This and the PUT on the same path are the SAME operation: both are a whole document upsert, which is what a Meilisearch client\'s addDocuments and updateDocuments both reduce to here. A body that is neither an array nor an object is 400. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
      * @summary Add or replace documents in an index
-     * @param {IndexApiPostV1IndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
+     * @param {IndexApiPostIndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public postV1IndexIndexesByUidDocuments(requestParameters: IndexApiPostV1IndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).postV1IndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
+    public postIndexIndexesByUidDocuments(requestParameters: IndexApiPostIndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).postIndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes every document named by an array of primary keys. Keys may be sent as strings or numbers — a number keeps its exact decimal form, so an integer key round-trips as `42` and never as scientific notation. Keys that are absent from the index are skipped rather than failing the batch, so this is idempotent. A body that is not an array is 400. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
      * @summary Delete many documents by primary key in one call
-     * @param {IndexApiPostV1IndexIndexesByUidDocumentsDeleteBatchRequest} requestParameters Request parameters.
+     * @param {IndexApiPostIndexIndexesByUidDocumentsDeleteBatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public postV1IndexIndexesByUidDocumentsDeleteBatch(requestParameters: IndexApiPostV1IndexIndexesByUidDocumentsDeleteBatchRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).postV1IndexIndexesByUidDocumentsDeleteBatch(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
+    public postIndexIndexesByUidDocumentsDeleteBatch(requestParameters: IndexApiPostIndexIndexesByUidDocumentsDeleteBatchRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).postIndexIndexesByUidDocumentsDeleteBatch(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers the documents in one index matching `q`, ranked by how many of the query\'s terms they match, with prefix matching so a partial word still finds its document. `limit` defaults to 20 and is capped at 1000, `offset` pages; a negative value falls back to the default rather than erroring.  `filter` takes a Meilisearch filter expression, or an array of them, and the `user = \"…\"` and `user IN […]` forms are honoured — that is how an app with many end users narrows results to one of them WITHIN the org. `estimatedTotalHits` is exact for the page returned, not an estimate, because every hit is materialised. An index the caller\'s org does not hold is 404 `index_not_found`. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.
      * @summary Search an index, forgiving typos
-     * @param {IndexApiPostV1IndexIndexesByUidSearchRequest} requestParameters Request parameters.
+     * @param {IndexApiPostIndexIndexesByUidSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public postV1IndexIndexesByUidSearch(requestParameters: IndexApiPostV1IndexIndexesByUidSearchRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).postV1IndexIndexesByUidSearch(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
+    public postIndexIndexesByUidSearch(requestParameters: IndexApiPostIndexIndexesByUidSearchRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).postIndexIndexesByUidSearch(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Upserts documents into one index, keyed by the index\'s primary key: a document whose key is already present is REPLACED, one that is not is added, and it becomes searchable immediately. Send an array, or a single object — a hand-rolled caller sending one document is accepted rather than 400\'d. The index is created on demand, so a first write needs no create call.  This and the POST on the same path are the SAME operation, served by one handler. Both exist because the Meilisearch dialect has both verbs; there is no partial-update semantics on this one — a document is replaced whole either way. The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header, and every query filters on it, so two orgs may both hold an index named \"messages\" and neither can see the other\'s documents. Without a validated principal the answer is 403 carrying Meilisearch\'s `invalid_api_key` body. Errors use Meilisearch\'s {message, code, type, link} shape rather than cloud\'s, because that `code` is a wire contract a Meilisearch client branches on.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the write is already applied when this answers, and the task it names is already complete. A client that polls waitForTask resolves immediately rather than waiting, and a client that does not poll has still had its write committed.
      * @summary Add or update documents in an index
-     * @param {IndexApiPutV1IndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
+     * @param {IndexApiPutIndexIndexesByUidDocumentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IndexApi
      */
-    public putV1IndexIndexesByUidDocuments(requestParameters: IndexApiPutV1IndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).putV1IndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
+    public putIndexIndexesByUidDocuments(requestParameters: IndexApiPutIndexIndexesByUidDocumentsRequest, options?: RawAxiosRequestConfig) {
+        return IndexApiFp(this.configuration).putIndexIndexesByUidDocuments(requestParameters.uid, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

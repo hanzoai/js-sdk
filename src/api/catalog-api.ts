@@ -36,9 +36,9 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CatalogEntriesByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteCatalogEntriesByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('deleteV1CatalogEntriesByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('deleteCatalogEntriesByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/catalog/entries/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -79,7 +79,7 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Catalog: async (q?: string, org?: string, kind?: string, origin?: string, archetype?: string, language?: string, template?: string, forkable?: string, limit?: string, offset?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCatalog: async (q?: string, org?: string, kind?: string, origin?: string, archetype?: string, language?: string, template?: string, forkable?: string, limit?: string, offset?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -149,7 +149,7 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CatalogEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCatalogEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/catalog/entries`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -179,7 +179,7 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CatalogEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCatalogEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/catalog/entries`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -209,7 +209,7 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CatalogModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCatalogModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/catalog/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -239,7 +239,7 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CatalogModelsRefresh: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCatalogModelsRefresh: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/catalog/models/refresh`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -269,7 +269,7 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CatalogSeed: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCatalogSeed: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/catalog/seed`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -300,9 +300,9 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CatalogEntriesByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCatalogEntriesByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('putV1CatalogEntriesByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('putCatalogEntriesByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/catalog/entries/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -344,10 +344,10 @@ export const CatalogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1CatalogEntriesByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1CatalogEntriesByWildcard1(wildcard1, options);
+        async deleteCatalogEntriesByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCatalogEntriesByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.deleteV1CatalogEntriesByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CatalogApi.deleteCatalogEntriesByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -366,10 +366,10 @@ export const CatalogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Catalog(q?: string, org?: string, kind?: string, origin?: string, archetype?: string, language?: string, template?: string, forkable?: string, limit?: string, offset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CatalogPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Catalog(q, org, kind, origin, archetype, language, template, forkable, limit, offset, options);
+        async getCatalog(q?: string, org?: string, kind?: string, origin?: string, archetype?: string, language?: string, template?: string, forkable?: string, limit?: string, offset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CatalogPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCatalog(q, org, kind, origin, archetype, language, template, forkable, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.getV1Catalog']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CatalogApi.getCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -378,10 +378,10 @@ export const CatalogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1CatalogEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1CatalogEntries(options);
+        async getCatalogEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCatalogEntries(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.getV1CatalogEntries']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CatalogApi.getCatalogEntries']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -390,10 +390,10 @@ export const CatalogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CatalogEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CatalogEntries(options);
+        async postCatalogEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCatalogEntries(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postV1CatalogEntries']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postCatalogEntries']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -402,10 +402,10 @@ export const CatalogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CatalogModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CatalogModels(options);
+        async postCatalogModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCatalogModels(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postV1CatalogModels']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postCatalogModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -414,10 +414,10 @@ export const CatalogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CatalogModelsRefresh(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CatalogModelsRefresh(options);
+        async postCatalogModelsRefresh(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCatalogModelsRefresh(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postV1CatalogModelsRefresh']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postCatalogModelsRefresh']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -426,10 +426,10 @@ export const CatalogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1CatalogSeed(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1CatalogSeed(options);
+        async postCatalogSeed(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCatalogSeed(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postV1CatalogSeed']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postCatalogSeed']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -439,10 +439,10 @@ export const CatalogApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1CatalogEntriesByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1CatalogEntriesByWildcard1(wildcard1, options);
+        async putCatalogEntriesByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCatalogEntriesByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.putV1CatalogEntriesByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CatalogApi.putCatalogEntriesByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -458,22 +458,22 @@ export const CatalogApiFactory = function (configuration?: Configuration, basePa
         /**
          * Deletes the entry with the addressed slug and answers 204. The slug is matched as a trailing wildcard, not a single segment, because a model slug contains a slash. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404, so the call is safe to repeat but not silently idempotent.
          * @summary Remove a catalog entry
-         * @param {CatalogApiDeleteV1CatalogEntriesByWildcard1Request} requestParameters Request parameters.
+         * @param {CatalogApiDeleteCatalogEntriesByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1CatalogEntriesByWildcard1(requestParameters: CatalogApiDeleteV1CatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1CatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        deleteCatalogEntriesByWildcard1(requestParameters: CatalogApiDeleteCatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
          * @summary Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
-         * @param {CatalogApiGetV1CatalogRequest} requestParameters Request parameters.
+         * @param {CatalogApiGetCatalogRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Catalog(requestParameters: CatalogApiGetV1CatalogRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CatalogPage> {
-            return localVarFp.getV1Catalog(requestParameters.q, requestParameters.org, requestParameters.kind, requestParameters.origin, requestParameters.archetype, requestParameters.language, requestParameters.template, requestParameters.forkable, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
+        getCatalog(requestParameters: CatalogApiGetCatalogRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CatalogPage> {
+            return localVarFp.getCatalog(requestParameters.q, requestParameters.org, requestParameters.kind, requestParameters.origin, requestParameters.archetype, requestParameters.language, requestParameters.template, requestParameters.forkable, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every catalog row as stored — the admin view, which unlike the public projection includes entries that are not published. It is cross-tenant platform data, so the gate is a PLATFORM admin: an org-level admin is refused 403 no matter how privileged they are inside their own org, enforced by the handler itself and not only by the route\'s token middleware.
@@ -481,8 +481,8 @@ export const CatalogApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1CatalogEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1CatalogEntries(options).then((request) => request(axios, basePath));
+        getCatalogEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCatalogEntries(options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a catalog row from the body and answers it at 201. The slug is required and is the globally-unique catalog key, so a second entry claiming a slug already in use is refused 409 rather than shadowing the first. PLATFORM admin only — this is cross-tenant pricing and packaging data, and an org-level admin is refused 403.
@@ -490,8 +490,8 @@ export const CatalogApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CatalogEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CatalogEntries(options).then((request) => request(axios, basePath));
+        postCatalogEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCatalogEntries(options).then((request) => request(axios, basePath));
         },
         /**
          * Takes a batch of model rows and upserts each one\'s upstream COST and machine-observable facts, answering what was created and changed. It deliberately touches nothing a human owns — not the retail price, not the markup, not the entitlement tier — so a sync can never overwrite an administrator\'s pricing decision. The gate is a PLATFORM principal rather than a platform ADMIN, because the caller is normally a scheduled job holding the internal service token, which carries platform scope but no admin claim.
@@ -499,8 +499,8 @@ export const CatalogApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CatalogModels(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CatalogModels(options).then((request) => request(axios, basePath));
+        postCatalogModels(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCatalogModels(options).then((request) => request(axios, basePath));
         },
         /**
          * Pulls the upstream model list and lands it through the same upsert the push door uses, so the rule that a sync owns cost and an administrator owns price holds no matter which door a row came through. It takes no body — the upstream is READ rather than told. If that upstream cannot be read the call answers 502 and writes NOTHING: a sync that cannot see its source must never conclude the source is empty, because that conclusion would withdraw every model on sale. The gate is a PLATFORM principal so the scheduled job\'s service token qualifies.
@@ -508,8 +508,8 @@ export const CatalogApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CatalogModelsRefresh(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CatalogModelsRefresh(options).then((request) => request(axios, basePath));
+        postCatalogModelsRefresh(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCatalogModelsRefresh(options).then((request) => request(axios, basePath));
         },
         /**
          * Upserts the shipped catalog seed and answers how many entries it created. It is idempotent and non-destructive — an entry an administrator has since edited is left alone — so it is safe to run against a live catalog to fill in what is missing. PLATFORM admin only; an org-level admin is refused 403.
@@ -517,123 +517,123 @@ export const CatalogApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1CatalogSeed(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1CatalogSeed(options).then((request) => request(axios, basePath));
+        postCatalogSeed(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCatalogSeed(options).then((request) => request(axios, basePath));
         },
         /**
          * Loads the addressed entry, applies the body over it and answers the stored result. The slug is the entry\'s IDENTITY and is re-stamped from the path after decoding, so a slug in the body is ignored and a rename is impossible through this address. The slug is matched as a trailing wildcard rather than one path segment because a model\'s slug IS its callable id and those contain a slash — a segment parameter would stop at it and leave most catalog rows unaddressable. PLATFORM admin only; an unknown slug is 404.
          * @summary Replace a catalog entry, keeping its slug
-         * @param {CatalogApiPutV1CatalogEntriesByWildcard1Request} requestParameters Request parameters.
+         * @param {CatalogApiPutCatalogEntriesByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1CatalogEntriesByWildcard1(requestParameters: CatalogApiPutV1CatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1CatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        putCatalogEntriesByWildcard1(requestParameters: CatalogApiPutCatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1CatalogEntriesByWildcard1 operation in CatalogApi.
+ * Request parameters for deleteCatalogEntriesByWildcard1 operation in CatalogApi.
  * @export
- * @interface CatalogApiDeleteV1CatalogEntriesByWildcard1Request
+ * @interface CatalogApiDeleteCatalogEntriesByWildcard1Request
  */
-export interface CatalogApiDeleteV1CatalogEntriesByWildcard1Request {
+export interface CatalogApiDeleteCatalogEntriesByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof CatalogApiDeleteV1CatalogEntriesByWildcard1
+     * @memberof CatalogApiDeleteCatalogEntriesByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for getV1Catalog operation in CatalogApi.
+ * Request parameters for getCatalog operation in CatalogApi.
  * @export
- * @interface CatalogApiGetV1CatalogRequest
+ * @interface CatalogApiGetCatalogRequest
  */
-export interface CatalogApiGetV1CatalogRequest {
+export interface CatalogApiGetCatalogRequest {
     /**
      * Q is the free-text query the lexical index scores relevance on. Empty is a browse rather than a search — the same request either way.
      * @type {string}
-     * @memberof CatalogApiGetV1Catalog
+     * @memberof CatalogApiGetCatalog
      */
     readonly q?: string
 
     /**
      * Org narrows to one builder org: hanzo | lux | zoo. Case-insensitive.
      * @type {string}
-     * @memberof CatalogApiGetV1Catalog
+     * @memberof CatalogApiGetCatalog
      */
     readonly org?: string
 
     /**
      * Kind narrows to repo | site. Case-insensitive.
      * @type {string}
-     * @memberof CatalogApiGetV1Catalog
+     * @memberof CatalogApiGetCatalog
      */
     readonly kind?: string
 
     /**
      * Origin narrows to what a row IS to you: template | community | third-party | product. This is the axis the two hanzo.app lanes are cut on.
      * @type {string}
-     * @memberof CatalogApiGetV1Catalog
+     * @memberof CatalogApiGetCatalog
      */
     readonly origin?: string
 
     /**
      * Archetype narrows to one project archetype. Case-insensitive.
      * @type {string}
-     * @memberof CatalogApiGetV1Catalog
+     * @memberof CatalogApiGetCatalog
      */
     readonly archetype?: string
 
     /**
      * Language narrows to one implementation language. Case-insensitive.
      * @type {string}
-     * @memberof CatalogApiGetV1Catalog
+     * @memberof CatalogApiGetCatalog
      */
     readonly language?: string
 
     /**
      * Template narrows a lane to ONE lineage: the id of the parent everything returned was forked from.
      * @type {string}
-     * @memberof CatalogApiGetV1Catalog
+     * @memberof CatalogApiGetCatalog
      */
     readonly template?: string
 
     /**
      * Forkable is tri-state: \&quot;true\&quot; selects the forkable rows, \&quot;false\&quot; selects the rest, and anything else — including absent — applies no filter at all.
      * @type {string}
-     * @memberof CatalogApiGetV1Catalog
+     * @memberof CatalogApiGetCatalog
      */
     readonly forkable?: string
 
     /**
      * Limit caps the page at 200, default 50. A value that is not a non-negative integer falls back to the default.
      * @type {string}
-     * @memberof CatalogApiGetV1Catalog
+     * @memberof CatalogApiGetCatalog
      */
     readonly limit?: string
 
     /**
      * Offset is where the page starts, default 0, with the same tolerance.
      * @type {string}
-     * @memberof CatalogApiGetV1Catalog
+     * @memberof CatalogApiGetCatalog
      */
     readonly offset?: string
 }
 
 /**
- * Request parameters for putV1CatalogEntriesByWildcard1 operation in CatalogApi.
+ * Request parameters for putCatalogEntriesByWildcard1 operation in CatalogApi.
  * @export
- * @interface CatalogApiPutV1CatalogEntriesByWildcard1Request
+ * @interface CatalogApiPutCatalogEntriesByWildcard1Request
  */
-export interface CatalogApiPutV1CatalogEntriesByWildcard1Request {
+export interface CatalogApiPutCatalogEntriesByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof CatalogApiPutV1CatalogEntriesByWildcard1
+     * @memberof CatalogApiPutCatalogEntriesByWildcard1
      */
     readonly wildcard1: string
 }
@@ -648,25 +648,25 @@ export class CatalogApi extends BaseAPI {
     /**
      * Deletes the entry with the addressed slug and answers 204. The slug is matched as a trailing wildcard, not a single segment, because a model slug contains a slash. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404, so the call is safe to repeat but not silently idempotent.
      * @summary Remove a catalog entry
-     * @param {CatalogApiDeleteV1CatalogEntriesByWildcard1Request} requestParameters Request parameters.
+     * @param {CatalogApiDeleteCatalogEntriesByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CatalogApi
      */
-    public deleteV1CatalogEntriesByWildcard1(requestParameters: CatalogApiDeleteV1CatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).deleteV1CatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public deleteCatalogEntriesByWildcard1(requestParameters: CatalogApiDeleteCatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return CatalogApiFp(this.configuration).deleteCatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
      * @summary Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
-     * @param {CatalogApiGetV1CatalogRequest} requestParameters Request parameters.
+     * @param {CatalogApiGetCatalogRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CatalogApi
      */
-    public getV1Catalog(requestParameters: CatalogApiGetV1CatalogRequest = {}, options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).getV1Catalog(requestParameters.q, requestParameters.org, requestParameters.kind, requestParameters.origin, requestParameters.archetype, requestParameters.language, requestParameters.template, requestParameters.forkable, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
+    public getCatalog(requestParameters: CatalogApiGetCatalogRequest = {}, options?: RawAxiosRequestConfig) {
+        return CatalogApiFp(this.configuration).getCatalog(requestParameters.q, requestParameters.org, requestParameters.kind, requestParameters.origin, requestParameters.archetype, requestParameters.language, requestParameters.template, requestParameters.forkable, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -676,8 +676,8 @@ export class CatalogApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CatalogApi
      */
-    public getV1CatalogEntries(options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).getV1CatalogEntries(options).then((request) => request(this.axios, this.basePath));
+    public getCatalogEntries(options?: RawAxiosRequestConfig) {
+        return CatalogApiFp(this.configuration).getCatalogEntries(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -687,8 +687,8 @@ export class CatalogApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CatalogApi
      */
-    public postV1CatalogEntries(options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).postV1CatalogEntries(options).then((request) => request(this.axios, this.basePath));
+    public postCatalogEntries(options?: RawAxiosRequestConfig) {
+        return CatalogApiFp(this.configuration).postCatalogEntries(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -698,8 +698,8 @@ export class CatalogApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CatalogApi
      */
-    public postV1CatalogModels(options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).postV1CatalogModels(options).then((request) => request(this.axios, this.basePath));
+    public postCatalogModels(options?: RawAxiosRequestConfig) {
+        return CatalogApiFp(this.configuration).postCatalogModels(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -709,8 +709,8 @@ export class CatalogApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CatalogApi
      */
-    public postV1CatalogModelsRefresh(options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).postV1CatalogModelsRefresh(options).then((request) => request(this.axios, this.basePath));
+    public postCatalogModelsRefresh(options?: RawAxiosRequestConfig) {
+        return CatalogApiFp(this.configuration).postCatalogModelsRefresh(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -720,20 +720,20 @@ export class CatalogApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CatalogApi
      */
-    public postV1CatalogSeed(options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).postV1CatalogSeed(options).then((request) => request(this.axios, this.basePath));
+    public postCatalogSeed(options?: RawAxiosRequestConfig) {
+        return CatalogApiFp(this.configuration).postCatalogSeed(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Loads the addressed entry, applies the body over it and answers the stored result. The slug is the entry\'s IDENTITY and is re-stamped from the path after decoding, so a slug in the body is ignored and a rename is impossible through this address. The slug is matched as a trailing wildcard rather than one path segment because a model\'s slug IS its callable id and those contain a slash — a segment parameter would stop at it and leave most catalog rows unaddressable. PLATFORM admin only; an unknown slug is 404.
      * @summary Replace a catalog entry, keeping its slug
-     * @param {CatalogApiPutV1CatalogEntriesByWildcard1Request} requestParameters Request parameters.
+     * @param {CatalogApiPutCatalogEntriesByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CatalogApi
      */
-    public putV1CatalogEntriesByWildcard1(requestParameters: CatalogApiPutV1CatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).putV1CatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public putCatalogEntriesByWildcard1(requestParameters: CatalogApiPutCatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return CatalogApiFp(this.configuration).putCatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

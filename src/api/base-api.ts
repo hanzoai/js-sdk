@@ -35,7 +35,7 @@ export const BaseApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BaseHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBaseHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/base/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const BaseApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1BaseHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseHealth>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BaseHealth(options);
+        async getBaseHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseHealth>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBaseHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BaseApi.getV1BaseHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BaseApi.getBaseHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const BaseApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BaseHealth(options?: RawAxiosRequestConfig): AxiosPromise<BaseHealth> {
-            return localVarFp.getV1BaseHealth(options).then((request) => request(axios, basePath));
+        getBaseHealth(options?: RawAxiosRequestConfig): AxiosPromise<BaseHealth> {
+            return localVarFp.getBaseHealth(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class BaseApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BaseApi
      */
-    public getV1BaseHealth(options?: RawAxiosRequestConfig) {
-        return BaseApiFp(this.configuration).getV1BaseHealth(options).then((request) => request(this.axios, this.basePath));
+    public getBaseHealth(options?: RawAxiosRequestConfig) {
+        return BaseApiFp(this.configuration).getBaseHealth(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

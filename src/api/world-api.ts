@@ -43,7 +43,7 @@ export const WorldApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1World: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getWorld: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/world`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -74,7 +74,7 @@ export const WorldApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1WorldLimits: async (plan?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getWorldLimits: async (plan?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/world/limits`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -108,7 +108,7 @@ export const WorldApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1WorldNews: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getWorldNews: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/world/news`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -138,7 +138,7 @@ export const WorldApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1WorldPipeline: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getWorldPipeline: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/world/pipeline`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -168,7 +168,7 @@ export const WorldApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1WorldStream: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getWorldStream: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/world/stream`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -199,9 +199,9 @@ export const WorldApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1WorldPipeline: async (pipelineReq: PipelineReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putWorldPipeline: async (pipelineReq: PipelineReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'pipelineReq' is not null or undefined
-            assertParamExists('putV1WorldPipeline', 'pipelineReq', pipelineReq)
+            assertParamExists('putWorldPipeline', 'pipelineReq', pipelineReq)
             const localVarPath = `/v1/world/pipeline`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -244,10 +244,10 @@ export const WorldApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1World(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WorldIndex>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1World(options);
+        async getWorld(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WorldIndex>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWorld(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WorldApi.getV1World']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WorldApi.getWorld']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -257,10 +257,10 @@ export const WorldApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1WorldLimits(plan?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LimitsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1WorldLimits(plan, options);
+        async getWorldLimits(plan?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LimitsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWorldLimits(plan, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WorldApi.getV1WorldLimits']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WorldApi.getWorldLimits']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -269,10 +269,10 @@ export const WorldApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1WorldNews(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NewsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1WorldNews(options);
+        async getWorldNews(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NewsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWorldNews(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WorldApi.getV1WorldNews']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WorldApi.getWorldNews']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -281,10 +281,10 @@ export const WorldApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1WorldPipeline(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1WorldPipeline(options);
+        async getWorldPipeline(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWorldPipeline(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WorldApi.getV1WorldPipeline']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WorldApi.getWorldPipeline']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -293,10 +293,10 @@ export const WorldApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1WorldStream(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1WorldStream(options);
+        async getWorldStream(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWorldStream(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WorldApi.getV1WorldStream']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WorldApi.getWorldStream']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -306,10 +306,10 @@ export const WorldApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1WorldPipeline(pipelineReq: PipelineReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1WorldPipeline(pipelineReq, options);
+        async putWorldPipeline(pipelineReq: PipelineReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putWorldPipeline(pipelineReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WorldApi.putV1WorldPipeline']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WorldApi.putWorldPipeline']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -328,18 +328,18 @@ export const WorldApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1World(options?: RawAxiosRequestConfig): AxiosPromise<WorldIndex> {
-            return localVarFp.getV1World(options).then((request) => request(axios, basePath));
+        getWorld(options?: RawAxiosRequestConfig): AxiosPromise<WorldIndex> {
+            return localVarFp.getWorld(options).then((request) => request(axios, basePath));
         },
         /**
          * Echoes a World plan\'s rate limits, alert quota and model-API grant, read straight from the live @hanzo/plans catalog, so agents and dashboards configure themselves against the catalog instead of hardcoding tier numbers.  An empty or unknown plan resolves world-free, and a catalog failure serves that same free floor rather than erroring — so this always answers 200, and it can only ever under-grant. It reports the contract; it does not enforce it.
          * @summary Echoes a World plan\'s rate limits, alert quota and model-API grant, read straight from the live @hanzo/plans catalog, so agents and dashboards configure themselves against the catalog instead of hardcoding tier numbers.
-         * @param {WorldApiGetV1WorldLimitsRequest} requestParameters Request parameters.
+         * @param {WorldApiGetWorldLimitsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1WorldLimits(requestParameters: WorldApiGetV1WorldLimitsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LimitsView> {
-            return localVarFp.getV1WorldLimits(requestParameters.plan, options).then((request) => request(axios, basePath));
+        getWorldLimits(requestParameters: WorldApiGetWorldLimitsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LimitsView> {
+            return localVarFp.getWorldLimits(requestParameters.plan, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller\'s merged world-news feed: every source their project\'s pipeline names — GDELT once per keyword, plus each allowlisted RSS or Atom feed — fetched concurrently, narrowed by the pipeline\'s keyword/region/source filters, deduplicated by link and sorted freshest first, capped at 50 items.  A project with no stored pipeline gets a sensible default set of world feeds rather than an empty answer. A source that fails or times out is SKIPPED: the feed degrades to honest partial results and never 5xxs because one outlet was down. Reading also publishes the result to the /v1/world/stream subscribers of the same (org, project), so a dashboard\'s own refresh updates every open tab.
@@ -347,8 +347,8 @@ export const WorldApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1WorldNews(options?: RawAxiosRequestConfig): AxiosPromise<NewsResponse> {
-            return localVarFp.getV1WorldNews(options).then((request) => request(axios, basePath));
+        getWorldNews(options?: RawAxiosRequestConfig): AxiosPromise<NewsResponse> {
+            return localVarFp.getWorldNews(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller project\'s news pipeline: which feeds it reads and how the merged result is filtered. A project that has never written one is answered with the built-in world feeds and `default: true`, so a fresh project sees the same feed /v1/world/news would actually serve rather than an empty configuration.
@@ -356,8 +356,8 @@ export const WorldApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1WorldPipeline(options?: RawAxiosRequestConfig): AxiosPromise<PipelineView> {
-            return localVarFp.getV1WorldPipeline(options).then((request) => request(axios, basePath));
+        getWorldPipeline(options?: RawAxiosRequestConfig): AxiosPromise<PipelineView> {
+            return localVarFp.getWorldPipeline(options).then((request) => request(axios, basePath));
         },
         /**
          * Holds the connection open as text/event-stream and pushes a `news` event — the same {items:[…]} body GET /v1/world/news answers — each time the caller\'s (org, project) feed refreshes, with a `: ping` heartbeat comment every 25s. Delivery is best-effort: a slow consumer is dropped on buffer overrun and reconnects, re-fetching GET /v1/world/news, which stays the source of truth. Requires a validated principal; 403 without one.
@@ -365,46 +365,46 @@ export const WorldApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1WorldStream(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1WorldStream(options).then((request) => request(axios, basePath));
+        getWorldStream(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getWorldStream(options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces the caller project\'s news pipeline and returns what was stored. It is a WHOLE replacement, not a patch: a field the request leaves out is stored empty, so sending only feeds clears the filters.  Every feed URL is validated HERE, at the write boundary — http(s) only, and the host must be on the server\'s allowlist — so a stored pipeline can never name a host the fetcher would later refuse, and the allowlist is one decision in one place rather than a check at each fetch.
          * @summary Replaces the caller project\'s news pipeline and returns what was stored.
-         * @param {WorldApiPutV1WorldPipelineRequest} requestParameters Request parameters.
+         * @param {WorldApiPutWorldPipelineRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1WorldPipeline(requestParameters: WorldApiPutV1WorldPipelineRequest, options?: RawAxiosRequestConfig): AxiosPromise<PipelineView> {
-            return localVarFp.putV1WorldPipeline(requestParameters.pipelineReq, options).then((request) => request(axios, basePath));
+        putWorldPipeline(requestParameters: WorldApiPutWorldPipelineRequest, options?: RawAxiosRequestConfig): AxiosPromise<PipelineView> {
+            return localVarFp.putWorldPipeline(requestParameters.pipelineReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1WorldLimits operation in WorldApi.
+ * Request parameters for getWorldLimits operation in WorldApi.
  * @export
- * @interface WorldApiGetV1WorldLimitsRequest
+ * @interface WorldApiGetWorldLimitsRequest
  */
-export interface WorldApiGetV1WorldLimitsRequest {
+export interface WorldApiGetWorldLimitsRequest {
     /**
      * Plan is a World plan id from the live @hanzo/plans catalog, e.g. world-pro. Empty means world-free, and so does an id the catalog does not know — this never fails on an unknown plan.
      * @type {string}
-     * @memberof WorldApiGetV1WorldLimits
+     * @memberof WorldApiGetWorldLimits
      */
     readonly plan?: string
 }
 
 /**
- * Request parameters for putV1WorldPipeline operation in WorldApi.
+ * Request parameters for putWorldPipeline operation in WorldApi.
  * @export
- * @interface WorldApiPutV1WorldPipelineRequest
+ * @interface WorldApiPutWorldPipelineRequest
  */
-export interface WorldApiPutV1WorldPipelineRequest {
+export interface WorldApiPutWorldPipelineRequest {
     /**
      * 
      * @type {PipelineReq}
-     * @memberof WorldApiPutV1WorldPipeline
+     * @memberof WorldApiPutWorldPipeline
      */
     readonly pipelineReq: PipelineReq
 }
@@ -423,20 +423,20 @@ export class WorldApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WorldApi
      */
-    public getV1World(options?: RawAxiosRequestConfig) {
-        return WorldApiFp(this.configuration).getV1World(options).then((request) => request(this.axios, this.basePath));
+    public getWorld(options?: RawAxiosRequestConfig) {
+        return WorldApiFp(this.configuration).getWorld(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Echoes a World plan\'s rate limits, alert quota and model-API grant, read straight from the live @hanzo/plans catalog, so agents and dashboards configure themselves against the catalog instead of hardcoding tier numbers.  An empty or unknown plan resolves world-free, and a catalog failure serves that same free floor rather than erroring — so this always answers 200, and it can only ever under-grant. It reports the contract; it does not enforce it.
      * @summary Echoes a World plan\'s rate limits, alert quota and model-API grant, read straight from the live @hanzo/plans catalog, so agents and dashboards configure themselves against the catalog instead of hardcoding tier numbers.
-     * @param {WorldApiGetV1WorldLimitsRequest} requestParameters Request parameters.
+     * @param {WorldApiGetWorldLimitsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorldApi
      */
-    public getV1WorldLimits(requestParameters: WorldApiGetV1WorldLimitsRequest = {}, options?: RawAxiosRequestConfig) {
-        return WorldApiFp(this.configuration).getV1WorldLimits(requestParameters.plan, options).then((request) => request(this.axios, this.basePath));
+    public getWorldLimits(requestParameters: WorldApiGetWorldLimitsRequest = {}, options?: RawAxiosRequestConfig) {
+        return WorldApiFp(this.configuration).getWorldLimits(requestParameters.plan, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -446,8 +446,8 @@ export class WorldApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WorldApi
      */
-    public getV1WorldNews(options?: RawAxiosRequestConfig) {
-        return WorldApiFp(this.configuration).getV1WorldNews(options).then((request) => request(this.axios, this.basePath));
+    public getWorldNews(options?: RawAxiosRequestConfig) {
+        return WorldApiFp(this.configuration).getWorldNews(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -457,8 +457,8 @@ export class WorldApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WorldApi
      */
-    public getV1WorldPipeline(options?: RawAxiosRequestConfig) {
-        return WorldApiFp(this.configuration).getV1WorldPipeline(options).then((request) => request(this.axios, this.basePath));
+    public getWorldPipeline(options?: RawAxiosRequestConfig) {
+        return WorldApiFp(this.configuration).getWorldPipeline(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -468,20 +468,20 @@ export class WorldApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WorldApi
      */
-    public getV1WorldStream(options?: RawAxiosRequestConfig) {
-        return WorldApiFp(this.configuration).getV1WorldStream(options).then((request) => request(this.axios, this.basePath));
+    public getWorldStream(options?: RawAxiosRequestConfig) {
+        return WorldApiFp(this.configuration).getWorldStream(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces the caller project\'s news pipeline and returns what was stored. It is a WHOLE replacement, not a patch: a field the request leaves out is stored empty, so sending only feeds clears the filters.  Every feed URL is validated HERE, at the write boundary — http(s) only, and the host must be on the server\'s allowlist — so a stored pipeline can never name a host the fetcher would later refuse, and the allowlist is one decision in one place rather than a check at each fetch.
      * @summary Replaces the caller project\'s news pipeline and returns what was stored.
-     * @param {WorldApiPutV1WorldPipelineRequest} requestParameters Request parameters.
+     * @param {WorldApiPutWorldPipelineRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorldApi
      */
-    public putV1WorldPipeline(requestParameters: WorldApiPutV1WorldPipelineRequest, options?: RawAxiosRequestConfig) {
-        return WorldApiFp(this.configuration).putV1WorldPipeline(requestParameters.pipelineReq, options).then((request) => request(this.axios, this.basePath));
+    public putWorldPipeline(requestParameters: WorldApiPutWorldPipelineRequest, options?: RawAxiosRequestConfig) {
+        return WorldApiFp(this.configuration).putWorldPipeline(requestParameters.pipelineReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

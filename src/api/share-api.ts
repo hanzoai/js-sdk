@@ -37,7 +37,7 @@ export const ShareApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Share: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getShare: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/share`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -67,7 +67,7 @@ export const ShareApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ShareEnable: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postShareEnable: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/share/enable`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -107,10 +107,10 @@ export const ShareApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Share(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SharesOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Share(options);
+        async getShare(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SharesOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getShare(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ShareApi.getV1Share']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ShareApi.getShare']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -119,10 +119,10 @@ export const ShareApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ShareEnable(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnableResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ShareEnable(options);
+        async postShareEnable(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnableResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postShareEnable(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ShareApi.postV1ShareEnable']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ShareApi.postShareEnable']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -141,8 +141,8 @@ export const ShareApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Share(options?: RawAxiosRequestConfig): AxiosPromise<SharesOut> {
-            return localVarFp.getV1Share(options).then((request) => request(axios, basePath));
+        getShare(options?: RawAxiosRequestConfig): AxiosPromise<SharesOut> {
+            return localVarFp.getShare(options).then((request) => request(axios, basePath));
         },
         /**
          * Enable provisions the caller org\'s tunnel account and returns the credential the `hanzo share` CLI needs to run a tunnel. It is idempotent: the account is keyed deterministically off the VALIDATED org, so a repeat call hands back the same account rather than creating a second one, and a caller can only ever provision their OWN org\'s account. 503 when the deployment has no share controller configured; 502 when that controller is unreachable.
@@ -150,8 +150,8 @@ export const ShareApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ShareEnable(options?: RawAxiosRequestConfig): AxiosPromise<EnableResp> {
-            return localVarFp.postV1ShareEnable(options).then((request) => request(axios, basePath));
+        postShareEnable(options?: RawAxiosRequestConfig): AxiosPromise<EnableResp> {
+            return localVarFp.postShareEnable(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -170,8 +170,8 @@ export class ShareApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShareApi
      */
-    public getV1Share(options?: RawAxiosRequestConfig) {
-        return ShareApiFp(this.configuration).getV1Share(options).then((request) => request(this.axios, this.basePath));
+    public getShare(options?: RawAxiosRequestConfig) {
+        return ShareApiFp(this.configuration).getShare(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -181,8 +181,8 @@ export class ShareApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ShareApi
      */
-    public postV1ShareEnable(options?: RawAxiosRequestConfig) {
-        return ShareApiFp(this.configuration).postV1ShareEnable(options).then((request) => request(this.axios, this.basePath));
+    public postShareEnable(options?: RawAxiosRequestConfig) {
+        return ShareApiFp(this.configuration).postShareEnable(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -1388,7 +1388,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.  It ALWAYS answers 200 — a tile board that fails as a whole because one upstream is down is useless. Instead every upstream reports itself in sources[]: ok, degraded, or not-configured. A commerce read that failed for ANY org marks that source degraded, because the spend/credits totals are then an undercount and must not read healthy.  tokens30d is 0 for the same reason /usage has no series: there is no fleet token counter to read yet.
+         * Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.  It ALWAYS answers 200 — a tile board that fails as a whole because one upstream is down is useless. Instead every upstream reports itself in sources[]: ok, degraded, or not-configured. A commerce read that failed for ANY org marks that source degraded, because the spend/credits totals are then an undercount and must not read healthy.  The AI tiles — 30-day spend and tokens — come from the AI ledger (ledger.go), the plane that owns \"what was served\". They used to come from the money plane with the token counter hardcoded to zero, so the board read $0.00 and 0 tokens over a month in which the fleet served fifteen thousand requests. Credits still come from commerce, which owns the wallet.
          * @summary Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2237,9 +2237,9 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Returns the month-to-date money totals: one org\'s when org names one, else the fleet sum across every org a SuperAdmin can see.  series and byProduct are ALWAYS empty. A daily trend and a per-product split are not derivable from the commerce billing API — they live in insights/datastore — so this answers with the honest empty arrays rather than fabricating a shape the console would then chart. Same reason tokens and requests are 0: there is no fleet counter to read.
-         * @summary Returns the month-to-date money totals: one org\'s when org names one, else the fleet sum across every org a SuperAdmin can see.
-         * @param {string} [org] Org reads ONE tenant\&#39;s month-to-date total instead of the fleet sum. Honoured for a SuperAdmin only — a white-label admin always reads their own org.
+         * Returns the trailing 30 days of AI usage: one org\'s when org names one, else the whole fleet\'s — the spend, the tokens and the requests, the daily curve behind them, and the split by model.  It reads the AI ledger (ledger.go), which is the plane that owns this question. It used to ask the commerce billing API instead, once per org, and answer with a hardcoded empty series, zero tokens and zero requests, on the reasoning that a trend and a split were \"not derivable from the commerce billing API\". They are not — but the question was never commerce\'s. hanzo.cloud_usage carries a row per served request, so all three fall out of the same window the totals do.
+         * @summary Returns the trailing 30 days of AI usage: one org\'s when org names one, else the whole fleet\'s — the spend, the tokens and the requests, the daily curve behind them, and the split by model.
+         * @param {string} [org] Org reads ONE tenant\&#39;s trailing-30-day total instead of the fleet sum. Honoured for a SuperAdmin only — a white-label admin always reads their own org.  The window is the one core.OrgMoney returns, and it is what the operator board beside this already labelled (\&quot;Daily, last 30 days\&quot;). The wire used to say month-to-date while that UI said 30 days; they agree now. This comment is REGENERATED into plugin/admin/openapi.json and openapi.yaml as the ?org parameter description, so a stale word here ships as a contradiction inside one spec file — which is the drift this whole change set exists to remove.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2479,7 +2479,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminAffiliates: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminAffiliates: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/affiliates`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2514,7 +2514,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminAuthors: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminAuthors: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/authors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2550,9 +2550,9 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminAuthorsByIdBasis: async (id: string, period?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminAuthorsByIdBasis: async (id: string, period?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1AdminAuthorsByIdBasis', 'id', id)
+            assertParamExists('getAdminAuthorsByIdBasis', 'id', id)
             const localVarPath = `/v1/admin/authors/{id}/basis`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2587,7 +2587,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/catalog`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2617,7 +2617,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminEnablement: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminEnablement: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/enablement`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2647,7 +2647,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminReferrals: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminReferrals: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/referrals`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2678,7 +2678,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminReferralsBonuses: async (limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminReferralsBonuses: async (limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/referrals/bonuses`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2713,7 +2713,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminTreasury: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAdminTreasury: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/treasury`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2748,9 +2748,9 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AdminCatalogModelsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminCatalogModelsByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('patchV1AdminCatalogModelsByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('patchAdminCatalogModelsByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/admin/catalog/models/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2783,11 +2783,11 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AdminCatalogProvidersByName: async (name: string, providerPatchIn: ProviderPatchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchAdminCatalogProvidersByName: async (name: string, providerPatchIn: ProviderPatchIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('patchV1AdminCatalogProvidersByName', 'name', name)
+            assertParamExists('patchAdminCatalogProvidersByName', 'name', name)
             // verify required parameter 'providerPatchIn' is not null or undefined
-            assertParamExists('patchV1AdminCatalogProvidersByName', 'providerPatchIn', providerPatchIn)
+            assertParamExists('patchAdminCatalogProvidersByName', 'providerPatchIn', providerPatchIn)
             const localVarPath = `/v1/admin/catalog/providers/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2823,11 +2823,11 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAffiliatesByIdApprove: async (id: string, approval: Approval, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminAffiliatesByIdApprove: async (id: string, approval: Approval, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AdminAffiliatesByIdApprove', 'id', id)
+            assertParamExists('postAdminAffiliatesByIdApprove', 'id', id)
             // verify required parameter 'approval' is not null or undefined
-            assertParamExists('postV1AdminAffiliatesByIdApprove', 'approval', approval)
+            assertParamExists('postAdminAffiliatesByIdApprove', 'approval', approval)
             const localVarPath = `/v1/admin/affiliates/{id}/approve`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2863,11 +2863,11 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAffiliatesByIdPayout: async (id: string, disbursal: Disbursal, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminAffiliatesByIdPayout: async (id: string, disbursal: Disbursal, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AdminAffiliatesByIdPayout', 'id', id)
+            assertParamExists('postAdminAffiliatesByIdPayout', 'id', id)
             // verify required parameter 'disbursal' is not null or undefined
-            assertParamExists('postV1AdminAffiliatesByIdPayout', 'disbursal', disbursal)
+            assertParamExists('postAdminAffiliatesByIdPayout', 'disbursal', disbursal)
             const localVarPath = `/v1/admin/affiliates/{id}/payout`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2903,11 +2903,11 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAffiliatesByIdRate: async (id: string, rateSet: RateSet, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminAffiliatesByIdRate: async (id: string, rateSet: RateSet, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AdminAffiliatesByIdRate', 'id', id)
+            assertParamExists('postAdminAffiliatesByIdRate', 'id', id)
             // verify required parameter 'rateSet' is not null or undefined
-            assertParamExists('postV1AdminAffiliatesByIdRate', 'rateSet', rateSet)
+            assertParamExists('postAdminAffiliatesByIdRate', 'rateSet', rateSet)
             const localVarPath = `/v1/admin/affiliates/{id}/rate`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2942,9 +2942,9 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAffiliatesByIdSuspend: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminAffiliatesByIdSuspend: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AdminAffiliatesByIdSuspend', 'id', id)
+            assertParamExists('postAdminAffiliatesByIdSuspend', 'id', id)
             const localVarPath = `/v1/admin/affiliates/{id}/suspend`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2975,7 +2975,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAffiliatesSweep: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminAffiliatesSweep: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/affiliates/sweep`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3007,11 +3007,11 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsByIdApprove: async (id: string, approveRequest: ApproveRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminAuthorsByIdApprove: async (id: string, approveRequest: ApproveRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AdminAuthorsByIdApprove', 'id', id)
+            assertParamExists('postAdminAuthorsByIdApprove', 'id', id)
             // verify required parameter 'approveRequest' is not null or undefined
-            assertParamExists('postV1AdminAuthorsByIdApprove', 'approveRequest', approveRequest)
+            assertParamExists('postAdminAuthorsByIdApprove', 'approveRequest', approveRequest)
             const localVarPath = `/v1/admin/authors/{id}/approve`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3047,11 +3047,11 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsByIdPayout: async (id: string, payoutRequest: PayoutRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminAuthorsByIdPayout: async (id: string, payoutRequest: PayoutRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AdminAuthorsByIdPayout', 'id', id)
+            assertParamExists('postAdminAuthorsByIdPayout', 'id', id)
             // verify required parameter 'payoutRequest' is not null or undefined
-            assertParamExists('postV1AdminAuthorsByIdPayout', 'payoutRequest', payoutRequest)
+            assertParamExists('postAdminAuthorsByIdPayout', 'payoutRequest', payoutRequest)
             const localVarPath = `/v1/admin/authors/{id}/payout`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3086,9 +3086,9 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsByIdSuspend: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminAuthorsByIdSuspend: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1AdminAuthorsByIdSuspend', 'id', id)
+            assertParamExists('postAdminAuthorsByIdSuspend', 'id', id)
             const localVarPath = `/v1/admin/authors/{id}/suspend`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3119,7 +3119,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsSweep: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminAuthorsSweep: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/authors/sweep`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3149,7 +3149,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminReferralsSweep: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminReferralsSweep: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/referrals/sweep`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3179,7 +3179,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminTreasuryAnchor: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminTreasuryAnchor: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/treasury/anchor`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3210,9 +3210,9 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminTreasuryPolicy: async (policyRequest: PolicyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminTreasuryPolicy: async (policyRequest: PolicyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'policyRequest' is not null or undefined
-            assertParamExists('postV1AdminTreasuryPolicy', 'policyRequest', policyRequest)
+            assertParamExists('postAdminTreasuryPolicy', 'policyRequest', policyRequest)
             const localVarPath = `/v1/admin/treasury/policy`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3246,9 +3246,9 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminTreasurySeed: async (seedRequest: SeedRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminTreasurySeed: async (seedRequest: SeedRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'seedRequest' is not null or undefined
-            assertParamExists('postV1AdminTreasurySeed', 'seedRequest', seedRequest)
+            assertParamExists('postAdminTreasurySeed', 'seedRequest', seedRequest)
             const localVarPath = `/v1/admin/treasury/seed`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3282,9 +3282,9 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminTreasurySweep: async (sweepRequest: SweepRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAdminTreasurySweep: async (sweepRequest: SweepRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'sweepRequest' is not null or undefined
-            assertParamExists('postV1AdminTreasurySweep', 'sweepRequest', sweepRequest)
+            assertParamExists('postAdminTreasurySweep', 'sweepRequest', sweepRequest)
             const localVarPath = `/v1/admin/treasury/sweep`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3318,9 +3318,9 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AdminEnablement: async (setEnablementBody: SetEnablementBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminEnablement: async (setEnablementBody: SetEnablementBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'setEnablementBody' is not null or undefined
-            assertParamExists('putV1AdminEnablement', 'setEnablementBody', setEnablementBody)
+            assertParamExists('putAdminEnablement', 'setEnablementBody', setEnablementBody)
             const localVarPath = `/v1/admin/enablement`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3353,7 +3353,7 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AdminTreasuryAnchorSigner: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putAdminTreasuryAnchorSigner: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/admin/treasury/anchor/signer`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3812,7 +3812,7 @@ export const AdminApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.  It ALWAYS answers 200 — a tile board that fails as a whole because one upstream is down is useless. Instead every upstream reports itself in sources[]: ok, degraded, or not-configured. A commerce read that failed for ANY org marks that source degraded, because the spend/credits totals are then an undercount and must not read healthy.  tokens30d is 0 for the same reason /usage has no series: there is no fleet token counter to read yet.
+         * Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.  It ALWAYS answers 200 — a tile board that fails as a whole because one upstream is down is useless. Instead every upstream reports itself in sources[]: ok, degraded, or not-configured. A commerce read that failed for ANY org marks that source degraded, because the spend/credits totals are then an undercount and must not read healthy.  The AI tiles — 30-day spend and tokens — come from the AI ledger (ledger.go), the plane that owns \"what was served\". They used to come from the money plane with the token counter hardcoded to zero, so the board read $0.00 and 0 tokens over a month in which the fleet served fifteen thousand requests. Credits still come from commerce, which owns the wallet.
          * @summary Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4120,9 +4120,9 @@ export const AdminApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the month-to-date money totals: one org\'s when org names one, else the fleet sum across every org a SuperAdmin can see.  series and byProduct are ALWAYS empty. A daily trend and a per-product split are not derivable from the commerce billing API — they live in insights/datastore — so this answers with the honest empty arrays rather than fabricating a shape the console would then chart. Same reason tokens and requests are 0: there is no fleet counter to read.
-         * @summary Returns the month-to-date money totals: one org\'s when org names one, else the fleet sum across every org a SuperAdmin can see.
-         * @param {string} [org] Org reads ONE tenant\&#39;s month-to-date total instead of the fleet sum. Honoured for a SuperAdmin only — a white-label admin always reads their own org.
+         * Returns the trailing 30 days of AI usage: one org\'s when org names one, else the whole fleet\'s — the spend, the tokens and the requests, the daily curve behind them, and the split by model.  It reads the AI ledger (ledger.go), which is the plane that owns this question. It used to ask the commerce billing API instead, once per org, and answer with a hardcoded empty series, zero tokens and zero requests, on the reasoning that a trend and a split were \"not derivable from the commerce billing API\". They are not — but the question was never commerce\'s. hanzo.cloud_usage carries a row per served request, so all three fall out of the same window the totals do.
+         * @summary Returns the trailing 30 days of AI usage: one org\'s when org names one, else the whole fleet\'s — the spend, the tokens and the requests, the daily curve behind them, and the split by model.
+         * @param {string} [org] Org reads ONE tenant\&#39;s trailing-30-day total instead of the fleet sum. Honoured for a SuperAdmin only — a white-label admin always reads their own org.  The window is the one core.OrgMoney returns, and it is what the operator board beside this already labelled (\&quot;Daily, last 30 days\&quot;). The wire used to say month-to-date while that UI said 30 days; they agree now. This comment is REGENERATED into plugin/admin/openapi.json and openapi.yaml as the ?org parameter description, so a stale word here ships as a contradiction inside one spec file — which is the drift this whole change set exists to remove.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4209,10 +4209,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AdminAffiliates(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DirectoryOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdminAffiliates(limit, options);
+        async getAdminAffiliates(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DirectoryOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminAffiliates(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.getV1AdminAffiliates']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.getAdminAffiliates']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4222,10 +4222,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AdminAuthors(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminBook>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdminAuthors(limit, options);
+        async getAdminAuthors(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminBook>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminAuthors(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.getV1AdminAuthors']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.getAdminAuthors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4236,10 +4236,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AdminAuthorsByIdBasis(id: string, period?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BasisResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdminAuthorsByIdBasis(id, period, options);
+        async getAdminAuthorsByIdBasis(id: string, period?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BasisResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminAuthorsByIdBasis(id, period, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.getV1AdminAuthorsByIdBasis']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.getAdminAuthorsByIdBasis']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4248,10 +4248,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AdminCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminCatalogOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdminCatalog(options);
+        async getAdminCatalog(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminCatalogOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminCatalog(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.getV1AdminCatalog']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.getAdminCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4260,10 +4260,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AdminEnablement(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminEnablementBoard>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdminEnablement(options);
+        async getAdminEnablement(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminEnablementBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminEnablement(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.getV1AdminEnablement']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.getAdminEnablement']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4272,10 +4272,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AdminReferrals(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferralsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdminReferrals(options);
+        async getAdminReferrals(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReferralsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminReferrals(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.getV1AdminReferrals']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.getAdminReferrals']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4285,10 +4285,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AdminReferralsBonuses(limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminBonusesEnvelope>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdminReferralsBonuses(limit, options);
+        async getAdminReferralsBonuses(limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminBonusesEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminReferralsBonuses(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.getV1AdminReferralsBonuses']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.getAdminReferralsBonuses']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4298,10 +4298,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1AdminTreasury(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminReportOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1AdminTreasury(limit, options);
+        async getAdminTreasury(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminReportOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdminTreasury(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.getV1AdminTreasury']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.getAdminTreasury']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4311,10 +4311,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AdminCatalogModelsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AdminCatalogModelsByWildcard1(wildcard1, options);
+        async patchAdminCatalogModelsByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminCatalogModelsByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.patchV1AdminCatalogModelsByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.patchAdminCatalogModelsByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4325,10 +4325,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1AdminCatalogProvidersByName(name: string, providerPatchIn: ProviderPatchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Overlay>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1AdminCatalogProvidersByName(name, providerPatchIn, options);
+        async patchAdminCatalogProvidersByName(name: string, providerPatchIn: ProviderPatchIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Overlay>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminCatalogProvidersByName(name, providerPatchIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.patchV1AdminCatalogProvidersByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.patchAdminCatalogProvidersByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4339,10 +4339,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAffiliatesByIdApprove(id: string, approval: Approval, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAffiliatesByIdApprove(id, approval, options);
+        async postAdminAffiliatesByIdApprove(id: string, approval: Approval, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminAffiliatesByIdApprove(id, approval, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAffiliatesByIdApprove']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminAffiliatesByIdApprove']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4353,10 +4353,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAffiliatesByIdPayout(id: string, disbursal: Disbursal, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PayoutOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAffiliatesByIdPayout(id, disbursal, options);
+        async postAdminAffiliatesByIdPayout(id: string, disbursal: Disbursal, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PayoutOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminAffiliatesByIdPayout(id, disbursal, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAffiliatesByIdPayout']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminAffiliatesByIdPayout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4367,10 +4367,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAffiliatesByIdRate(id: string, rateSet: RateSet, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAffiliatesByIdRate(id, rateSet, options);
+        async postAdminAffiliatesByIdRate(id: string, rateSet: RateSet, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminAffiliatesByIdRate(id, rateSet, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAffiliatesByIdRate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminAffiliatesByIdRate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4380,10 +4380,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAffiliatesByIdSuspend(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAffiliatesByIdSuspend(id, options);
+        async postAdminAffiliatesByIdSuspend(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AffiliateOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminAffiliatesByIdSuspend(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAffiliatesByIdSuspend']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminAffiliatesByIdSuspend']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4392,10 +4392,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAffiliatesSweep(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccrualsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAffiliatesSweep(options);
+        async postAdminAffiliatesSweep(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccrualsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminAffiliatesSweep(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAffiliatesSweep']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminAffiliatesSweep']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4406,10 +4406,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAuthorsByIdApprove(id: string, approveRequest: ApproveRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAuthorsByIdApprove(id, approveRequest, options);
+        async postAdminAuthorsByIdApprove(id: string, approveRequest: ApproveRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminAuthorsByIdApprove(id, approveRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAuthorsByIdApprove']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminAuthorsByIdApprove']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4420,10 +4420,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAuthorsByIdPayout(id: string, payoutRequest: PayoutRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PayoutResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAuthorsByIdPayout(id, payoutRequest, options);
+        async postAdminAuthorsByIdPayout(id: string, payoutRequest: PayoutRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PayoutResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminAuthorsByIdPayout(id, payoutRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAuthorsByIdPayout']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminAuthorsByIdPayout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4433,10 +4433,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAuthorsByIdSuspend(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAuthorsByIdSuspend(id, options);
+        async postAdminAuthorsByIdSuspend(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminAuthorsByIdSuspend(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAuthorsByIdSuspend']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminAuthorsByIdSuspend']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4445,10 +4445,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminAuthorsSweep(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorSweepResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminAuthorsSweep(options);
+        async postAdminAuthorsSweep(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorSweepResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminAuthorsSweep(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminAuthorsSweep']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminAuthorsSweep']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4457,10 +4457,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminReferralsSweep(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SweepEnvelope>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminReferralsSweep(options);
+        async postAdminReferralsSweep(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SweepEnvelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminReferralsSweep(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminReferralsSweep']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminReferralsSweep']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4469,10 +4469,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminTreasuryAnchor(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnchorOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminTreasuryAnchor(options);
+        async postAdminTreasuryAnchor(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnchorOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminTreasuryAnchor(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminTreasuryAnchor']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminTreasuryAnchor']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4482,10 +4482,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminTreasuryPolicy(policyRequest: PolicyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PolicyOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminTreasuryPolicy(policyRequest, options);
+        async postAdminTreasuryPolicy(policyRequest: PolicyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PolicyOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminTreasuryPolicy(policyRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminTreasuryPolicy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminTreasuryPolicy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4495,10 +4495,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminTreasurySeed(seedRequest: SeedRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeedOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminTreasurySeed(seedRequest, options);
+        async postAdminTreasurySeed(seedRequest: SeedRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeedOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminTreasurySeed(seedRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminTreasurySeed']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminTreasurySeed']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4508,10 +4508,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1AdminTreasurySweep(sweepRequest: SweepRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SweepOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1AdminTreasurySweep(sweepRequest, options);
+        async postAdminTreasurySweep(sweepRequest: SweepRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SweepOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAdminTreasurySweep(sweepRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.postV1AdminTreasurySweep']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.postAdminTreasurySweep']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4521,10 +4521,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AdminEnablement(setEnablementBody: SetEnablementBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminEnablementItem>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AdminEnablement(setEnablementBody, options);
+        async putAdminEnablement(setEnablementBody: SetEnablementBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminEnablementItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminEnablement(setEnablementBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.putV1AdminEnablement']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.putAdminEnablement']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4533,10 +4533,10 @@ export const AdminApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1AdminTreasuryAnchorSigner(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignerOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1AdminTreasuryAnchorSigner(options);
+        async putAdminTreasuryAnchorSigner(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignerOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminTreasuryAnchorSigner(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminApi.putV1AdminTreasuryAnchorSigner']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AdminApi.putAdminTreasuryAnchorSigner']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -4852,7 +4852,7 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.adminOrgs(options).then((request) => request(axios, basePath));
         },
         /**
-         * Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.  It ALWAYS answers 200 — a tile board that fails as a whole because one upstream is down is useless. Instead every upstream reports itself in sources[]: ok, degraded, or not-configured. A commerce read that failed for ANY org marks that source degraded, because the spend/credits totals are then an undercount and must not read healthy.  tokens30d is 0 for the same reason /usage has no series: there is no fleet token counter to read yet.
+         * Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.  It ALWAYS answers 200 — a tile board that fails as a whole because one upstream is down is useless. Instead every upstream reports itself in sources[]: ok, degraded, or not-configured. A commerce read that failed for ANY org marks that source degraded, because the spend/credits totals are then an undercount and must not read healthy.  The AI tiles — 30-day spend and tokens — come from the AI ledger (ledger.go), the plane that owns \"what was served\". They used to come from the money plane with the token counter hardcoded to zero, so the board read $0.00 and 0 tokens over a month in which the fleet served fifteen thousand requests. Credits still come from commerce, which owns the wallet.
          * @summary Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5076,8 +5076,8 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.adminUpsertService(requestParameters.serviceInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the month-to-date money totals: one org\'s when org names one, else the fleet sum across every org a SuperAdmin can see.  series and byProduct are ALWAYS empty. A daily trend and a per-product split are not derivable from the commerce billing API — they live in insights/datastore — so this answers with the honest empty arrays rather than fabricating a shape the console would then chart. Same reason tokens and requests are 0: there is no fleet counter to read.
-         * @summary Returns the month-to-date money totals: one org\'s when org names one, else the fleet sum across every org a SuperAdmin can see.
+         * Returns the trailing 30 days of AI usage: one org\'s when org names one, else the whole fleet\'s — the spend, the tokens and the requests, the daily curve behind them, and the split by model.  It reads the AI ledger (ledger.go), which is the plane that owns this question. It used to ask the commerce billing API instead, once per org, and answer with a hardcoded empty series, zero tokens and zero requests, on the reasoning that a trend and a split were \"not derivable from the commerce billing API\". They are not — but the question was never commerce\'s. hanzo.cloud_usage carries a row per served request, so all three fall out of the same window the totals do.
+         * @summary Returns the trailing 30 days of AI usage: one org\'s when org names one, else the whole fleet\'s — the spend, the tokens and the requests, the daily curve behind them, and the split by model.
          * @param {AdminApiAdminUsageRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5137,32 +5137,32 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
         /**
          * Lists every affiliate across the fleet with its ORG exposed, plus a fleet summary of lifetime accrued, still-pending and paid commission in integer cents.  PLATFORM SUDO ONLY, and a non-admin is refused outright. This is the cross-tenant view and it names orgs — exactly what the partner-facing leaderboard refuses to do. There is deliberately no org-scoped variant of this read; a partner sees its own standing through its own dashboard. Bounded per request.
          * @summary Lists every affiliate across the fleet with its ORG exposed, plus a fleet summary of lifetime accrued, still-pending and paid commission in integer cents.
-         * @param {AdminApiGetV1AdminAffiliatesRequest} requestParameters Request parameters.
+         * @param {AdminApiGetAdminAffiliatesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminAffiliates(requestParameters: AdminApiGetV1AdminAffiliatesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DirectoryOut> {
-            return localVarFp.getV1AdminAffiliates(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getAdminAffiliates(requestParameters: AdminApiGetAdminAffiliatesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DirectoryOut> {
+            return localVarFp.getAdminAffiliates(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the platform\'s whole author program — every org\'s author record, not the caller\'s — with each one\'s repository and deploy counts and a fleet roll-up of the money accrued, pending and paid.  It is a Hanzo platform operation: a caller who is not a SuperAdmin gets 403. It exposes the owning org of each author, which no tenant-facing read ever does.
          * @summary Returns the platform\'s whole author program — every org\'s author record, not the caller\'s — with each one\'s repository and deploy counts and a fleet roll-up of the money accrued, pending and paid.
-         * @param {AdminApiGetV1AdminAuthorsRequest} requestParameters Request parameters.
+         * @param {AdminApiGetAdminAuthorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminAuthors(requestParameters: AdminApiGetV1AdminAuthorsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AdminBook> {
-            return localVarFp.getV1AdminAuthors(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getAdminAuthors(requestParameters: AdminApiGetAdminAuthorsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AdminBook> {
+            return localVarFp.getAdminAuthors(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the audit trail behind ONE author\'s royalty — the same payload the author reads at /v1/authors/basis, from the same builder, so support sees exactly what the author sees rather than a parallel view free to drift.  The data object carries: id, status, asOf, shareBps, platformShareBps, defaultShareBps, shareSource, settlesTo, method (the formula, the rate card and the sizing), ledger (every row with its spend, the share applied then, the platform\'s matching half, whether it satisfies the formula and the attribution edges that explain it), reconciliation (does the ledger foot to the balance) and window (what slice was actually returned) — plus period when one was requested.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
          * @summary Returns the audit trail behind ONE author\'s royalty — the same payload the author reads at /v1/authors/basis, from the same builder, so support sees exactly what the author sees rather than a parallel view free to drift.
-         * @param {AdminApiGetV1AdminAuthorsByIdBasisRequest} requestParameters Request parameters.
+         * @param {AdminApiGetAdminAuthorsByIdBasisRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminAuthorsByIdBasis(requestParameters: AdminApiGetV1AdminAuthorsByIdBasisRequest, options?: RawAxiosRequestConfig): AxiosPromise<BasisResult> {
-            return localVarFp.getV1AdminAuthorsByIdBasis(requestParameters.id, requestParameters.period, options).then((request) => request(axios, basePath));
+        getAdminAuthorsByIdBasis(requestParameters: AdminApiGetAdminAuthorsByIdBasisRequest, options?: RawAxiosRequestConfig): AxiosPromise<BasisResult> {
+            return localVarFp.getAdminAuthorsByIdBasis(requestParameters.id, requestParameters.period, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the full model and provider catalog annotated with each entry\'s enablement state, for the operator console. Nothing is hidden: this is the admin\'s view of what exists and what is currently off, in beta or generally available. SuperAdmin only; every other caller is refused.
@@ -5170,8 +5170,8 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminCatalog(options?: RawAxiosRequestConfig): AxiosPromise<AdminCatalogOut> {
-            return localVarFp.getV1AdminCatalog(options).then((request) => request(axios, basePath));
+        getAdminCatalog(options?: RawAxiosRequestConfig): AxiosPromise<AdminCatalogOut> {
+            return localVarFp.getAdminCatalog(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every item an operator has set an enablement state on — its global state (off, beta or ga) and the orgs granted its beta. An item nobody has touched is absent, because an untouched item is generally available; the console composes the candidate list from the live catalog. SuperAdmin only; every other caller is refused.
@@ -5179,8 +5179,8 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminEnablement(options?: RawAxiosRequestConfig): AxiosPromise<AdminEnablementBoard> {
-            return localVarFp.getV1AdminEnablement(options).then((request) => request(axios, basePath));
+        getAdminEnablement(options?: RawAxiosRequestConfig): AxiosPromise<AdminEnablementBoard> {
+            return localVarFp.getAdminEnablement(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the referral board: the top referrers by lifetime commission, the funnel conversion rate (referred orgs that have actually produced commission, over all referred orgs), and the accrual LIABILITY the platform owes, broken out by upline level.  Read the liability figure carefully — it is commission accrued and NOT yet paid, so it is money owed, not money spent, and the per-level split says how much of it comes from direct referrals versus the second and third levels.  PLATFORM SUDO ONLY, cross-tenant, and it names orgs. It reads the SAME single attribution spine the accrual itself walks, so the board and the ledger cannot disagree. Amounts are integer cents.
@@ -5188,88 +5188,88 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminReferrals(options?: RawAxiosRequestConfig): AxiosPromise<ReferralsOut> {
-            return localVarFp.getV1AdminReferrals(options).then((request) => request(axios, basePath));
+        getAdminReferrals(options?: RawAxiosRequestConfig): AxiosPromise<ReferralsOut> {
+            return localVarFp.getAdminReferrals(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every referral edge in the directory with a fleet summary.  SuperAdmin only, fail-closed. This is the ATTRIBUTION directory — who referred whom and whether that referee became a customer. It carries no amounts because this package issues none. The cross-tenant referral ANALYTICS board (top referrers, conversion) is a different surface, GET /v1/admin/referrals, owned by the affiliates subsystem over the shared attribution spine.
          * @summary Returns every referral edge in the directory with a fleet summary.
-         * @param {AdminApiGetV1AdminReferralsBonusesRequest} requestParameters Request parameters.
+         * @param {AdminApiGetAdminReferralsBonusesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminReferralsBonuses(requestParameters: AdminApiGetV1AdminReferralsBonusesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AdminBonusesEnvelope> {
-            return localVarFp.getV1AdminReferralsBonuses(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getAdminReferralsBonuses(requestParameters: AdminApiGetAdminReferralsBonusesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AdminBonusesEnvelope> {
+            return localVarFp.getAdminReferralsBonuses(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the whole treasury board for a SuperAdmin: the reserve fund report, the recent double-entry journal, and the Hanzo L1 anchor status of the ledger root. ?limit= bounds the journal page.
          * @summary Returns the whole treasury board for a SuperAdmin: the reserve fund report, the recent double-entry journal, and the Hanzo L1 anchor status of the ledger root.
-         * @param {AdminApiGetV1AdminTreasuryRequest} requestParameters Request parameters.
+         * @param {AdminApiGetAdminTreasuryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1AdminTreasury(requestParameters: AdminApiGetV1AdminTreasuryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AdminReportOut> {
-            return localVarFp.getV1AdminTreasury(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getAdminTreasury(requestParameters: AdminApiGetAdminTreasuryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AdminReportOut> {
+            return localVarFp.getAdminTreasury(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets one model\'s availability overlay — and the price overrides applied on top of the catalog — then answers the new effective overlay, so a console needs no second read. The model id is the whole remaining path, so a slashed id like `acme/some-model-1` addresses intact.  SuperAdmin only; every other caller is 403, decided before the body is read. The overlay is PLATFORM-WIDE — this is the catalog every org prices against, not a per-org setting — and `betaOrgs` is what narrows a beta to named orgs.  Only the fields the patch names change; an entry with no overlay yet starts from the catalog default, which is enabled. `state` is the coherent tri-state setter (`off`|`beta`|`ga`) and the low-level `enabled`/`beta` flags are applied AFTER it, so they win where both are sent; anything else in `state` is 400. A field sent as an explicit `null` arrives indistinguishable from an absent one, so null does not clear anything.  The rule worth reading twice: a disabled entry that still carries beta orgs IS a beta — `{\"enabled\":false,\"betaOrgs\":[\"acme\"]}` leaves acme seeing the model. Only an explicit `off` (or `beta:false`) with an empty list is the absolute kill switch that a user\'s own beta opt-in can never re-open.  `overrides` is an RFC 7386 merge patch, stored and echoed back verbatim; it must be a JSON object or null — an array or a scalar is refused — and is bounded in size and nesting depth. An uninitialised overlay store answers 503.
          * @summary Turn one model off, into beta for named orgs, or generally available
-         * @param {AdminApiPatchV1AdminCatalogModelsByWildcard1Request} requestParameters Request parameters.
+         * @param {AdminApiPatchAdminCatalogModelsByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AdminCatalogModelsByWildcard1(requestParameters: AdminApiPatchV1AdminCatalogModelsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1AdminCatalogModelsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        patchAdminCatalogModelsByWildcard1(requestParameters: AdminApiPatchAdminCatalogModelsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchAdminCatalogModelsByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets one provider\'s availability overlay.  The overlay decides whether a provider is off, in beta for named orgs, or generally available, and carries the price overrides applied on top of the catalog. Only the fields the patch names change; every other field keeps the value it had, and an absent overlay starts from the catalog default (enabled). Answers the new effective overlay, so a console needs no second read.  SuperAdmin only.
          * @summary Sets one provider\'s availability overlay.
-         * @param {AdminApiPatchV1AdminCatalogProvidersByNameRequest} requestParameters Request parameters.
+         * @param {AdminApiPatchAdminCatalogProvidersByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1AdminCatalogProvidersByName(requestParameters: AdminApiPatchV1AdminCatalogProvidersByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<Overlay> {
-            return localVarFp.patchV1AdminCatalogProvidersByName(requestParameters.name, requestParameters.providerPatchIn, options).then((request) => request(axios, basePath));
+        patchAdminCatalogProvidersByName(requestParameters: AdminApiPatchAdminCatalogProvidersByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<Overlay> {
+            return localVarFp.patchAdminCatalogProvidersByName(requestParameters.name, requestParameters.providerPatchIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.  The code is taken from the body if one is given, else the vanity code the applicant requested, else a slug derived for them. Codes are ONE global namespace, so a taken code is a 409 and nothing is approved. The minted code is also mirrored as a link row so click tracking is uniform across every code the affiliate holds; that mirror is best-effort and its failure never fails the approval.  Approval is what makes an affiliate eligible: before it, attribution against its code does not resolve and no sweep accrues to it. PLATFORM SUDO ONLY. Audited.
          * @summary Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.
-         * @param {AdminApiPostV1AdminAffiliatesByIdApproveRequest} requestParameters Request parameters.
+         * @param {AdminApiPostAdminAffiliatesByIdApproveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAffiliatesByIdApprove(requestParameters: AdminApiPostV1AdminAffiliatesByIdApproveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
-            return localVarFp.postV1AdminAffiliatesByIdApprove(requestParameters.id, requestParameters.approval, options).then((request) => request(axios, basePath));
+        postAdminAffiliatesByIdApprove(requestParameters: AdminApiPostAdminAffiliatesByIdApproveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
+            return localVarFp.postAdminAffiliatesByIdApprove(requestParameters.id, requestParameters.approval, options).then((request) => request(axios, basePath));
         },
         /**
          * Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.  The amount is reserved atomically against the affiliate\'s PENDING commission — accrued minus paid — so a payout can never exceed what is owed. The METHOD decides whether money actually moves: `credits` issues a commerce grant into the affiliate ORG\'s own wallet, tagged so the ledger can tell an affiliate payout apart from an admin or referral grant; every other method — wire, paypal and the rest — is RECORD-ONLY: the payout row and the balances move, the cash is disbursed out of band.  The amount is integer cents and must be positive. PLATFORM SUDO ONLY. Audited.
          * @summary Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.
-         * @param {AdminApiPostV1AdminAffiliatesByIdPayoutRequest} requestParameters Request parameters.
+         * @param {AdminApiPostAdminAffiliatesByIdPayoutRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAffiliatesByIdPayout(requestParameters: AdminApiPostV1AdminAffiliatesByIdPayoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<PayoutOut> {
-            return localVarFp.postV1AdminAffiliatesByIdPayout(requestParameters.id, requestParameters.disbursal, options).then((request) => request(axios, basePath));
+        postAdminAffiliatesByIdPayout(requestParameters: AdminApiPostAdminAffiliatesByIdPayoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<PayoutOut> {
+            return localVarFp.postAdminAffiliatesByIdPayout(requestParameters.id, requestParameters.disbursal, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.  The rate is CAPPED so that the direct rate plus the platform-wide second- and third-level rates can never exceed the whole margin — the structural guarantee that everything paid on one source event stays inside the margin actually earned. The cap is resolved from the rates in force at the moment of the call and quoted in the refusal, because those switches move; a hardcoded bound would start lying the moment somebody edits the schedule.  Only the direct level is per-affiliate. The second and third levels are platform switches and are not settable here. The change applies to FUTURE accruals — commission already latched for a period is not recomputed. PLATFORM SUDO ONLY. Audited.
          * @summary Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.
-         * @param {AdminApiPostV1AdminAffiliatesByIdRateRequest} requestParameters Request parameters.
+         * @param {AdminApiPostAdminAffiliatesByIdRateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAffiliatesByIdRate(requestParameters: AdminApiPostV1AdminAffiliatesByIdRateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
-            return localVarFp.postV1AdminAffiliatesByIdRate(requestParameters.id, requestParameters.rateSet, options).then((request) => request(axios, basePath));
+        postAdminAffiliatesByIdRate(requestParameters: AdminApiPostAdminAffiliatesByIdRateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
+            return localVarFp.postAdminAffiliatesByIdRate(requestParameters.id, requestParameters.rateSet, options).then((request) => request(axios, basePath));
         },
         /**
          * Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.  It CLAWS NOTHING BACK. Commission already accrued stays accrued and stays payable, and existing attribution edges are left standing — suspension ends earning, it does not unwind history. PLATFORM SUDO ONLY. Audited.
          * @summary Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.
-         * @param {AdminApiPostV1AdminAffiliatesByIdSuspendRequest} requestParameters Request parameters.
+         * @param {AdminApiPostAdminAffiliatesByIdSuspendRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAffiliatesByIdSuspend(requestParameters: AdminApiPostV1AdminAffiliatesByIdSuspendRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
-            return localVarFp.postV1AdminAffiliatesByIdSuspend(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAdminAffiliatesByIdSuspend(requestParameters: AdminApiPostAdminAffiliatesByIdSuspendRequest, options?: RawAxiosRequestConfig): AxiosPromise<AffiliateOut> {
+            return localVarFp.postAdminAffiliatesByIdSuspend(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs the accrual: for each referred org it reads that org\'s metered spend for the current period and accrues commission to every affiliate up its referral chain, then answers how many sources were swept and how many NEW accruals landed.  This is the cron path, and it is LATCHED at most once per affiliate, source org and period — so re-running it inside the same period accrues nothing further. Safe to retry, and safe to run by hand beside the schedule.  Commission is a rate of Hanzo\'s MARGIN on that spend, never of the customer\'s gross bill, so every level\'s share summed over one source event stays within the margin actually earned and the customer\'s charge is untouched. Nothing accrues past the third upline level, and only an APPROVED affiliate accrues at all.  The same spend read drives the OSS author royalty — one read, both programs — so the answer reports royalties accrued alongside. PLATFORM SUDO ONLY. Bounded per run; a source whose spend cannot be read is skipped and picked up next time, never half-accrued.
@@ -5277,38 +5277,38 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAffiliatesSweep(options?: RawAxiosRequestConfig): AxiosPromise<AccrualsOut> {
-            return localVarFp.postV1AdminAffiliatesSweep(options).then((request) => request(axios, basePath));
+        postAdminAffiliatesSweep(options?: RawAxiosRequestConfig): AxiosPromise<AccrualsOut> {
+            return localVarFp.postAdminAffiliatesSweep(options).then((request) => request(axios, basePath));
         },
         /**
          * Admits one author to EARNING, optionally on a negotiated royalty share. Until this runs, a connected author accrues nothing however many verified repositories they have.  A share override applies from here forward only — existing ledger rows keep the share that was applied when they were written, because a rate change must never rewrite what was already owed.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
          * @summary Admits one author to EARNING, optionally on a negotiated royalty share.
-         * @param {AdminApiPostV1AdminAuthorsByIdApproveRequest} requestParameters Request parameters.
+         * @param {AdminApiPostAdminAuthorsByIdApproveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsByIdApprove(requestParameters: AdminApiPostV1AdminAuthorsByIdApproveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorResult> {
-            return localVarFp.postV1AdminAuthorsByIdApprove(requestParameters.id, requestParameters.approveRequest, options).then((request) => request(axios, basePath));
+        postAdminAuthorsByIdApprove(requestParameters: AdminApiPostAdminAuthorsByIdApproveRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorResult> {
+            return localVarFp.postAdminAuthorsByIdApprove(requestParameters.id, requestParameters.approveRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Records a payout of accrued royalty and settles it.  The amount is RESERVED against the author\'s pending royalty atomically before anything is paid, so a payout can never exceed what is owed even under concurrent calls. An external author\'s payout is then BACKED against the platform reserve fund — a second, independent guard — and refused with 402 if the reserve cannot cover it, with the reservation voided. A \"credits\" method issues the actual wallet grant after both guards; a cash method is record-only. A first-party (treasury) author\'s royalty is realized into Hanzo\'s own reserve instead of an external wallet, and every payout row discloses which of the three it was.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
          * @summary Records a payout of accrued royalty and settles it.
-         * @param {AdminApiPostV1AdminAuthorsByIdPayoutRequest} requestParameters Request parameters.
+         * @param {AdminApiPostAdminAuthorsByIdPayoutRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsByIdPayout(requestParameters: AdminApiPostV1AdminAuthorsByIdPayoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<PayoutResult> {
-            return localVarFp.postV1AdminAuthorsByIdPayout(requestParameters.id, requestParameters.payoutRequest, options).then((request) => request(axios, basePath));
+        postAdminAuthorsByIdPayout(requestParameters: AdminApiPostAdminAuthorsByIdPayoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<PayoutResult> {
+            return localVarFp.postAdminAuthorsByIdPayout(requestParameters.id, requestParameters.payoutRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Stops one author earning. Their record, verified claims and ledger are untouched — suspension halts future accrual, it does not erase what was already owed, and it does not delete the evidence behind it.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
          * @summary Stops one author earning.
-         * @param {AdminApiPostV1AdminAuthorsByIdSuspendRequest} requestParameters Request parameters.
+         * @param {AdminApiPostAdminAuthorsByIdSuspendRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsByIdSuspend(requestParameters: AdminApiPostV1AdminAuthorsByIdSuspendRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorResult> {
-            return localVarFp.postV1AdminAuthorsByIdSuspend(requestParameters.id, options).then((request) => request(axios, basePath));
+        postAdminAuthorsByIdSuspend(requestParameters: AdminApiPostAdminAuthorsByIdSuspendRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorResult> {
+            return localVarFp.postAdminAuthorsByIdSuspend(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Runs the accrual sweep across every approved author: for each of their deploying orgs it computes this period\'s royalty from that org\'s metered spend and latches it at most once per period.  It is an OVERRIDE, not the mechanism: a background scheduler runs the same sweep on its own, and every author\'s dashboard read sweeps their own accruals lazily. This is the manual trigger for an operator who needs the numbers now. It is idempotent — the per-period latch means running it twice accrues nothing the second time.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
@@ -5316,8 +5316,8 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminAuthorsSweep(options?: RawAxiosRequestConfig): AxiosPromise<AuthorSweepResult> {
-            return localVarFp.postV1AdminAuthorsSweep(options).then((request) => request(axios, basePath));
+        postAdminAuthorsSweep(options?: RawAxiosRequestConfig): AxiosPromise<AuthorSweepResult> {
+            return localVarFp.postAdminAuthorsSweep(options).then((request) => request(axios, basePath));
         },
         /**
          * Qualify-checks every pending referral and advances the ones that now qualify.  SuperAdmin only, fail-closed. This is the cron path, and the ONLY path that advances a referral: a referee QUALIFIES once they have made metered spend — the honest signal that they actually used the product rather than merely signing up.  Qualifying moves NO money. It records that an attribution became a real customer; what is owed for that is an affiliate payable in commerce, settled by wire or to a connected wallet. One pass is bounded, so a large backlog drains over several runs instead of wedging one request, and the latch makes the transition at-most-once under a concurrent sweep.  It reads nothing from the caller — the counters it returns are the whole result.
@@ -5325,8 +5325,8 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminReferralsSweep(options?: RawAxiosRequestConfig): AxiosPromise<SweepEnvelope> {
-            return localVarFp.postV1AdminReferralsSweep(options).then((request) => request(axios, basePath));
+        postAdminReferralsSweep(options?: RawAxiosRequestConfig): AxiosPromise<SweepEnvelope> {
+            return localVarFp.postAdminReferralsSweep(options).then((request) => request(axios, basePath));
         },
         /**
          * Commits the current ledger root to Hanzo L1, making the books tamper-evident on chain, and returns the anchoring status. When the chain path is wired it signs and submits the anchor transaction and records it; when it is not, it returns the root that WOULD be committed plus the exact remaining wiring step and records nothing false. A submit that fails still answers 200 with the anchor\'s own status set to \"error\" — the attempt is the product. SuperAdmin only.
@@ -5334,48 +5334,48 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminTreasuryAnchor(options?: RawAxiosRequestConfig): AxiosPromise<AnchorOut> {
-            return localVarFp.postV1AdminTreasuryAnchor(options).then((request) => request(axios, basePath));
+        postAdminTreasuryAnchor(options?: RawAxiosRequestConfig): AxiosPromise<AnchorOut> {
+            return localVarFp.postAdminTreasuryAnchor(options).then((request) => request(axios, basePath));
         },
         /**
          * Sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy. 0–10000; the change is audited. SuperAdmin only.
          * @summary Sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy.
-         * @param {AdminApiPostV1AdminTreasuryPolicyRequest} requestParameters Request parameters.
+         * @param {AdminApiPostAdminTreasuryPolicyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminTreasuryPolicy(requestParameters: AdminApiPostV1AdminTreasuryPolicyRequest, options?: RawAxiosRequestConfig): AxiosPromise<PolicyOut> {
-            return localVarFp.postV1AdminTreasuryPolicy(requestParameters.policyRequest, options).then((request) => request(axios, basePath));
+        postAdminTreasuryPolicy(requestParameters: AdminApiPostAdminTreasuryPolicyRequest, options?: RawAxiosRequestConfig): AxiosPromise<PolicyOut> {
+            return localVarFp.postAdminTreasuryPolicy(requestParameters.policyRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Injects bootstrap capital into the reserve fund so backed payouts can begin before the first revenue-share sweep, and returns the journal entry it wrote. A repeat of the same ref is at-most-once and reports created=false. SuperAdmin only.
          * @summary Injects bootstrap capital into the reserve fund so backed payouts can begin before the first revenue-share sweep, and returns the journal entry it wrote.
-         * @param {AdminApiPostV1AdminTreasurySeedRequest} requestParameters Request parameters.
+         * @param {AdminApiPostAdminTreasurySeedRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminTreasurySeed(requestParameters: AdminApiPostV1AdminTreasurySeedRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeedOut> {
-            return localVarFp.postV1AdminTreasurySeed(requestParameters.seedRequest, options).then((request) => request(axios, basePath));
+        postAdminTreasurySeed(requestParameters: AdminApiPostAdminTreasurySeedRequest, options?: RawAxiosRequestConfig): AxiosPromise<SeedOut> {
+            return localVarFp.postAdminTreasurySeed(requestParameters.seedRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Posts the revenue-share accrual for one period — revenue into the reserve fund, at the current policy\'s basis points — and returns what it moved. It is idempotent per period: a re-run of a period already swept accrues nothing and reports created=false. SuperAdmin only.
          * @summary Posts the revenue-share accrual for one period — revenue into the reserve fund, at the current policy\'s basis points — and returns what it moved.
-         * @param {AdminApiPostV1AdminTreasurySweepRequest} requestParameters Request parameters.
+         * @param {AdminApiPostAdminTreasurySweepRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1AdminTreasurySweep(requestParameters: AdminApiPostV1AdminTreasurySweepRequest, options?: RawAxiosRequestConfig): AxiosPromise<SweepOut> {
-            return localVarFp.postV1AdminTreasurySweep(requestParameters.sweepRequest, options).then((request) => request(axios, basePath));
+        postAdminTreasurySweep(requestParameters: AdminApiPostAdminTreasurySweepRequest, options?: RawAxiosRequestConfig): AxiosPromise<SweepOut> {
+            return localVarFp.postAdminTreasurySweep(requestParameters.sweepRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets one item\'s global enablement state — off, beta or ga — and optionally replaces the list of orgs granted its beta. It is generic over kind, so the same call manages models, providers and product features through the one registry. `off` is an absolute kill switch: a self-service opt-in can never re-open it. SuperAdmin only; every other caller is refused.
          * @summary Sets one item\'s global enablement state — off, beta or ga — and optionally replaces the list of orgs granted its beta.
-         * @param {AdminApiPutV1AdminEnablementRequest} requestParameters Request parameters.
+         * @param {AdminApiPutAdminEnablementRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AdminEnablement(requestParameters: AdminApiPutV1AdminEnablementRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminEnablementItem> {
-            return localVarFp.putV1AdminEnablement(requestParameters.setEnablementBody, options).then((request) => request(axios, basePath));
+        putAdminEnablement(requestParameters: AdminApiPutAdminEnablementRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminEnablementItem> {
+            return localVarFp.putAdminEnablement(requestParameters.setEnablementBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Installs the reserve\'s threshold MPC wallet as the signer for on-chain anchors, and returns its EVM address so an operator can fund it for gas. It provisions-or-resolves the caller org\'s treasury wallet on the deployed MPC ring and installs it, so every later anchor commits the ledger root SIGNED BY THE QUORUM WALLET instead of a lone KMS key. Idempotent — a repeat resolves the same wallet, which is why the address is a PUT. SuperAdmin only.
@@ -5383,8 +5383,8 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1AdminTreasuryAnchorSigner(options?: RawAxiosRequestConfig): AxiosPromise<SignerOut> {
-            return localVarFp.putV1AdminTreasuryAnchorSigner(options).then((request) => request(axios, basePath));
+        putAdminTreasuryAnchorSigner(options?: RawAxiosRequestConfig): AxiosPromise<SignerOut> {
+            return localVarFp.putAdminTreasuryAnchorSigner(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6264,7 +6264,7 @@ export interface AdminApiAdminUpsertServiceRequest {
  */
 export interface AdminApiAdminUsageRequest {
     /**
-     * Org reads ONE tenant\&#39;s month-to-date total instead of the fleet sum. Honoured for a SuperAdmin only — a white-label admin always reads their own org.
+     * Org reads ONE tenant\&#39;s trailing-30-day total instead of the fleet sum. Honoured for a SuperAdmin only — a white-label admin always reads their own org.  The window is the one core.OrgMoney returns, and it is what the operator board beside this already labelled (\&quot;Daily, last 30 days\&quot;). The wire used to say month-to-date while that UI said 30 days; they agree now. This comment is REGENERATED into plugin/admin/openapi.json and openapi.yaml as the ?org parameter description, so a stale word here ships as a contradiction inside one spec file — which is the drift this whole change set exists to remove.
      * @type {string}
      * @memberof AdminApiAdminUsage
      */
@@ -6370,302 +6370,302 @@ export interface AdminApiAdminWaitlistBoostRequest {
 }
 
 /**
- * Request parameters for getV1AdminAffiliates operation in AdminApi.
+ * Request parameters for getAdminAffiliates operation in AdminApi.
  * @export
- * @interface AdminApiGetV1AdminAffiliatesRequest
+ * @interface AdminApiGetAdminAffiliatesRequest
  */
-export interface AdminApiGetV1AdminAffiliatesRequest {
+export interface AdminApiGetAdminAffiliatesRequest {
     /**
      * Limit caps the rows returned. Absent or non-positive means the default of 500; anything above 1000 is clamped to 1000.
      * @type {number}
-     * @memberof AdminApiGetV1AdminAffiliates
+     * @memberof AdminApiGetAdminAffiliates
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1AdminAuthors operation in AdminApi.
+ * Request parameters for getAdminAuthors operation in AdminApi.
  * @export
- * @interface AdminApiGetV1AdminAuthorsRequest
+ * @interface AdminApiGetAdminAuthorsRequest
  */
-export interface AdminApiGetV1AdminAuthorsRequest {
+export interface AdminApiGetAdminAuthorsRequest {
     /**
      * Limit bounds the page. 0 or less means the default of 500; anything above 1000 is clamped to 1000.
      * @type {number}
-     * @memberof AdminApiGetV1AdminAuthors
+     * @memberof AdminApiGetAdminAuthors
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1AdminAuthorsByIdBasis operation in AdminApi.
+ * Request parameters for getAdminAuthorsByIdBasis operation in AdminApi.
  * @export
- * @interface AdminApiGetV1AdminAuthorsByIdBasisRequest
+ * @interface AdminApiGetAdminAuthorsByIdBasisRequest
  */
-export interface AdminApiGetV1AdminAuthorsByIdBasisRequest {
+export interface AdminApiGetAdminAuthorsByIdBasisRequest {
     /**
      * ID is the author record\&#39;s handle, from the path.
      * @type {string}
-     * @memberof AdminApiGetV1AdminAuthorsByIdBasis
+     * @memberof AdminApiGetAdminAuthorsByIdBasis
      */
     readonly id: string
 
     /**
      * Period is the UTC accrual month, YYYY-MM. Empty means every period; any other shape is refused with 400.
      * @type {string}
-     * @memberof AdminApiGetV1AdminAuthorsByIdBasis
+     * @memberof AdminApiGetAdminAuthorsByIdBasis
      */
     readonly period?: string
 }
 
 /**
- * Request parameters for getV1AdminReferralsBonuses operation in AdminApi.
+ * Request parameters for getAdminReferralsBonuses operation in AdminApi.
  * @export
- * @interface AdminApiGetV1AdminReferralsBonusesRequest
+ * @interface AdminApiGetAdminReferralsBonusesRequest
  */
-export interface AdminApiGetV1AdminReferralsBonusesRequest {
+export interface AdminApiGetAdminReferralsBonusesRequest {
     /**
      * Limit is how many referrals to return, as a decimal string in the &#x60;?limit&#x3D;&#x60; query. Absent, unparseable or non-positive means 500; over 1000 is clamped to 1000. It is a string rather than a number because the parse that has always served this route trims surrounding whitespace, and one parse rule is better than two.
      * @type {string}
-     * @memberof AdminApiGetV1AdminReferralsBonuses
+     * @memberof AdminApiGetAdminReferralsBonuses
      */
     readonly limit?: string
 }
 
 /**
- * Request parameters for getV1AdminTreasury operation in AdminApi.
+ * Request parameters for getAdminTreasury operation in AdminApi.
  * @export
- * @interface AdminApiGetV1AdminTreasuryRequest
+ * @interface AdminApiGetAdminTreasuryRequest
  */
-export interface AdminApiGetV1AdminTreasuryRequest {
+export interface AdminApiGetAdminTreasuryRequest {
     /**
      * Limit caps the journal entries returned. Out of range or unparseable takes the default.
      * @type {number}
-     * @memberof AdminApiGetV1AdminTreasury
+     * @memberof AdminApiGetAdminTreasury
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for patchV1AdminCatalogModelsByWildcard1 operation in AdminApi.
+ * Request parameters for patchAdminCatalogModelsByWildcard1 operation in AdminApi.
  * @export
- * @interface AdminApiPatchV1AdminCatalogModelsByWildcard1Request
+ * @interface AdminApiPatchAdminCatalogModelsByWildcard1Request
  */
-export interface AdminApiPatchV1AdminCatalogModelsByWildcard1Request {
+export interface AdminApiPatchAdminCatalogModelsByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof AdminApiPatchV1AdminCatalogModelsByWildcard1
+     * @memberof AdminApiPatchAdminCatalogModelsByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for patchV1AdminCatalogProvidersByName operation in AdminApi.
+ * Request parameters for patchAdminCatalogProvidersByName operation in AdminApi.
  * @export
- * @interface AdminApiPatchV1AdminCatalogProvidersByNameRequest
+ * @interface AdminApiPatchAdminCatalogProvidersByNameRequest
  */
-export interface AdminApiPatchV1AdminCatalogProvidersByNameRequest {
+export interface AdminApiPatchAdminCatalogProvidersByNameRequest {
     /**
      * Name is the provider the overlay belongs to, from the URL.
      * @type {string}
-     * @memberof AdminApiPatchV1AdminCatalogProvidersByName
+     * @memberof AdminApiPatchAdminCatalogProvidersByName
      */
     readonly name: string
 
     /**
      * 
      * @type {ProviderPatchIn}
-     * @memberof AdminApiPatchV1AdminCatalogProvidersByName
+     * @memberof AdminApiPatchAdminCatalogProvidersByName
      */
     readonly providerPatchIn: ProviderPatchIn
 }
 
 /**
- * Request parameters for postV1AdminAffiliatesByIdApprove operation in AdminApi.
+ * Request parameters for postAdminAffiliatesByIdApprove operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminAffiliatesByIdApproveRequest
+ * @interface AdminApiPostAdminAffiliatesByIdApproveRequest
  */
-export interface AdminApiPostV1AdminAffiliatesByIdApproveRequest {
+export interface AdminApiPostAdminAffiliatesByIdApproveRequest {
     /**
      * ID is the affiliate to approve, from the path.
      * @type {string}
-     * @memberof AdminApiPostV1AdminAffiliatesByIdApprove
+     * @memberof AdminApiPostAdminAffiliatesByIdApprove
      */
     readonly id: string
 
     /**
      * 
      * @type {Approval}
-     * @memberof AdminApiPostV1AdminAffiliatesByIdApprove
+     * @memberof AdminApiPostAdminAffiliatesByIdApprove
      */
     readonly approval: Approval
 }
 
 /**
- * Request parameters for postV1AdminAffiliatesByIdPayout operation in AdminApi.
+ * Request parameters for postAdminAffiliatesByIdPayout operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminAffiliatesByIdPayoutRequest
+ * @interface AdminApiPostAdminAffiliatesByIdPayoutRequest
  */
-export interface AdminApiPostV1AdminAffiliatesByIdPayoutRequest {
+export interface AdminApiPostAdminAffiliatesByIdPayoutRequest {
     /**
      * ID is the affiliate to pay, from the path.
      * @type {string}
-     * @memberof AdminApiPostV1AdminAffiliatesByIdPayout
+     * @memberof AdminApiPostAdminAffiliatesByIdPayout
      */
     readonly id: string
 
     /**
      * 
      * @type {Disbursal}
-     * @memberof AdminApiPostV1AdminAffiliatesByIdPayout
+     * @memberof AdminApiPostAdminAffiliatesByIdPayout
      */
     readonly disbursal: Disbursal
 }
 
 /**
- * Request parameters for postV1AdminAffiliatesByIdRate operation in AdminApi.
+ * Request parameters for postAdminAffiliatesByIdRate operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminAffiliatesByIdRateRequest
+ * @interface AdminApiPostAdminAffiliatesByIdRateRequest
  */
-export interface AdminApiPostV1AdminAffiliatesByIdRateRequest {
+export interface AdminApiPostAdminAffiliatesByIdRateRequest {
     /**
      * ID is the affiliate whose direct rate moves, from the path.
      * @type {string}
-     * @memberof AdminApiPostV1AdminAffiliatesByIdRate
+     * @memberof AdminApiPostAdminAffiliatesByIdRate
      */
     readonly id: string
 
     /**
      * 
      * @type {RateSet}
-     * @memberof AdminApiPostV1AdminAffiliatesByIdRate
+     * @memberof AdminApiPostAdminAffiliatesByIdRate
      */
     readonly rateSet: RateSet
 }
 
 /**
- * Request parameters for postV1AdminAffiliatesByIdSuspend operation in AdminApi.
+ * Request parameters for postAdminAffiliatesByIdSuspend operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminAffiliatesByIdSuspendRequest
+ * @interface AdminApiPostAdminAffiliatesByIdSuspendRequest
  */
-export interface AdminApiPostV1AdminAffiliatesByIdSuspendRequest {
+export interface AdminApiPostAdminAffiliatesByIdSuspendRequest {
     /**
      * ID is the affiliate\&#39;s server-minted handle, \&quot;aff_\&quot;-prefixed.
      * @type {string}
-     * @memberof AdminApiPostV1AdminAffiliatesByIdSuspend
+     * @memberof AdminApiPostAdminAffiliatesByIdSuspend
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AdminAuthorsByIdApprove operation in AdminApi.
+ * Request parameters for postAdminAuthorsByIdApprove operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminAuthorsByIdApproveRequest
+ * @interface AdminApiPostAdminAuthorsByIdApproveRequest
  */
-export interface AdminApiPostV1AdminAuthorsByIdApproveRequest {
+export interface AdminApiPostAdminAuthorsByIdApproveRequest {
     /**
      * ID is the author to approve, from the path.
      * @type {string}
-     * @memberof AdminApiPostV1AdminAuthorsByIdApprove
+     * @memberof AdminApiPostAdminAuthorsByIdApprove
      */
     readonly id: string
 
     /**
      * 
      * @type {ApproveRequest}
-     * @memberof AdminApiPostV1AdminAuthorsByIdApprove
+     * @memberof AdminApiPostAdminAuthorsByIdApprove
      */
     readonly approveRequest: ApproveRequest
 }
 
 /**
- * Request parameters for postV1AdminAuthorsByIdPayout operation in AdminApi.
+ * Request parameters for postAdminAuthorsByIdPayout operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminAuthorsByIdPayoutRequest
+ * @interface AdminApiPostAdminAuthorsByIdPayoutRequest
  */
-export interface AdminApiPostV1AdminAuthorsByIdPayoutRequest {
+export interface AdminApiPostAdminAuthorsByIdPayoutRequest {
     /**
      * ID is the author to pay, from the path.
      * @type {string}
-     * @memberof AdminApiPostV1AdminAuthorsByIdPayout
+     * @memberof AdminApiPostAdminAuthorsByIdPayout
      */
     readonly id: string
 
     /**
      * 
      * @type {PayoutRequest}
-     * @memberof AdminApiPostV1AdminAuthorsByIdPayout
+     * @memberof AdminApiPostAdminAuthorsByIdPayout
      */
     readonly payoutRequest: PayoutRequest
 }
 
 /**
- * Request parameters for postV1AdminAuthorsByIdSuspend operation in AdminApi.
+ * Request parameters for postAdminAuthorsByIdSuspend operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminAuthorsByIdSuspendRequest
+ * @interface AdminApiPostAdminAuthorsByIdSuspendRequest
  */
-export interface AdminApiPostV1AdminAuthorsByIdSuspendRequest {
+export interface AdminApiPostAdminAuthorsByIdSuspendRequest {
     /**
      * ID is the author record\&#39;s handle, \&quot;aut_\&quot;-prefixed.
      * @type {string}
-     * @memberof AdminApiPostV1AdminAuthorsByIdSuspend
+     * @memberof AdminApiPostAdminAuthorsByIdSuspend
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1AdminTreasuryPolicy operation in AdminApi.
+ * Request parameters for postAdminTreasuryPolicy operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminTreasuryPolicyRequest
+ * @interface AdminApiPostAdminTreasuryPolicyRequest
  */
-export interface AdminApiPostV1AdminTreasuryPolicyRequest {
+export interface AdminApiPostAdminTreasuryPolicyRequest {
     /**
      * 
      * @type {PolicyRequest}
-     * @memberof AdminApiPostV1AdminTreasuryPolicy
+     * @memberof AdminApiPostAdminTreasuryPolicy
      */
     readonly policyRequest: PolicyRequest
 }
 
 /**
- * Request parameters for postV1AdminTreasurySeed operation in AdminApi.
+ * Request parameters for postAdminTreasurySeed operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminTreasurySeedRequest
+ * @interface AdminApiPostAdminTreasurySeedRequest
  */
-export interface AdminApiPostV1AdminTreasurySeedRequest {
+export interface AdminApiPostAdminTreasurySeedRequest {
     /**
      * 
      * @type {SeedRequest}
-     * @memberof AdminApiPostV1AdminTreasurySeed
+     * @memberof AdminApiPostAdminTreasurySeed
      */
     readonly seedRequest: SeedRequest
 }
 
 /**
- * Request parameters for postV1AdminTreasurySweep operation in AdminApi.
+ * Request parameters for postAdminTreasurySweep operation in AdminApi.
  * @export
- * @interface AdminApiPostV1AdminTreasurySweepRequest
+ * @interface AdminApiPostAdminTreasurySweepRequest
  */
-export interface AdminApiPostV1AdminTreasurySweepRequest {
+export interface AdminApiPostAdminTreasurySweepRequest {
     /**
      * 
      * @type {SweepRequest}
-     * @memberof AdminApiPostV1AdminTreasurySweep
+     * @memberof AdminApiPostAdminTreasurySweep
      */
     readonly sweepRequest: SweepRequest
 }
 
 /**
- * Request parameters for putV1AdminEnablement operation in AdminApi.
+ * Request parameters for putAdminEnablement operation in AdminApi.
  * @export
- * @interface AdminApiPutV1AdminEnablementRequest
+ * @interface AdminApiPutAdminEnablementRequest
  */
-export interface AdminApiPutV1AdminEnablementRequest {
+export interface AdminApiPutAdminEnablementRequest {
     /**
      * 
      * @type {SetEnablementBody}
-     * @memberof AdminApiPutV1AdminEnablement
+     * @memberof AdminApiPutAdminEnablement
      */
     readonly setEnablementBody: SetEnablementBody
 }
@@ -7042,7 +7042,7 @@ export class AdminApi extends BaseAPI {
     }
 
     /**
-     * Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.  It ALWAYS answers 200 — a tile board that fails as a whole because one upstream is down is useless. Instead every upstream reports itself in sources[]: ok, degraded, or not-configured. A commerce read that failed for ANY org marks that source degraded, because the spend/credits totals are then an undercount and must not read healthy.  tokens30d is 0 for the same reason /usage has no series: there is no fleet token counter to read yet.
+     * Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.  It ALWAYS answers 200 — a tile board that fails as a whole because one upstream is down is useless. Instead every upstream reports itself in sources[]: ok, degraded, or not-configured. A commerce read that failed for ANY org marks that source degraded, because the spend/credits totals are then an undercount and must not read healthy.  The AI tiles — 30-day spend and tokens — come from the AI ledger (ledger.go), the plane that owns \"what was served\". They used to come from the money plane with the token counter hardcoded to zero, so the board read $0.00 and 0 tokens over a month in which the fleet served fifteen thousand requests. Credits still come from commerce, which owns the wallet.
      * @summary Is the Platform Overview tiles: how many orgs and users are in the caller\'s tenant window, the fleet workload counts, and month-to-date spend and credits.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7312,8 +7312,8 @@ export class AdminApi extends BaseAPI {
     }
 
     /**
-     * Returns the month-to-date money totals: one org\'s when org names one, else the fleet sum across every org a SuperAdmin can see.  series and byProduct are ALWAYS empty. A daily trend and a per-product split are not derivable from the commerce billing API — they live in insights/datastore — so this answers with the honest empty arrays rather than fabricating a shape the console would then chart. Same reason tokens and requests are 0: there is no fleet counter to read.
-     * @summary Returns the month-to-date money totals: one org\'s when org names one, else the fleet sum across every org a SuperAdmin can see.
+     * Returns the trailing 30 days of AI usage: one org\'s when org names one, else the whole fleet\'s — the spend, the tokens and the requests, the daily curve behind them, and the split by model.  It reads the AI ledger (ledger.go), which is the plane that owns this question. It used to ask the commerce billing API instead, once per org, and answer with a hardcoded empty series, zero tokens and zero requests, on the reasoning that a trend and a split were \"not derivable from the commerce billing API\". They are not — but the question was never commerce\'s. hanzo.cloud_usage carries a row per served request, so all three fall out of the same window the totals do.
+     * @summary Returns the trailing 30 days of AI usage: one org\'s when org names one, else the whole fleet\'s — the spend, the tokens and the requests, the daily curve behind them, and the split by model.
      * @param {AdminApiAdminUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7385,37 +7385,37 @@ export class AdminApi extends BaseAPI {
     /**
      * Lists every affiliate across the fleet with its ORG exposed, plus a fleet summary of lifetime accrued, still-pending and paid commission in integer cents.  PLATFORM SUDO ONLY, and a non-admin is refused outright. This is the cross-tenant view and it names orgs — exactly what the partner-facing leaderboard refuses to do. There is deliberately no org-scoped variant of this read; a partner sees its own standing through its own dashboard. Bounded per request.
      * @summary Lists every affiliate across the fleet with its ORG exposed, plus a fleet summary of lifetime accrued, still-pending and paid commission in integer cents.
-     * @param {AdminApiGetV1AdminAffiliatesRequest} requestParameters Request parameters.
+     * @param {AdminApiGetAdminAffiliatesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public getV1AdminAffiliates(requestParameters: AdminApiGetV1AdminAffiliatesRequest = {}, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).getV1AdminAffiliates(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getAdminAffiliates(requestParameters: AdminApiGetAdminAffiliatesRequest = {}, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).getAdminAffiliates(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the platform\'s whole author program — every org\'s author record, not the caller\'s — with each one\'s repository and deploy counts and a fleet roll-up of the money accrued, pending and paid.  It is a Hanzo platform operation: a caller who is not a SuperAdmin gets 403. It exposes the owning org of each author, which no tenant-facing read ever does.
      * @summary Returns the platform\'s whole author program — every org\'s author record, not the caller\'s — with each one\'s repository and deploy counts and a fleet roll-up of the money accrued, pending and paid.
-     * @param {AdminApiGetV1AdminAuthorsRequest} requestParameters Request parameters.
+     * @param {AdminApiGetAdminAuthorsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public getV1AdminAuthors(requestParameters: AdminApiGetV1AdminAuthorsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).getV1AdminAuthors(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getAdminAuthors(requestParameters: AdminApiGetAdminAuthorsRequest = {}, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).getAdminAuthors(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the audit trail behind ONE author\'s royalty — the same payload the author reads at /v1/authors/basis, from the same builder, so support sees exactly what the author sees rather than a parallel view free to drift.  The data object carries: id, status, asOf, shareBps, platformShareBps, defaultShareBps, shareSource, settlesTo, method (the formula, the rate card and the sizing), ledger (every row with its spend, the share applied then, the platform\'s matching half, whether it satisfies the formula and the attribution edges that explain it), reconciliation (does the ledger foot to the balance) and window (what slice was actually returned) — plus period when one was requested.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
      * @summary Returns the audit trail behind ONE author\'s royalty — the same payload the author reads at /v1/authors/basis, from the same builder, so support sees exactly what the author sees rather than a parallel view free to drift.
-     * @param {AdminApiGetV1AdminAuthorsByIdBasisRequest} requestParameters Request parameters.
+     * @param {AdminApiGetAdminAuthorsByIdBasisRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public getV1AdminAuthorsByIdBasis(requestParameters: AdminApiGetV1AdminAuthorsByIdBasisRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).getV1AdminAuthorsByIdBasis(requestParameters.id, requestParameters.period, options).then((request) => request(this.axios, this.basePath));
+    public getAdminAuthorsByIdBasis(requestParameters: AdminApiGetAdminAuthorsByIdBasisRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).getAdminAuthorsByIdBasis(requestParameters.id, requestParameters.period, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7425,8 +7425,8 @@ export class AdminApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public getV1AdminCatalog(options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).getV1AdminCatalog(options).then((request) => request(this.axios, this.basePath));
+    public getAdminCatalog(options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).getAdminCatalog(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7436,8 +7436,8 @@ export class AdminApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public getV1AdminEnablement(options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).getV1AdminEnablement(options).then((request) => request(this.axios, this.basePath));
+    public getAdminEnablement(options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).getAdminEnablement(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7447,104 +7447,104 @@ export class AdminApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public getV1AdminReferrals(options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).getV1AdminReferrals(options).then((request) => request(this.axios, this.basePath));
+    public getAdminReferrals(options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).getAdminReferrals(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns every referral edge in the directory with a fleet summary.  SuperAdmin only, fail-closed. This is the ATTRIBUTION directory — who referred whom and whether that referee became a customer. It carries no amounts because this package issues none. The cross-tenant referral ANALYTICS board (top referrers, conversion) is a different surface, GET /v1/admin/referrals, owned by the affiliates subsystem over the shared attribution spine.
      * @summary Returns every referral edge in the directory with a fleet summary.
-     * @param {AdminApiGetV1AdminReferralsBonusesRequest} requestParameters Request parameters.
+     * @param {AdminApiGetAdminReferralsBonusesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public getV1AdminReferralsBonuses(requestParameters: AdminApiGetV1AdminReferralsBonusesRequest = {}, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).getV1AdminReferralsBonuses(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getAdminReferralsBonuses(requestParameters: AdminApiGetAdminReferralsBonusesRequest = {}, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).getAdminReferralsBonuses(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the whole treasury board for a SuperAdmin: the reserve fund report, the recent double-entry journal, and the Hanzo L1 anchor status of the ledger root. ?limit= bounds the journal page.
      * @summary Returns the whole treasury board for a SuperAdmin: the reserve fund report, the recent double-entry journal, and the Hanzo L1 anchor status of the ledger root.
-     * @param {AdminApiGetV1AdminTreasuryRequest} requestParameters Request parameters.
+     * @param {AdminApiGetAdminTreasuryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public getV1AdminTreasury(requestParameters: AdminApiGetV1AdminTreasuryRequest = {}, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).getV1AdminTreasury(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getAdminTreasury(requestParameters: AdminApiGetAdminTreasuryRequest = {}, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).getAdminTreasury(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets one model\'s availability overlay — and the price overrides applied on top of the catalog — then answers the new effective overlay, so a console needs no second read. The model id is the whole remaining path, so a slashed id like `acme/some-model-1` addresses intact.  SuperAdmin only; every other caller is 403, decided before the body is read. The overlay is PLATFORM-WIDE — this is the catalog every org prices against, not a per-org setting — and `betaOrgs` is what narrows a beta to named orgs.  Only the fields the patch names change; an entry with no overlay yet starts from the catalog default, which is enabled. `state` is the coherent tri-state setter (`off`|`beta`|`ga`) and the low-level `enabled`/`beta` flags are applied AFTER it, so they win where both are sent; anything else in `state` is 400. A field sent as an explicit `null` arrives indistinguishable from an absent one, so null does not clear anything.  The rule worth reading twice: a disabled entry that still carries beta orgs IS a beta — `{\"enabled\":false,\"betaOrgs\":[\"acme\"]}` leaves acme seeing the model. Only an explicit `off` (or `beta:false`) with an empty list is the absolute kill switch that a user\'s own beta opt-in can never re-open.  `overrides` is an RFC 7386 merge patch, stored and echoed back verbatim; it must be a JSON object or null — an array or a scalar is refused — and is bounded in size and nesting depth. An uninitialised overlay store answers 503.
      * @summary Turn one model off, into beta for named orgs, or generally available
-     * @param {AdminApiPatchV1AdminCatalogModelsByWildcard1Request} requestParameters Request parameters.
+     * @param {AdminApiPatchAdminCatalogModelsByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public patchV1AdminCatalogModelsByWildcard1(requestParameters: AdminApiPatchV1AdminCatalogModelsByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).patchV1AdminCatalogModelsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public patchAdminCatalogModelsByWildcard1(requestParameters: AdminApiPatchAdminCatalogModelsByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).patchAdminCatalogModelsByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets one provider\'s availability overlay.  The overlay decides whether a provider is off, in beta for named orgs, or generally available, and carries the price overrides applied on top of the catalog. Only the fields the patch names change; every other field keeps the value it had, and an absent overlay starts from the catalog default (enabled). Answers the new effective overlay, so a console needs no second read.  SuperAdmin only.
      * @summary Sets one provider\'s availability overlay.
-     * @param {AdminApiPatchV1AdminCatalogProvidersByNameRequest} requestParameters Request parameters.
+     * @param {AdminApiPatchAdminCatalogProvidersByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public patchV1AdminCatalogProvidersByName(requestParameters: AdminApiPatchV1AdminCatalogProvidersByNameRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).patchV1AdminCatalogProvidersByName(requestParameters.name, requestParameters.providerPatchIn, options).then((request) => request(this.axios, this.basePath));
+    public patchAdminCatalogProvidersByName(requestParameters: AdminApiPatchAdminCatalogProvidersByNameRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).patchAdminCatalogProvidersByName(requestParameters.name, requestParameters.providerPatchIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.  The code is taken from the body if one is given, else the vanity code the applicant requested, else a slug derived for them. Codes are ONE global namespace, so a taken code is a 409 and nothing is approved. The minted code is also mirrored as a link row so click tracking is uniform across every code the affiliate holds; that mirror is best-effort and its failure never fails the approval.  Approval is what makes an affiliate eligible: before it, attribution against its code does not resolve and no sweep accrues to it. PLATFORM SUDO ONLY. Audited.
      * @summary Approves an affiliate and MINTS its referral code — the moment the partner has a working share link and starts accruing.
-     * @param {AdminApiPostV1AdminAffiliatesByIdApproveRequest} requestParameters Request parameters.
+     * @param {AdminApiPostAdminAffiliatesByIdApproveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAffiliatesByIdApprove(requestParameters: AdminApiPostV1AdminAffiliatesByIdApproveRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAffiliatesByIdApprove(requestParameters.id, requestParameters.approval, options).then((request) => request(this.axios, this.basePath));
+    public postAdminAffiliatesByIdApprove(requestParameters: AdminApiPostAdminAffiliatesByIdApproveRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminAffiliatesByIdApprove(requestParameters.id, requestParameters.approval, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.  The amount is reserved atomically against the affiliate\'s PENDING commission — accrued minus paid — so a payout can never exceed what is owed. The METHOD decides whether money actually moves: `credits` issues a commerce grant into the affiliate ORG\'s own wallet, tagged so the ledger can tell an affiliate payout apart from an admin or referral grant; every other method — wire, paypal and the rest — is RECORD-ONLY: the payout row and the balances move, the cash is disbursed out of band.  The amount is integer cents and must be positive. PLATFORM SUDO ONLY. Audited.
      * @summary Pays out accrued commission and answers the payout row with the affiliate\'s updated balances.
-     * @param {AdminApiPostV1AdminAffiliatesByIdPayoutRequest} requestParameters Request parameters.
+     * @param {AdminApiPostAdminAffiliatesByIdPayoutRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAffiliatesByIdPayout(requestParameters: AdminApiPostV1AdminAffiliatesByIdPayoutRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAffiliatesByIdPayout(requestParameters.id, requestParameters.disbursal, options).then((request) => request(this.axios, this.basePath));
+    public postAdminAffiliatesByIdPayout(requestParameters: AdminApiPostAdminAffiliatesByIdPayoutRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminAffiliatesByIdPayout(requestParameters.id, requestParameters.disbursal, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.  The rate is CAPPED so that the direct rate plus the platform-wide second- and third-level rates can never exceed the whole margin — the structural guarantee that everything paid on one source event stays inside the margin actually earned. The cap is resolved from the rates in force at the moment of the call and quoted in the refusal, because those switches move; a hardcoded bound would start lying the moment somebody edits the schedule.  Only the direct level is per-affiliate. The second and third levels are platform switches and are not settable here. The change applies to FUTURE accruals — commission already latched for a period is not recomputed. PLATFORM SUDO ONLY. Audited.
      * @summary Sets one affiliate\'s DIRECT commission rate, in basis points of Hanzo\'s margin.
-     * @param {AdminApiPostV1AdminAffiliatesByIdRateRequest} requestParameters Request parameters.
+     * @param {AdminApiPostAdminAffiliatesByIdRateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAffiliatesByIdRate(requestParameters: AdminApiPostV1AdminAffiliatesByIdRateRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAffiliatesByIdRate(requestParameters.id, requestParameters.rateSet, options).then((request) => request(this.axios, this.basePath));
+    public postAdminAffiliatesByIdRate(requestParameters: AdminApiPostAdminAffiliatesByIdRateRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminAffiliatesByIdRate(requestParameters.id, requestParameters.rateSet, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.  It CLAWS NOTHING BACK. Commission already accrued stays accrued and stays payable, and existing attribution edges are left standing — suspension ends earning, it does not unwind history. PLATFORM SUDO ONLY. Audited.
      * @summary Suspends an affiliate: it stops accruing on the next sweep, and its code stops resolving for new attributions.
-     * @param {AdminApiPostV1AdminAffiliatesByIdSuspendRequest} requestParameters Request parameters.
+     * @param {AdminApiPostAdminAffiliatesByIdSuspendRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAffiliatesByIdSuspend(requestParameters: AdminApiPostV1AdminAffiliatesByIdSuspendRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAffiliatesByIdSuspend(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAdminAffiliatesByIdSuspend(requestParameters: AdminApiPostAdminAffiliatesByIdSuspendRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminAffiliatesByIdSuspend(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7554,44 +7554,44 @@ export class AdminApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAffiliatesSweep(options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAffiliatesSweep(options).then((request) => request(this.axios, this.basePath));
+    public postAdminAffiliatesSweep(options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminAffiliatesSweep(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Admits one author to EARNING, optionally on a negotiated royalty share. Until this runs, a connected author accrues nothing however many verified repositories they have.  A share override applies from here forward only — existing ledger rows keep the share that was applied when they were written, because a rate change must never rewrite what was already owed.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
      * @summary Admits one author to EARNING, optionally on a negotiated royalty share.
-     * @param {AdminApiPostV1AdminAuthorsByIdApproveRequest} requestParameters Request parameters.
+     * @param {AdminApiPostAdminAuthorsByIdApproveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAuthorsByIdApprove(requestParameters: AdminApiPostV1AdminAuthorsByIdApproveRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAuthorsByIdApprove(requestParameters.id, requestParameters.approveRequest, options).then((request) => request(this.axios, this.basePath));
+    public postAdminAuthorsByIdApprove(requestParameters: AdminApiPostAdminAuthorsByIdApproveRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminAuthorsByIdApprove(requestParameters.id, requestParameters.approveRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records a payout of accrued royalty and settles it.  The amount is RESERVED against the author\'s pending royalty atomically before anything is paid, so a payout can never exceed what is owed even under concurrent calls. An external author\'s payout is then BACKED against the platform reserve fund — a second, independent guard — and refused with 402 if the reserve cannot cover it, with the reservation voided. A \"credits\" method issues the actual wallet grant after both guards; a cash method is record-only. A first-party (treasury) author\'s royalty is realized into Hanzo\'s own reserve instead of an external wallet, and every payout row discloses which of the three it was.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
      * @summary Records a payout of accrued royalty and settles it.
-     * @param {AdminApiPostV1AdminAuthorsByIdPayoutRequest} requestParameters Request parameters.
+     * @param {AdminApiPostAdminAuthorsByIdPayoutRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAuthorsByIdPayout(requestParameters: AdminApiPostV1AdminAuthorsByIdPayoutRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAuthorsByIdPayout(requestParameters.id, requestParameters.payoutRequest, options).then((request) => request(this.axios, this.basePath));
+    public postAdminAuthorsByIdPayout(requestParameters: AdminApiPostAdminAuthorsByIdPayoutRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminAuthorsByIdPayout(requestParameters.id, requestParameters.payoutRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Stops one author earning. Their record, verified claims and ledger are untouched — suspension halts future accrual, it does not erase what was already owed, and it does not delete the evidence behind it.  A Hanzo platform operation: a caller who is not a SuperAdmin gets 403.
      * @summary Stops one author earning.
-     * @param {AdminApiPostV1AdminAuthorsByIdSuspendRequest} requestParameters Request parameters.
+     * @param {AdminApiPostAdminAuthorsByIdSuspendRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAuthorsByIdSuspend(requestParameters: AdminApiPostV1AdminAuthorsByIdSuspendRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAuthorsByIdSuspend(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postAdminAuthorsByIdSuspend(requestParameters: AdminApiPostAdminAuthorsByIdSuspendRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminAuthorsByIdSuspend(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7601,8 +7601,8 @@ export class AdminApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminAuthorsSweep(options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminAuthorsSweep(options).then((request) => request(this.axios, this.basePath));
+    public postAdminAuthorsSweep(options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminAuthorsSweep(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7612,8 +7612,8 @@ export class AdminApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminReferralsSweep(options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminReferralsSweep(options).then((request) => request(this.axios, this.basePath));
+    public postAdminReferralsSweep(options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminReferralsSweep(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7623,56 +7623,56 @@ export class AdminApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminTreasuryAnchor(options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminTreasuryAnchor(options).then((request) => request(this.axios, this.basePath));
+    public postAdminTreasuryAnchor(options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminTreasuryAnchor(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy. 0–10000; the change is audited. SuperAdmin only.
      * @summary Sets the revenue-share basis points a sweep accrues into the reserve fund and returns the stored policy.
-     * @param {AdminApiPostV1AdminTreasuryPolicyRequest} requestParameters Request parameters.
+     * @param {AdminApiPostAdminTreasuryPolicyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminTreasuryPolicy(requestParameters: AdminApiPostV1AdminTreasuryPolicyRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminTreasuryPolicy(requestParameters.policyRequest, options).then((request) => request(this.axios, this.basePath));
+    public postAdminTreasuryPolicy(requestParameters: AdminApiPostAdminTreasuryPolicyRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminTreasuryPolicy(requestParameters.policyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Injects bootstrap capital into the reserve fund so backed payouts can begin before the first revenue-share sweep, and returns the journal entry it wrote. A repeat of the same ref is at-most-once and reports created=false. SuperAdmin only.
      * @summary Injects bootstrap capital into the reserve fund so backed payouts can begin before the first revenue-share sweep, and returns the journal entry it wrote.
-     * @param {AdminApiPostV1AdminTreasurySeedRequest} requestParameters Request parameters.
+     * @param {AdminApiPostAdminTreasurySeedRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminTreasurySeed(requestParameters: AdminApiPostV1AdminTreasurySeedRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminTreasurySeed(requestParameters.seedRequest, options).then((request) => request(this.axios, this.basePath));
+    public postAdminTreasurySeed(requestParameters: AdminApiPostAdminTreasurySeedRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminTreasurySeed(requestParameters.seedRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Posts the revenue-share accrual for one period — revenue into the reserve fund, at the current policy\'s basis points — and returns what it moved. It is idempotent per period: a re-run of a period already swept accrues nothing and reports created=false. SuperAdmin only.
      * @summary Posts the revenue-share accrual for one period — revenue into the reserve fund, at the current policy\'s basis points — and returns what it moved.
-     * @param {AdminApiPostV1AdminTreasurySweepRequest} requestParameters Request parameters.
+     * @param {AdminApiPostAdminTreasurySweepRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public postV1AdminTreasurySweep(requestParameters: AdminApiPostV1AdminTreasurySweepRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).postV1AdminTreasurySweep(requestParameters.sweepRequest, options).then((request) => request(this.axios, this.basePath));
+    public postAdminTreasurySweep(requestParameters: AdminApiPostAdminTreasurySweepRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).postAdminTreasurySweep(requestParameters.sweepRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets one item\'s global enablement state — off, beta or ga — and optionally replaces the list of orgs granted its beta. It is generic over kind, so the same call manages models, providers and product features through the one registry. `off` is an absolute kill switch: a self-service opt-in can never re-open it. SuperAdmin only; every other caller is refused.
      * @summary Sets one item\'s global enablement state — off, beta or ga — and optionally replaces the list of orgs granted its beta.
-     * @param {AdminApiPutV1AdminEnablementRequest} requestParameters Request parameters.
+     * @param {AdminApiPutAdminEnablementRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public putV1AdminEnablement(requestParameters: AdminApiPutV1AdminEnablementRequest, options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).putV1AdminEnablement(requestParameters.setEnablementBody, options).then((request) => request(this.axios, this.basePath));
+    public putAdminEnablement(requestParameters: AdminApiPutAdminEnablementRequest, options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).putAdminEnablement(requestParameters.setEnablementBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7682,8 +7682,8 @@ export class AdminApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AdminApi
      */
-    public putV1AdminTreasuryAnchorSigner(options?: RawAxiosRequestConfig) {
-        return AdminApiFp(this.configuration).putV1AdminTreasuryAnchorSigner(options).then((request) => request(this.axios, this.basePath));
+    public putAdminTreasuryAnchorSigner(options?: RawAxiosRequestConfig) {
+        return AdminApiFp(this.configuration).putAdminTreasuryAnchorSigner(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

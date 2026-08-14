@@ -46,9 +46,9 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketplaceListingsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMarketplaceListingsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1MarketplaceListingsById', 'id', id)
+            assertParamExists('deleteMarketplaceListingsById', 'id', id)
             const localVarPath = `/v1/marketplace/listings/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -79,7 +79,7 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Marketplace: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketplace: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketplace`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -109,7 +109,7 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketplaceListings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMarketplaceListings: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/marketplace/listings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -140,9 +140,9 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketplaceInstall: async (installReq: InstallReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketplaceInstall: async (installReq: InstallReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'installReq' is not null or undefined
-            assertParamExists('postV1MarketplaceInstall', 'installReq', installReq)
+            assertParamExists('postMarketplaceInstall', 'installReq', installReq)
             const localVarPath = `/v1/marketplace/install`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -176,9 +176,9 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketplaceListings: async (publishReq: PublishReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketplaceListings: async (publishReq: PublishReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'publishReq' is not null or undefined
-            assertParamExists('postV1MarketplaceListings', 'publishReq', publishReq)
+            assertParamExists('postMarketplaceListings', 'publishReq', publishReq)
             const localVarPath = `/v1/marketplace/listings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -212,9 +212,9 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketplaceUninstall: async (installReq: InstallReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMarketplaceUninstall: async (installReq: InstallReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'installReq' is not null or undefined
-            assertParamExists('postV1MarketplaceUninstall', 'installReq', installReq)
+            assertParamExists('postMarketplaceUninstall', 'installReq', installReq)
             const localVarPath = `/v1/marketplace/uninstall`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -258,10 +258,10 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1MarketplaceListingsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1MarketplaceListingsById(id, options);
+        async deleteMarketplaceListingsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMarketplaceListingsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.deleteV1MarketplaceListingsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.deleteMarketplaceListingsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -270,10 +270,10 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Marketplace(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketCatalog>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Marketplace(options);
+        async getMarketplace(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarketCatalog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplace(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getV1Marketplace']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplace']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -282,10 +282,10 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1MarketplaceListings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListingPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1MarketplaceListings(options);
+        async getMarketplaceListings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListingPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceListings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getV1MarketplaceListings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.getMarketplaceListings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -295,10 +295,10 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketplaceInstall(installReq: InstallReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallState>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketplaceInstall(installReq, options);
+        async postMarketplaceInstall(installReq: InstallReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallState>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceInstall(installReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postV1MarketplaceInstall']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceInstall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -308,10 +308,10 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketplaceListings(publishReq: PublishReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Listing>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketplaceListings(publishReq, options);
+        async postMarketplaceListings(publishReq: PublishReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Listing>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceListings(publishReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postV1MarketplaceListings']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceListings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -321,10 +321,10 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MarketplaceUninstall(installReq: InstallReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallState>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MarketplaceUninstall(installReq, options);
+        async postMarketplaceUninstall(installReq: InstallReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InstallState>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMarketplaceUninstall(installReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postV1MarketplaceUninstall']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.postMarketplaceUninstall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -340,12 +340,12 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
         /**
          * Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it.
          * @summary Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204.
-         * @param {MarketplaceApiDeleteV1MarketplaceListingsByIdRequest} requestParameters Request parameters.
+         * @param {MarketplaceApiDeleteMarketplaceListingsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1MarketplaceListingsById(requestParameters: MarketplaceApiDeleteV1MarketplaceListingsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1MarketplaceListingsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteMarketplaceListingsById(requestParameters: MarketplaceApiDeleteMarketplaceListingsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMarketplaceListingsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Discover lists every tool and agent the caller can reach in their own org and project, enriched with any public listing\'s title, category and price, and with installed=true on the ones already activated for that scope. It is the shop window: one read that answers what exists, what it costs and what is already on.
@@ -353,8 +353,8 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Marketplace(options?: RawAxiosRequestConfig): AxiosPromise<MarketCatalog> {
-            return localVarFp.getV1Marketplace(options).then((request) => request(axios, basePath));
+        getMarketplace(options?: RawAxiosRequestConfig): AxiosPromise<MarketCatalog> {
+            return localVarFp.getMarketplace(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the listings the caller\'s own org has published — what this org is offering, not what it can buy. A publisher only ever sees its own rows.
@@ -362,94 +362,94 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1MarketplaceListings(options?: RawAxiosRequestConfig): AxiosPromise<ListingPage> {
-            return localVarFp.getV1MarketplaceListings(options).then((request) => request(axios, basePath));
+        getMarketplaceListings(options?: RawAxiosRequestConfig): AxiosPromise<ListingPage> {
+            return localVarFp.getMarketplaceListings(options).then((request) => request(axios, basePath));
         },
         /**
          * Install activates one tool for the caller\'s own org and project. A marketplace install IS the tool plane\'s activation write — one store, one truth — so an installed capability is immediately dispatchable and a monetized one is priced from its listing at every call. The tool must resolve in the caller\'s scope, so installing something that does not exist is refused rather than recorded.
          * @summary Install activates one tool for the caller\'s own org and project.
-         * @param {MarketplaceApiPostV1MarketplaceInstallRequest} requestParameters Request parameters.
+         * @param {MarketplaceApiPostMarketplaceInstallRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketplaceInstall(requestParameters: MarketplaceApiPostV1MarketplaceInstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallState> {
-            return localVarFp.postV1MarketplaceInstall(requestParameters.installReq, options).then((request) => request(axios, basePath));
+        postMarketplaceInstall(requestParameters: MarketplaceApiPostMarketplaceInstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallState> {
+            return localVarFp.postMarketplaceInstall(requestParameters.installReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 seam settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
          * @summary Publish offers one tool on the marketplace, optionally monetized.
-         * @param {MarketplaceApiPostV1MarketplaceListingsRequest} requestParameters Request parameters.
+         * @param {MarketplaceApiPostMarketplaceListingsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketplaceListings(requestParameters: MarketplaceApiPostV1MarketplaceListingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Listing> {
-            return localVarFp.postV1MarketplaceListings(requestParameters.publishReq, options).then((request) => request(axios, basePath));
+        postMarketplaceListings(requestParameters: MarketplaceApiPostMarketplaceListingsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Listing> {
+            return localVarFp.postMarketplaceListings(requestParameters.publishReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there. It is the exact inverse of install and touches the same activation record; deactivating something that was never active is not an error. The listing itself is untouched — this withdraws the caller\'s use of a capability, not anyone\'s offer of it.
          * @summary Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there.
-         * @param {MarketplaceApiPostV1MarketplaceUninstallRequest} requestParameters Request parameters.
+         * @param {MarketplaceApiPostMarketplaceUninstallRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MarketplaceUninstall(requestParameters: MarketplaceApiPostV1MarketplaceUninstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallState> {
-            return localVarFp.postV1MarketplaceUninstall(requestParameters.installReq, options).then((request) => request(axios, basePath));
+        postMarketplaceUninstall(requestParameters: MarketplaceApiPostMarketplaceUninstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<InstallState> {
+            return localVarFp.postMarketplaceUninstall(requestParameters.installReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1MarketplaceListingsById operation in MarketplaceApi.
+ * Request parameters for deleteMarketplaceListingsById operation in MarketplaceApi.
  * @export
- * @interface MarketplaceApiDeleteV1MarketplaceListingsByIdRequest
+ * @interface MarketplaceApiDeleteMarketplaceListingsByIdRequest
  */
-export interface MarketplaceApiDeleteV1MarketplaceListingsByIdRequest {
+export interface MarketplaceApiDeleteMarketplaceListingsByIdRequest {
     /**
      * ID is the listing to unpublish, from the path.
      * @type {string}
-     * @memberof MarketplaceApiDeleteV1MarketplaceListingsById
+     * @memberof MarketplaceApiDeleteMarketplaceListingsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1MarketplaceInstall operation in MarketplaceApi.
+ * Request parameters for postMarketplaceInstall operation in MarketplaceApi.
  * @export
- * @interface MarketplaceApiPostV1MarketplaceInstallRequest
+ * @interface MarketplaceApiPostMarketplaceInstallRequest
  */
-export interface MarketplaceApiPostV1MarketplaceInstallRequest {
+export interface MarketplaceApiPostMarketplaceInstallRequest {
     /**
      * 
      * @type {InstallReq}
-     * @memberof MarketplaceApiPostV1MarketplaceInstall
+     * @memberof MarketplaceApiPostMarketplaceInstall
      */
     readonly installReq: InstallReq
 }
 
 /**
- * Request parameters for postV1MarketplaceListings operation in MarketplaceApi.
+ * Request parameters for postMarketplaceListings operation in MarketplaceApi.
  * @export
- * @interface MarketplaceApiPostV1MarketplaceListingsRequest
+ * @interface MarketplaceApiPostMarketplaceListingsRequest
  */
-export interface MarketplaceApiPostV1MarketplaceListingsRequest {
+export interface MarketplaceApiPostMarketplaceListingsRequest {
     /**
      * 
      * @type {PublishReq}
-     * @memberof MarketplaceApiPostV1MarketplaceListings
+     * @memberof MarketplaceApiPostMarketplaceListings
      */
     readonly publishReq: PublishReq
 }
 
 /**
- * Request parameters for postV1MarketplaceUninstall operation in MarketplaceApi.
+ * Request parameters for postMarketplaceUninstall operation in MarketplaceApi.
  * @export
- * @interface MarketplaceApiPostV1MarketplaceUninstallRequest
+ * @interface MarketplaceApiPostMarketplaceUninstallRequest
  */
-export interface MarketplaceApiPostV1MarketplaceUninstallRequest {
+export interface MarketplaceApiPostMarketplaceUninstallRequest {
     /**
      * 
      * @type {InstallReq}
-     * @memberof MarketplaceApiPostV1MarketplaceUninstall
+     * @memberof MarketplaceApiPostMarketplaceUninstall
      */
     readonly installReq: InstallReq
 }
@@ -464,13 +464,13 @@ export class MarketplaceApi extends BaseAPI {
     /**
      * Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204. Only the publishing org can remove its own listing; an id that is unknown, or belongs to another org, is the same 404, so a probe learns nothing about what exists. Removing a listing removes its price from per-call enforcement; it does not uninstall the tool for anyone who already installed it.
      * @summary Unpublish withdraws one of the caller org\'s listings from the marketplace and answers 204.
-     * @param {MarketplaceApiDeleteV1MarketplaceListingsByIdRequest} requestParameters Request parameters.
+     * @param {MarketplaceApiDeleteMarketplaceListingsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
-    public deleteV1MarketplaceListingsById(requestParameters: MarketplaceApiDeleteV1MarketplaceListingsByIdRequest, options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).deleteV1MarketplaceListingsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteMarketplaceListingsById(requestParameters: MarketplaceApiDeleteMarketplaceListingsByIdRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).deleteMarketplaceListingsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -480,8 +480,8 @@ export class MarketplaceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
-    public getV1Marketplace(options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).getV1Marketplace(options).then((request) => request(this.axios, this.basePath));
+    public getMarketplace(options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).getMarketplace(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -491,44 +491,44 @@ export class MarketplaceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
-    public getV1MarketplaceListings(options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).getV1MarketplaceListings(options).then((request) => request(this.axios, this.basePath));
+    public getMarketplaceListings(options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).getMarketplaceListings(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Install activates one tool for the caller\'s own org and project. A marketplace install IS the tool plane\'s activation write — one store, one truth — so an installed capability is immediately dispatchable and a monetized one is priced from its listing at every call. The tool must resolve in the caller\'s scope, so installing something that does not exist is refused rather than recorded.
      * @summary Install activates one tool for the caller\'s own org and project.
-     * @param {MarketplaceApiPostV1MarketplaceInstallRequest} requestParameters Request parameters.
+     * @param {MarketplaceApiPostMarketplaceInstallRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
-    public postV1MarketplaceInstall(requestParameters: MarketplaceApiPostV1MarketplaceInstallRequest, options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).postV1MarketplaceInstall(requestParameters.installReq, options).then((request) => request(this.axios, this.basePath));
+    public postMarketplaceInstall(requestParameters: MarketplaceApiPostMarketplaceInstallRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceInstall(requestParameters.installReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 seam settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
      * @summary Publish offers one tool on the marketplace, optionally monetized.
-     * @param {MarketplaceApiPostV1MarketplaceListingsRequest} requestParameters Request parameters.
+     * @param {MarketplaceApiPostMarketplaceListingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
-    public postV1MarketplaceListings(requestParameters: MarketplaceApiPostV1MarketplaceListingsRequest, options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).postV1MarketplaceListings(requestParameters.publishReq, options).then((request) => request(this.axios, this.basePath));
+    public postMarketplaceListings(requestParameters: MarketplaceApiPostMarketplaceListingsRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceListings(requestParameters.publishReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there. It is the exact inverse of install and touches the same activation record; deactivating something that was never active is not an error. The listing itself is untouched — this withdraws the caller\'s use of a capability, not anyone\'s offer of it.
      * @summary Uninstall deactivates one tool for the caller\'s own org and project, so it stops being dispatchable there.
-     * @param {MarketplaceApiPostV1MarketplaceUninstallRequest} requestParameters Request parameters.
+     * @param {MarketplaceApiPostMarketplaceUninstallRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
-    public postV1MarketplaceUninstall(requestParameters: MarketplaceApiPostV1MarketplaceUninstallRequest, options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).postV1MarketplaceUninstall(requestParameters.installReq, options).then((request) => request(this.axios, this.basePath));
+    public postMarketplaceUninstall(requestParameters: MarketplaceApiPostMarketplaceUninstallRequest, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).postMarketplaceUninstall(requestParameters.installReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

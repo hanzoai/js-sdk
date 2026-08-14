@@ -35,7 +35,7 @@ export const CsrfApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Csrf: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCsrf: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/csrf`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const CsrfApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Csrf(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CsrfResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Csrf(options);
+        async getCsrf(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CsrfResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCsrf(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CsrfApi.getV1Csrf']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CsrfApi.getCsrf']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const CsrfApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Csrf(options?: RawAxiosRequestConfig): AxiosPromise<CsrfResp> {
-            return localVarFp.getV1Csrf(options).then((request) => request(axios, basePath));
+        getCsrf(options?: RawAxiosRequestConfig): AxiosPromise<CsrfResp> {
+            return localVarFp.getCsrf(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class CsrfApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CsrfApi
      */
-    public getV1Csrf(options?: RawAxiosRequestConfig) {
-        return CsrfApiFp(this.configuration).getV1Csrf(options).then((request) => request(this.axios, this.basePath));
+    public getCsrf(options?: RawAxiosRequestConfig) {
+        return CsrfApiFp(this.configuration).getCsrf(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

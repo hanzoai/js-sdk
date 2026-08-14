@@ -33,7 +33,7 @@ export const FinetuneApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetuneHfDatasets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinetuneHfDatasets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finetune/hf/datasets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const FinetuneApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetuneHfModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinetuneHfModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finetune/hf/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -93,7 +93,7 @@ export const FinetuneApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetuneHfRepo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinetuneHfRepo: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finetune/hf/repo`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -123,7 +123,7 @@ export const FinetuneApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetuneJob: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinetuneJob: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finetune/job`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -153,7 +153,7 @@ export const FinetuneApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetuneJobs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinetuneJobs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finetune/jobs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -183,7 +183,7 @@ export const FinetuneApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetunePresets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinetunePresets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finetune/presets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -213,7 +213,7 @@ export const FinetuneApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FinetuneCancel: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFinetuneCancel: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finetune/cancel`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -243,7 +243,7 @@ export const FinetuneApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FinetuneDeploy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFinetuneDeploy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finetune/deploy`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -273,7 +273,7 @@ export const FinetuneApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FinetuneJobs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFinetuneJobs: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finetune/jobs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -313,10 +313,10 @@ export const FinetuneApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinetuneHfDatasets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinetuneHfDatasets(options);
+        async getFinetuneHfDatasets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinetuneHfDatasets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getV1FinetuneHfDatasets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getFinetuneHfDatasets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -325,10 +325,10 @@ export const FinetuneApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinetuneHfModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinetuneHfModels(options);
+        async getFinetuneHfModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinetuneHfModels(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getV1FinetuneHfModels']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getFinetuneHfModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -337,10 +337,10 @@ export const FinetuneApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinetuneHfRepo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinetuneHfRepo(options);
+        async getFinetuneHfRepo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinetuneHfRepo(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getV1FinetuneHfRepo']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getFinetuneHfRepo']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -349,10 +349,10 @@ export const FinetuneApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinetuneJob(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinetuneJob(options);
+        async getFinetuneJob(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinetuneJob(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getV1FinetuneJob']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getFinetuneJob']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -361,10 +361,10 @@ export const FinetuneApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinetuneJobs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinetuneJobs(options);
+        async getFinetuneJobs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinetuneJobs(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getV1FinetuneJobs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getFinetuneJobs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -373,10 +373,10 @@ export const FinetuneApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinetunePresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinetunePresets(options);
+        async getFinetunePresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinetunePresets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getV1FinetunePresets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.getFinetunePresets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -385,10 +385,10 @@ export const FinetuneApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1FinetuneCancel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1FinetuneCancel(options);
+        async postFinetuneCancel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFinetuneCancel(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.postV1FinetuneCancel']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.postFinetuneCancel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -397,10 +397,10 @@ export const FinetuneApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1FinetuneDeploy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1FinetuneDeploy(options);
+        async postFinetuneDeploy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFinetuneDeploy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.postV1FinetuneDeploy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.postFinetuneDeploy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -409,10 +409,10 @@ export const FinetuneApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1FinetuneJobs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1FinetuneJobs(options);
+        async postFinetuneJobs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFinetuneJobs(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.postV1FinetuneJobs']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinetuneApi.postFinetuneJobs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -431,8 +431,8 @@ export const FinetuneApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetuneHfDatasets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1FinetuneHfDatasets(options).then((request) => request(axios, basePath));
+        getFinetuneHfDatasets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getFinetuneHfDatasets(options).then((request) => request(axios, basePath));
         },
         /**
          * Proxies a HuggingFace model search (base-model picker).
@@ -440,8 +440,8 @@ export const FinetuneApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetuneHfModels(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1FinetuneHfModels(options).then((request) => request(axios, basePath));
+        getFinetuneHfModels(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getFinetuneHfModels(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a repo\'s detail (files, gated/private state). ?id=&kind=model|dataset
@@ -449,8 +449,8 @@ export const FinetuneApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetuneHfRepo(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1FinetuneHfRepo(options).then((request) => request(axios, basePath));
+        getFinetuneHfRepo(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getFinetuneHfRepo(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one job with refreshed live status. ?id=owner/name or ?name=
@@ -458,8 +458,8 @@ export const FinetuneApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetuneJob(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1FinetuneJob(options).then((request) => request(axios, basePath));
+        getFinetuneJob(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getFinetuneJob(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s jobs, refreshing live status for active ones.
@@ -467,8 +467,8 @@ export const FinetuneApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetuneJobs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1FinetuneJobs(options).then((request) => request(axios, basePath));
+        getFinetuneJobs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getFinetuneJobs(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the new-job catalog plus, when a selection is passed (?baseModel&method&task&preset[&datasetExamples]), the recommended config so the console can render \"Recommended\" as a one-click, ready-to-run default.
@@ -476,8 +476,8 @@ export const FinetuneApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinetunePresets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1FinetunePresets(options).then((request) => request(axios, basePath));
+        getFinetunePresets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getFinetunePresets(options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes the TrainJob CR, meters the GPU-hours used so far, and marks the job cancelled. ?id= or ?name=
@@ -485,8 +485,8 @@ export const FinetuneApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FinetuneCancel(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1FinetuneCancel(options).then((request) => request(axios, basePath));
+        postFinetuneCancel(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postFinetuneCancel(options).then((request) => request(axios, basePath));
         },
         /**
          * Serves a completed job\'s checkpoints and registers the result as a routable model on api.hanzo.ai. ?id= or ?name=
@@ -494,8 +494,8 @@ export const FinetuneApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FinetuneDeploy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1FinetuneDeploy(options).then((request) => request(axios, basePath));
+        postFinetuneDeploy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postFinetuneDeploy(options).then((request) => request(axios, basePath));
         },
         /**
          * Validates the request, resolves efficient defaults, persists the job, and submits a real TrainJob CR. A submit failure (e.g. no cluster wired) is surfaced honestly: the job is saved with status \"failed\" + the reason, never faked.
@@ -503,8 +503,8 @@ export const FinetuneApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FinetuneJobs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1FinetuneJobs(options).then((request) => request(axios, basePath));
+        postFinetuneJobs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postFinetuneJobs(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -523,8 +523,8 @@ export class FinetuneApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinetuneApi
      */
-    public getV1FinetuneHfDatasets(options?: RawAxiosRequestConfig) {
-        return FinetuneApiFp(this.configuration).getV1FinetuneHfDatasets(options).then((request) => request(this.axios, this.basePath));
+    public getFinetuneHfDatasets(options?: RawAxiosRequestConfig) {
+        return FinetuneApiFp(this.configuration).getFinetuneHfDatasets(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -534,8 +534,8 @@ export class FinetuneApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinetuneApi
      */
-    public getV1FinetuneHfModels(options?: RawAxiosRequestConfig) {
-        return FinetuneApiFp(this.configuration).getV1FinetuneHfModels(options).then((request) => request(this.axios, this.basePath));
+    public getFinetuneHfModels(options?: RawAxiosRequestConfig) {
+        return FinetuneApiFp(this.configuration).getFinetuneHfModels(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -545,8 +545,8 @@ export class FinetuneApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinetuneApi
      */
-    public getV1FinetuneHfRepo(options?: RawAxiosRequestConfig) {
-        return FinetuneApiFp(this.configuration).getV1FinetuneHfRepo(options).then((request) => request(this.axios, this.basePath));
+    public getFinetuneHfRepo(options?: RawAxiosRequestConfig) {
+        return FinetuneApiFp(this.configuration).getFinetuneHfRepo(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -556,8 +556,8 @@ export class FinetuneApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinetuneApi
      */
-    public getV1FinetuneJob(options?: RawAxiosRequestConfig) {
-        return FinetuneApiFp(this.configuration).getV1FinetuneJob(options).then((request) => request(this.axios, this.basePath));
+    public getFinetuneJob(options?: RawAxiosRequestConfig) {
+        return FinetuneApiFp(this.configuration).getFinetuneJob(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -567,8 +567,8 @@ export class FinetuneApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinetuneApi
      */
-    public getV1FinetuneJobs(options?: RawAxiosRequestConfig) {
-        return FinetuneApiFp(this.configuration).getV1FinetuneJobs(options).then((request) => request(this.axios, this.basePath));
+    public getFinetuneJobs(options?: RawAxiosRequestConfig) {
+        return FinetuneApiFp(this.configuration).getFinetuneJobs(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -578,8 +578,8 @@ export class FinetuneApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinetuneApi
      */
-    public getV1FinetunePresets(options?: RawAxiosRequestConfig) {
-        return FinetuneApiFp(this.configuration).getV1FinetunePresets(options).then((request) => request(this.axios, this.basePath));
+    public getFinetunePresets(options?: RawAxiosRequestConfig) {
+        return FinetuneApiFp(this.configuration).getFinetunePresets(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -589,8 +589,8 @@ export class FinetuneApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinetuneApi
      */
-    public postV1FinetuneCancel(options?: RawAxiosRequestConfig) {
-        return FinetuneApiFp(this.configuration).postV1FinetuneCancel(options).then((request) => request(this.axios, this.basePath));
+    public postFinetuneCancel(options?: RawAxiosRequestConfig) {
+        return FinetuneApiFp(this.configuration).postFinetuneCancel(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -600,8 +600,8 @@ export class FinetuneApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinetuneApi
      */
-    public postV1FinetuneDeploy(options?: RawAxiosRequestConfig) {
-        return FinetuneApiFp(this.configuration).postV1FinetuneDeploy(options).then((request) => request(this.axios, this.basePath));
+    public postFinetuneDeploy(options?: RawAxiosRequestConfig) {
+        return FinetuneApiFp(this.configuration).postFinetuneDeploy(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -611,8 +611,8 @@ export class FinetuneApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinetuneApi
      */
-    public postV1FinetuneJobs(options?: RawAxiosRequestConfig) {
-        return FinetuneApiFp(this.configuration).postV1FinetuneJobs(options).then((request) => request(this.axios, this.basePath));
+    public postFinetuneJobs(options?: RawAxiosRequestConfig) {
+        return FinetuneApiFp(this.configuration).postFinetuneJobs(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -37,7 +37,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Bots: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBots: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -68,9 +68,9 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotsByRunidStop: async (runId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postBotsByRunidStop: async (runId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'runId' is not null or undefined
-            assertParamExists('postV1BotsByRunidStop', 'runId', runId)
+            assertParamExists('postBotsByRunidStop', 'runId', runId)
             const localVarPath = `/v1/bots/{runId}/stop`
                 .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -101,7 +101,7 @@ export const BotsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotsRun: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postBotsRun: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/bots/run`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -141,10 +141,10 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Bots(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotRuns>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Bots(options);
+        async getBots(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotRuns>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBots(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotsApi.getV1Bots']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.getBots']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -154,10 +154,10 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1BotsByRunidStop(runId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotStopped>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BotsByRunidStop(runId, options);
+        async postBotsByRunidStop(runId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BotStopped>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBotsByRunidStop(runId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotsApi.postV1BotsByRunidStop']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.postBotsByRunidStop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -166,10 +166,10 @@ export const BotsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1BotsRun(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BotsRun(options);
+        async postBotsRun(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBotsRun(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotsApi.postV1BotsRun']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotsApi.postBotsRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -188,18 +188,18 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Bots(options?: RawAxiosRequestConfig): AxiosPromise<BotRuns> {
-            return localVarFp.getV1Bots(options).then((request) => request(axios, basePath));
+        getBots(options?: RawAxiosRequestConfig): AxiosPromise<BotRuns> {
+            return localVarFp.getBots(options).then((request) => request(axios, basePath));
         },
         /**
          * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
          * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
-         * @param {BotsApiPostV1BotsByRunidStopRequest} requestParameters Request parameters.
+         * @param {BotsApiPostBotsByRunidStopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotsByRunidStop(requestParameters: BotsApiPostV1BotsByRunidStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotStopped> {
-            return localVarFp.postV1BotsByRunidStop(requestParameters.runId, options).then((request) => request(axios, basePath));
+        postBotsByRunidStop(requestParameters: BotsApiPostBotsByRunidStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<BotStopped> {
+            return localVarFp.postBotsByRunidStop(requestParameters.runId, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is reserved: routes resolve by specificity, so the `run` literal can never bind as a run id against its neighbour `/v1/bots/:runId/stop`.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
@@ -207,22 +207,22 @@ export const BotsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotsRun(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1BotsRun(options).then((request) => request(axios, basePath));
+        postBotsRun(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postBotsRun(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for postV1BotsByRunidStop operation in BotsApi.
+ * Request parameters for postBotsByRunidStop operation in BotsApi.
  * @export
- * @interface BotsApiPostV1BotsByRunidStopRequest
+ * @interface BotsApiPostBotsByRunidStopRequest
  */
-export interface BotsApiPostV1BotsByRunidStopRequest {
+export interface BotsApiPostBotsByRunidStopRequest {
     /**
      * 
      * @type {string}
-     * @memberof BotsApiPostV1BotsByRunidStop
+     * @memberof BotsApiPostBotsByRunidStop
      */
     readonly runId: string
 }
@@ -241,20 +241,20 @@ export class BotsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public getV1Bots(options?: RawAxiosRequestConfig) {
-        return BotsApiFp(this.configuration).getV1Bots(options).then((request) => request(this.axios, this.basePath));
+    public getBots(options?: RawAxiosRequestConfig) {
+        return BotsApiFp(this.configuration).getBots(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
      * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
-     * @param {BotsApiPostV1BotsByRunidStopRequest} requestParameters Request parameters.
+     * @param {BotsApiPostBotsByRunidStopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public postV1BotsByRunidStop(requestParameters: BotsApiPostV1BotsByRunidStopRequest, options?: RawAxiosRequestConfig) {
-        return BotsApiFp(this.configuration).postV1BotsByRunidStop(requestParameters.runId, options).then((request) => request(this.axios, this.basePath));
+    public postBotsByRunidStop(requestParameters: BotsApiPostBotsByRunidStopRequest, options?: RawAxiosRequestConfig) {
+        return BotsApiFp(this.configuration).postBotsByRunidStop(requestParameters.runId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -264,8 +264,8 @@ export class BotsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotsApi
      */
-    public postV1BotsRun(options?: RawAxiosRequestConfig) {
-        return BotsApiFp(this.configuration).postV1BotsRun(options).then((request) => request(this.axios, this.basePath));
+    public postBotsRun(options?: RawAxiosRequestConfig) {
+        return BotsApiFp(this.configuration).postBotsRun(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

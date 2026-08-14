@@ -245,7 +245,7 @@ export const MachinesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Machines: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMachines: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/machines`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -396,10 +396,10 @@ export const MachinesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Machines(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Machines(options);
+        async postMachines(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMachines(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MachinesApi.postV1Machines']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MachinesApi.postMachines']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -489,8 +489,8 @@ export const MachinesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Machines(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Machines(options).then((request) => request(axios, basePath));
+        postMachines(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMachines(options).then((request) => request(axios, basePath));
         },
         /**
          * Detaches the agent runtime from one of the caller org\'s machines. The machine stays — this halts the bot, it does not terminate the compute. Answers 204.
@@ -666,8 +666,8 @@ export class MachinesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MachinesApi
      */
-    public postV1Machines(options?: RawAxiosRequestConfig) {
-        return MachinesApiFp(this.configuration).postV1Machines(options).then((request) => request(this.axios, this.basePath));
+    public postMachines(options?: RawAxiosRequestConfig) {
+        return MachinesApiFp(this.configuration).postMachines(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

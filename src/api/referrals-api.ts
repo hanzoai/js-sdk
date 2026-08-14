@@ -39,7 +39,7 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Referrals: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getReferrals: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/referrals`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -70,9 +70,9 @@ export const ReferralsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ReferralsClaim: async (claimRequest: ClaimRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postReferralsClaim: async (claimRequest: ClaimRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'claimRequest' is not null or undefined
-            assertParamExists('postV1ReferralsClaim', 'claimRequest', claimRequest)
+            assertParamExists('postReferralsClaim', 'claimRequest', claimRequest)
             const localVarPath = `/v1/referrals/claim`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -115,10 +115,10 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Referrals(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MyReferrals>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Referrals(options);
+        async getReferrals(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MyReferrals>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getReferrals(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReferralsApi.getV1Referrals']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ReferralsApi.getReferrals']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -128,10 +128,10 @@ export const ReferralsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ReferralsClaim(claimRequest: ClaimRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClaimView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ReferralsClaim(claimRequest, options);
+        async postReferralsClaim(claimRequest: ClaimRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClaimView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postReferralsClaim(claimRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReferralsApi.postV1ReferralsClaim']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ReferralsApi.postReferralsClaim']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -150,32 +150,32 @@ export const ReferralsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Referrals(options?: RawAxiosRequestConfig): AxiosPromise<MyReferrals> {
-            return localVarFp.getV1Referrals(options).then((request) => request(axios, basePath));
+        getReferrals(options?: RawAxiosRequestConfig): AxiosPromise<MyReferrals> {
+            return localVarFp.getReferrals(options).then((request) => request(axios, basePath));
         },
         /**
          * Records that the caller\'s org signed up through a referral code.  The REFEREE is the validated caller, never a client field, and the referrer is resolved from the code — so a caller can only ever attach THEMSELVES to someone else\'s code. Referring yourself is 400 and an unknown code is 404.  It is idempotent and first-touch: an org can be referred once, ever. A repeat call returns the referral already on file with created=false and 200, where the first call answers 201.  Recording a referral grants nothing, and neither does anything downstream of it: the edge later advances to qualified when the referee makes metered spend (POST /v1/admin/referrals/sweep), and that is the end of it. No credit is ever issued from this package.
          * @summary Records that the caller\'s org signed up through a referral code.
-         * @param {ReferralsApiPostV1ReferralsClaimRequest} requestParameters Request parameters.
+         * @param {ReferralsApiPostReferralsClaimRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ReferralsClaim(requestParameters: ReferralsApiPostV1ReferralsClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClaimView> {
-            return localVarFp.postV1ReferralsClaim(requestParameters.claimRequest, options).then((request) => request(axios, basePath));
+        postReferralsClaim(requestParameters: ReferralsApiPostReferralsClaimRequest, options?: RawAxiosRequestConfig): AxiosPromise<ClaimView> {
+            return localVarFp.postReferralsClaim(requestParameters.claimRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for postV1ReferralsClaim operation in ReferralsApi.
+ * Request parameters for postReferralsClaim operation in ReferralsApi.
  * @export
- * @interface ReferralsApiPostV1ReferralsClaimRequest
+ * @interface ReferralsApiPostReferralsClaimRequest
  */
-export interface ReferralsApiPostV1ReferralsClaimRequest {
+export interface ReferralsApiPostReferralsClaimRequest {
     /**
      * 
      * @type {ClaimRequest}
-     * @memberof ReferralsApiPostV1ReferralsClaim
+     * @memberof ReferralsApiPostReferralsClaim
      */
     readonly claimRequest: ClaimRequest
 }
@@ -194,20 +194,20 @@ export class ReferralsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ReferralsApi
      */
-    public getV1Referrals(options?: RawAxiosRequestConfig) {
-        return ReferralsApiFp(this.configuration).getV1Referrals(options).then((request) => request(this.axios, this.basePath));
+    public getReferrals(options?: RawAxiosRequestConfig) {
+        return ReferralsApiFp(this.configuration).getReferrals(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records that the caller\'s org signed up through a referral code.  The REFEREE is the validated caller, never a client field, and the referrer is resolved from the code — so a caller can only ever attach THEMSELVES to someone else\'s code. Referring yourself is 400 and an unknown code is 404.  It is idempotent and first-touch: an org can be referred once, ever. A repeat call returns the referral already on file with created=false and 200, where the first call answers 201.  Recording a referral grants nothing, and neither does anything downstream of it: the edge later advances to qualified when the referee makes metered spend (POST /v1/admin/referrals/sweep), and that is the end of it. No credit is ever issued from this package.
      * @summary Records that the caller\'s org signed up through a referral code.
-     * @param {ReferralsApiPostV1ReferralsClaimRequest} requestParameters Request parameters.
+     * @param {ReferralsApiPostReferralsClaimRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReferralsApi
      */
-    public postV1ReferralsClaim(requestParameters: ReferralsApiPostV1ReferralsClaimRequest, options?: RawAxiosRequestConfig) {
-        return ReferralsApiFp(this.configuration).postV1ReferralsClaim(requestParameters.claimRequest, options).then((request) => request(this.axios, this.basePath));
+    public postReferralsClaim(requestParameters: ReferralsApiPostReferralsClaimRequest, options?: RawAxiosRequestConfig) {
+        return ReferralsApiFp(this.configuration).postReferralsClaim(requestParameters.claimRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

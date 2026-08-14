@@ -37,7 +37,7 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1WebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteWebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/websearch/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -67,7 +67,7 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1WebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getWebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/websearch/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -97,7 +97,7 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1WebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchWebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/websearch/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -127,7 +127,7 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1WebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postWebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/websearch/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -157,7 +157,7 @@ export const WebsearchApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1WebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putWebsearchSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/websearch/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -233,10 +233,10 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1WebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1WebsearchSearch(options);
+        async deleteWebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteWebsearchSearch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WebsearchApi.deleteV1WebsearchSearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WebsearchApi.deleteWebsearchSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -245,10 +245,10 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1WebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1WebsearchSearch(options);
+        async getWebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWebsearchSearch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WebsearchApi.getV1WebsearchSearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WebsearchApi.getWebsearchSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -257,10 +257,10 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1WebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1WebsearchSearch(options);
+        async patchWebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchWebsearchSearch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WebsearchApi.patchV1WebsearchSearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WebsearchApi.patchWebsearchSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -269,10 +269,10 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1WebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1WebsearchSearch(options);
+        async postWebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postWebsearchSearch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WebsearchApi.postV1WebsearchSearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WebsearchApi.postWebsearchSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -281,10 +281,10 @@ export const WebsearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1WebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1WebsearchSearch(options);
+        async putWebsearchSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putWebsearchSearch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['WebsearchApi.putV1WebsearchSearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['WebsearchApi.putWebsearchSearch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -316,8 +316,8 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1WebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1WebsearchSearch(options).then((request) => request(axios, basePath));
+        deleteWebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteWebsearchSearch(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 30. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
@@ -325,8 +325,8 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1WebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1WebsearchSearch(options).then((request) => request(axios, basePath));
+        getWebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getWebsearchSearch(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 30. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
@@ -334,8 +334,8 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1WebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1WebsearchSearch(options).then((request) => request(axios, basePath));
+        patchWebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchWebsearchSearch(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 30. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
@@ -343,8 +343,8 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1WebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1WebsearchSearch(options).then((request) => request(axios, basePath));
+        postWebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postWebsearchSearch(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers {query, number_of_results, results:[{url, title, content, engine}]} — the exact /search?format=json contract a SearXNG client decodes, so an agent tool configured against SearXNG reaches this with no change. `q` is the query and `language` narrows it; both are read from the QUERY STRING.  Served in-process by a Go meta-search over keyless public engines, never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept — distinct queries are distinct results) and capped at 30. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  TWO WAYS IN, one-way equivalent, and no third: a validated principal — the same gate the whole data plane uses — passes straight through, and a caller without one must present the shared service key as X-API-Key, compared in constant time. A deployment with no key configured answers 503 rather than opening the surface to everyone, and a missing or wrong key is 401. It is never an open proxy. There is no tenant scoping beyond that gate, and there is nothing to scope: the results are public web pages, identical for every caller.  It fails SOFT on the engines and closed only on the gate. An engine that errors or is served a bot-challenge page contributes zero results and never fails the request, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  The one thing to get right: every method answers identically. This is one handler registered for all of them, and it reads only the query string, so a body sent on the write verbs is ignored rather than refused.
@@ -352,8 +352,8 @@ export const WebsearchApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1WebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1WebsearchSearch(options).then((request) => request(axios, basePath));
+        putWebsearchSearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putWebsearchSearch(options).then((request) => request(axios, basePath));
         },
         /**
          * Searches the live web and answers with ranked results.  This is the fleet\'s path to what is happening RIGHT NOW — today\'s weather, an outage, a release that postdates any model\'s training. `q` is the query and `language` narrows it to a locale. The answer is `{query, number_of_results, results:[{url, title, content, engine}]}`, where `content` is the ENGINE\'s snippet and not the page: read a page with POST /v1/crawl.  It is served in-process by a Go meta-search over keyless public engines — never a third-party search API and never a search key. The enabled engines run concurrently and their hits are merged, deduplicated by normalised URL (host and path, trailing slash and fragment dropped, query kept, so distinct queries stay distinct results) and capped at 30. Ranking is deterministic rather than scored: the first configured engine\'s hits lead.  It fails SOFT on the engines. One that errors, times out or is served a bot-challenge page contributes zero results and never fails the call, so an empty `results` is a real answer — nothing was found — and not an outage. The array is always present, never null.  A VALIDATED PRINCIPAL IS REQUIRED, and there is no tenant beyond that: the results are public web pages, identical for every caller, so nothing here is scoped and nothing here can leak across orgs. A typed op is also an MCP tool and a CLI command, and tools/call invokes it with no route and therefore no middleware — so the gate is in the handler, where every door reaches it, rather than in a middleware only one door passes through.
@@ -396,8 +396,8 @@ export class WebsearchApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WebsearchApi
      */
-    public deleteV1WebsearchSearch(options?: RawAxiosRequestConfig) {
-        return WebsearchApiFp(this.configuration).deleteV1WebsearchSearch(options).then((request) => request(this.axios, this.basePath));
+    public deleteWebsearchSearch(options?: RawAxiosRequestConfig) {
+        return WebsearchApiFp(this.configuration).deleteWebsearchSearch(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -407,8 +407,8 @@ export class WebsearchApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WebsearchApi
      */
-    public getV1WebsearchSearch(options?: RawAxiosRequestConfig) {
-        return WebsearchApiFp(this.configuration).getV1WebsearchSearch(options).then((request) => request(this.axios, this.basePath));
+    public getWebsearchSearch(options?: RawAxiosRequestConfig) {
+        return WebsearchApiFp(this.configuration).getWebsearchSearch(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -418,8 +418,8 @@ export class WebsearchApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WebsearchApi
      */
-    public patchV1WebsearchSearch(options?: RawAxiosRequestConfig) {
-        return WebsearchApiFp(this.configuration).patchV1WebsearchSearch(options).then((request) => request(this.axios, this.basePath));
+    public patchWebsearchSearch(options?: RawAxiosRequestConfig) {
+        return WebsearchApiFp(this.configuration).patchWebsearchSearch(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -429,8 +429,8 @@ export class WebsearchApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WebsearchApi
      */
-    public postV1WebsearchSearch(options?: RawAxiosRequestConfig) {
-        return WebsearchApiFp(this.configuration).postV1WebsearchSearch(options).then((request) => request(this.axios, this.basePath));
+    public postWebsearchSearch(options?: RawAxiosRequestConfig) {
+        return WebsearchApiFp(this.configuration).postWebsearchSearch(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -440,8 +440,8 @@ export class WebsearchApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WebsearchApi
      */
-    public putV1WebsearchSearch(options?: RawAxiosRequestConfig) {
-        return WebsearchApiFp(this.configuration).putV1WebsearchSearch(options).then((request) => request(this.axios, this.basePath));
+    public putWebsearchSearch(options?: RawAxiosRequestConfig) {
+        return WebsearchApiFp(this.configuration).putWebsearchSearch(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -33,7 +33,7 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignDocuments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEsignDocuments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/esign/documents`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -64,9 +64,9 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignDocumentsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEsignDocumentsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1EsignDocumentsById', 'id', id)
+            assertParamExists('getEsignDocumentsById', 'id', id)
             const localVarPath = `/v1/esign/documents/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -98,9 +98,9 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignDocumentsByIdAudit: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEsignDocumentsByIdAudit: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1EsignDocumentsByIdAudit', 'id', id)
+            assertParamExists('getEsignDocumentsByIdAudit', 'id', id)
             const localVarPath = `/v1/esign/documents/{id}/audit`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -132,9 +132,9 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignDocumentsByIdDownload: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEsignDocumentsByIdDownload: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1EsignDocumentsByIdDownload', 'id', id)
+            assertParamExists('getEsignDocumentsByIdDownload', 'id', id)
             const localVarPath = `/v1/esign/documents/{id}/download`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -165,7 +165,7 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEsignHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/esign/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -197,11 +197,11 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignOByOrgSignByToken: async (org: string, token: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEsignOByOrgSignByToken: async (org: string, token: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'org' is not null or undefined
-            assertParamExists('getV1EsignOByOrgSignByToken', 'org', org)
+            assertParamExists('getEsignOByOrgSignByToken', 'org', org)
             // verify required parameter 'token' is not null or undefined
-            assertParamExists('getV1EsignOByOrgSignByToken', 'token', token)
+            assertParamExists('getEsignOByOrgSignByToken', 'token', token)
             const localVarPath = `/v1/esign/o/{org}/sign/{token}`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)))
                 .replace(`{${"token"}}`, encodeURIComponent(String(token)));
@@ -233,7 +233,7 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignDocuments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEsignDocuments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/esign/documents`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -264,9 +264,9 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignDocumentsByIdFields: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEsignDocumentsByIdFields: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1EsignDocumentsByIdFields', 'id', id)
+            assertParamExists('postEsignDocumentsByIdFields', 'id', id)
             const localVarPath = `/v1/esign/documents/{id}/fields`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -298,9 +298,9 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignDocumentsByIdRecipients: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEsignDocumentsByIdRecipients: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1EsignDocumentsByIdRecipients', 'id', id)
+            assertParamExists('postEsignDocumentsByIdRecipients', 'id', id)
             const localVarPath = `/v1/esign/documents/{id}/recipients`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -332,9 +332,9 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignDocumentsByIdSend: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEsignDocumentsByIdSend: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1EsignDocumentsByIdSend', 'id', id)
+            assertParamExists('postEsignDocumentsByIdSend', 'id', id)
             const localVarPath = `/v1/esign/documents/{id}/send`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -367,11 +367,11 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignOByOrgSignByTokenComplete: async (org: string, token: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEsignOByOrgSignByTokenComplete: async (org: string, token: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'org' is not null or undefined
-            assertParamExists('postV1EsignOByOrgSignByTokenComplete', 'org', org)
+            assertParamExists('postEsignOByOrgSignByTokenComplete', 'org', org)
             // verify required parameter 'token' is not null or undefined
-            assertParamExists('postV1EsignOByOrgSignByTokenComplete', 'token', token)
+            assertParamExists('postEsignOByOrgSignByTokenComplete', 'token', token)
             const localVarPath = `/v1/esign/o/{org}/sign/{token}/complete`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)))
                 .replace(`{${"token"}}`, encodeURIComponent(String(token)));
@@ -406,13 +406,13 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignOByOrgSignByTokenFieldsByFieldid: async (org: string, token: string, fieldId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEsignOByOrgSignByTokenFieldsByFieldid: async (org: string, token: string, fieldId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'org' is not null or undefined
-            assertParamExists('postV1EsignOByOrgSignByTokenFieldsByFieldid', 'org', org)
+            assertParamExists('postEsignOByOrgSignByTokenFieldsByFieldid', 'org', org)
             // verify required parameter 'token' is not null or undefined
-            assertParamExists('postV1EsignOByOrgSignByTokenFieldsByFieldid', 'token', token)
+            assertParamExists('postEsignOByOrgSignByTokenFieldsByFieldid', 'token', token)
             // verify required parameter 'fieldId' is not null or undefined
-            assertParamExists('postV1EsignOByOrgSignByTokenFieldsByFieldid', 'fieldId', fieldId)
+            assertParamExists('postEsignOByOrgSignByTokenFieldsByFieldid', 'fieldId', fieldId)
             const localVarPath = `/v1/esign/o/{org}/sign/{token}/fields/{fieldId}`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)))
                 .replace(`{${"token"}}`, encodeURIComponent(String(token)))
@@ -447,11 +447,11 @@ export const EsignApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignOByOrgSignByTokenReject: async (org: string, token: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEsignOByOrgSignByTokenReject: async (org: string, token: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'org' is not null or undefined
-            assertParamExists('postV1EsignOByOrgSignByTokenReject', 'org', org)
+            assertParamExists('postEsignOByOrgSignByTokenReject', 'org', org)
             // verify required parameter 'token' is not null or undefined
-            assertParamExists('postV1EsignOByOrgSignByTokenReject', 'token', token)
+            assertParamExists('postEsignOByOrgSignByTokenReject', 'token', token)
             const localVarPath = `/v1/esign/o/{org}/sign/{token}/reject`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)))
                 .replace(`{${"token"}}`, encodeURIComponent(String(token)));
@@ -493,10 +493,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1EsignDocuments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1EsignDocuments(options);
+        async getEsignDocuments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEsignDocuments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.getV1EsignDocuments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.getEsignDocuments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -506,10 +506,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1EsignDocumentsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1EsignDocumentsById(id, options);
+        async getEsignDocumentsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEsignDocumentsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.getV1EsignDocumentsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.getEsignDocumentsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -519,10 +519,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1EsignDocumentsByIdAudit(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1EsignDocumentsByIdAudit(id, options);
+        async getEsignDocumentsByIdAudit(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEsignDocumentsByIdAudit(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.getV1EsignDocumentsByIdAudit']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.getEsignDocumentsByIdAudit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -532,10 +532,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1EsignDocumentsByIdDownload(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1EsignDocumentsByIdDownload(id, options);
+        async getEsignDocumentsByIdDownload(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEsignDocumentsByIdDownload(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.getV1EsignDocumentsByIdDownload']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.getEsignDocumentsByIdDownload']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -544,10 +544,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1EsignHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1EsignHealth(options);
+        async getEsignHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEsignHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.getV1EsignHealth']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.getEsignHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -558,10 +558,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1EsignOByOrgSignByToken(org: string, token: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1EsignOByOrgSignByToken(org, token, options);
+        async getEsignOByOrgSignByToken(org: string, token: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEsignOByOrgSignByToken(org, token, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.getV1EsignOByOrgSignByToken']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.getEsignOByOrgSignByToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -570,10 +570,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1EsignDocuments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1EsignDocuments(options);
+        async postEsignDocuments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEsignDocuments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.postV1EsignDocuments']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.postEsignDocuments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -583,10 +583,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1EsignDocumentsByIdFields(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1EsignDocumentsByIdFields(id, options);
+        async postEsignDocumentsByIdFields(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEsignDocumentsByIdFields(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.postV1EsignDocumentsByIdFields']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.postEsignDocumentsByIdFields']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -596,10 +596,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1EsignDocumentsByIdRecipients(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1EsignDocumentsByIdRecipients(id, options);
+        async postEsignDocumentsByIdRecipients(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEsignDocumentsByIdRecipients(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.postV1EsignDocumentsByIdRecipients']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.postEsignDocumentsByIdRecipients']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -609,10 +609,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1EsignDocumentsByIdSend(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1EsignDocumentsByIdSend(id, options);
+        async postEsignDocumentsByIdSend(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEsignDocumentsByIdSend(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.postV1EsignDocumentsByIdSend']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.postEsignDocumentsByIdSend']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -623,10 +623,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1EsignOByOrgSignByTokenComplete(org: string, token: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1EsignOByOrgSignByTokenComplete(org, token, options);
+        async postEsignOByOrgSignByTokenComplete(org: string, token: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEsignOByOrgSignByTokenComplete(org, token, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.postV1EsignOByOrgSignByTokenComplete']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.postEsignOByOrgSignByTokenComplete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -638,10 +638,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1EsignOByOrgSignByTokenFieldsByFieldid(org: string, token: string, fieldId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1EsignOByOrgSignByTokenFieldsByFieldid(org, token, fieldId, options);
+        async postEsignOByOrgSignByTokenFieldsByFieldid(org: string, token: string, fieldId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEsignOByOrgSignByTokenFieldsByFieldid(org, token, fieldId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.postV1EsignOByOrgSignByTokenFieldsByFieldid']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.postEsignOByOrgSignByTokenFieldsByFieldid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -652,10 +652,10 @@ export const EsignApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1EsignOByOrgSignByTokenReject(org: string, token: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1EsignOByOrgSignByTokenReject(org, token, options);
+        async postEsignOByOrgSignByTokenReject(org: string, token: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEsignOByOrgSignByTokenReject(org, token, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EsignApi.postV1EsignOByOrgSignByTokenReject']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EsignApi.postEsignOByOrgSignByTokenReject']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -674,38 +674,38 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignDocuments(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1EsignDocuments(options).then((request) => request(axios, basePath));
+        getEsignDocuments(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getEsignDocuments(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the document, its recipients with each one\'s read and signing status, and every field with its type, page and position — the view a sender\'s UI renders, and where the field ids come from. Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404 rather than a refusal that would confirm it exists.
          * @summary One document with its recipients and field layout
-         * @param {EsignApiGetV1EsignDocumentsByIdRequest} requestParameters Request parameters.
+         * @param {EsignApiGetEsignDocumentsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignDocumentsById(requestParameters: EsignApiGetV1EsignDocumentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1EsignDocumentsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getEsignDocumentsById(requestParameters: EsignApiGetEsignDocumentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getEsignDocumentsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers every recorded event for the document in order — created, recipient added, field created, sent, opened, each field inserted, each recipient completed or rejected, and completion — with the actor and timestamp on each. This is the evidence record behind a signature, so it is append-only and nothing in the surface edits it.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
          * @summary The document\'s full audit trail, oldest first
-         * @param {EsignApiGetV1EsignDocumentsByIdAuditRequest} requestParameters Request parameters.
+         * @param {EsignApiGetEsignDocumentsByIdAuditRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignDocumentsByIdAudit(requestParameters: EsignApiGetV1EsignDocumentsByIdAuditRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1EsignDocumentsByIdAudit(requestParameters.id, options).then((request) => request(axios, basePath));
+        getEsignDocumentsByIdAudit(requestParameters: EsignApiGetEsignDocumentsByIdAuditRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getEsignDocumentsByIdAudit(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the document\'s current PDF as base64 with a `sealed` flag and a filename. Before completion that is the original upload; once every signer has finished it is the SEALED artifact — the field values rendered onto the page and a real x509 PKCS#7 digital signature applied — and `sealed` is true. There is one `pdfBase64` field either way, so `sealed` is what tells you which you are holding.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
          * @summary Download the document — the sealed PDF once it is complete
-         * @param {EsignApiGetV1EsignDocumentsByIdDownloadRequest} requestParameters Request parameters.
+         * @param {EsignApiGetEsignDocumentsByIdDownloadRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignDocumentsByIdDownload(requestParameters: EsignApiGetV1EsignDocumentsByIdDownloadRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1EsignDocumentsByIdDownload(requestParameters.id, options).then((request) => request(axios, basePath));
+        getEsignDocumentsByIdDownload(requestParameters: EsignApiGetEsignDocumentsByIdDownloadRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getEsignDocumentsByIdDownload(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers ok whenever the subsystem is mounted. It is unauthenticated and takes no tenant, and it is deliberately shallow: it is registered before the document host is built, so it still answers on a deployment that came up WITHOUT object storage and therefore serves nothing else. Read it as reachability, never as a promise that documents can be stored.
@@ -713,18 +713,18 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1EsignHealth(options).then((request) => request(axios, basePath));
+        getEsignHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getEsignHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the document, the recipient it identifies, the fields THAT recipient must fill, and the PDF to display. The first open also marks the recipient as having opened it and records that on the audit trail, so this read has a side effect by design.  This is the signer\'s door and it takes NO account: the signing token is the entire credential, and it names the recipient, so a signer sees only their own fields and never the other recipients\' tokens. The `:org` segment selects which tenant\'s store is opened, and the token is then looked up inside it — so a token presented under the wrong org simply does not resolve. An unknown or wrong-org token is a 401, never a hint that some other document exists.
          * @summary Open a document you were asked to sign, using your signing link
-         * @param {EsignApiGetV1EsignOByOrgSignByTokenRequest} requestParameters Request parameters.
+         * @param {EsignApiGetEsignOByOrgSignByTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1EsignOByOrgSignByToken(requestParameters: EsignApiGetV1EsignOByOrgSignByTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1EsignOByOrgSignByToken(requestParameters.org, requestParameters.token, options).then((request) => request(axios, basePath));
+        getEsignOByOrgSignByToken(requestParameters: EsignApiGetEsignOByOrgSignByTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getEsignOByOrgSignByToken(requestParameters.org, requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a document from a base64 PDF and answers 201 with it in `DRAFT` — the state where recipients and fields may still be added, and the only state they may. `title` and `pdfBase64` are required; `signingOrder` chooses `PARALLEL` (the default, everyone may sign at once) or `SEQUENTIAL`, and that choice is fixed for the document\'s life.  The bytes go to object storage, not into the tenant database, and the ORIGINAL is kept under its own key so it survives sealing untouched — a completed document can always be compared against what was uploaded. Creation is recorded on the audit trail.  This is the sender\'s door: a validated principal is required (403 without one) and the document lands in that principal\'s OWN org. Isolation is physical rather than a filter — each tenant has its own store — so another org\'s document id is simply not there. Bodies over 32 MiB are refused with 413.
@@ -732,243 +732,243 @@ export const EsignApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignDocuments(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1EsignDocuments(options).then((request) => request(axios, basePath));
+        postEsignDocuments(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postEsignDocuments(options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a field — a signature, date, name, email or text box — at a page and position for ONE named recipient, and answers 201 with its id. `recipientId` and a valid `type` are required, and the recipient must belong to this document (400 otherwise); page defaults to 1 and position defaults to the origin.  Fields are what make a recipient signable: a document cannot be sent while any signing recipient has none. Only while DRAFT — adding a field to a sent document is a 409. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
          * @summary Place a field on the page for one recipient to fill
-         * @param {EsignApiPostV1EsignDocumentsByIdFieldsRequest} requestParameters Request parameters.
+         * @param {EsignApiPostEsignDocumentsByIdFieldsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignDocumentsByIdFields(requestParameters: EsignApiPostV1EsignDocumentsByIdFieldsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1EsignDocumentsByIdFields(requestParameters.id, options).then((request) => request(axios, basePath));
+        postEsignDocumentsByIdFields(requestParameters: EsignApiPostEsignDocumentsByIdFieldsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postEsignDocumentsByIdFields(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a recipient and answers 201 with their id and their signing TOKEN — the crypto-random capability that is the only credential the signer\'s door accepts, so this response is where the signing link is built from. `email` is required; `role` defaults to `SIGNER`, and a `CC` recipient is recorded as already complete because they are never asked to sign. `signingOrder` sets this recipient\'s position for a sequential document.  Only while DRAFT: adding a recipient to a document already sent is a 409, because the field layout and the turn order were fixed when it went out. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
          * @summary Add someone to a draft and mint their signing token
-         * @param {EsignApiPostV1EsignDocumentsByIdRecipientsRequest} requestParameters Request parameters.
+         * @param {EsignApiPostEsignDocumentsByIdRecipientsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignDocumentsByIdRecipients(requestParameters: EsignApiPostV1EsignDocumentsByIdRecipientsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1EsignDocumentsByIdRecipients(requestParameters.id, options).then((request) => request(axios, basePath));
+        postEsignDocumentsByIdRecipients(requestParameters: EsignApiPostEsignDocumentsByIdRecipientsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postEsignDocumentsByIdRecipients(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Moves the document from `DRAFT` to `PENDING` and answers the signing tokens — one per signing recipient, with the path to hand them — which is how the links reach the people who must sign. Nothing is emailed by this call; delivering the links is the caller\'s.  It refuses to send an unsignable document: no recipients at all is a 400, and so is any signing recipient with no fields to fill, named in the error. Re-sending an already-pending document is allowed and re-issues the same links rather than restarting anything; a completed document is a 409. Requires a validated principal (403 without one) and acts only on the caller\'s own tenant; an unknown document is a 404. The send is recorded on the audit trail.
          * @summary Send the document out and get each signer\'s link
-         * @param {EsignApiPostV1EsignDocumentsByIdSendRequest} requestParameters Request parameters.
+         * @param {EsignApiPostEsignDocumentsByIdSendRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignDocumentsByIdSend(requestParameters: EsignApiPostV1EsignDocumentsByIdSendRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1EsignDocumentsByIdSend(requestParameters.id, options).then((request) => request(axios, basePath));
+        postEsignDocumentsByIdSend(requestParameters: EsignApiPostEsignDocumentsByIdSendRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postEsignDocumentsByIdSend(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Marks this recipient as done and answers whether the DOCUMENT sealed with it. When every signing recipient has completed, sealing happens right here in the same call: the collected values are rendered onto the PDF, a real x509 PKCS#7 signature is applied, the sealed bytes are stored beside the untouched original, and the document moves to `COMPLETED`. Until then the answer is the recipient\'s own completion with the document still pending.  It refuses to complete a half-filled signature: a recipient with any unfilled field is a 400 naming how many remain. A document not out for signature is a 409, as is a recipient who has already completed, and under SEQUENTIAL order a signer out of turn is a 403. The token is the whole credential — no account, and a token that does not resolve under `:org` is a 401. Sealing and completion are one transaction, so a failure anywhere leaves the document exactly as it was.
          * @summary Finish signing — and seal the document if you were the last
-         * @param {EsignApiPostV1EsignOByOrgSignByTokenCompleteRequest} requestParameters Request parameters.
+         * @param {EsignApiPostEsignOByOrgSignByTokenCompleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignOByOrgSignByTokenComplete(requestParameters: EsignApiPostV1EsignOByOrgSignByTokenCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1EsignOByOrgSignByTokenComplete(requestParameters.org, requestParameters.token, options).then((request) => request(axios, basePath));
+        postEsignOByOrgSignByTokenComplete(requestParameters: EsignApiPostEsignOByOrgSignByTokenCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postEsignOByOrgSignByTokenComplete(requestParameters.org, requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
          * Records a value for one field and marks it inserted. A signature field takes `value` with `isBase64` true for drawn image bytes, or false for a typed signature; a date, name or email field falls back to today, the recipient\'s name or their email when `value` is omitted; any other type requires one.  Nothing is sealed here — filling every field still leaves the document pending until the completion call. The token is the whole credential and it bounds what can be written: a field belonging to another recipient is refused with 401 even under a valid token, an unknown field is a 404, and a field already filled is a 409. A document not out for signature is a 409, as is a recipient who has already completed or rejected. Under SEQUENTIAL order a signer whose turn has not come is refused 403 until every earlier signer has signed. Each insertion is recorded on the audit trail.
          * @summary Fill in one of your fields
-         * @param {EsignApiPostV1EsignOByOrgSignByTokenFieldsByFieldidRequest} requestParameters Request parameters.
+         * @param {EsignApiPostEsignOByOrgSignByTokenFieldsByFieldidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignOByOrgSignByTokenFieldsByFieldid(requestParameters: EsignApiPostV1EsignOByOrgSignByTokenFieldsByFieldidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1EsignOByOrgSignByTokenFieldsByFieldid(requestParameters.org, requestParameters.token, requestParameters.fieldId, options).then((request) => request(axios, basePath));
+        postEsignOByOrgSignByTokenFieldsByFieldid(requestParameters: EsignApiPostEsignOByOrgSignByTokenFieldsByFieldidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postEsignOByOrgSignByTokenFieldsByFieldid(requestParameters.org, requestParameters.token, requestParameters.fieldId, options).then((request) => request(axios, basePath));
         },
         /**
          * Records this recipient\'s refusal and moves the WHOLE DOCUMENT to `REJECTED` — one declining signer ends it for everyone, and there is no route back: the document cannot then be signed or completed. An optional `reason` is stored and written onto the audit trail with the rejection, which is what the sender sees.  A document not out for signature is a 409, and so is a recipient who has already signed or already rejected — a refusal cannot be taken back or repeated. The token is the whole credential; one that does not resolve under `:org` is a 401.
          * @summary Decline to sign, with an optional reason
-         * @param {EsignApiPostV1EsignOByOrgSignByTokenRejectRequest} requestParameters Request parameters.
+         * @param {EsignApiPostEsignOByOrgSignByTokenRejectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EsignOByOrgSignByTokenReject(requestParameters: EsignApiPostV1EsignOByOrgSignByTokenRejectRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1EsignOByOrgSignByTokenReject(requestParameters.org, requestParameters.token, options).then((request) => request(axios, basePath));
+        postEsignOByOrgSignByTokenReject(requestParameters: EsignApiPostEsignOByOrgSignByTokenRejectRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postEsignOByOrgSignByTokenReject(requestParameters.org, requestParameters.token, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1EsignDocumentsById operation in EsignApi.
+ * Request parameters for getEsignDocumentsById operation in EsignApi.
  * @export
- * @interface EsignApiGetV1EsignDocumentsByIdRequest
+ * @interface EsignApiGetEsignDocumentsByIdRequest
  */
-export interface EsignApiGetV1EsignDocumentsByIdRequest {
+export interface EsignApiGetEsignDocumentsByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof EsignApiGetV1EsignDocumentsById
+     * @memberof EsignApiGetEsignDocumentsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1EsignDocumentsByIdAudit operation in EsignApi.
+ * Request parameters for getEsignDocumentsByIdAudit operation in EsignApi.
  * @export
- * @interface EsignApiGetV1EsignDocumentsByIdAuditRequest
+ * @interface EsignApiGetEsignDocumentsByIdAuditRequest
  */
-export interface EsignApiGetV1EsignDocumentsByIdAuditRequest {
+export interface EsignApiGetEsignDocumentsByIdAuditRequest {
     /**
      * 
      * @type {string}
-     * @memberof EsignApiGetV1EsignDocumentsByIdAudit
+     * @memberof EsignApiGetEsignDocumentsByIdAudit
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1EsignDocumentsByIdDownload operation in EsignApi.
+ * Request parameters for getEsignDocumentsByIdDownload operation in EsignApi.
  * @export
- * @interface EsignApiGetV1EsignDocumentsByIdDownloadRequest
+ * @interface EsignApiGetEsignDocumentsByIdDownloadRequest
  */
-export interface EsignApiGetV1EsignDocumentsByIdDownloadRequest {
+export interface EsignApiGetEsignDocumentsByIdDownloadRequest {
     /**
      * 
      * @type {string}
-     * @memberof EsignApiGetV1EsignDocumentsByIdDownload
+     * @memberof EsignApiGetEsignDocumentsByIdDownload
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1EsignOByOrgSignByToken operation in EsignApi.
+ * Request parameters for getEsignOByOrgSignByToken operation in EsignApi.
  * @export
- * @interface EsignApiGetV1EsignOByOrgSignByTokenRequest
+ * @interface EsignApiGetEsignOByOrgSignByTokenRequest
  */
-export interface EsignApiGetV1EsignOByOrgSignByTokenRequest {
+export interface EsignApiGetEsignOByOrgSignByTokenRequest {
     /**
      * 
      * @type {string}
-     * @memberof EsignApiGetV1EsignOByOrgSignByToken
+     * @memberof EsignApiGetEsignOByOrgSignByToken
      */
     readonly org: string
 
     /**
      * 
      * @type {string}
-     * @memberof EsignApiGetV1EsignOByOrgSignByToken
+     * @memberof EsignApiGetEsignOByOrgSignByToken
      */
     readonly token: string
 }
 
 /**
- * Request parameters for postV1EsignDocumentsByIdFields operation in EsignApi.
+ * Request parameters for postEsignDocumentsByIdFields operation in EsignApi.
  * @export
- * @interface EsignApiPostV1EsignDocumentsByIdFieldsRequest
+ * @interface EsignApiPostEsignDocumentsByIdFieldsRequest
  */
-export interface EsignApiPostV1EsignDocumentsByIdFieldsRequest {
+export interface EsignApiPostEsignDocumentsByIdFieldsRequest {
     /**
      * 
      * @type {string}
-     * @memberof EsignApiPostV1EsignDocumentsByIdFields
+     * @memberof EsignApiPostEsignDocumentsByIdFields
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1EsignDocumentsByIdRecipients operation in EsignApi.
+ * Request parameters for postEsignDocumentsByIdRecipients operation in EsignApi.
  * @export
- * @interface EsignApiPostV1EsignDocumentsByIdRecipientsRequest
+ * @interface EsignApiPostEsignDocumentsByIdRecipientsRequest
  */
-export interface EsignApiPostV1EsignDocumentsByIdRecipientsRequest {
+export interface EsignApiPostEsignDocumentsByIdRecipientsRequest {
     /**
      * 
      * @type {string}
-     * @memberof EsignApiPostV1EsignDocumentsByIdRecipients
+     * @memberof EsignApiPostEsignDocumentsByIdRecipients
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1EsignDocumentsByIdSend operation in EsignApi.
+ * Request parameters for postEsignDocumentsByIdSend operation in EsignApi.
  * @export
- * @interface EsignApiPostV1EsignDocumentsByIdSendRequest
+ * @interface EsignApiPostEsignDocumentsByIdSendRequest
  */
-export interface EsignApiPostV1EsignDocumentsByIdSendRequest {
+export interface EsignApiPostEsignDocumentsByIdSendRequest {
     /**
      * 
      * @type {string}
-     * @memberof EsignApiPostV1EsignDocumentsByIdSend
+     * @memberof EsignApiPostEsignDocumentsByIdSend
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1EsignOByOrgSignByTokenComplete operation in EsignApi.
+ * Request parameters for postEsignOByOrgSignByTokenComplete operation in EsignApi.
  * @export
- * @interface EsignApiPostV1EsignOByOrgSignByTokenCompleteRequest
+ * @interface EsignApiPostEsignOByOrgSignByTokenCompleteRequest
  */
-export interface EsignApiPostV1EsignOByOrgSignByTokenCompleteRequest {
+export interface EsignApiPostEsignOByOrgSignByTokenCompleteRequest {
     /**
      * 
      * @type {string}
-     * @memberof EsignApiPostV1EsignOByOrgSignByTokenComplete
+     * @memberof EsignApiPostEsignOByOrgSignByTokenComplete
      */
     readonly org: string
 
     /**
      * 
      * @type {string}
-     * @memberof EsignApiPostV1EsignOByOrgSignByTokenComplete
+     * @memberof EsignApiPostEsignOByOrgSignByTokenComplete
      */
     readonly token: string
 }
 
 /**
- * Request parameters for postV1EsignOByOrgSignByTokenFieldsByFieldid operation in EsignApi.
+ * Request parameters for postEsignOByOrgSignByTokenFieldsByFieldid operation in EsignApi.
  * @export
- * @interface EsignApiPostV1EsignOByOrgSignByTokenFieldsByFieldidRequest
+ * @interface EsignApiPostEsignOByOrgSignByTokenFieldsByFieldidRequest
  */
-export interface EsignApiPostV1EsignOByOrgSignByTokenFieldsByFieldidRequest {
+export interface EsignApiPostEsignOByOrgSignByTokenFieldsByFieldidRequest {
     /**
      * 
      * @type {string}
-     * @memberof EsignApiPostV1EsignOByOrgSignByTokenFieldsByFieldid
+     * @memberof EsignApiPostEsignOByOrgSignByTokenFieldsByFieldid
      */
     readonly org: string
 
     /**
      * 
      * @type {string}
-     * @memberof EsignApiPostV1EsignOByOrgSignByTokenFieldsByFieldid
+     * @memberof EsignApiPostEsignOByOrgSignByTokenFieldsByFieldid
      */
     readonly token: string
 
     /**
      * 
      * @type {string}
-     * @memberof EsignApiPostV1EsignOByOrgSignByTokenFieldsByFieldid
+     * @memberof EsignApiPostEsignOByOrgSignByTokenFieldsByFieldid
      */
     readonly fieldId: string
 }
 
 /**
- * Request parameters for postV1EsignOByOrgSignByTokenReject operation in EsignApi.
+ * Request parameters for postEsignOByOrgSignByTokenReject operation in EsignApi.
  * @export
- * @interface EsignApiPostV1EsignOByOrgSignByTokenRejectRequest
+ * @interface EsignApiPostEsignOByOrgSignByTokenRejectRequest
  */
-export interface EsignApiPostV1EsignOByOrgSignByTokenRejectRequest {
+export interface EsignApiPostEsignOByOrgSignByTokenRejectRequest {
     /**
      * 
      * @type {string}
-     * @memberof EsignApiPostV1EsignOByOrgSignByTokenReject
+     * @memberof EsignApiPostEsignOByOrgSignByTokenReject
      */
     readonly org: string
 
     /**
      * 
      * @type {string}
-     * @memberof EsignApiPostV1EsignOByOrgSignByTokenReject
+     * @memberof EsignApiPostEsignOByOrgSignByTokenReject
      */
     readonly token: string
 }
@@ -987,44 +987,44 @@ export class EsignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public getV1EsignDocuments(options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).getV1EsignDocuments(options).then((request) => request(this.axios, this.basePath));
+    public getEsignDocuments(options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).getEsignDocuments(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers the document, its recipients with each one\'s read and signing status, and every field with its type, page and position — the view a sender\'s UI renders, and where the field ids come from. Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404 rather than a refusal that would confirm it exists.
      * @summary One document with its recipients and field layout
-     * @param {EsignApiGetV1EsignDocumentsByIdRequest} requestParameters Request parameters.
+     * @param {EsignApiGetEsignDocumentsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public getV1EsignDocumentsById(requestParameters: EsignApiGetV1EsignDocumentsByIdRequest, options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).getV1EsignDocumentsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getEsignDocumentsById(requestParameters: EsignApiGetEsignDocumentsByIdRequest, options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).getEsignDocumentsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers every recorded event for the document in order — created, recipient added, field created, sent, opened, each field inserted, each recipient completed or rejected, and completion — with the actor and timestamp on each. This is the evidence record behind a signature, so it is append-only and nothing in the surface edits it.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
      * @summary The document\'s full audit trail, oldest first
-     * @param {EsignApiGetV1EsignDocumentsByIdAuditRequest} requestParameters Request parameters.
+     * @param {EsignApiGetEsignDocumentsByIdAuditRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public getV1EsignDocumentsByIdAudit(requestParameters: EsignApiGetV1EsignDocumentsByIdAuditRequest, options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).getV1EsignDocumentsByIdAudit(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getEsignDocumentsByIdAudit(requestParameters: EsignApiGetEsignDocumentsByIdAuditRequest, options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).getEsignDocumentsByIdAudit(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers the document\'s current PDF as base64 with a `sealed` flag and a filename. Before completion that is the original upload; once every signer has finished it is the SEALED artifact — the field values rendered onto the page and a real x509 PKCS#7 digital signature applied — and `sealed` is true. There is one `pdfBase64` field either way, so `sealed` is what tells you which you are holding.  Requires a validated principal (403 without one) and resolves the id in the caller\'s OWN tenant store, so another org\'s document id is a 404.
      * @summary Download the document — the sealed PDF once it is complete
-     * @param {EsignApiGetV1EsignDocumentsByIdDownloadRequest} requestParameters Request parameters.
+     * @param {EsignApiGetEsignDocumentsByIdDownloadRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public getV1EsignDocumentsByIdDownload(requestParameters: EsignApiGetV1EsignDocumentsByIdDownloadRequest, options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).getV1EsignDocumentsByIdDownload(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getEsignDocumentsByIdDownload(requestParameters: EsignApiGetEsignDocumentsByIdDownloadRequest, options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).getEsignDocumentsByIdDownload(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1034,20 +1034,20 @@ export class EsignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public getV1EsignHealth(options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).getV1EsignHealth(options).then((request) => request(this.axios, this.basePath));
+    public getEsignHealth(options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).getEsignHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers the document, the recipient it identifies, the fields THAT recipient must fill, and the PDF to display. The first open also marks the recipient as having opened it and records that on the audit trail, so this read has a side effect by design.  This is the signer\'s door and it takes NO account: the signing token is the entire credential, and it names the recipient, so a signer sees only their own fields and never the other recipients\' tokens. The `:org` segment selects which tenant\'s store is opened, and the token is then looked up inside it — so a token presented under the wrong org simply does not resolve. An unknown or wrong-org token is a 401, never a hint that some other document exists.
      * @summary Open a document you were asked to sign, using your signing link
-     * @param {EsignApiGetV1EsignOByOrgSignByTokenRequest} requestParameters Request parameters.
+     * @param {EsignApiGetEsignOByOrgSignByTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public getV1EsignOByOrgSignByToken(requestParameters: EsignApiGetV1EsignOByOrgSignByTokenRequest, options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).getV1EsignOByOrgSignByToken(requestParameters.org, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    public getEsignOByOrgSignByToken(requestParameters: EsignApiGetEsignOByOrgSignByTokenRequest, options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).getEsignOByOrgSignByToken(requestParameters.org, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1057,80 +1057,80 @@ export class EsignApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public postV1EsignDocuments(options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).postV1EsignDocuments(options).then((request) => request(this.axios, this.basePath));
+    public postEsignDocuments(options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).postEsignDocuments(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds a field — a signature, date, name, email or text box — at a page and position for ONE named recipient, and answers 201 with its id. `recipientId` and a valid `type` are required, and the recipient must belong to this document (400 otherwise); page defaults to 1 and position defaults to the origin.  Fields are what make a recipient signable: a document cannot be sent while any signing recipient has none. Only while DRAFT — adding a field to a sent document is a 409. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
      * @summary Place a field on the page for one recipient to fill
-     * @param {EsignApiPostV1EsignDocumentsByIdFieldsRequest} requestParameters Request parameters.
+     * @param {EsignApiPostEsignDocumentsByIdFieldsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public postV1EsignDocumentsByIdFields(requestParameters: EsignApiPostV1EsignDocumentsByIdFieldsRequest, options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).postV1EsignDocumentsByIdFields(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postEsignDocumentsByIdFields(requestParameters: EsignApiPostEsignDocumentsByIdFieldsRequest, options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).postEsignDocumentsByIdFields(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds a recipient and answers 201 with their id and their signing TOKEN — the crypto-random capability that is the only credential the signer\'s door accepts, so this response is where the signing link is built from. `email` is required; `role` defaults to `SIGNER`, and a `CC` recipient is recorded as already complete because they are never asked to sign. `signingOrder` sets this recipient\'s position for a sequential document.  Only while DRAFT: adding a recipient to a document already sent is a 409, because the field layout and the turn order were fixed when it went out. Requires a validated principal (403 without one), acts only on the caller\'s own tenant, and an unknown document is a 404. The addition is recorded on the audit trail.
      * @summary Add someone to a draft and mint their signing token
-     * @param {EsignApiPostV1EsignDocumentsByIdRecipientsRequest} requestParameters Request parameters.
+     * @param {EsignApiPostEsignDocumentsByIdRecipientsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public postV1EsignDocumentsByIdRecipients(requestParameters: EsignApiPostV1EsignDocumentsByIdRecipientsRequest, options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).postV1EsignDocumentsByIdRecipients(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postEsignDocumentsByIdRecipients(requestParameters: EsignApiPostEsignDocumentsByIdRecipientsRequest, options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).postEsignDocumentsByIdRecipients(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Moves the document from `DRAFT` to `PENDING` and answers the signing tokens — one per signing recipient, with the path to hand them — which is how the links reach the people who must sign. Nothing is emailed by this call; delivering the links is the caller\'s.  It refuses to send an unsignable document: no recipients at all is a 400, and so is any signing recipient with no fields to fill, named in the error. Re-sending an already-pending document is allowed and re-issues the same links rather than restarting anything; a completed document is a 409. Requires a validated principal (403 without one) and acts only on the caller\'s own tenant; an unknown document is a 404. The send is recorded on the audit trail.
      * @summary Send the document out and get each signer\'s link
-     * @param {EsignApiPostV1EsignDocumentsByIdSendRequest} requestParameters Request parameters.
+     * @param {EsignApiPostEsignDocumentsByIdSendRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public postV1EsignDocumentsByIdSend(requestParameters: EsignApiPostV1EsignDocumentsByIdSendRequest, options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).postV1EsignDocumentsByIdSend(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postEsignDocumentsByIdSend(requestParameters: EsignApiPostEsignDocumentsByIdSendRequest, options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).postEsignDocumentsByIdSend(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Marks this recipient as done and answers whether the DOCUMENT sealed with it. When every signing recipient has completed, sealing happens right here in the same call: the collected values are rendered onto the PDF, a real x509 PKCS#7 signature is applied, the sealed bytes are stored beside the untouched original, and the document moves to `COMPLETED`. Until then the answer is the recipient\'s own completion with the document still pending.  It refuses to complete a half-filled signature: a recipient with any unfilled field is a 400 naming how many remain. A document not out for signature is a 409, as is a recipient who has already completed, and under SEQUENTIAL order a signer out of turn is a 403. The token is the whole credential — no account, and a token that does not resolve under `:org` is a 401. Sealing and completion are one transaction, so a failure anywhere leaves the document exactly as it was.
      * @summary Finish signing — and seal the document if you were the last
-     * @param {EsignApiPostV1EsignOByOrgSignByTokenCompleteRequest} requestParameters Request parameters.
+     * @param {EsignApiPostEsignOByOrgSignByTokenCompleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public postV1EsignOByOrgSignByTokenComplete(requestParameters: EsignApiPostV1EsignOByOrgSignByTokenCompleteRequest, options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).postV1EsignOByOrgSignByTokenComplete(requestParameters.org, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    public postEsignOByOrgSignByTokenComplete(requestParameters: EsignApiPostEsignOByOrgSignByTokenCompleteRequest, options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).postEsignOByOrgSignByTokenComplete(requestParameters.org, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records a value for one field and marks it inserted. A signature field takes `value` with `isBase64` true for drawn image bytes, or false for a typed signature; a date, name or email field falls back to today, the recipient\'s name or their email when `value` is omitted; any other type requires one.  Nothing is sealed here — filling every field still leaves the document pending until the completion call. The token is the whole credential and it bounds what can be written: a field belonging to another recipient is refused with 401 even under a valid token, an unknown field is a 404, and a field already filled is a 409. A document not out for signature is a 409, as is a recipient who has already completed or rejected. Under SEQUENTIAL order a signer whose turn has not come is refused 403 until every earlier signer has signed. Each insertion is recorded on the audit trail.
      * @summary Fill in one of your fields
-     * @param {EsignApiPostV1EsignOByOrgSignByTokenFieldsByFieldidRequest} requestParameters Request parameters.
+     * @param {EsignApiPostEsignOByOrgSignByTokenFieldsByFieldidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public postV1EsignOByOrgSignByTokenFieldsByFieldid(requestParameters: EsignApiPostV1EsignOByOrgSignByTokenFieldsByFieldidRequest, options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).postV1EsignOByOrgSignByTokenFieldsByFieldid(requestParameters.org, requestParameters.token, requestParameters.fieldId, options).then((request) => request(this.axios, this.basePath));
+    public postEsignOByOrgSignByTokenFieldsByFieldid(requestParameters: EsignApiPostEsignOByOrgSignByTokenFieldsByFieldidRequest, options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).postEsignOByOrgSignByTokenFieldsByFieldid(requestParameters.org, requestParameters.token, requestParameters.fieldId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Records this recipient\'s refusal and moves the WHOLE DOCUMENT to `REJECTED` — one declining signer ends it for everyone, and there is no route back: the document cannot then be signed or completed. An optional `reason` is stored and written onto the audit trail with the rejection, which is what the sender sees.  A document not out for signature is a 409, and so is a recipient who has already signed or already rejected — a refusal cannot be taken back or repeated. The token is the whole credential; one that does not resolve under `:org` is a 401.
      * @summary Decline to sign, with an optional reason
-     * @param {EsignApiPostV1EsignOByOrgSignByTokenRejectRequest} requestParameters Request parameters.
+     * @param {EsignApiPostEsignOByOrgSignByTokenRejectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EsignApi
      */
-    public postV1EsignOByOrgSignByTokenReject(requestParameters: EsignApiPostV1EsignOByOrgSignByTokenRejectRequest, options?: RawAxiosRequestConfig) {
-        return EsignApiFp(this.configuration).postV1EsignOByOrgSignByTokenReject(requestParameters.org, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
+    public postEsignOByOrgSignByTokenReject(requestParameters: EsignApiPostEsignOByOrgSignByTokenRejectRequest, options?: RawAxiosRequestConfig) {
+        return EsignApiFp(this.configuration).postEsignOByOrgSignByTokenReject(requestParameters.org, requestParameters.token, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

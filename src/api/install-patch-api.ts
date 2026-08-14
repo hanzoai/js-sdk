@@ -33,7 +33,7 @@ export const InstallPatchApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1InstallPatch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postInstallPatch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/install-patch`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const InstallPatchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1InstallPatch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1InstallPatch(options);
+        async postInstallPatch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postInstallPatch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['InstallPatchApi.postV1InstallPatch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['InstallPatchApi.postInstallPatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const InstallPatchApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1InstallPatch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1InstallPatch(options).then((request) => request(axios, basePath));
+        postInstallPatch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postInstallPatch(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class InstallPatchApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InstallPatchApi
      */
-    public postV1InstallPatch(options?: RawAxiosRequestConfig) {
-        return InstallPatchApiFp(this.configuration).postV1InstallPatch(options).then((request) => request(this.axios, this.basePath));
+    public postInstallPatch(options?: RawAxiosRequestConfig) {
+        return InstallPatchApiFp(this.configuration).postInstallPatch(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

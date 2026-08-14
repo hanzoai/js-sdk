@@ -39,7 +39,7 @@ export const NetworksApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Networks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getNetworks: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/networks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -70,9 +70,9 @@ export const NetworksApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1NetworksById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getNetworksById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getV1NetworksById', 'id', id)
+            assertParamExists('getNetworksById', 'id', id)
             const localVarPath = `/v1/networks/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -103,7 +103,7 @@ export const NetworksApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1NetworksRouters: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getNetworksRouters: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/networks/routers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -143,10 +143,10 @@ export const NetworksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Networks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NetworkList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Networks(options);
+        async getNetworks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NetworkList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNetworks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['NetworksApi.getV1Networks']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['NetworksApi.getNetworks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -156,10 +156,10 @@ export const NetworksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1NetworksById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NetworkView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1NetworksById(id, options);
+        async getNetworksById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NetworkView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNetworksById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['NetworksApi.getV1NetworksById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['NetworksApi.getNetworksById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -168,10 +168,10 @@ export const NetworksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1NetworksRouters(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RouterList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1NetworksRouters(options);
+        async getNetworksRouters(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RouterList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNetworksRouters(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['NetworksApi.getV1NetworksRouters']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['NetworksApi.getNetworksRouters']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -190,18 +190,18 @@ export const NetworksApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Networks(options?: RawAxiosRequestConfig): AxiosPromise<NetworkList> {
-            return localVarFp.getV1Networks(options).then((request) => request(axios, basePath));
+        getNetworks(options?: RawAxiosRequestConfig): AxiosPromise<NetworkList> {
+            return localVarFp.getNetworks(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one overlay network by id, scoped to the caller\'s org.  The org has exactly one overlay network and its id is derived from the org, so any other id — another tenant\'s, or one that does not exist — is 404 rather than a peek across the tenant boundary. An org whose network exists but has no edge-routers is 404 too, for the same reason the list is empty: there is no overlay until something is on it.
          * @summary Returns one overlay network by id, scoped to the caller\'s org.
-         * @param {NetworksApiGetV1NetworksByIdRequest} requestParameters Request parameters.
+         * @param {NetworksApiGetNetworksByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1NetworksById(requestParameters: NetworksApiGetV1NetworksByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<NetworkView> {
-            return localVarFp.getV1NetworksById(requestParameters.id, options).then((request) => request(axios, basePath));
+        getNetworksById(requestParameters: NetworksApiGetNetworksByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<NetworkView> {
+            return localVarFp.getNetworksById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the Zero Trust routers the caller\'s org owns.  One row per real ZT edge-router tagged with the org\'s \"org-<org>\" role attribute, carrying the controller\'s own health signal: \"online\" when connected, \"disabled\" when administratively disabled, \"offline\" otherwise. region is filled only from a \"region-<slug>\" role attribute and omitted when the router carries none, so the column renders \"—\" rather than a guess.  The read degrades rather than erroring: a deployment with no ZT credential, and a controller that cannot be reached, both answer 200 with an empty list.
@@ -209,22 +209,22 @@ export const NetworksApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1NetworksRouters(options?: RawAxiosRequestConfig): AxiosPromise<RouterList> {
-            return localVarFp.getV1NetworksRouters(options).then((request) => request(axios, basePath));
+        getNetworksRouters(options?: RawAxiosRequestConfig): AxiosPromise<RouterList> {
+            return localVarFp.getNetworksRouters(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1NetworksById operation in NetworksApi.
+ * Request parameters for getNetworksById operation in NetworksApi.
  * @export
- * @interface NetworksApiGetV1NetworksByIdRequest
+ * @interface NetworksApiGetNetworksByIdRequest
  */
-export interface NetworksApiGetV1NetworksByIdRequest {
+export interface NetworksApiGetNetworksByIdRequest {
     /**
      * ID is the network id from the path. The URL is the addressing authority, so it binds from there whatever else the request carries.
      * @type {string}
-     * @memberof NetworksApiGetV1NetworksById
+     * @memberof NetworksApiGetNetworksById
      */
     readonly id: string
 }
@@ -243,20 +243,20 @@ export class NetworksApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NetworksApi
      */
-    public getV1Networks(options?: RawAxiosRequestConfig) {
-        return NetworksApiFp(this.configuration).getV1Networks(options).then((request) => request(this.axios, this.basePath));
+    public getNetworks(options?: RawAxiosRequestConfig) {
+        return NetworksApiFp(this.configuration).getNetworks(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one overlay network by id, scoped to the caller\'s org.  The org has exactly one overlay network and its id is derived from the org, so any other id — another tenant\'s, or one that does not exist — is 404 rather than a peek across the tenant boundary. An org whose network exists but has no edge-routers is 404 too, for the same reason the list is empty: there is no overlay until something is on it.
      * @summary Returns one overlay network by id, scoped to the caller\'s org.
-     * @param {NetworksApiGetV1NetworksByIdRequest} requestParameters Request parameters.
+     * @param {NetworksApiGetNetworksByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NetworksApi
      */
-    public getV1NetworksById(requestParameters: NetworksApiGetV1NetworksByIdRequest, options?: RawAxiosRequestConfig) {
-        return NetworksApiFp(this.configuration).getV1NetworksById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getNetworksById(requestParameters: NetworksApiGetNetworksByIdRequest, options?: RawAxiosRequestConfig) {
+        return NetworksApiFp(this.configuration).getNetworksById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -266,8 +266,8 @@ export class NetworksApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NetworksApi
      */
-    public getV1NetworksRouters(options?: RawAxiosRequestConfig) {
-        return NetworksApiFp(this.configuration).getV1NetworksRouters(options).then((request) => request(this.axios, this.basePath));
+    public getNetworksRouters(options?: RawAxiosRequestConfig) {
+        return NetworksApiFp(this.configuration).getNetworksRouters(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

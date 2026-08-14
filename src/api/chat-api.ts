@@ -33,7 +33,7 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Chat: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postChat: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/chat`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ChatCompletions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postChatCompletions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/chat/completions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -103,10 +103,10 @@ export const ChatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Chat(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Chat(options);
+        async postChat(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postChat(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ChatApi.postV1Chat']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ChatApi.postChat']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -115,10 +115,10 @@ export const ChatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ChatCompletions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ChatCompletions(options);
+        async postChatCompletions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postChatCompletions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ChatApi.postV1ChatCompletions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ChatApi.postChatCompletions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -137,8 +137,8 @@ export const ChatApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Chat(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Chat(options).then((request) => request(axios, basePath));
+        postChat(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postChat(options).then((request) => request(axios, basePath));
         },
         /**
          * Implements the OpenAI-compatible chat completions API
@@ -146,8 +146,8 @@ export const ChatApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ChatCompletions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1ChatCompletions(options).then((request) => request(axios, basePath));
+        postChatCompletions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postChatCompletions(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -166,8 +166,8 @@ export class ChatApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public postV1Chat(options?: RawAxiosRequestConfig) {
-        return ChatApiFp(this.configuration).postV1Chat(options).then((request) => request(this.axios, this.basePath));
+    public postChat(options?: RawAxiosRequestConfig) {
+        return ChatApiFp(this.configuration).postChat(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -177,8 +177,8 @@ export class ChatApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public postV1ChatCompletions(options?: RawAxiosRequestConfig) {
-        return ChatApiFp(this.configuration).postV1ChatCompletions(options).then((request) => request(this.axios, this.basePath));
+    public postChatCompletions(options?: RawAxiosRequestConfig) {
+        return ChatApiFp(this.configuration).postChatCompletions(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

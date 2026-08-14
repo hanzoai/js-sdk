@@ -72,9 +72,9 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PubsubJetstreamStreamsByStream: async (stream: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePubsubJetstreamStreamsByStream: async (stream: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('deleteV1PubsubJetstreamStreamsByStream', 'stream', stream)
+            assertParamExists('deletePubsubJetstreamStreamsByStream', 'stream', stream)
             const localVarPath = `/v1/pubsub/jetstream/streams/{stream}`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -107,11 +107,11 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PubsubJetstreamStreamsByStreamConsumersByName: async (stream: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePubsubJetstreamStreamsByStreamConsumersByName: async (stream: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('deleteV1PubsubJetstreamStreamsByStreamConsumersByName', 'stream', stream)
+            assertParamExists('deletePubsubJetstreamStreamsByStreamConsumersByName', 'stream', stream)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1PubsubJetstreamStreamsByStreamConsumersByName', 'name', name)
+            assertParamExists('deletePubsubJetstreamStreamsByStreamConsumersByName', 'name', name)
             const localVarPath = `/v1/pubsub/jetstream/streams/{stream}/consumers/{name}`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -144,9 +144,9 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PubsubKvByBucket: async (bucket: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePubsubKvByBucket: async (bucket: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('deleteV1PubsubKvByBucket', 'bucket', bucket)
+            assertParamExists('deletePubsubKvByBucket', 'bucket', bucket)
             const localVarPath = `/v1/pubsub/kv/{bucket}`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -179,11 +179,11 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PubsubKvByBucketByKey: async (bucket: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePubsubKvByBucketByKey: async (bucket: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('deleteV1PubsubKvByBucketByKey', 'bucket', bucket)
+            assertParamExists('deletePubsubKvByBucketByKey', 'bucket', bucket)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('deleteV1PubsubKvByBucketByKey', 'key', key)
+            assertParamExists('deletePubsubKvByBucketByKey', 'key', key)
             const localVarPath = `/v1/pubsub/kv/{bucket}/{key}`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -215,7 +215,7 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubJetstreamStreams: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPubsubJetstreamStreams: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/pubsub/jetstream/streams`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -246,9 +246,9 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubJetstreamStreamsByStream: async (stream: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPubsubJetstreamStreamsByStream: async (stream: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('getV1PubsubJetstreamStreamsByStream', 'stream', stream)
+            assertParamExists('getPubsubJetstreamStreamsByStream', 'stream', stream)
             const localVarPath = `/v1/pubsub/jetstream/streams/{stream}`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -280,9 +280,9 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubJetstreamStreamsByStreamConsumers: async (stream: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPubsubJetstreamStreamsByStreamConsumers: async (stream: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('getV1PubsubJetstreamStreamsByStreamConsumers', 'stream', stream)
+            assertParamExists('getPubsubJetstreamStreamsByStreamConsumers', 'stream', stream)
             const localVarPath = `/v1/pubsub/jetstream/streams/{stream}/consumers`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -315,11 +315,11 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubJetstreamStreamsByStreamConsumersByName: async (stream: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPubsubJetstreamStreamsByStreamConsumersByName: async (stream: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('getV1PubsubJetstreamStreamsByStreamConsumersByName', 'stream', stream)
+            assertParamExists('getPubsubJetstreamStreamsByStreamConsumersByName', 'stream', stream)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1PubsubJetstreamStreamsByStreamConsumersByName', 'name', name)
+            assertParamExists('getPubsubJetstreamStreamsByStreamConsumersByName', 'name', name)
             const localVarPath = `/v1/pubsub/jetstream/streams/{stream}/consumers/{name}`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -353,11 +353,11 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubKvByBucketByKey: async (bucket: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPubsubKvByBucketByKey: async (bucket: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('getV1PubsubKvByBucketByKey', 'bucket', bucket)
+            assertParamExists('getPubsubKvByBucketByKey', 'bucket', bucket)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('getV1PubsubKvByBucketByKey', 'key', key)
+            assertParamExists('getPubsubKvByBucketByKey', 'key', key)
             const localVarPath = `/v1/pubsub/kv/{bucket}/{key}`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -391,11 +391,11 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubKvByBucketByKeyHistory: async (bucket: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPubsubKvByBucketByKeyHistory: async (bucket: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('getV1PubsubKvByBucketByKeyHistory', 'bucket', bucket)
+            assertParamExists('getPubsubKvByBucketByKeyHistory', 'bucket', bucket)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('getV1PubsubKvByBucketByKeyHistory', 'key', key)
+            assertParamExists('getPubsubKvByBucketByKeyHistory', 'key', key)
             const localVarPath = `/v1/pubsub/kv/{bucket}/{key}/history`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -428,9 +428,9 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubJetstreamStreams: async (streamWrite: StreamWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPubsubJetstreamStreams: async (streamWrite: StreamWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'streamWrite' is not null or undefined
-            assertParamExists('postV1PubsubJetstreamStreams', 'streamWrite', streamWrite)
+            assertParamExists('postPubsubJetstreamStreams', 'streamWrite', streamWrite)
             const localVarPath = `/v1/pubsub/jetstream/streams`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -465,11 +465,11 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubJetstreamStreamsByStreamConsumers: async (stream: string, consumerWrite: ConsumerWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPubsubJetstreamStreamsByStreamConsumers: async (stream: string, consumerWrite: ConsumerWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('postV1PubsubJetstreamStreamsByStreamConsumers', 'stream', stream)
+            assertParamExists('postPubsubJetstreamStreamsByStreamConsumers', 'stream', stream)
             // verify required parameter 'consumerWrite' is not null or undefined
-            assertParamExists('postV1PubsubJetstreamStreamsByStreamConsumers', 'consumerWrite', consumerWrite)
+            assertParamExists('postPubsubJetstreamStreamsByStreamConsumers', 'consumerWrite', consumerWrite)
             const localVarPath = `/v1/pubsub/jetstream/streams/{stream}/consumers`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -506,13 +506,13 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubJetstreamStreamsByStreamConsumersByNameNext: async (stream: string, name: string, fetchQuery: FetchQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPubsubJetstreamStreamsByStreamConsumersByNameNext: async (stream: string, name: string, fetchQuery: FetchQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('postV1PubsubJetstreamStreamsByStreamConsumersByNameNext', 'stream', stream)
+            assertParamExists('postPubsubJetstreamStreamsByStreamConsumersByNameNext', 'stream', stream)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1PubsubJetstreamStreamsByStreamConsumersByNameNext', 'name', name)
+            assertParamExists('postPubsubJetstreamStreamsByStreamConsumersByNameNext', 'name', name)
             // verify required parameter 'fetchQuery' is not null or undefined
-            assertParamExists('postV1PubsubJetstreamStreamsByStreamConsumersByNameNext', 'fetchQuery', fetchQuery)
+            assertParamExists('postPubsubJetstreamStreamsByStreamConsumersByNameNext', 'fetchQuery', fetchQuery)
             const localVarPath = `/v1/pubsub/jetstream/streams/{stream}/consumers/{name}/next`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -549,11 +549,11 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubKvByBucket: async (bucket: string, bucketWrite: BucketWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPubsubKvByBucket: async (bucket: string, bucketWrite: BucketWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('postV1PubsubKvByBucket', 'bucket', bucket)
+            assertParamExists('postPubsubKvByBucket', 'bucket', bucket)
             // verify required parameter 'bucketWrite' is not null or undefined
-            assertParamExists('postV1PubsubKvByBucket', 'bucketWrite', bucketWrite)
+            assertParamExists('postPubsubKvByBucket', 'bucketWrite', bucketWrite)
             const localVarPath = `/v1/pubsub/kv/{bucket}`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -588,9 +588,9 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubPublish: async (busPublish: BusPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPubsubPublish: async (busPublish: BusPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'busPublish' is not null or undefined
-            assertParamExists('postV1PubsubPublish', 'busPublish', busPublish)
+            assertParamExists('postPubsubPublish', 'busPublish', busPublish)
             const localVarPath = `/v1/pubsub/publish`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -624,9 +624,9 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubRequest: async (busRequest: BusRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postPubsubRequest: async (busRequest: BusRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'busRequest' is not null or undefined
-            assertParamExists('postV1PubsubRequest', 'busRequest', busRequest)
+            assertParamExists('postPubsubRequest', 'busRequest', busRequest)
             const localVarPath = `/v1/pubsub/request`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -661,11 +661,11 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1PubsubJetstreamStreamsByStream: async (stream: string, streamUpdate: StreamUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putPubsubJetstreamStreamsByStream: async (stream: string, streamUpdate: StreamUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('putV1PubsubJetstreamStreamsByStream', 'stream', stream)
+            assertParamExists('putPubsubJetstreamStreamsByStream', 'stream', stream)
             // verify required parameter 'streamUpdate' is not null or undefined
-            assertParamExists('putV1PubsubJetstreamStreamsByStream', 'streamUpdate', streamUpdate)
+            assertParamExists('putPubsubJetstreamStreamsByStream', 'streamUpdate', streamUpdate)
             const localVarPath = `/v1/pubsub/jetstream/streams/{stream}`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -702,13 +702,13 @@ export const PubsubApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1PubsubKvByBucketByKey: async (bucket: string, key: string, kvWrite: KvWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putPubsubKvByBucketByKey: async (bucket: string, key: string, kvWrite: KvWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('putV1PubsubKvByBucketByKey', 'bucket', bucket)
+            assertParamExists('putPubsubKvByBucketByKey', 'bucket', bucket)
             // verify required parameter 'key' is not null or undefined
-            assertParamExists('putV1PubsubKvByBucketByKey', 'key', key)
+            assertParamExists('putPubsubKvByBucketByKey', 'key', key)
             // verify required parameter 'kvWrite' is not null or undefined
-            assertParamExists('putV1PubsubKvByBucketByKey', 'kvWrite', kvWrite)
+            assertParamExists('putPubsubKvByBucketByKey', 'kvWrite', kvWrite)
             const localVarPath = `/v1/pubsub/kv/{bucket}/{key}`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)));
@@ -754,10 +754,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1PubsubJetstreamStreamsByStream(stream: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PubsubJetstreamStreamsByStream(stream, options);
+        async deletePubsubJetstreamStreamsByStream(stream: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePubsubJetstreamStreamsByStream(stream, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.deleteV1PubsubJetstreamStreamsByStream']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.deletePubsubJetstreamStreamsByStream']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -768,10 +768,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1PubsubJetstreamStreamsByStreamConsumersByName(stream: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PubsubJetstreamStreamsByStreamConsumersByName(stream, name, options);
+        async deletePubsubJetstreamStreamsByStreamConsumersByName(stream: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePubsubJetstreamStreamsByStreamConsumersByName(stream, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.deleteV1PubsubJetstreamStreamsByStreamConsumersByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.deletePubsubJetstreamStreamsByStreamConsumersByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -781,10 +781,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1PubsubKvByBucket(bucket: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PubsubKvByBucket(bucket, options);
+        async deletePubsubKvByBucket(bucket: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePubsubKvByBucket(bucket, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.deleteV1PubsubKvByBucket']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.deletePubsubKvByBucket']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -795,10 +795,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1PubsubKvByBucketByKey(bucket: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1PubsubKvByBucketByKey(bucket, key, options);
+        async deletePubsubKvByBucketByKey(bucket: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePubsubKvByBucketByKey(bucket, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.deleteV1PubsubKvByBucketByKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.deletePubsubKvByBucketByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -807,10 +807,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PubsubJetstreamStreams(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StreamPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PubsubJetstreamStreams(options);
+        async getPubsubJetstreamStreams(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StreamPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPubsubJetstreamStreams(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getV1PubsubJetstreamStreams']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getPubsubJetstreamStreams']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -820,10 +820,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PubsubJetstreamStreamsByStream(stream: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StreamRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PubsubJetstreamStreamsByStream(stream, options);
+        async getPubsubJetstreamStreamsByStream(stream: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StreamRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPubsubJetstreamStreamsByStream(stream, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getV1PubsubJetstreamStreamsByStream']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getPubsubJetstreamStreamsByStream']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -833,10 +833,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PubsubJetstreamStreamsByStreamConsumers(stream: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumerPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PubsubJetstreamStreamsByStreamConsumers(stream, options);
+        async getPubsubJetstreamStreamsByStreamConsumers(stream: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumerPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPubsubJetstreamStreamsByStreamConsumers(stream, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getV1PubsubJetstreamStreamsByStreamConsumers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getPubsubJetstreamStreamsByStreamConsumers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -847,10 +847,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PubsubJetstreamStreamsByStreamConsumersByName(stream: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumerRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PubsubJetstreamStreamsByStreamConsumersByName(stream, name, options);
+        async getPubsubJetstreamStreamsByStreamConsumersByName(stream: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumerRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPubsubJetstreamStreamsByStreamConsumersByName(stream, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getV1PubsubJetstreamStreamsByStreamConsumersByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getPubsubJetstreamStreamsByStreamConsumersByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -861,10 +861,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PubsubKvByBucketByKey(bucket: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvEntry>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PubsubKvByBucketByKey(bucket, key, options);
+        async getPubsubKvByBucketByKey(bucket: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvEntry>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPubsubKvByBucketByKey(bucket, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getV1PubsubKvByBucketByKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getPubsubKvByBucketByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -875,10 +875,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1PubsubKvByBucketByKeyHistory(bucket: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1PubsubKvByBucketByKeyHistory(bucket, key, options);
+        async getPubsubKvByBucketByKeyHistory(bucket: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPubsubKvByBucketByKeyHistory(bucket, key, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getV1PubsubKvByBucketByKeyHistory']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.getPubsubKvByBucketByKeyHistory']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -888,10 +888,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PubsubJetstreamStreams(streamWrite: StreamWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StreamRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PubsubJetstreamStreams(streamWrite, options);
+        async postPubsubJetstreamStreams(streamWrite: StreamWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StreamRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPubsubJetstreamStreams(streamWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postV1PubsubJetstreamStreams']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postPubsubJetstreamStreams']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -902,10 +902,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PubsubJetstreamStreamsByStreamConsumers(stream: string, consumerWrite: ConsumerWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumerRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PubsubJetstreamStreamsByStreamConsumers(stream, consumerWrite, options);
+        async postPubsubJetstreamStreamsByStreamConsumers(stream: string, consumerWrite: ConsumerWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConsumerRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPubsubJetstreamStreamsByStreamConsumers(stream, consumerWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postV1PubsubJetstreamStreamsByStreamConsumers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postPubsubJetstreamStreamsByStreamConsumers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -917,10 +917,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PubsubJetstreamStreamsByStreamConsumersByNameNext(stream: string, name: string, fetchQuery: FetchQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagePage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PubsubJetstreamStreamsByStreamConsumersByNameNext(stream, name, fetchQuery, options);
+        async postPubsubJetstreamStreamsByStreamConsumersByNameNext(stream: string, name: string, fetchQuery: FetchQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessagePage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPubsubJetstreamStreamsByStreamConsumersByNameNext(stream, name, fetchQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postV1PubsubJetstreamStreamsByStreamConsumersByNameNext']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postPubsubJetstreamStreamsByStreamConsumersByNameNext']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -931,10 +931,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PubsubKvByBucket(bucket: string, bucketWrite: BucketWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BucketRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PubsubKvByBucket(bucket, bucketWrite, options);
+        async postPubsubKvByBucket(bucket: string, bucketWrite: BucketWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BucketRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPubsubKvByBucket(bucket, bucketWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postV1PubsubKvByBucket']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postPubsubKvByBucket']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -944,10 +944,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PubsubPublish(busPublish: BusPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BusAck>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PubsubPublish(busPublish, options);
+        async postPubsubPublish(busPublish: BusPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BusAck>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPubsubPublish(busPublish, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postV1PubsubPublish']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postPubsubPublish']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -957,10 +957,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1PubsubRequest(busRequest: BusRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BusMessage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1PubsubRequest(busRequest, options);
+        async postPubsubRequest(busRequest: BusRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BusMessage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPubsubRequest(busRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postV1PubsubRequest']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.postPubsubRequest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -971,10 +971,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1PubsubJetstreamStreamsByStream(stream: string, streamUpdate: StreamUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StreamRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1PubsubJetstreamStreamsByStream(stream, streamUpdate, options);
+        async putPubsubJetstreamStreamsByStream(stream: string, streamUpdate: StreamUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StreamRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putPubsubJetstreamStreamsByStream(stream, streamUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.putV1PubsubJetstreamStreamsByStream']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.putPubsubJetstreamStreamsByStream']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -986,10 +986,10 @@ export const PubsubApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1PubsubKvByBucketByKey(bucket: string, key: string, kvWrite: KvWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvAck>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1PubsubKvByBucketByKey(bucket, key, kvWrite, options);
+        async putPubsubKvByBucketByKey(bucket: string, key: string, kvWrite: KvWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KvAck>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putPubsubKvByBucketByKey(bucket, key, kvWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PubsubApi.putV1PubsubKvByBucketByKey']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PubsubApi.putPubsubKvByBucketByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1005,42 +1005,42 @@ export const PubsubApiFactory = function (configuration?: Configuration, basePat
         /**
          * Removes one stream of the caller\'s org — its retained messages and its consumers with it — and answers 204 with no body. 404 when the org has no stream of that name.
          * @summary Removes one stream of the caller\'s org — its retained messages and its consumers with it — and answers 204 with no body.
-         * @param {PubsubApiDeleteV1PubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
+         * @param {PubsubApiDeletePubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PubsubJetstreamStreamsByStream(requestParameters: PubsubApiDeleteV1PubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1PubsubJetstreamStreamsByStream(requestParameters.stream, options).then((request) => request(axios, basePath));
+        deletePubsubJetstreamStreamsByStream(requestParameters: PubsubApiDeletePubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePubsubJetstreamStreamsByStream(requestParameters.stream, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one consumer — its cursor, not the stream\'s messages — and answers 204 with no body. 404 when the stream or the consumer does not exist.
          * @summary Removes one consumer — its cursor, not the stream\'s messages — and answers 204 with no body.
-         * @param {PubsubApiDeleteV1PubsubJetstreamStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
+         * @param {PubsubApiDeletePubsubJetstreamStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PubsubJetstreamStreamsByStreamConsumersByName(requestParameters: PubsubApiDeleteV1PubsubJetstreamStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1PubsubJetstreamStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(axios, basePath));
+        deletePubsubJetstreamStreamsByStreamConsumersByName(requestParameters: PubsubApiDeletePubsubJetstreamStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePubsubJetstreamStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one bucket of the caller\'s org — every key and every revision with it — and answers 204 with no body. 404 when the org has no bucket of that name.
          * @summary Removes one bucket of the caller\'s org — every key and every revision with it — and answers 204 with no body.
-         * @param {PubsubApiDeleteV1PubsubKvByBucketRequest} requestParameters Request parameters.
+         * @param {PubsubApiDeletePubsubKvByBucketRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PubsubKvByBucket(requestParameters: PubsubApiDeleteV1PubsubKvByBucketRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1PubsubKvByBucket(requestParameters.bucket, options).then((request) => request(axios, basePath));
+        deletePubsubKvByBucket(requestParameters: PubsubApiDeletePubsubKvByBucketRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePubsubKvByBucket(requestParameters.bucket, options).then((request) => request(axios, basePath));
         },
         /**
          * Delete removes one key — a delete marker in the key\'s history, so watchers see it and Get answers 404 — and answers 204 with no body. 404 when the bucket does not exist.
          * @summary Delete removes one key — a delete marker in the key\'s history, so watchers see it and Get answers 404 — and answers 204 with no body.
-         * @param {PubsubApiDeleteV1PubsubKvByBucketByKeyRequest} requestParameters Request parameters.
+         * @param {PubsubApiDeletePubsubKvByBucketByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1PubsubKvByBucketByKey(requestParameters: PubsubApiDeleteV1PubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1PubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, options).then((request) => request(axios, basePath));
+        deletePubsubKvByBucketByKey(requestParameters: PubsubApiDeletePubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the org\'s streams, sorted by name.  A stream is the durable log: it captures every message published to its subjects and retains them by its own limits, independent of any consumer. The listing is org-scoped server-side — one org can never see another\'s streams, and the platform\'s own planes never appear.
@@ -1048,460 +1048,460 @@ export const PubsubApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubJetstreamStreams(options?: RawAxiosRequestConfig): AxiosPromise<StreamPage> {
-            return localVarFp.getV1PubsubJetstreamStreams(options).then((request) => request(axios, basePath));
+        getPubsubJetstreamStreams(options?: RawAxiosRequestConfig): AxiosPromise<StreamPage> {
+            return localVarFp.getPubsubJetstreamStreams(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one stream of the caller\'s org — its configuration and its live state (messages, bytes, sequence range, consumer count). 404 when the org has no stream of that name.
          * @summary Returns one stream of the caller\'s org — its configuration and its live state (messages, bytes, sequence range, consumer count).
-         * @param {PubsubApiGetV1PubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
+         * @param {PubsubApiGetPubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubJetstreamStreamsByStream(requestParameters: PubsubApiGetV1PubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<StreamRecord> {
-            return localVarFp.getV1PubsubJetstreamStreamsByStream(requestParameters.stream, options).then((request) => request(axios, basePath));
+        getPubsubJetstreamStreamsByStream(requestParameters: PubsubApiGetPubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<StreamRecord> {
+            return localVarFp.getPubsubJetstreamStreamsByStream(requestParameters.stream, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one stream\'s consumers, sorted by name. 404 when the org has no stream of that name.
          * @summary Returns one stream\'s consumers, sorted by name.
-         * @param {PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersRequest} requestParameters Request parameters.
+         * @param {PubsubApiGetPubsubJetstreamStreamsByStreamConsumersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubJetstreamStreamsByStreamConsumers(requestParameters: PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConsumerPage> {
-            return localVarFp.getV1PubsubJetstreamStreamsByStreamConsumers(requestParameters.stream, options).then((request) => request(axios, basePath));
+        getPubsubJetstreamStreamsByStreamConsumers(requestParameters: PubsubApiGetPubsubJetstreamStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConsumerPage> {
+            return localVarFp.getPubsubJetstreamStreamsByStreamConsumers(requestParameters.stream, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one consumer of one org stream — its configuration and its cursor: delivered and acknowledged sequences, pending and redelivered counts. 404 when the stream or the consumer does not exist.
          * @summary Returns one consumer of one org stream — its configuration and its cursor: delivered and acknowledged sequences, pending and redelivered counts.
-         * @param {PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
+         * @param {PubsubApiGetPubsubJetstreamStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubJetstreamStreamsByStreamConsumersByName(requestParameters: PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConsumerRecord> {
-            return localVarFp.getV1PubsubJetstreamStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(axios, basePath));
+        getPubsubJetstreamStreamsByStreamConsumersByName(requestParameters: PubsubApiGetPubsubJetstreamStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConsumerRecord> {
+            return localVarFp.getPubsubJetstreamStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Get returns one key\'s current value and revision. 404 when the bucket does not exist, the key was never written, or its latest revision is a delete.
          * @summary Get returns one key\'s current value and revision.
-         * @param {PubsubApiGetV1PubsubKvByBucketByKeyRequest} requestParameters Request parameters.
+         * @param {PubsubApiGetPubsubKvByBucketByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubKvByBucketByKey(requestParameters: PubsubApiGetV1PubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvEntry> {
-            return localVarFp.getV1PubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, options).then((request) => request(axios, basePath));
+        getPubsubKvByBucketByKey(requestParameters: PubsubApiGetPubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvEntry> {
+            return localVarFp.getPubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth. 404 when the bucket does not exist or the key was never written.
          * @summary History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth.
-         * @param {PubsubApiGetV1PubsubKvByBucketByKeyHistoryRequest} requestParameters Request parameters.
+         * @param {PubsubApiGetPubsubKvByBucketByKeyHistoryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1PubsubKvByBucketByKeyHistory(requestParameters: PubsubApiGetV1PubsubKvByBucketByKeyHistoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvPage> {
-            return localVarFp.getV1PubsubKvByBucketByKeyHistory(requestParameters.bucket, requestParameters.key, options).then((request) => request(axios, basePath));
+        getPubsubKvByBucketByKeyHistory(requestParameters: PubsubApiGetPubsubKvByBucketByKeyHistoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvPage> {
+            return localVarFp.getPubsubKvByBucketByKeyHistory(requestParameters.bucket, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a durable stream capturing the given subjects and returns it. 409 when the org already has a stream of that name; the subjects are the org\'s own and cannot collide with another org\'s.
          * @summary Creates a durable stream capturing the given subjects and returns it.
-         * @param {PubsubApiPostV1PubsubJetstreamStreamsRequest} requestParameters Request parameters.
+         * @param {PubsubApiPostPubsubJetstreamStreamsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubJetstreamStreams(requestParameters: PubsubApiPostV1PubsubJetstreamStreamsRequest, options?: RawAxiosRequestConfig): AxiosPromise<StreamRecord> {
-            return localVarFp.postV1PubsubJetstreamStreams(requestParameters.streamWrite, options).then((request) => request(axios, basePath));
+        postPubsubJetstreamStreams(requestParameters: PubsubApiPostPubsubJetstreamStreamsRequest, options?: RawAxiosRequestConfig): AxiosPromise<StreamRecord> {
+            return localVarFp.postPubsubJetstreamStreams(requestParameters.streamWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a durable consumer on one stream and returns it. A consumer is a named cursor: it tracks what has been delivered and what is acknowledged, so many workers can share it and none sees a message twice outside redelivery. 409 when the stream already has a consumer of that name with a different configuration.
          * @summary Creates a durable consumer on one stream and returns it.
-         * @param {PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersRequest} requestParameters Request parameters.
+         * @param {PubsubApiPostPubsubJetstreamStreamsByStreamConsumersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubJetstreamStreamsByStreamConsumers(requestParameters: PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConsumerRecord> {
-            return localVarFp.postV1PubsubJetstreamStreamsByStreamConsumers(requestParameters.stream, requestParameters.consumerWrite, options).then((request) => request(axios, basePath));
+        postPubsubJetstreamStreamsByStreamConsumers(requestParameters: PubsubApiPostPubsubJetstreamStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConsumerRecord> {
+            return localVarFp.postPubsubJetstreamStreamsByStreamConsumers(requestParameters.stream, requestParameters.consumerWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * Fetch pulls the next batch from a consumer and acknowledges it — the request/response way to consume a stream. The hand-off is at-most-once: a message returned here is acked here, so a caller that loses the response does not see it again. Workers needing at-least-once delivery consume the same consumer over the NATS port, where acks are theirs to send. An empty batch after the wait is an empty page, not an error.
          * @summary Fetch pulls the next batch from a consumer and acknowledges it — the request/response way to consume a stream.
-         * @param {PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersByNameNextRequest} requestParameters Request parameters.
+         * @param {PubsubApiPostPubsubJetstreamStreamsByStreamConsumersByNameNextRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubJetstreamStreamsByStreamConsumersByNameNext(requestParameters: PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersByNameNextRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessagePage> {
-            return localVarFp.postV1PubsubJetstreamStreamsByStreamConsumersByNameNext(requestParameters.stream, requestParameters.name, requestParameters.fetchQuery, options).then((request) => request(axios, basePath));
+        postPubsubJetstreamStreamsByStreamConsumersByNameNext(requestParameters: PubsubApiPostPubsubJetstreamStreamsByStreamConsumersByNameNextRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessagePage> {
+            return localVarFp.postPubsubJetstreamStreamsByStreamConsumersByNameNext(requestParameters.stream, requestParameters.name, requestParameters.fetchQuery, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a KV bucket and returns it. A bucket is keyed state on the same durable plane as the streams: each key holds up to History revisions, entries can expire by TTL, and watchers on the NATS port see every write. 409 when the org already has a bucket of that name.
          * @summary Creates a KV bucket and returns it.
-         * @param {PubsubApiPostV1PubsubKvByBucketRequest} requestParameters Request parameters.
+         * @param {PubsubApiPostPubsubKvByBucketRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubKvByBucket(requestParameters: PubsubApiPostV1PubsubKvByBucketRequest, options?: RawAxiosRequestConfig): AxiosPromise<BucketRecord> {
-            return localVarFp.postV1PubsubKvByBucket(requestParameters.bucket, requestParameters.bucketWrite, options).then((request) => request(axios, basePath));
+        postPubsubKvByBucket(requestParameters: PubsubApiPostPubsubKvByBucketRequest, options?: RawAxiosRequestConfig): AxiosPromise<BucketRecord> {
+            return localVarFp.postPubsubKvByBucket(requestParameters.bucket, requestParameters.bucketWrite, options).then((request) => request(axios, basePath));
         },
         /**
          * Publish puts one message on the org\'s bus. When a stream captures the subject the write is DURABLE — the receipt names the stream and sequence only after JetStream has it on storage, and a repeated Nats-Msg-Id header within the dedup window answers duplicate instead of storing twice. When nothing captures it, the message goes out core NATS: delivered to current subscribers, receipt {ok}, nothing retained.
          * @summary Publish puts one message on the org\'s bus.
-         * @param {PubsubApiPostV1PubsubPublishRequest} requestParameters Request parameters.
+         * @param {PubsubApiPostPubsubPublishRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubPublish(requestParameters: PubsubApiPostV1PubsubPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<BusAck> {
-            return localVarFp.postV1PubsubPublish(requestParameters.busPublish, options).then((request) => request(axios, basePath));
+        postPubsubPublish(requestParameters: PubsubApiPostPubsubPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<BusAck> {
+            return localVarFp.postPubsubPublish(requestParameters.busPublish, options).then((request) => request(axios, basePath));
         },
         /**
          * Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port. 404 when nobody is listening on the subject; 408 when a responder exists but no reply arrived within the timeout.
          * @summary Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port.
-         * @param {PubsubApiPostV1PubsubRequestRequest} requestParameters Request parameters.
+         * @param {PubsubApiPostPubsubRequestRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1PubsubRequest(requestParameters: PubsubApiPostV1PubsubRequestRequest, options?: RawAxiosRequestConfig): AxiosPromise<BusMessage> {
-            return localVarFp.postV1PubsubRequest(requestParameters.busRequest, options).then((request) => request(axios, basePath));
+        postPubsubRequest(requestParameters: PubsubApiPostPubsubRequestRequest, options?: RawAxiosRequestConfig): AxiosPromise<BusMessage> {
+            return localVarFp.postPubsubRequest(requestParameters.busRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Rewrites a stream\'s configuration — subjects, limits, discard — and returns the updated stream. It is a PUT: the spec sent replaces the spec held, with one reading for the enums a caller omits — an empty storage, retention or discard keeps the stream\'s current one, because JetStream holds storage and retention immutable and refuses a change with a 400 rather than this door pretending it took.
          * @summary Rewrites a stream\'s configuration — subjects, limits, discard — and returns the updated stream.
-         * @param {PubsubApiPutV1PubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
+         * @param {PubsubApiPutPubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1PubsubJetstreamStreamsByStream(requestParameters: PubsubApiPutV1PubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<StreamRecord> {
-            return localVarFp.putV1PubsubJetstreamStreamsByStream(requestParameters.stream, requestParameters.streamUpdate, options).then((request) => request(axios, basePath));
+        putPubsubJetstreamStreamsByStream(requestParameters: PubsubApiPutPubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<StreamRecord> {
+            return localVarFp.putPubsubJetstreamStreamsByStream(requestParameters.stream, requestParameters.streamUpdate, options).then((request) => request(axios, basePath));
         },
         /**
          * Put sets one key to one value and returns the revision the write created. Writes are versioned: each put is a new revision and the bucket retains up to its History of them per key.
          * @summary Put sets one key to one value and returns the revision the write created.
-         * @param {PubsubApiPutV1PubsubKvByBucketByKeyRequest} requestParameters Request parameters.
+         * @param {PubsubApiPutPubsubKvByBucketByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1PubsubKvByBucketByKey(requestParameters: PubsubApiPutV1PubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvAck> {
-            return localVarFp.putV1PubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, requestParameters.kvWrite, options).then((request) => request(axios, basePath));
+        putPubsubKvByBucketByKey(requestParameters: PubsubApiPutPubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<KvAck> {
+            return localVarFp.putPubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, requestParameters.kvWrite, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1PubsubJetstreamStreamsByStream operation in PubsubApi.
+ * Request parameters for deletePubsubJetstreamStreamsByStream operation in PubsubApi.
  * @export
- * @interface PubsubApiDeleteV1PubsubJetstreamStreamsByStreamRequest
+ * @interface PubsubApiDeletePubsubJetstreamStreamsByStreamRequest
  */
-export interface PubsubApiDeleteV1PubsubJetstreamStreamsByStreamRequest {
+export interface PubsubApiDeletePubsubJetstreamStreamsByStreamRequest {
     /**
      * Stream is the stream\&#39;s name, from the path.
      * @type {string}
-     * @memberof PubsubApiDeleteV1PubsubJetstreamStreamsByStream
+     * @memberof PubsubApiDeletePubsubJetstreamStreamsByStream
      */
     readonly stream: string
 }
 
 /**
- * Request parameters for deleteV1PubsubJetstreamStreamsByStreamConsumersByName operation in PubsubApi.
+ * Request parameters for deletePubsubJetstreamStreamsByStreamConsumersByName operation in PubsubApi.
  * @export
- * @interface PubsubApiDeleteV1PubsubJetstreamStreamsByStreamConsumersByNameRequest
+ * @interface PubsubApiDeletePubsubJetstreamStreamsByStreamConsumersByNameRequest
  */
-export interface PubsubApiDeleteV1PubsubJetstreamStreamsByStreamConsumersByNameRequest {
+export interface PubsubApiDeletePubsubJetstreamStreamsByStreamConsumersByNameRequest {
     /**
      * Stream is the stream, from the path.
      * @type {string}
-     * @memberof PubsubApiDeleteV1PubsubJetstreamStreamsByStreamConsumersByName
+     * @memberof PubsubApiDeletePubsubJetstreamStreamsByStreamConsumersByName
      */
     readonly stream: string
 
     /**
      * Name is the consumer, from the path.
      * @type {string}
-     * @memberof PubsubApiDeleteV1PubsubJetstreamStreamsByStreamConsumersByName
+     * @memberof PubsubApiDeletePubsubJetstreamStreamsByStreamConsumersByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for deleteV1PubsubKvByBucket operation in PubsubApi.
+ * Request parameters for deletePubsubKvByBucket operation in PubsubApi.
  * @export
- * @interface PubsubApiDeleteV1PubsubKvByBucketRequest
+ * @interface PubsubApiDeletePubsubKvByBucketRequest
  */
-export interface PubsubApiDeleteV1PubsubKvByBucketRequest {
+export interface PubsubApiDeletePubsubKvByBucketRequest {
     /**
      * Bucket is the bucket\&#39;s name, from the path.
      * @type {string}
-     * @memberof PubsubApiDeleteV1PubsubKvByBucket
+     * @memberof PubsubApiDeletePubsubKvByBucket
      */
     readonly bucket: string
 }
 
 /**
- * Request parameters for deleteV1PubsubKvByBucketByKey operation in PubsubApi.
+ * Request parameters for deletePubsubKvByBucketByKey operation in PubsubApi.
  * @export
- * @interface PubsubApiDeleteV1PubsubKvByBucketByKeyRequest
+ * @interface PubsubApiDeletePubsubKvByBucketByKeyRequest
  */
-export interface PubsubApiDeleteV1PubsubKvByBucketByKeyRequest {
+export interface PubsubApiDeletePubsubKvByBucketByKeyRequest {
     /**
      * Bucket is the bucket, from the path.
      * @type {string}
-     * @memberof PubsubApiDeleteV1PubsubKvByBucketByKey
+     * @memberof PubsubApiDeletePubsubKvByBucketByKey
      */
     readonly bucket: string
 
     /**
      * Key is the key, from the path.
      * @type {string}
-     * @memberof PubsubApiDeleteV1PubsubKvByBucketByKey
+     * @memberof PubsubApiDeletePubsubKvByBucketByKey
      */
     readonly key: string
 }
 
 /**
- * Request parameters for getV1PubsubJetstreamStreamsByStream operation in PubsubApi.
+ * Request parameters for getPubsubJetstreamStreamsByStream operation in PubsubApi.
  * @export
- * @interface PubsubApiGetV1PubsubJetstreamStreamsByStreamRequest
+ * @interface PubsubApiGetPubsubJetstreamStreamsByStreamRequest
  */
-export interface PubsubApiGetV1PubsubJetstreamStreamsByStreamRequest {
+export interface PubsubApiGetPubsubJetstreamStreamsByStreamRequest {
     /**
      * Stream is the stream\&#39;s name, from the path.
      * @type {string}
-     * @memberof PubsubApiGetV1PubsubJetstreamStreamsByStream
+     * @memberof PubsubApiGetPubsubJetstreamStreamsByStream
      */
     readonly stream: string
 }
 
 /**
- * Request parameters for getV1PubsubJetstreamStreamsByStreamConsumers operation in PubsubApi.
+ * Request parameters for getPubsubJetstreamStreamsByStreamConsumers operation in PubsubApi.
  * @export
- * @interface PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersRequest
+ * @interface PubsubApiGetPubsubJetstreamStreamsByStreamConsumersRequest
  */
-export interface PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersRequest {
+export interface PubsubApiGetPubsubJetstreamStreamsByStreamConsumersRequest {
     /**
      * Stream is the stream\&#39;s name, from the path.
      * @type {string}
-     * @memberof PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumers
+     * @memberof PubsubApiGetPubsubJetstreamStreamsByStreamConsumers
      */
     readonly stream: string
 }
 
 /**
- * Request parameters for getV1PubsubJetstreamStreamsByStreamConsumersByName operation in PubsubApi.
+ * Request parameters for getPubsubJetstreamStreamsByStreamConsumersByName operation in PubsubApi.
  * @export
- * @interface PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersByNameRequest
+ * @interface PubsubApiGetPubsubJetstreamStreamsByStreamConsumersByNameRequest
  */
-export interface PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersByNameRequest {
+export interface PubsubApiGetPubsubJetstreamStreamsByStreamConsumersByNameRequest {
     /**
      * Stream is the stream, from the path.
      * @type {string}
-     * @memberof PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersByName
+     * @memberof PubsubApiGetPubsubJetstreamStreamsByStreamConsumersByName
      */
     readonly stream: string
 
     /**
      * Name is the consumer, from the path.
      * @type {string}
-     * @memberof PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersByName
+     * @memberof PubsubApiGetPubsubJetstreamStreamsByStreamConsumersByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1PubsubKvByBucketByKey operation in PubsubApi.
+ * Request parameters for getPubsubKvByBucketByKey operation in PubsubApi.
  * @export
- * @interface PubsubApiGetV1PubsubKvByBucketByKeyRequest
+ * @interface PubsubApiGetPubsubKvByBucketByKeyRequest
  */
-export interface PubsubApiGetV1PubsubKvByBucketByKeyRequest {
+export interface PubsubApiGetPubsubKvByBucketByKeyRequest {
     /**
      * Bucket is the bucket, from the path.
      * @type {string}
-     * @memberof PubsubApiGetV1PubsubKvByBucketByKey
+     * @memberof PubsubApiGetPubsubKvByBucketByKey
      */
     readonly bucket: string
 
     /**
      * Key is the key, from the path.
      * @type {string}
-     * @memberof PubsubApiGetV1PubsubKvByBucketByKey
+     * @memberof PubsubApiGetPubsubKvByBucketByKey
      */
     readonly key: string
 }
 
 /**
- * Request parameters for getV1PubsubKvByBucketByKeyHistory operation in PubsubApi.
+ * Request parameters for getPubsubKvByBucketByKeyHistory operation in PubsubApi.
  * @export
- * @interface PubsubApiGetV1PubsubKvByBucketByKeyHistoryRequest
+ * @interface PubsubApiGetPubsubKvByBucketByKeyHistoryRequest
  */
-export interface PubsubApiGetV1PubsubKvByBucketByKeyHistoryRequest {
+export interface PubsubApiGetPubsubKvByBucketByKeyHistoryRequest {
     /**
      * Bucket is the bucket, from the path.
      * @type {string}
-     * @memberof PubsubApiGetV1PubsubKvByBucketByKeyHistory
+     * @memberof PubsubApiGetPubsubKvByBucketByKeyHistory
      */
     readonly bucket: string
 
     /**
      * Key is the key, from the path.
      * @type {string}
-     * @memberof PubsubApiGetV1PubsubKvByBucketByKeyHistory
+     * @memberof PubsubApiGetPubsubKvByBucketByKeyHistory
      */
     readonly key: string
 }
 
 /**
- * Request parameters for postV1PubsubJetstreamStreams operation in PubsubApi.
+ * Request parameters for postPubsubJetstreamStreams operation in PubsubApi.
  * @export
- * @interface PubsubApiPostV1PubsubJetstreamStreamsRequest
+ * @interface PubsubApiPostPubsubJetstreamStreamsRequest
  */
-export interface PubsubApiPostV1PubsubJetstreamStreamsRequest {
+export interface PubsubApiPostPubsubJetstreamStreamsRequest {
     /**
      * 
      * @type {StreamWrite}
-     * @memberof PubsubApiPostV1PubsubJetstreamStreams
+     * @memberof PubsubApiPostPubsubJetstreamStreams
      */
     readonly streamWrite: StreamWrite
 }
 
 /**
- * Request parameters for postV1PubsubJetstreamStreamsByStreamConsumers operation in PubsubApi.
+ * Request parameters for postPubsubJetstreamStreamsByStreamConsumers operation in PubsubApi.
  * @export
- * @interface PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersRequest
+ * @interface PubsubApiPostPubsubJetstreamStreamsByStreamConsumersRequest
  */
-export interface PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersRequest {
+export interface PubsubApiPostPubsubJetstreamStreamsByStreamConsumersRequest {
     /**
      * Stream is the stream to consume, from the path.
      * @type {string}
-     * @memberof PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumers
+     * @memberof PubsubApiPostPubsubJetstreamStreamsByStreamConsumers
      */
     readonly stream: string
 
     /**
      * 
      * @type {ConsumerWrite}
-     * @memberof PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumers
+     * @memberof PubsubApiPostPubsubJetstreamStreamsByStreamConsumers
      */
     readonly consumerWrite: ConsumerWrite
 }
 
 /**
- * Request parameters for postV1PubsubJetstreamStreamsByStreamConsumersByNameNext operation in PubsubApi.
+ * Request parameters for postPubsubJetstreamStreamsByStreamConsumersByNameNext operation in PubsubApi.
  * @export
- * @interface PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersByNameNextRequest
+ * @interface PubsubApiPostPubsubJetstreamStreamsByStreamConsumersByNameNextRequest
  */
-export interface PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersByNameNextRequest {
+export interface PubsubApiPostPubsubJetstreamStreamsByStreamConsumersByNameNextRequest {
     /**
      * Stream is the stream, from the path.
      * @type {string}
-     * @memberof PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersByNameNext
+     * @memberof PubsubApiPostPubsubJetstreamStreamsByStreamConsumersByNameNext
      */
     readonly stream: string
 
     /**
      * Name is the consumer, from the path.
      * @type {string}
-     * @memberof PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersByNameNext
+     * @memberof PubsubApiPostPubsubJetstreamStreamsByStreamConsumersByNameNext
      */
     readonly name: string
 
     /**
      * 
      * @type {FetchQuery}
-     * @memberof PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersByNameNext
+     * @memberof PubsubApiPostPubsubJetstreamStreamsByStreamConsumersByNameNext
      */
     readonly fetchQuery: FetchQuery
 }
 
 /**
- * Request parameters for postV1PubsubKvByBucket operation in PubsubApi.
+ * Request parameters for postPubsubKvByBucket operation in PubsubApi.
  * @export
- * @interface PubsubApiPostV1PubsubKvByBucketRequest
+ * @interface PubsubApiPostPubsubKvByBucketRequest
  */
-export interface PubsubApiPostV1PubsubKvByBucketRequest {
+export interface PubsubApiPostPubsubKvByBucketRequest {
     /**
      * Bucket is the bucket\&#39;s name within the org, from the path: 1–64 of [A-Za-z0-9_], no dash.
      * @type {string}
-     * @memberof PubsubApiPostV1PubsubKvByBucket
+     * @memberof PubsubApiPostPubsubKvByBucket
      */
     readonly bucket: string
 
     /**
      * 
      * @type {BucketWrite}
-     * @memberof PubsubApiPostV1PubsubKvByBucket
+     * @memberof PubsubApiPostPubsubKvByBucket
      */
     readonly bucketWrite: BucketWrite
 }
 
 /**
- * Request parameters for postV1PubsubPublish operation in PubsubApi.
+ * Request parameters for postPubsubPublish operation in PubsubApi.
  * @export
- * @interface PubsubApiPostV1PubsubPublishRequest
+ * @interface PubsubApiPostPubsubPublishRequest
  */
-export interface PubsubApiPostV1PubsubPublishRequest {
+export interface PubsubApiPostPubsubPublishRequest {
     /**
      * 
      * @type {BusPublish}
-     * @memberof PubsubApiPostV1PubsubPublish
+     * @memberof PubsubApiPostPubsubPublish
      */
     readonly busPublish: BusPublish
 }
 
 /**
- * Request parameters for postV1PubsubRequest operation in PubsubApi.
+ * Request parameters for postPubsubRequest operation in PubsubApi.
  * @export
- * @interface PubsubApiPostV1PubsubRequestRequest
+ * @interface PubsubApiPostPubsubRequestRequest
  */
-export interface PubsubApiPostV1PubsubRequestRequest {
+export interface PubsubApiPostPubsubRequestRequest {
     /**
      * 
      * @type {BusRequest}
-     * @memberof PubsubApiPostV1PubsubRequest
+     * @memberof PubsubApiPostPubsubRequest
      */
     readonly busRequest: BusRequest
 }
 
 /**
- * Request parameters for putV1PubsubJetstreamStreamsByStream operation in PubsubApi.
+ * Request parameters for putPubsubJetstreamStreamsByStream operation in PubsubApi.
  * @export
- * @interface PubsubApiPutV1PubsubJetstreamStreamsByStreamRequest
+ * @interface PubsubApiPutPubsubJetstreamStreamsByStreamRequest
  */
-export interface PubsubApiPutV1PubsubJetstreamStreamsByStreamRequest {
+export interface PubsubApiPutPubsubJetstreamStreamsByStreamRequest {
     /**
      * Stream is the stream to update, from the path.
      * @type {string}
-     * @memberof PubsubApiPutV1PubsubJetstreamStreamsByStream
+     * @memberof PubsubApiPutPubsubJetstreamStreamsByStream
      */
     readonly stream: string
 
     /**
      * 
      * @type {StreamUpdate}
-     * @memberof PubsubApiPutV1PubsubJetstreamStreamsByStream
+     * @memberof PubsubApiPutPubsubJetstreamStreamsByStream
      */
     readonly streamUpdate: StreamUpdate
 }
 
 /**
- * Request parameters for putV1PubsubKvByBucketByKey operation in PubsubApi.
+ * Request parameters for putPubsubKvByBucketByKey operation in PubsubApi.
  * @export
- * @interface PubsubApiPutV1PubsubKvByBucketByKeyRequest
+ * @interface PubsubApiPutPubsubKvByBucketByKeyRequest
  */
-export interface PubsubApiPutV1PubsubKvByBucketByKeyRequest {
+export interface PubsubApiPutPubsubKvByBucketByKeyRequest {
     /**
      * Bucket is the bucket, from the path.
      * @type {string}
-     * @memberof PubsubApiPutV1PubsubKvByBucketByKey
+     * @memberof PubsubApiPutPubsubKvByBucketByKey
      */
     readonly bucket: string
 
     /**
      * Key is the key, from the path.
      * @type {string}
-     * @memberof PubsubApiPutV1PubsubKvByBucketByKey
+     * @memberof PubsubApiPutPubsubKvByBucketByKey
      */
     readonly key: string
 
     /**
      * 
      * @type {KvWrite}
-     * @memberof PubsubApiPutV1PubsubKvByBucketByKey
+     * @memberof PubsubApiPutPubsubKvByBucketByKey
      */
     readonly kvWrite: KvWrite
 }
@@ -1516,49 +1516,49 @@ export class PubsubApi extends BaseAPI {
     /**
      * Removes one stream of the caller\'s org — its retained messages and its consumers with it — and answers 204 with no body. 404 when the org has no stream of that name.
      * @summary Removes one stream of the caller\'s org — its retained messages and its consumers with it — and answers 204 with no body.
-     * @param {PubsubApiDeleteV1PubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
+     * @param {PubsubApiDeletePubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public deleteV1PubsubJetstreamStreamsByStream(requestParameters: PubsubApiDeleteV1PubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).deleteV1PubsubJetstreamStreamsByStream(requestParameters.stream, options).then((request) => request(this.axios, this.basePath));
+    public deletePubsubJetstreamStreamsByStream(requestParameters: PubsubApiDeletePubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).deletePubsubJetstreamStreamsByStream(requestParameters.stream, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one consumer — its cursor, not the stream\'s messages — and answers 204 with no body. 404 when the stream or the consumer does not exist.
      * @summary Removes one consumer — its cursor, not the stream\'s messages — and answers 204 with no body.
-     * @param {PubsubApiDeleteV1PubsubJetstreamStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
+     * @param {PubsubApiDeletePubsubJetstreamStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public deleteV1PubsubJetstreamStreamsByStreamConsumersByName(requestParameters: PubsubApiDeleteV1PubsubJetstreamStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).deleteV1PubsubJetstreamStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deletePubsubJetstreamStreamsByStreamConsumersByName(requestParameters: PubsubApiDeletePubsubJetstreamStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).deletePubsubJetstreamStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one bucket of the caller\'s org — every key and every revision with it — and answers 204 with no body. 404 when the org has no bucket of that name.
      * @summary Removes one bucket of the caller\'s org — every key and every revision with it — and answers 204 with no body.
-     * @param {PubsubApiDeleteV1PubsubKvByBucketRequest} requestParameters Request parameters.
+     * @param {PubsubApiDeletePubsubKvByBucketRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public deleteV1PubsubKvByBucket(requestParameters: PubsubApiDeleteV1PubsubKvByBucketRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).deleteV1PubsubKvByBucket(requestParameters.bucket, options).then((request) => request(this.axios, this.basePath));
+    public deletePubsubKvByBucket(requestParameters: PubsubApiDeletePubsubKvByBucketRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).deletePubsubKvByBucket(requestParameters.bucket, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Delete removes one key — a delete marker in the key\'s history, so watchers see it and Get answers 404 — and answers 204 with no body. 404 when the bucket does not exist.
      * @summary Delete removes one key — a delete marker in the key\'s history, so watchers see it and Get answers 404 — and answers 204 with no body.
-     * @param {PubsubApiDeleteV1PubsubKvByBucketByKeyRequest} requestParameters Request parameters.
+     * @param {PubsubApiDeletePubsubKvByBucketByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public deleteV1PubsubKvByBucketByKey(requestParameters: PubsubApiDeleteV1PubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).deleteV1PubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public deletePubsubKvByBucketByKey(requestParameters: PubsubApiDeletePubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).deletePubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1568,164 +1568,164 @@ export class PubsubApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public getV1PubsubJetstreamStreams(options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).getV1PubsubJetstreamStreams(options).then((request) => request(this.axios, this.basePath));
+    public getPubsubJetstreamStreams(options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).getPubsubJetstreamStreams(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one stream of the caller\'s org — its configuration and its live state (messages, bytes, sequence range, consumer count). 404 when the org has no stream of that name.
      * @summary Returns one stream of the caller\'s org — its configuration and its live state (messages, bytes, sequence range, consumer count).
-     * @param {PubsubApiGetV1PubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
+     * @param {PubsubApiGetPubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public getV1PubsubJetstreamStreamsByStream(requestParameters: PubsubApiGetV1PubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).getV1PubsubJetstreamStreamsByStream(requestParameters.stream, options).then((request) => request(this.axios, this.basePath));
+    public getPubsubJetstreamStreamsByStream(requestParameters: PubsubApiGetPubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).getPubsubJetstreamStreamsByStream(requestParameters.stream, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one stream\'s consumers, sorted by name. 404 when the org has no stream of that name.
      * @summary Returns one stream\'s consumers, sorted by name.
-     * @param {PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersRequest} requestParameters Request parameters.
+     * @param {PubsubApiGetPubsubJetstreamStreamsByStreamConsumersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public getV1PubsubJetstreamStreamsByStreamConsumers(requestParameters: PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).getV1PubsubJetstreamStreamsByStreamConsumers(requestParameters.stream, options).then((request) => request(this.axios, this.basePath));
+    public getPubsubJetstreamStreamsByStreamConsumers(requestParameters: PubsubApiGetPubsubJetstreamStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).getPubsubJetstreamStreamsByStreamConsumers(requestParameters.stream, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one consumer of one org stream — its configuration and its cursor: delivered and acknowledged sequences, pending and redelivered counts. 404 when the stream or the consumer does not exist.
      * @summary Returns one consumer of one org stream — its configuration and its cursor: delivered and acknowledged sequences, pending and redelivered counts.
-     * @param {PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
+     * @param {PubsubApiGetPubsubJetstreamStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public getV1PubsubJetstreamStreamsByStreamConsumersByName(requestParameters: PubsubApiGetV1PubsubJetstreamStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).getV1PubsubJetstreamStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getPubsubJetstreamStreamsByStreamConsumersByName(requestParameters: PubsubApiGetPubsubJetstreamStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).getPubsubJetstreamStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get returns one key\'s current value and revision. 404 when the bucket does not exist, the key was never written, or its latest revision is a delete.
      * @summary Get returns one key\'s current value and revision.
-     * @param {PubsubApiGetV1PubsubKvByBucketByKeyRequest} requestParameters Request parameters.
+     * @param {PubsubApiGetPubsubKvByBucketByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public getV1PubsubKvByBucketByKey(requestParameters: PubsubApiGetV1PubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).getV1PubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public getPubsubKvByBucketByKey(requestParameters: PubsubApiGetPubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).getPubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth. 404 when the bucket does not exist or the key was never written.
      * @summary History returns one key\'s retained revisions, oldest first — every put and every delete marker up to the bucket\'s History depth.
-     * @param {PubsubApiGetV1PubsubKvByBucketByKeyHistoryRequest} requestParameters Request parameters.
+     * @param {PubsubApiGetPubsubKvByBucketByKeyHistoryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public getV1PubsubKvByBucketByKeyHistory(requestParameters: PubsubApiGetV1PubsubKvByBucketByKeyHistoryRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).getV1PubsubKvByBucketByKeyHistory(requestParameters.bucket, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    public getPubsubKvByBucketByKeyHistory(requestParameters: PubsubApiGetPubsubKvByBucketByKeyHistoryRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).getPubsubKvByBucketByKeyHistory(requestParameters.bucket, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a durable stream capturing the given subjects and returns it. 409 when the org already has a stream of that name; the subjects are the org\'s own and cannot collide with another org\'s.
      * @summary Creates a durable stream capturing the given subjects and returns it.
-     * @param {PubsubApiPostV1PubsubJetstreamStreamsRequest} requestParameters Request parameters.
+     * @param {PubsubApiPostPubsubJetstreamStreamsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public postV1PubsubJetstreamStreams(requestParameters: PubsubApiPostV1PubsubJetstreamStreamsRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).postV1PubsubJetstreamStreams(requestParameters.streamWrite, options).then((request) => request(this.axios, this.basePath));
+    public postPubsubJetstreamStreams(requestParameters: PubsubApiPostPubsubJetstreamStreamsRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).postPubsubJetstreamStreams(requestParameters.streamWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a durable consumer on one stream and returns it. A consumer is a named cursor: it tracks what has been delivered and what is acknowledged, so many workers can share it and none sees a message twice outside redelivery. 409 when the stream already has a consumer of that name with a different configuration.
      * @summary Creates a durable consumer on one stream and returns it.
-     * @param {PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersRequest} requestParameters Request parameters.
+     * @param {PubsubApiPostPubsubJetstreamStreamsByStreamConsumersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public postV1PubsubJetstreamStreamsByStreamConsumers(requestParameters: PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).postV1PubsubJetstreamStreamsByStreamConsumers(requestParameters.stream, requestParameters.consumerWrite, options).then((request) => request(this.axios, this.basePath));
+    public postPubsubJetstreamStreamsByStreamConsumers(requestParameters: PubsubApiPostPubsubJetstreamStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).postPubsubJetstreamStreamsByStreamConsumers(requestParameters.stream, requestParameters.consumerWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Fetch pulls the next batch from a consumer and acknowledges it — the request/response way to consume a stream. The hand-off is at-most-once: a message returned here is acked here, so a caller that loses the response does not see it again. Workers needing at-least-once delivery consume the same consumer over the NATS port, where acks are theirs to send. An empty batch after the wait is an empty page, not an error.
      * @summary Fetch pulls the next batch from a consumer and acknowledges it — the request/response way to consume a stream.
-     * @param {PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersByNameNextRequest} requestParameters Request parameters.
+     * @param {PubsubApiPostPubsubJetstreamStreamsByStreamConsumersByNameNextRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public postV1PubsubJetstreamStreamsByStreamConsumersByNameNext(requestParameters: PubsubApiPostV1PubsubJetstreamStreamsByStreamConsumersByNameNextRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).postV1PubsubJetstreamStreamsByStreamConsumersByNameNext(requestParameters.stream, requestParameters.name, requestParameters.fetchQuery, options).then((request) => request(this.axios, this.basePath));
+    public postPubsubJetstreamStreamsByStreamConsumersByNameNext(requestParameters: PubsubApiPostPubsubJetstreamStreamsByStreamConsumersByNameNextRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).postPubsubJetstreamStreamsByStreamConsumersByNameNext(requestParameters.stream, requestParameters.name, requestParameters.fetchQuery, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a KV bucket and returns it. A bucket is keyed state on the same durable plane as the streams: each key holds up to History revisions, entries can expire by TTL, and watchers on the NATS port see every write. 409 when the org already has a bucket of that name.
      * @summary Creates a KV bucket and returns it.
-     * @param {PubsubApiPostV1PubsubKvByBucketRequest} requestParameters Request parameters.
+     * @param {PubsubApiPostPubsubKvByBucketRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public postV1PubsubKvByBucket(requestParameters: PubsubApiPostV1PubsubKvByBucketRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).postV1PubsubKvByBucket(requestParameters.bucket, requestParameters.bucketWrite, options).then((request) => request(this.axios, this.basePath));
+    public postPubsubKvByBucket(requestParameters: PubsubApiPostPubsubKvByBucketRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).postPubsubKvByBucket(requestParameters.bucket, requestParameters.bucketWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Publish puts one message on the org\'s bus. When a stream captures the subject the write is DURABLE — the receipt names the stream and sequence only after JetStream has it on storage, and a repeated Nats-Msg-Id header within the dedup window answers duplicate instead of storing twice. When nothing captures it, the message goes out core NATS: delivered to current subscribers, receipt {ok}, nothing retained.
      * @summary Publish puts one message on the org\'s bus.
-     * @param {PubsubApiPostV1PubsubPublishRequest} requestParameters Request parameters.
+     * @param {PubsubApiPostPubsubPublishRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public postV1PubsubPublish(requestParameters: PubsubApiPostV1PubsubPublishRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).postV1PubsubPublish(requestParameters.busPublish, options).then((request) => request(this.axios, this.basePath));
+    public postPubsubPublish(requestParameters: PubsubApiPostPubsubPublishRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).postPubsubPublish(requestParameters.busPublish, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port. 404 when nobody is listening on the subject; 408 when a responder exists but no reply arrived within the timeout.
      * @summary Request sends one request on the org\'s bus and waits for one reply — the synchronous half of pub/sub, for callers speaking to a responder subscribed on the NATS port.
-     * @param {PubsubApiPostV1PubsubRequestRequest} requestParameters Request parameters.
+     * @param {PubsubApiPostPubsubRequestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public postV1PubsubRequest(requestParameters: PubsubApiPostV1PubsubRequestRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).postV1PubsubRequest(requestParameters.busRequest, options).then((request) => request(this.axios, this.basePath));
+    public postPubsubRequest(requestParameters: PubsubApiPostPubsubRequestRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).postPubsubRequest(requestParameters.busRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Rewrites a stream\'s configuration — subjects, limits, discard — and returns the updated stream. It is a PUT: the spec sent replaces the spec held, with one reading for the enums a caller omits — an empty storage, retention or discard keeps the stream\'s current one, because JetStream holds storage and retention immutable and refuses a change with a 400 rather than this door pretending it took.
      * @summary Rewrites a stream\'s configuration — subjects, limits, discard — and returns the updated stream.
-     * @param {PubsubApiPutV1PubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
+     * @param {PubsubApiPutPubsubJetstreamStreamsByStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public putV1PubsubJetstreamStreamsByStream(requestParameters: PubsubApiPutV1PubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).putV1PubsubJetstreamStreamsByStream(requestParameters.stream, requestParameters.streamUpdate, options).then((request) => request(this.axios, this.basePath));
+    public putPubsubJetstreamStreamsByStream(requestParameters: PubsubApiPutPubsubJetstreamStreamsByStreamRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).putPubsubJetstreamStreamsByStream(requestParameters.stream, requestParameters.streamUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Put sets one key to one value and returns the revision the write created. Writes are versioned: each put is a new revision and the bucket retains up to its History of them per key.
      * @summary Put sets one key to one value and returns the revision the write created.
-     * @param {PubsubApiPutV1PubsubKvByBucketByKeyRequest} requestParameters Request parameters.
+     * @param {PubsubApiPutPubsubKvByBucketByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PubsubApi
      */
-    public putV1PubsubKvByBucketByKey(requestParameters: PubsubApiPutV1PubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig) {
-        return PubsubApiFp(this.configuration).putV1PubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, requestParameters.kvWrite, options).then((request) => request(this.axios, this.basePath));
+    public putPubsubKvByBucketByKey(requestParameters: PubsubApiPutPubsubKvByBucketByKeyRequest, options?: RawAxiosRequestConfig) {
+        return PubsubApiFp(this.configuration).putPubsubKvByBucketByKey(requestParameters.bucket, requestParameters.key, requestParameters.kvWrite, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -44,9 +44,9 @@ export const SkillsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SkillsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteSkillsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1SkillsById', 'id', id)
+            assertParamExists('deleteSkillsById', 'id', id)
             const localVarPath = `/v1/skills/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -78,7 +78,7 @@ export const SkillsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Skills: async (activated?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSkills: async (activated?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/skills`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -112,7 +112,7 @@ export const SkillsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SkillsAuthored: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSkillsAuthored: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/skills/authored`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -143,9 +143,9 @@ export const SkillsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Skills: async (skillIn: SkillIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSkills: async (skillIn: SkillIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'skillIn' is not null or undefined
-            assertParamExists('postV1Skills', 'skillIn', skillIn)
+            assertParamExists('postSkills', 'skillIn', skillIn)
             const localVarPath = `/v1/skills`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -189,10 +189,10 @@ export const SkillsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1SkillsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillDeleted>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1SkillsById(id, options);
+        async deleteSkillsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillDeleted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSkillsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SkillsApi.deleteV1SkillsById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SkillsApi.deleteSkillsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -202,10 +202,10 @@ export const SkillsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Skills(activated?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SourceToolList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Skills(activated, options);
+        async getSkills(activated?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SourceToolList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSkills(activated, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SkillsApi.getV1Skills']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SkillsApi.getSkills']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -214,10 +214,10 @@ export const SkillsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1SkillsAuthored(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthoredSkillList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1SkillsAuthored(options);
+        async getSkillsAuthored(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthoredSkillList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSkillsAuthored(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SkillsApi.getV1SkillsAuthored']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SkillsApi.getSkillsAuthored']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -227,10 +227,10 @@ export const SkillsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Skills(skillIn: SkillIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillWritten>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Skills(skillIn, options);
+        async postSkills(skillIn: SkillIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SkillWritten>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSkills(skillIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SkillsApi.postV1Skills']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SkillsApi.postSkills']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -246,22 +246,22 @@ export const SkillsApiFactory = function (configuration?: Configuration, basePat
         /**
          * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is.
          * @summary Removes one of the caller org\'s authored skills.
-         * @param {SkillsApiDeleteV1SkillsByIdRequest} requestParameters Request parameters.
+         * @param {SkillsApiDeleteSkillsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1SkillsById(requestParameters: SkillsApiDeleteV1SkillsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SkillDeleted> {
-            return localVarFp.deleteV1SkillsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteSkillsById(requestParameters: SkillsApiDeleteSkillsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SkillDeleted> {
+            return localVarFp.deleteSkillsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the skills the caller\'s org can reach — the brand\'s embedded catalogue plus the org\'s own authored ones — with each one\'s activation flag. A skill is discovery and activation metadata attached to an agent, never called directly, so every entry here is non-dispatchable. It is GET /v1/tools narrowed to one source, not a second store: a name a caller sees here is the same entry, with the same activation state, that discovery reports.
          * @summary Lists the skills the caller\'s org can reach — the brand\'s embedded catalogue plus the org\'s own authored ones — with each one\'s activation flag.
-         * @param {SkillsApiGetV1SkillsRequest} requestParameters Request parameters.
+         * @param {SkillsApiGetSkillsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Skills(requestParameters: SkillsApiGetV1SkillsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SourceToolList> {
-            return localVarFp.getV1Skills(requestParameters.activated, options).then((request) => request(axios, basePath));
+        getSkills(requestParameters: SkillsApiGetSkillsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SourceToolList> {
+            return localVarFp.getSkills(requestParameters.activated, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller org\'s OWN skills with their SKILL.md bodies. GET /v1/skills is the registry view — the brand\'s catalogue plus this org\'s, with activation flags and no bodies; this is the EDITABLE set, so it carries the content that view omits and nothing the org did not write.
@@ -269,60 +269,60 @@ export const SkillsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1SkillsAuthored(options?: RawAxiosRequestConfig): AxiosPromise<AuthoredSkillList> {
-            return localVarFp.getV1SkillsAuthored(options).then((request) => request(axios, basePath));
+        getSkillsAuthored(options?: RawAxiosRequestConfig): AxiosPromise<AuthoredSkillList> {
+            return localVarFp.getSkillsAuthored(options).then((request) => request(axios, basePath));
         },
         /**
          * Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record. The id is derived from the name, so writing the same name again REVISES that skill rather than accumulating near-duplicates that would then collide in the registry. An org\'s skills are private to it by construction — they live in a different store from the brand\'s embedded catalogue and have no path into the public gallery — and a brand skill always wins a name collision against an org\'s.
          * @summary Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record.
-         * @param {SkillsApiPostV1SkillsRequest} requestParameters Request parameters.
+         * @param {SkillsApiPostSkillsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Skills(requestParameters: SkillsApiPostV1SkillsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SkillWritten> {
-            return localVarFp.postV1Skills(requestParameters.skillIn, options).then((request) => request(axios, basePath));
+        postSkills(requestParameters: SkillsApiPostSkillsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SkillWritten> {
+            return localVarFp.postSkills(requestParameters.skillIn, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1SkillsById operation in SkillsApi.
+ * Request parameters for deleteSkillsById operation in SkillsApi.
  * @export
- * @interface SkillsApiDeleteV1SkillsByIdRequest
+ * @interface SkillsApiDeleteSkillsByIdRequest
  */
-export interface SkillsApiDeleteV1SkillsByIdRequest {
+export interface SkillsApiDeleteSkillsByIdRequest {
     /**
      * ID is the skill to remove, from the path. It is the skill\&#39;s name.
      * @type {string}
-     * @memberof SkillsApiDeleteV1SkillsById
+     * @memberof SkillsApiDeleteSkillsById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for getV1Skills operation in SkillsApi.
+ * Request parameters for getSkills operation in SkillsApi.
  * @export
- * @interface SkillsApiGetV1SkillsRequest
+ * @interface SkillsApiGetSkillsRequest
  */
-export interface SkillsApiGetV1SkillsRequest {
+export interface SkillsApiGetSkillsRequest {
     /**
      * Activated keeps only the tools activated for the caller\&#39;s org and project, and only when it is exactly the string \&quot;true\&quot;.
      * @type {string}
-     * @memberof SkillsApiGetV1Skills
+     * @memberof SkillsApiGetSkills
      */
     readonly activated?: string
 }
 
 /**
- * Request parameters for postV1Skills operation in SkillsApi.
+ * Request parameters for postSkills operation in SkillsApi.
  * @export
- * @interface SkillsApiPostV1SkillsRequest
+ * @interface SkillsApiPostSkillsRequest
  */
-export interface SkillsApiPostV1SkillsRequest {
+export interface SkillsApiPostSkillsRequest {
     /**
      * 
      * @type {SkillIn}
-     * @memberof SkillsApiPostV1Skills
+     * @memberof SkillsApiPostSkills
      */
     readonly skillIn: SkillIn
 }
@@ -337,25 +337,25 @@ export class SkillsApi extends BaseAPI {
     /**
      * Removes one of the caller org\'s authored skills. Scoped to the caller\'s org, so an id belonging to another tenant is never reached. Removing what is not there is not an error — the caller\'s intent is \"gone\", and it is.
      * @summary Removes one of the caller org\'s authored skills.
-     * @param {SkillsApiDeleteV1SkillsByIdRequest} requestParameters Request parameters.
+     * @param {SkillsApiDeleteSkillsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SkillsApi
      */
-    public deleteV1SkillsById(requestParameters: SkillsApiDeleteV1SkillsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SkillsApiFp(this.configuration).deleteV1SkillsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteSkillsById(requestParameters: SkillsApiDeleteSkillsByIdRequest, options?: RawAxiosRequestConfig) {
+        return SkillsApiFp(this.configuration).deleteSkillsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Lists the skills the caller\'s org can reach — the brand\'s embedded catalogue plus the org\'s own authored ones — with each one\'s activation flag. A skill is discovery and activation metadata attached to an agent, never called directly, so every entry here is non-dispatchable. It is GET /v1/tools narrowed to one source, not a second store: a name a caller sees here is the same entry, with the same activation state, that discovery reports.
      * @summary Lists the skills the caller\'s org can reach — the brand\'s embedded catalogue plus the org\'s own authored ones — with each one\'s activation flag.
-     * @param {SkillsApiGetV1SkillsRequest} requestParameters Request parameters.
+     * @param {SkillsApiGetSkillsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SkillsApi
      */
-    public getV1Skills(requestParameters: SkillsApiGetV1SkillsRequest = {}, options?: RawAxiosRequestConfig) {
-        return SkillsApiFp(this.configuration).getV1Skills(requestParameters.activated, options).then((request) => request(this.axios, this.basePath));
+    public getSkills(requestParameters: SkillsApiGetSkillsRequest = {}, options?: RawAxiosRequestConfig) {
+        return SkillsApiFp(this.configuration).getSkills(requestParameters.activated, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -365,20 +365,20 @@ export class SkillsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SkillsApi
      */
-    public getV1SkillsAuthored(options?: RawAxiosRequestConfig) {
-        return SkillsApiFp(this.configuration).getV1SkillsAuthored(options).then((request) => request(this.axios, this.basePath));
+    public getSkillsAuthored(options?: RawAxiosRequestConfig) {
+        return SkillsApiFp(this.configuration).getSkillsAuthored(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record. The id is derived from the name, so writing the same name again REVISES that skill rather than accumulating near-duplicates that would then collide in the registry. An org\'s skills are private to it by construction — they live in a different store from the brand\'s embedded catalogue and have no path into the public gallery — and a brand skill always wins a name collision against an org\'s.
      * @summary Adds or revises one of the caller org\'s own skills, and answers 201 with the stored record.
-     * @param {SkillsApiPostV1SkillsRequest} requestParameters Request parameters.
+     * @param {SkillsApiPostSkillsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SkillsApi
      */
-    public postV1Skills(requestParameters: SkillsApiPostV1SkillsRequest, options?: RawAxiosRequestConfig) {
-        return SkillsApiFp(this.configuration).postV1Skills(requestParameters.skillIn, options).then((request) => request(this.axios, this.basePath));
+    public postSkills(requestParameters: SkillsApiPostSkillsRequest, options?: RawAxiosRequestConfig) {
+        return SkillsApiFp(this.configuration).postSkills(requestParameters.skillIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

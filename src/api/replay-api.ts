@@ -38,7 +38,7 @@ export const ReplayApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Replay: async (replayBody?: ReplayBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postReplay: async (replayBody?: ReplayBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/replay`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -82,10 +82,10 @@ export const ReplayApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Replay(replayBody?: ReplayBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptureResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Replay(replayBody, options);
+        async postReplay(replayBody?: ReplayBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CaptureResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postReplay(replayBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ReplayApi.postV1Replay']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ReplayApi.postReplay']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -101,26 +101,26 @@ export const ReplayApiFactory = function (configuration?: Configuration, basePat
         /**
          * Accepts a batch of rrweb events from a browser recorder and hands it to the session-replay pipeline, which stores the recording and derives the session summary a player reads back.  ONE REQUEST IS ONE BATCH, and it is all-or-nothing: the recording is made durable before this answers, so a 200 {\"accepted\":1} means stored and never \"buffered somewhere\". There is no partial count, because a half-written recording is not a recording.  `sessionId` is REQUIRED and bounded — at most 70 characters of ASCII letters, digits or \'-\'. It is the key every batch of one visit is grouped and ordered by, so an id outside that grammar is refused 400 here rather than accepted and dropped further down. `windowId` separates two tabs of one session and `distinctId` attributes the recording to a person; both are optional. `events` is the rrweb batch, each element a raw eventWithTime object, carried VERBATIM — the summary (click, keypress and mouse-activity counts, size) is derived downstream from exactly these bytes, so nothing is re-encoded or dropped.  THE CALLER\'S CREDENTIAL DECIDES THE TENANT, and the body never does: the recording lands in the org the presented credential resolves to. It takes the SAME credentials as /v1/event — a validated bearer, an org API key, or a publishable pk- key on Authorization: Bearer, x-hanzo-ingest-key or ?ingest_key= — so a browser bundle already holding a pk- for events needs nothing new to record. A caller that presents nothing is 401 `ingest_key_required`; one whose key resolves to no project is 403 `ingest_key_unknown`; a reduced principal (a Hanzo Team workspace token) is 403 `insufficient_capability`, because a full-fidelity screen recording has no projected form that is safe for a guest to write into a host org.  BOUNDS: 413 over 512 KiB of body, and that is the only bound on one batch — a recorder is expected to chunk a long session rather than send it whole, and the cap is the size one message can carry rather than an arbitrary number. 503 when the pipeline cannot take the batch: honest unavailability the caller can retry, never a 200 over a discarded recording.
          * @summary Record a session-replay snapshot batch
-         * @param {ReplayApiPostV1ReplayRequest} requestParameters Request parameters.
+         * @param {ReplayApiPostReplayRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Replay(requestParameters: ReplayApiPostV1ReplayRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CaptureResult> {
-            return localVarFp.postV1Replay(requestParameters.replayBody, options).then((request) => request(axios, basePath));
+        postReplay(requestParameters: ReplayApiPostReplayRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CaptureResult> {
+            return localVarFp.postReplay(requestParameters.replayBody, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for postV1Replay operation in ReplayApi.
+ * Request parameters for postReplay operation in ReplayApi.
  * @export
- * @interface ReplayApiPostV1ReplayRequest
+ * @interface ReplayApiPostReplayRequest
  */
-export interface ReplayApiPostV1ReplayRequest {
+export interface ReplayApiPostReplayRequest {
     /**
      * 
      * @type {ReplayBody}
-     * @memberof ReplayApiPostV1Replay
+     * @memberof ReplayApiPostReplay
      */
     readonly replayBody?: ReplayBody
 }
@@ -135,13 +135,13 @@ export class ReplayApi extends BaseAPI {
     /**
      * Accepts a batch of rrweb events from a browser recorder and hands it to the session-replay pipeline, which stores the recording and derives the session summary a player reads back.  ONE REQUEST IS ONE BATCH, and it is all-or-nothing: the recording is made durable before this answers, so a 200 {\"accepted\":1} means stored and never \"buffered somewhere\". There is no partial count, because a half-written recording is not a recording.  `sessionId` is REQUIRED and bounded — at most 70 characters of ASCII letters, digits or \'-\'. It is the key every batch of one visit is grouped and ordered by, so an id outside that grammar is refused 400 here rather than accepted and dropped further down. `windowId` separates two tabs of one session and `distinctId` attributes the recording to a person; both are optional. `events` is the rrweb batch, each element a raw eventWithTime object, carried VERBATIM — the summary (click, keypress and mouse-activity counts, size) is derived downstream from exactly these bytes, so nothing is re-encoded or dropped.  THE CALLER\'S CREDENTIAL DECIDES THE TENANT, and the body never does: the recording lands in the org the presented credential resolves to. It takes the SAME credentials as /v1/event — a validated bearer, an org API key, or a publishable pk- key on Authorization: Bearer, x-hanzo-ingest-key or ?ingest_key= — so a browser bundle already holding a pk- for events needs nothing new to record. A caller that presents nothing is 401 `ingest_key_required`; one whose key resolves to no project is 403 `ingest_key_unknown`; a reduced principal (a Hanzo Team workspace token) is 403 `insufficient_capability`, because a full-fidelity screen recording has no projected form that is safe for a guest to write into a host org.  BOUNDS: 413 over 512 KiB of body, and that is the only bound on one batch — a recorder is expected to chunk a long session rather than send it whole, and the cap is the size one message can carry rather than an arbitrary number. 503 when the pipeline cannot take the batch: honest unavailability the caller can retry, never a 200 over a discarded recording.
      * @summary Record a session-replay snapshot batch
-     * @param {ReplayApiPostV1ReplayRequest} requestParameters Request parameters.
+     * @param {ReplayApiPostReplayRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReplayApi
      */
-    public postV1Replay(requestParameters: ReplayApiPostV1ReplayRequest = {}, options?: RawAxiosRequestConfig) {
-        return ReplayApiFp(this.configuration).postV1Replay(requestParameters.replayBody, options).then((request) => request(this.axios, this.basePath));
+    public postReplay(requestParameters: ReplayApiPostReplayRequest = {}, options?: RawAxiosRequestConfig) {
+        return ReplayApiFp(this.configuration).postReplay(requestParameters.replayBody, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

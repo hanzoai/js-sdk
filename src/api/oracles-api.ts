@@ -35,7 +35,7 @@ export const OraclesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Oracles: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getOracles: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/oracles`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const OraclesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Oracles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OraclesOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Oracles(options);
+        async getOracles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OraclesOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOracles(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['OraclesApi.getV1Oracles']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['OraclesApi.getOracles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const OraclesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Oracles(options?: RawAxiosRequestConfig): AxiosPromise<OraclesOut> {
-            return localVarFp.getV1Oracles(options).then((request) => request(axios, basePath));
+        getOracles(options?: RawAxiosRequestConfig): AxiosPromise<OraclesOut> {
+            return localVarFp.getOracles(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class OraclesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OraclesApi
      */
-    public getV1Oracles(options?: RawAxiosRequestConfig) {
-        return OraclesApiFp(this.configuration).getV1Oracles(options).then((request) => request(this.axios, this.basePath));
+    public getOracles(options?: RawAxiosRequestConfig) {
+        return OraclesApiFp(this.configuration).getOracles(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

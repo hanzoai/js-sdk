@@ -38,9 +38,9 @@ export const ExecApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Exec: async (codeRun: CodeRun, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postExec: async (codeRun: CodeRun, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'codeRun' is not null or undefined
-            assertParamExists('postV1Exec', 'codeRun', codeRun)
+            assertParamExists('postExec', 'codeRun', codeRun)
             const localVarPath = `/v1/exec`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,7 +73,7 @@ export const ExecApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ExecProgrammatic: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postExecProgrammatic: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/exec/programmatic`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -114,10 +114,10 @@ export const ExecApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Exec(codeRun: CodeRun, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodeResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Exec(codeRun, options);
+        async postExec(codeRun: CodeRun, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodeResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postExec(codeRun, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.postV1Exec']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ExecApi.postExec']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -126,10 +126,10 @@ export const ExecApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ExecProgrammatic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ExecProgrammatic(options);
+        async postExecProgrammatic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postExecProgrammatic(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ExecApi.postV1ExecProgrammatic']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ExecApi.postExecProgrammatic']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -145,12 +145,12 @@ export const ExecApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Executes a program in a throwaway sandbox and answers with what it printed and what it left behind.  `lang` names one of the thirteen the sandbox image carries — py, js, ts, bash, r, php, go, rs, c, cpp, java, d, f90 — and `code` is the whole program, not a fragment: a compiled language is compiled and then run, an interpreted one is interpreted, and `args` becomes the program\'s own argv either way. Nothing is installed for you; the image is the environment.  A PROGRAM THAT FAILS IS A SUCCESSFUL CALL. A non-zero exit answers 200 with the diagnostics on `stderr`, because \"the code threw\" and \"the interpreter is down\" are different facts a caller renders differently. Only the second is an error status.  Runs are stateful through `session_id`. Omit it and the run gets a fresh sandbox whose id comes back on the answer; pass that id again and the next run sees the same filesystem, so a program can write a file one call and read it the next. `files` names bytes already uploaded to a session (POST /v1/upload), copied in before the program starts. `files` on the ANSWER is what the program created or changed, by comparison against a marker taken at start — so it is the run\'s real output, not a listing of the directory — and each is fetched from GET /v1/download/{session}/{name}.  The tenant is the caller\'s, never the body\'s, at every door. A typed op is also an MCP tool and an op-plane op; MCP\'s tools/call invokes it directly, with no route and therefore no middleware, so nothing there could have checked a credential. tenantOf refuses a context carrying neither a validated principal nor exec\'s own admission marker, so those doors fail closed without a second gate to keep in step.
          * @summary Run a code snippet in a sandboxed interpreter
-         * @param {ExecApiPostV1ExecRequest} requestParameters Request parameters.
+         * @param {ExecApiPostExecRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Exec(requestParameters: ExecApiPostV1ExecRequest, options?: RawAxiosRequestConfig): AxiosPromise<CodeResult> {
-            return localVarFp.postV1Exec(requestParameters.codeRun, options).then((request) => request(axios, basePath));
+        postExec(requestParameters: ExecApiPostExecRequest, options?: RawAxiosRequestConfig): AxiosPromise<CodeResult> {
+            return localVarFp.postExec(requestParameters.codeRun, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers 501. This address belongs to a DIFFERENT protocol from /v1/exec: the server suspends a program on each tool call, returns the pending calls with a continuation token, and resumes when the client posts results back. Serving it means implementing suspension and resumption, so it refuses in the open rather than answering with a shape the caller\'s parser cannot read.
@@ -158,22 +158,22 @@ export const ExecApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ExecProgrammatic(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1ExecProgrammatic(options).then((request) => request(axios, basePath));
+        postExecProgrammatic(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postExecProgrammatic(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for postV1Exec operation in ExecApi.
+ * Request parameters for postExec operation in ExecApi.
  * @export
- * @interface ExecApiPostV1ExecRequest
+ * @interface ExecApiPostExecRequest
  */
-export interface ExecApiPostV1ExecRequest {
+export interface ExecApiPostExecRequest {
     /**
      * 
      * @type {CodeRun}
-     * @memberof ExecApiPostV1Exec
+     * @memberof ExecApiPostExec
      */
     readonly codeRun: CodeRun
 }
@@ -188,13 +188,13 @@ export class ExecApi extends BaseAPI {
     /**
      * Executes a program in a throwaway sandbox and answers with what it printed and what it left behind.  `lang` names one of the thirteen the sandbox image carries — py, js, ts, bash, r, php, go, rs, c, cpp, java, d, f90 — and `code` is the whole program, not a fragment: a compiled language is compiled and then run, an interpreted one is interpreted, and `args` becomes the program\'s own argv either way. Nothing is installed for you; the image is the environment.  A PROGRAM THAT FAILS IS A SUCCESSFUL CALL. A non-zero exit answers 200 with the diagnostics on `stderr`, because \"the code threw\" and \"the interpreter is down\" are different facts a caller renders differently. Only the second is an error status.  Runs are stateful through `session_id`. Omit it and the run gets a fresh sandbox whose id comes back on the answer; pass that id again and the next run sees the same filesystem, so a program can write a file one call and read it the next. `files` names bytes already uploaded to a session (POST /v1/upload), copied in before the program starts. `files` on the ANSWER is what the program created or changed, by comparison against a marker taken at start — so it is the run\'s real output, not a listing of the directory — and each is fetched from GET /v1/download/{session}/{name}.  The tenant is the caller\'s, never the body\'s, at every door. A typed op is also an MCP tool and an op-plane op; MCP\'s tools/call invokes it directly, with no route and therefore no middleware, so nothing there could have checked a credential. tenantOf refuses a context carrying neither a validated principal nor exec\'s own admission marker, so those doors fail closed without a second gate to keep in step.
      * @summary Run a code snippet in a sandboxed interpreter
-     * @param {ExecApiPostV1ExecRequest} requestParameters Request parameters.
+     * @param {ExecApiPostExecRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ExecApi
      */
-    public postV1Exec(requestParameters: ExecApiPostV1ExecRequest, options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).postV1Exec(requestParameters.codeRun, options).then((request) => request(this.axios, this.basePath));
+    public postExec(requestParameters: ExecApiPostExecRequest, options?: RawAxiosRequestConfig) {
+        return ExecApiFp(this.configuration).postExec(requestParameters.codeRun, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -204,8 +204,8 @@ export class ExecApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ExecApi
      */
-    public postV1ExecProgrammatic(options?: RawAxiosRequestConfig) {
-        return ExecApiFp(this.configuration).postV1ExecProgrammatic(options).then((request) => request(this.axios, this.basePath));
+    public postExecProgrammatic(options?: RawAxiosRequestConfig) {
+        return ExecApiFp(this.configuration).postExecProgrammatic(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

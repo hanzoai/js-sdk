@@ -67,7 +67,7 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageActivity: async (subject?: string, id?: string, from?: string, to?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUsageActivity: async (subject?: string, id?: string, from?: string, to?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/usage/activity`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -112,12 +112,12 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
          * @summary Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from.
          * @param {string} [end] End is the exclusive window end, RFC3339. Read only when Range is custom.
          * @param {string} [plan] Plan is the plan id whose entitlement decides access and retention. INTERIM: cloud has no org-to-plan resolver yet, so the caller names the plan; when that resolver lands this becomes the caller org\&#39;s own plan.
-         * @param {string} [range] Range is the window: 24h, 7d, 30d, or custom. Empty means 24h.
+         * @param {string} [range] Range is the window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all, custom. Empty means 24h. The window is then clamped forward to the plan\&#39;s retention entitlement.
          * @param {string} [start] Start is the inclusive window start, RFC3339. Read only when Range is custom, and clamped forward to the plan\&#39;s retention floor.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageAnalytics: async (end?: string, plan?: string, range?: string, start?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUsageAnalytics: async (end?: string, plan?: string, range?: string, start?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/usage/analytics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -164,7 +164,7 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageAnalyticsAccess: async (plan?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUsageAnalyticsAccess: async (plan?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/usage/analytics/access`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -202,7 +202,7 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageLeaderboard: async (scope?: string, metric?: string, period?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUsageLeaderboard: async (scope?: string, metric?: string, period?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/usage/leaderboard`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -248,7 +248,7 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageLeaderboardOptin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUsageLeaderboardOptin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/usage/leaderboard/optin`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -277,12 +277,12 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
          * @summary Is the PER-PROVIDER view: one connected account\'s own consumption of its own plan — \"my plan is 47% through its 6h window, resets at 14:20\".
          * @param {string} [account] Account narrows to ONE linked account of that provider. Empty covers every account the caller has linked there.
          * @param {string} [provider] Provider is the upstream to read, e.g. anthropic. Required.
-         * @param {string} [range] Range is the window to read: 1h, 24h, 7d or 30d. Empty means 24h, and any other label is refused rather than silently replaced.
+         * @param {string} [range] Range is the window to read: a count and a unit — 1h, 24h, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Empty means 24h. A label that is not a count, or one reaching past the 730-day horizon, is refused rather than silently replaced.
          * @param {string} [window] Window narrows to ONE window class: 6h, day, week or month. Empty covers every class.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageSamples: async (account?: string, provider?: string, range?: string, window?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUsageSamples: async (account?: string, provider?: string, range?: string, window?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/usage/samples`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -325,13 +325,13 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Answers GET /v1/usage/summary: the caller\'s own usage footprint over one window — the categorized spend roll-up from the commerce ledger, the org\'s LLM usage totals from the warehouse, and the caller\'s OWN linked provider accounts beside the org\'s Hanzo-routed usage.  Every source degrades INDEPENDENTLY to honest zeros and says so in `sources` and in its own `available` flag, so a partial deploy reports \"no data\" rather than fabricating spend. The account rows and the Hanzo rows are concatenated and never summed: a plan\'s percent is not money.  The response is org-scoped from the validated principal and marked no-store — a signed-out caller is refused.
          * @summary Answers GET /v1/usage/summary: the caller\'s own usage footprint over one window — the categorized spend roll-up from the commerce ledger, the org\'s LLM usage totals from the warehouse, and the caller\'s OWN linked provider accounts beside the org\'s Hanzo-routed usage.
-         * @param {string} [range] Range is the window: 24h, 7d, 30d, or custom. Empty means 24h. A label this surface does not know is refused rather than silently replaced.
+         * @param {string} [range] Range is the window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all, custom. Empty means 24h. A label this surface does not know, or one reaching past the 730-day horizon, is refused rather than silently replaced.
          * @param {string} [start] Start is the inclusive window start, RFC3339. Read only when Range is custom.
          * @param {string} [end] End is the exclusive window end, RFC3339. Read only when Range is custom.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageSummary: async (range?: string, start?: string, end?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUsageSummary: async (range?: string, start?: string, end?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/usage/summary`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -374,9 +374,9 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Usage: async (reportReq: ReportReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postUsage: async (reportReq: ReportReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'reportReq' is not null or undefined
-            assertParamExists('postV1Usage', 'reportReq', reportReq)
+            assertParamExists('postUsage', 'reportReq', reportReq)
             const localVarPath = `/v1/usage`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -410,9 +410,9 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1UsageRollupBackfill: async (backfillQuery: BackfillQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postUsageRollupBackfill: async (backfillQuery: BackfillQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'backfillQuery' is not null or undefined
-            assertParamExists('postV1UsageRollupBackfill', 'backfillQuery', backfillQuery)
+            assertParamExists('postUsageRollupBackfill', 'backfillQuery', backfillQuery)
             const localVarPath = `/v1/usage/rollup/backfill`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -446,9 +446,9 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1UsageLeaderboardOptin: async (userOptinReq: UserOptinReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putUsageLeaderboardOptin: async (userOptinReq: UserOptinReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userOptinReq' is not null or undefined
-            assertParamExists('putV1UsageLeaderboardOptin', 'userOptinReq', userOptinReq)
+            assertParamExists('putUsageLeaderboardOptin', 'userOptinReq', userOptinReq)
             const localVarPath = `/v1/usage/leaderboard/optin`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -482,9 +482,9 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1UsageLeaderboardOptinOrg: async (orgOptinReq: OrgOptinReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putUsageLeaderboardOptinOrg: async (orgOptinReq: OrgOptinReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgOptinReq' is not null or undefined
-            assertParamExists('putV1UsageLeaderboardOptinOrg', 'orgOptinReq', orgOptinReq)
+            assertParamExists('putUsageLeaderboardOptinOrg', 'orgOptinReq', orgOptinReq)
             const localVarPath = `/v1/usage/leaderboard/optin/org`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -531,10 +531,10 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1UsageActivity(subject?: string, id?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivityView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1UsageActivity(subject, id, from, to, options);
+        async getUsageActivity(subject?: string, id?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivityView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageActivity(subject, id, from, to, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.getV1UsageActivity']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageActivity']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -542,15 +542,15 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @summary Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from.
          * @param {string} [end] End is the exclusive window end, RFC3339. Read only when Range is custom.
          * @param {string} [plan] Plan is the plan id whose entitlement decides access and retention. INTERIM: cloud has no org-to-plan resolver yet, so the caller names the plan; when that resolver lands this becomes the caller org\&#39;s own plan.
-         * @param {string} [range] Range is the window: 24h, 7d, 30d, or custom. Empty means 24h.
+         * @param {string} [range] Range is the window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all, custom. Empty means 24h. The window is then clamped forward to the plan\&#39;s retention entitlement.
          * @param {string} [start] Start is the inclusive window start, RFC3339. Read only when Range is custom, and clamped forward to the plan\&#39;s retention floor.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1UsageAnalytics(end?: string, plan?: string, range?: string, start?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageAnalyticsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1UsageAnalytics(end, plan, range, start, options);
+        async getUsageAnalytics(end?: string, plan?: string, range?: string, start?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageAnalyticsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageAnalytics(end, plan, range, start, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.getV1UsageAnalytics']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageAnalytics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -560,10 +560,10 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1UsageAnalyticsAccess(plan?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageAnalyticsAccess>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1UsageAnalyticsAccess(plan, options);
+        async getUsageAnalyticsAccess(plan?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageAnalyticsAccess>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageAnalyticsAccess(plan, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.getV1UsageAnalyticsAccess']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageAnalyticsAccess']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -576,10 +576,10 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1UsageLeaderboard(scope?: string, metric?: string, period?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1UsageLeaderboard(scope, metric, period, limit, options);
+        async getUsageLeaderboard(scope?: string, metric?: string, period?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageLeaderboard(scope, metric, period, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.getV1UsageLeaderboard']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageLeaderboard']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -588,10 +588,10 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1UsageLeaderboardOptin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OptinView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1UsageLeaderboardOptin(options);
+        async getUsageLeaderboardOptin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OptinView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageLeaderboardOptin(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.getV1UsageLeaderboardOptin']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageLeaderboardOptin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -599,30 +599,30 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @summary Is the PER-PROVIDER view: one connected account\'s own consumption of its own plan — \"my plan is 47% through its 6h window, resets at 14:20\".
          * @param {string} [account] Account narrows to ONE linked account of that provider. Empty covers every account the caller has linked there.
          * @param {string} [provider] Provider is the upstream to read, e.g. anthropic. Required.
-         * @param {string} [range] Range is the window to read: 1h, 24h, 7d or 30d. Empty means 24h, and any other label is refused rather than silently replaced.
+         * @param {string} [range] Range is the window to read: a count and a unit — 1h, 24h, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Empty means 24h. A label that is not a count, or one reaching past the 730-day horizon, is refused rather than silently replaced.
          * @param {string} [window] Window narrows to ONE window class: 6h, day, week or month. Empty covers every class.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1UsageSamples(account?: string, provider?: string, range?: string, window?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1UsageSamples(account, provider, range, window, options);
+        async getUsageSamples(account?: string, provider?: string, range?: string, window?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DashResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageSamples(account, provider, range, window, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.getV1UsageSamples']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageSamples']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * Answers GET /v1/usage/summary: the caller\'s own usage footprint over one window — the categorized spend roll-up from the commerce ledger, the org\'s LLM usage totals from the warehouse, and the caller\'s OWN linked provider accounts beside the org\'s Hanzo-routed usage.  Every source degrades INDEPENDENTLY to honest zeros and says so in `sources` and in its own `available` flag, so a partial deploy reports \"no data\" rather than fabricating spend. The account rows and the Hanzo rows are concatenated and never summed: a plan\'s percent is not money.  The response is org-scoped from the validated principal and marked no-store — a signed-out caller is refused.
          * @summary Answers GET /v1/usage/summary: the caller\'s own usage footprint over one window — the categorized spend roll-up from the commerce ledger, the org\'s LLM usage totals from the warehouse, and the caller\'s OWN linked provider accounts beside the org\'s Hanzo-routed usage.
-         * @param {string} [range] Range is the window: 24h, 7d, 30d, or custom. Empty means 24h. A label this surface does not know is refused rather than silently replaced.
+         * @param {string} [range] Range is the window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all, custom. Empty means 24h. A label this surface does not know, or one reaching past the 730-day horizon, is refused rather than silently replaced.
          * @param {string} [start] Start is the inclusive window start, RFC3339. Read only when Range is custom.
          * @param {string} [end] End is the exclusive window end, RFC3339. Read only when Range is custom.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1UsageSummary(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageSummary>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1UsageSummary(range, start, end, options);
+        async getUsageSummary(range?: string, start?: string, end?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsageSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageSummary(range, start, end, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.getV1UsageSummary']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageSummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -632,10 +632,10 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Usage(reportReq: ReportReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportResp>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Usage(reportReq, options);
+        async postUsage(reportReq: ReportReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReportResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postUsage(reportReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.postV1Usage']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsageApi.postUsage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -645,10 +645,10 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1UsageRollupBackfill(backfillQuery: BackfillQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BackfillResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1UsageRollupBackfill(backfillQuery, options);
+        async postUsageRollupBackfill(backfillQuery: BackfillQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BackfillResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postUsageRollupBackfill(backfillQuery, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.postV1UsageRollupBackfill']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsageApi.postUsageRollupBackfill']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -658,10 +658,10 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1UsageLeaderboardOptin(userOptinReq: UserOptinReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserOptinView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1UsageLeaderboardOptin(userOptinReq, options);
+        async putUsageLeaderboardOptin(userOptinReq: UserOptinReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserOptinView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putUsageLeaderboardOptin(userOptinReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.putV1UsageLeaderboardOptin']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsageApi.putUsageLeaderboardOptin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -671,10 +671,10 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1UsageLeaderboardOptinOrg(orgOptinReq: OrgOptinReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrgOptinView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1UsageLeaderboardOptinOrg(orgOptinReq, options);
+        async putUsageLeaderboardOptinOrg(orgOptinReq: OrgOptinReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrgOptinView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putUsageLeaderboardOptinOrg(orgOptinReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.putV1UsageLeaderboardOptinOrg']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UsageApi.putUsageLeaderboardOptinOrg']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -690,42 +690,42 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
         /**
          * Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
          * @summary Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
-         * @param {UsageApiGetV1UsageActivityRequest} requestParameters Request parameters.
+         * @param {UsageApiGetUsageActivityRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageActivity(requestParameters: UsageApiGetV1UsageActivityRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ActivityView> {
-            return localVarFp.getV1UsageActivity(requestParameters.subject, requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
+        getUsageActivity(requestParameters: UsageApiGetUsageActivityRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ActivityView> {
+            return localVarFp.getUsageActivity(requestParameters.subject, requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
         },
         /**
          * Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from. Basic own-org usage stays ungated at /v1/usage/summary.  A plan that does not grant the analytics datastore is refused with 402, and an unresolvable plan fails closed to the free floor, which does not grant it. The window is clamped forward to the plan\'s retention entitlement, so a tenant can never read older than its plan allows even with a custom start. The response is marked no-store.  INTERIM (mirrors apps/world\'s limits echo): no org→plan resolver exists in cloud yet — the subscription lookup is owned by the billing plane and the gateway principal carries no plan claim — so the caller passes the plan and the gate resolves THAT plan\'s access.
          * @summary Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from.
-         * @param {UsageApiGetV1UsageAnalyticsRequest} requestParameters Request parameters.
+         * @param {UsageApiGetUsageAnalyticsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageAnalytics(requestParameters: UsageApiGetV1UsageAnalyticsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageAnalyticsView> {
-            return localVarFp.getV1UsageAnalytics(requestParameters.end, requestParameters.plan, requestParameters.range, requestParameters.start, options).then((request) => request(axios, basePath));
+        getUsageAnalytics(requestParameters: UsageApiGetUsageAnalyticsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageAnalyticsView> {
+            return localVarFp.getUsageAnalytics(requestParameters.end, requestParameters.plan, requestParameters.range, requestParameters.start, options).then((request) => request(axios, basePath));
         },
         /**
          * Echoes a plan\'s resolved analytics entitlement so a dashboard can configure itself against the LIVE catalog instead of hardcoding tier numbers. An empty plan resolves the free floor, and a catalog resolution failure serves that same floor rather than erroring — so this always answers 200. It is a read-only contract echo and carries no tenant data.
          * @summary Echoes a plan\'s resolved analytics entitlement so a dashboard can configure itself against the LIVE catalog instead of hardcoding tier numbers.
-         * @param {UsageApiGetV1UsageAnalyticsAccessRequest} requestParameters Request parameters.
+         * @param {UsageApiGetUsageAnalyticsAccessRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageAnalyticsAccess(requestParameters: UsageApiGetV1UsageAnalyticsAccessRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageAnalyticsAccess> {
-            return localVarFp.getV1UsageAnalyticsAccess(requestParameters.plan, options).then((request) => request(axios, basePath));
+        getUsageAnalyticsAccess(requestParameters: UsageApiGetUsageAnalyticsAccessRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageAnalyticsAccess> {
+            return localVarFp.getUsageAnalyticsAccess(requestParameters.plan, options).then((request) => request(axios, basePath));
         },
         /**
          * Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
          * @summary Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
-         * @param {UsageApiGetV1UsageLeaderboardRequest} requestParameters Request parameters.
+         * @param {UsageApiGetUsageLeaderboardRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageLeaderboard(requestParameters: UsageApiGetV1UsageLeaderboardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardView> {
-            return localVarFp.getV1UsageLeaderboard(requestParameters.scope, requestParameters.metric, requestParameters.period, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getUsageLeaderboard(requestParameters: UsageApiGetUsageLeaderboardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardView> {
+            return localVarFp.getUsageLeaderboard(requestParameters.scope, requestParameters.metric, requestParameters.period, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it. Public listing is opt-in and private by default, so a fresh caller reads listed=false for both.
@@ -733,306 +733,306 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageLeaderboardOptin(options?: RawAxiosRequestConfig): AxiosPromise<OptinView> {
-            return localVarFp.getV1UsageLeaderboardOptin(options).then((request) => request(axios, basePath));
+        getUsageLeaderboardOptin(options?: RawAxiosRequestConfig): AxiosPromise<OptinView> {
+            return localVarFp.getUsageLeaderboardOptin(options).then((request) => request(axios, basePath));
         },
         /**
          * Is the PER-PROVIDER view: one connected account\'s own consumption of its own plan — \"my plan is 47% through its 6h window, resets at 14:20\".  `current` is the newest instance of each lane (the headline); `windows` is the history behind it. Both come from ONE deduped read, so they can never disagree. The rows are the caller\'s OWN linked accounts, scoped to the validated principal and its subject — never another user\'s, and never another org\'s.
          * @summary Is the PER-PROVIDER view: one connected account\'s own consumption of its own plan — \"my plan is 47% through its 6h window, resets at 14:20\".
-         * @param {UsageApiGetV1UsageSamplesRequest} requestParameters Request parameters.
+         * @param {UsageApiGetUsageSamplesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageSamples(requestParameters: UsageApiGetV1UsageSamplesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DashResp> {
-            return localVarFp.getV1UsageSamples(requestParameters.account, requestParameters.provider, requestParameters.range, requestParameters.window, options).then((request) => request(axios, basePath));
+        getUsageSamples(requestParameters: UsageApiGetUsageSamplesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DashResp> {
+            return localVarFp.getUsageSamples(requestParameters.account, requestParameters.provider, requestParameters.range, requestParameters.window, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers GET /v1/usage/summary: the caller\'s own usage footprint over one window — the categorized spend roll-up from the commerce ledger, the org\'s LLM usage totals from the warehouse, and the caller\'s OWN linked provider accounts beside the org\'s Hanzo-routed usage.  Every source degrades INDEPENDENTLY to honest zeros and says so in `sources` and in its own `available` flag, so a partial deploy reports \"no data\" rather than fabricating spend. The account rows and the Hanzo rows are concatenated and never summed: a plan\'s percent is not money.  The response is org-scoped from the validated principal and marked no-store — a signed-out caller is refused.
          * @summary Answers GET /v1/usage/summary: the caller\'s own usage footprint over one window — the categorized spend roll-up from the commerce ledger, the org\'s LLM usage totals from the warehouse, and the caller\'s OWN linked provider accounts beside the org\'s Hanzo-routed usage.
-         * @param {UsageApiGetV1UsageSummaryRequest} requestParameters Request parameters.
+         * @param {UsageApiGetUsageSummaryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1UsageSummary(requestParameters: UsageApiGetV1UsageSummaryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageSummary> {
-            return localVarFp.getV1UsageSummary(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
+        getUsageSummary(requestParameters: UsageApiGetUsageSummaryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageSummary> {
+            return localVarFp.getUsageSummary(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
         },
         /**
          * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/links, so there is one and only one way to update an account row.
          * @summary Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series.
-         * @param {UsageApiPostV1UsageRequest} requestParameters Request parameters.
+         * @param {UsageApiPostUsageRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Usage(requestParameters: UsageApiPostV1UsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReportResp> {
-            return localVarFp.postV1Usage(requestParameters.reportReq, options).then((request) => request(axios, basePath));
+        postUsage(requestParameters: UsageApiPostUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReportResp> {
+            return localVarFp.postUsage(requestParameters.reportReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture. SuperAdmin only. Because the rollup accumulates, a second unguarded run would double every day it re-reads, so it refuses with 409 when the rollup already holds rows unless force=true is passed; forcing WILL double-count.
          * @summary Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture.
-         * @param {UsageApiPostV1UsageRollupBackfillRequest} requestParameters Request parameters.
+         * @param {UsageApiPostUsageRollupBackfillRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1UsageRollupBackfill(requestParameters: UsageApiPostV1UsageRollupBackfillRequest, options?: RawAxiosRequestConfig): AxiosPromise<BackfillResult> {
-            return localVarFp.postV1UsageRollupBackfill(requestParameters.backfillQuery, options).then((request) => request(axios, basePath));
+        postUsageRollupBackfill(requestParameters: UsageApiPostUsageRollupBackfillRequest, options?: RawAxiosRequestConfig): AxiosPromise<BackfillResult> {
+            return localVarFp.postUsageRollupBackfill(requestParameters.backfillQuery, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets the CALLER\'s own public-listing preference on the leaderboard. Self only: the row written is keyed by the caller\'s validated ledger identity, so this can never edit another member\'s visibility whatever the request says. A caller opting in with no handle is given their username, so a listed row never renders as \"Anonymous\" to its own owner.
          * @summary Sets the CALLER\'s own public-listing preference on the leaderboard.
-         * @param {UsageApiPutV1UsageLeaderboardOptinRequest} requestParameters Request parameters.
+         * @param {UsageApiPutUsageLeaderboardOptinRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1UsageLeaderboardOptin(requestParameters: UsageApiPutV1UsageLeaderboardOptinRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserOptinView> {
-            return localVarFp.putV1UsageLeaderboardOptin(requestParameters.userOptinReq, options).then((request) => request(axios, basePath));
+        putUsageLeaderboardOptin(requestParameters: UsageApiPutUsageLeaderboardOptinRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserOptinView> {
+            return localVarFp.putUsageLeaderboardOptin(requestParameters.userOptinReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Sets the ORG\'s listing on the cross-org global board. Only an admin of the caller\'s own org — an org admin or a platform SuperAdmin — may change it, and the org written is the caller\'s validated tenant, never a value from the request. Listing consents to publishing the org\'s usage VOLUME; cross-org spend stays restricted to platform admins regardless.
          * @summary Sets the ORG\'s listing on the cross-org global board.
-         * @param {UsageApiPutV1UsageLeaderboardOptinOrgRequest} requestParameters Request parameters.
+         * @param {UsageApiPutUsageLeaderboardOptinOrgRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1UsageLeaderboardOptinOrg(requestParameters: UsageApiPutV1UsageLeaderboardOptinOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<OrgOptinView> {
-            return localVarFp.putV1UsageLeaderboardOptinOrg(requestParameters.orgOptinReq, options).then((request) => request(axios, basePath));
+        putUsageLeaderboardOptinOrg(requestParameters: UsageApiPutUsageLeaderboardOptinOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<OrgOptinView> {
+            return localVarFp.putUsageLeaderboardOptinOrg(requestParameters.orgOptinReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1UsageActivity operation in UsageApi.
+ * Request parameters for getUsageActivity operation in UsageApi.
  * @export
- * @interface UsageApiGetV1UsageActivityRequest
+ * @interface UsageApiGetUsageActivityRequest
  */
-export interface UsageApiGetV1UsageActivityRequest {
+export interface UsageApiGetUsageActivityRequest {
     /**
      * Subject is what the series is about: \&quot;user\&quot; (default), \&quot;org\&quot; or \&quot;project\&quot;.
      * @type {string}
-     * @memberof UsageApiGetV1UsageActivity
+     * @memberof UsageApiGetUsageActivity
      */
     readonly subject?: string
 
     /**
      * ID names the subject within what the caller is entitled to see. Omitted (or \&quot;me\&quot;) it is the caller themselves, or their own org. Another user requires org admin and must belong to the caller\&#39;s org; another org requires a SuperAdmin.
      * @type {string}
-     * @memberof UsageApiGetV1UsageActivity
+     * @memberof UsageApiGetUsageActivity
      */
     readonly id?: string
 
     /**
      * From is the first day of the range, \&quot;2006-01-02\&quot;. Defaults to 90 days back.
      * @type {string}
-     * @memberof UsageApiGetV1UsageActivity
+     * @memberof UsageApiGetUsageActivity
      */
     readonly from?: string
 
     /**
      * To is the last day of the range, \&quot;2006-01-02\&quot;. Defaults to today; the span is clamped to 366 days.
      * @type {string}
-     * @memberof UsageApiGetV1UsageActivity
+     * @memberof UsageApiGetUsageActivity
      */
     readonly to?: string
 }
 
 /**
- * Request parameters for getV1UsageAnalytics operation in UsageApi.
+ * Request parameters for getUsageAnalytics operation in UsageApi.
  * @export
- * @interface UsageApiGetV1UsageAnalyticsRequest
+ * @interface UsageApiGetUsageAnalyticsRequest
  */
-export interface UsageApiGetV1UsageAnalyticsRequest {
+export interface UsageApiGetUsageAnalyticsRequest {
     /**
      * End is the exclusive window end, RFC3339. Read only when Range is custom.
      * @type {string}
-     * @memberof UsageApiGetV1UsageAnalytics
+     * @memberof UsageApiGetUsageAnalytics
      */
     readonly end?: string
 
     /**
      * Plan is the plan id whose entitlement decides access and retention. INTERIM: cloud has no org-to-plan resolver yet, so the caller names the plan; when that resolver lands this becomes the caller org\&#39;s own plan.
      * @type {string}
-     * @memberof UsageApiGetV1UsageAnalytics
+     * @memberof UsageApiGetUsageAnalytics
      */
     readonly plan?: string
 
     /**
-     * Range is the window: 24h, 7d, 30d, or custom. Empty means 24h.
+     * Range is the window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all, custom. Empty means 24h. The window is then clamped forward to the plan\&#39;s retention entitlement.
      * @type {string}
-     * @memberof UsageApiGetV1UsageAnalytics
+     * @memberof UsageApiGetUsageAnalytics
      */
     readonly range?: string
 
     /**
      * Start is the inclusive window start, RFC3339. Read only when Range is custom, and clamped forward to the plan\&#39;s retention floor.
      * @type {string}
-     * @memberof UsageApiGetV1UsageAnalytics
+     * @memberof UsageApiGetUsageAnalytics
      */
     readonly start?: string
 }
 
 /**
- * Request parameters for getV1UsageAnalyticsAccess operation in UsageApi.
+ * Request parameters for getUsageAnalyticsAccess operation in UsageApi.
  * @export
- * @interface UsageApiGetV1UsageAnalyticsAccessRequest
+ * @interface UsageApiGetUsageAnalyticsAccessRequest
  */
-export interface UsageApiGetV1UsageAnalyticsAccessRequest {
+export interface UsageApiGetUsageAnalyticsAccessRequest {
     /**
      * Plan is a plan id from the live @hanzo/plans catalog. Empty resolves the free floor, and so does an id the catalog does not know — this never fails on an unknown plan.
      * @type {string}
-     * @memberof UsageApiGetV1UsageAnalyticsAccess
+     * @memberof UsageApiGetUsageAnalyticsAccess
      */
     readonly plan?: string
 }
 
 /**
- * Request parameters for getV1UsageLeaderboard operation in UsageApi.
+ * Request parameters for getUsageLeaderboard operation in UsageApi.
  * @export
- * @interface UsageApiGetV1UsageLeaderboardRequest
+ * @interface UsageApiGetUsageLeaderboardRequest
  */
-export interface UsageApiGetV1UsageLeaderboardRequest {
+export interface UsageApiGetUsageLeaderboardRequest {
     /**
      * Scope picks the board: \&quot;personal\&quot; (default) ranks the caller among their own org\&#39;s users, \&quot;org\&quot; is that same org board named for an admin, \&quot;global\&quot; ranks organizations against each other.
      * @type {string}
-     * @memberof UsageApiGetV1UsageLeaderboard
+     * @memberof UsageApiGetUsageLeaderboard
      */
     readonly scope?: string
 
     /**
      * Metric is the value ranked: tokens (default), requests, or cost.
      * @type {string}
-     * @memberof UsageApiGetV1UsageLeaderboard
+     * @memberof UsageApiGetUsageLeaderboard
      */
     readonly metric?: string
 
     /**
      * Period is the window ranked: day, week, month (default) or all.
      * @type {string}
-     * @memberof UsageApiGetV1UsageLeaderboard
+     * @memberof UsageApiGetUsageLeaderboard
      */
     readonly period?: string
 
     /**
      * Limit caps the rows returned, clamped to 100. Defaults to 10, which is also what a non-positive or unparseable value takes.
      * @type {number}
-     * @memberof UsageApiGetV1UsageLeaderboard
+     * @memberof UsageApiGetUsageLeaderboard
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1UsageSamples operation in UsageApi.
+ * Request parameters for getUsageSamples operation in UsageApi.
  * @export
- * @interface UsageApiGetV1UsageSamplesRequest
+ * @interface UsageApiGetUsageSamplesRequest
  */
-export interface UsageApiGetV1UsageSamplesRequest {
+export interface UsageApiGetUsageSamplesRequest {
     /**
      * Account narrows to ONE linked account of that provider. Empty covers every account the caller has linked there.
      * @type {string}
-     * @memberof UsageApiGetV1UsageSamples
+     * @memberof UsageApiGetUsageSamples
      */
     readonly account?: string
 
     /**
      * Provider is the upstream to read, e.g. anthropic. Required.
      * @type {string}
-     * @memberof UsageApiGetV1UsageSamples
+     * @memberof UsageApiGetUsageSamples
      */
     readonly provider?: string
 
     /**
-     * Range is the window to read: 1h, 24h, 7d or 30d. Empty means 24h, and any other label is refused rather than silently replaced.
+     * Range is the window to read: a count and a unit — 1h, 24h, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all. Empty means 24h. A label that is not a count, or one reaching past the 730-day horizon, is refused rather than silently replaced.
      * @type {string}
-     * @memberof UsageApiGetV1UsageSamples
+     * @memberof UsageApiGetUsageSamples
      */
     readonly range?: string
 
     /**
      * Window narrows to ONE window class: 6h, day, week or month. Empty covers every class.
      * @type {string}
-     * @memberof UsageApiGetV1UsageSamples
+     * @memberof UsageApiGetUsageSamples
      */
     readonly window?: string
 }
 
 /**
- * Request parameters for getV1UsageSummary operation in UsageApi.
+ * Request parameters for getUsageSummary operation in UsageApi.
  * @export
- * @interface UsageApiGetV1UsageSummaryRequest
+ * @interface UsageApiGetUsageSummaryRequest
  */
-export interface UsageApiGetV1UsageSummaryRequest {
+export interface UsageApiGetUsageSummaryRequest {
     /**
-     * Range is the window: 24h, 7d, 30d, or custom. Empty means 24h. A label this surface does not know is refused rather than silently replaced.
+     * Range is the window: a count and a unit — 24h, 7d, 90d, any &lt;N&gt;h or &lt;N&gt;d — or day, week, month, all, custom. Empty means 24h. A label this surface does not know, or one reaching past the 730-day horizon, is refused rather than silently replaced.
      * @type {string}
-     * @memberof UsageApiGetV1UsageSummary
+     * @memberof UsageApiGetUsageSummary
      */
     readonly range?: string
 
     /**
      * Start is the inclusive window start, RFC3339. Read only when Range is custom.
      * @type {string}
-     * @memberof UsageApiGetV1UsageSummary
+     * @memberof UsageApiGetUsageSummary
      */
     readonly start?: string
 
     /**
      * End is the exclusive window end, RFC3339. Read only when Range is custom.
      * @type {string}
-     * @memberof UsageApiGetV1UsageSummary
+     * @memberof UsageApiGetUsageSummary
      */
     readonly end?: string
 }
 
 /**
- * Request parameters for postV1Usage operation in UsageApi.
+ * Request parameters for postUsage operation in UsageApi.
  * @export
- * @interface UsageApiPostV1UsageRequest
+ * @interface UsageApiPostUsageRequest
  */
-export interface UsageApiPostV1UsageRequest {
+export interface UsageApiPostUsageRequest {
     /**
      * 
      * @type {ReportReq}
-     * @memberof UsageApiPostV1Usage
+     * @memberof UsageApiPostUsage
      */
     readonly reportReq: ReportReq
 }
 
 /**
- * Request parameters for postV1UsageRollupBackfill operation in UsageApi.
+ * Request parameters for postUsageRollupBackfill operation in UsageApi.
  * @export
- * @interface UsageApiPostV1UsageRollupBackfillRequest
+ * @interface UsageApiPostUsageRollupBackfillRequest
  */
-export interface UsageApiPostV1UsageRollupBackfillRequest {
+export interface UsageApiPostUsageRollupBackfillRequest {
     /**
      * 
      * @type {BackfillQuery}
-     * @memberof UsageApiPostV1UsageRollupBackfill
+     * @memberof UsageApiPostUsageRollupBackfill
      */
     readonly backfillQuery: BackfillQuery
 }
 
 /**
- * Request parameters for putV1UsageLeaderboardOptin operation in UsageApi.
+ * Request parameters for putUsageLeaderboardOptin operation in UsageApi.
  * @export
- * @interface UsageApiPutV1UsageLeaderboardOptinRequest
+ * @interface UsageApiPutUsageLeaderboardOptinRequest
  */
-export interface UsageApiPutV1UsageLeaderboardOptinRequest {
+export interface UsageApiPutUsageLeaderboardOptinRequest {
     /**
      * 
      * @type {UserOptinReq}
-     * @memberof UsageApiPutV1UsageLeaderboardOptin
+     * @memberof UsageApiPutUsageLeaderboardOptin
      */
     readonly userOptinReq: UserOptinReq
 }
 
 /**
- * Request parameters for putV1UsageLeaderboardOptinOrg operation in UsageApi.
+ * Request parameters for putUsageLeaderboardOptinOrg operation in UsageApi.
  * @export
- * @interface UsageApiPutV1UsageLeaderboardOptinOrgRequest
+ * @interface UsageApiPutUsageLeaderboardOptinOrgRequest
  */
-export interface UsageApiPutV1UsageLeaderboardOptinOrgRequest {
+export interface UsageApiPutUsageLeaderboardOptinOrgRequest {
     /**
      * 
      * @type {OrgOptinReq}
-     * @memberof UsageApiPutV1UsageLeaderboardOptinOrg
+     * @memberof UsageApiPutUsageLeaderboardOptinOrg
      */
     readonly orgOptinReq: OrgOptinReq
 }
@@ -1047,49 +1047,49 @@ export class UsageApi extends BaseAPI {
     /**
      * Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
      * @summary Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
-     * @param {UsageApiGetV1UsageActivityRequest} requestParameters Request parameters.
+     * @param {UsageApiGetUsageActivityRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public getV1UsageActivity(requestParameters: UsageApiGetV1UsageActivityRequest = {}, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).getV1UsageActivity(requestParameters.subject, requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(this.axios, this.basePath));
+    public getUsageActivity(requestParameters: UsageApiGetUsageActivityRequest = {}, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).getUsageActivity(requestParameters.subject, requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from. Basic own-org usage stays ungated at /v1/usage/summary.  A plan that does not grant the analytics datastore is refused with 402, and an unresolvable plan fails closed to the free floor, which does not grant it. The window is clamped forward to the plan\'s retention entitlement, so a tenant can never read older than its plan allows even with a custom start. The response is marked no-store.  INTERIM (mirrors apps/world\'s limits echo): no org→plan resolver exists in cloud yet — the subscription lookup is owned by the billing plane and the gateway principal carries no plan claim — so the caller passes the plan and the gate resolves THAT plan\'s access.
      * @summary Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from.
-     * @param {UsageApiGetV1UsageAnalyticsRequest} requestParameters Request parameters.
+     * @param {UsageApiGetUsageAnalyticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public getV1UsageAnalytics(requestParameters: UsageApiGetV1UsageAnalyticsRequest = {}, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).getV1UsageAnalytics(requestParameters.end, requestParameters.plan, requestParameters.range, requestParameters.start, options).then((request) => request(this.axios, this.basePath));
+    public getUsageAnalytics(requestParameters: UsageApiGetUsageAnalyticsRequest = {}, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).getUsageAnalytics(requestParameters.end, requestParameters.plan, requestParameters.range, requestParameters.start, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Echoes a plan\'s resolved analytics entitlement so a dashboard can configure itself against the LIVE catalog instead of hardcoding tier numbers. An empty plan resolves the free floor, and a catalog resolution failure serves that same floor rather than erroring — so this always answers 200. It is a read-only contract echo and carries no tenant data.
      * @summary Echoes a plan\'s resolved analytics entitlement so a dashboard can configure itself against the LIVE catalog instead of hardcoding tier numbers.
-     * @param {UsageApiGetV1UsageAnalyticsAccessRequest} requestParameters Request parameters.
+     * @param {UsageApiGetUsageAnalyticsAccessRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public getV1UsageAnalyticsAccess(requestParameters: UsageApiGetV1UsageAnalyticsAccessRequest = {}, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).getV1UsageAnalyticsAccess(requestParameters.plan, options).then((request) => request(this.axios, this.basePath));
+    public getUsageAnalyticsAccess(requestParameters: UsageApiGetUsageAnalyticsAccessRequest = {}, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).getUsageAnalyticsAccess(requestParameters.plan, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
      * @summary Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
-     * @param {UsageApiGetV1UsageLeaderboardRequest} requestParameters Request parameters.
+     * @param {UsageApiGetUsageLeaderboardRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public getV1UsageLeaderboard(requestParameters: UsageApiGetV1UsageLeaderboardRequest = {}, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).getV1UsageLeaderboard(requestParameters.scope, requestParameters.metric, requestParameters.period, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getUsageLeaderboard(requestParameters: UsageApiGetUsageLeaderboardRequest = {}, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).getUsageLeaderboard(requestParameters.scope, requestParameters.metric, requestParameters.period, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1099,80 +1099,80 @@ export class UsageApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public getV1UsageLeaderboardOptin(options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).getV1UsageLeaderboardOptin(options).then((request) => request(this.axios, this.basePath));
+    public getUsageLeaderboardOptin(options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).getUsageLeaderboardOptin(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Is the PER-PROVIDER view: one connected account\'s own consumption of its own plan — \"my plan is 47% through its 6h window, resets at 14:20\".  `current` is the newest instance of each lane (the headline); `windows` is the history behind it. Both come from ONE deduped read, so they can never disagree. The rows are the caller\'s OWN linked accounts, scoped to the validated principal and its subject — never another user\'s, and never another org\'s.
      * @summary Is the PER-PROVIDER view: one connected account\'s own consumption of its own plan — \"my plan is 47% through its 6h window, resets at 14:20\".
-     * @param {UsageApiGetV1UsageSamplesRequest} requestParameters Request parameters.
+     * @param {UsageApiGetUsageSamplesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public getV1UsageSamples(requestParameters: UsageApiGetV1UsageSamplesRequest = {}, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).getV1UsageSamples(requestParameters.account, requestParameters.provider, requestParameters.range, requestParameters.window, options).then((request) => request(this.axios, this.basePath));
+    public getUsageSamples(requestParameters: UsageApiGetUsageSamplesRequest = {}, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).getUsageSamples(requestParameters.account, requestParameters.provider, requestParameters.range, requestParameters.window, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers GET /v1/usage/summary: the caller\'s own usage footprint over one window — the categorized spend roll-up from the commerce ledger, the org\'s LLM usage totals from the warehouse, and the caller\'s OWN linked provider accounts beside the org\'s Hanzo-routed usage.  Every source degrades INDEPENDENTLY to honest zeros and says so in `sources` and in its own `available` flag, so a partial deploy reports \"no data\" rather than fabricating spend. The account rows and the Hanzo rows are concatenated and never summed: a plan\'s percent is not money.  The response is org-scoped from the validated principal and marked no-store — a signed-out caller is refused.
      * @summary Answers GET /v1/usage/summary: the caller\'s own usage footprint over one window — the categorized spend roll-up from the commerce ledger, the org\'s LLM usage totals from the warehouse, and the caller\'s OWN linked provider accounts beside the org\'s Hanzo-routed usage.
-     * @param {UsageApiGetV1UsageSummaryRequest} requestParameters Request parameters.
+     * @param {UsageApiGetUsageSummaryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public getV1UsageSummary(requestParameters: UsageApiGetV1UsageSummaryRequest = {}, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).getV1UsageSummary(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(this.axios, this.basePath));
+    public getUsageSummary(requestParameters: UsageApiGetUsageSummaryRequest = {}, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).getUsageSummary(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/links, so there is one and only one way to update an account row.
      * @summary Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series.
-     * @param {UsageApiPostV1UsageRequest} requestParameters Request parameters.
+     * @param {UsageApiPostUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public postV1Usage(requestParameters: UsageApiPostV1UsageRequest, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).postV1Usage(requestParameters.reportReq, options).then((request) => request(this.axios, this.basePath));
+    public postUsage(requestParameters: UsageApiPostUsageRequest, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).postUsage(requestParameters.reportReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture. SuperAdmin only. Because the rollup accumulates, a second unguarded run would double every day it re-reads, so it refuses with 409 when the rollup already holds rows unless force=true is passed; forcing WILL double-count.
      * @summary Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture.
-     * @param {UsageApiPostV1UsageRollupBackfillRequest} requestParameters Request parameters.
+     * @param {UsageApiPostUsageRollupBackfillRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public postV1UsageRollupBackfill(requestParameters: UsageApiPostV1UsageRollupBackfillRequest, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).postV1UsageRollupBackfill(requestParameters.backfillQuery, options).then((request) => request(this.axios, this.basePath));
+    public postUsageRollupBackfill(requestParameters: UsageApiPostUsageRollupBackfillRequest, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).postUsageRollupBackfill(requestParameters.backfillQuery, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets the CALLER\'s own public-listing preference on the leaderboard. Self only: the row written is keyed by the caller\'s validated ledger identity, so this can never edit another member\'s visibility whatever the request says. A caller opting in with no handle is given their username, so a listed row never renders as \"Anonymous\" to its own owner.
      * @summary Sets the CALLER\'s own public-listing preference on the leaderboard.
-     * @param {UsageApiPutV1UsageLeaderboardOptinRequest} requestParameters Request parameters.
+     * @param {UsageApiPutUsageLeaderboardOptinRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public putV1UsageLeaderboardOptin(requestParameters: UsageApiPutV1UsageLeaderboardOptinRequest, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).putV1UsageLeaderboardOptin(requestParameters.userOptinReq, options).then((request) => request(this.axios, this.basePath));
+    public putUsageLeaderboardOptin(requestParameters: UsageApiPutUsageLeaderboardOptinRequest, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).putUsageLeaderboardOptin(requestParameters.userOptinReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sets the ORG\'s listing on the cross-org global board. Only an admin of the caller\'s own org — an org admin or a platform SuperAdmin — may change it, and the org written is the caller\'s validated tenant, never a value from the request. Listing consents to publishing the org\'s usage VOLUME; cross-org spend stays restricted to platform admins regardless.
      * @summary Sets the ORG\'s listing on the cross-org global board.
-     * @param {UsageApiPutV1UsageLeaderboardOptinOrgRequest} requestParameters Request parameters.
+     * @param {UsageApiPutUsageLeaderboardOptinOrgRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public putV1UsageLeaderboardOptinOrg(requestParameters: UsageApiPutV1UsageLeaderboardOptinOrgRequest, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).putV1UsageLeaderboardOptinOrg(requestParameters.orgOptinReq, options).then((request) => request(this.axios, this.basePath));
+    public putUsageLeaderboardOptinOrg(requestParameters: UsageApiPutUsageLeaderboardOptinOrgRequest, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).putUsageLeaderboardOptinOrg(requestParameters.orgOptinReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

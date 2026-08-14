@@ -35,7 +35,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterArtifactMeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteRouterArtifactMeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/artifact-meta`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -65,7 +65,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterData: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteRouterData: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -95,7 +95,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterDefaults: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteRouterDefaults: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/defaults`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -125,7 +125,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterLedger: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteRouterLedger: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/ledger`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -155,7 +155,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteRouterPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/policy`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -185,7 +185,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterRewards: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteRouterRewards: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/rewards`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -215,7 +215,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterArtifactMeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRouterArtifactMeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/artifact-meta`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -245,7 +245,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterData: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRouterData: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/data`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -275,7 +275,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterDefaults: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRouterDefaults: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/defaults`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -305,7 +305,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterHistory: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRouterHistory: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/history`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -335,7 +335,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterJudgePanel: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRouterJudgePanel: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/judge-panel`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -365,7 +365,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterLedger: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRouterLedger: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/ledger`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -395,7 +395,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRouterPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/policy`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -425,7 +425,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterRewards: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRouterRewards: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/rewards`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -455,7 +455,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterStats: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getRouterStats: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/stats`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -485,7 +485,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1RouterArtifactMeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchRouterArtifactMeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/artifact-meta`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -515,7 +515,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1RouterDefaults: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchRouterDefaults: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/defaults`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -545,7 +545,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1RouterLedger: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchRouterLedger: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/ledger`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -575,7 +575,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1RouterPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchRouterPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/policy`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -605,7 +605,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1RouterRewards: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchRouterRewards: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/rewards`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -635,7 +635,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RouterArtifactMeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRouterArtifactMeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/artifact-meta`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -665,7 +665,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RouterDefaults: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRouterDefaults: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/defaults`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -695,7 +695,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RouterLedger: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRouterLedger: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/ledger`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -725,7 +725,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RouterPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRouterPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/policy`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -755,7 +755,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RouterRewards: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postRouterRewards: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/rewards`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -785,7 +785,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1RouterArtifactMeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putRouterArtifactMeta: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/artifact-meta`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -815,7 +815,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1RouterDefaults: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putRouterDefaults: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/defaults`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -845,7 +845,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1RouterLedger: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putRouterLedger: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/ledger`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -875,7 +875,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1RouterPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putRouterPolicy: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/policy`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -905,7 +905,7 @@ export const RouterApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1RouterRewards: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putRouterRewards: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/router/rewards`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -945,10 +945,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1RouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1RouterArtifactMeta(options);
+        async deleteRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRouterArtifactMeta(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteV1RouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteRouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -957,10 +957,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1RouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1RouterData(options);
+        async deleteRouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRouterData(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteV1RouterData']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteRouterData']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -969,10 +969,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1RouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1RouterDefaults(options);
+        async deleteRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRouterDefaults(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteV1RouterDefaults']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteRouterDefaults']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -981,10 +981,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1RouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1RouterLedger(options);
+        async deleteRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRouterLedger(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteV1RouterLedger']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteRouterLedger']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -993,10 +993,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1RouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1RouterPolicy(options);
+        async deleteRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRouterPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteV1RouterPolicy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteRouterPolicy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1005,10 +1005,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1RouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1RouterRewards(options);
+        async deleteRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRouterRewards(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteV1RouterRewards']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteRouterRewards']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1017,10 +1017,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RouterArtifactMeta(options);
+        async getRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRouterArtifactMeta(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.getV1RouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.getRouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1029,10 +1029,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RouterData(options);
+        async getRouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRouterData(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.getV1RouterData']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.getRouterData']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1041,10 +1041,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RouterDefaults(options);
+        async getRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRouterDefaults(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.getV1RouterDefaults']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.getRouterDefaults']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1053,10 +1053,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RouterHistory(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RouterHistory(options);
+        async getRouterHistory(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRouterHistory(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.getV1RouterHistory']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.getRouterHistory']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1065,10 +1065,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RouterJudgePanel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RouterJudgePanel(options);
+        async getRouterJudgePanel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRouterJudgePanel(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.getV1RouterJudgePanel']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.getRouterJudgePanel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1077,10 +1077,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RouterLedger(options);
+        async getRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRouterLedger(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.getV1RouterLedger']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.getRouterLedger']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1089,10 +1089,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RouterPolicy(options);
+        async getRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRouterPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.getV1RouterPolicy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.getRouterPolicy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1101,10 +1101,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RouterRewards(options);
+        async getRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRouterRewards(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.getV1RouterRewards']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.getRouterRewards']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1113,10 +1113,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1RouterStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1RouterStats(options);
+        async getRouterStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRouterStats(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.getV1RouterStats']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.getRouterStats']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1125,10 +1125,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1RouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1RouterArtifactMeta(options);
+        async patchRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchRouterArtifactMeta(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.patchV1RouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.patchRouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1137,10 +1137,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1RouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1RouterDefaults(options);
+        async patchRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchRouterDefaults(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.patchV1RouterDefaults']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.patchRouterDefaults']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1149,10 +1149,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1RouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1RouterLedger(options);
+        async patchRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchRouterLedger(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.patchV1RouterLedger']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.patchRouterLedger']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1161,10 +1161,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1RouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1RouterPolicy(options);
+        async patchRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchRouterPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.patchV1RouterPolicy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.patchRouterPolicy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1173,10 +1173,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1RouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1RouterRewards(options);
+        async patchRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchRouterRewards(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.patchV1RouterRewards']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.patchRouterRewards']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1185,10 +1185,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1RouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1RouterArtifactMeta(options);
+        async postRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRouterArtifactMeta(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.postV1RouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.postRouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1197,10 +1197,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1RouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1RouterDefaults(options);
+        async postRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRouterDefaults(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.postV1RouterDefaults']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.postRouterDefaults']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1209,10 +1209,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1RouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1RouterLedger(options);
+        async postRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRouterLedger(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.postV1RouterLedger']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.postRouterLedger']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1221,10 +1221,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1RouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1RouterPolicy(options);
+        async postRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRouterPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.postV1RouterPolicy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.postRouterPolicy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1233,10 +1233,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1RouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1RouterRewards(options);
+        async postRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postRouterRewards(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.postV1RouterRewards']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.postRouterRewards']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1245,10 +1245,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1RouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1RouterArtifactMeta(options);
+        async putRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putRouterArtifactMeta(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.putV1RouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.putRouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1257,10 +1257,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1RouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1RouterDefaults(options);
+        async putRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putRouterDefaults(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.putV1RouterDefaults']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.putRouterDefaults']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1269,10 +1269,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1RouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1RouterLedger(options);
+        async putRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putRouterLedger(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.putV1RouterLedger']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.putRouterLedger']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1281,10 +1281,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1RouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1RouterPolicy(options);
+        async putRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putRouterPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.putV1RouterPolicy']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.putRouterPolicy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1293,10 +1293,10 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1RouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1RouterRewards(options);
+        async putRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putRouterRewards(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['RouterApi.putV1RouterRewards']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['RouterApi.putRouterRewards']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1315,8 +1315,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1RouterArtifactMeta(options).then((request) => request(axios, basePath));
+        deleteRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteRouterArtifactMeta(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1324,8 +1324,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterData(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
-            return localVarFp.deleteV1RouterData(options).then((request) => request(axios, basePath));
+        deleteRouterData(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
+            return localVarFp.deleteRouterData(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1333,8 +1333,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1RouterDefaults(options).then((request) => request(axios, basePath));
+        deleteRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteRouterDefaults(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1342,8 +1342,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1RouterLedger(options).then((request) => request(axios, basePath));
+        deleteRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteRouterLedger(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1351,8 +1351,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1RouterPolicy(options).then((request) => request(axios, basePath));
+        deleteRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteRouterPolicy(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1360,8 +1360,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1RouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1RouterRewards(options).then((request) => request(axios, basePath));
+        deleteRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteRouterRewards(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1369,8 +1369,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1RouterArtifactMeta(options).then((request) => request(axios, basePath));
+        getRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getRouterArtifactMeta(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1378,8 +1378,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterData(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
-            return localVarFp.getV1RouterData(options).then((request) => request(axios, basePath));
+        getRouterData(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
+            return localVarFp.getRouterData(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1387,8 +1387,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1RouterDefaults(options).then((request) => request(axios, basePath));
+        getRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getRouterDefaults(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the router-improvement time-series. Two scopes, one route, mirroring /v1/router/stats:    - ?scope=platform — PUBLIC-safe aggregate over ALL orgs, no authentication. Emits     the daily reward/cost-saved/adoption series (task mix included, model ids NOT)     and the retrain timeline. This is what world.hanzo.ai polls.   - default (org scope) — requires a signed-in principal, scoped to the caller\'s OWN     org (a super admin may pass ?org= to target another or \"\" for all).  Window: ?days=N (default 30, capped at 90). Aggregates only.
@@ -1396,8 +1396,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterHistory(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1RouterHistory(options).then((request) => request(axios, basePath));
+        getRouterHistory(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getRouterHistory(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the LIVE Mean-Field Judge Panel state: the configured panel + dynamic judge posture (enabled/sample) resolved from the \"*\" GlobalDefaultOwner row, the live in-process per-judge calibration (weight/mean/n), and the static published benchmark. PUBLIC-safe and platform-global (model ids + scalars only), so it rides the same unauthenticated, balance-exempt class as /v1/router/stats?scope=platform — the world widget polls it with no auth. The judge state is a single in-process population (not per-org), so there is nothing to scope; ?scope=platform is accepted for symmetry with router-stats.
@@ -1405,8 +1405,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterJudgePanel(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1RouterJudgePanel(options).then((request) => request(axios, basePath));
+        getRouterJudgePanel(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getRouterJudgePanel(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1414,8 +1414,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1RouterLedger(options).then((request) => request(axios, basePath));
+        getRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getRouterLedger(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1423,8 +1423,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1RouterPolicy(options).then((request) => request(axios, basePath));
+        getRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getRouterPolicy(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1432,8 +1432,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1RouterRewards(options).then((request) => request(axios, basePath));
+        getRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getRouterRewards(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the router observability aggregate. Two scopes, one route:    - ?scope=platform — PUBLIC-safe aggregate over ALL orgs, no authentication.     Emits rates, shares, per-task/per-model counts, throughput, and the cost     RATIO (saved_pct) + counterfactual model id, but NEVER absolute $ levels,     org identity, raw events, or feature vectors. This is what world.hanzo.ai     polls.   - default (org scope) — requires a signed-in principal; scoped to the caller\'s     OWN org (a super admin may pass ?org= to target another org or \"\" for all).     Carries the absolute $/MTok indices for the admin savings panel.  Window: ?since= (RFC3339) or ?hours= (default 24, capped). Aggregates only.
@@ -1441,8 +1441,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1RouterStats(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1RouterStats(options).then((request) => request(axios, basePath));
+        getRouterStats(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getRouterStats(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1450,8 +1450,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1RouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1RouterArtifactMeta(options).then((request) => request(axios, basePath));
+        patchRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchRouterArtifactMeta(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1459,8 +1459,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1RouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1RouterDefaults(options).then((request) => request(axios, basePath));
+        patchRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchRouterDefaults(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1468,8 +1468,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1RouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1RouterLedger(options).then((request) => request(axios, basePath));
+        patchRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchRouterLedger(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1477,8 +1477,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1RouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1RouterPolicy(options).then((request) => request(axios, basePath));
+        patchRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchRouterPolicy(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1486,8 +1486,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1RouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1RouterRewards(options).then((request) => request(axios, basePath));
+        patchRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchRouterRewards(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1495,8 +1495,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1RouterArtifactMeta(options).then((request) => request(axios, basePath));
+        postRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postRouterArtifactMeta(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1504,8 +1504,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1RouterDefaults(options).then((request) => request(axios, basePath));
+        postRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postRouterDefaults(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1513,8 +1513,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1RouterLedger(options).then((request) => request(axios, basePath));
+        postRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postRouterLedger(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1522,8 +1522,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1RouterPolicy(options).then((request) => request(axios, basePath));
+        postRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postRouterPolicy(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1531,8 +1531,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1RouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1RouterRewards(options).then((request) => request(axios, basePath));
+        postRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postRouterRewards(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1540,8 +1540,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1RouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1RouterArtifactMeta(options).then((request) => request(axios, basePath));
+        putRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putRouterArtifactMeta(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1549,8 +1549,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1RouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1RouterDefaults(options).then((request) => request(axios, basePath));
+        putRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putRouterDefaults(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1558,8 +1558,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1RouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1RouterLedger(options).then((request) => request(axios, basePath));
+        putRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putRouterLedger(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1567,8 +1567,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1RouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1RouterPolicy(options).then((request) => request(axios, basePath));
+        putRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putRouterPolicy(options).then((request) => request(axios, basePath));
         },
         /**
          * The HTTP transport binding for the RESTful router-config nouns (/v1/router/{policy,defaults,ledger,rewards,artifact-meta} and /v1/org/settings[/list]). It dispatches IN-PROCESS through dispatchGateway — the SAME canonical ZAP gateway registry (zap_registry.go) that the MsgType 200 handler serves over the gateway transport. The native ZAP handler is the ONE and ONLY implementation of these routes; this is purely the api.hanzo.ai HTTP binding, so there is NO controller twin to drift from and the split-brain the router refactor removed stays removed.  Why a bridge and not a twin controller method: every other migrated route (get-records, get-connections, …) carries BOTH a controller method and a ZAP handler — the exact dual-impl drift that silently NULLed customer router settings (the update-router-policy data-wipe). Routing these nouns through the ZAP handler over one adapter keeps a single source of truth.  Identity is the request\'s own Bearer credential (Authorization header), which the native handlers resolve exactly as the gateway does — every caller (console, chat, app) already sends it. The dispatched handler returns a ZAP message whose status is field 0 and body is field 4 (BuildCloudResponse / BuildGatewayResponse layout); both are relayed verbatim. The route is mapped \"*\" (any verb) because the native handler is method-aware: /v1/router/policy splits GET (read) vs PUT (write), /v1/org/settings GET/PUT/DELETE, and returns 405 for a verb it does not own.
@@ -1576,8 +1576,8 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1RouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1RouterRewards(options).then((request) => request(axios, basePath));
+        putRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putRouterRewards(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1596,8 +1596,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public deleteV1RouterArtifactMeta(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).deleteV1RouterArtifactMeta(options).then((request) => request(this.axios, this.basePath));
+    public deleteRouterArtifactMeta(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).deleteRouterArtifactMeta(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1607,8 +1607,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public deleteV1RouterData(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).deleteV1RouterData(options).then((request) => request(this.axios, this.basePath));
+    public deleteRouterData(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).deleteRouterData(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1618,8 +1618,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public deleteV1RouterDefaults(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).deleteV1RouterDefaults(options).then((request) => request(this.axios, this.basePath));
+    public deleteRouterDefaults(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).deleteRouterDefaults(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1629,8 +1629,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public deleteV1RouterLedger(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).deleteV1RouterLedger(options).then((request) => request(this.axios, this.basePath));
+    public deleteRouterLedger(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).deleteRouterLedger(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1640,8 +1640,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public deleteV1RouterPolicy(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).deleteV1RouterPolicy(options).then((request) => request(this.axios, this.basePath));
+    public deleteRouterPolicy(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).deleteRouterPolicy(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1651,8 +1651,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public deleteV1RouterRewards(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).deleteV1RouterRewards(options).then((request) => request(this.axios, this.basePath));
+    public deleteRouterRewards(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).deleteRouterRewards(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1662,8 +1662,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public getV1RouterArtifactMeta(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).getV1RouterArtifactMeta(options).then((request) => request(this.axios, this.basePath));
+    public getRouterArtifactMeta(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).getRouterArtifactMeta(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1673,8 +1673,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public getV1RouterData(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).getV1RouterData(options).then((request) => request(this.axios, this.basePath));
+    public getRouterData(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).getRouterData(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1684,8 +1684,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public getV1RouterDefaults(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).getV1RouterDefaults(options).then((request) => request(this.axios, this.basePath));
+    public getRouterDefaults(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).getRouterDefaults(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1695,8 +1695,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public getV1RouterHistory(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).getV1RouterHistory(options).then((request) => request(this.axios, this.basePath));
+    public getRouterHistory(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).getRouterHistory(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1706,8 +1706,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public getV1RouterJudgePanel(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).getV1RouterJudgePanel(options).then((request) => request(this.axios, this.basePath));
+    public getRouterJudgePanel(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).getRouterJudgePanel(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1717,8 +1717,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public getV1RouterLedger(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).getV1RouterLedger(options).then((request) => request(this.axios, this.basePath));
+    public getRouterLedger(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).getRouterLedger(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1728,8 +1728,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public getV1RouterPolicy(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).getV1RouterPolicy(options).then((request) => request(this.axios, this.basePath));
+    public getRouterPolicy(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).getRouterPolicy(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1739,8 +1739,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public getV1RouterRewards(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).getV1RouterRewards(options).then((request) => request(this.axios, this.basePath));
+    public getRouterRewards(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).getRouterRewards(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1750,8 +1750,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public getV1RouterStats(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).getV1RouterStats(options).then((request) => request(this.axios, this.basePath));
+    public getRouterStats(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).getRouterStats(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1761,8 +1761,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public patchV1RouterArtifactMeta(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).patchV1RouterArtifactMeta(options).then((request) => request(this.axios, this.basePath));
+    public patchRouterArtifactMeta(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).patchRouterArtifactMeta(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1772,8 +1772,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public patchV1RouterDefaults(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).patchV1RouterDefaults(options).then((request) => request(this.axios, this.basePath));
+    public patchRouterDefaults(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).patchRouterDefaults(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1783,8 +1783,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public patchV1RouterLedger(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).patchV1RouterLedger(options).then((request) => request(this.axios, this.basePath));
+    public patchRouterLedger(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).patchRouterLedger(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1794,8 +1794,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public patchV1RouterPolicy(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).patchV1RouterPolicy(options).then((request) => request(this.axios, this.basePath));
+    public patchRouterPolicy(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).patchRouterPolicy(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1805,8 +1805,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public patchV1RouterRewards(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).patchV1RouterRewards(options).then((request) => request(this.axios, this.basePath));
+    public patchRouterRewards(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).patchRouterRewards(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1816,8 +1816,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public postV1RouterArtifactMeta(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).postV1RouterArtifactMeta(options).then((request) => request(this.axios, this.basePath));
+    public postRouterArtifactMeta(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).postRouterArtifactMeta(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1827,8 +1827,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public postV1RouterDefaults(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).postV1RouterDefaults(options).then((request) => request(this.axios, this.basePath));
+    public postRouterDefaults(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).postRouterDefaults(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1838,8 +1838,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public postV1RouterLedger(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).postV1RouterLedger(options).then((request) => request(this.axios, this.basePath));
+    public postRouterLedger(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).postRouterLedger(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1849,8 +1849,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public postV1RouterPolicy(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).postV1RouterPolicy(options).then((request) => request(this.axios, this.basePath));
+    public postRouterPolicy(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).postRouterPolicy(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1860,8 +1860,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public postV1RouterRewards(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).postV1RouterRewards(options).then((request) => request(this.axios, this.basePath));
+    public postRouterRewards(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).postRouterRewards(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1871,8 +1871,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public putV1RouterArtifactMeta(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).putV1RouterArtifactMeta(options).then((request) => request(this.axios, this.basePath));
+    public putRouterArtifactMeta(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).putRouterArtifactMeta(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1882,8 +1882,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public putV1RouterDefaults(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).putV1RouterDefaults(options).then((request) => request(this.axios, this.basePath));
+    public putRouterDefaults(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).putRouterDefaults(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1893,8 +1893,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public putV1RouterLedger(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).putV1RouterLedger(options).then((request) => request(this.axios, this.basePath));
+    public putRouterLedger(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).putRouterLedger(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1904,8 +1904,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public putV1RouterPolicy(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).putV1RouterPolicy(options).then((request) => request(this.axios, this.basePath));
+    public putRouterPolicy(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).putRouterPolicy(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1915,8 +1915,8 @@ export class RouterApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RouterApi
      */
-    public putV1RouterRewards(options?: RawAxiosRequestConfig) {
-        return RouterApiFp(this.configuration).putV1RouterRewards(options).then((request) => request(this.axios, this.basePath));
+    public putRouterRewards(options?: RawAxiosRequestConfig) {
+        return RouterApiFp(this.configuration).putRouterRewards(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

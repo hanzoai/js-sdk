@@ -36,7 +36,7 @@ export const ErrorsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Errors: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getErrors: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/errors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -81,10 +81,10 @@ export const ErrorsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Errors(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ErrorList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Errors(limit, options);
+        async getErrors(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ErrorList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getErrors(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ErrorsApi.getV1Errors']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ErrorsApi.getErrors']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -100,26 +100,26 @@ export const ErrorsApiFactory = function (configuration?: Configuration, basePat
         /**
          * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
          * @summary Errors returns the caller org\'s most recently captured errors, newest first.
-         * @param {ErrorsApiGetV1ErrorsRequest} requestParameters Request parameters.
+         * @param {ErrorsApiGetErrorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Errors(requestParameters: ErrorsApiGetV1ErrorsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ErrorList> {
-            return localVarFp.getV1Errors(requestParameters.limit, options).then((request) => request(axios, basePath));
+        getErrors(requestParameters: ErrorsApiGetErrorsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ErrorList> {
+            return localVarFp.getErrors(requestParameters.limit, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1Errors operation in ErrorsApi.
+ * Request parameters for getErrors operation in ErrorsApi.
  * @export
- * @interface ErrorsApiGetV1ErrorsRequest
+ * @interface ErrorsApiGetErrorsRequest
  */
-export interface ErrorsApiGetV1ErrorsRequest {
+export interface ErrorsApiGetErrorsRequest {
     /**
      * Limit is how many rows to return, newest first. Default 50, maximum 200; a value at or below zero, or one that is not a number, takes the default.
      * @type {number}
-     * @memberof ErrorsApiGetV1Errors
+     * @memberof ErrorsApiGetErrors
      */
     readonly limit?: number
 }
@@ -134,13 +134,13 @@ export class ErrorsApi extends BaseAPI {
     /**
      * Errors returns the caller org\'s most recently captured errors, newest first. The error-tracking read view over event.error — the plane table the write core\'s error facts land in (errors are DELIBERATELY not on event.event) — each with its captured exception surfaced from the attributes map as a first-class field.  The org is the validated principal\'s — never a parameter — and this read requires a real bearer, NEVER the write-only publishable key: pk- can attribute a write and can read nothing. 403 without a validated bearer, 503 when the warehouse is unreachable.
      * @summary Errors returns the caller org\'s most recently captured errors, newest first.
-     * @param {ErrorsApiGetV1ErrorsRequest} requestParameters Request parameters.
+     * @param {ErrorsApiGetErrorsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ErrorsApi
      */
-    public getV1Errors(requestParameters: ErrorsApiGetV1ErrorsRequest = {}, options?: RawAxiosRequestConfig) {
-        return ErrorsApiFp(this.configuration).getV1Errors(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getErrors(requestParameters: ErrorsApiGetErrorsRequest = {}, options?: RawAxiosRequestConfig) {
+        return ErrorsApiFp(this.configuration).getErrors(requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -33,7 +33,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Messages: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMessages: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/messages`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -63,7 +63,7 @@ export const MessagesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MessagesCountTokens: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMessagesCountTokens: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/messages/count_tokens`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -103,10 +103,10 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Messages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Messages(options);
+        async postMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMessages(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MessagesApi.postV1Messages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MessagesApi.postMessages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -115,10 +115,10 @@ export const MessagesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1MessagesCountTokens(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1MessagesCountTokens(options);
+        async postMessagesCountTokens(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMessagesCountTokens(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MessagesApi.postV1MessagesCountTokens']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MessagesApi.postMessagesCountTokens']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -137,8 +137,8 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Messages(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Messages(options).then((request) => request(axios, basePath));
+        postMessages(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMessages(options).then((request) => request(axios, basePath));
         },
         /**
          * Implements POST /v1/messages/count_tokens. Claude Code calls it before a request; it returns {\"input_tokens\": N} for the given model + messages + tools.
@@ -146,8 +146,8 @@ export const MessagesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1MessagesCountTokens(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1MessagesCountTokens(options).then((request) => request(axios, basePath));
+        postMessagesCountTokens(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postMessagesCountTokens(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -166,8 +166,8 @@ export class MessagesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MessagesApi
      */
-    public postV1Messages(options?: RawAxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).postV1Messages(options).then((request) => request(this.axios, this.basePath));
+    public postMessages(options?: RawAxiosRequestConfig) {
+        return MessagesApiFp(this.configuration).postMessages(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -177,8 +177,8 @@ export class MessagesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof MessagesApi
      */
-    public postV1MessagesCountTokens(options?: RawAxiosRequestConfig) {
-        return MessagesApiFp(this.configuration).postV1MessagesCountTokens(options).then((request) => request(this.axios, this.basePath));
+    public postMessagesCountTokens(options?: RawAxiosRequestConfig) {
+        return MessagesApiFp(this.configuration).postMessagesCountTokens(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

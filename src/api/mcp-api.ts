@@ -40,9 +40,9 @@ export const McpApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1McpServersById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMcpServersById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('deleteV1McpServersById', 'id', id)
+            assertParamExists('deleteMcpServersById', 'id', id)
             const localVarPath = `/v1/mcp/servers/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -73,7 +73,7 @@ export const McpApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1McpServers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMcpServers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/mcp/servers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -104,9 +104,9 @@ export const McpApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1McpServers: async (createServerReq: CreateServerReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMcpServers: async (createServerReq: CreateServerReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createServerReq' is not null or undefined
-            assertParamExists('postV1McpServers', 'createServerReq', createServerReq)
+            assertParamExists('postMcpServers', 'createServerReq', createServerReq)
             const localVarPath = `/v1/mcp/servers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -150,10 +150,10 @@ export const McpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1McpServersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1McpServersById(id, options);
+        async deleteMcpServersById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMcpServersById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['McpApi.deleteV1McpServersById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['McpApi.deleteMcpServersById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -162,10 +162,10 @@ export const McpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1McpServers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpServerList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1McpServers(options);
+        async getMcpServers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpServerList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMcpServers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['McpApi.getV1McpServers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['McpApi.getMcpServers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -175,10 +175,10 @@ export const McpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1McpServers(createServerReq: CreateServerReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPServer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1McpServers(createServerReq, options);
+        async postMcpServers(createServerReq: CreateServerReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MCPServer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMcpServers(createServerReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['McpApi.postV1McpServers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['McpApi.postMcpServers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -194,12 +194,12 @@ export const McpApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404.
          * @summary Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry.
-         * @param {McpApiDeleteV1McpServersByIdRequest} requestParameters Request parameters.
+         * @param {McpApiDeleteMcpServersByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1McpServersById(requestParameters: McpApiDeleteV1McpServersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1McpServersById(requestParameters.id, options).then((request) => request(axios, basePath));
+        deleteMcpServersById(requestParameters: McpApiDeleteMcpServersByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMcpServersById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the external MCP servers the caller\'s org has registered. Each record carries the URL and the name of the header its credential is injected into; the credential VALUE lives only in KMS and is never returned, so hasSecret is the whole of what this surface says about it.
@@ -207,46 +207,46 @@ export const McpApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1McpServers(options?: RawAxiosRequestConfig): AxiosPromise<McpServerList> {
-            return localVarFp.getV1McpServers(options).then((request) => request(axios, basePath));
+        getMcpServers(options?: RawAxiosRequestConfig): AxiosPromise<McpServerList> {
+            return localVarFp.getMcpServers(options).then((request) => request(axios, basePath));
         },
         /**
          * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP door. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.
          * @summary Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP door.
-         * @param {McpApiPostV1McpServersRequest} requestParameters Request parameters.
+         * @param {McpApiPostMcpServersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1McpServers(requestParameters: McpApiPostV1McpServersRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPServer> {
-            return localVarFp.postV1McpServers(requestParameters.createServerReq, options).then((request) => request(axios, basePath));
+        postMcpServers(requestParameters: McpApiPostMcpServersRequest, options?: RawAxiosRequestConfig): AxiosPromise<MCPServer> {
+            return localVarFp.postMcpServers(requestParameters.createServerReq, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1McpServersById operation in McpApi.
+ * Request parameters for deleteMcpServersById operation in McpApi.
  * @export
- * @interface McpApiDeleteV1McpServersByIdRequest
+ * @interface McpApiDeleteMcpServersByIdRequest
  */
-export interface McpApiDeleteV1McpServersByIdRequest {
+export interface McpApiDeleteMcpServersByIdRequest {
     /**
      * ID is the server to deregister, from the path.
      * @type {string}
-     * @memberof McpApiDeleteV1McpServersById
+     * @memberof McpApiDeleteMcpServersById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1McpServers operation in McpApi.
+ * Request parameters for postMcpServers operation in McpApi.
  * @export
- * @interface McpApiPostV1McpServersRequest
+ * @interface McpApiPostMcpServersRequest
  */
-export interface McpApiPostV1McpServersRequest {
+export interface McpApiPostMcpServersRequest {
     /**
      * 
      * @type {CreateServerReq}
-     * @memberof McpApiPostV1McpServers
+     * @memberof McpApiPostMcpServers
      */
     readonly createServerReq: CreateServerReq
 }
@@ -261,13 +261,13 @@ export class McpApi extends BaseAPI {
     /**
      * Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry. Scoped to the caller\'s org, so an id belonging to another tenant is a 404 and not a delete. Answers 204 with no body; a server this org does not have is 404.
      * @summary Deregisters one of the caller org\'s external MCP servers, so its tools leave the registry.
-     * @param {McpApiDeleteV1McpServersByIdRequest} requestParameters Request parameters.
+     * @param {McpApiDeleteMcpServersByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof McpApi
      */
-    public deleteV1McpServersById(requestParameters: McpApiDeleteV1McpServersByIdRequest, options?: RawAxiosRequestConfig) {
-        return McpApiFp(this.configuration).deleteV1McpServersById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public deleteMcpServersById(requestParameters: McpApiDeleteMcpServersByIdRequest, options?: RawAxiosRequestConfig) {
+        return McpApiFp(this.configuration).deleteMcpServersById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -277,20 +277,20 @@ export class McpApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof McpApi
      */
-    public getV1McpServers(options?: RawAxiosRequestConfig) {
-        return McpApiFp(this.configuration).getV1McpServers(options).then((request) => request(this.axios, this.basePath));
+    public getMcpServers(options?: RawAxiosRequestConfig) {
+        return McpApiFp(this.configuration).getMcpServers(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP door. It is the ONE way an org gains a server, whether it typed the URL in or enabled a catalog listing: both write the SAME record, and `source` says which it was. A second registration path would be a second place for a server to exist, and then a second place to forget to check the credential.  The credential VALUE is sealed in KMS under a per-org ref; the row keeps only the URL, the header name to inject it into, and a has-secret flag — so a secret with no KMS configured is refused 503 rather than stored in the clear. The URL is SSRF-validated here and re-checked by the dialer at connect time, which is the DNS-rebinding defense.  Enabling a listing the org already enabled REVISES that server rather than adding a near-duplicate beside it, so a retried enable is the same one server. Answers 201 with the stored record.
      * @summary Gives the caller\'s org one more external MCP server, so its tools join the org\'s tool plane and the fleet\'s MCP door.
-     * @param {McpApiPostV1McpServersRequest} requestParameters Request parameters.
+     * @param {McpApiPostMcpServersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof McpApi
      */
-    public postV1McpServers(requestParameters: McpApiPostV1McpServersRequest, options?: RawAxiosRequestConfig) {
-        return McpApiFp(this.configuration).postV1McpServers(requestParameters.createServerReq, options).then((request) => request(this.axios, this.basePath));
+    public postMcpServers(requestParameters: McpApiPostMcpServersRequest, options?: RawAxiosRequestConfig) {
+        return McpApiFp(this.configuration).postMcpServers(requestParameters.createServerReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

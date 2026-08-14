@@ -33,7 +33,7 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Upload: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postUpload: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/upload`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const UploadApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1Upload(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1Upload(options);
+        async postUpload(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postUpload(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UploadApi.postV1Upload']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UploadApi.postUpload']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1Upload(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1Upload(options).then((request) => request(axios, basePath));
+        postUpload(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postUpload(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class UploadApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UploadApi
      */
-    public postV1Upload(options?: RawAxiosRequestConfig) {
-        return UploadApiFp(this.configuration).postV1Upload(options).then((request) => request(this.axios, this.basePath));
+    public postUpload(options?: RawAxiosRequestConfig) {
+        return UploadApiFp(this.configuration).postUpload(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

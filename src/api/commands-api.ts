@@ -33,7 +33,7 @@ export const CommandsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Commands: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCommands: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commands`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -73,10 +73,10 @@ export const CommandsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Commands(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Commands(options);
+        async getCommands(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommands(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommandsApi.getV1Commands']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommandsApi.getCommands']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -95,8 +95,8 @@ export const CommandsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Commands(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1Commands(options).then((request) => request(axios, basePath));
+        getCommands(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommands(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -115,8 +115,8 @@ export class CommandsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CommandsApi
      */
-    public getV1Commands(options?: RawAxiosRequestConfig) {
-        return CommandsApiFp(this.configuration).getV1Commands(options).then((request) => request(this.axios, this.basePath));
+    public getCommands(options?: RawAxiosRequestConfig) {
+        return CommandsApiFp(this.configuration).getCommands(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -13,9 +13,6 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { DriftFlag } from './drift-flag';
 
 /**
  * 
@@ -25,15 +22,45 @@ import type { DriftFlag } from './drift-flag';
 export interface Verdict {
     /**
      * 
-     * @type {Array<DriftFlag>}
+     * @type {number}
      * @memberof Verdict
      */
-    'flags'?: Array<DriftFlag>;
+    'builds'?: number;
     /**
      * 
      * @type {string}
      * @memberof Verdict
      */
-    'severity'?: string;
+    'commit'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Verdict
+     */
+    'fired'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Verdict
+     */
+    'org'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Verdict
+     */
+    'reason'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Verdict
+     */
+    'ref'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Verdict
+     */
+    'repo'?: string;
 }
 

@@ -55,7 +55,7 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ContentBoard: async (status?: string, project?: string, doctype?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getContentBoard: async (status?: string, project?: string, doctype?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/content/board`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -101,7 +101,7 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ContentChannels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getContentChannels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/content/channels`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -131,7 +131,7 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ContentLifecycle: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getContentLifecycle: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/content/lifecycle`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -164,13 +164,13 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ContentByDoctypeByNameTransition: async (doctype: string, name: string, transitionIn: TransitionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postContentByDoctypeByNameTransition: async (doctype: string, name: string, transitionIn: TransitionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'doctype' is not null or undefined
-            assertParamExists('postV1ContentByDoctypeByNameTransition', 'doctype', doctype)
+            assertParamExists('postContentByDoctypeByNameTransition', 'doctype', doctype)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1ContentByDoctypeByNameTransition', 'name', name)
+            assertParamExists('postContentByDoctypeByNameTransition', 'name', name)
             // verify required parameter 'transitionIn' is not null or undefined
-            assertParamExists('postV1ContentByDoctypeByNameTransition', 'transitionIn', transitionIn)
+            assertParamExists('postContentByDoctypeByNameTransition', 'transitionIn', transitionIn)
             const localVarPath = `/v1/content/{doctype}/{name}/transition`
                 .replace(`{${"doctype"}}`, encodeURIComponent(String(doctype)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -206,9 +206,9 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ContentGenerate: async (generateInput: GenerateInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postContentGenerate: async (generateInput: GenerateInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'generateInput' is not null or undefined
-            assertParamExists('postV1ContentGenerate', 'generateInput', generateInput)
+            assertParamExists('postContentGenerate', 'generateInput', generateInput)
             const localVarPath = `/v1/content/generate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -242,9 +242,9 @@ export const ContentApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ContentPublish: async (publishInput: PublishInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postContentPublish: async (publishInput: PublishInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'publishInput' is not null or undefined
-            assertParamExists('postV1ContentPublish', 'publishInput', publishInput)
+            assertParamExists('postContentPublish', 'publishInput', publishInput)
             const localVarPath = `/v1/content/publish`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -291,10 +291,10 @@ export const ContentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ContentBoard(status?: string, project?: string, doctype?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BoardPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ContentBoard(status, project, doctype, limit, options);
+        async getContentBoard(status?: string, project?: string, doctype?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BoardPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getContentBoard(status, project, doctype, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ContentApi.getV1ContentBoard']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ContentApi.getContentBoard']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -303,10 +303,10 @@ export const ContentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ContentChannels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChannelList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ContentChannels(options);
+        async getContentChannels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChannelList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getContentChannels(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ContentApi.getV1ContentChannels']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ContentApi.getContentChannels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -315,10 +315,10 @@ export const ContentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1ContentLifecycle(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StateGraph>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1ContentLifecycle(options);
+        async getContentLifecycle(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StateGraph>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getContentLifecycle(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ContentApi.getV1ContentLifecycle']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ContentApi.getContentLifecycle']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -330,10 +330,10 @@ export const ContentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ContentByDoctypeByNameTransition(doctype: string, name: string, transitionIn: TransitionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransitionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ContentByDoctypeByNameTransition(doctype, name, transitionIn, options);
+        async postContentByDoctypeByNameTransition(doctype: string, name: string, transitionIn: TransitionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransitionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postContentByDoctypeByNameTransition(doctype, name, transitionIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ContentApi.postV1ContentByDoctypeByNameTransition']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ContentApi.postContentByDoctypeByNameTransition']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -343,10 +343,10 @@ export const ContentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ContentGenerate(generateInput: GenerateInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ContentGenerate(generateInput, options);
+        async postContentGenerate(generateInput: GenerateInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GenerateResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postContentGenerate(generateInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ContentApi.postV1ContentGenerate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ContentApi.postContentGenerate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -356,10 +356,10 @@ export const ContentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1ContentPublish(publishInput: PublishInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublishResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1ContentPublish(publishInput, options);
+        async postContentPublish(publishInput: PublishInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublishResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postContentPublish(publishInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ContentApi.postV1ContentPublish']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ContentApi.postContentPublish']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -375,12 +375,12 @@ export const ContentApiFactory = function (configuration?: Configuration, basePa
         /**
          * Aggregates the caller org\'s marketing content across every publishable content type into ONE queue board — the cross-type read the framework\'s per-DocType list cannot give. It never fails on a partial outage: a content type the org has not installed, or one whose search errors, is skipped and logged rather than failing the whole board.
          * @summary Aggregates the caller org\'s marketing content across every publishable content type into ONE queue board — the cross-type read the framework\'s per-DocType list cannot give.
-         * @param {ContentApiGetV1ContentBoardRequest} requestParameters Request parameters.
+         * @param {ContentApiGetContentBoardRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ContentBoard(requestParameters: ContentApiGetV1ContentBoardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BoardPage> {
-            return localVarFp.getV1ContentBoard(requestParameters.status, requestParameters.project, requestParameters.doctype, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getContentBoard(requestParameters: ContentApiGetContentBoardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<BoardPage> {
+            return localVarFp.getContentBoard(requestParameters.status, requestParameters.project, requestParameters.doctype, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the distribution channels the caller\'s org has connected — the social integrations a publish can target. A deployment with no distribution edge wired answers 503 rather than an empty list that would read as \"no channels\".
@@ -388,8 +388,8 @@ export const ContentApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ContentChannels(options?: RawAxiosRequestConfig): AxiosPromise<ChannelList> {
-            return localVarFp.getV1ContentChannels(options).then((request) => request(axios, basePath));
+        getContentChannels(options?: RawAxiosRequestConfig): AxiosPromise<ChannelList> {
+            return localVarFp.getContentChannels(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the ONE marketing-content state machine: the ordered lifecycle states, which state a fresh document starts in, which one is publicly live, and the legal successors of every state. The console builds its board columns and its per-item action buttons from this single answer, so the UI and the write-time enforcement hook can never disagree about what is legal.
@@ -397,129 +397,129 @@ export const ContentApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1ContentLifecycle(options?: RawAxiosRequestConfig): AxiosPromise<StateGraph> {
-            return localVarFp.getV1ContentLifecycle(options).then((request) => request(axios, basePath));
+        getContentLifecycle(options?: RawAxiosRequestConfig): AxiosPromise<StateGraph> {
+            return localVarFp.getContentLifecycle(options).then((request) => request(axios, basePath));
         },
         /**
          * Moves one content item to a new lifecycle state and, on the move to published, fans it out to the item\'s channels. The edge must be legal for the item\'s current state — an illegal move is refused with 409 — and the status write re-validates it at the storage boundary. Distribution is best effort: its honest state is reported on the result and a distribution failure never rolls the status change back.
          * @summary Moves one content item to a new lifecycle state and, on the move to published, fans it out to the item\'s channels.
-         * @param {ContentApiPostV1ContentByDoctypeByNameTransitionRequest} requestParameters Request parameters.
+         * @param {ContentApiPostContentByDoctypeByNameTransitionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ContentByDoctypeByNameTransition(requestParameters: ContentApiPostV1ContentByDoctypeByNameTransitionRequest, options?: RawAxiosRequestConfig): AxiosPromise<TransitionResult> {
-            return localVarFp.postV1ContentByDoctypeByNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.transitionIn, options).then((request) => request(axios, basePath));
+        postContentByDoctypeByNameTransition(requestParameters: ContentApiPostContentByDoctypeByNameTransitionRequest, options?: RawAxiosRequestConfig): AxiosPromise<TransitionResult> {
+            return localVarFp.postContentByDoctypeByNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.transitionIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Draft a piece of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
          * @summary Draft a piece of marketing content and file it in the CMS as a draft.
-         * @param {ContentApiPostV1ContentGenerateRequest} requestParameters Request parameters.
+         * @param {ContentApiPostContentGenerateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ContentGenerate(requestParameters: ContentApiPostV1ContentGenerateRequest, options?: RawAxiosRequestConfig): AxiosPromise<GenerateResult> {
-            return localVarFp.postV1ContentGenerate(requestParameters.generateInput, options).then((request) => request(axios, basePath));
+        postContentGenerate(requestParameters: ContentApiPostContentGenerateRequest, options?: RawAxiosRequestConfig): AxiosPromise<GenerateResult> {
+            return localVarFp.postContentGenerate(requestParameters.generateInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Publish distributes one CMS content item to the channels recorded on it and returns the honest per-channel outcome. The item names itself — its caption, media and channel list are read from the stored document, not from this request. It is idempotent per channel (a channel already posted for this item is skipped), and a publish that loses the per-item lease to a live publisher answers status \"in_progress\" having posted nothing.
          * @summary Publish distributes one CMS content item to the channels recorded on it and returns the honest per-channel outcome.
-         * @param {ContentApiPostV1ContentPublishRequest} requestParameters Request parameters.
+         * @param {ContentApiPostContentPublishRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1ContentPublish(requestParameters: ContentApiPostV1ContentPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<PublishResult> {
-            return localVarFp.postV1ContentPublish(requestParameters.publishInput, options).then((request) => request(axios, basePath));
+        postContentPublish(requestParameters: ContentApiPostContentPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<PublishResult> {
+            return localVarFp.postContentPublish(requestParameters.publishInput, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1ContentBoard operation in ContentApi.
+ * Request parameters for getContentBoard operation in ContentApi.
  * @export
- * @interface ContentApiGetV1ContentBoardRequest
+ * @interface ContentApiGetContentBoardRequest
  */
-export interface ContentApiGetV1ContentBoardRequest {
+export interface ContentApiGetContentBoardRequest {
     /**
      * Status keeps only items in one lifecycle state (draft, in_review, approved, queued, published, archived). An undefined state is refused.
      * @type {string}
-     * @memberof ContentApiGetV1ContentBoard
+     * @memberof ContentApiGetContentBoard
      */
     readonly status?: string
 
     /**
      * Project keeps only items in one brand/site sub-scope.
      * @type {string}
-     * @memberof ContentApiGetV1ContentBoard
+     * @memberof ContentApiGetContentBoard
      */
     readonly project?: string
 
     /**
      * DocType keeps only one content type; omitted, the board spans every publishable type. An unknown type is refused.
      * @type {string}
-     * @memberof ContentApiGetV1ContentBoard
+     * @memberof ContentApiGetContentBoard
      */
     readonly doctype?: string
 
     /**
      * Limit caps the rows returned, clamped to 1000. Defaults to 200, which is also what a non-positive or unparseable value takes.
      * @type {number}
-     * @memberof ContentApiGetV1ContentBoard
+     * @memberof ContentApiGetContentBoard
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for postV1ContentByDoctypeByNameTransition operation in ContentApi.
+ * Request parameters for postContentByDoctypeByNameTransition operation in ContentApi.
  * @export
- * @interface ContentApiPostV1ContentByDoctypeByNameTransitionRequest
+ * @interface ContentApiPostContentByDoctypeByNameTransitionRequest
  */
-export interface ContentApiPostV1ContentByDoctypeByNameTransitionRequest {
+export interface ContentApiPostContentByDoctypeByNameTransitionRequest {
     /**
      * DocType is the content type to act on, from the path.
      * @type {string}
-     * @memberof ContentApiPostV1ContentByDoctypeByNameTransition
+     * @memberof ContentApiPostContentByDoctypeByNameTransition
      */
     readonly doctype: string
 
     /**
      * Name is the document to act on, from the path.
      * @type {string}
-     * @memberof ContentApiPostV1ContentByDoctypeByNameTransition
+     * @memberof ContentApiPostContentByDoctypeByNameTransition
      */
     readonly name: string
 
     /**
      * 
      * @type {TransitionIn}
-     * @memberof ContentApiPostV1ContentByDoctypeByNameTransition
+     * @memberof ContentApiPostContentByDoctypeByNameTransition
      */
     readonly transitionIn: TransitionIn
 }
 
 /**
- * Request parameters for postV1ContentGenerate operation in ContentApi.
+ * Request parameters for postContentGenerate operation in ContentApi.
  * @export
- * @interface ContentApiPostV1ContentGenerateRequest
+ * @interface ContentApiPostContentGenerateRequest
  */
-export interface ContentApiPostV1ContentGenerateRequest {
+export interface ContentApiPostContentGenerateRequest {
     /**
      * 
      * @type {GenerateInput}
-     * @memberof ContentApiPostV1ContentGenerate
+     * @memberof ContentApiPostContentGenerate
      */
     readonly generateInput: GenerateInput
 }
 
 /**
- * Request parameters for postV1ContentPublish operation in ContentApi.
+ * Request parameters for postContentPublish operation in ContentApi.
  * @export
- * @interface ContentApiPostV1ContentPublishRequest
+ * @interface ContentApiPostContentPublishRequest
  */
-export interface ContentApiPostV1ContentPublishRequest {
+export interface ContentApiPostContentPublishRequest {
     /**
      * 
      * @type {PublishInput}
-     * @memberof ContentApiPostV1ContentPublish
+     * @memberof ContentApiPostContentPublish
      */
     readonly publishInput: PublishInput
 }
@@ -534,13 +534,13 @@ export class ContentApi extends BaseAPI {
     /**
      * Aggregates the caller org\'s marketing content across every publishable content type into ONE queue board — the cross-type read the framework\'s per-DocType list cannot give. It never fails on a partial outage: a content type the org has not installed, or one whose search errors, is skipped and logged rather than failing the whole board.
      * @summary Aggregates the caller org\'s marketing content across every publishable content type into ONE queue board — the cross-type read the framework\'s per-DocType list cannot give.
-     * @param {ContentApiGetV1ContentBoardRequest} requestParameters Request parameters.
+     * @param {ContentApiGetContentBoardRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContentApi
      */
-    public getV1ContentBoard(requestParameters: ContentApiGetV1ContentBoardRequest = {}, options?: RawAxiosRequestConfig) {
-        return ContentApiFp(this.configuration).getV1ContentBoard(requestParameters.status, requestParameters.project, requestParameters.doctype, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getContentBoard(requestParameters: ContentApiGetContentBoardRequest = {}, options?: RawAxiosRequestConfig) {
+        return ContentApiFp(this.configuration).getContentBoard(requestParameters.status, requestParameters.project, requestParameters.doctype, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -550,8 +550,8 @@ export class ContentApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ContentApi
      */
-    public getV1ContentChannels(options?: RawAxiosRequestConfig) {
-        return ContentApiFp(this.configuration).getV1ContentChannels(options).then((request) => request(this.axios, this.basePath));
+    public getContentChannels(options?: RawAxiosRequestConfig) {
+        return ContentApiFp(this.configuration).getContentChannels(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -561,44 +561,44 @@ export class ContentApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ContentApi
      */
-    public getV1ContentLifecycle(options?: RawAxiosRequestConfig) {
-        return ContentApiFp(this.configuration).getV1ContentLifecycle(options).then((request) => request(this.axios, this.basePath));
+    public getContentLifecycle(options?: RawAxiosRequestConfig) {
+        return ContentApiFp(this.configuration).getContentLifecycle(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Moves one content item to a new lifecycle state and, on the move to published, fans it out to the item\'s channels. The edge must be legal for the item\'s current state — an illegal move is refused with 409 — and the status write re-validates it at the storage boundary. Distribution is best effort: its honest state is reported on the result and a distribution failure never rolls the status change back.
      * @summary Moves one content item to a new lifecycle state and, on the move to published, fans it out to the item\'s channels.
-     * @param {ContentApiPostV1ContentByDoctypeByNameTransitionRequest} requestParameters Request parameters.
+     * @param {ContentApiPostContentByDoctypeByNameTransitionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContentApi
      */
-    public postV1ContentByDoctypeByNameTransition(requestParameters: ContentApiPostV1ContentByDoctypeByNameTransitionRequest, options?: RawAxiosRequestConfig) {
-        return ContentApiFp(this.configuration).postV1ContentByDoctypeByNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.transitionIn, options).then((request) => request(this.axios, this.basePath));
+    public postContentByDoctypeByNameTransition(requestParameters: ContentApiPostContentByDoctypeByNameTransitionRequest, options?: RawAxiosRequestConfig) {
+        return ContentApiFp(this.configuration).postContentByDoctypeByNameTransition(requestParameters.doctype, requestParameters.name, requestParameters.transitionIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Draft a piece of marketing content and file it in the CMS as a draft.  Answers 201 with the created draft\'s identity — {doctype, name, status} — and the document itself lands in the CMS through the SAME validate and lifecycle-hook pipeline an ordinary create runs. This is a WRITE, not a preview: there is no dry-run, and every call that succeeds leaves a document behind.  `doctype` picks which of two generation planes runs, and they are the only two. Campaign and SocialPost are drafted as brand COPY on the platform AI plane (zen5 by default, overridable per request with `model` or per deployment); Asset is a studio image render the AI plane never sees. Everything else about the call is identical.  MONEY, metered in exactly one place per mode and never both. Copy rides the platform\'s own inference meter — the org\'s balance is authorised before the model call and debited at the exact token cost after — so content never re-bills it. A studio render is invisible to that meter, so content is the sole meter for it: the org is gated BEFORE the GPU compute and refused 402 when out of funds or over its spend cap, and the debit is recorded only once the render actually returns, because the billable event is the consumed compute and not the CMS row. `project` rides the BODY rather than a server-minted identity claim, so it attributes spend but a project-scoped cap stays soft on it — the org is the value that is enforced.  The org is the caller\'s own, resolved once from the validated principal and never read from the body; a caller without one is refused 403. Status is not the generator\'s to choose: a generated item is ALWAYS a draft, and the storage-boundary hook enforces that a second time.  It fails closed rather than inventing anything. An unknown content type is 404 and a deployment whose marketing module is not installed is 409 naming the install call. An AI plane or studio that is unconfigured or unreachable, a graph the studio rejects, and a render that does not return in time all degrade to 503 — never fabricated copy, never a fake render. A `source_media` that fails the SSRF and traversal validator is 400 raised before the billing gate and before the studio is contacted, so a hostile source never costs the caller anything.
      * @summary Draft a piece of marketing content and file it in the CMS as a draft.
-     * @param {ContentApiPostV1ContentGenerateRequest} requestParameters Request parameters.
+     * @param {ContentApiPostContentGenerateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContentApi
      */
-    public postV1ContentGenerate(requestParameters: ContentApiPostV1ContentGenerateRequest, options?: RawAxiosRequestConfig) {
-        return ContentApiFp(this.configuration).postV1ContentGenerate(requestParameters.generateInput, options).then((request) => request(this.axios, this.basePath));
+    public postContentGenerate(requestParameters: ContentApiPostContentGenerateRequest, options?: RawAxiosRequestConfig) {
+        return ContentApiFp(this.configuration).postContentGenerate(requestParameters.generateInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Publish distributes one CMS content item to the channels recorded on it and returns the honest per-channel outcome. The item names itself — its caption, media and channel list are read from the stored document, not from this request. It is idempotent per channel (a channel already posted for this item is skipped), and a publish that loses the per-item lease to a live publisher answers status \"in_progress\" having posted nothing.
      * @summary Publish distributes one CMS content item to the channels recorded on it and returns the honest per-channel outcome.
-     * @param {ContentApiPostV1ContentPublishRequest} requestParameters Request parameters.
+     * @param {ContentApiPostContentPublishRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContentApi
      */
-    public postV1ContentPublish(requestParameters: ContentApiPostV1ContentPublishRequest, options?: RawAxiosRequestConfig) {
-        return ContentApiFp(this.configuration).postV1ContentPublish(requestParameters.publishInput, options).then((request) => request(this.axios, this.basePath));
+    public postContentPublish(requestParameters: ContentApiPostContentPublishRequest, options?: RawAxiosRequestConfig) {
+        return ContentApiFp(this.configuration).postContentPublish(requestParameters.publishInput, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

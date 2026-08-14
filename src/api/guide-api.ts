@@ -55,7 +55,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1GuideCurriculum: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteGuideCurriculum: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/curriculum`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -85,7 +85,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Guide: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGuide: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -115,7 +115,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideActions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGuideActions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/actions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -145,7 +145,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideAnalytics: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGuideAnalytics: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/analytics`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -175,7 +175,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideBlueprint: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGuideBlueprint: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/blueprint`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -205,7 +205,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideBlueprintVersions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGuideBlueprintVersions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/blueprint/versions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -235,7 +235,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideCurriculum: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGuideCurriculum: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/curriculum`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -265,7 +265,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideProfile: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGuideProfile: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/profile`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -298,7 +298,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideStrategies: async (category?: string, stage?: string, workload?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGuideStrategies: async (category?: string, stage?: string, workload?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/strategies`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -340,7 +340,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideSuggest: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGuideSuggest: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/suggest`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -372,11 +372,11 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1GuideBlueprintByCollectionById: async (collection: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchGuideBlueprintByCollectionById: async (collection: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'collection' is not null or undefined
-            assertParamExists('patchV1GuideBlueprintByCollectionById', 'collection', collection)
+            assertParamExists('patchGuideBlueprintByCollectionById', 'collection', collection)
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('patchV1GuideBlueprintByCollectionById', 'id', id)
+            assertParamExists('patchGuideBlueprintByCollectionById', 'id', id)
             const localVarPath = `/v1/guide/blueprint/{collection}/{id}`
                 .replace(`{${"collection"}}`, encodeURIComponent(String(collection)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -409,9 +409,9 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideChat: async (chatRequest: ChatRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGuideChat: async (chatRequest: ChatRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'chatRequest' is not null or undefined
-            assertParamExists('postV1GuideChat', 'chatRequest', chatRequest)
+            assertParamExists('postGuideChat', 'chatRequest', chatRequest)
             const localVarPath = `/v1/guide/chat`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -445,9 +445,9 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsByIdDo: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGuideStepsByIdDo: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1GuideStepsByIdDo', 'id', id)
+            assertParamExists('postGuideStepsByIdDo', 'id', id)
             const localVarPath = `/v1/guide/steps/{id}/do`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -479,9 +479,9 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsByIdDone: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGuideStepsByIdDone: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1GuideStepsByIdDone', 'id', id)
+            assertParamExists('postGuideStepsByIdDone', 'id', id)
             const localVarPath = `/v1/guide/steps/{id}/done`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -513,9 +513,9 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsByIdReset: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGuideStepsByIdReset: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1GuideStepsByIdReset', 'id', id)
+            assertParamExists('postGuideStepsByIdReset', 'id', id)
             const localVarPath = `/v1/guide/steps/{id}/reset`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -547,9 +547,9 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsByIdSkip: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGuideStepsByIdSkip: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1GuideStepsByIdSkip', 'id', id)
+            assertParamExists('postGuideStepsByIdSkip', 'id', id)
             const localVarPath = `/v1/guide/steps/{id}/skip`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -581,9 +581,9 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsByIdStart: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postGuideStepsByIdStart: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1GuideStepsByIdStart', 'id', id)
+            assertParamExists('postGuideStepsByIdStart', 'id', id)
             const localVarPath = `/v1/guide/steps/{id}/start`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -614,7 +614,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1GuideBlueprint: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putGuideBlueprint: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/blueprint`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -644,7 +644,7 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1GuideCurriculum: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putGuideCurriculum: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/guide/curriculum`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -684,10 +684,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1GuideCurriculum(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CurriculumView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1GuideCurriculum(options);
+        async deleteGuideCurriculum(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CurriculumView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteGuideCurriculum(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.deleteV1GuideCurriculum']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.deleteGuideCurriculum']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -696,10 +696,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Guide(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Guide(options);
+        async getGuide(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuide(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.getV1Guide']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuide']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -708,10 +708,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GuideActions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GuideActions(options);
+        async getGuideActions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActionsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideActions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.getV1GuideActions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideActions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -720,10 +720,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GuideAnalytics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GuideAnalytics(options);
+        async getGuideAnalytics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideAnalytics(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.getV1GuideAnalytics']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideAnalytics']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -732,10 +732,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GuideBlueprint(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GuideBlueprint(options);
+        async getGuideBlueprint(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideBlueprint(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.getV1GuideBlueprint']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideBlueprint']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -744,10 +744,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GuideBlueprintVersions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintVersionsView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GuideBlueprintVersions(options);
+        async getGuideBlueprintVersions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlueprintVersionsView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideBlueprintVersions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.getV1GuideBlueprintVersions']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideBlueprintVersions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -756,10 +756,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GuideCurriculum(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CurriculumView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GuideCurriculum(options);
+        async getGuideCurriculum(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CurriculumView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideCurriculum(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.getV1GuideCurriculum']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideCurriculum']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -768,10 +768,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GuideProfile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProfileResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GuideProfile(options);
+        async getGuideProfile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProfileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideProfile(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.getV1GuideProfile']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideProfile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -783,10 +783,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GuideStrategies(category?: string, stage?: string, workload?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CorpusView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GuideStrategies(category, stage, workload, options);
+        async getGuideStrategies(category?: string, stage?: string, workload?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CorpusView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideStrategies(category, stage, workload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.getV1GuideStrategies']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideStrategies']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -795,10 +795,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1GuideSuggest(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuggestResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1GuideSuggest(options);
+        async getGuideSuggest(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SuggestResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGuideSuggest(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.getV1GuideSuggest']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.getGuideSuggest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -809,10 +809,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1GuideBlueprintByCollectionById(collection: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1GuideBlueprintByCollectionById(collection, id, options);
+        async patchGuideBlueprintByCollectionById(collection: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchGuideBlueprintByCollectionById(collection, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.patchV1GuideBlueprintByCollectionById']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.patchGuideBlueprintByCollectionById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -822,10 +822,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GuideChat(chatRequest: ChatRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GuideChat(chatRequest, options);
+        async postGuideChat(chatRequest: ChatRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideChat(chatRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.postV1GuideChat']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideChat']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -835,10 +835,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GuideStepsByIdDo(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GuideStepsByIdDo(id, options);
+        async postGuideStepsByIdDo(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideStepsByIdDo(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.postV1GuideStepsByIdDo']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideStepsByIdDo']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -848,10 +848,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GuideStepsByIdDone(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GuideStepsByIdDone(id, options);
+        async postGuideStepsByIdDone(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideStepsByIdDone(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.postV1GuideStepsByIdDone']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideStepsByIdDone']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -861,10 +861,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GuideStepsByIdReset(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GuideStepsByIdReset(id, options);
+        async postGuideStepsByIdReset(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideStepsByIdReset(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.postV1GuideStepsByIdReset']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideStepsByIdReset']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -874,10 +874,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GuideStepsByIdSkip(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GuideStepsByIdSkip(id, options);
+        async postGuideStepsByIdSkip(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideStepsByIdSkip(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.postV1GuideStepsByIdSkip']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideStepsByIdSkip']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -887,10 +887,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1GuideStepsByIdStart(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1GuideStepsByIdStart(id, options);
+        async postGuideStepsByIdStart(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideStepsByIdStart(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.postV1GuideStepsByIdStart']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideStepsByIdStart']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -899,10 +899,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1GuideBlueprint(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1GuideBlueprint(options);
+        async putGuideBlueprint(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putGuideBlueprint(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.putV1GuideBlueprint']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.putGuideBlueprint']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -911,10 +911,10 @@ export const GuideApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1GuideCurriculum(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1GuideCurriculum(options);
+        async putGuideCurriculum(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putGuideCurriculum(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['GuideApi.putV1GuideCurriculum']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['GuideApi.putGuideCurriculum']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -933,8 +933,8 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1GuideCurriculum(options?: RawAxiosRequestConfig): AxiosPromise<CurriculumView> {
-            return localVarFp.deleteV1GuideCurriculum(options).then((request) => request(axios, basePath));
+        deleteGuideCurriculum(options?: RawAxiosRequestConfig): AxiosPromise<CurriculumView> {
+            return localVarFp.deleteGuideCurriculum(options).then((request) => request(axios, basePath));
         },
         /**
          * Overview returns the caller org\'s launch journey: the active curriculum\'s version and title, every step with its state, whether it is available, what blocks it and whether the Business AI can run it, the done/total/percent progress with the next step to take, and the org\'s analytics funnel folded in. Auto-detect runs first, so a step the org has already completed elsewhere reads done without anyone marking it.
@@ -942,8 +942,8 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Guide(options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
-            return localVarFp.getV1Guide(options).then((request) => request(axios, basePath));
+        getGuide(options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
+            return localVarFp.getGuide(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s Business AI action ledger, most recent first: every \"do it for me\" tool call, the arguments it ran with, its result and whether it succeeded. It is the audit-visible record of what the agent did on the org\'s behalf, and the backing state for the \"acted\" auto-detect signal.
@@ -951,8 +951,8 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideActions(options?: RawAxiosRequestConfig): AxiosPromise<ActionsView> {
-            return localVarFp.getV1GuideActions(options).then((request) => request(axios, basePath));
+        getGuideActions(options?: RawAxiosRequestConfig): AxiosPromise<ActionsView> {
+            return localVarFp.getGuideActions(options).then((request) => request(axios, basePath));
         },
         /**
          * Analytics returns the caller org\'s funnel from the analytics lens plus the GTM recommendations derived from it. It is the Business AI\'s data-grounded read — what the funnel is doing, and the next-best action to move its weakest stage. An unreachable or silent warehouse answers available=false, never a fabricated number.
@@ -960,8 +960,8 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideAnalytics(options?: RawAxiosRequestConfig): AxiosPromise<AnalyticsView> {
-            return localVarFp.getV1GuideAnalytics(options).then((request) => request(axios, basePath));
+        getGuideAnalytics(options?: RawAxiosRequestConfig): AxiosPromise<AnalyticsView> {
+            return localVarFp.getGuideAnalytics(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the FULL authored brand blueprint — every principle, section, step, strategy and template WITH its enabled flag made explicit, including the disabled items the org-facing reads never see — plus the active version number, the brand key it is stored under and the item counts. It is the SuperAdmin authoring view of the platform blueprint, so it is refused 403 for anyone else, including a per-org admin: the brand blueprint is shared platform content, not a per-customer surface.
@@ -969,8 +969,8 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideBlueprint(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintView> {
-            return localVarFp.getV1GuideBlueprint(options).then((request) => request(axios, basePath));
+        getGuideBlueprint(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintView> {
+            return localVarFp.getGuideBlueprint(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the brand blueprint\'s version history — every stored version\'s number and edit time, newest first — which is the point-in-time-recovery and audit trail behind the authoring plane. Metadata only: the documents are not returned. SuperAdmin only, like the rest of this plane. The history is listable even when the current stored document no longer parses, so a schema-drifted row can still be diagnosed.
@@ -978,8 +978,8 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideBlueprintVersions(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintVersionsView> {
-            return localVarFp.getV1GuideBlueprintVersions(options).then((request) => request(axios, basePath));
+        getGuideBlueprintVersions(options?: RawAxiosRequestConfig): AxiosPromise<BlueprintVersionsView> {
+            return localVarFp.getGuideBlueprintVersions(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the journey the caller\'s org is actually running, and whether it comes from the org\'s OWN override (custom) or from the platform default — the brand blueprint, else the embedded fixture.
@@ -987,8 +987,8 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideCurriculum(options?: RawAxiosRequestConfig): AxiosPromise<CurriculumView> {
-            return localVarFp.getV1GuideCurriculum(options).then((request) => request(axios, basePath));
+        getGuideCurriculum(options?: RawAxiosRequestConfig): AxiosPromise<CurriculumView> {
+            return localVarFp.getGuideCurriculum(options).then((request) => request(axios, basePath));
         },
         /**
          * Profile returns the caller org\'s OBSERVED growth profile — the signal set, the classified growth stage, and the org\'s own key metrics. It is a pure READ, recomputed from the org\'s CURRENT state each request (real-time by pull): it reuses the reconcile path (snapshotFor runs the detectors) for launch progress and runs the growth probes (observe) for the signals — it never caches, never runs a billable effect, never targets another org. Org-scoped on the validated principal; fail-closed without one. It PRODUCES the profile and classifies the stage; it decides NO recommendation (that is a later surface).
@@ -996,18 +996,18 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideProfile(options?: RawAxiosRequestConfig): AxiosPromise<ProfileResponse> {
-            return localVarFp.getV1GuideProfile(options).then((request) => request(axios, basePath));
+        getGuideProfile(options?: RawAxiosRequestConfig): AxiosPromise<ProfileResponse> {
+            return localVarFp.getGuideProfile(options).then((request) => request(axios, basePath));
         },
         /**
          * Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it). Passing stage PREVIEWS the corpus at that stage instead of the observed one. The content is shared platform data — no org\'s records — and the read is never a billable effect.
          * @summary Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it).
-         * @param {GuideApiGetV1GuideStrategiesRequest} requestParameters Request parameters.
+         * @param {GuideApiGetGuideStrategiesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideStrategies(requestParameters: GuideApiGetV1GuideStrategiesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CorpusView> {
-            return localVarFp.getV1GuideStrategies(requestParameters.category, requestParameters.stage, requestParameters.workload, options).then((request) => request(axios, basePath));
+        getGuideStrategies(requestParameters: GuideApiGetGuideStrategiesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CorpusView> {
+            return localVarFp.getGuideStrategies(requestParameters.category, requestParameters.stage, requestParameters.workload, options).then((request) => request(axios, basePath));
         },
         /**
          * Suggest returns the caller org\'s next-best quests: the available, non-terminal steps of its journey ranked by how much downstream work each unblocks, each with the grounded reason it is a good next move and whether the Business AI can run it, plus the org\'s funnel and the GTM recommendations derived from it. A best-effort AI narrative over exactly those quests and numbers is included when an AI plane is wired. READ-ONLY: it advises and never runs a step — the only executing path is POST /v1/guide/steps/{id}/do.
@@ -1015,78 +1015,78 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1GuideSuggest(options?: RawAxiosRequestConfig): AxiosPromise<SuggestResponse> {
-            return localVarFp.getV1GuideSuggest(options).then((request) => request(axios, basePath));
+        getGuideSuggest(options?: RawAxiosRequestConfig): AxiosPromise<SuggestResponse> {
+            return localVarFp.getGuideSuggest(options).then((request) => request(axios, basePath));
         },
         /**
          * Edits a single item of the brand blueprint by id and saves it as a NEW VERSION, answering the whole blueprint after the edit. `collection` is one of `sections`, `steps`, `strategies` or `templates`; anything else is 400, and an id that collection does not hold is 404. This is also the retire lever: `{\"enabled\": false}` takes an item out of every org\'s journey without deleting it or its history.  SuperAdmin ONLY, like the rest of the authoring plane; a per-org admin is 403. The write is audited.  The patch is a SHALLOW merge over the item\'s own top-level keys — a key you send replaces that key whole, a key you omit is left alone — and `id` is dropped from the patch before it is applied, so an edit can never rekey an item. That is why the body has no declarable shape: its keys are the patched item\'s, not this route\'s.  Fail-closed on the WHOLE document, not just the item: the blueprint is re-validated after the merge, so a patch that would dangle a dependency, break the step DAG or empty the journey is 422 and nothing is saved. An empty patch is 400 and one over 16 MiB is 413.
          * @summary Edit — or retire — one item of the brand blueprint
-         * @param {GuideApiPatchV1GuideBlueprintByCollectionByIdRequest} requestParameters Request parameters.
+         * @param {GuideApiPatchGuideBlueprintByCollectionByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1GuideBlueprintByCollectionById(requestParameters: GuideApiPatchV1GuideBlueprintByCollectionByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1GuideBlueprintByCollectionById(requestParameters.collection, requestParameters.id, options).then((request) => request(axios, basePath));
+        patchGuideBlueprintByCollectionById(requestParameters: GuideApiPatchGuideBlueprintByCollectionByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchGuideBlueprintByCollectionById(requestParameters.collection, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one. READ-ONLY — it advises and never runs a step, so it cannot be talked into performing an action; the only executing path is POST /v1/guide/steps/{id}/do. One AI completion per call, billed to the caller\'s own payer.
          * @summary Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one.
-         * @param {GuideApiPostV1GuideChatRequest} requestParameters Request parameters.
+         * @param {GuideApiPostGuideChatRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideChat(requestParameters: GuideApiPostV1GuideChatRequest, options?: RawAxiosRequestConfig): AxiosPromise<ChatResponse> {
-            return localVarFp.postV1GuideChat(requestParameters.chatRequest, options).then((request) => request(axios, basePath));
+        postGuideChat(requestParameters: GuideApiPostGuideChatRequest, options?: RawAxiosRequestConfig): AxiosPromise<ChatResponse> {
+            return localVarFp.postGuideChat(requestParameters.chatRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Executes one step of the caller org\'s journey through that principal\'s OWN tool plane and answers the action log — `{step, events, state}` — so the caller sees every tool call the agent made and where the step ended up. This is the ONE executing path in guide: suggest and chat advise, this acts, and the work is charged to the calling principal\'s ledger.  Ask for it live and the same actions arrive as Server-Sent Events instead, on either of two triggers — `Accept: text/event-stream` or `?stream=1`. The stream opens with a comment, emits one frame per action as it happens, and closes with an `end` frame carrying `ok` and the final state. The streamed run is detached and bounded at 120 seconds, so it finishes on its own clock once the response has begun.  An agent that FAILS is not a failed request: the JSON answer still comes back 200 with `error` beside the events it did manage, and the stream still ends with `ok:false`. The refusals are the ones before the agent runs — 409 with `{error, step, blockedBy}` for a step whose dependencies are unfinished, 404 for an id the journey does not contain, 403 without a validated org.
          * @summary Have the Business AI actually do the step for you
-         * @param {GuideApiPostV1GuideStepsByIdDoRequest} requestParameters Request parameters.
+         * @param {GuideApiPostGuideStepsByIdDoRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsByIdDo(requestParameters: GuideApiPostV1GuideStepsByIdDoRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1GuideStepsByIdDo(requestParameters.id, options).then((request) => request(axios, basePath));
+        postGuideStepsByIdDo(requestParameters: GuideApiPostGuideStepsByIdDoRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postGuideStepsByIdDo(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Moves one step of the caller org\'s journey to done and answers the whole refreshed journey, which is what unblocks everything downstream of it.  Dependency-GATED like start: finishing a step whose prerequisites are themselves unfinished is 409 carrying `{error, step, blockedBy}` naming what is in the way, not a silent success. A step id the org\'s active journey does not contain is 404. Skipping is the ungated alternative — a founder declaring a step does not apply — and it lives at /skip.  Requires a validated org; 403 without one. The mark is recorded as `manual`, and /reset returns the step to todo.
          * @summary Mark a step of your org\'s journey finished
-         * @param {GuideApiPostV1GuideStepsByIdDoneRequest} requestParameters Request parameters.
+         * @param {GuideApiPostGuideStepsByIdDoneRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsByIdDone(requestParameters: GuideApiPostV1GuideStepsByIdDoneRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1GuideStepsByIdDone(requestParameters.id, options).then((request) => request(axios, basePath));
+        postGuideStepsByIdDone(requestParameters: GuideApiPostGuideStepsByIdDoneRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postGuideStepsByIdDone(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey. Reset is never dependency-gated. Auto-detect runs on the next read, so a step the org has in fact completed elsewhere goes straight back to done.
          * @summary Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey.
-         * @param {GuideApiPostV1GuideStepsByIdResetRequest} requestParameters Request parameters.
+         * @param {GuideApiPostGuideStepsByIdResetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsByIdReset(requestParameters: GuideApiPostV1GuideStepsByIdResetRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
-            return localVarFp.postV1GuideStepsByIdReset(requestParameters.id, options).then((request) => request(axios, basePath));
+        postGuideStepsByIdReset(requestParameters: GuideApiPostGuideStepsByIdResetRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
+            return localVarFp.postGuideStepsByIdReset(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Marks one step of the caller org\'s journey skipped and returns the refreshed journey. Skipping is never dependency-gated — the founder is declaring the step does not apply to them — so a step whose dependencies are unfinished can still be skipped, and a skipped step counts as terminal for everything downstream of it.
          * @summary Marks one step of the caller org\'s journey skipped and returns the refreshed journey.
-         * @param {GuideApiPostV1GuideStepsByIdSkipRequest} requestParameters Request parameters.
+         * @param {GuideApiPostGuideStepsByIdSkipRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsByIdSkip(requestParameters: GuideApiPostV1GuideStepsByIdSkipRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
-            return localVarFp.postV1GuideStepsByIdSkip(requestParameters.id, options).then((request) => request(axios, basePath));
+        postGuideStepsByIdSkip(requestParameters: GuideApiPostGuideStepsByIdSkipRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
+            return localVarFp.postGuideStepsByIdSkip(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Moves one step of the caller org\'s journey to in-progress and answers the whole refreshed journey, so a console needs no second read.  The transition is dependency-GATED, and that is why the answer set is wider than a success: a step whose prerequisites are unfinished is 409 carrying `{error, step, blockedBy}`, where `blockedBy` names the exact steps in the way — enough to render the blockage rather than merely report it. A step id the org\'s active journey does not contain is 404.  Requires a validated org; 403 without one, and the journey read and written is that org\'s alone. The mark is recorded as `manual`, and the journey is reconciled against the auto-detectors on every read, so a step the org has demonstrably completed elsewhere can still be moved to done underneath it.
          * @summary Mark a step of your org\'s journey started
-         * @param {GuideApiPostV1GuideStepsByIdStartRequest} requestParameters Request parameters.
+         * @param {GuideApiPostGuideStepsByIdStartRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1GuideStepsByIdStart(requestParameters: GuideApiPostV1GuideStepsByIdStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1GuideStepsByIdStart(requestParameters.id, options).then((request) => request(axios, basePath));
+        postGuideStepsByIdStart(requestParameters: GuideApiPostGuideStepsByIdStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postGuideStepsByIdStart(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces the deployment\'s brand blueprint — the shared journey, sections, strategies and templates every org starts from — as a NEW VERSION, and answers the stored document with its key and version number. The previous versions are kept, so /blueprint/versions is a real recovery trail.  SuperAdmin ONLY. A per-org admin is 403: this is platform content, not a per-customer surface — the per-customer surface is /v1/guide/curriculum. The write is audited.  The body is a blueprint document accepted as YAML **or** JSON, which is the caller-visible reason it takes a raw body. It must parse AND validate — unique ids throughout, an acyclic step graph with no dangling dependencies, every step\'s section and every strategy\'s principle resolving to a real one — or it is 422 and never becomes active, leaving the version already serving authoritative. An empty body is 400 and one over 16 MiB is 413.  Edits are live: the next resolve reads the newest version. A stored document that is itself corrupt or schema-drifted does not block this write — the target is resolved without parsing what is there — so a bad version can always be published over.
@@ -1094,8 +1094,8 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1GuideBlueprint(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1GuideBlueprint(options).then((request) => request(axios, basePath));
+        putGuideBlueprint(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putGuideBlueprint(options).then((request) => request(axios, basePath));
         },
         /**
          * Sets the caller org\'s OWN curriculum — the per-customer override — and answers the journey now in force with `custom: true`. The body is a curriculum document, and it is accepted as YAML **or** JSON: that is the caller-visible reason this takes a raw body rather than a declared shape. Whatever the syntax, the CANONICAL parsed form is what is stored, so the document the engine runs never depends on how it was written.  Fail-closed: a body that does not parse, or parses but is not a valid journey (unique step ids, no dangling or cyclic dependencies), is 422 and NEVER becomes active — the org keeps the journey it had. Requires a validated org; 403 without one. An empty body is 400 and one over 256 KiB is 413.  This is tier one only. It overrides nothing but this org\'s own journey; the shared brand blueprint is a different surface with a different gate. DELETE the same path to drop the override and fall back to it.
@@ -1103,141 +1103,141 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1GuideCurriculum(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1GuideCurriculum(options).then((request) => request(axios, basePath));
+        putGuideCurriculum(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putGuideCurriculum(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1GuideStrategies operation in GuideApi.
+ * Request parameters for getGuideStrategies operation in GuideApi.
  * @export
- * @interface GuideApiGetV1GuideStrategiesRequest
+ * @interface GuideApiGetGuideStrategiesRequest
  */
-export interface GuideApiGetV1GuideStrategiesRequest {
+export interface GuideApiGetGuideStrategiesRequest {
     /**
      * Category filters to tactics in exactly this category.
      * @type {string}
-     * @memberof GuideApiGetV1GuideStrategies
+     * @memberof GuideApiGetGuideStrategies
      */
     readonly category?: string
 
     /**
      * Stage previews the corpus at a chosen growth stage (research|formed|launched|activated|scaling), overriding the org\&#39;s observed one. An unknown value is ignored and the observed stage stands.
      * @type {string}
-     * @memberof GuideApiGetV1GuideStrategies
+     * @memberof GuideApiGetGuideStrategies
      */
     readonly stage?: string
 
     /**
      * Workload filters to tactics with exactly this workload.
      * @type {string}
-     * @memberof GuideApiGetV1GuideStrategies
+     * @memberof GuideApiGetGuideStrategies
      */
     readonly workload?: string
 }
 
 /**
- * Request parameters for patchV1GuideBlueprintByCollectionById operation in GuideApi.
+ * Request parameters for patchGuideBlueprintByCollectionById operation in GuideApi.
  * @export
- * @interface GuideApiPatchV1GuideBlueprintByCollectionByIdRequest
+ * @interface GuideApiPatchGuideBlueprintByCollectionByIdRequest
  */
-export interface GuideApiPatchV1GuideBlueprintByCollectionByIdRequest {
+export interface GuideApiPatchGuideBlueprintByCollectionByIdRequest {
     /**
      * 
      * @type {string}
-     * @memberof GuideApiPatchV1GuideBlueprintByCollectionById
+     * @memberof GuideApiPatchGuideBlueprintByCollectionById
      */
     readonly collection: string
 
     /**
      * 
      * @type {string}
-     * @memberof GuideApiPatchV1GuideBlueprintByCollectionById
+     * @memberof GuideApiPatchGuideBlueprintByCollectionById
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1GuideChat operation in GuideApi.
+ * Request parameters for postGuideChat operation in GuideApi.
  * @export
- * @interface GuideApiPostV1GuideChatRequest
+ * @interface GuideApiPostGuideChatRequest
  */
-export interface GuideApiPostV1GuideChatRequest {
+export interface GuideApiPostGuideChatRequest {
     /**
      * 
      * @type {ChatRequest}
-     * @memberof GuideApiPostV1GuideChat
+     * @memberof GuideApiPostGuideChat
      */
     readonly chatRequest: ChatRequest
 }
 
 /**
- * Request parameters for postV1GuideStepsByIdDo operation in GuideApi.
+ * Request parameters for postGuideStepsByIdDo operation in GuideApi.
  * @export
- * @interface GuideApiPostV1GuideStepsByIdDoRequest
+ * @interface GuideApiPostGuideStepsByIdDoRequest
  */
-export interface GuideApiPostV1GuideStepsByIdDoRequest {
+export interface GuideApiPostGuideStepsByIdDoRequest {
     /**
      * 
      * @type {string}
-     * @memberof GuideApiPostV1GuideStepsByIdDo
+     * @memberof GuideApiPostGuideStepsByIdDo
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1GuideStepsByIdDone operation in GuideApi.
+ * Request parameters for postGuideStepsByIdDone operation in GuideApi.
  * @export
- * @interface GuideApiPostV1GuideStepsByIdDoneRequest
+ * @interface GuideApiPostGuideStepsByIdDoneRequest
  */
-export interface GuideApiPostV1GuideStepsByIdDoneRequest {
+export interface GuideApiPostGuideStepsByIdDoneRequest {
     /**
      * 
      * @type {string}
-     * @memberof GuideApiPostV1GuideStepsByIdDone
+     * @memberof GuideApiPostGuideStepsByIdDone
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1GuideStepsByIdReset operation in GuideApi.
+ * Request parameters for postGuideStepsByIdReset operation in GuideApi.
  * @export
- * @interface GuideApiPostV1GuideStepsByIdResetRequest
+ * @interface GuideApiPostGuideStepsByIdResetRequest
  */
-export interface GuideApiPostV1GuideStepsByIdResetRequest {
+export interface GuideApiPostGuideStepsByIdResetRequest {
     /**
      * ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
      * @type {string}
-     * @memberof GuideApiPostV1GuideStepsByIdReset
+     * @memberof GuideApiPostGuideStepsByIdReset
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1GuideStepsByIdSkip operation in GuideApi.
+ * Request parameters for postGuideStepsByIdSkip operation in GuideApi.
  * @export
- * @interface GuideApiPostV1GuideStepsByIdSkipRequest
+ * @interface GuideApiPostGuideStepsByIdSkipRequest
  */
-export interface GuideApiPostV1GuideStepsByIdSkipRequest {
+export interface GuideApiPostGuideStepsByIdSkipRequest {
     /**
      * ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
      * @type {string}
-     * @memberof GuideApiPostV1GuideStepsByIdSkip
+     * @memberof GuideApiPostGuideStepsByIdSkip
      */
     readonly id: string
 }
 
 /**
- * Request parameters for postV1GuideStepsByIdStart operation in GuideApi.
+ * Request parameters for postGuideStepsByIdStart operation in GuideApi.
  * @export
- * @interface GuideApiPostV1GuideStepsByIdStartRequest
+ * @interface GuideApiPostGuideStepsByIdStartRequest
  */
-export interface GuideApiPostV1GuideStepsByIdStartRequest {
+export interface GuideApiPostGuideStepsByIdStartRequest {
     /**
      * 
      * @type {string}
-     * @memberof GuideApiPostV1GuideStepsByIdStart
+     * @memberof GuideApiPostGuideStepsByIdStart
      */
     readonly id: string
 }
@@ -1256,8 +1256,8 @@ export class GuideApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public deleteV1GuideCurriculum(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).deleteV1GuideCurriculum(options).then((request) => request(this.axios, this.basePath));
+    public deleteGuideCurriculum(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).deleteGuideCurriculum(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1267,8 +1267,8 @@ export class GuideApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public getV1Guide(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).getV1Guide(options).then((request) => request(this.axios, this.basePath));
+    public getGuide(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuide(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1278,8 +1278,8 @@ export class GuideApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public getV1GuideActions(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).getV1GuideActions(options).then((request) => request(this.axios, this.basePath));
+    public getGuideActions(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuideActions(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1289,8 +1289,8 @@ export class GuideApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public getV1GuideAnalytics(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).getV1GuideAnalytics(options).then((request) => request(this.axios, this.basePath));
+    public getGuideAnalytics(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuideAnalytics(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1300,8 +1300,8 @@ export class GuideApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public getV1GuideBlueprint(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).getV1GuideBlueprint(options).then((request) => request(this.axios, this.basePath));
+    public getGuideBlueprint(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuideBlueprint(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1311,8 +1311,8 @@ export class GuideApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public getV1GuideBlueprintVersions(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).getV1GuideBlueprintVersions(options).then((request) => request(this.axios, this.basePath));
+    public getGuideBlueprintVersions(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuideBlueprintVersions(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1322,8 +1322,8 @@ export class GuideApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public getV1GuideCurriculum(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).getV1GuideCurriculum(options).then((request) => request(this.axios, this.basePath));
+    public getGuideCurriculum(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuideCurriculum(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1333,20 +1333,20 @@ export class GuideApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public getV1GuideProfile(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).getV1GuideProfile(options).then((request) => request(this.axios, this.basePath));
+    public getGuideProfile(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuideProfile(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it). Passing stage PREVIEWS the corpus at that stage instead of the observed one. The content is shared platform data — no org\'s records — and the read is never a billable effect.
      * @summary Strategies returns the ENABLED tactics corpus for the caller\'s org: the tactics library narrowed by the explicit category/workload filters AND by the org\'s OBSERVED growth stage and capability signals (a tactic\'s tags are preconditions, so it surfaces only once the org can act on it).
-     * @param {GuideApiGetV1GuideStrategiesRequest} requestParameters Request parameters.
+     * @param {GuideApiGetGuideStrategiesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public getV1GuideStrategies(requestParameters: GuideApiGetV1GuideStrategiesRequest = {}, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).getV1GuideStrategies(requestParameters.category, requestParameters.stage, requestParameters.workload, options).then((request) => request(this.axios, this.basePath));
+    public getGuideStrategies(requestParameters: GuideApiGetGuideStrategiesRequest = {}, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuideStrategies(requestParameters.category, requestParameters.stage, requestParameters.workload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1356,92 +1356,92 @@ export class GuideApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public getV1GuideSuggest(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).getV1GuideSuggest(options).then((request) => request(this.axios, this.basePath));
+    public getGuideSuggest(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).getGuideSuggest(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Edits a single item of the brand blueprint by id and saves it as a NEW VERSION, answering the whole blueprint after the edit. `collection` is one of `sections`, `steps`, `strategies` or `templates`; anything else is 400, and an id that collection does not hold is 404. This is also the retire lever: `{\"enabled\": false}` takes an item out of every org\'s journey without deleting it or its history.  SuperAdmin ONLY, like the rest of the authoring plane; a per-org admin is 403. The write is audited.  The patch is a SHALLOW merge over the item\'s own top-level keys — a key you send replaces that key whole, a key you omit is left alone — and `id` is dropped from the patch before it is applied, so an edit can never rekey an item. That is why the body has no declarable shape: its keys are the patched item\'s, not this route\'s.  Fail-closed on the WHOLE document, not just the item: the blueprint is re-validated after the merge, so a patch that would dangle a dependency, break the step DAG or empty the journey is 422 and nothing is saved. An empty patch is 400 and one over 16 MiB is 413.
      * @summary Edit — or retire — one item of the brand blueprint
-     * @param {GuideApiPatchV1GuideBlueprintByCollectionByIdRequest} requestParameters Request parameters.
+     * @param {GuideApiPatchGuideBlueprintByCollectionByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public patchV1GuideBlueprintByCollectionById(requestParameters: GuideApiPatchV1GuideBlueprintByCollectionByIdRequest, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).patchV1GuideBlueprintByCollectionById(requestParameters.collection, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public patchGuideBlueprintByCollectionById(requestParameters: GuideApiPatchGuideBlueprintByCollectionByIdRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).patchGuideBlueprintByCollectionById(requestParameters.collection, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one. READ-ONLY — it advises and never runs a step, so it cannot be talked into performing an action; the only executing path is POST /v1/guide/steps/{id}/do. One AI completion per call, billed to the caller\'s own payer.
      * @summary Chat answers a founder\'s question about their launch journey as the Business AI coach: it grounds the reply in the org\'s REAL progress, its ranked available quests and its analytics funnel, and returns those candidate quests alongside so the caller can act on one.
-     * @param {GuideApiPostV1GuideChatRequest} requestParameters Request parameters.
+     * @param {GuideApiPostGuideChatRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public postV1GuideChat(requestParameters: GuideApiPostV1GuideChatRequest, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).postV1GuideChat(requestParameters.chatRequest, options).then((request) => request(this.axios, this.basePath));
+    public postGuideChat(requestParameters: GuideApiPostGuideChatRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).postGuideChat(requestParameters.chatRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Executes one step of the caller org\'s journey through that principal\'s OWN tool plane and answers the action log — `{step, events, state}` — so the caller sees every tool call the agent made and where the step ended up. This is the ONE executing path in guide: suggest and chat advise, this acts, and the work is charged to the calling principal\'s ledger.  Ask for it live and the same actions arrive as Server-Sent Events instead, on either of two triggers — `Accept: text/event-stream` or `?stream=1`. The stream opens with a comment, emits one frame per action as it happens, and closes with an `end` frame carrying `ok` and the final state. The streamed run is detached and bounded at 120 seconds, so it finishes on its own clock once the response has begun.  An agent that FAILS is not a failed request: the JSON answer still comes back 200 with `error` beside the events it did manage, and the stream still ends with `ok:false`. The refusals are the ones before the agent runs — 409 with `{error, step, blockedBy}` for a step whose dependencies are unfinished, 404 for an id the journey does not contain, 403 without a validated org.
      * @summary Have the Business AI actually do the step for you
-     * @param {GuideApiPostV1GuideStepsByIdDoRequest} requestParameters Request parameters.
+     * @param {GuideApiPostGuideStepsByIdDoRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public postV1GuideStepsByIdDo(requestParameters: GuideApiPostV1GuideStepsByIdDoRequest, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).postV1GuideStepsByIdDo(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postGuideStepsByIdDo(requestParameters: GuideApiPostGuideStepsByIdDoRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).postGuideStepsByIdDo(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Moves one step of the caller org\'s journey to done and answers the whole refreshed journey, which is what unblocks everything downstream of it.  Dependency-GATED like start: finishing a step whose prerequisites are themselves unfinished is 409 carrying `{error, step, blockedBy}` naming what is in the way, not a silent success. A step id the org\'s active journey does not contain is 404. Skipping is the ungated alternative — a founder declaring a step does not apply — and it lives at /skip.  Requires a validated org; 403 without one. The mark is recorded as `manual`, and /reset returns the step to todo.
      * @summary Mark a step of your org\'s journey finished
-     * @param {GuideApiPostV1GuideStepsByIdDoneRequest} requestParameters Request parameters.
+     * @param {GuideApiPostGuideStepsByIdDoneRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public postV1GuideStepsByIdDone(requestParameters: GuideApiPostV1GuideStepsByIdDoneRequest, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).postV1GuideStepsByIdDone(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postGuideStepsByIdDone(requestParameters: GuideApiPostGuideStepsByIdDoneRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).postGuideStepsByIdDone(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey. Reset is never dependency-gated. Auto-detect runs on the next read, so a step the org has in fact completed elsewhere goes straight back to done.
      * @summary Returns one step of the caller org\'s journey to todo — clearing a manual mark or a skip — and returns the refreshed journey.
-     * @param {GuideApiPostV1GuideStepsByIdResetRequest} requestParameters Request parameters.
+     * @param {GuideApiPostGuideStepsByIdResetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public postV1GuideStepsByIdReset(requestParameters: GuideApiPostV1GuideStepsByIdResetRequest, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).postV1GuideStepsByIdReset(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postGuideStepsByIdReset(requestParameters: GuideApiPostGuideStepsByIdResetRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).postGuideStepsByIdReset(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Marks one step of the caller org\'s journey skipped and returns the refreshed journey. Skipping is never dependency-gated — the founder is declaring the step does not apply to them — so a step whose dependencies are unfinished can still be skipped, and a skipped step counts as terminal for everything downstream of it.
      * @summary Marks one step of the caller org\'s journey skipped and returns the refreshed journey.
-     * @param {GuideApiPostV1GuideStepsByIdSkipRequest} requestParameters Request parameters.
+     * @param {GuideApiPostGuideStepsByIdSkipRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public postV1GuideStepsByIdSkip(requestParameters: GuideApiPostV1GuideStepsByIdSkipRequest, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).postV1GuideStepsByIdSkip(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postGuideStepsByIdSkip(requestParameters: GuideApiPostGuideStepsByIdSkipRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).postGuideStepsByIdSkip(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Moves one step of the caller org\'s journey to in-progress and answers the whole refreshed journey, so a console needs no second read.  The transition is dependency-GATED, and that is why the answer set is wider than a success: a step whose prerequisites are unfinished is 409 carrying `{error, step, blockedBy}`, where `blockedBy` names the exact steps in the way — enough to render the blockage rather than merely report it. A step id the org\'s active journey does not contain is 404.  Requires a validated org; 403 without one, and the journey read and written is that org\'s alone. The mark is recorded as `manual`, and the journey is reconciled against the auto-detectors on every read, so a step the org has demonstrably completed elsewhere can still be moved to done underneath it.
      * @summary Mark a step of your org\'s journey started
-     * @param {GuideApiPostV1GuideStepsByIdStartRequest} requestParameters Request parameters.
+     * @param {GuideApiPostGuideStepsByIdStartRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public postV1GuideStepsByIdStart(requestParameters: GuideApiPostV1GuideStepsByIdStartRequest, options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).postV1GuideStepsByIdStart(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postGuideStepsByIdStart(requestParameters: GuideApiPostGuideStepsByIdStartRequest, options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).postGuideStepsByIdStart(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1451,8 +1451,8 @@ export class GuideApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public putV1GuideBlueprint(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).putV1GuideBlueprint(options).then((request) => request(this.axios, this.basePath));
+    public putGuideBlueprint(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).putGuideBlueprint(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1462,8 +1462,8 @@ export class GuideApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof GuideApi
      */
-    public putV1GuideCurriculum(options?: RawAxiosRequestConfig) {
-        return GuideApiFp(this.configuration).putV1GuideCurriculum(options).then((request) => request(this.axios, this.basePath));
+    public putGuideCurriculum(options?: RawAxiosRequestConfig) {
+        return GuideApiFp(this.configuration).putGuideCurriculum(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

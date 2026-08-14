@@ -35,7 +35,7 @@ export const TagsApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Tags: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTags: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/tags`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -75,10 +75,10 @@ export const TagsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Tags(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagConfig>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Tags(options);
+        async getTags(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TagConfig>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTags(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TagsApi.getV1Tags']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['TagsApi.getTags']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -97,8 +97,8 @@ export const TagsApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Tags(options?: RawAxiosRequestConfig): AxiosPromise<TagConfig> {
-            return localVarFp.getV1Tags(options).then((request) => request(axios, basePath));
+        getTags(options?: RawAxiosRequestConfig): AxiosPromise<TagConfig> {
+            return localVarFp.getTags(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -117,8 +117,8 @@ export class TagsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TagsApi
      */
-    public getV1Tags(options?: RawAxiosRequestConfig) {
-        return TagsApiFp(this.configuration).getV1Tags(options).then((request) => request(this.axios, this.basePath));
+    public getTags(options?: RawAxiosRequestConfig) {
+        return TagsApiFp(this.configuration).getTags(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

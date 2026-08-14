@@ -36,9 +36,9 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1BotByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteBotByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('deleteV1BotByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('deleteBotByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/bot/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -70,9 +70,9 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BotByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBotByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getV1BotByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('getBotByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/bot/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -103,7 +103,7 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BotConnect: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBotConnect: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/bot/connect`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -133,7 +133,7 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BotNodes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBotNodes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/bot/nodes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -164,9 +164,9 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1BotByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchBotByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('patchV1BotByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('patchBotByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/bot/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -198,9 +198,9 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postBotByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('postV1BotByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('postBotByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/bot/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -232,9 +232,9 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotNodesByIdInvoke: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postBotNodesByIdInvoke: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('postV1BotNodesByIdInvoke', 'id', id)
+            assertParamExists('postBotNodesByIdInvoke', 'id', id)
             const localVarPath = `/v1/bot/nodes/{id}/invoke`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -265,7 +265,7 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotPeerInvoke: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postBotPeerInvoke: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/bot/peer/invoke`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -296,9 +296,9 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1BotByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putBotByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('putV1BotByWildcard1', 'wildcard1', wildcard1)
+            assertParamExists('putBotByWildcard1', 'wildcard1', wildcard1)
             const localVarPath = `/v1/bot/{wildcard1}`
                 .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -340,10 +340,10 @@ export const BotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1BotByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1BotByWildcard1(wildcard1, options);
+        async deleteBotByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteBotByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotApi.deleteV1BotByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotApi.deleteBotByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -353,10 +353,10 @@ export const BotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1BotByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BotByWildcard1(wildcard1, options);
+        async getBotByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBotByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotApi.getV1BotByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotApi.getBotByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -365,10 +365,10 @@ export const BotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1BotConnect(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BotConnect(options);
+        async getBotConnect(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBotConnect(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotApi.getV1BotConnect']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotApi.getBotConnect']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -377,10 +377,10 @@ export const BotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1BotNodes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NodesView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1BotNodes(options);
+        async getBotNodes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NodesView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBotNodes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotApi.getV1BotNodes']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotApi.getBotNodes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -390,10 +390,10 @@ export const BotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchV1BotByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchV1BotByWildcard1(wildcard1, options);
+        async patchBotByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchBotByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotApi.patchV1BotByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotApi.patchBotByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -403,10 +403,10 @@ export const BotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1BotByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BotByWildcard1(wildcard1, options);
+        async postBotByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBotByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotApi.postV1BotByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotApi.postBotByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -416,10 +416,10 @@ export const BotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1BotNodesByIdInvoke(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BotNodesByIdInvoke(id, options);
+        async postBotNodesByIdInvoke(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBotNodesByIdInvoke(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotApi.postV1BotNodesByIdInvoke']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotApi.postBotNodesByIdInvoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -428,10 +428,10 @@ export const BotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1BotPeerInvoke(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1BotPeerInvoke(options);
+        async postBotPeerInvoke(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBotPeerInvoke(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotApi.postV1BotPeerInvoke']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotApi.postBotPeerInvoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -441,10 +441,10 @@ export const BotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1BotByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1BotByWildcard1(wildcard1, options);
+        async putBotByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putBotByWildcard1(wildcard1, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BotApi.putV1BotByWildcard1']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BotApi.putBotByWildcard1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -460,22 +460,22 @@ export const BotApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Forwards a request to the bot runtime — the service that executes channels and skills — and hands back its answer unchanged. `/v1/bot` is stripped before forwarding, because the runtime serves bare paths: /v1/bot/health reaches it as /health.  This is the runtime\'s OPS face, not a control plane. A liveness probe is not a tenant-scoped resource, so it stays a relay rather than being reimplemented in Go; everything a tenant can ACT on is native and typed at /v1/bots.  A validated principal is required and the request is refused with 403 before anything is forwarded — the runtime trusts the identity headers it receives as gateway-minted, so an unauthenticated call must never be allowed to hand it a victim tenant. The caller\'s Authorization, org, user, email, project and environment headers ride along; nothing is minted here. The runtime\'s own status code and Content-Type come back verbatim (frequently not JSON), the body is bounded at 16 MiB, and a runtime that cannot be reached is 502.  One registration owns this address for every method, so which methods actually answer is the runtime\'s decision, not this edge\'s.
          * @summary Relay one of the bot runtime\'s own operational paths
-         * @param {BotApiDeleteV1BotByWildcard1Request} requestParameters Request parameters.
+         * @param {BotApiDeleteBotByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1BotByWildcard1(requestParameters: BotApiDeleteV1BotByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1BotByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        deleteBotByWildcard1(requestParameters: BotApiDeleteBotByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteBotByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Forwards a request to the bot runtime — the service that executes channels and skills — and hands back its answer unchanged. `/v1/bot` is stripped before forwarding, because the runtime serves bare paths: /v1/bot/health reaches it as /health.  This is the runtime\'s OPS face, not a control plane. A liveness probe is not a tenant-scoped resource, so it stays a relay rather than being reimplemented in Go; everything a tenant can ACT on is native and typed at /v1/bots.  A validated principal is required and the request is refused with 403 before anything is forwarded — the runtime trusts the identity headers it receives as gateway-minted, so an unauthenticated call must never be allowed to hand it a victim tenant. The caller\'s Authorization, org, user, email, project and environment headers ride along; nothing is minted here. The runtime\'s own status code and Content-Type come back verbatim (frequently not JSON), the body is bounded at 16 MiB, and a runtime that cannot be reached is 502.  One registration owns this address for every method, so which methods actually answer is the runtime\'s decision, not this edge\'s.
          * @summary Relay one of the bot runtime\'s own operational paths
-         * @param {BotApiGetV1BotByWildcard1Request} requestParameters Request parameters.
+         * @param {BotApiGetBotByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BotByWildcard1(requestParameters: BotApiGetV1BotByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1BotByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        getBotByWildcard1(requestParameters: BotApiGetBotByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getBotByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Upgrades to a WebSocket and keeps it for the life of the node. cloud writes a challenge frame immediately; the node answers with a connect frame naming the protocol range it speaks, the role `node`, its own node id, and the display name, platform, agent version, capabilities and commands it reports for itself. On acceptance the session is registered, the node appears in this org\'s node list, and invocations begin arriving as frames on the same connection.  The upgrade needs a validated principal and answers 403 without one. The org is the gateway\'s verdict — injected after IAM validation and after any client copy is stripped — and is never read from the request itself, because a caller that could name an org could attach a machine into someone else\'s tenant.  A request carrying an Origin header is refused outright. A node is a daemon and a browser has no business here; since no same-origin policy applies to WebSockets, a page could otherwise ride a signed-in viewer\'s session into registering a node. Removing the whole category is the gate, not an allowlist of brand domains. The handshake deadline is one fixed instant rather than a per-read timer, so a peer cannot hold a pre-handshake socket open indefinitely by sending frames this endpoint ignores.  Two things to get right. Everything the node declares about itself — capabilities, commands, platform — is a SELF-REPORT: it is useful to show and never load-bearing, because what the node may actually be asked to run is decided at this socket against the deployment\'s allowlist. And a node can only ever answer calls placed on its own connection: correlation ids are minted under the connection id and checked against it, so naming another node\'s in-flight call resolves nothing.
@@ -483,8 +483,8 @@ export const BotApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BotConnect(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getV1BotConnect(options).then((request) => request(axios, basePath));
+        getBotConnect(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getBotConnect(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s currently connected bot nodes: what each one calls itself, the platform it runs on, its agent version, when its socket was established, and the capabilities and commands it reported.  Only this org\'s nodes are listed — the org is half of every key in the table it reads — and only nodes attached to THIS replica, because the list is of live sockets rather than of registrations. The capability and command lists are the node\'s own self-report: useful to show, never load-bearing, because what a node may actually be asked to do is decided at the socket against the deployment\'s allowlist.
@@ -492,38 +492,38 @@ export const BotApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1BotNodes(options?: RawAxiosRequestConfig): AxiosPromise<NodesView> {
-            return localVarFp.getV1BotNodes(options).then((request) => request(axios, basePath));
+        getBotNodes(options?: RawAxiosRequestConfig): AxiosPromise<NodesView> {
+            return localVarFp.getBotNodes(options).then((request) => request(axios, basePath));
         },
         /**
          * Forwards a request to the bot runtime — the service that executes channels and skills — and hands back its answer unchanged. `/v1/bot` is stripped before forwarding, because the runtime serves bare paths: /v1/bot/health reaches it as /health.  This is the runtime\'s OPS face, not a control plane. A liveness probe is not a tenant-scoped resource, so it stays a relay rather than being reimplemented in Go; everything a tenant can ACT on is native and typed at /v1/bots.  A validated principal is required and the request is refused with 403 before anything is forwarded — the runtime trusts the identity headers it receives as gateway-minted, so an unauthenticated call must never be allowed to hand it a victim tenant. The caller\'s Authorization, org, user, email, project and environment headers ride along; nothing is minted here. The runtime\'s own status code and Content-Type come back verbatim (frequently not JSON), the body is bounded at 16 MiB, and a runtime that cannot be reached is 502.  One registration owns this address for every method, so which methods actually answer is the runtime\'s decision, not this edge\'s.
          * @summary Relay one of the bot runtime\'s own operational paths
-         * @param {BotApiPatchV1BotByWildcard1Request} requestParameters Request parameters.
+         * @param {BotApiPatchBotByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchV1BotByWildcard1(requestParameters: BotApiPatchV1BotByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchV1BotByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        patchBotByWildcard1(requestParameters: BotApiPatchBotByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchBotByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Forwards a request to the bot runtime — the service that executes channels and skills — and hands back its answer unchanged. `/v1/bot` is stripped before forwarding, because the runtime serves bare paths: /v1/bot/health reaches it as /health.  This is the runtime\'s OPS face, not a control plane. A liveness probe is not a tenant-scoped resource, so it stays a relay rather than being reimplemented in Go; everything a tenant can ACT on is native and typed at /v1/bots.  A validated principal is required and the request is refused with 403 before anything is forwarded — the runtime trusts the identity headers it receives as gateway-minted, so an unauthenticated call must never be allowed to hand it a victim tenant. The caller\'s Authorization, org, user, email, project and environment headers ride along; nothing is minted here. The runtime\'s own status code and Content-Type come back verbatim (frequently not JSON), the body is bounded at 16 MiB, and a runtime that cannot be reached is 502.  One registration owns this address for every method, so which methods actually answer is the runtime\'s decision, not this edge\'s.
          * @summary Relay one of the bot runtime\'s own operational paths
-         * @param {BotApiPostV1BotByWildcard1Request} requestParameters Request parameters.
+         * @param {BotApiPostBotByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotByWildcard1(requestParameters: BotApiPostV1BotByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1BotByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        postBotByWildcard1(requestParameters: BotApiPostBotByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postBotByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Sends {command, params, timeoutMs, idempotencyKey} to the named node and answers with what the node returned: {ok, payload, code, message}, where payload is the node\'s own JSON passed through — cloud routes the call, it does not interpret the result. A reply that is not valid JSON becomes an empty payload rather than corrupting the response, which ok and code already qualify.  Neither the node nor the org is a body field: the node is the path and the org is the caller\'s validated identity, and a field for either would be a field somebody could set to a stranger\'s. A validated principal is required (403 without one), and a node id that belongs to another org answers exactly like one that does not exist — not found — so this cannot be used to probe another tenant\'s fleet.  Authorization happened ONCE, at the socket, on the replica holding that node — the only place that knows what the node declared it can do. A node attached to a different replica is reached through the peer forward and is authorized by the same code with the same session in hand, so a local node and a forwarded one cannot get different answers. The timeout defaults to 30s and is clamped to 5 minutes, so one request can never pin a node\'s socket open indefinitely.  system.run is rewritten before dispatch: its approval control fields are re-derived from the approval record and whatever the caller claimed is discarded, because a caller that could pre-approve itself is the whole thing approvals exist to prevent. No approval registry is wired today, so an invocation CLAIMING an approval is refused while an ordinary one is unaffected.  The one thing to get right: a refusal is a 403 carrying a DOMAIN body — {error, code, reason} — not the flat error envelope the rest of cloud returns, and the same body comes back whether the pre-flight sanitize refused it or the node\'s own gate did. Switch on `code`. The remaining failures are ordinary statuses: the node not answering in time is 504, and a node that disconnected or could not be reached is 502.
          * @summary Ask one of your connected machines to run a command, and get its answer back.
-         * @param {BotApiPostV1BotNodesByIdInvokeRequest} requestParameters Request parameters.
+         * @param {BotApiPostBotNodesByIdInvokeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotNodesByIdInvoke(requestParameters: BotApiPostV1BotNodesByIdInvokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1BotNodesByIdInvoke(requestParameters.id, options).then((request) => request(axios, basePath));
+        postBotNodesByIdInvoke(requestParameters: BotApiPostBotNodesByIdInvokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postBotNodesByIdInvoke(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * A machine hop, not a caller-facing route. A node\'s socket lands on one replica while invocations land on any, so the replica that took the request forwards it here to the one that actually holds the node, and returns that answer as its own.  It authenticates with the shared peer token, compared in constant time, and carries no user identity at all. That is why the org arrives IN THE BODY here: the forwarding replica already derived it from a gateway-validated header, so the value is a fact being relayed rather than a claim being made. On any caller-facing route the same field would be a cross-tenant invoke primitive.  It fails closed on its own configuration: with no peer token set, or a half-wired cluster that has presence but no way to forward, it serves 503 and forwards nothing — an unauthenticated endpoint that takes an org from a body is precisely the hole. A missing or wrong token is 403, and the forwarded body is bounded on read.  Two things to get right. Its refusals are text/plain rather than the JSON every zip error uses, so a client decoding them as JSON will fail on the error path only. And an invocation that RAN but was denied still answers 200 here, carrying a stable error token in the JSON body — no such node, timeout, node gone, denied, failed — which the calling replica maps back onto the status codes a caller sees. Authorization already ran on this replica at the socket and is deliberately not repeated.
@@ -531,102 +531,102 @@ export const BotApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1BotPeerInvoke(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1BotPeerInvoke(options).then((request) => request(axios, basePath));
+        postBotPeerInvoke(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postBotPeerInvoke(options).then((request) => request(axios, basePath));
         },
         /**
          * Forwards a request to the bot runtime — the service that executes channels and skills — and hands back its answer unchanged. `/v1/bot` is stripped before forwarding, because the runtime serves bare paths: /v1/bot/health reaches it as /health.  This is the runtime\'s OPS face, not a control plane. A liveness probe is not a tenant-scoped resource, so it stays a relay rather than being reimplemented in Go; everything a tenant can ACT on is native and typed at /v1/bots.  A validated principal is required and the request is refused with 403 before anything is forwarded — the runtime trusts the identity headers it receives as gateway-minted, so an unauthenticated call must never be allowed to hand it a victim tenant. The caller\'s Authorization, org, user, email, project and environment headers ride along; nothing is minted here. The runtime\'s own status code and Content-Type come back verbatim (frequently not JSON), the body is bounded at 16 MiB, and a runtime that cannot be reached is 502.  One registration owns this address for every method, so which methods actually answer is the runtime\'s decision, not this edge\'s.
          * @summary Relay one of the bot runtime\'s own operational paths
-         * @param {BotApiPutV1BotByWildcard1Request} requestParameters Request parameters.
+         * @param {BotApiPutBotByWildcard1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1BotByWildcard1(requestParameters: BotApiPutV1BotByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1BotByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
+        putBotByWildcard1(requestParameters: BotApiPutBotByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putBotByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1BotByWildcard1 operation in BotApi.
+ * Request parameters for deleteBotByWildcard1 operation in BotApi.
  * @export
- * @interface BotApiDeleteV1BotByWildcard1Request
+ * @interface BotApiDeleteBotByWildcard1Request
  */
-export interface BotApiDeleteV1BotByWildcard1Request {
+export interface BotApiDeleteBotByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof BotApiDeleteV1BotByWildcard1
+     * @memberof BotApiDeleteBotByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for getV1BotByWildcard1 operation in BotApi.
+ * Request parameters for getBotByWildcard1 operation in BotApi.
  * @export
- * @interface BotApiGetV1BotByWildcard1Request
+ * @interface BotApiGetBotByWildcard1Request
  */
-export interface BotApiGetV1BotByWildcard1Request {
+export interface BotApiGetBotByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof BotApiGetV1BotByWildcard1
+     * @memberof BotApiGetBotByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for patchV1BotByWildcard1 operation in BotApi.
+ * Request parameters for patchBotByWildcard1 operation in BotApi.
  * @export
- * @interface BotApiPatchV1BotByWildcard1Request
+ * @interface BotApiPatchBotByWildcard1Request
  */
-export interface BotApiPatchV1BotByWildcard1Request {
+export interface BotApiPatchBotByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof BotApiPatchV1BotByWildcard1
+     * @memberof BotApiPatchBotByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for postV1BotByWildcard1 operation in BotApi.
+ * Request parameters for postBotByWildcard1 operation in BotApi.
  * @export
- * @interface BotApiPostV1BotByWildcard1Request
+ * @interface BotApiPostBotByWildcard1Request
  */
-export interface BotApiPostV1BotByWildcard1Request {
+export interface BotApiPostBotByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof BotApiPostV1BotByWildcard1
+     * @memberof BotApiPostBotByWildcard1
      */
     readonly wildcard1: string
 }
 
 /**
- * Request parameters for postV1BotNodesByIdInvoke operation in BotApi.
+ * Request parameters for postBotNodesByIdInvoke operation in BotApi.
  * @export
- * @interface BotApiPostV1BotNodesByIdInvokeRequest
+ * @interface BotApiPostBotNodesByIdInvokeRequest
  */
-export interface BotApiPostV1BotNodesByIdInvokeRequest {
+export interface BotApiPostBotNodesByIdInvokeRequest {
     /**
      * 
      * @type {string}
-     * @memberof BotApiPostV1BotNodesByIdInvoke
+     * @memberof BotApiPostBotNodesByIdInvoke
      */
     readonly id: string
 }
 
 /**
- * Request parameters for putV1BotByWildcard1 operation in BotApi.
+ * Request parameters for putBotByWildcard1 operation in BotApi.
  * @export
- * @interface BotApiPutV1BotByWildcard1Request
+ * @interface BotApiPutBotByWildcard1Request
  */
-export interface BotApiPutV1BotByWildcard1Request {
+export interface BotApiPutBotByWildcard1Request {
     /**
      * 
      * @type {string}
-     * @memberof BotApiPutV1BotByWildcard1
+     * @memberof BotApiPutBotByWildcard1
      */
     readonly wildcard1: string
 }
@@ -641,25 +641,25 @@ export class BotApi extends BaseAPI {
     /**
      * Forwards a request to the bot runtime — the service that executes channels and skills — and hands back its answer unchanged. `/v1/bot` is stripped before forwarding, because the runtime serves bare paths: /v1/bot/health reaches it as /health.  This is the runtime\'s OPS face, not a control plane. A liveness probe is not a tenant-scoped resource, so it stays a relay rather than being reimplemented in Go; everything a tenant can ACT on is native and typed at /v1/bots.  A validated principal is required and the request is refused with 403 before anything is forwarded — the runtime trusts the identity headers it receives as gateway-minted, so an unauthenticated call must never be allowed to hand it a victim tenant. The caller\'s Authorization, org, user, email, project and environment headers ride along; nothing is minted here. The runtime\'s own status code and Content-Type come back verbatim (frequently not JSON), the body is bounded at 16 MiB, and a runtime that cannot be reached is 502.  One registration owns this address for every method, so which methods actually answer is the runtime\'s decision, not this edge\'s.
      * @summary Relay one of the bot runtime\'s own operational paths
-     * @param {BotApiDeleteV1BotByWildcard1Request} requestParameters Request parameters.
+     * @param {BotApiDeleteBotByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotApi
      */
-    public deleteV1BotByWildcard1(requestParameters: BotApiDeleteV1BotByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return BotApiFp(this.configuration).deleteV1BotByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public deleteBotByWildcard1(requestParameters: BotApiDeleteBotByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return BotApiFp(this.configuration).deleteBotByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Forwards a request to the bot runtime — the service that executes channels and skills — and hands back its answer unchanged. `/v1/bot` is stripped before forwarding, because the runtime serves bare paths: /v1/bot/health reaches it as /health.  This is the runtime\'s OPS face, not a control plane. A liveness probe is not a tenant-scoped resource, so it stays a relay rather than being reimplemented in Go; everything a tenant can ACT on is native and typed at /v1/bots.  A validated principal is required and the request is refused with 403 before anything is forwarded — the runtime trusts the identity headers it receives as gateway-minted, so an unauthenticated call must never be allowed to hand it a victim tenant. The caller\'s Authorization, org, user, email, project and environment headers ride along; nothing is minted here. The runtime\'s own status code and Content-Type come back verbatim (frequently not JSON), the body is bounded at 16 MiB, and a runtime that cannot be reached is 502.  One registration owns this address for every method, so which methods actually answer is the runtime\'s decision, not this edge\'s.
      * @summary Relay one of the bot runtime\'s own operational paths
-     * @param {BotApiGetV1BotByWildcard1Request} requestParameters Request parameters.
+     * @param {BotApiGetBotByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotApi
      */
-    public getV1BotByWildcard1(requestParameters: BotApiGetV1BotByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return BotApiFp(this.configuration).getV1BotByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public getBotByWildcard1(requestParameters: BotApiGetBotByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return BotApiFp(this.configuration).getBotByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -669,8 +669,8 @@ export class BotApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotApi
      */
-    public getV1BotConnect(options?: RawAxiosRequestConfig) {
-        return BotApiFp(this.configuration).getV1BotConnect(options).then((request) => request(this.axios, this.basePath));
+    public getBotConnect(options?: RawAxiosRequestConfig) {
+        return BotApiFp(this.configuration).getBotConnect(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -680,44 +680,44 @@ export class BotApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotApi
      */
-    public getV1BotNodes(options?: RawAxiosRequestConfig) {
-        return BotApiFp(this.configuration).getV1BotNodes(options).then((request) => request(this.axios, this.basePath));
+    public getBotNodes(options?: RawAxiosRequestConfig) {
+        return BotApiFp(this.configuration).getBotNodes(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Forwards a request to the bot runtime — the service that executes channels and skills — and hands back its answer unchanged. `/v1/bot` is stripped before forwarding, because the runtime serves bare paths: /v1/bot/health reaches it as /health.  This is the runtime\'s OPS face, not a control plane. A liveness probe is not a tenant-scoped resource, so it stays a relay rather than being reimplemented in Go; everything a tenant can ACT on is native and typed at /v1/bots.  A validated principal is required and the request is refused with 403 before anything is forwarded — the runtime trusts the identity headers it receives as gateway-minted, so an unauthenticated call must never be allowed to hand it a victim tenant. The caller\'s Authorization, org, user, email, project and environment headers ride along; nothing is minted here. The runtime\'s own status code and Content-Type come back verbatim (frequently not JSON), the body is bounded at 16 MiB, and a runtime that cannot be reached is 502.  One registration owns this address for every method, so which methods actually answer is the runtime\'s decision, not this edge\'s.
      * @summary Relay one of the bot runtime\'s own operational paths
-     * @param {BotApiPatchV1BotByWildcard1Request} requestParameters Request parameters.
+     * @param {BotApiPatchBotByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotApi
      */
-    public patchV1BotByWildcard1(requestParameters: BotApiPatchV1BotByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return BotApiFp(this.configuration).patchV1BotByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public patchBotByWildcard1(requestParameters: BotApiPatchBotByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return BotApiFp(this.configuration).patchBotByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Forwards a request to the bot runtime — the service that executes channels and skills — and hands back its answer unchanged. `/v1/bot` is stripped before forwarding, because the runtime serves bare paths: /v1/bot/health reaches it as /health.  This is the runtime\'s OPS face, not a control plane. A liveness probe is not a tenant-scoped resource, so it stays a relay rather than being reimplemented in Go; everything a tenant can ACT on is native and typed at /v1/bots.  A validated principal is required and the request is refused with 403 before anything is forwarded — the runtime trusts the identity headers it receives as gateway-minted, so an unauthenticated call must never be allowed to hand it a victim tenant. The caller\'s Authorization, org, user, email, project and environment headers ride along; nothing is minted here. The runtime\'s own status code and Content-Type come back verbatim (frequently not JSON), the body is bounded at 16 MiB, and a runtime that cannot be reached is 502.  One registration owns this address for every method, so which methods actually answer is the runtime\'s decision, not this edge\'s.
      * @summary Relay one of the bot runtime\'s own operational paths
-     * @param {BotApiPostV1BotByWildcard1Request} requestParameters Request parameters.
+     * @param {BotApiPostBotByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotApi
      */
-    public postV1BotByWildcard1(requestParameters: BotApiPostV1BotByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return BotApiFp(this.configuration).postV1BotByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public postBotByWildcard1(requestParameters: BotApiPostBotByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return BotApiFp(this.configuration).postBotByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Sends {command, params, timeoutMs, idempotencyKey} to the named node and answers with what the node returned: {ok, payload, code, message}, where payload is the node\'s own JSON passed through — cloud routes the call, it does not interpret the result. A reply that is not valid JSON becomes an empty payload rather than corrupting the response, which ok and code already qualify.  Neither the node nor the org is a body field: the node is the path and the org is the caller\'s validated identity, and a field for either would be a field somebody could set to a stranger\'s. A validated principal is required (403 without one), and a node id that belongs to another org answers exactly like one that does not exist — not found — so this cannot be used to probe another tenant\'s fleet.  Authorization happened ONCE, at the socket, on the replica holding that node — the only place that knows what the node declared it can do. A node attached to a different replica is reached through the peer forward and is authorized by the same code with the same session in hand, so a local node and a forwarded one cannot get different answers. The timeout defaults to 30s and is clamped to 5 minutes, so one request can never pin a node\'s socket open indefinitely.  system.run is rewritten before dispatch: its approval control fields are re-derived from the approval record and whatever the caller claimed is discarded, because a caller that could pre-approve itself is the whole thing approvals exist to prevent. No approval registry is wired today, so an invocation CLAIMING an approval is refused while an ordinary one is unaffected.  The one thing to get right: a refusal is a 403 carrying a DOMAIN body — {error, code, reason} — not the flat error envelope the rest of cloud returns, and the same body comes back whether the pre-flight sanitize refused it or the node\'s own gate did. Switch on `code`. The remaining failures are ordinary statuses: the node not answering in time is 504, and a node that disconnected or could not be reached is 502.
      * @summary Ask one of your connected machines to run a command, and get its answer back.
-     * @param {BotApiPostV1BotNodesByIdInvokeRequest} requestParameters Request parameters.
+     * @param {BotApiPostBotNodesByIdInvokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotApi
      */
-    public postV1BotNodesByIdInvoke(requestParameters: BotApiPostV1BotNodesByIdInvokeRequest, options?: RawAxiosRequestConfig) {
-        return BotApiFp(this.configuration).postV1BotNodesByIdInvoke(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public postBotNodesByIdInvoke(requestParameters: BotApiPostBotNodesByIdInvokeRequest, options?: RawAxiosRequestConfig) {
+        return BotApiFp(this.configuration).postBotNodesByIdInvoke(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -727,20 +727,20 @@ export class BotApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BotApi
      */
-    public postV1BotPeerInvoke(options?: RawAxiosRequestConfig) {
-        return BotApiFp(this.configuration).postV1BotPeerInvoke(options).then((request) => request(this.axios, this.basePath));
+    public postBotPeerInvoke(options?: RawAxiosRequestConfig) {
+        return BotApiFp(this.configuration).postBotPeerInvoke(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Forwards a request to the bot runtime — the service that executes channels and skills — and hands back its answer unchanged. `/v1/bot` is stripped before forwarding, because the runtime serves bare paths: /v1/bot/health reaches it as /health.  This is the runtime\'s OPS face, not a control plane. A liveness probe is not a tenant-scoped resource, so it stays a relay rather than being reimplemented in Go; everything a tenant can ACT on is native and typed at /v1/bots.  A validated principal is required and the request is refused with 403 before anything is forwarded — the runtime trusts the identity headers it receives as gateway-minted, so an unauthenticated call must never be allowed to hand it a victim tenant. The caller\'s Authorization, org, user, email, project and environment headers ride along; nothing is minted here. The runtime\'s own status code and Content-Type come back verbatim (frequently not JSON), the body is bounded at 16 MiB, and a runtime that cannot be reached is 502.  One registration owns this address for every method, so which methods actually answer is the runtime\'s decision, not this edge\'s.
      * @summary Relay one of the bot runtime\'s own operational paths
-     * @param {BotApiPutV1BotByWildcard1Request} requestParameters Request parameters.
+     * @param {BotApiPutBotByWildcard1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotApi
      */
-    public putV1BotByWildcard1(requestParameters: BotApiPutV1BotByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return BotApiFp(this.configuration).putV1BotByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
+    public putBotByWildcard1(requestParameters: BotApiPutBotByWildcard1Request, options?: RawAxiosRequestConfig) {
+        return BotApiFp(this.configuration).putBotByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

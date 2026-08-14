@@ -39,7 +39,7 @@ export const EnablementApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Enablement: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getEnablement: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/enablement`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -70,9 +70,9 @@ export const EnablementApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EnablementOptin: async (enablementOptRef: EnablementOptRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEnablementOptin: async (enablementOptRef: EnablementOptRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'enablementOptRef' is not null or undefined
-            assertParamExists('postV1EnablementOptin', 'enablementOptRef', enablementOptRef)
+            assertParamExists('postEnablementOptin', 'enablementOptRef', enablementOptRef)
             const localVarPath = `/v1/enablement/optin`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -106,9 +106,9 @@ export const EnablementApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EnablementOptout: async (enablementOptRef: EnablementOptRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postEnablementOptout: async (enablementOptRef: EnablementOptRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'enablementOptRef' is not null or undefined
-            assertParamExists('postV1EnablementOptout', 'enablementOptRef', enablementOptRef)
+            assertParamExists('postEnablementOptout', 'enablementOptRef', enablementOptRef)
             const localVarPath = `/v1/enablement/optout`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -151,10 +151,10 @@ export const EnablementApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1Enablement(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnablementBoard>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1Enablement(options);
+        async getEnablement(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnablementBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnablement(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EnablementApi.getV1Enablement']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EnablementApi.getEnablement']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -164,10 +164,10 @@ export const EnablementApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1EnablementOptin(enablementOptRef: EnablementOptRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserEnablementItem>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1EnablementOptin(enablementOptRef, options);
+        async postEnablementOptin(enablementOptRef: EnablementOptRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserEnablementItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEnablementOptin(enablementOptRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EnablementApi.postV1EnablementOptin']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EnablementApi.postEnablementOptin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -177,10 +177,10 @@ export const EnablementApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1EnablementOptout(enablementOptRef: EnablementOptRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserEnablementItem>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1EnablementOptout(enablementOptRef, options);
+        async postEnablementOptout(enablementOptRef: EnablementOptRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserEnablementItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEnablementOptout(enablementOptRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['EnablementApi.postV1EnablementOptout']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['EnablementApi.postEnablementOptout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -199,56 +199,56 @@ export const EnablementApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1Enablement(options?: RawAxiosRequestConfig): AxiosPromise<EnablementBoard> {
-            return localVarFp.getV1Enablement(options).then((request) => request(axios, basePath));
+        getEnablement(options?: RawAxiosRequestConfig): AxiosPromise<EnablementBoard> {
+            return localVarFp.getEnablement(options).then((request) => request(axios, basePath));
         },
         /**
          * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. Requires a signed-in caller with an org.
          * @summary Opts the caller\'s OWN org into a beta item.
-         * @param {EnablementApiPostV1EnablementOptinRequest} requestParameters Request parameters.
+         * @param {EnablementApiPostEnablementOptinRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EnablementOptin(requestParameters: EnablementApiPostV1EnablementOptinRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserEnablementItem> {
-            return localVarFp.postV1EnablementOptin(requestParameters.enablementOptRef, options).then((request) => request(axios, basePath));
+        postEnablementOptin(requestParameters: EnablementApiPostEnablementOptinRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserEnablementItem> {
+            return localVarFp.postEnablementOptin(requestParameters.enablementOptRef, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in caller with an org.
          * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
-         * @param {EnablementApiPostV1EnablementOptoutRequest} requestParameters Request parameters.
+         * @param {EnablementApiPostEnablementOptoutRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1EnablementOptout(requestParameters: EnablementApiPostV1EnablementOptoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserEnablementItem> {
-            return localVarFp.postV1EnablementOptout(requestParameters.enablementOptRef, options).then((request) => request(axios, basePath));
+        postEnablementOptout(requestParameters: EnablementApiPostEnablementOptoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserEnablementItem> {
+            return localVarFp.postEnablementOptout(requestParameters.enablementOptRef, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for postV1EnablementOptin operation in EnablementApi.
+ * Request parameters for postEnablementOptin operation in EnablementApi.
  * @export
- * @interface EnablementApiPostV1EnablementOptinRequest
+ * @interface EnablementApiPostEnablementOptinRequest
  */
-export interface EnablementApiPostV1EnablementOptinRequest {
+export interface EnablementApiPostEnablementOptinRequest {
     /**
      * 
      * @type {EnablementOptRef}
-     * @memberof EnablementApiPostV1EnablementOptin
+     * @memberof EnablementApiPostEnablementOptin
      */
     readonly enablementOptRef: EnablementOptRef
 }
 
 /**
- * Request parameters for postV1EnablementOptout operation in EnablementApi.
+ * Request parameters for postEnablementOptout operation in EnablementApi.
  * @export
- * @interface EnablementApiPostV1EnablementOptoutRequest
+ * @interface EnablementApiPostEnablementOptoutRequest
  */
-export interface EnablementApiPostV1EnablementOptoutRequest {
+export interface EnablementApiPostEnablementOptoutRequest {
     /**
      * 
      * @type {EnablementOptRef}
-     * @memberof EnablementApiPostV1EnablementOptout
+     * @memberof EnablementApiPostEnablementOptout
      */
     readonly enablementOptRef: EnablementOptRef
 }
@@ -267,32 +267,32 @@ export class EnablementApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EnablementApi
      */
-    public getV1Enablement(options?: RawAxiosRequestConfig) {
-        return EnablementApiFp(this.configuration).getV1Enablement(options).then((request) => request(this.axios, this.basePath));
+    public getEnablement(options?: RawAxiosRequestConfig) {
+        return EnablementApiFp(this.configuration).getEnablement(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Opts the caller\'s OWN org into a beta item. The org is the caller\'s validated one, so this can never target another org, and the registry refuses anything not in beta — so it can neither re-open an item an operator turned off nor touch one that is already generally available. Requires a signed-in caller with an org.
      * @summary Opts the caller\'s OWN org into a beta item.
-     * @param {EnablementApiPostV1EnablementOptinRequest} requestParameters Request parameters.
+     * @param {EnablementApiPostEnablementOptinRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnablementApi
      */
-    public postV1EnablementOptin(requestParameters: EnablementApiPostV1EnablementOptinRequest, options?: RawAxiosRequestConfig) {
-        return EnablementApiFp(this.configuration).postV1EnablementOptin(requestParameters.enablementOptRef, options).then((request) => request(this.axios, this.basePath));
+    public postEnablementOptin(requestParameters: EnablementApiPostEnablementOptinRequest, options?: RawAxiosRequestConfig) {
+        return EnablementApiFp(this.configuration).postEnablementOptin(requestParameters.enablementOptRef, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent. The org is the caller\'s validated one, so this can never revoke another org\'s grant. Requires a signed-in caller with an org.
      * @summary Removes the caller\'s OWN org from a beta item\'s grant list, the reverse of OptIntoBeta and idempotent.
-     * @param {EnablementApiPostV1EnablementOptoutRequest} requestParameters Request parameters.
+     * @param {EnablementApiPostEnablementOptoutRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EnablementApi
      */
-    public postV1EnablementOptout(requestParameters: EnablementApiPostV1EnablementOptoutRequest, options?: RawAxiosRequestConfig) {
-        return EnablementApiFp(this.configuration).postV1EnablementOptout(requestParameters.enablementOptRef, options).then((request) => request(this.axios, this.basePath));
+    public postEnablementOptout(requestParameters: EnablementApiPostEnablementOptoutRequest, options?: RawAxiosRequestConfig) {
+        return EnablementApiFp(this.configuration).postEnablementOptout(requestParameters.enablementOptRef, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

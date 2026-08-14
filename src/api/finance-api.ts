@@ -51,7 +51,7 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceAccounts: async (scope?: string, org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinanceAccounts: async (scope?: string, org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finance/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -89,7 +89,7 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceBalance: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinanceBalance: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finance/balance`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -119,7 +119,7 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceCredits: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinanceCredits: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finance/credits`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -149,7 +149,7 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceInvoices: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinanceInvoices: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finance/invoices`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -180,7 +180,7 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceLedger: async (range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinanceLedger: async (range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finance/ledger`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -214,7 +214,7 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinancePaymentMethods: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinancePaymentMethods: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finance/payment-methods`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -244,7 +244,7 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceTreasury: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinanceTreasury: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finance/treasury`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -275,7 +275,7 @@ export const FinanceApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceUsage: async (range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFinanceUsage: async (range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/finance/usage`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -321,10 +321,10 @@ export const FinanceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinanceAccounts(scope?: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinanceAccounts(scope, org, options);
+        async getFinanceAccounts(scope?: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinanceAccounts(scope, org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getV1FinanceAccounts']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getFinanceAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -333,10 +333,10 @@ export const FinanceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinanceBalance(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FinanceBalanceView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinanceBalance(options);
+        async getFinanceBalance(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FinanceBalanceView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinanceBalance(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getV1FinanceBalance']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getFinanceBalance']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -345,10 +345,10 @@ export const FinanceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinanceCredits(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FinanceCredit>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinanceCredits(options);
+        async getFinanceCredits(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FinanceCredit>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinanceCredits(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getV1FinanceCredits']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getFinanceCredits']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -357,10 +357,10 @@ export const FinanceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinanceInvoices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FinanceInvoice>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinanceInvoices(options);
+        async getFinanceInvoices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FinanceInvoice>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinanceInvoices(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getV1FinanceInvoices']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getFinanceInvoices']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -370,10 +370,10 @@ export const FinanceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinanceLedger(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FinanceLedgerEntry>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinanceLedger(range, options);
+        async getFinanceLedger(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FinanceLedgerEntry>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinanceLedger(range, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getV1FinanceLedger']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getFinanceLedger']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -382,10 +382,10 @@ export const FinanceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinancePaymentMethods(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FinancePaymentMethod>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinancePaymentMethods(options);
+        async getFinancePaymentMethods(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FinancePaymentMethod>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinancePaymentMethods(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getV1FinancePaymentMethods']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getFinancePaymentMethods']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -394,10 +394,10 @@ export const FinanceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinanceTreasury(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TreasuryReport>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinanceTreasury(options);
+        async getFinanceTreasury(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TreasuryReport>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinanceTreasury(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getV1FinanceTreasury']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getFinanceTreasury']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -407,10 +407,10 @@ export const FinanceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FinanceUsage(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FinanceUsageView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FinanceUsage(range, options);
+        async getFinanceUsage(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FinanceUsageView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFinanceUsage(range, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getV1FinanceUsage']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FinanceApi.getFinanceUsage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -426,12 +426,12 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
         /**
          * Returns the ledger accounts the caller may see, with their balances. It is tenant-isolated SERVER-SIDE: an ordinary caller sees ONLY accounts under its own \"org:<tenant>:\" prefix, never house accounts and never another tenant\'s. A SuperAdmin may widen with ?scope=house (the reserve, revenue and payout house accounts) or ?org=<tenant> — the only way to cross the tenant boundary, and only for platform sudo. The answer is honestly empty until a tenant has ledger postings.
          * @summary Returns the ledger accounts the caller may see, with their balances.
-         * @param {FinanceApiGetV1FinanceAccountsRequest} requestParameters Request parameters.
+         * @param {FinanceApiGetFinanceAccountsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceAccounts(requestParameters: FinanceApiGetV1FinanceAccountsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsOut> {
-            return localVarFp.getV1FinanceAccounts(requestParameters.scope, requestParameters.org, options).then((request) => request(axios, basePath));
+        getFinanceAccounts(requestParameters: FinanceApiGetFinanceAccountsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AccountsOut> {
+            return localVarFp.getFinanceAccounts(requestParameters.scope, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the org\'s spendable prepaid balance typed for the finance surfaces: `availableCents`, `pendingCents`, `dueCents` and the `asOf` instant it was read.  It is the SAME wallet read /v1/billing/balance answers — one function, called by both, so the two surfaces cannot drift into disagreeing about a customer\'s money. Reshaped, never re-metered. Co-resident the number comes straight out of the org\'s own double-entry ledger file.  `dueCents` is a structural 0: this is a PREPAID wallet with no open-invoice debt, so nothing is ever owed and a non-zero value here would be an invention. `pendingCents` is 0 on the co-resident ledger, where authorization holds are never posted; only a split-deploy upstream reports holds, and there spendable is the balance NET of them, floored at 0 — a fully-held wallet reports 0 rather than money the gate would refuse.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org from the validated IAM owner claim; 401 without a validated principal, and a balance that cannot be read is 502 — never 0, because unknown is not broke.
@@ -439,8 +439,8 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceBalance(options?: RawAxiosRequestConfig): AxiosPromise<FinanceBalanceView> {
-            return localVarFp.getV1FinanceBalance(options).then((request) => request(axios, basePath));
+        getFinanceBalance(options?: RawAxiosRequestConfig): AxiosPromise<FinanceBalanceView> {
+            return localVarFp.getFinanceBalance(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the money PUT IN to the org\'s wallet — each staff grant, promo and settled top-up as a positive row with its id, label, cents and grant time.  Spend is not a credit. A posting counts here only when it moved money IN; debits belong to /v1/finance/usage (aggregated) and /v1/finance/ledger (signed). All three project ONE read of the same ledger through ONE vocabulary for what a posting means, so they cannot disagree about a row — nor silently drop one, which is what an empty credits page against a funded wallet was.  `label` falls back through the posting\'s notes, then its tags, then a bare Credit — it is a description, never an identifier. `remainingCents` is OMITTED: the wallet is one running balance, not per-grant buckets, so no grant has a remainder to report and spend cannot be attributed to the credit that funded it.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org; 401 without a validated principal. An org with no grants gets an empty array — honest, never a fabricated figure.
@@ -448,8 +448,8 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceCredits(options?: RawAxiosRequestConfig): AxiosPromise<Array<FinanceCredit>> {
-            return localVarFp.getV1FinanceCredits(options).then((request) => request(axios, basePath));
+        getFinanceCredits(options?: RawAxiosRequestConfig): AxiosPromise<Array<FinanceCredit>> {
+            return localVarFp.getFinanceCredits(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers an empty typed array, always. The fleet bills a PREPAID wallet — money in, metered debits out — and issues no customer invoices, so there is no invoice ledger to project. Nothing here is a fabricated figure and nothing is hidden behind a filter.  The shape is fixed, so the finance UI renders this lane today and the day an invoice ledger exists it fills with ZERO client change. Spend that actually happened is /v1/finance/usage; money in and out is /v1/finance/ledger; what is left to spend is /v1/finance/balance.  The gate is real even though the body is empty: 401 without a validated principal. It is the only finance read that touches no store, so it is also the only one that cannot 502.
@@ -457,18 +457,18 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceInvoices(options?: RawAxiosRequestConfig): AxiosPromise<Array<FinanceInvoice>> {
-            return localVarFp.getV1FinanceInvoices(options).then((request) => request(axios, basePath));
+        getFinanceInvoices(options?: RawAxiosRequestConfig): AxiosPromise<Array<FinanceInvoice>> {
+            return localVarFp.getFinanceInvoices(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags. The sign is the posting\'s own meaning, read through ONE vocabulary shared with the ledger that wrote it — a reader with its own spelling for `deposit` rendered a customer\'s grant as a charge.  This is the closest projection of the truth. The org\'s double-entry postings are the source of record — balanced, only ever appended, one file per org — and this lane is that list, widest of the three: /v1/finance/credits is its deposit half and /v1/finance/usage is its withdrawal half rolled up. All three come from ONE read, which is why they cannot contradict each other, and all three answer 501 where no commerce link is configured rather than reporting an empty wallet.  A row whose timestamp will not parse is KEPT rather than dropped — a malformed date must show up in a money list, not vanish from it. `balanceCents` is omitted: these are MOVEMENTS, and the standing balance is /v1/finance/balance.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org, where the org\'s ledger file is the tenant boundary; 401 without a validated principal.
          * @summary Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags.
-         * @param {FinanceApiGetV1FinanceLedgerRequest} requestParameters Request parameters.
+         * @param {FinanceApiGetFinanceLedgerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceLedger(requestParameters: FinanceApiGetV1FinanceLedgerRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<FinanceLedgerEntry>> {
-            return localVarFp.getV1FinanceLedger(requestParameters.range, options).then((request) => request(axios, basePath));
+        getFinanceLedger(requestParameters: FinanceApiGetFinanceLedgerRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<FinanceLedgerEntry>> {
+            return localVarFp.getFinanceLedger(requestParameters.range, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the masked card descriptors for the caller\'s resolved WALLET — id, brand, last four, expiry, default flag — reshaped into the finance contract.  It re-masks defensively: whatever the upstream sends, at most the trailing four DIGITS survive into `last4`. No card number, no security code and no processor token exists in this shape at all, so an over-returning upstream still cannot leak one through this lane.  Read the sibling difference before trusting a mismatch. This keys the store on the resolved wallet; /v1/billing/methods keys it on the org SLUG, which is also the key a card is SAVED under — identical for an org paying from its shared pool, different wherever the payer is a person. When the two lists disagree, the billing one is what was saved.  401 without a validated principal. An upstream that answers non-2xx or cannot be reached is 502 — never an empty list, because no cards and could not ask must not look alike.
@@ -476,8 +476,8 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinancePaymentMethods(options?: RawAxiosRequestConfig): AxiosPromise<Array<FinancePaymentMethod>> {
-            return localVarFp.getV1FinancePaymentMethods(options).then((request) => request(axios, basePath));
+        getFinancePaymentMethods(options?: RawAxiosRequestConfig): AxiosPromise<Array<FinancePaymentMethod>> {
+            return localVarFp.getFinancePaymentMethods(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the reserve fund\'s health and the current revenue-share policy for any validated caller. It is a TRANSPARENCY view — a partner or author can see that the pool backing their payouts is solvent — and NOT per-org money, which is the customer\'s own commerce balance at /v1/billing/balance. The policy is read-only here; only a SuperAdmin sets it.
@@ -485,67 +485,67 @@ export const FinanceApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceTreasury(options?: RawAxiosRequestConfig): AxiosPromise<TreasuryReport> {
-            return localVarFp.getV1FinanceTreasury(options).then((request) => request(axios, basePath));
+        getFinanceTreasury(options?: RawAxiosRequestConfig): AxiosPromise<TreasuryReport> {
+            return localVarFp.getFinanceTreasury(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers metered spend inside `range=`: the window total, a time series to plot, and one line per usage TAG. Aggregated from the same charged ledger the balance comes off — projected, never re-metered.  Only DEBIT postings count; deposits are credits and are excluded. Buckets are hourly at 24h and daily otherwise, in UTC; a posting whose timestamp will not parse is dropped rather than mis-bucketed.  Lines group by the posting\'s tag (`Usage` where it carries none) and `units` counts POSTINGS, not tokens. The dimensions here are time and tag. For per-request rows and a per-PRODUCT breakdown, read /v1/billing/usage instead — the same money, cut a different way.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD, so a window made of sub-cent token calls totals LOW here. Scoped to the caller\'s own org; 401 without a validated principal.
          * @summary Answers metered spend inside `range=`: the window total, a time series to plot, and one line per usage TAG.
-         * @param {FinanceApiGetV1FinanceUsageRequest} requestParameters Request parameters.
+         * @param {FinanceApiGetFinanceUsageRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FinanceUsage(requestParameters: FinanceApiGetV1FinanceUsageRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FinanceUsageView> {
-            return localVarFp.getV1FinanceUsage(requestParameters.range, options).then((request) => request(axios, basePath));
+        getFinanceUsage(requestParameters: FinanceApiGetFinanceUsageRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<FinanceUsageView> {
+            return localVarFp.getFinanceUsage(requestParameters.range, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1FinanceAccounts operation in FinanceApi.
+ * Request parameters for getFinanceAccounts operation in FinanceApi.
  * @export
- * @interface FinanceApiGetV1FinanceAccountsRequest
+ * @interface FinanceApiGetFinanceAccountsRequest
  */
-export interface FinanceApiGetV1FinanceAccountsRequest {
+export interface FinanceApiGetFinanceAccountsRequest {
     /**
      * Scope is \&quot;house\&quot; to read the reserve/revenue/payout house accounts. SuperAdmin only.
      * @type {string}
-     * @memberof FinanceApiGetV1FinanceAccounts
+     * @memberof FinanceApiGetFinanceAccounts
      */
     readonly scope?: string
 
     /**
      * Org names another tenant to read. SuperAdmin only; ignored when scope&#x3D;house.
      * @type {string}
-     * @memberof FinanceApiGetV1FinanceAccounts
+     * @memberof FinanceApiGetFinanceAccounts
      */
     readonly org?: string
 }
 
 /**
- * Request parameters for getV1FinanceLedger operation in FinanceApi.
+ * Request parameters for getFinanceLedger operation in FinanceApi.
  * @export
- * @interface FinanceApiGetV1FinanceLedgerRequest
+ * @interface FinanceApiGetFinanceLedgerRequest
  */
-export interface FinanceApiGetV1FinanceLedgerRequest {
+export interface FinanceApiGetFinanceLedgerRequest {
     /**
      * Range is the window: 24h, 7d, 30d or 90d. Anything else — including absent — is 30d, so a typo silently widens the window to a month rather than failing.
      * @type {string}
-     * @memberof FinanceApiGetV1FinanceLedger
+     * @memberof FinanceApiGetFinanceLedger
      */
     readonly range?: string
 }
 
 /**
- * Request parameters for getV1FinanceUsage operation in FinanceApi.
+ * Request parameters for getFinanceUsage operation in FinanceApi.
  * @export
- * @interface FinanceApiGetV1FinanceUsageRequest
+ * @interface FinanceApiGetFinanceUsageRequest
  */
-export interface FinanceApiGetV1FinanceUsageRequest {
+export interface FinanceApiGetFinanceUsageRequest {
     /**
      * Range is the window: 24h, 7d, 30d or 90d. Anything else — including absent — is 30d, so a typo silently widens the window to a month rather than failing.
      * @type {string}
-     * @memberof FinanceApiGetV1FinanceUsage
+     * @memberof FinanceApiGetFinanceUsage
      */
     readonly range?: string
 }
@@ -560,13 +560,13 @@ export class FinanceApi extends BaseAPI {
     /**
      * Returns the ledger accounts the caller may see, with their balances. It is tenant-isolated SERVER-SIDE: an ordinary caller sees ONLY accounts under its own \"org:<tenant>:\" prefix, never house accounts and never another tenant\'s. A SuperAdmin may widen with ?scope=house (the reserve, revenue and payout house accounts) or ?org=<tenant> — the only way to cross the tenant boundary, and only for platform sudo. The answer is honestly empty until a tenant has ledger postings.
      * @summary Returns the ledger accounts the caller may see, with their balances.
-     * @param {FinanceApiGetV1FinanceAccountsRequest} requestParameters Request parameters.
+     * @param {FinanceApiGetFinanceAccountsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FinanceApi
      */
-    public getV1FinanceAccounts(requestParameters: FinanceApiGetV1FinanceAccountsRequest = {}, options?: RawAxiosRequestConfig) {
-        return FinanceApiFp(this.configuration).getV1FinanceAccounts(requestParameters.scope, requestParameters.org, options).then((request) => request(this.axios, this.basePath));
+    public getFinanceAccounts(requestParameters: FinanceApiGetFinanceAccountsRequest = {}, options?: RawAxiosRequestConfig) {
+        return FinanceApiFp(this.configuration).getFinanceAccounts(requestParameters.scope, requestParameters.org, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -576,8 +576,8 @@ export class FinanceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinanceApi
      */
-    public getV1FinanceBalance(options?: RawAxiosRequestConfig) {
-        return FinanceApiFp(this.configuration).getV1FinanceBalance(options).then((request) => request(this.axios, this.basePath));
+    public getFinanceBalance(options?: RawAxiosRequestConfig) {
+        return FinanceApiFp(this.configuration).getFinanceBalance(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -587,8 +587,8 @@ export class FinanceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinanceApi
      */
-    public getV1FinanceCredits(options?: RawAxiosRequestConfig) {
-        return FinanceApiFp(this.configuration).getV1FinanceCredits(options).then((request) => request(this.axios, this.basePath));
+    public getFinanceCredits(options?: RawAxiosRequestConfig) {
+        return FinanceApiFp(this.configuration).getFinanceCredits(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -598,20 +598,20 @@ export class FinanceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinanceApi
      */
-    public getV1FinanceInvoices(options?: RawAxiosRequestConfig) {
-        return FinanceApiFp(this.configuration).getV1FinanceInvoices(options).then((request) => request(this.axios, this.basePath));
+    public getFinanceInvoices(options?: RawAxiosRequestConfig) {
+        return FinanceApiFp(this.configuration).getFinanceInvoices(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags. The sign is the posting\'s own meaning, read through ONE vocabulary shared with the ledger that wrote it — a reader with its own spelling for `deposit` rendered a customer\'s grant as a charge.  This is the closest projection of the truth. The org\'s double-entry postings are the source of record — balanced, only ever appended, one file per org — and this lane is that list, widest of the three: /v1/finance/credits is its deposit half and /v1/finance/usage is its withdrawal half rolled up. All three come from ONE read, which is why they cannot contradict each other, and all three answer 501 where no commerce link is configured rather than reporting an empty wallet.  A row whose timestamp will not parse is KEPT rather than dropped — a malformed date must show up in a money list, not vanish from it. `balanceCents` is omitted: these are MOVEMENTS, and the standing balance is /v1/finance/balance.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org, where the org\'s ledger file is the tenant boundary; 401 without a validated principal.
      * @summary Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags.
-     * @param {FinanceApiGetV1FinanceLedgerRequest} requestParameters Request parameters.
+     * @param {FinanceApiGetFinanceLedgerRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FinanceApi
      */
-    public getV1FinanceLedger(requestParameters: FinanceApiGetV1FinanceLedgerRequest = {}, options?: RawAxiosRequestConfig) {
-        return FinanceApiFp(this.configuration).getV1FinanceLedger(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
+    public getFinanceLedger(requestParameters: FinanceApiGetFinanceLedgerRequest = {}, options?: RawAxiosRequestConfig) {
+        return FinanceApiFp(this.configuration).getFinanceLedger(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -621,8 +621,8 @@ export class FinanceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinanceApi
      */
-    public getV1FinancePaymentMethods(options?: RawAxiosRequestConfig) {
-        return FinanceApiFp(this.configuration).getV1FinancePaymentMethods(options).then((request) => request(this.axios, this.basePath));
+    public getFinancePaymentMethods(options?: RawAxiosRequestConfig) {
+        return FinanceApiFp(this.configuration).getFinancePaymentMethods(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -632,20 +632,20 @@ export class FinanceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FinanceApi
      */
-    public getV1FinanceTreasury(options?: RawAxiosRequestConfig) {
-        return FinanceApiFp(this.configuration).getV1FinanceTreasury(options).then((request) => request(this.axios, this.basePath));
+    public getFinanceTreasury(options?: RawAxiosRequestConfig) {
+        return FinanceApiFp(this.configuration).getFinanceTreasury(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Answers metered spend inside `range=`: the window total, a time series to plot, and one line per usage TAG. Aggregated from the same charged ledger the balance comes off — projected, never re-metered.  Only DEBIT postings count; deposits are credits and are excluded. Buckets are hourly at 24h and daily otherwise, in UTC; a posting whose timestamp will not parse is dropped rather than mis-bucketed.  Lines group by the posting\'s tag (`Usage` where it carries none) and `units` counts POSTINGS, not tokens. The dimensions here are time and tag. For per-request rows and a per-PRODUCT breakdown, read /v1/billing/usage instead — the same money, cut a different way.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD, so a window made of sub-cent token calls totals LOW here. Scoped to the caller\'s own org; 401 without a validated principal.
      * @summary Answers metered spend inside `range=`: the window total, a time series to plot, and one line per usage TAG.
-     * @param {FinanceApiGetV1FinanceUsageRequest} requestParameters Request parameters.
+     * @param {FinanceApiGetFinanceUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FinanceApi
      */
-    public getV1FinanceUsage(requestParameters: FinanceApiGetV1FinanceUsageRequest = {}, options?: RawAxiosRequestConfig) {
-        return FinanceApiFp(this.configuration).getV1FinanceUsage(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
+    public getFinanceUsage(requestParameters: FinanceApiGetFinanceUsageRequest = {}, options?: RawAxiosRequestConfig) {
+        return FinanceApiFp(this.configuration).getFinanceUsage(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

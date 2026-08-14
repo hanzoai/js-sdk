@@ -63,11 +63,11 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IamApplication: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteIamApplication: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
-            assertParamExists('deleteV1IamApplication', 'owner', owner)
+            assertParamExists('deleteIamApplication', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1IamApplication', 'name', name)
+            assertParamExists('deleteIamApplication', 'name', name)
             const localVarPath = `/v1/iam/application`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -107,11 +107,11 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamApplication: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIamApplication: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
-            assertParamExists('getV1IamApplication', 'owner', owner)
+            assertParamExists('getIamApplication', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1IamApplication', 'name', name)
+            assertParamExists('getIamApplication', 'name', name)
             const localVarPath = `/v1/iam/application`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -150,9 +150,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamAddApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamApplication' is not null or undefined
-            assertParamExists('postV1IamAddApplication', 'iamApplication', iamApplication)
+            assertParamExists('postIamAddApplication', 'iamApplication', iamApplication)
             const localVarPath = `/v1/iam/add-application`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -186,9 +186,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddOrganization: async (iamCreateOrganizationInput: IamCreateOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamAddOrganization: async (iamCreateOrganizationInput: IamCreateOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamCreateOrganizationInput' is not null or undefined
-            assertParamExists('postV1IamAddOrganization', 'iamCreateOrganizationInput', iamCreateOrganizationInput)
+            assertParamExists('postIamAddOrganization', 'iamCreateOrganizationInput', iamCreateOrganizationInput)
             const localVarPath = `/v1/iam/add-organization`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -222,9 +222,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddProject: async (iamInput: IamInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamAddProject: async (iamInput: IamInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamInput' is not null or undefined
-            assertParamExists('postV1IamAddProject', 'iamInput', iamInput)
+            assertParamExists('postIamAddProject', 'iamInput', iamInput)
             const localVarPath = `/v1/iam/add-project`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -258,9 +258,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddProvider: async (iamProvider: IamProvider, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamAddProvider: async (iamProvider: IamProvider, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamProvider' is not null or undefined
-            assertParamExists('postV1IamAddProvider', 'iamProvider', iamProvider)
+            assertParamExists('postIamAddProvider', 'iamProvider', iamProvider)
             const localVarPath = `/v1/iam/add-provider`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -294,9 +294,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddRole: async (iamRolesInput: IamRolesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamAddRole: async (iamRolesInput: IamRolesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamRolesInput' is not null or undefined
-            assertParamExists('postV1IamAddRole', 'iamRolesInput', iamRolesInput)
+            assertParamExists('postIamAddRole', 'iamRolesInput', iamRolesInput)
             const localVarPath = `/v1/iam/add-role`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -330,9 +330,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddUser: async (iamUserBody: IamUserBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamAddUser: async (iamUserBody: IamUserBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamUserBody' is not null or undefined
-            assertParamExists('postV1IamAddUser', 'iamUserBody', iamUserBody)
+            assertParamExists('postIamAddUser', 'iamUserBody', iamUserBody)
             const localVarPath = `/v1/iam/add-user`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -366,9 +366,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddWorkspace: async (iamWorkspacesInput: IamWorkspacesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamAddWorkspace: async (iamWorkspacesInput: IamWorkspacesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamWorkspacesInput' is not null or undefined
-            assertParamExists('postV1IamAddWorkspace', 'iamWorkspacesInput', iamWorkspacesInput)
+            assertParamExists('postIamAddWorkspace', 'iamWorkspacesInput', iamWorkspacesInput)
             const localVarPath = `/v1/iam/add-workspace`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -402,9 +402,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamApplication' is not null or undefined
-            assertParamExists('postV1IamApplication', 'iamApplication', iamApplication)
+            assertParamExists('postIamApplication', 'iamApplication', iamApplication)
             const localVarPath = `/v1/iam/application`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -438,9 +438,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamDeleteApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamApplication' is not null or undefined
-            assertParamExists('postV1IamDeleteApplication', 'iamApplication', iamApplication)
+            assertParamExists('postIamDeleteApplication', 'iamApplication', iamApplication)
             const localVarPath = `/v1/iam/delete-application`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -474,9 +474,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteOrganization: async (iamDeleteOrganizationInput: IamDeleteOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamDeleteOrganization: async (iamDeleteOrganizationInput: IamDeleteOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamDeleteOrganizationInput' is not null or undefined
-            assertParamExists('postV1IamDeleteOrganization', 'iamDeleteOrganizationInput', iamDeleteOrganizationInput)
+            assertParamExists('postIamDeleteOrganization', 'iamDeleteOrganizationInput', iamDeleteOrganizationInput)
             const localVarPath = `/v1/iam/delete-organization`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -510,9 +510,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteProject: async (iamProjectsRef: IamProjectsRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamDeleteProject: async (iamProjectsRef: IamProjectsRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamProjectsRef' is not null or undefined
-            assertParamExists('postV1IamDeleteProject', 'iamProjectsRef', iamProjectsRef)
+            assertParamExists('postIamDeleteProject', 'iamProjectsRef', iamProjectsRef)
             const localVarPath = `/v1/iam/delete-project`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -546,9 +546,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteProvider: async (iamProvider: IamProvider, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamDeleteProvider: async (iamProvider: IamProvider, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamProvider' is not null or undefined
-            assertParamExists('postV1IamDeleteProvider', 'iamProvider', iamProvider)
+            assertParamExists('postIamDeleteProvider', 'iamProvider', iamProvider)
             const localVarPath = `/v1/iam/delete-provider`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -582,9 +582,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteRole: async (iamRolesRef: IamRolesRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamDeleteRole: async (iamRolesRef: IamRolesRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamRolesRef' is not null or undefined
-            assertParamExists('postV1IamDeleteRole', 'iamRolesRef', iamRolesRef)
+            assertParamExists('postIamDeleteRole', 'iamRolesRef', iamRolesRef)
             const localVarPath = `/v1/iam/delete-role`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -618,9 +618,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteUser: async (iamUserBody: IamUserBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamDeleteUser: async (iamUserBody: IamUserBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamUserBody' is not null or undefined
-            assertParamExists('postV1IamDeleteUser', 'iamUserBody', iamUserBody)
+            assertParamExists('postIamDeleteUser', 'iamUserBody', iamUserBody)
             const localVarPath = `/v1/iam/delete-user`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -654,9 +654,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteWorkspace: async (iamWorkspacesRef: IamWorkspacesRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamDeleteWorkspace: async (iamWorkspacesRef: IamWorkspacesRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamWorkspacesRef' is not null or undefined
-            assertParamExists('postV1IamDeleteWorkspace', 'iamWorkspacesRef', iamWorkspacesRef)
+            assertParamExists('postIamDeleteWorkspace', 'iamWorkspacesRef', iamWorkspacesRef)
             const localVarPath = `/v1/iam/delete-workspace`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -690,9 +690,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamUpdateApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamUpdateApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamApplication' is not null or undefined
-            assertParamExists('postV1IamUpdateApplication', 'iamApplication', iamApplication)
+            assertParamExists('postIamUpdateApplication', 'iamApplication', iamApplication)
             const localVarPath = `/v1/iam/update-application`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -726,9 +726,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamUpdateOrganization: async (iamUpdateOrganizationInput: IamUpdateOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamUpdateOrganization: async (iamUpdateOrganizationInput: IamUpdateOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamUpdateOrganizationInput' is not null or undefined
-            assertParamExists('postV1IamUpdateOrganization', 'iamUpdateOrganizationInput', iamUpdateOrganizationInput)
+            assertParamExists('postIamUpdateOrganization', 'iamUpdateOrganizationInput', iamUpdateOrganizationInput)
             const localVarPath = `/v1/iam/update-organization`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -762,9 +762,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamUpdateProvider: async (iamProvider: IamProvider, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamUpdateProvider: async (iamProvider: IamProvider, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamProvider' is not null or undefined
-            assertParamExists('postV1IamUpdateProvider', 'iamProvider', iamProvider)
+            assertParamExists('postIamUpdateProvider', 'iamProvider', iamProvider)
             const localVarPath = `/v1/iam/update-provider`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -798,9 +798,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamUpdateRole: async (iamRolesInput: IamRolesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamUpdateRole: async (iamRolesInput: IamRolesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamRolesInput' is not null or undefined
-            assertParamExists('postV1IamUpdateRole', 'iamRolesInput', iamRolesInput)
+            assertParamExists('postIamUpdateRole', 'iamRolesInput', iamRolesInput)
             const localVarPath = `/v1/iam/update-role`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -834,9 +834,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamUpdateUser: async (iamUserBody: IamUserBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIamUpdateUser: async (iamUserBody: IamUserBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamUserBody' is not null or undefined
-            assertParamExists('postV1IamUpdateUser', 'iamUserBody', iamUserBody)
+            assertParamExists('postIamUpdateUser', 'iamUserBody', iamUserBody)
             const localVarPath = `/v1/iam/update-user`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -870,9 +870,9 @@ export const CompatApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IamApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIamApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamApplication' is not null or undefined
-            assertParamExists('putV1IamApplication', 'iamApplication', iamApplication)
+            assertParamExists('putIamApplication', 'iamApplication', iamApplication)
             const localVarPath = `/v1/iam/application`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -917,10 +917,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1IamApplication(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1IamApplication(owner, name, options);
+        async deleteIamApplication(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamApplication(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.deleteV1IamApplication']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.deleteIamApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -931,10 +931,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1IamApplication(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1IamApplication(owner, name, options);
+        async getIamApplication(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamApplication(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.getV1IamApplication']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.getIamApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -944,10 +944,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamAddApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamAddApplication(iamApplication, options);
+        async postIamAddApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddApplication(iamApplication, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamAddApplication']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamAddApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -957,10 +957,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamAddOrganization(iamCreateOrganizationInput: IamCreateOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamAddOrganization(iamCreateOrganizationInput, options);
+        async postIamAddOrganization(iamCreateOrganizationInput: IamCreateOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddOrganization(iamCreateOrganizationInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamAddOrganization']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamAddOrganization']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -970,10 +970,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamAddProject(iamInput: IamInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamAddProject(iamInput, options);
+        async postIamAddProject(iamInput: IamInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddProject(iamInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamAddProject']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamAddProject']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -983,10 +983,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamAddProvider(iamProvider: IamProvider, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamAddProvider(iamProvider, options);
+        async postIamAddProvider(iamProvider: IamProvider, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddProvider(iamProvider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamAddProvider']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamAddProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -996,10 +996,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamAddRole(iamRolesInput: IamRolesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamAddRole(iamRolesInput, options);
+        async postIamAddRole(iamRolesInput: IamRolesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddRole(iamRolesInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamAddRole']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamAddRole']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1009,10 +1009,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamAddUser(iamUserBody: IamUserBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamAddUser(iamUserBody, options);
+        async postIamAddUser(iamUserBody: IamUserBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddUser(iamUserBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamAddUser']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamAddUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1022,10 +1022,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamAddWorkspace(iamWorkspacesInput: IamWorkspacesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamAddWorkspace(iamWorkspacesInput, options);
+        async postIamAddWorkspace(iamWorkspacesInput: IamWorkspacesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddWorkspace(iamWorkspacesInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamAddWorkspace']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamAddWorkspace']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1035,10 +1035,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamApplication(iamApplication, options);
+        async postIamApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamApplication(iamApplication, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamApplication']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1048,10 +1048,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamDeleteApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamDeleteApplication(iamApplication, options);
+        async postIamDeleteApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteApplication(iamApplication, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamDeleteApplication']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamDeleteApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1061,10 +1061,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamDeleteOrganization(iamDeleteOrganizationInput: IamDeleteOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamDeleteOrganization(iamDeleteOrganizationInput, options);
+        async postIamDeleteOrganization(iamDeleteOrganizationInput: IamDeleteOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteOrganization(iamDeleteOrganizationInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamDeleteOrganization']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamDeleteOrganization']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1074,10 +1074,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamDeleteProject(iamProjectsRef: IamProjectsRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamDeleteProject(iamProjectsRef, options);
+        async postIamDeleteProject(iamProjectsRef: IamProjectsRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteProject(iamProjectsRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamDeleteProject']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamDeleteProject']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1087,10 +1087,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamDeleteProvider(iamProvider: IamProvider, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamDeleteProvider(iamProvider, options);
+        async postIamDeleteProvider(iamProvider: IamProvider, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteProvider(iamProvider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamDeleteProvider']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamDeleteProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1100,10 +1100,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamDeleteRole(iamRolesRef: IamRolesRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamDeleteRole(iamRolesRef, options);
+        async postIamDeleteRole(iamRolesRef: IamRolesRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteRole(iamRolesRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamDeleteRole']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamDeleteRole']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1113,10 +1113,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamDeleteUser(iamUserBody: IamUserBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamDeleteUser(iamUserBody, options);
+        async postIamDeleteUser(iamUserBody: IamUserBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteUser(iamUserBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamDeleteUser']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamDeleteUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1126,10 +1126,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamDeleteWorkspace(iamWorkspacesRef: IamWorkspacesRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamDeleteWorkspace(iamWorkspacesRef, options);
+        async postIamDeleteWorkspace(iamWorkspacesRef: IamWorkspacesRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteWorkspace(iamWorkspacesRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamDeleteWorkspace']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamDeleteWorkspace']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1139,10 +1139,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamUpdateApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamUpdateApplication(iamApplication, options);
+        async postIamUpdateApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdateApplication(iamApplication, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamUpdateApplication']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamUpdateApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1152,10 +1152,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamUpdateOrganization(iamUpdateOrganizationInput: IamUpdateOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamUpdateOrganization(iamUpdateOrganizationInput, options);
+        async postIamUpdateOrganization(iamUpdateOrganizationInput: IamUpdateOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdateOrganization(iamUpdateOrganizationInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamUpdateOrganization']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamUpdateOrganization']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1165,10 +1165,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamUpdateProvider(iamProvider: IamProvider, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamUpdateProvider(iamProvider, options);
+        async postIamUpdateProvider(iamProvider: IamProvider, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdateProvider(iamProvider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamUpdateProvider']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamUpdateProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1178,10 +1178,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamUpdateRole(iamRolesInput: IamRolesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamUpdateRole(iamRolesInput, options);
+        async postIamUpdateRole(iamRolesInput: IamRolesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdateRole(iamRolesInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamUpdateRole']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamUpdateRole']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1191,10 +1191,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1IamUpdateUser(iamUserBody: IamUserBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1IamUpdateUser(iamUserBody, options);
+        async postIamUpdateUser(iamUserBody: IamUserBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdateUser(iamUserBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.postV1IamUpdateUser']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.postIamUpdateUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1204,10 +1204,10 @@ export const CompatApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1IamApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1IamApplication(iamApplication, options);
+        async putIamApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamApplication(iamApplication, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CompatApi.putV1IamApplication']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CompatApi.putIamApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1223,568 +1223,568 @@ export const CompatApiFactory = function (configuration?: Configuration, basePat
         /**
          * Removes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration before deleting it.
          * @summary Removes an application.
-         * @param {CompatApiDeleteV1IamApplicationRequest} requestParameters Request parameters.
+         * @param {CompatApiDeleteIamApplicationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1IamApplication(requestParameters: CompatApiDeleteV1IamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteResult> {
-            return localVarFp.deleteV1IamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteIamApplication(requestParameters: CompatApiDeleteIamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteResult> {
+            return localVarFp.deleteIamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
          * @summary Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-         * @param {CompatApiGetV1IamApplicationRequest} requestParameters Request parameters.
+         * @param {CompatApiGetIamApplicationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1IamApplication(requestParameters: CompatApiGetV1IamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
-            return localVarFp.getV1IamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        getIamApplication(requestParameters: CompatApiGetIamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
+            return localVarFp.getIamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.  The older spelling of POST /v1/iam/application. A name already used in the organization is refused rather than overwritten.
          * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-         * @param {CompatApiPostV1IamAddApplicationRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamAddApplicationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddApplication(requestParameters: CompatApiPostV1IamAddApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamAddApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
+        postIamAddApplication(requestParameters: CompatApiPostIamAddApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamAddApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an organization — the account everything else in your directory hangs from. Users, applications, roles, projects and workspaces are all named inside one organization, so this is the first write in a new tenant.  The older spelling of POST /v1/iam/organizations. Both reach the same create, so a name already taken is refused here too.
          * @summary Creates an organization — the account everything else in your directory hangs from.
-         * @param {CompatApiPostV1IamAddOrganizationRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamAddOrganizationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddOrganization(requestParameters: CompatApiPostV1IamAddOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamAddOrganization(requestParameters.iamCreateOrganizationInput, options).then((request) => request(axios, basePath));
+        postIamAddOrganization(requestParameters: CompatApiPostIamAddOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamAddOrganization(requestParameters.iamCreateOrganizationInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.  The older spelling of POST /v1/iam/projects. Creating one takes an administrator of the owning organization.
          * @summary Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.
-         * @param {CompatApiPostV1IamAddProjectRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamAddProjectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddProject(requestParameters: CompatApiPostV1IamAddProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamAddProject(requestParameters.iamInput, options).then((request) => request(axios, basePath));
+        postIamAddProject(requestParameters: CompatApiPostIamAddProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamAddProject(requestParameters.iamInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.  A provider is configured once here and then switched on per application, so several applications can share one set of credentials.  The older spelling of POST /v1/iam/providers.
          * @summary Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.
-         * @param {CompatApiPostV1IamAddProviderRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamAddProviderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddProvider(requestParameters: CompatApiPostV1IamAddProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamAddProvider(requestParameters.iamProvider, options).then((request) => request(axios, basePath));
+        postIamAddProvider(requestParameters: CompatApiPostIamAddProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamAddProvider(requestParameters.iamProvider, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do.  The older spelling of POST /v1/iam/roles.
          * @summary Creates a role — a named group of people that permissions are granted to.
-         * @param {CompatApiPostV1IamAddRoleRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamAddRoleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddRole(requestParameters: CompatApiPostV1IamAddRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamAddRole(requestParameters.iamRolesInput, options).then((request) => request(axios, basePath));
+        postIamAddRole(requestParameters: CompatApiPostIamAddRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamAddRole(requestParameters.iamRolesInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a person to your organization and, if you send a password, sets the one they will sign in with. The password is hashed before it is stored and is never returned to you or to anyone else.  Usernames are checked against one rule wherever an account is created — this verb, password signup, a social sign-in, or SCIM — so a name accepted here is a name accepted everywhere.  The older spelling of POST /v1/iam/users, and it posts the user\'s fields at the top level rather than wrapped in {user, password}.
          * @summary Adds a person to your organization and, if you send a password, sets the one they will sign in with.
-         * @param {CompatApiPostV1IamAddUserRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamAddUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddUser(requestParameters: CompatApiPostV1IamAddUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamAddUser(requestParameters.iamUserBody, options).then((request) => request(axios, basePath));
+        postIamAddUser(requestParameters: CompatApiPostIamAddUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamAddUser(requestParameters.iamUserBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.  The older spelling of POST /v1/iam/workspaces. Creating one takes an administrator of the owning organization.
          * @summary Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.
-         * @param {CompatApiPostV1IamAddWorkspaceRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamAddWorkspaceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamAddWorkspace(requestParameters: CompatApiPostV1IamAddWorkspaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamAddWorkspace(requestParameters.iamWorkspacesInput, options).then((request) => request(axios, basePath));
+        postIamAddWorkspace(requestParameters: CompatApiPostIamAddWorkspaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamAddWorkspace(requestParameters.iamWorkspacesInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
          * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-         * @param {CompatApiPostV1IamApplicationRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamApplicationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamApplication(requestParameters: CompatApiPostV1IamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
-            return localVarFp.postV1IamApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
+        postIamApplication(requestParameters: CompatApiPostIamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
+            return localVarFp.postIamApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration first.  The older spelling of DELETE /v1/iam/application.
          * @summary Deletes an application.
-         * @param {CompatApiPostV1IamDeleteApplicationRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamDeleteApplicationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteApplication(requestParameters: CompatApiPostV1IamDeleteApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamDeleteApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
+        postIamDeleteApplication(requestParameters: CompatApiPostIamDeleteApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamDeleteApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces. There is no undo, and every session issued under it stops working.  The older spelling of POST /v1/iam/organizations/delete.
          * @summary Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces.
-         * @param {CompatApiPostV1IamDeleteOrganizationRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamDeleteOrganizationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteOrganization(requestParameters: CompatApiPostV1IamDeleteOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamDeleteOrganization(requestParameters.iamDeleteOrganizationInput, options).then((request) => request(axios, basePath));
+        postIamDeleteOrganization(requestParameters: CompatApiPostIamDeleteOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamDeleteOrganization(requestParameters.iamDeleteOrganizationInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so anything addressed by it must move first.  The older spelling of POST /v1/iam/projects/delete.
          * @summary Deletes a project.
-         * @param {CompatApiPostV1IamDeleteProjectRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamDeleteProjectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteProject(requestParameters: CompatApiPostV1IamDeleteProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamDeleteProject(requestParameters.iamProjectsRef, options).then((request) => request(axios, basePath));
+        postIamDeleteProject(requestParameters: CompatApiPostIamDeleteProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamDeleteProject(requestParameters.iamProjectsRef, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a provider. Sign-in through it stops for every application that used it, so detach those applications first if they have no other method.  The older spelling of POST /v1/iam/providers/delete.
          * @summary Removes a provider.
-         * @param {CompatApiPostV1IamDeleteProviderRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamDeleteProviderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteProvider(requestParameters: CompatApiPostV1IamDeleteProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamDeleteProvider(requestParameters.iamProvider, options).then((request) => request(axios, basePath));
+        postIamDeleteProvider(requestParameters: CompatApiPostIamDeleteProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamDeleteProvider(requestParameters.iamProvider, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes a role. Everyone in it loses the access it carried; their accounts and any other roles they hold are untouched.  The older spelling of POST /v1/iam/roles/delete.
          * @summary Deletes a role.
-         * @param {CompatApiPostV1IamDeleteRoleRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamDeleteRoleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteRole(requestParameters: CompatApiPostV1IamDeleteRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamDeleteRole(requestParameters.iamRolesRef, options).then((request) => request(axios, basePath));
+        postIamDeleteRole(requestParameters: CompatApiPostIamDeleteRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamDeleteRole(requestParameters.iamRolesRef, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a person from your organization. Their sessions stop working and the account is gone, not suspended — to keep the record and only stop sign-in, update the user instead.  The older spelling of POST /v1/iam/users/delete.
          * @summary Removes a person from your organization.
-         * @param {CompatApiPostV1IamDeleteUserRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamDeleteUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteUser(requestParameters: CompatApiPostV1IamDeleteUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamDeleteUser(requestParameters.iamUserBody, options).then((request) => request(axios, basePath));
+        postIamDeleteUser(requestParameters: CompatApiPostIamDeleteUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamDeleteUser(requestParameters.iamUserBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Deletes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.  The older spelling of POST /v1/iam/workspaces/delete.
          * @summary Deletes a workspace.
-         * @param {CompatApiPostV1IamDeleteWorkspaceRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamDeleteWorkspaceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamDeleteWorkspace(requestParameters: CompatApiPostV1IamDeleteWorkspaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamDeleteWorkspace(requestParameters.iamWorkspacesRef, options).then((request) => request(axios, basePath));
+        postIamDeleteWorkspace(requestParameters: CompatApiPostIamDeleteWorkspaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamDeleteWorkspace(requestParameters.iamWorkspacesRef, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to. Which organization and name the application has are fixed when it is created and are not editable here.  A redirect URI you add becomes an allowed sign-in origin, so this is the call that makes login work from a new host.  The older spelling of PUT /v1/iam/application.
          * @summary Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to.
-         * @param {CompatApiPostV1IamUpdateApplicationRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamUpdateApplicationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamUpdateApplication(requestParameters: CompatApiPostV1IamUpdateApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamUpdateApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
+        postIamUpdateApplication(requestParameters: CompatApiPostIamUpdateApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamUpdateApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.  The older spelling of POST /v1/iam/organizations/update.
          * @summary Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.
-         * @param {CompatApiPostV1IamUpdateOrganizationRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamUpdateOrganizationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamUpdateOrganization(requestParameters: CompatApiPostV1IamUpdateOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamUpdateOrganization(requestParameters.iamUpdateOrganizationInput, options).then((request) => request(axios, basePath));
+        postIamUpdateOrganization(requestParameters: CompatApiPostIamUpdateOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamUpdateOrganization(requestParameters.iamUpdateOrganizationInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates a provider\'s settings or rotates the credentials it holds. The change takes effect on the next sign-in through it — sessions already issued are unaffected.  The older spelling of POST /v1/iam/providers/update.
          * @summary Updates a provider\'s settings or rotates the credentials it holds.
-         * @param {CompatApiPostV1IamUpdateProviderRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamUpdateProviderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamUpdateProvider(requestParameters: CompatApiPostV1IamUpdateProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamUpdateProvider(requestParameters.iamProvider, options).then((request) => request(axios, basePath));
+        postIamUpdateProvider(requestParameters: CompatApiPostIamUpdateProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamUpdateProvider(requestParameters.iamProvider, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates a role\'s members or the roles it includes. Access changes for everyone in it as soon as the write lands.  The older spelling of POST /v1/iam/roles/update.
          * @summary Updates a role\'s members or the roles it includes.
-         * @param {CompatApiPostV1IamUpdateRoleRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamUpdateRoleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamUpdateRole(requestParameters: CompatApiPostV1IamUpdateRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamUpdateRole(requestParameters.iamRolesInput, options).then((request) => request(axios, basePath));
+        postIamUpdateRole(requestParameters: CompatApiPostIamUpdateRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamUpdateRole(requestParameters.iamRolesInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates one of your users\' profile, roles or credentials. Send a password to reset it; leave it out and the current one stands.  The older spelling of POST /v1/iam/users/update, with the user\'s fields at the top level rather than wrapped in {user, password}.
          * @summary Updates one of your users\' profile, roles or credentials.
-         * @param {CompatApiPostV1IamUpdateUserRequest} requestParameters Request parameters.
+         * @param {CompatApiPostIamUpdateUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1IamUpdateUser(requestParameters: CompatApiPostV1IamUpdateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postV1IamUpdateUser(requestParameters.iamUserBody, options).then((request) => request(axios, basePath));
+        postIamUpdateUser(requestParameters: CompatApiPostIamUpdateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
+            return localVarFp.postIamUpdateUser(requestParameters.iamUserBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
          * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
-         * @param {CompatApiPutV1IamApplicationRequest} requestParameters Request parameters.
+         * @param {CompatApiPutIamApplicationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1IamApplication(requestParameters: CompatApiPutV1IamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
-            return localVarFp.putV1IamApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
+        putIamApplication(requestParameters: CompatApiPutIamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
+            return localVarFp.putIamApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1IamApplication operation in CompatApi.
+ * Request parameters for deleteIamApplication operation in CompatApi.
  * @export
- * @interface CompatApiDeleteV1IamApplicationRequest
+ * @interface CompatApiDeleteIamApplicationRequest
  */
-export interface CompatApiDeleteV1IamApplicationRequest {
+export interface CompatApiDeleteIamApplicationRequest {
     /**
      * 
      * @type {string}
-     * @memberof CompatApiDeleteV1IamApplication
+     * @memberof CompatApiDeleteIamApplication
      */
     readonly owner: string
 
     /**
      * 
      * @type {string}
-     * @memberof CompatApiDeleteV1IamApplication
+     * @memberof CompatApiDeleteIamApplication
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1IamApplication operation in CompatApi.
+ * Request parameters for getIamApplication operation in CompatApi.
  * @export
- * @interface CompatApiGetV1IamApplicationRequest
+ * @interface CompatApiGetIamApplicationRequest
  */
-export interface CompatApiGetV1IamApplicationRequest {
+export interface CompatApiGetIamApplicationRequest {
     /**
      * 
      * @type {string}
-     * @memberof CompatApiGetV1IamApplication
+     * @memberof CompatApiGetIamApplication
      */
     readonly owner: string
 
     /**
      * 
      * @type {string}
-     * @memberof CompatApiGetV1IamApplication
+     * @memberof CompatApiGetIamApplication
      */
     readonly name: string
 }
 
 /**
- * Request parameters for postV1IamAddApplication operation in CompatApi.
+ * Request parameters for postIamAddApplication operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamAddApplicationRequest
+ * @interface CompatApiPostIamAddApplicationRequest
  */
-export interface CompatApiPostV1IamAddApplicationRequest {
+export interface CompatApiPostIamAddApplicationRequest {
     /**
      * 
      * @type {IamApplication}
-     * @memberof CompatApiPostV1IamAddApplication
+     * @memberof CompatApiPostIamAddApplication
      */
     readonly iamApplication: IamApplication
 }
 
 /**
- * Request parameters for postV1IamAddOrganization operation in CompatApi.
+ * Request parameters for postIamAddOrganization operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamAddOrganizationRequest
+ * @interface CompatApiPostIamAddOrganizationRequest
  */
-export interface CompatApiPostV1IamAddOrganizationRequest {
+export interface CompatApiPostIamAddOrganizationRequest {
     /**
      * 
      * @type {IamCreateOrganizationInput}
-     * @memberof CompatApiPostV1IamAddOrganization
+     * @memberof CompatApiPostIamAddOrganization
      */
     readonly iamCreateOrganizationInput: IamCreateOrganizationInput
 }
 
 /**
- * Request parameters for postV1IamAddProject operation in CompatApi.
+ * Request parameters for postIamAddProject operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamAddProjectRequest
+ * @interface CompatApiPostIamAddProjectRequest
  */
-export interface CompatApiPostV1IamAddProjectRequest {
+export interface CompatApiPostIamAddProjectRequest {
     /**
      * 
      * @type {IamInput}
-     * @memberof CompatApiPostV1IamAddProject
+     * @memberof CompatApiPostIamAddProject
      */
     readonly iamInput: IamInput
 }
 
 /**
- * Request parameters for postV1IamAddProvider operation in CompatApi.
+ * Request parameters for postIamAddProvider operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamAddProviderRequest
+ * @interface CompatApiPostIamAddProviderRequest
  */
-export interface CompatApiPostV1IamAddProviderRequest {
+export interface CompatApiPostIamAddProviderRequest {
     /**
      * 
      * @type {IamProvider}
-     * @memberof CompatApiPostV1IamAddProvider
+     * @memberof CompatApiPostIamAddProvider
      */
     readonly iamProvider: IamProvider
 }
 
 /**
- * Request parameters for postV1IamAddRole operation in CompatApi.
+ * Request parameters for postIamAddRole operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamAddRoleRequest
+ * @interface CompatApiPostIamAddRoleRequest
  */
-export interface CompatApiPostV1IamAddRoleRequest {
+export interface CompatApiPostIamAddRoleRequest {
     /**
      * 
      * @type {IamRolesInput}
-     * @memberof CompatApiPostV1IamAddRole
+     * @memberof CompatApiPostIamAddRole
      */
     readonly iamRolesInput: IamRolesInput
 }
 
 /**
- * Request parameters for postV1IamAddUser operation in CompatApi.
+ * Request parameters for postIamAddUser operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamAddUserRequest
+ * @interface CompatApiPostIamAddUserRequest
  */
-export interface CompatApiPostV1IamAddUserRequest {
+export interface CompatApiPostIamAddUserRequest {
     /**
      * 
      * @type {IamUserBody}
-     * @memberof CompatApiPostV1IamAddUser
+     * @memberof CompatApiPostIamAddUser
      */
     readonly iamUserBody: IamUserBody
 }
 
 /**
- * Request parameters for postV1IamAddWorkspace operation in CompatApi.
+ * Request parameters for postIamAddWorkspace operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamAddWorkspaceRequest
+ * @interface CompatApiPostIamAddWorkspaceRequest
  */
-export interface CompatApiPostV1IamAddWorkspaceRequest {
+export interface CompatApiPostIamAddWorkspaceRequest {
     /**
      * 
      * @type {IamWorkspacesInput}
-     * @memberof CompatApiPostV1IamAddWorkspace
+     * @memberof CompatApiPostIamAddWorkspace
      */
     readonly iamWorkspacesInput: IamWorkspacesInput
 }
 
 /**
- * Request parameters for postV1IamApplication operation in CompatApi.
+ * Request parameters for postIamApplication operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamApplicationRequest
+ * @interface CompatApiPostIamApplicationRequest
  */
-export interface CompatApiPostV1IamApplicationRequest {
+export interface CompatApiPostIamApplicationRequest {
     /**
      * 
      * @type {IamApplication}
-     * @memberof CompatApiPostV1IamApplication
+     * @memberof CompatApiPostIamApplication
      */
     readonly iamApplication: IamApplication
 }
 
 /**
- * Request parameters for postV1IamDeleteApplication operation in CompatApi.
+ * Request parameters for postIamDeleteApplication operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamDeleteApplicationRequest
+ * @interface CompatApiPostIamDeleteApplicationRequest
  */
-export interface CompatApiPostV1IamDeleteApplicationRequest {
+export interface CompatApiPostIamDeleteApplicationRequest {
     /**
      * 
      * @type {IamApplication}
-     * @memberof CompatApiPostV1IamDeleteApplication
+     * @memberof CompatApiPostIamDeleteApplication
      */
     readonly iamApplication: IamApplication
 }
 
 /**
- * Request parameters for postV1IamDeleteOrganization operation in CompatApi.
+ * Request parameters for postIamDeleteOrganization operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamDeleteOrganizationRequest
+ * @interface CompatApiPostIamDeleteOrganizationRequest
  */
-export interface CompatApiPostV1IamDeleteOrganizationRequest {
+export interface CompatApiPostIamDeleteOrganizationRequest {
     /**
      * 
      * @type {IamDeleteOrganizationInput}
-     * @memberof CompatApiPostV1IamDeleteOrganization
+     * @memberof CompatApiPostIamDeleteOrganization
      */
     readonly iamDeleteOrganizationInput: IamDeleteOrganizationInput
 }
 
 /**
- * Request parameters for postV1IamDeleteProject operation in CompatApi.
+ * Request parameters for postIamDeleteProject operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamDeleteProjectRequest
+ * @interface CompatApiPostIamDeleteProjectRequest
  */
-export interface CompatApiPostV1IamDeleteProjectRequest {
+export interface CompatApiPostIamDeleteProjectRequest {
     /**
      * 
      * @type {IamProjectsRef}
-     * @memberof CompatApiPostV1IamDeleteProject
+     * @memberof CompatApiPostIamDeleteProject
      */
     readonly iamProjectsRef: IamProjectsRef
 }
 
 /**
- * Request parameters for postV1IamDeleteProvider operation in CompatApi.
+ * Request parameters for postIamDeleteProvider operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamDeleteProviderRequest
+ * @interface CompatApiPostIamDeleteProviderRequest
  */
-export interface CompatApiPostV1IamDeleteProviderRequest {
+export interface CompatApiPostIamDeleteProviderRequest {
     /**
      * 
      * @type {IamProvider}
-     * @memberof CompatApiPostV1IamDeleteProvider
+     * @memberof CompatApiPostIamDeleteProvider
      */
     readonly iamProvider: IamProvider
 }
 
 /**
- * Request parameters for postV1IamDeleteRole operation in CompatApi.
+ * Request parameters for postIamDeleteRole operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamDeleteRoleRequest
+ * @interface CompatApiPostIamDeleteRoleRequest
  */
-export interface CompatApiPostV1IamDeleteRoleRequest {
+export interface CompatApiPostIamDeleteRoleRequest {
     /**
      * 
      * @type {IamRolesRef}
-     * @memberof CompatApiPostV1IamDeleteRole
+     * @memberof CompatApiPostIamDeleteRole
      */
     readonly iamRolesRef: IamRolesRef
 }
 
 /**
- * Request parameters for postV1IamDeleteUser operation in CompatApi.
+ * Request parameters for postIamDeleteUser operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamDeleteUserRequest
+ * @interface CompatApiPostIamDeleteUserRequest
  */
-export interface CompatApiPostV1IamDeleteUserRequest {
+export interface CompatApiPostIamDeleteUserRequest {
     /**
      * 
      * @type {IamUserBody}
-     * @memberof CompatApiPostV1IamDeleteUser
+     * @memberof CompatApiPostIamDeleteUser
      */
     readonly iamUserBody: IamUserBody
 }
 
 /**
- * Request parameters for postV1IamDeleteWorkspace operation in CompatApi.
+ * Request parameters for postIamDeleteWorkspace operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamDeleteWorkspaceRequest
+ * @interface CompatApiPostIamDeleteWorkspaceRequest
  */
-export interface CompatApiPostV1IamDeleteWorkspaceRequest {
+export interface CompatApiPostIamDeleteWorkspaceRequest {
     /**
      * 
      * @type {IamWorkspacesRef}
-     * @memberof CompatApiPostV1IamDeleteWorkspace
+     * @memberof CompatApiPostIamDeleteWorkspace
      */
     readonly iamWorkspacesRef: IamWorkspacesRef
 }
 
 /**
- * Request parameters for postV1IamUpdateApplication operation in CompatApi.
+ * Request parameters for postIamUpdateApplication operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamUpdateApplicationRequest
+ * @interface CompatApiPostIamUpdateApplicationRequest
  */
-export interface CompatApiPostV1IamUpdateApplicationRequest {
+export interface CompatApiPostIamUpdateApplicationRequest {
     /**
      * 
      * @type {IamApplication}
-     * @memberof CompatApiPostV1IamUpdateApplication
+     * @memberof CompatApiPostIamUpdateApplication
      */
     readonly iamApplication: IamApplication
 }
 
 /**
- * Request parameters for postV1IamUpdateOrganization operation in CompatApi.
+ * Request parameters for postIamUpdateOrganization operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamUpdateOrganizationRequest
+ * @interface CompatApiPostIamUpdateOrganizationRequest
  */
-export interface CompatApiPostV1IamUpdateOrganizationRequest {
+export interface CompatApiPostIamUpdateOrganizationRequest {
     /**
      * 
      * @type {IamUpdateOrganizationInput}
-     * @memberof CompatApiPostV1IamUpdateOrganization
+     * @memberof CompatApiPostIamUpdateOrganization
      */
     readonly iamUpdateOrganizationInput: IamUpdateOrganizationInput
 }
 
 /**
- * Request parameters for postV1IamUpdateProvider operation in CompatApi.
+ * Request parameters for postIamUpdateProvider operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamUpdateProviderRequest
+ * @interface CompatApiPostIamUpdateProviderRequest
  */
-export interface CompatApiPostV1IamUpdateProviderRequest {
+export interface CompatApiPostIamUpdateProviderRequest {
     /**
      * 
      * @type {IamProvider}
-     * @memberof CompatApiPostV1IamUpdateProvider
+     * @memberof CompatApiPostIamUpdateProvider
      */
     readonly iamProvider: IamProvider
 }
 
 /**
- * Request parameters for postV1IamUpdateRole operation in CompatApi.
+ * Request parameters for postIamUpdateRole operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamUpdateRoleRequest
+ * @interface CompatApiPostIamUpdateRoleRequest
  */
-export interface CompatApiPostV1IamUpdateRoleRequest {
+export interface CompatApiPostIamUpdateRoleRequest {
     /**
      * 
      * @type {IamRolesInput}
-     * @memberof CompatApiPostV1IamUpdateRole
+     * @memberof CompatApiPostIamUpdateRole
      */
     readonly iamRolesInput: IamRolesInput
 }
 
 /**
- * Request parameters for postV1IamUpdateUser operation in CompatApi.
+ * Request parameters for postIamUpdateUser operation in CompatApi.
  * @export
- * @interface CompatApiPostV1IamUpdateUserRequest
+ * @interface CompatApiPostIamUpdateUserRequest
  */
-export interface CompatApiPostV1IamUpdateUserRequest {
+export interface CompatApiPostIamUpdateUserRequest {
     /**
      * 
      * @type {IamUserBody}
-     * @memberof CompatApiPostV1IamUpdateUser
+     * @memberof CompatApiPostIamUpdateUser
      */
     readonly iamUserBody: IamUserBody
 }
 
 /**
- * Request parameters for putV1IamApplication operation in CompatApi.
+ * Request parameters for putIamApplication operation in CompatApi.
  * @export
- * @interface CompatApiPutV1IamApplicationRequest
+ * @interface CompatApiPutIamApplicationRequest
  */
-export interface CompatApiPutV1IamApplicationRequest {
+export interface CompatApiPutIamApplicationRequest {
     /**
      * 
      * @type {IamApplication}
-     * @memberof CompatApiPutV1IamApplication
+     * @memberof CompatApiPutIamApplication
      */
     readonly iamApplication: IamApplication
 }
@@ -1799,277 +1799,277 @@ export class CompatApi extends BaseAPI {
     /**
      * Removes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration before deleting it.
      * @summary Removes an application.
-     * @param {CompatApiDeleteV1IamApplicationRequest} requestParameters Request parameters.
+     * @param {CompatApiDeleteIamApplicationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public deleteV1IamApplication(requestParameters: CompatApiDeleteV1IamApplicationRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).deleteV1IamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteIamApplication(requestParameters: CompatApiDeleteIamApplicationRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).deleteIamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
      * @summary Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-     * @param {CompatApiGetV1IamApplicationRequest} requestParameters Request parameters.
+     * @param {CompatApiGetIamApplicationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public getV1IamApplication(requestParameters: CompatApiGetV1IamApplicationRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).getV1IamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getIamApplication(requestParameters: CompatApiGetIamApplicationRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).getIamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.  The older spelling of POST /v1/iam/application. A name already used in the organization is refused rather than overwritten.
      * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-     * @param {CompatApiPostV1IamAddApplicationRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamAddApplicationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamAddApplication(requestParameters: CompatApiPostV1IamAddApplicationRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamAddApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
+    public postIamAddApplication(requestParameters: CompatApiPostIamAddApplicationRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamAddApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates an organization — the account everything else in your directory hangs from. Users, applications, roles, projects and workspaces are all named inside one organization, so this is the first write in a new tenant.  The older spelling of POST /v1/iam/organizations. Both reach the same create, so a name already taken is refused here too.
      * @summary Creates an organization — the account everything else in your directory hangs from.
-     * @param {CompatApiPostV1IamAddOrganizationRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamAddOrganizationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamAddOrganization(requestParameters: CompatApiPostV1IamAddOrganizationRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamAddOrganization(requestParameters.iamCreateOrganizationInput, options).then((request) => request(this.axios, this.basePath));
+    public postIamAddOrganization(requestParameters: CompatApiPostIamAddOrganizationRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamAddOrganization(requestParameters.iamCreateOrganizationInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.  The older spelling of POST /v1/iam/projects. Creating one takes an administrator of the owning organization.
      * @summary Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.
-     * @param {CompatApiPostV1IamAddProjectRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamAddProjectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamAddProject(requestParameters: CompatApiPostV1IamAddProjectRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamAddProject(requestParameters.iamInput, options).then((request) => request(this.axios, this.basePath));
+    public postIamAddProject(requestParameters: CompatApiPostIamAddProjectRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamAddProject(requestParameters.iamInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.  A provider is configured once here and then switched on per application, so several applications can share one set of credentials.  The older spelling of POST /v1/iam/providers.
      * @summary Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.
-     * @param {CompatApiPostV1IamAddProviderRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamAddProviderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamAddProvider(requestParameters: CompatApiPostV1IamAddProviderRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamAddProvider(requestParameters.iamProvider, options).then((request) => request(this.axios, this.basePath));
+    public postIamAddProvider(requestParameters: CompatApiPostIamAddProviderRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamAddProvider(requestParameters.iamProvider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do.  The older spelling of POST /v1/iam/roles.
      * @summary Creates a role — a named group of people that permissions are granted to.
-     * @param {CompatApiPostV1IamAddRoleRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamAddRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamAddRole(requestParameters: CompatApiPostV1IamAddRoleRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamAddRole(requestParameters.iamRolesInput, options).then((request) => request(this.axios, this.basePath));
+    public postIamAddRole(requestParameters: CompatApiPostIamAddRoleRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamAddRole(requestParameters.iamRolesInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Adds a person to your organization and, if you send a password, sets the one they will sign in with. The password is hashed before it is stored and is never returned to you or to anyone else.  Usernames are checked against one rule wherever an account is created — this verb, password signup, a social sign-in, or SCIM — so a name accepted here is a name accepted everywhere.  The older spelling of POST /v1/iam/users, and it posts the user\'s fields at the top level rather than wrapped in {user, password}.
      * @summary Adds a person to your organization and, if you send a password, sets the one they will sign in with.
-     * @param {CompatApiPostV1IamAddUserRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamAddUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamAddUser(requestParameters: CompatApiPostV1IamAddUserRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamAddUser(requestParameters.iamUserBody, options).then((request) => request(this.axios, this.basePath));
+    public postIamAddUser(requestParameters: CompatApiPostIamAddUserRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamAddUser(requestParameters.iamUserBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.  The older spelling of POST /v1/iam/workspaces. Creating one takes an administrator of the owning organization.
      * @summary Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.
-     * @param {CompatApiPostV1IamAddWorkspaceRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamAddWorkspaceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamAddWorkspace(requestParameters: CompatApiPostV1IamAddWorkspaceRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamAddWorkspace(requestParameters.iamWorkspacesInput, options).then((request) => request(this.axios, this.basePath));
+    public postIamAddWorkspace(requestParameters: CompatApiPostIamAddWorkspaceRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamAddWorkspace(requestParameters.iamWorkspacesInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
      * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-     * @param {CompatApiPostV1IamApplicationRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamApplicationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamApplication(requestParameters: CompatApiPostV1IamApplicationRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
+    public postIamApplication(requestParameters: CompatApiPostIamApplicationRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Deletes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration first.  The older spelling of DELETE /v1/iam/application.
      * @summary Deletes an application.
-     * @param {CompatApiPostV1IamDeleteApplicationRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamDeleteApplicationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamDeleteApplication(requestParameters: CompatApiPostV1IamDeleteApplicationRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamDeleteApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
+    public postIamDeleteApplication(requestParameters: CompatApiPostIamDeleteApplicationRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamDeleteApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces. There is no undo, and every session issued under it stops working.  The older spelling of POST /v1/iam/organizations/delete.
      * @summary Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces.
-     * @param {CompatApiPostV1IamDeleteOrganizationRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamDeleteOrganizationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamDeleteOrganization(requestParameters: CompatApiPostV1IamDeleteOrganizationRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamDeleteOrganization(requestParameters.iamDeleteOrganizationInput, options).then((request) => request(this.axios, this.basePath));
+    public postIamDeleteOrganization(requestParameters: CompatApiPostIamDeleteOrganizationRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamDeleteOrganization(requestParameters.iamDeleteOrganizationInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Deletes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so anything addressed by it must move first.  The older spelling of POST /v1/iam/projects/delete.
      * @summary Deletes a project.
-     * @param {CompatApiPostV1IamDeleteProjectRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamDeleteProjectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamDeleteProject(requestParameters: CompatApiPostV1IamDeleteProjectRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamDeleteProject(requestParameters.iamProjectsRef, options).then((request) => request(this.axios, this.basePath));
+    public postIamDeleteProject(requestParameters: CompatApiPostIamDeleteProjectRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamDeleteProject(requestParameters.iamProjectsRef, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes a provider. Sign-in through it stops for every application that used it, so detach those applications first if they have no other method.  The older spelling of POST /v1/iam/providers/delete.
      * @summary Removes a provider.
-     * @param {CompatApiPostV1IamDeleteProviderRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamDeleteProviderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamDeleteProvider(requestParameters: CompatApiPostV1IamDeleteProviderRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamDeleteProvider(requestParameters.iamProvider, options).then((request) => request(this.axios, this.basePath));
+    public postIamDeleteProvider(requestParameters: CompatApiPostIamDeleteProviderRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamDeleteProvider(requestParameters.iamProvider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Deletes a role. Everyone in it loses the access it carried; their accounts and any other roles they hold are untouched.  The older spelling of POST /v1/iam/roles/delete.
      * @summary Deletes a role.
-     * @param {CompatApiPostV1IamDeleteRoleRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamDeleteRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamDeleteRole(requestParameters: CompatApiPostV1IamDeleteRoleRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamDeleteRole(requestParameters.iamRolesRef, options).then((request) => request(this.axios, this.basePath));
+    public postIamDeleteRole(requestParameters: CompatApiPostIamDeleteRoleRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamDeleteRole(requestParameters.iamRolesRef, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes a person from your organization. Their sessions stop working and the account is gone, not suspended — to keep the record and only stop sign-in, update the user instead.  The older spelling of POST /v1/iam/users/delete.
      * @summary Removes a person from your organization.
-     * @param {CompatApiPostV1IamDeleteUserRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamDeleteUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamDeleteUser(requestParameters: CompatApiPostV1IamDeleteUserRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamDeleteUser(requestParameters.iamUserBody, options).then((request) => request(this.axios, this.basePath));
+    public postIamDeleteUser(requestParameters: CompatApiPostIamDeleteUserRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamDeleteUser(requestParameters.iamUserBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Deletes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.  The older spelling of POST /v1/iam/workspaces/delete.
      * @summary Deletes a workspace.
-     * @param {CompatApiPostV1IamDeleteWorkspaceRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamDeleteWorkspaceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamDeleteWorkspace(requestParameters: CompatApiPostV1IamDeleteWorkspaceRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamDeleteWorkspace(requestParameters.iamWorkspacesRef, options).then((request) => request(this.axios, this.basePath));
+    public postIamDeleteWorkspace(requestParameters: CompatApiPostIamDeleteWorkspaceRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamDeleteWorkspace(requestParameters.iamWorkspacesRef, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to. Which organization and name the application has are fixed when it is created and are not editable here.  A redirect URI you add becomes an allowed sign-in origin, so this is the call that makes login work from a new host.  The older spelling of PUT /v1/iam/application.
      * @summary Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to.
-     * @param {CompatApiPostV1IamUpdateApplicationRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamUpdateApplicationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamUpdateApplication(requestParameters: CompatApiPostV1IamUpdateApplicationRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamUpdateApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
+    public postIamUpdateApplication(requestParameters: CompatApiPostIamUpdateApplicationRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamUpdateApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.  The older spelling of POST /v1/iam/organizations/update.
      * @summary Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.
-     * @param {CompatApiPostV1IamUpdateOrganizationRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamUpdateOrganizationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamUpdateOrganization(requestParameters: CompatApiPostV1IamUpdateOrganizationRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamUpdateOrganization(requestParameters.iamUpdateOrganizationInput, options).then((request) => request(this.axios, this.basePath));
+    public postIamUpdateOrganization(requestParameters: CompatApiPostIamUpdateOrganizationRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamUpdateOrganization(requestParameters.iamUpdateOrganizationInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Updates a provider\'s settings or rotates the credentials it holds. The change takes effect on the next sign-in through it — sessions already issued are unaffected.  The older spelling of POST /v1/iam/providers/update.
      * @summary Updates a provider\'s settings or rotates the credentials it holds.
-     * @param {CompatApiPostV1IamUpdateProviderRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamUpdateProviderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamUpdateProvider(requestParameters: CompatApiPostV1IamUpdateProviderRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamUpdateProvider(requestParameters.iamProvider, options).then((request) => request(this.axios, this.basePath));
+    public postIamUpdateProvider(requestParameters: CompatApiPostIamUpdateProviderRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamUpdateProvider(requestParameters.iamProvider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Updates a role\'s members or the roles it includes. Access changes for everyone in it as soon as the write lands.  The older spelling of POST /v1/iam/roles/update.
      * @summary Updates a role\'s members or the roles it includes.
-     * @param {CompatApiPostV1IamUpdateRoleRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamUpdateRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamUpdateRole(requestParameters: CompatApiPostV1IamUpdateRoleRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamUpdateRole(requestParameters.iamRolesInput, options).then((request) => request(this.axios, this.basePath));
+    public postIamUpdateRole(requestParameters: CompatApiPostIamUpdateRoleRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamUpdateRole(requestParameters.iamRolesInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Updates one of your users\' profile, roles or credentials. Send a password to reset it; leave it out and the current one stands.  The older spelling of POST /v1/iam/users/update, with the user\'s fields at the top level rather than wrapped in {user, password}.
      * @summary Updates one of your users\' profile, roles or credentials.
-     * @param {CompatApiPostV1IamUpdateUserRequest} requestParameters Request parameters.
+     * @param {CompatApiPostIamUpdateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public postV1IamUpdateUser(requestParameters: CompatApiPostV1IamUpdateUserRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).postV1IamUpdateUser(requestParameters.iamUserBody, options).then((request) => request(this.axios, this.basePath));
+    public postIamUpdateUser(requestParameters: CompatApiPostIamUpdateUserRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).postIamUpdateUser(requestParameters.iamUserBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
      * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
-     * @param {CompatApiPutV1IamApplicationRequest} requestParameters Request parameters.
+     * @param {CompatApiPutIamApplicationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompatApi
      */
-    public putV1IamApplication(requestParameters: CompatApiPutV1IamApplicationRequest, options?: RawAxiosRequestConfig) {
-        return CompatApiFp(this.configuration).putV1IamApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
+    public putIamApplication(requestParameters: CompatApiPutIamApplicationRequest, options?: RawAxiosRequestConfig) {
+        return CompatApiFp(this.configuration).putIamApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -45,7 +45,7 @@ export const HelpApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1HelpArticles: async (category?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getHelpArticles: async (category?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/help/articles`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -84,9 +84,9 @@ export const HelpApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1HelpArticlesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getHelpArticlesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getV1HelpArticlesBySlug', 'slug', slug)
+            assertParamExists('getHelpArticlesBySlug', 'slug', slug)
             const localVarPath = `/v1/help/articles/{slug}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -117,7 +117,7 @@ export const HelpApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1HelpCategories: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getHelpCategories: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/help/categories`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -148,9 +148,9 @@ export const HelpApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1HelpTickets: async (helpTicketIntake: HelpTicketIntake, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postHelpTickets: async (helpTicketIntake: HelpTicketIntake, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'helpTicketIntake' is not null or undefined
-            assertParamExists('postV1HelpTickets', 'helpTicketIntake', helpTicketIntake)
+            assertParamExists('postHelpTickets', 'helpTicketIntake', helpTicketIntake)
             const localVarPath = `/v1/help/tickets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -195,10 +195,10 @@ export const HelpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1HelpArticles(category?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpArticleList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1HelpArticles(category, limit, options);
+        async getHelpArticles(category?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpArticleList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelpArticles(category, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HelpApi.getV1HelpArticles']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['HelpApi.getHelpArticles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -208,10 +208,10 @@ export const HelpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1HelpArticlesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpArticle>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1HelpArticlesBySlug(slug, options);
+        async getHelpArticlesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpArticle>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelpArticlesBySlug(slug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HelpApi.getV1HelpArticlesBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['HelpApi.getHelpArticlesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -220,10 +220,10 @@ export const HelpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1HelpCategories(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpCategoryList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1HelpCategories(options);
+        async getHelpCategories(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpCategoryList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHelpCategories(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HelpApi.getV1HelpCategories']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['HelpApi.getHelpCategories']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -233,10 +233,10 @@ export const HelpApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1HelpTickets(helpTicketIntake: HelpTicketIntake, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpTicketFiled>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1HelpTickets(helpTicketIntake, options);
+        async postHelpTickets(helpTicketIntake: HelpTicketIntake, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HelpTicketFiled>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postHelpTickets(helpTicketIntake, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['HelpApi.postV1HelpTickets']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['HelpApi.postHelpTickets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -252,22 +252,22 @@ export const HelpApiFactory = function (configuration?: Configuration, basePath?
         /**
          * Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards. The org is server-fixed and the status/is_public filter is server-set, so neither the tenant nor the visibility can be widened by the caller. A deployment with no help center answers 404.
          * @summary Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards.
-         * @param {HelpApiGetV1HelpArticlesRequest} requestParameters Request parameters.
+         * @param {HelpApiGetHelpArticlesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1HelpArticles(requestParameters: HelpApiGetV1HelpArticlesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<HelpArticleList> {
-            return localVarFp.getV1HelpArticles(requestParameters.category, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getHelpArticles(requestParameters: HelpApiGetHelpArticlesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<HelpArticleList> {
+            return localVarFp.getHelpArticles(requestParameters.category, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one public article by slug, with its body. A missing, Draft, or internal (non-public) article is 404 — fail-closed, so this route is no existence oracle for anything beyond \"published and public\".
          * @summary Returns one public article by slug, with its body.
-         * @param {HelpApiGetV1HelpArticlesBySlugRequest} requestParameters Request parameters.
+         * @param {HelpApiGetHelpArticlesBySlugRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1HelpArticlesBySlug(requestParameters: HelpApiGetV1HelpArticlesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelpArticle> {
-            return localVarFp.getV1HelpArticlesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        getHelpArticlesBySlug(requestParameters: HelpApiGetHelpArticlesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelpArticle> {
+            return localVarFp.getHelpArticlesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the knowledge-base sections for the public center\'s navigation — but ONLY the sections that front at least one Published, public article, so an internal (agent-only) category name or description never leaks. A section with no public article is invisible; a center with no public articles has no sections, which is an empty list rather than an error.
@@ -275,67 +275,67 @@ export const HelpApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1HelpCategories(options?: RawAxiosRequestConfig): AxiosPromise<HelpCategoryList> {
-            return localVarFp.getV1HelpCategories(options).then((request) => request(axios, basePath));
+        getHelpCategories(options?: RawAxiosRequestConfig): AxiosPromise<HelpCategoryList> {
+            return localVarFp.getHelpCategories(options).then((request) => request(axios, basePath));
         },
         /**
          * Files a customer support ticket into the public help center. It creates the ticket (status Open, source portal) with the customer\'s message on the description, then records that same message as the opening entry of the ticket\'s conversation thread; the description carries it regardless, so failing to write that entry loses nothing. Answers 201 with an opaque reference.  A deployment with no help center answers 404, one whose center has not installed the Help model answers 503, and a body over 64 KiB answers 413 — in that order, which is the order the route has always decided them in.
          * @summary Files a customer support ticket into the public help center.
-         * @param {HelpApiPostV1HelpTicketsRequest} requestParameters Request parameters.
+         * @param {HelpApiPostHelpTicketsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1HelpTickets(requestParameters: HelpApiPostV1HelpTicketsRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelpTicketFiled> {
-            return localVarFp.postV1HelpTickets(requestParameters.helpTicketIntake, options).then((request) => request(axios, basePath));
+        postHelpTickets(requestParameters: HelpApiPostHelpTicketsRequest, options?: RawAxiosRequestConfig): AxiosPromise<HelpTicketFiled> {
+            return localVarFp.postHelpTickets(requestParameters.helpTicketIntake, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getV1HelpArticles operation in HelpApi.
+ * Request parameters for getHelpArticles operation in HelpApi.
  * @export
- * @interface HelpApiGetV1HelpArticlesRequest
+ * @interface HelpApiGetHelpArticlesRequest
  */
-export interface HelpApiGetV1HelpArticlesRequest {
+export interface HelpApiGetHelpArticlesRequest {
     /**
      * Category narrows the list to one knowledge-base section, matched against the article\&#39;s category by exact name. Empty lists every section.
      * @type {string}
-     * @memberof HelpApiGetV1HelpArticles
+     * @memberof HelpApiGetHelpArticles
      */
     readonly category?: string
 
     /**
      * Limit caps how many articles are returned. Anything that is not a positive integer uses 50, and values above 200 are clamped to 200.
      * @type {number}
-     * @memberof HelpApiGetV1HelpArticles
+     * @memberof HelpApiGetHelpArticles
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getV1HelpArticlesBySlug operation in HelpApi.
+ * Request parameters for getHelpArticlesBySlug operation in HelpApi.
  * @export
- * @interface HelpApiGetV1HelpArticlesBySlugRequest
+ * @interface HelpApiGetHelpArticlesBySlugRequest
  */
-export interface HelpApiGetV1HelpArticlesBySlugRequest {
+export interface HelpApiGetHelpArticlesBySlugRequest {
     /**
      * Slug is the article\&#39;s public identifier, from the path. It IS the document name in the help center\&#39;s store.
      * @type {string}
-     * @memberof HelpApiGetV1HelpArticlesBySlug
+     * @memberof HelpApiGetHelpArticlesBySlug
      */
     readonly slug: string
 }
 
 /**
- * Request parameters for postV1HelpTickets operation in HelpApi.
+ * Request parameters for postHelpTickets operation in HelpApi.
  * @export
- * @interface HelpApiPostV1HelpTicketsRequest
+ * @interface HelpApiPostHelpTicketsRequest
  */
-export interface HelpApiPostV1HelpTicketsRequest {
+export interface HelpApiPostHelpTicketsRequest {
     /**
      * 
      * @type {HelpTicketIntake}
-     * @memberof HelpApiPostV1HelpTickets
+     * @memberof HelpApiPostHelpTickets
      */
     readonly helpTicketIntake: HelpTicketIntake
 }
@@ -350,25 +350,25 @@ export class HelpApi extends BaseAPI {
     /**
      * Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards. The org is server-fixed and the status/is_public filter is server-set, so neither the tenant nor the visibility can be widened by the caller. A deployment with no help center answers 404.
      * @summary Returns the public knowledge base: the help center\'s Published, publicly-visible articles as cards.
-     * @param {HelpApiGetV1HelpArticlesRequest} requestParameters Request parameters.
+     * @param {HelpApiGetHelpArticlesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelpApi
      */
-    public getV1HelpArticles(requestParameters: HelpApiGetV1HelpArticlesRequest = {}, options?: RawAxiosRequestConfig) {
-        return HelpApiFp(this.configuration).getV1HelpArticles(requestParameters.category, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getHelpArticles(requestParameters: HelpApiGetHelpArticlesRequest = {}, options?: RawAxiosRequestConfig) {
+        return HelpApiFp(this.configuration).getHelpArticles(requestParameters.category, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one public article by slug, with its body. A missing, Draft, or internal (non-public) article is 404 — fail-closed, so this route is no existence oracle for anything beyond \"published and public\".
      * @summary Returns one public article by slug, with its body.
-     * @param {HelpApiGetV1HelpArticlesBySlugRequest} requestParameters Request parameters.
+     * @param {HelpApiGetHelpArticlesBySlugRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelpApi
      */
-    public getV1HelpArticlesBySlug(requestParameters: HelpApiGetV1HelpArticlesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return HelpApiFp(this.configuration).getV1HelpArticlesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public getHelpArticlesBySlug(requestParameters: HelpApiGetHelpArticlesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return HelpApiFp(this.configuration).getHelpArticlesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -378,20 +378,20 @@ export class HelpApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof HelpApi
      */
-    public getV1HelpCategories(options?: RawAxiosRequestConfig) {
-        return HelpApiFp(this.configuration).getV1HelpCategories(options).then((request) => request(this.axios, this.basePath));
+    public getHelpCategories(options?: RawAxiosRequestConfig) {
+        return HelpApiFp(this.configuration).getHelpCategories(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Files a customer support ticket into the public help center. It creates the ticket (status Open, source portal) with the customer\'s message on the description, then records that same message as the opening entry of the ticket\'s conversation thread; the description carries it regardless, so failing to write that entry loses nothing. Answers 201 with an opaque reference.  A deployment with no help center answers 404, one whose center has not installed the Help model answers 503, and a body over 64 KiB answers 413 — in that order, which is the order the route has always decided them in.
      * @summary Files a customer support ticket into the public help center.
-     * @param {HelpApiPostV1HelpTicketsRequest} requestParameters Request parameters.
+     * @param {HelpApiPostHelpTicketsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof HelpApi
      */
-    public postV1HelpTickets(requestParameters: HelpApiPostV1HelpTicketsRequest, options?: RawAxiosRequestConfig) {
-        return HelpApiFp(this.configuration).postV1HelpTickets(requestParameters.helpTicketIntake, options).then((request) => request(this.axios, this.basePath));
+    public postHelpTickets(requestParameters: HelpApiPostHelpTicketsRequest, options?: RawAxiosRequestConfig) {
+        return HelpApiFp(this.configuration).postHelpTickets(requestParameters.helpTicketIntake, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -53,11 +53,11 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1FrameworkByDoctypeByName: async (doctype: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteFrameworkByDoctypeByName: async (doctype: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'doctype' is not null or undefined
-            assertParamExists('deleteV1FrameworkByDoctypeByName', 'doctype', doctype)
+            assertParamExists('deleteFrameworkByDoctypeByName', 'doctype', doctype)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1FrameworkByDoctypeByName', 'name', name)
+            assertParamExists('deleteFrameworkByDoctypeByName', 'name', name)
             const localVarPath = `/v1/framework/{doctype}/{name}`
                 .replace(`{${"doctype"}}`, encodeURIComponent(String(doctype)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -90,9 +90,9 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1FrameworkDoctypesByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteFrameworkDoctypesByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteV1FrameworkDoctypesByName', 'name', name)
+            assertParamExists('deleteFrameworkDoctypesByName', 'name', name)
             const localVarPath = `/v1/framework/doctypes/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -125,11 +125,11 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1FrameworkRolesByUserByRole: async (user: string, role: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteFrameworkRolesByUserByRole: async (user: string, role: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'user' is not null or undefined
-            assertParamExists('deleteV1FrameworkRolesByUserByRole', 'user', user)
+            assertParamExists('deleteFrameworkRolesByUserByRole', 'user', user)
             // verify required parameter 'role' is not null or undefined
-            assertParamExists('deleteV1FrameworkRolesByUserByRole', 'role', role)
+            assertParamExists('deleteFrameworkRolesByUserByRole', 'role', role)
             const localVarPath = `/v1/framework/roles/{user}/{role}`
                 .replace(`{${"user"}}`, encodeURIComponent(String(user)))
                 .replace(`{${"role"}}`, encodeURIComponent(String(role)));
@@ -166,9 +166,9 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkByDoctype: async (doctype: string, filters?: string, fields?: string, orderBy?: string, limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFrameworkByDoctype: async (doctype: string, filters?: string, fields?: string, orderBy?: string, limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'doctype' is not null or undefined
-            assertParamExists('getV1FrameworkByDoctype', 'doctype', doctype)
+            assertParamExists('getFrameworkByDoctype', 'doctype', doctype)
             const localVarPath = `/v1/framework/{doctype}`
                 .replace(`{${"doctype"}}`, encodeURIComponent(String(doctype)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -217,11 +217,11 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkByDoctypeByName: async (doctype: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFrameworkByDoctypeByName: async (doctype: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'doctype' is not null or undefined
-            assertParamExists('getV1FrameworkByDoctypeByName', 'doctype', doctype)
+            assertParamExists('getFrameworkByDoctypeByName', 'doctype', doctype)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1FrameworkByDoctypeByName', 'name', name)
+            assertParamExists('getFrameworkByDoctypeByName', 'name', name)
             const localVarPath = `/v1/framework/{doctype}/{name}`
                 .replace(`{${"doctype"}}`, encodeURIComponent(String(doctype)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -253,7 +253,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkDoctypes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFrameworkDoctypes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/framework/doctypes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -284,9 +284,9 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkDoctypesByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFrameworkDoctypesByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getV1FrameworkDoctypesByName', 'name', name)
+            assertParamExists('getFrameworkDoctypesByName', 'name', name)
             const localVarPath = `/v1/framework/doctypes/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -317,7 +317,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkModules: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFrameworkModules: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/framework/modules`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -348,9 +348,9 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkModulesByModule: async (module: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFrameworkModulesByModule: async (module: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'module' is not null or undefined
-            assertParamExists('getV1FrameworkModulesByModule', 'module', module)
+            assertParamExists('getFrameworkModulesByModule', 'module', module)
             const localVarPath = `/v1/framework/modules/{module}`
                 .replace(`{${"module"}}`, encodeURIComponent(String(module)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -381,7 +381,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkRoles: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFrameworkRoles: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/framework/roles`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -411,7 +411,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFrameworkSummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/framework/summary`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -442,9 +442,9 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkByDoctype: async (doctype: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFrameworkByDoctype: async (doctype: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'doctype' is not null or undefined
-            assertParamExists('postV1FrameworkByDoctype', 'doctype', doctype)
+            assertParamExists('postFrameworkByDoctype', 'doctype', doctype)
             const localVarPath = `/v1/framework/{doctype}`
                 .replace(`{${"doctype"}}`, encodeURIComponent(String(doctype)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -477,11 +477,11 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkByDoctypeByNameCancel: async (doctype: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFrameworkByDoctypeByNameCancel: async (doctype: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'doctype' is not null or undefined
-            assertParamExists('postV1FrameworkByDoctypeByNameCancel', 'doctype', doctype)
+            assertParamExists('postFrameworkByDoctypeByNameCancel', 'doctype', doctype)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1FrameworkByDoctypeByNameCancel', 'name', name)
+            assertParamExists('postFrameworkByDoctypeByNameCancel', 'name', name)
             const localVarPath = `/v1/framework/{doctype}/{name}/cancel`
                 .replace(`{${"doctype"}}`, encodeURIComponent(String(doctype)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -515,11 +515,11 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkByDoctypeByNameSubmit: async (doctype: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFrameworkByDoctypeByNameSubmit: async (doctype: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'doctype' is not null or undefined
-            assertParamExists('postV1FrameworkByDoctypeByNameSubmit', 'doctype', doctype)
+            assertParamExists('postFrameworkByDoctypeByNameSubmit', 'doctype', doctype)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postV1FrameworkByDoctypeByNameSubmit', 'name', name)
+            assertParamExists('postFrameworkByDoctypeByNameSubmit', 'name', name)
             const localVarPath = `/v1/framework/{doctype}/{name}/submit`
                 .replace(`{${"doctype"}}`, encodeURIComponent(String(doctype)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -552,9 +552,9 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkDoctypes: async (docType: DocType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFrameworkDoctypes: async (docType: DocType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'docType' is not null or undefined
-            assertParamExists('postV1FrameworkDoctypes', 'docType', docType)
+            assertParamExists('postFrameworkDoctypes', 'docType', docType)
             const localVarPath = `/v1/framework/doctypes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -588,9 +588,9 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkModulesByModuleInstall: async (module: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFrameworkModulesByModuleInstall: async (module: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'module' is not null or undefined
-            assertParamExists('postV1FrameworkModulesByModuleInstall', 'module', module)
+            assertParamExists('postFrameworkModulesByModuleInstall', 'module', module)
             const localVarPath = `/v1/framework/modules/{module}/install`
                 .replace(`{${"module"}}`, encodeURIComponent(String(module)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -622,9 +622,9 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkRoles: async (roleAssignment: RoleAssignment, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFrameworkRoles: async (roleAssignment: RoleAssignment, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'roleAssignment' is not null or undefined
-            assertParamExists('postV1FrameworkRoles', 'roleAssignment', roleAssignment)
+            assertParamExists('postFrameworkRoles', 'roleAssignment', roleAssignment)
             const localVarPath = `/v1/framework/roles`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -659,11 +659,11 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1FrameworkByDoctypeByName: async (doctype: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putFrameworkByDoctypeByName: async (doctype: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'doctype' is not null or undefined
-            assertParamExists('putV1FrameworkByDoctypeByName', 'doctype', doctype)
+            assertParamExists('putFrameworkByDoctypeByName', 'doctype', doctype)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('putV1FrameworkByDoctypeByName', 'name', name)
+            assertParamExists('putFrameworkByDoctypeByName', 'name', name)
             const localVarPath = `/v1/framework/{doctype}/{name}`
                 .replace(`{${"doctype"}}`, encodeURIComponent(String(doctype)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
@@ -697,11 +697,11 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1FrameworkDoctypesByName: async (name: string, docType: DocType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putFrameworkDoctypesByName: async (name: string, docType: DocType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('putV1FrameworkDoctypesByName', 'name', name)
+            assertParamExists('putFrameworkDoctypesByName', 'name', name)
             // verify required parameter 'docType' is not null or undefined
-            assertParamExists('putV1FrameworkDoctypesByName', 'docType', docType)
+            assertParamExists('putFrameworkDoctypesByName', 'docType', docType)
             const localVarPath = `/v1/framework/doctypes/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -747,10 +747,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1FrameworkByDoctypeByName(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1FrameworkByDoctypeByName(doctype, name, options);
+        async deleteFrameworkByDoctypeByName(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFrameworkByDoctypeByName(doctype, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.deleteV1FrameworkByDoctypeByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.deleteFrameworkByDoctypeByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -760,10 +760,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1FrameworkDoctypesByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1FrameworkDoctypesByName(name, options);
+        async deleteFrameworkDoctypesByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFrameworkDoctypesByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.deleteV1FrameworkDoctypesByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.deleteFrameworkDoctypesByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -774,10 +774,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteV1FrameworkRolesByUserByRole(user: string, role: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteV1FrameworkRolesByUserByRole(user, role, options);
+        async deleteFrameworkRolesByUserByRole(user: string, role: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFrameworkRolesByUserByRole(user, role, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.deleteV1FrameworkRolesByUserByRole']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.deleteFrameworkRolesByUserByRole']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -791,10 +791,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FrameworkByDoctype(doctype: string, filters?: string, fields?: string, orderBy?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocumentList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FrameworkByDoctype(doctype, filters, fields, orderBy, limit, options);
+        async getFrameworkByDoctype(doctype: string, filters?: string, fields?: string, orderBy?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocumentList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkByDoctype(doctype, filters, fields, orderBy, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getV1FrameworkByDoctype']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkByDoctype']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -805,10 +805,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FrameworkByDoctypeByName(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FrameworkByDoctypeByName(doctype, name, options);
+        async getFrameworkByDoctypeByName(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkByDoctypeByName(doctype, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getV1FrameworkByDoctypeByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkByDoctypeByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -817,10 +817,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FrameworkDoctypes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocTypeList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FrameworkDoctypes(options);
+        async getFrameworkDoctypes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocTypeList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkDoctypes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getV1FrameworkDoctypes']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkDoctypes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -830,10 +830,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FrameworkDoctypesByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocType>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FrameworkDoctypesByName(name, options);
+        async getFrameworkDoctypesByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocType>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkDoctypesByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getV1FrameworkDoctypesByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkDoctypesByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -842,10 +842,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FrameworkModules(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModuleList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FrameworkModules(options);
+        async getFrameworkModules(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModuleList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkModules(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getV1FrameworkModules']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkModules']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -855,10 +855,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FrameworkModulesByModule(module: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModuleState>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FrameworkModulesByModule(module, options);
+        async getFrameworkModulesByModule(module: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModuleState>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkModulesByModule(module, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getV1FrameworkModulesByModule']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkModulesByModule']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -867,10 +867,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FrameworkRoles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FrameworkRoles(options);
+        async getFrameworkRoles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkRoles(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getV1FrameworkRoles']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkRoles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -879,10 +879,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getV1FrameworkSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummaryView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getV1FrameworkSummary(options);
+        async getFrameworkSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummaryView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getV1FrameworkSummary']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkSummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -892,10 +892,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1FrameworkByDoctype(doctype: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1FrameworkByDoctype(doctype, options);
+        async postFrameworkByDoctype(doctype: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkByDoctype(doctype, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postV1FrameworkByDoctype']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkByDoctype']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -906,10 +906,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1FrameworkByDoctypeByNameCancel(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1FrameworkByDoctypeByNameCancel(doctype, name, options);
+        async postFrameworkByDoctypeByNameCancel(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkByDoctypeByNameCancel(doctype, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postV1FrameworkByDoctypeByNameCancel']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkByDoctypeByNameCancel']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -920,10 +920,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1FrameworkByDoctypeByNameSubmit(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1FrameworkByDoctypeByNameSubmit(doctype, name, options);
+        async postFrameworkByDoctypeByNameSubmit(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkByDoctypeByNameSubmit(doctype, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postV1FrameworkByDoctypeByNameSubmit']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkByDoctypeByNameSubmit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -933,10 +933,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1FrameworkDoctypes(docType: DocType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocType>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1FrameworkDoctypes(docType, options);
+        async postFrameworkDoctypes(docType: DocType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocType>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkDoctypes(docType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postV1FrameworkDoctypes']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkDoctypes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -946,10 +946,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1FrameworkModulesByModuleInstall(module: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Install>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1FrameworkModulesByModuleInstall(module, options);
+        async postFrameworkModulesByModuleInstall(module: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Install>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkModulesByModuleInstall(module, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postV1FrameworkModulesByModuleInstall']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkModulesByModuleInstall']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -959,10 +959,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postV1FrameworkRoles(roleAssignment: RoleAssignment, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleAssignment>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postV1FrameworkRoles(roleAssignment, options);
+        async postFrameworkRoles(roleAssignment: RoleAssignment, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleAssignment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkRoles(roleAssignment, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postV1FrameworkRoles']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkRoles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -973,10 +973,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1FrameworkByDoctypeByName(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1FrameworkByDoctypeByName(doctype, name, options);
+        async putFrameworkByDoctypeByName(doctype: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putFrameworkByDoctypeByName(doctype, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.putV1FrameworkByDoctypeByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.putFrameworkByDoctypeByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -987,10 +987,10 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putV1FrameworkDoctypesByName(name: string, docType: DocType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocType>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putV1FrameworkDoctypesByName(name, docType, options);
+        async putFrameworkDoctypesByName(name: string, docType: DocType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DocType>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putFrameworkDoctypesByName(name, docType, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.putV1FrameworkDoctypesByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.putFrameworkDoctypesByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1006,52 +1006,52 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
         /**
          * Removes one document, after its on_trash hooks agree. A SUBMITTED document cannot be deleted — cancel it first. Answers 204.
          * @summary Removes one document, after its on_trash hooks agree.
-         * @param {FrameworkApiDeleteV1FrameworkByDoctypeByNameRequest} requestParameters Request parameters.
+         * @param {FrameworkApiDeleteFrameworkByDoctypeByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1FrameworkByDoctypeByName(requestParameters: FrameworkApiDeleteV1FrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1FrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteFrameworkByDoctypeByName(requestParameters: FrameworkApiDeleteFrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteFrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a DocType and every document stored under it. The definition and its data go together — a document with no schema can be neither validated nor read back — so there is no undo. Manager-only. Answers 204.
          * @summary Removes a DocType and every document stored under it.
-         * @param {FrameworkApiDeleteV1FrameworkDoctypesByNameRequest} requestParameters Request parameters.
+         * @param {FrameworkApiDeleteFrameworkDoctypesByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1FrameworkDoctypesByName(requestParameters: FrameworkApiDeleteV1FrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1FrameworkDoctypesByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteFrameworkDoctypesByName(requestParameters: FrameworkApiDeleteFrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteFrameworkDoctypesByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes one (user, role) grant in the caller\'s org. Manager-only. Answers 204; a grant that does not exist is not found.
          * @summary Removes one (user, role) grant in the caller\'s org.
-         * @param {FrameworkApiDeleteV1FrameworkRolesByUserByRoleRequest} requestParameters Request parameters.
+         * @param {FrameworkApiDeleteFrameworkRolesByUserByRoleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteV1FrameworkRolesByUserByRole(requestParameters: FrameworkApiDeleteV1FrameworkRolesByUserByRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteV1FrameworkRolesByUserByRole(requestParameters.user, requestParameters.role, options).then((request) => request(axios, basePath));
+        deleteFrameworkRolesByUserByRole(requestParameters: FrameworkApiDeleteFrameworkRolesByUserByRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteFrameworkRolesByUserByRole(requestParameters.user, requestParameters.role, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query. The DocType is resolved FIRST — through the same permission gate the list itself uses — because the query is validated against its schema: a filter, sort or field name the DocType does not declare is refused rather than reaching the store.
          * @summary Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query.
-         * @param {FrameworkApiGetV1FrameworkByDoctypeRequest} requestParameters Request parameters.
+         * @param {FrameworkApiGetFrameworkByDoctypeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkByDoctype(requestParameters: FrameworkApiGetV1FrameworkByDoctypeRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocumentList> {
-            return localVarFp.getV1FrameworkByDoctype(requestParameters.doctype, requestParameters.filters, requestParameters.fields, requestParameters.orderBy, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getFrameworkByDoctype(requestParameters: FrameworkApiGetFrameworkByDoctypeRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocumentList> {
+            return localVarFp.getFrameworkByDoctype(requestParameters.doctype, requestParameters.filters, requestParameters.fields, requestParameters.orderBy, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one document by name, with Password fields redacted.
          * @summary Returns one document by name, with Password fields redacted.
-         * @param {FrameworkApiGetV1FrameworkByDoctypeByNameRequest} requestParameters Request parameters.
+         * @param {FrameworkApiGetFrameworkByDoctypeByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkByDoctypeByName(requestParameters: FrameworkApiGetV1FrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.getV1FrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
+        getFrameworkByDoctypeByName(requestParameters: FrameworkApiGetFrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.getFrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every DocType defined in the caller\'s org. Another tenant\'s definitions are never included: the org is part of the store key.
@@ -1059,18 +1059,18 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkDoctypes(options?: RawAxiosRequestConfig): AxiosPromise<DocTypeList> {
-            return localVarFp.getV1FrameworkDoctypes(options).then((request) => request(axios, basePath));
+        getFrameworkDoctypes(options?: RawAxiosRequestConfig): AxiosPromise<DocTypeList> {
+            return localVarFp.getFrameworkDoctypes(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one DocType definition — its fields, naming rule, permissions and lifecycle flags. Scoped to the caller\'s org, so another tenant\'s DocType of the same name is simply not found.
          * @summary Returns one DocType definition — its fields, naming rule, permissions and lifecycle flags.
-         * @param {FrameworkApiGetV1FrameworkDoctypesByNameRequest} requestParameters Request parameters.
+         * @param {FrameworkApiGetFrameworkDoctypesByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkDoctypesByName(requestParameters: FrameworkApiGetV1FrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocType> {
-            return localVarFp.getV1FrameworkDoctypesByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getFrameworkDoctypesByName(requestParameters: FrameworkApiGetFrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocType> {
+            return localVarFp.getFrameworkDoctypesByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every app lane compiled into this deployment and the DocTypes each one installs. It describes the BINARY, not the org: what a given org has actually installed is the per-module state below.
@@ -1078,18 +1078,18 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkModules(options?: RawAxiosRequestConfig): AxiosPromise<ModuleList> {
-            return localVarFp.getV1FrameworkModules(options).then((request) => request(axios, basePath));
+        getFrameworkModules(options?: RawAxiosRequestConfig): AxiosPromise<ModuleList> {
+            return localVarFp.getFrameworkModules(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one app lane\'s install state for the caller\'s org: the DocTypes the lane declares, and which of them already exist in the org. That is the honest \"set up\" versus \"installed\" answer a console renders.
          * @summary Returns one app lane\'s install state for the caller\'s org: the DocTypes the lane declares, and which of them already exist in the org.
-         * @param {FrameworkApiGetV1FrameworkModulesByModuleRequest} requestParameters Request parameters.
+         * @param {FrameworkApiGetFrameworkModulesByModuleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkModulesByModule(requestParameters: FrameworkApiGetV1FrameworkModulesByModuleRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModuleState> {
-            return localVarFp.getV1FrameworkModulesByModule(requestParameters.module, options).then((request) => request(axios, basePath));
+        getFrameworkModulesByModule(requestParameters: FrameworkApiGetFrameworkModulesByModuleRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModuleState> {
+            return localVarFp.getFrameworkModulesByModule(requestParameters.module, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every (user, role) assignment in the caller\'s org. Roles are what DocType permissions are written against, so this is the grant table the permission calculus resolves a member\'s rights from.
@@ -1097,8 +1097,8 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkRoles(options?: RawAxiosRequestConfig): AxiosPromise<RoleList> {
-            return localVarFp.getV1FrameworkRoles(options).then((request) => request(axios, basePath));
+        getFrameworkRoles(options?: RawAxiosRequestConfig): AxiosPromise<RoleList> {
+            return localVarFp.getFrameworkRoles(options).then((request) => request(axios, basePath));
         },
         /**
          * Reports how much of the DocType surface the caller\'s org uses: how many DocTypes it has defined, and how many documents exist across them.
@@ -1106,375 +1106,375 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getV1FrameworkSummary(options?: RawAxiosRequestConfig): AxiosPromise<SummaryView> {
-            return localVarFp.getV1FrameworkSummary(options).then((request) => request(axios, basePath));
+        getFrameworkSummary(options?: RawAxiosRequestConfig): AxiosPromise<SummaryView> {
+            return localVarFp.getFrameworkSummary(options).then((request) => request(axios, basePath));
         },
         /**
          * The body is the DOCUMENT\'S field data: a flat JSON object whose properties are the fieldnames the DocType declares, not a fixed envelope. That is why this operation publishes no request schema — the shape is metadata the DocType defines at run time, and no Go struct both accepts it verbatim and describes it, so nothing is asserted rather than something false.  The engine validates and coerces every field against the DocType, runs the before_insert and before_save hooks (either may reject the write), stores the document, then runs the after hooks. It answers 201 with the stored document: the field data plus the managed envelope — `name`, `doctype`, `docstatus`, `createdAt`, `updatedAt`. A Password field comes back as a fixed redaction marker and is dropped when empty; its stored value is never returned by this or any other read on this surface.  `name` in the body is the REQUESTED DOCUMENT NAME, not a data field. A DocType with an autoname rule names the document itself and ignores it; a prompt-named DocType takes it. This collision is also why the two path segments cannot be folded into the body, and so why the route stays untyped.  Scoped to the org of the validated principal, and the engine\'s own permission calculus decides the rest: the caller needs create rights on this DocType through a role it holds, or a platform admin bit. A caller with no validated principal reaches the engine as the zero Caller and is refused before any store is opened — a forged org header alone buys nothing.  A DocType declared Single has exactly ONE document per org, so this writes that one instance instead of adding a row. The body is size-bounded by the engine, the same bound on every host.
          * @summary Create one document of a DocType, from that DocType\'s own fields.
-         * @param {FrameworkApiPostV1FrameworkByDoctypeRequest} requestParameters Request parameters.
+         * @param {FrameworkApiPostFrameworkByDoctypeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkByDoctype(requestParameters: FrameworkApiPostV1FrameworkByDoctypeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postV1FrameworkByDoctype(requestParameters.doctype, options).then((request) => request(axios, basePath));
+        postFrameworkByDoctype(requestParameters: FrameworkApiPostFrameworkByDoctypeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postFrameworkByDoctype(requestParameters.doctype, options).then((request) => request(axios, basePath));
         },
         /**
          * Moves a submitted document to cancelled (docstatus 1 → 2) after its on_cancel hooks agree. Cancelling is terminal — a cancelled document cannot be re-submitted — but it CAN then be deleted.
          * @summary Moves a submitted document to cancelled (docstatus 1 → 2) after its on_cancel hooks agree.
-         * @param {FrameworkApiPostV1FrameworkByDoctypeByNameCancelRequest} requestParameters Request parameters.
+         * @param {FrameworkApiPostFrameworkByDoctypeByNameCancelRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkByDoctypeByNameCancel(requestParameters: FrameworkApiPostV1FrameworkByDoctypeByNameCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.postV1FrameworkByDoctypeByNameCancel(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
+        postFrameworkByDoctypeByNameCancel(requestParameters: FrameworkApiPostFrameworkByDoctypeByNameCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.postFrameworkByDoctypeByNameCancel(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Moves a draft to submitted (docstatus 0 → 1) after its on_submit hooks agree. A submitted document is IMMUTABLE: further writes and deletes are refused until it is cancelled. Only a submittable DocType has this lifecycle; any other docstatus is an illegal transition.
          * @summary Moves a draft to submitted (docstatus 0 → 1) after its on_submit hooks agree.
-         * @param {FrameworkApiPostV1FrameworkByDoctypeByNameSubmitRequest} requestParameters Request parameters.
+         * @param {FrameworkApiPostFrameworkByDoctypeByNameSubmitRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkByDoctypeByNameSubmit(requestParameters: FrameworkApiPostV1FrameworkByDoctypeByNameSubmitRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
-            return localVarFp.postV1FrameworkByDoctypeByNameSubmit(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
+        postFrameworkByDoctypeByNameSubmit(requestParameters: FrameworkApiPostFrameworkByDoctypeByNameSubmitRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+            return localVarFp.postFrameworkByDoctypeByNameSubmit(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Defines a DocType in the caller\'s org: the metadata that gives a document surface its fields, its naming rule, whether it has a submit/cancel lifecycle, and which role may do what to it. Manager-only — on a fresh org the first caller to administer it is seeded as its System Manager, after which only a System Manager (or a platform admin) may define. Answers 201.
          * @summary Defines a DocType in the caller\'s org: the metadata that gives a document surface its fields, its naming rule, whether it has a submit/cancel lifecycle, and which role may do what to it.
-         * @param {FrameworkApiPostV1FrameworkDoctypesRequest} requestParameters Request parameters.
+         * @param {FrameworkApiPostFrameworkDoctypesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkDoctypes(requestParameters: FrameworkApiPostV1FrameworkDoctypesRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocType> {
-            return localVarFp.postV1FrameworkDoctypes(requestParameters.docType, options).then((request) => request(axios, basePath));
+        postFrameworkDoctypes(requestParameters: FrameworkApiPostFrameworkDoctypesRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocType> {
+            return localVarFp.postFrameworkDoctypes(requestParameters.docType, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an app lane\'s DocTypes in the caller\'s org. Idempotent and create-if-absent: a DocType the org already has is reported as existing and never replaced, so re-installing cannot clobber a definition the org has since edited. Manager-only.
          * @summary Creates an app lane\'s DocTypes in the caller\'s org.
-         * @param {FrameworkApiPostV1FrameworkModulesByModuleInstallRequest} requestParameters Request parameters.
+         * @param {FrameworkApiPostFrameworkModulesByModuleInstallRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkModulesByModuleInstall(requestParameters: FrameworkApiPostV1FrameworkModulesByModuleInstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<Install> {
-            return localVarFp.postV1FrameworkModulesByModuleInstall(requestParameters.module, options).then((request) => request(axios, basePath));
+        postFrameworkModulesByModuleInstall(requestParameters: FrameworkApiPostFrameworkModulesByModuleInstallRequest, options?: RawAxiosRequestConfig): AxiosPromise<Install> {
+            return localVarFp.postFrameworkModulesByModuleInstall(requestParameters.module, options).then((request) => request(axios, basePath));
         },
         /**
          * Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users. Manager-only. Answers 201.
          * @summary Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users.
-         * @param {FrameworkApiPostV1FrameworkRolesRequest} requestParameters Request parameters.
+         * @param {FrameworkApiPostFrameworkRolesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postV1FrameworkRoles(requestParameters: FrameworkApiPostV1FrameworkRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoleAssignment> {
-            return localVarFp.postV1FrameworkRoles(requestParameters.roleAssignment, options).then((request) => request(axios, basePath));
+        postFrameworkRoles(requestParameters: FrameworkApiPostFrameworkRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoleAssignment> {
+            return localVarFp.postFrameworkRoles(requestParameters.roleAssignment, options).then((request) => request(axios, basePath));
         },
         /**
          * PUT semantics: the stored field data BECOMES the body, so a field the body omits is not left at its previous value. The body is the document\'s own field data — the same metadata-defined open object the create takes, and the same reason this operation publishes no request schema.  Only a DRAFT can be edited. A document that has been submitted or cancelled is immutable and the write is refused as a conflict, so the submit lifecycle cannot be bypassed by a plain update — cancel it first, and note that a cancelled document can be deleted but never re-submitted or re-edited. The engine validates the new data against the DocType, runs before_save (which may reject), writes, then runs the after hooks, and answers 200 with the stored document plus its managed envelope, Password fields redacted.  The document name in the path is percent-decoded before it is matched, so a name containing a space is addressed as it is stored. An unknown DocType or document is not found, and the same answer covers a document that exists in another tenant: the org comes from the validated principal and is part of the store key, so a caller cannot learn that another org\'s document exists. Write rights on the DocType are required, decided by the engine\'s permission calculus.  For a Single DocType the path name is ignored — there is one instance per org and this writes it.
          * @summary Replace a draft document\'s field data wholesale.
-         * @param {FrameworkApiPutV1FrameworkByDoctypeByNameRequest} requestParameters Request parameters.
+         * @param {FrameworkApiPutFrameworkByDoctypeByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1FrameworkByDoctypeByName(requestParameters: FrameworkApiPutV1FrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putV1FrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
+        putFrameworkByDoctypeByName(requestParameters: FrameworkApiPutFrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putFrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces a DocType definition wholesale (PUT semantics): the stored definition becomes the body. The name in the URL is authoritative over the body\'s, and documents already stored under the DocType are left intact. Manager-only.
          * @summary Replaces a DocType definition wholesale (PUT semantics): the stored definition becomes the body.
-         * @param {FrameworkApiPutV1FrameworkDoctypesByNameRequest} requestParameters Request parameters.
+         * @param {FrameworkApiPutFrameworkDoctypesByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putV1FrameworkDoctypesByName(requestParameters: FrameworkApiPutV1FrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocType> {
-            return localVarFp.putV1FrameworkDoctypesByName(requestParameters.name, requestParameters.docType, options).then((request) => request(axios, basePath));
+        putFrameworkDoctypesByName(requestParameters: FrameworkApiPutFrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<DocType> {
+            return localVarFp.putFrameworkDoctypesByName(requestParameters.name, requestParameters.docType, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteV1FrameworkByDoctypeByName operation in FrameworkApi.
+ * Request parameters for deleteFrameworkByDoctypeByName operation in FrameworkApi.
  * @export
- * @interface FrameworkApiDeleteV1FrameworkByDoctypeByNameRequest
+ * @interface FrameworkApiDeleteFrameworkByDoctypeByNameRequest
  */
-export interface FrameworkApiDeleteV1FrameworkByDoctypeByNameRequest {
+export interface FrameworkApiDeleteFrameworkByDoctypeByNameRequest {
     /**
      * DocType is the document\&#39;s DocType, from the path.
      * @type {string}
-     * @memberof FrameworkApiDeleteV1FrameworkByDoctypeByName
+     * @memberof FrameworkApiDeleteFrameworkByDoctypeByName
      */
     readonly doctype: string
 
     /**
      * Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
      * @type {string}
-     * @memberof FrameworkApiDeleteV1FrameworkByDoctypeByName
+     * @memberof FrameworkApiDeleteFrameworkByDoctypeByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for deleteV1FrameworkDoctypesByName operation in FrameworkApi.
+ * Request parameters for deleteFrameworkDoctypesByName operation in FrameworkApi.
  * @export
- * @interface FrameworkApiDeleteV1FrameworkDoctypesByNameRequest
+ * @interface FrameworkApiDeleteFrameworkDoctypesByNameRequest
  */
-export interface FrameworkApiDeleteV1FrameworkDoctypesByNameRequest {
+export interface FrameworkApiDeleteFrameworkDoctypesByNameRequest {
     /**
      * Name is the DocType\&#39;s name, from the path. A name containing a space (\&quot;Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
      * @type {string}
-     * @memberof FrameworkApiDeleteV1FrameworkDoctypesByName
+     * @memberof FrameworkApiDeleteFrameworkDoctypesByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for deleteV1FrameworkRolesByUserByRole operation in FrameworkApi.
+ * Request parameters for deleteFrameworkRolesByUserByRole operation in FrameworkApi.
  * @export
- * @interface FrameworkApiDeleteV1FrameworkRolesByUserByRoleRequest
+ * @interface FrameworkApiDeleteFrameworkRolesByUserByRoleRequest
  */
-export interface FrameworkApiDeleteV1FrameworkRolesByUserByRoleRequest {
+export interface FrameworkApiDeleteFrameworkRolesByUserByRoleRequest {
     /**
      * User is the assignee whose grant is being revoked, from the path.
      * @type {string}
-     * @memberof FrameworkApiDeleteV1FrameworkRolesByUserByRole
+     * @memberof FrameworkApiDeleteFrameworkRolesByUserByRole
      */
     readonly user: string
 
     /**
      * Role is the role to revoke, from the path. A role name containing a space (\&quot;System Manager\&quot;) arrives percent-encoded and is decoded before it is matched against the stored assignment.
      * @type {string}
-     * @memberof FrameworkApiDeleteV1FrameworkRolesByUserByRole
+     * @memberof FrameworkApiDeleteFrameworkRolesByUserByRole
      */
     readonly role: string
 }
 
 /**
- * Request parameters for getV1FrameworkByDoctype operation in FrameworkApi.
+ * Request parameters for getFrameworkByDoctype operation in FrameworkApi.
  * @export
- * @interface FrameworkApiGetV1FrameworkByDoctypeRequest
+ * @interface FrameworkApiGetFrameworkByDoctypeRequest
  */
-export interface FrameworkApiGetV1FrameworkByDoctypeRequest {
+export interface FrameworkApiGetFrameworkByDoctypeRequest {
     /**
      * DocType is the DocType to list, from the path.
      * @type {string}
-     * @memberof FrameworkApiGetV1FrameworkByDoctype
+     * @memberof FrameworkApiGetFrameworkByDoctype
      */
     readonly doctype: string
 
     /**
      * Filters is a JSON object of equality matches, e.g. {\&quot;priority\&quot;:\&quot;High\&quot;}. Every key must be a field the DocType declares (or the managed name / docstatus); an undeclared one is refused rather than silently ignored.
      * @type {string}
-     * @memberof FrameworkApiGetV1FrameworkByDoctype
+     * @memberof FrameworkApiGetFrameworkByDoctype
      */
     readonly filters?: string
 
     /**
      * Fields projects the response to a subset — a JSON array [\&quot;a\&quot;,\&quot;b\&quot;] or a comma list \&quot;a,b\&quot;. The envelope keys are always returned.
      * @type {string}
-     * @memberof FrameworkApiGetV1FrameworkByDoctype
+     * @memberof FrameworkApiGetFrameworkByDoctype
      */
     readonly fields?: string
 
     /**
      * OrderBy is \&quot;&lt;field&gt; [asc|desc]\&quot;. Empty means most-recently-updated first.
      * @type {string}
-     * @memberof FrameworkApiGetV1FrameworkByDoctype
+     * @memberof FrameworkApiGetFrameworkByDoctype
      */
     readonly orderBy?: string
 
     /**
      * Limit caps the rows returned. Anything that is not a positive integer leaves the engine\&#39;s default in place.
      * @type {string}
-     * @memberof FrameworkApiGetV1FrameworkByDoctype
+     * @memberof FrameworkApiGetFrameworkByDoctype
      */
     readonly limit?: string
 }
 
 /**
- * Request parameters for getV1FrameworkByDoctypeByName operation in FrameworkApi.
+ * Request parameters for getFrameworkByDoctypeByName operation in FrameworkApi.
  * @export
- * @interface FrameworkApiGetV1FrameworkByDoctypeByNameRequest
+ * @interface FrameworkApiGetFrameworkByDoctypeByNameRequest
  */
-export interface FrameworkApiGetV1FrameworkByDoctypeByNameRequest {
+export interface FrameworkApiGetFrameworkByDoctypeByNameRequest {
     /**
      * DocType is the document\&#39;s DocType, from the path.
      * @type {string}
-     * @memberof FrameworkApiGetV1FrameworkByDoctypeByName
+     * @memberof FrameworkApiGetFrameworkByDoctypeByName
      */
     readonly doctype: string
 
     /**
      * Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
      * @type {string}
-     * @memberof FrameworkApiGetV1FrameworkByDoctypeByName
+     * @memberof FrameworkApiGetFrameworkByDoctypeByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1FrameworkDoctypesByName operation in FrameworkApi.
+ * Request parameters for getFrameworkDoctypesByName operation in FrameworkApi.
  * @export
- * @interface FrameworkApiGetV1FrameworkDoctypesByNameRequest
+ * @interface FrameworkApiGetFrameworkDoctypesByNameRequest
  */
-export interface FrameworkApiGetV1FrameworkDoctypesByNameRequest {
+export interface FrameworkApiGetFrameworkDoctypesByNameRequest {
     /**
      * Name is the DocType\&#39;s name, from the path. A name containing a space (\&quot;Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
      * @type {string}
-     * @memberof FrameworkApiGetV1FrameworkDoctypesByName
+     * @memberof FrameworkApiGetFrameworkDoctypesByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getV1FrameworkModulesByModule operation in FrameworkApi.
+ * Request parameters for getFrameworkModulesByModule operation in FrameworkApi.
  * @export
- * @interface FrameworkApiGetV1FrameworkModulesByModuleRequest
+ * @interface FrameworkApiGetFrameworkModulesByModuleRequest
  */
-export interface FrameworkApiGetV1FrameworkModulesByModuleRequest {
+export interface FrameworkApiGetFrameworkModulesByModuleRequest {
     /**
      * Module is the lane\&#39;s registered name (\&quot;cms\&quot;, \&quot;erp\&quot;), from the path.
      * @type {string}
-     * @memberof FrameworkApiGetV1FrameworkModulesByModule
+     * @memberof FrameworkApiGetFrameworkModulesByModule
      */
     readonly module: string
 }
 
 /**
- * Request parameters for postV1FrameworkByDoctype operation in FrameworkApi.
+ * Request parameters for postFrameworkByDoctype operation in FrameworkApi.
  * @export
- * @interface FrameworkApiPostV1FrameworkByDoctypeRequest
+ * @interface FrameworkApiPostFrameworkByDoctypeRequest
  */
-export interface FrameworkApiPostV1FrameworkByDoctypeRequest {
+export interface FrameworkApiPostFrameworkByDoctypeRequest {
     /**
      * 
      * @type {string}
-     * @memberof FrameworkApiPostV1FrameworkByDoctype
+     * @memberof FrameworkApiPostFrameworkByDoctype
      */
     readonly doctype: string
 }
 
 /**
- * Request parameters for postV1FrameworkByDoctypeByNameCancel operation in FrameworkApi.
+ * Request parameters for postFrameworkByDoctypeByNameCancel operation in FrameworkApi.
  * @export
- * @interface FrameworkApiPostV1FrameworkByDoctypeByNameCancelRequest
+ * @interface FrameworkApiPostFrameworkByDoctypeByNameCancelRequest
  */
-export interface FrameworkApiPostV1FrameworkByDoctypeByNameCancelRequest {
+export interface FrameworkApiPostFrameworkByDoctypeByNameCancelRequest {
     /**
      * DocType is the document\&#39;s DocType, from the path.
      * @type {string}
-     * @memberof FrameworkApiPostV1FrameworkByDoctypeByNameCancel
+     * @memberof FrameworkApiPostFrameworkByDoctypeByNameCancel
      */
     readonly doctype: string
 
     /**
      * Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
      * @type {string}
-     * @memberof FrameworkApiPostV1FrameworkByDoctypeByNameCancel
+     * @memberof FrameworkApiPostFrameworkByDoctypeByNameCancel
      */
     readonly name: string
 }
 
 /**
- * Request parameters for postV1FrameworkByDoctypeByNameSubmit operation in FrameworkApi.
+ * Request parameters for postFrameworkByDoctypeByNameSubmit operation in FrameworkApi.
  * @export
- * @interface FrameworkApiPostV1FrameworkByDoctypeByNameSubmitRequest
+ * @interface FrameworkApiPostFrameworkByDoctypeByNameSubmitRequest
  */
-export interface FrameworkApiPostV1FrameworkByDoctypeByNameSubmitRequest {
+export interface FrameworkApiPostFrameworkByDoctypeByNameSubmitRequest {
     /**
      * DocType is the document\&#39;s DocType, from the path.
      * @type {string}
-     * @memberof FrameworkApiPostV1FrameworkByDoctypeByNameSubmit
+     * @memberof FrameworkApiPostFrameworkByDoctypeByNameSubmit
      */
     readonly doctype: string
 
     /**
      * Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
      * @type {string}
-     * @memberof FrameworkApiPostV1FrameworkByDoctypeByNameSubmit
+     * @memberof FrameworkApiPostFrameworkByDoctypeByNameSubmit
      */
     readonly name: string
 }
 
 /**
- * Request parameters for postV1FrameworkDoctypes operation in FrameworkApi.
+ * Request parameters for postFrameworkDoctypes operation in FrameworkApi.
  * @export
- * @interface FrameworkApiPostV1FrameworkDoctypesRequest
+ * @interface FrameworkApiPostFrameworkDoctypesRequest
  */
-export interface FrameworkApiPostV1FrameworkDoctypesRequest {
+export interface FrameworkApiPostFrameworkDoctypesRequest {
     /**
      * 
      * @type {DocType}
-     * @memberof FrameworkApiPostV1FrameworkDoctypes
+     * @memberof FrameworkApiPostFrameworkDoctypes
      */
     readonly docType: DocType
 }
 
 /**
- * Request parameters for postV1FrameworkModulesByModuleInstall operation in FrameworkApi.
+ * Request parameters for postFrameworkModulesByModuleInstall operation in FrameworkApi.
  * @export
- * @interface FrameworkApiPostV1FrameworkModulesByModuleInstallRequest
+ * @interface FrameworkApiPostFrameworkModulesByModuleInstallRequest
  */
-export interface FrameworkApiPostV1FrameworkModulesByModuleInstallRequest {
+export interface FrameworkApiPostFrameworkModulesByModuleInstallRequest {
     /**
      * Module is the lane\&#39;s registered name (\&quot;cms\&quot;, \&quot;erp\&quot;), from the path.
      * @type {string}
-     * @memberof FrameworkApiPostV1FrameworkModulesByModuleInstall
+     * @memberof FrameworkApiPostFrameworkModulesByModuleInstall
      */
     readonly module: string
 }
 
 /**
- * Request parameters for postV1FrameworkRoles operation in FrameworkApi.
+ * Request parameters for postFrameworkRoles operation in FrameworkApi.
  * @export
- * @interface FrameworkApiPostV1FrameworkRolesRequest
+ * @interface FrameworkApiPostFrameworkRolesRequest
  */
-export interface FrameworkApiPostV1FrameworkRolesRequest {
+export interface FrameworkApiPostFrameworkRolesRequest {
     /**
      * 
      * @type {RoleAssignment}
-     * @memberof FrameworkApiPostV1FrameworkRoles
+     * @memberof FrameworkApiPostFrameworkRoles
      */
     readonly roleAssignment: RoleAssignment
 }
 
 /**
- * Request parameters for putV1FrameworkByDoctypeByName operation in FrameworkApi.
+ * Request parameters for putFrameworkByDoctypeByName operation in FrameworkApi.
  * @export
- * @interface FrameworkApiPutV1FrameworkByDoctypeByNameRequest
+ * @interface FrameworkApiPutFrameworkByDoctypeByNameRequest
  */
-export interface FrameworkApiPutV1FrameworkByDoctypeByNameRequest {
+export interface FrameworkApiPutFrameworkByDoctypeByNameRequest {
     /**
      * 
      * @type {string}
-     * @memberof FrameworkApiPutV1FrameworkByDoctypeByName
+     * @memberof FrameworkApiPutFrameworkByDoctypeByName
      */
     readonly doctype: string
 
     /**
      * 
      * @type {string}
-     * @memberof FrameworkApiPutV1FrameworkByDoctypeByName
+     * @memberof FrameworkApiPutFrameworkByDoctypeByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for putV1FrameworkDoctypesByName operation in FrameworkApi.
+ * Request parameters for putFrameworkDoctypesByName operation in FrameworkApi.
  * @export
- * @interface FrameworkApiPutV1FrameworkDoctypesByNameRequest
+ * @interface FrameworkApiPutFrameworkDoctypesByNameRequest
  */
-export interface FrameworkApiPutV1FrameworkDoctypesByNameRequest {
+export interface FrameworkApiPutFrameworkDoctypesByNameRequest {
     /**
      * 
      * @type {string}
-     * @memberof FrameworkApiPutV1FrameworkDoctypesByName
+     * @memberof FrameworkApiPutFrameworkDoctypesByName
      */
     readonly name: string
 
     /**
      * 
      * @type {DocType}
-     * @memberof FrameworkApiPutV1FrameworkDoctypesByName
+     * @memberof FrameworkApiPutFrameworkDoctypesByName
      */
     readonly docType: DocType
 }
@@ -1489,61 +1489,61 @@ export class FrameworkApi extends BaseAPI {
     /**
      * Removes one document, after its on_trash hooks agree. A SUBMITTED document cannot be deleted — cancel it first. Answers 204.
      * @summary Removes one document, after its on_trash hooks agree.
-     * @param {FrameworkApiDeleteV1FrameworkByDoctypeByNameRequest} requestParameters Request parameters.
+     * @param {FrameworkApiDeleteFrameworkByDoctypeByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public deleteV1FrameworkByDoctypeByName(requestParameters: FrameworkApiDeleteV1FrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).deleteV1FrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteFrameworkByDoctypeByName(requestParameters: FrameworkApiDeleteFrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).deleteFrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes a DocType and every document stored under it. The definition and its data go together — a document with no schema can be neither validated nor read back — so there is no undo. Manager-only. Answers 204.
      * @summary Removes a DocType and every document stored under it.
-     * @param {FrameworkApiDeleteV1FrameworkDoctypesByNameRequest} requestParameters Request parameters.
+     * @param {FrameworkApiDeleteFrameworkDoctypesByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public deleteV1FrameworkDoctypesByName(requestParameters: FrameworkApiDeleteV1FrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).deleteV1FrameworkDoctypesByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteFrameworkDoctypesByName(requestParameters: FrameworkApiDeleteFrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).deleteFrameworkDoctypesByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes one (user, role) grant in the caller\'s org. Manager-only. Answers 204; a grant that does not exist is not found.
      * @summary Removes one (user, role) grant in the caller\'s org.
-     * @param {FrameworkApiDeleteV1FrameworkRolesByUserByRoleRequest} requestParameters Request parameters.
+     * @param {FrameworkApiDeleteFrameworkRolesByUserByRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public deleteV1FrameworkRolesByUserByRole(requestParameters: FrameworkApiDeleteV1FrameworkRolesByUserByRoleRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).deleteV1FrameworkRolesByUserByRole(requestParameters.user, requestParameters.role, options).then((request) => request(this.axios, this.basePath));
+    public deleteFrameworkRolesByUserByRole(requestParameters: FrameworkApiDeleteFrameworkRolesByUserByRoleRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).deleteFrameworkRolesByUserByRole(requestParameters.user, requestParameters.role, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query. The DocType is resolved FIRST — through the same permission gate the list itself uses — because the query is validated against its schema: a filter, sort or field name the DocType does not declare is refused rather than reaching the store.
      * @summary Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query.
-     * @param {FrameworkApiGetV1FrameworkByDoctypeRequest} requestParameters Request parameters.
+     * @param {FrameworkApiGetFrameworkByDoctypeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public getV1FrameworkByDoctype(requestParameters: FrameworkApiGetV1FrameworkByDoctypeRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).getV1FrameworkByDoctype(requestParameters.doctype, requestParameters.filters, requestParameters.fields, requestParameters.orderBy, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getFrameworkByDoctype(requestParameters: FrameworkApiGetFrameworkByDoctypeRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).getFrameworkByDoctype(requestParameters.doctype, requestParameters.filters, requestParameters.fields, requestParameters.orderBy, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one document by name, with Password fields redacted.
      * @summary Returns one document by name, with Password fields redacted.
-     * @param {FrameworkApiGetV1FrameworkByDoctypeByNameRequest} requestParameters Request parameters.
+     * @param {FrameworkApiGetFrameworkByDoctypeByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public getV1FrameworkByDoctypeByName(requestParameters: FrameworkApiGetV1FrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).getV1FrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getFrameworkByDoctypeByName(requestParameters: FrameworkApiGetFrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).getFrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1553,20 +1553,20 @@ export class FrameworkApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public getV1FrameworkDoctypes(options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).getV1FrameworkDoctypes(options).then((request) => request(this.axios, this.basePath));
+    public getFrameworkDoctypes(options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).getFrameworkDoctypes(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one DocType definition — its fields, naming rule, permissions and lifecycle flags. Scoped to the caller\'s org, so another tenant\'s DocType of the same name is simply not found.
      * @summary Returns one DocType definition — its fields, naming rule, permissions and lifecycle flags.
-     * @param {FrameworkApiGetV1FrameworkDoctypesByNameRequest} requestParameters Request parameters.
+     * @param {FrameworkApiGetFrameworkDoctypesByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public getV1FrameworkDoctypesByName(requestParameters: FrameworkApiGetV1FrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).getV1FrameworkDoctypesByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getFrameworkDoctypesByName(requestParameters: FrameworkApiGetFrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).getFrameworkDoctypesByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1576,20 +1576,20 @@ export class FrameworkApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public getV1FrameworkModules(options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).getV1FrameworkModules(options).then((request) => request(this.axios, this.basePath));
+    public getFrameworkModules(options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).getFrameworkModules(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one app lane\'s install state for the caller\'s org: the DocTypes the lane declares, and which of them already exist in the org. That is the honest \"set up\" versus \"installed\" answer a console renders.
      * @summary Returns one app lane\'s install state for the caller\'s org: the DocTypes the lane declares, and which of them already exist in the org.
-     * @param {FrameworkApiGetV1FrameworkModulesByModuleRequest} requestParameters Request parameters.
+     * @param {FrameworkApiGetFrameworkModulesByModuleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public getV1FrameworkModulesByModule(requestParameters: FrameworkApiGetV1FrameworkModulesByModuleRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).getV1FrameworkModulesByModule(requestParameters.module, options).then((request) => request(this.axios, this.basePath));
+    public getFrameworkModulesByModule(requestParameters: FrameworkApiGetFrameworkModulesByModuleRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).getFrameworkModulesByModule(requestParameters.module, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1599,8 +1599,8 @@ export class FrameworkApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public getV1FrameworkRoles(options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).getV1FrameworkRoles(options).then((request) => request(this.axios, this.basePath));
+    public getFrameworkRoles(options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).getFrameworkRoles(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1610,104 +1610,104 @@ export class FrameworkApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public getV1FrameworkSummary(options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).getV1FrameworkSummary(options).then((request) => request(this.axios, this.basePath));
+    public getFrameworkSummary(options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).getFrameworkSummary(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * The body is the DOCUMENT\'S field data: a flat JSON object whose properties are the fieldnames the DocType declares, not a fixed envelope. That is why this operation publishes no request schema — the shape is metadata the DocType defines at run time, and no Go struct both accepts it verbatim and describes it, so nothing is asserted rather than something false.  The engine validates and coerces every field against the DocType, runs the before_insert and before_save hooks (either may reject the write), stores the document, then runs the after hooks. It answers 201 with the stored document: the field data plus the managed envelope — `name`, `doctype`, `docstatus`, `createdAt`, `updatedAt`. A Password field comes back as a fixed redaction marker and is dropped when empty; its stored value is never returned by this or any other read on this surface.  `name` in the body is the REQUESTED DOCUMENT NAME, not a data field. A DocType with an autoname rule names the document itself and ignores it; a prompt-named DocType takes it. This collision is also why the two path segments cannot be folded into the body, and so why the route stays untyped.  Scoped to the org of the validated principal, and the engine\'s own permission calculus decides the rest: the caller needs create rights on this DocType through a role it holds, or a platform admin bit. A caller with no validated principal reaches the engine as the zero Caller and is refused before any store is opened — a forged org header alone buys nothing.  A DocType declared Single has exactly ONE document per org, so this writes that one instance instead of adding a row. The body is size-bounded by the engine, the same bound on every host.
      * @summary Create one document of a DocType, from that DocType\'s own fields.
-     * @param {FrameworkApiPostV1FrameworkByDoctypeRequest} requestParameters Request parameters.
+     * @param {FrameworkApiPostFrameworkByDoctypeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public postV1FrameworkByDoctype(requestParameters: FrameworkApiPostV1FrameworkByDoctypeRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).postV1FrameworkByDoctype(requestParameters.doctype, options).then((request) => request(this.axios, this.basePath));
+    public postFrameworkByDoctype(requestParameters: FrameworkApiPostFrameworkByDoctypeRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).postFrameworkByDoctype(requestParameters.doctype, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Moves a submitted document to cancelled (docstatus 1 → 2) after its on_cancel hooks agree. Cancelling is terminal — a cancelled document cannot be re-submitted — but it CAN then be deleted.
      * @summary Moves a submitted document to cancelled (docstatus 1 → 2) after its on_cancel hooks agree.
-     * @param {FrameworkApiPostV1FrameworkByDoctypeByNameCancelRequest} requestParameters Request parameters.
+     * @param {FrameworkApiPostFrameworkByDoctypeByNameCancelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public postV1FrameworkByDoctypeByNameCancel(requestParameters: FrameworkApiPostV1FrameworkByDoctypeByNameCancelRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).postV1FrameworkByDoctypeByNameCancel(requestParameters.doctype, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public postFrameworkByDoctypeByNameCancel(requestParameters: FrameworkApiPostFrameworkByDoctypeByNameCancelRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).postFrameworkByDoctypeByNameCancel(requestParameters.doctype, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Moves a draft to submitted (docstatus 0 → 1) after its on_submit hooks agree. A submitted document is IMMUTABLE: further writes and deletes are refused until it is cancelled. Only a submittable DocType has this lifecycle; any other docstatus is an illegal transition.
      * @summary Moves a draft to submitted (docstatus 0 → 1) after its on_submit hooks agree.
-     * @param {FrameworkApiPostV1FrameworkByDoctypeByNameSubmitRequest} requestParameters Request parameters.
+     * @param {FrameworkApiPostFrameworkByDoctypeByNameSubmitRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public postV1FrameworkByDoctypeByNameSubmit(requestParameters: FrameworkApiPostV1FrameworkByDoctypeByNameSubmitRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).postV1FrameworkByDoctypeByNameSubmit(requestParameters.doctype, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public postFrameworkByDoctypeByNameSubmit(requestParameters: FrameworkApiPostFrameworkByDoctypeByNameSubmitRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).postFrameworkByDoctypeByNameSubmit(requestParameters.doctype, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Defines a DocType in the caller\'s org: the metadata that gives a document surface its fields, its naming rule, whether it has a submit/cancel lifecycle, and which role may do what to it. Manager-only — on a fresh org the first caller to administer it is seeded as its System Manager, after which only a System Manager (or a platform admin) may define. Answers 201.
      * @summary Defines a DocType in the caller\'s org: the metadata that gives a document surface its fields, its naming rule, whether it has a submit/cancel lifecycle, and which role may do what to it.
-     * @param {FrameworkApiPostV1FrameworkDoctypesRequest} requestParameters Request parameters.
+     * @param {FrameworkApiPostFrameworkDoctypesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public postV1FrameworkDoctypes(requestParameters: FrameworkApiPostV1FrameworkDoctypesRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).postV1FrameworkDoctypes(requestParameters.docType, options).then((request) => request(this.axios, this.basePath));
+    public postFrameworkDoctypes(requestParameters: FrameworkApiPostFrameworkDoctypesRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).postFrameworkDoctypes(requestParameters.docType, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates an app lane\'s DocTypes in the caller\'s org. Idempotent and create-if-absent: a DocType the org already has is reported as existing and never replaced, so re-installing cannot clobber a definition the org has since edited. Manager-only.
      * @summary Creates an app lane\'s DocTypes in the caller\'s org.
-     * @param {FrameworkApiPostV1FrameworkModulesByModuleInstallRequest} requestParameters Request parameters.
+     * @param {FrameworkApiPostFrameworkModulesByModuleInstallRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public postV1FrameworkModulesByModuleInstall(requestParameters: FrameworkApiPostV1FrameworkModulesByModuleInstallRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).postV1FrameworkModulesByModuleInstall(requestParameters.module, options).then((request) => request(this.axios, this.basePath));
+    public postFrameworkModulesByModuleInstall(requestParameters: FrameworkApiPostFrameworkModulesByModuleInstallRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).postFrameworkModulesByModuleInstall(requestParameters.module, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users. Manager-only. Answers 201.
      * @summary Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users.
-     * @param {FrameworkApiPostV1FrameworkRolesRequest} requestParameters Request parameters.
+     * @param {FrameworkApiPostFrameworkRolesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public postV1FrameworkRoles(requestParameters: FrameworkApiPostV1FrameworkRolesRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).postV1FrameworkRoles(requestParameters.roleAssignment, options).then((request) => request(this.axios, this.basePath));
+    public postFrameworkRoles(requestParameters: FrameworkApiPostFrameworkRolesRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).postFrameworkRoles(requestParameters.roleAssignment, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * PUT semantics: the stored field data BECOMES the body, so a field the body omits is not left at its previous value. The body is the document\'s own field data — the same metadata-defined open object the create takes, and the same reason this operation publishes no request schema.  Only a DRAFT can be edited. A document that has been submitted or cancelled is immutable and the write is refused as a conflict, so the submit lifecycle cannot be bypassed by a plain update — cancel it first, and note that a cancelled document can be deleted but never re-submitted or re-edited. The engine validates the new data against the DocType, runs before_save (which may reject), writes, then runs the after hooks, and answers 200 with the stored document plus its managed envelope, Password fields redacted.  The document name in the path is percent-decoded before it is matched, so a name containing a space is addressed as it is stored. An unknown DocType or document is not found, and the same answer covers a document that exists in another tenant: the org comes from the validated principal and is part of the store key, so a caller cannot learn that another org\'s document exists. Write rights on the DocType are required, decided by the engine\'s permission calculus.  For a Single DocType the path name is ignored — there is one instance per org and this writes it.
      * @summary Replace a draft document\'s field data wholesale.
-     * @param {FrameworkApiPutV1FrameworkByDoctypeByNameRequest} requestParameters Request parameters.
+     * @param {FrameworkApiPutFrameworkByDoctypeByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public putV1FrameworkByDoctypeByName(requestParameters: FrameworkApiPutV1FrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).putV1FrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public putFrameworkByDoctypeByName(requestParameters: FrameworkApiPutFrameworkByDoctypeByNameRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).putFrameworkByDoctypeByName(requestParameters.doctype, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Replaces a DocType definition wholesale (PUT semantics): the stored definition becomes the body. The name in the URL is authoritative over the body\'s, and documents already stored under the DocType are left intact. Manager-only.
      * @summary Replaces a DocType definition wholesale (PUT semantics): the stored definition becomes the body.
-     * @param {FrameworkApiPutV1FrameworkDoctypesByNameRequest} requestParameters Request parameters.
+     * @param {FrameworkApiPutFrameworkDoctypesByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FrameworkApi
      */
-    public putV1FrameworkDoctypesByName(requestParameters: FrameworkApiPutV1FrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).putV1FrameworkDoctypesByName(requestParameters.name, requestParameters.docType, options).then((request) => request(this.axios, this.basePath));
+    public putFrameworkDoctypesByName(requestParameters: FrameworkApiPutFrameworkDoctypesByNameRequest, options?: RawAxiosRequestConfig) {
+        return FrameworkApiFp(this.configuration).putFrameworkDoctypesByName(requestParameters.name, requestParameters.docType, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
