@@ -170,8 +170,39 @@ against what npm serves for that version — equal is a no-op (re-running a tag 
 safe), different is a hard failure naming both digests. `npm pack` normalises
 mtimes, so that comparison is exact. It ends by reading the version back from
 the registry: npm, not `package.json` and not the run's colour, is the version
-of record. The npm credential comes from KMS (`hanzo`/`prod`/`js-sdk-publish`),
-like every other publish credential in the fleet.
+of record.
+
+The npm credential comes from KMS, like every other publish credential in the
+fleet, and the address is `GET /v1/kms/secrets/NPM_TOKEN?env=prod`, answering
+`{name, env, value}`. The org is the token's OWNER CLAIM, not a path segment —
+the forge identity is organization `hanzo`, so that read lands on the `hanzo`
+root, where NPM_TOKEN is. `/v1/kms/orgs/<org>/secrets/<path>/<name>` is not a
+route this KMS has: it answers 404 for every name, including names that are
+there, which reads as an unseeded secret and is a wrong address. Only the KMS
+machine identity (`KMS_CLIENT_ID`/`KMS_CLIENT_SECRET`) is a forge secret.
+
+## The declarations name `globalAxios` as a namespace, and it is not one
+
+`dist/**/*.d.ts` reference `globalAxios.AxiosResponse<...>` in 192 files. Axios
+declares `const axios: AxiosStatic`, never a namespace, so a consumer compiling
+with `skipLibCheck: false` gets 2502 × TS2503 `Cannot find namespace
+'globalAxios'`. With `skipLibCheck: true` — what `tsc --init`, Next.js and Vite
+all set — the SDK is clean and the quickstart typechecks. Present identically in
+2.2.9 and 2.2.10; it is not a regression, and it is not hand-fixable here.
+
+The cause is declaration emit, not the source. The Factory annotates its return
+(`AxiosPromise<Receipt>`, imported, prints fine); the `Api` CLASS method carries
+no return annotation, so tsc infers `Promise<AxiosResponse<Receipt, any, {}>>`
+and must name `AxiosResponse`. The file does not import it, so the emitter
+reaches for the only axios binding in scope — the default import `globalAxios` —
+and qualifies the type with a value.
+
+The fix is one import in the `typescript-axios` template, so it belongs in
+hanzoai/openapi, not here: a vendored template via a `flags: {template-dir: …}`
+row in `sdks.yaml`, which is exactly what that escape hatch is for ("how one
+language's generator has to be corrected to emit code that compiles").
+`generate.py` has no post-generation step by design — `emit` → `prune` → copy —
+so patching the emitted tree is not available and should not be invented.
 
 ## There is no MCP server here
 
