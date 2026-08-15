@@ -47,22 +47,28 @@ $ npx tsx quickstart.ts
 
 ## Auth
 
-One scheme: a bearer token — an IAM JWT or an `hk-` Cloud API key. The server
+One scheme: a bearer token — an IAM access token or a Cloud API key. The server
 derives your org from the token's `owner` claim, so no route takes an org
 argument.
 
-**Pass it as `baseOptions`, not as `accessToken`.** The API document declares no
-`securityScheme`, so the generator emitted no auth code: `accessToken`
-type-checks, sends no `Authorization` header, and the call is refused as
-anonymous. `baseOptions` is spread into every request by every operation, so the
-header set once below reaches all 2502 methods.
+**It goes in `accessToken`.** The document declares one `securityScheme`
+(`bearer`, http/bearer) and applies it at the top level, so every operation that
+does not opt out with `security: []` generates
+`await setBearerAuthToObject(header, configuration)` — 2498 call sites across
+191 of the 192 api classes — and that helper reads this field and writes
+`Authorization: Bearer <token>`.
+
+Four operations opt out and take no credential: `GET /v1/models`,
+`GET /v1/models/providers`, `GET /v1/commands`, `GET /v1/openapi.json`. For
+those, construct a `Configuration` with no `accessToken` and the client sends no
+header at all.
 
 ```ts
 import { Configuration, ChatApi } from 'hanzoai';
 
 const config = new Configuration({
   basePath: 'https://api.hanzo.ai',
-  baseOptions: { headers: { Authorization: `Bearer ${process.env.HANZO_API_KEY}` } },
+  accessToken: process.env.HANZO_API_KEY,
 });
 
 type Completion = { choices?: Array<{ message?: { content?: string } }> };
@@ -81,13 +87,26 @@ main();
 The client reads no environment variable of its own — `HANZO_API_KEY` above is
 just where the examples keep theirs.
 
+Hanzo IAM mints the token. A service holding client credentials asks for one the
+OAuth2 way, and the reply's `access_token` is what goes in `accessToken`:
+
+```bash
+curl -s -X POST https://api.hanzo.ai/v1/iam/oauth/token \
+  -d grant_type=client_credentials -d client_id=... -d client_secret=...
+# {"access_token":"eyJ…","token_type":"Bearer","expires_in":604800}
+```
+
+`GET /v1/iam/oauth/userinfo` is how you check one: it answers the token's
+identity, or `401 {"error":"invalid_token"}`. That is the `hello` flow below.
+
 ## Examples
 
-Six flows under [`examples/`](examples), one directory each, every one a
+Seven flows under [`examples/`](examples), one directory each, every one a
 complete program:
 
 | flow | what it does | routes |
 |---|---|---|
+| [`models`](examples/models) | the catalog, **no credential needed** | `GET /v1/models` |
 | [`hello`](examples/hello) | identity — prove the key works | `GET /v1/iam/oauth/userinfo` |
 | [`chat`](examples/chat) | one completion | `POST /v1/chat/completions` |
 | [`money`](examples/money) | balance + usage | `GET /v1/billing/balance`, `GET /v1/billing/usage` |
@@ -95,17 +114,47 @@ complete program:
 | [`agent`](examples/agent) | create + run + read | `POST /v1/agents`, `POST /v1/agents/{ref}/run`, `GET /v1/agents/{ref}/runs` |
 | [`tools`](examples/tools) | tool catalog | `GET /v1/tools` |
 
-All six read `HANZO_API_KEY` and talk to `https://api.hanzo.ai` unless
-`HANZO_BASE_URL` says otherwise:
+`models` runs with nothing exported — one command, against the live API, before
+you have any credential:
 
 ```bash
-export HANZO_API_KEY=hk-...
-npm ci && npm run build
+npm ci && npm run build && npx tsx examples/models/index.ts
+```
+
+(`npm run build` first because the examples import `hanzoai` by name and the
+package resolves its own name through `exports`, which points at `dist/`.)
+
+```
+112 models from https://api.hanzo.ai
+  all-mini-lm-l6-v2  (do-ai)
+  anthropic-claude-opus-5  (do-ai)
+  best  (hanzo)
+  bge-m3  (do-ai)
+  claude-4.5-sonnet  (anthropic)
+```
+
+The other six read `HANZO_API_KEY`, and all seven talk to `https://api.hanzo.ai`
+unless `HANZO_BASE_URL` says otherwise:
+
+```bash
+export HANZO_API_KEY=...
 npx tsx examples/hello/index.ts
 ```
 
-`npm run examples` type-checks all six against the client, and `hanzo.yml` makes
-that a CI gate — which is what keeps them from rotting into pseudocode.
+```
+hello from https://api.hanzo.ai
+  sub admin/hanzo-cloud in org hanzo
+  (unnamed) <no email>
+  issued by https://hanzo.id
+```
+
+Hand it a token the server refuses and you get the other half of the proof —
+`HTTP 401: {"error":"invalid_token","error_description":"the access token is
+invalid or revoked"}` — which is the header being sent and evaluated, not
+silently dropped.
+
+`npm run examples` type-checks all seven against the client, and `hanzo.yml`
+makes that a CI gate — which is what keeps them from rotting into pseudocode.
 
 ## The API surface
 

@@ -15,7 +15,14 @@
 import { IamApi } from 'hanzoai';
 import { config, basePath, fail } from '../client';
 
-type UserInfo = { sub?: string; name?: string; preferred_username?: string; email?: string };
+type UserInfo = {
+  sub?: string;
+  name?: string;
+  preferred_username?: string;
+  email?: string;
+  organization?: string;
+  iss?: string;
+};
 
 async function main() {
   const iam = new IamApi(config());
@@ -23,8 +30,9 @@ async function main() {
   const me = data as unknown as UserInfo;
 
   console.log(`hello from ${basePath}`);
+  console.log(`  sub ${me.sub ?? '(none)'} in org ${me.organization ?? '(none)'}`);
   console.log(`  ${me.name ?? me.preferred_username ?? '(unnamed)'} <${me.email ?? 'no email'}>`);
-  console.log(`  sub ${me.sub ?? '(none)'}`);
+  console.log(`  issued by ${me.iss ?? '(unknown issuer)'}`);
 }
 
 main().catch(fail);
