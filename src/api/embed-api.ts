@@ -49,6 +49,10 @@ export const EmbedApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (app !== undefined) {
                 localVarQueryParameter['app'] = app;
             }
