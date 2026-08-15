@@ -110,7 +110,7 @@ jobs:
       # NPM_TOKEN beside it would be a second place to hold one thing, and the
       # one that rots silently — npm answers an unauthorised publish with 404 on
       # PUT, not 401, so a stale token reads as "package not found" for a package
-      # that plainly exists. Path: org `hanzo`, env `prod`, `js-sdk-publish`.
+      # that plainly exists. It is `NPM_TOKEN` in the `hanzo` org, env `prod`.
       - name: Load the publish credential from KMS
         if: steps.exists.outputs.done == 'false'
         env:
@@ -124,20 +124,25 @@ jobs:
             echo "::error::KMS machine identity absent — cannot pull the npm credential. Seed KMS_CLIENT_ID/KMS_CLIENT_SECRET as git.hanzo.ai Actions secrets (org or repo scope)." >&2
             exit 1
           fi
-          KMS=https://kms.hanzo.ai; ORG=hanzo; ENVN=prod; P=js-sdk-publish
+          KMS=https://kms.hanzo.ai; ENVN=prod
           TOKEN=$(curl -sf "$KMS/v1/kms/auth/login" -H 'Content-Type: application/json' \
             -d "{\"clientId\":\"$KMS_CLIENT_ID\",\"clientSecret\":\"$KMS_CLIENT_SECRET\"}" | jq -r .accessToken)
           [ -n "$TOKEN" ] && [ "$TOKEN" != null ] || { echo "::error::KMS login failed"; exit 1; }
-          # `|| true` on the fetch, deliberately: under `bash -e -o pipefail` a
-          # `curl -sf` on an ABSENT path exits 22 and kills the step before any
-          # message of ours prints, which reads like a broken network and is
-          # actually an unseeded path. Capture the status and say which it was.
-          BODY=$(curl -s -w '\n%{http_code}' "$KMS/v1/kms/orgs/$ORG/secrets/$P/NPM_TOKEN?env=$ENVN" \
-            -H "Authorization: Bearer $TOKEN") || true
+          # The org is the TOKEN's owner claim, not a path segment, so the read
+          # names only the secret: `/v1/kms/secrets/<name>?env=<env>`, answering
+          # `{name, env, value}`. That is the one shape this KMS routes —
+          # `/v1/kms/orgs/<org>/secrets/...` has no route at all and answers 404
+          # for every name, including names that are there. NPM_TOKEN sits at the
+          # org root, so there is no path to give it.
+          URL="$KMS/v1/kms/secrets/NPM_TOKEN?env=$ENVN"
+          # No -f, deliberately: under `bash -e -o pipefail` a `curl -sf` on a
+          # 404 exits 22 and kills the step before any message of ours prints,
+          # which reads like a broken network. Capture the status and say it.
+          BODY=$(curl -s -w '\n%{http_code}' "$URL" -H "Authorization: Bearer $TOKEN") || true
           CODE=$(printf '%s' "$BODY" | tail -1)
-          VAL=$(printf '%s' "$BODY" | sed '$d' | jq -r '.secret.value // empty' 2>/dev/null || true)
+          VAL=$(printf '%s' "$BODY" | sed '$d' | jq -r '.value // empty' 2>/dev/null || true)
           if [ -z "$VAL" ]; then
-            echo "::error::KMS returned HTTP $CODE for $ORG/$ENVN/$P/NPM_TOKEN with no value — seed it there, not as a forge secret." >&2
+            echo "::error::KMS returned HTTP $CODE for $URL with no value — seed NPM_TOKEN there, not as a forge secret." >&2
             exit 1
           fi
           echo "::add-mask::$VAL"
