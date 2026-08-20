@@ -1204,6 +1204,36 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * The same document /v1/openapi.json serves, at the address RFC 8615 reserves for discovery — one handler over one render, so the two cannot describe different APIs.  It exists because a client that has never seen this API probes here first. Prefer /v1/openapi.json when you already know the API: it is canonical, and it is what the document\'s own self-description names.
+         * @summary The API description, at the conventional address
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWellKnownOpenapiJson: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/.well-known/openapi.json`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the OpenID Connect discovery document — the one URL you point a standards-compliant client at so it can find every other endpoint on its own, instead of you configuring them by hand.  It advertises only what is actually implemented, so a client that reads it cannot ask for a flow that will fail: the authorization-code flow, PKCE with S256, the supported grants, and the signing algorithms whose public keys the JWKS really publishes.  The issuer is derived from the host you asked on and is the same value the tokens carry, so a client that pins the issuer never sees it change.
          * @summary Returns the OpenID Connect discovery document — the one URL you point a standards-compliant client at so it can find every other endpoint on its own, instead of you configuring them by hand.
          * @param {*} [options] Override http request option.
@@ -2352,6 +2382,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The same document /v1/openapi.json serves, at the address RFC 8615 reserves for discovery — one handler over one render, so the two cannot describe different APIs.  It exists because a client that has never seen this API probes here first. Prefer /v1/openapi.json when you already know the API: it is canonical, and it is what the document\'s own self-description names.
+         * @summary The API description, at the conventional address
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getWellKnownOpenapiJson(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWellKnownOpenapiJson(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.getWellKnownOpenapiJson']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the OpenID Connect discovery document — the one URL you point a standards-compliant client at so it can find every other endpoint on its own, instead of you configuring them by hand.  It advertises only what is actually implemented, so a client that reads it cannot ask for a flow that will fail: the authorization-code flow, PKCE with S256, the supported grants, and the signing algorithms whose public keys the JWKS really publishes.  The issuer is derived from the host you asked on and is the same value the tokens carry, so a client that pins the issuer never sees it change.
          * @summary Returns the OpenID Connect discovery document — the one URL you point a standards-compliant client at so it can find every other endpoint on its own, instead of you configuring them by hand.
          * @param {*} [options] Override http request option.
@@ -2904,6 +2946,15 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         getWellKnownOauthAuthorizationServer(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getWellKnownOauthAuthorizationServer(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The same document /v1/openapi.json serves, at the address RFC 8615 reserves for discovery — one handler over one render, so the two cannot describe different APIs.  It exists because a client that has never seen this API probes here first. Prefer /v1/openapi.json when you already know the API: it is canonical, and it is what the document\'s own self-description names.
+         * @summary The API description, at the conventional address
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWellKnownOpenapiJson(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getWellKnownOpenapiJson(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the OpenID Connect discovery document — the one URL you point a standards-compliant client at so it can find every other endpoint on its own, instead of you configuring them by hand.  It advertises only what is actually implemented, so a client that reads it cannot ask for a flow that will fail: the authorization-code flow, PKCE with S256, the supported grants, and the signing algorithms whose public keys the JWKS really publishes.  The issuer is derived from the host you asked on and is the same value the tokens carry, so a client that pins the issuer never sees it change.
@@ -3997,6 +4048,17 @@ export class DefaultApi extends BaseAPI {
      */
     public getWellKnownOauthAuthorizationServer(options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).getWellKnownOauthAuthorizationServer(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The same document /v1/openapi.json serves, at the address RFC 8615 reserves for discovery — one handler over one render, so the two cannot describe different APIs.  It exists because a client that has never seen this API probes here first. Prefer /v1/openapi.json when you already know the API: it is canonical, and it is what the document\'s own self-description names.
+     * @summary The API description, at the conventional address
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getWellKnownOpenapiJson(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getWellKnownOpenapiJson(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

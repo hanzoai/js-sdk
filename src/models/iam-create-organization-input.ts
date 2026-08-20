@@ -43,6 +43,12 @@ export interface IamCreateOrganizationInput {
     'accountMenu'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof IamCreateOrganizationInput
+     */
+    'avatar'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof IamCreateOrganizationInput
      */
@@ -113,6 +119,12 @@ export interface IamCreateOrganizationInput {
      * @memberof IamCreateOrganizationInput
      */
     'displayName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamCreateOrganizationInput
+     */
+    'emoji'?: string;
     /**
      * 
      * @type {boolean}

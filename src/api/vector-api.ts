@@ -22,14 +22,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ProvisionRequest } from '../models';
-// @ts-ignore
-import type { ProvisionResult } from '../models';
-// @ts-ignore
-import type { ProvisionedResource } from '../models';
-// @ts-ignore
-import type { ProvisionedSummary } from '../models';
-// @ts-ignore
 import type { VectorCollectionList } from '../models';
 // @ts-ignore
 import type { VectorStats } from '../models';
@@ -39,116 +31,6 @@ import type { VectorStats } from '../models';
  */
 export const VectorApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Deletes one vector collection from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary Deletes one vector collection from the shared backend and removes its metadata row.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteVectorByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteVectorByName', 'name', name)
-            const localVarPath = `/v1/vector/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists the caller org\'s vector collections. A collection is a logical resource inside an already-live shared backend, so every one of them is reached through the public gateway rather than at an instance of its own.
-         * @summary Lists the caller org\'s vector collections.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getVector: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/vector`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
-         * @summary Returns one vector collection\'s metadata.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getVectorByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('getVectorByName', 'name', name)
-            const localVarPath = `/v1/vector/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Lists the vector collections with their size and geometry.  It reads the in-cluster Qdrant service: the collection list, then each collection\'s detail for its point count, vector dimension and distance metric. Per-collection detail is best-effort — one collection that fails to describe itself keeps its name and defaults (dimension 0, cosine) rather than blanking the whole panel — and an unreachable Qdrant answers 200 with an EMPTY list.
          * @summary Lists the vector collections with their size and geometry.
@@ -225,44 +107,6 @@ export const VectorApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Creates a vector collection inside the already-running shared vector backend and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
-         * @summary Provision a vector collection for your org
-         * @param {ProvisionRequest} [provisionRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postVector: async (provisionRequest?: ProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/vector`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(provisionRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -273,44 +117,6 @@ export const VectorApiAxiosParamCreator = function (configuration?: Configuratio
 export const VectorApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = VectorApiAxiosParamCreator(configuration)
     return {
-        /**
-         * Deletes one vector collection from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary Deletes one vector collection from the shared backend and removes its metadata row.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteVectorByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteVectorByName(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VectorApi.deleteVectorByName']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists the caller org\'s vector collections. A collection is a logical resource inside an already-live shared backend, so every one of them is reached through the public gateway rather than at an instance of its own.
-         * @summary Lists the caller org\'s vector collections.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getVector(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisionedSummary>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getVector(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VectorApi.getVector']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
-         * @summary Returns one vector collection\'s metadata.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getVectorByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getVectorByName(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VectorApi.getVectorByName']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
         /**
          * Lists the vector collections with their size and geometry.  It reads the in-cluster Qdrant service: the collection list, then each collection\'s detail for its point count, vector dimension and distance metric. Per-collection detail is best-effort — one collection that fails to describe itself keeps its name and defaults (dimension 0, cosine) rather than blanking the whole panel — and an unreachable Qdrant answers 200 with an EMPTY list.
          * @summary Lists the vector collections with their size and geometry.
@@ -337,19 +143,6 @@ export const VectorApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['VectorApi.getVectorStats']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Creates a vector collection inside the already-running shared vector backend and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
-         * @summary Provision a vector collection for your org
-         * @param {ProvisionRequest} [provisionRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postVector(provisionRequest?: ProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postVector(provisionRequest, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['VectorApi.postVector']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -360,35 +153,6 @@ export const VectorApiFp = function(configuration?: Configuration) {
 export const VectorApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = VectorApiFp(configuration)
     return {
-        /**
-         * Deletes one vector collection from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary Deletes one vector collection from the shared backend and removes its metadata row.
-         * @param {VectorApiDeleteVectorByNameRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteVectorByName(requestParameters: VectorApiDeleteVectorByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteVectorByName(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists the caller org\'s vector collections. A collection is a logical resource inside an already-live shared backend, so every one of them is reached through the public gateway rather than at an instance of its own.
-         * @summary Lists the caller org\'s vector collections.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getVector(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisionedSummary>> {
-            return localVarFp.getVector(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
-         * @summary Returns one vector collection\'s metadata.
-         * @param {VectorApiGetVectorByNameRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getVectorByName(requestParameters: VectorApiGetVectorByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
-            return localVarFp.getVectorByName(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
         /**
          * Lists the vector collections with their size and geometry.  It reads the in-cluster Qdrant service: the collection list, then each collection\'s detail for its point count, vector dimension and distance metric. Per-collection detail is best-effort — one collection that fails to describe itself keeps its name and defaults (dimension 0, cosine) rather than blanking the whole panel — and an unreachable Qdrant answers 200 with an EMPTY list.
          * @summary Lists the vector collections with their size and geometry.
@@ -409,46 +173,8 @@ export const VectorApiFactory = function (configuration?: Configuration, basePat
         getVectorStats(requestParameters: VectorApiGetVectorStatsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<VectorStats> {
             return localVarFp.getVectorStats(requestParameters.authorization, options).then((request) => request(axios, basePath));
         },
-        /**
-         * Creates a vector collection inside the already-running shared vector backend and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
-         * @summary Provision a vector collection for your org
-         * @param {VectorApiPostVectorRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postVector(requestParameters: VectorApiPostVectorRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionResult> {
-            return localVarFp.postVector(requestParameters.provisionRequest, options).then((request) => request(axios, basePath));
-        },
     };
 };
-
-/**
- * Request parameters for deleteVectorByName operation in VectorApi.
- * @export
- * @interface VectorApiDeleteVectorByNameRequest
- */
-export interface VectorApiDeleteVectorByNameRequest {
-    /**
-     * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-     * @type {string}
-     * @memberof VectorApiDeleteVectorByName
-     */
-    readonly name: string
-}
-
-/**
- * Request parameters for getVectorByName operation in VectorApi.
- * @export
- * @interface VectorApiGetVectorByNameRequest
- */
-export interface VectorApiGetVectorByNameRequest {
-    /**
-     * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-     * @type {string}
-     * @memberof VectorApiGetVectorByName
-     */
-    readonly name: string
-}
 
 /**
  * Request parameters for getVectorCollections operation in VectorApi.
@@ -479,61 +205,12 @@ export interface VectorApiGetVectorStatsRequest {
 }
 
 /**
- * Request parameters for postVector operation in VectorApi.
- * @export
- * @interface VectorApiPostVectorRequest
- */
-export interface VectorApiPostVectorRequest {
-    /**
-     * 
-     * @type {ProvisionRequest}
-     * @memberof VectorApiPostVector
-     */
-    readonly provisionRequest?: ProvisionRequest
-}
-
-/**
  * VectorApi - object-oriented interface
  * @export
  * @class VectorApi
  * @extends {BaseAPI}
  */
 export class VectorApi extends BaseAPI {
-    /**
-     * Deletes one vector collection from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
-     * @summary Deletes one vector collection from the shared backend and removes its metadata row.
-     * @param {VectorApiDeleteVectorByNameRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VectorApi
-     */
-    public deleteVectorByName(requestParameters: VectorApiDeleteVectorByNameRequest, options?: RawAxiosRequestConfig) {
-        return VectorApiFp(this.configuration).deleteVectorByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists the caller org\'s vector collections. A collection is a logical resource inside an already-live shared backend, so every one of them is reached through the public gateway rather than at an instance of its own.
-     * @summary Lists the caller org\'s vector collections.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VectorApi
-     */
-    public getVector(options?: RawAxiosRequestConfig) {
-        return VectorApiFp(this.configuration).getVector(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one vector collection\'s metadata. It carries the collection\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-collection credential, so there is no per-resource user to report.
-     * @summary Returns one vector collection\'s metadata.
-     * @param {VectorApiGetVectorByNameRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VectorApi
-     */
-    public getVectorByName(requestParameters: VectorApiGetVectorByNameRequest, options?: RawAxiosRequestConfig) {
-        return VectorApiFp(this.configuration).getVectorByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Lists the vector collections with their size and geometry.  It reads the in-cluster Qdrant service: the collection list, then each collection\'s detail for its point count, vector dimension and distance metric. Per-collection detail is best-effort — one collection that fails to describe itself keeps its name and defaults (dimension 0, cosine) rather than blanking the whole panel — and an unreachable Qdrant answers 200 with an EMPTY list.
      * @summary Lists the vector collections with their size and geometry.
@@ -556,18 +233,6 @@ export class VectorApi extends BaseAPI {
      */
     public getVectorStats(requestParameters: VectorApiGetVectorStatsRequest = {}, options?: RawAxiosRequestConfig) {
         return VectorApiFp(this.configuration).getVectorStats(requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a vector collection inside the already-running shared vector backend and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
-     * @summary Provision a vector collection for your org
-     * @param {VectorApiPostVectorRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof VectorApi
-     */
-    public postVector(requestParameters: VectorApiPostVectorRequest = {}, options?: RawAxiosRequestConfig) {
-        return VectorApiFp(this.configuration).postVector(requestParameters.provisionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

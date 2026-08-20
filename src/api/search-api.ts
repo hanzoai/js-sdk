@@ -22,13 +22,9 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ProvisionRequest } from '../models';
+import type { Request } from '../models';
 // @ts-ignore
-import type { ProvisionResult } from '../models';
-// @ts-ignore
-import type { ProvisionedResource } from '../models';
-// @ts-ignore
-import type { ProvisionedSummary } from '../models';
+import type { Response } from '../models';
 // @ts-ignore
 import type { SearchIndexList } from '../models';
 // @ts-ignore
@@ -39,116 +35,6 @@ import type { SearchStats } from '../models';
  */
 export const SearchApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Deletes one search index from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary Deletes one search index from the shared backend and removes its metadata row.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteSearchByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteSearchByName', 'name', name)
-            const localVarPath = `/v1/search/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists the caller org\'s search indexes. An index is a logical resource inside an already-live shared backend, so every one of them is reached through the public gateway rather than at an instance of its own.
-         * @summary Lists the caller org\'s search indexes.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/search`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
-         * @summary Returns one search index\'s metadata.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSearchByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('getSearchByName', 'name', name)
-            const localVarPath = `/v1/search/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
          * @summary Lists the search indexes with their document counts and timestamps.
@@ -226,13 +112,15 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Creates a search index inside the already-running shared search backend and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
-         * @summary Provision a search index for your org
-         * @param {ProvisionRequest} [provisionRequest] 
+         * Is the typed op behind POST /v1/search. It does exactly two things the in-process entry point must not do: resolve the tenant from the validated principal, and refuse when there is none. Everything else is ForOrg.
+         * @summary Hybrid search over the org\'s own corpora
+         * @param {Request} request 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSearch: async (provisionRequest?: ProvisionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        search: async (request: Request, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'request' is not null or undefined
+            assertParamExists('search', 'request', request)
             const localVarPath = `/v1/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -256,7 +144,7 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(provisionRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(request, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -273,44 +161,6 @@ export const SearchApiAxiosParamCreator = function (configuration?: Configuratio
 export const SearchApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SearchApiAxiosParamCreator(configuration)
     return {
-        /**
-         * Deletes one search index from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary Deletes one search index from the shared backend and removes its metadata row.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteSearchByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSearchByName(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SearchApi.deleteSearchByName']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists the caller org\'s search indexes. An index is a logical resource inside an already-live shared backend, so every one of them is reached through the public gateway rather than at an instance of its own.
-         * @summary Lists the caller org\'s search indexes.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProvisionedSummary>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSearch(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SearchApi.getSearch']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
-         * @summary Returns one search index\'s metadata.
-         * @param {string} name Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getSearchByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionedResource>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSearchByName(name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SearchApi.getSearchByName']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
         /**
          * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
          * @summary Lists the search indexes with their document counts and timestamps.
@@ -338,16 +188,16 @@ export const SearchApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a search index inside the already-running shared search backend and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
-         * @summary Provision a search index for your org
-         * @param {ProvisionRequest} [provisionRequest] 
+         * Is the typed op behind POST /v1/search. It does exactly two things the in-process entry point must not do: resolve the tenant from the validated principal, and refuse when there is none. Everything else is ForOrg.
+         * @summary Hybrid search over the org\'s own corpora
+         * @param {Request} request 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSearch(provisionRequest?: ProvisionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProvisionResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSearch(provisionRequest, options);
+        async search(request: Request, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.search(request, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SearchApi.postSearch']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SearchApi.search']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -360,35 +210,6 @@ export const SearchApiFp = function(configuration?: Configuration) {
 export const SearchApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SearchApiFp(configuration)
     return {
-        /**
-         * Deletes one search index from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
-         * @summary Deletes one search index from the shared backend and removes its metadata row.
-         * @param {SearchApiDeleteSearchByNameRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteSearchByName(requestParameters: SearchApiDeleteSearchByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteSearchByName(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists the caller org\'s search indexes. An index is a logical resource inside an already-live shared backend, so every one of them is reached through the public gateway rather than at an instance of its own.
-         * @summary Lists the caller org\'s search indexes.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSearch(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProvisionedSummary>> {
-            return localVarFp.getSearch(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
-         * @summary Returns one search index\'s metadata.
-         * @param {SearchApiGetSearchByNameRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSearchByName(requestParameters: SearchApiGetSearchByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionedResource> {
-            return localVarFp.getSearchByName(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
         /**
          * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
          * @summary Lists the search indexes with their document counts and timestamps.
@@ -410,45 +231,17 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getSearchStats(requestParameters.authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a search index inside the already-running shared search backend and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
-         * @summary Provision a search index for your org
-         * @param {SearchApiPostSearchRequest} requestParameters Request parameters.
+         * Is the typed op behind POST /v1/search. It does exactly two things the in-process entry point must not do: resolve the tenant from the validated principal, and refuse when there is none. Everything else is ForOrg.
+         * @summary Hybrid search over the org\'s own corpora
+         * @param {SearchApiSearchRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSearch(requestParameters: SearchApiPostSearchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ProvisionResult> {
-            return localVarFp.postSearch(requestParameters.provisionRequest, options).then((request) => request(axios, basePath));
+        search(requestParameters: SearchApiSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<Response> {
+            return localVarFp.search(requestParameters.request, options).then((request) => request(axios, basePath));
         },
     };
 };
-
-/**
- * Request parameters for deleteSearchByName operation in SearchApi.
- * @export
- * @interface SearchApiDeleteSearchByNameRequest
- */
-export interface SearchApiDeleteSearchByNameRequest {
-    /**
-     * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-     * @type {string}
-     * @memberof SearchApiDeleteSearchByName
-     */
-    readonly name: string
-}
-
-/**
- * Request parameters for getSearchByName operation in SearchApi.
- * @export
- * @interface SearchApiGetSearchByNameRequest
- */
-export interface SearchApiGetSearchByNameRequest {
-    /**
-     * Name is the resource\&#39;s org-unique slug, from the path. Lower-cased and trimmed before lookup, exactly as it was at create.
-     * @type {string}
-     * @memberof SearchApiGetSearchByName
-     */
-    readonly name: string
-}
 
 /**
  * Request parameters for getSearchIndexes operation in SearchApi.
@@ -479,17 +272,17 @@ export interface SearchApiGetSearchStatsRequest {
 }
 
 /**
- * Request parameters for postSearch operation in SearchApi.
+ * Request parameters for search operation in SearchApi.
  * @export
- * @interface SearchApiPostSearchRequest
+ * @interface SearchApiSearchRequest
  */
-export interface SearchApiPostSearchRequest {
+export interface SearchApiSearchRequest {
     /**
      * 
-     * @type {ProvisionRequest}
-     * @memberof SearchApiPostSearch
+     * @type {Request}
+     * @memberof SearchApiSearch
      */
-    readonly provisionRequest?: ProvisionRequest
+    readonly request: Request
 }
 
 /**
@@ -499,41 +292,6 @@ export interface SearchApiPostSearchRequest {
  * @extends {BaseAPI}
  */
 export class SearchApi extends BaseAPI {
-    /**
-     * Deletes one search index from the shared backend and removes its metadata row. Answers 204 with no body; a second call is a 404.
-     * @summary Deletes one search index from the shared backend and removes its metadata row.
-     * @param {SearchApiDeleteSearchByNameRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SearchApi
-     */
-    public deleteSearchByName(requestParameters: SearchApiDeleteSearchByNameRequest, options?: RawAxiosRequestConfig) {
-        return SearchApiFp(this.configuration).deleteSearchByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists the caller org\'s search indexes. An index is a logical resource inside an already-live shared backend, so every one of them is reached through the public gateway rather than at an instance of its own.
-     * @summary Lists the caller org\'s search indexes.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SearchApi
-     */
-    public getSearch(options?: RawAxiosRequestConfig) {
-        return SearchApiFp(this.configuration).getSearch(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one search index\'s metadata. It carries the index\'s status and the gateway address it is reached at, and no username: the backend authenticates with a shared, out-of-band key rather than a per-index credential.
-     * @summary Returns one search index\'s metadata.
-     * @param {SearchApiGetSearchByNameRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SearchApi
-     */
-    public getSearchByName(requestParameters: SearchApiGetSearchByNameRequest, options?: RawAxiosRequestConfig) {
-        return SearchApiFp(this.configuration).getSearchByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
      * @summary Lists the search indexes with their document counts and timestamps.
@@ -559,15 +317,15 @@ export class SearchApi extends BaseAPI {
     }
 
     /**
-     * Creates a search index inside the already-running shared search backend and answers with the endpoint that reaches it.  `name` is the org-unique slug every physical name derives from, and must match ^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$. `instance` optionally BINDS the add-on to one of your app instances: the DSN is injected into that instance\'s addons secret as <KIND>_URL, switching the app off its built-in store and onto this one. Omit it and the connection string is yours to wire.  THE CREDENTIAL COMES BACK ONCE. The connection string and password are in this response and nowhere else — every read beside it omits the password — so a caller that does not keep them has to provision again. Where KMS is configured the password is sealed there and only a reference is persisted; where it is not, it is returned this once and stored nowhere. It is never held in plaintext.  Scoped to the caller\'s validated org (403 without one), which also namespaces the physical resource under a fixed-width hash, so two tenants can never fold onto one backend resource — a residual collision fails closed with 409 rather than silently sharing. A name already taken in your org is 409; an invalid name or instance slug is 400; a backend that refuses the create is 502. Where a later step fails after the backend resource already exists, it is torn back down rather than left orphaned.  Billing is gated BEFORE anything is created: an unfunded org — or, in the fail-closed default, an unreachable meter — gets the fleet-wide 402/503 and nothing is provisioned. The fee is per-kind and set by the deployment.
-     * @summary Provision a search index for your org
-     * @param {SearchApiPostSearchRequest} requestParameters Request parameters.
+     * Is the typed op behind POST /v1/search. It does exactly two things the in-process entry point must not do: resolve the tenant from the validated principal, and refuse when there is none. Everything else is ForOrg.
+     * @summary Hybrid search over the org\'s own corpora
+     * @param {SearchApiSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SearchApi
      */
-    public postSearch(requestParameters: SearchApiPostSearchRequest = {}, options?: RawAxiosRequestConfig) {
-        return SearchApiFp(this.configuration).postSearch(requestParameters.provisionRequest, options).then((request) => request(this.axios, this.basePath));
+    public search(requestParameters: SearchApiSearchRequest, options?: RawAxiosRequestConfig) {
+        return SearchApiFp(this.configuration).search(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

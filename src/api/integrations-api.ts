@@ -66,6 +66,8 @@ import type { GithubSearchOut } from '../models';
 // @ts-ignore
 import type { GithubSearchReq } from '../models';
 // @ts-ignore
+import type { GitlabProjectsOut } from '../models';
+// @ts-ignore
 import type { ListOut } from '../models';
 // @ts-ignore
 import type { ProviderView } from '../models';
@@ -407,6 +409,40 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             assertParamExists('getIntegrationsGithubReposByRepoPages', 'repo', repo)
             const localVarPath = `/v1/integrations/github/repos/{repo}/pages`
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the projects the org\'s GitLab connection can reach — membership projects, most recently active first.
+         * @summary Lists the projects the org\'s GitLab connection can reach — membership projects, most recently active first.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIntegrationsGitlabProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integrations/gitlab/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1630,6 +1666,18 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Lists the projects the org\'s GitLab connection can reach — membership projects, most recently active first.
+         * @summary Lists the projects the org\'s GitLab connection can reach — membership projects, most recently active first.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIntegrationsGitlabProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GitlabProjectsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsGitlabProjects(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsGitlabProjects']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * The address behind Slack\'s \"Add to Slack\" and Marketplace Install buttons. It answers a 302 to Slack\'s own consent screen and does nothing else — it is a redirector by design.  It exists because Slack refuses a slack.com URL in that field and requires one of ours that redirects there, which makes the field an ATTRIBUTION hook: routing the click through our own address is what lets an install be counted, and always answering the redirect is what keeps the counter from becoming a detour that never reaches consent. The destination is the same consent URL every time, built from the same scopes the console\'s Connect button asks for, so a workspace is asked to grant one thing however the install began.  It is PUBLIC and carries no principal, because whoever clicks Install in Slack\'s directory has no Hanzo session yet. It binds no org either, and that is deliberate rather than missing: the org is resolved at the shared provider callback, from the signed state a console connect minted or from the workspace\'s existing connection. Minting an org for an anonymous click is the one thing that would break tenant isolation, so an install begun here finishes under exactly the rules every other install obeys.  Where the app is not configured it answers 503, rather than a consent URL carrying an empty client_id that Slack would render as its own dead-end error page.
          * @summary Install the Hanzo app into a Slack workspace
          * @param {*} [options] Override http request option.
@@ -2095,6 +2143,15 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          */
         getIntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiGetIntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GithubPagesView> {
             return localVarFp.getIntegrationsGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the projects the org\'s GitLab connection can reach — membership projects, most recently active first.
+         * @summary Lists the projects the org\'s GitLab connection can reach — membership projects, most recently active first.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIntegrationsGitlabProjects(options?: RawAxiosRequestConfig): AxiosPromise<GitlabProjectsOut> {
+            return localVarFp.getIntegrationsGitlabProjects(options).then((request) => request(axios, basePath));
         },
         /**
          * The address behind Slack\'s \"Add to Slack\" and Marketplace Install buttons. It answers a 302 to Slack\'s own consent screen and does nothing else — it is a redirector by design.  It exists because Slack refuses a slack.com URL in that field and requires one of ours that redirects there, which makes the field an ATTRIBUTION hook: routing the click through our own address is what lets an install be counted, and always answering the redirect is what keeps the counter from becoming a detour that never reaches consent. The destination is the same consent URL every time, built from the same scopes the console\'s Connect button asks for, so a workspace is asked to grant one thing however the install began.  It is PUBLIC and carries no principal, because whoever clicks Install in Slack\'s directory has no Hanzo session yet. It binds no org either, and that is deliberate rather than missing: the org is resolved at the shared provider callback, from the signed state a console connect minted or from the workspace\'s existing connection. Minting an org for an anonymous click is the one thing that would break tenant isolation, so an install begun here finishes under exactly the rules every other install obeys.  Where the app is not configured it answers 503, rather than a consent URL carrying an empty client_id that Slack would render as its own dead-end error page.
@@ -2736,6 +2793,17 @@ export class IntegrationsApi extends BaseAPI {
      */
     public getIntegrationsGithubReposByRepoPages(requestParameters: IntegrationsApiGetIntegrationsGithubReposByRepoPagesRequest, options?: RawAxiosRequestConfig) {
         return IntegrationsApiFp(this.configuration).getIntegrationsGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the projects the org\'s GitLab connection can reach — membership projects, most recently active first.
+     * @summary Lists the projects the org\'s GitLab connection can reach — membership projects, most recently active first.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public getIntegrationsGitlabProjects(options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).getIntegrationsGitlabProjects(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

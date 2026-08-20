@@ -42,6 +42,12 @@ export interface IamOrganization {
      */
     'accountMenu'?: string;
     /**
+     * How the organization appears across Hanzo — the square mark beside its name — as an image or as one emoji, never both. It is the pair a person carries (User.Avatar) under the same names, resolved the same way, so a screen draws a subject without asking which kind of subject it has. Both halves live on the row: a mark that appears everywhere cannot be kept on one device. Written through schema.MarkOf; Logo and LogoDark above are a different thing, the wordmark a login screen draws.
+     * @type {string}
+     * @memberof IamOrganization
+     */
+    'avatar'?: string;
+    /**
      * 
      * @type {number}
      * @memberof IamOrganization
@@ -113,6 +119,12 @@ export interface IamOrganization {
      * @memberof IamOrganization
      */
     'displayName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamOrganization
+     */
+    'emoji'?: string;
     /**
      * 
      * @type {boolean}
