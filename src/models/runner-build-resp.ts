@@ -21,7 +21,7 @@
  */
 export interface RunnerBuildResp {
     /**
-     * BuildJobID is the queued build\'s id, and what a release is followed by.
+     * BuildJobID is the queued build\'s id, and what its progress is read by.
      * @type {string}
      * @memberof RunnerBuildResp
      */
@@ -45,7 +45,7 @@ export interface RunnerBuildResp {
      */
     'runnerPool'?: string;
     /**
-     * Status is `queued` for an ordinary build, `releasing` for a self-publish.
+     * Status is `queued` — the build was accepted and has not finished.
      * @type {string}
      * @memberof RunnerBuildResp
      */

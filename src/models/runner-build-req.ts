@@ -96,12 +96,6 @@ export interface RunnerBuildReq {
      */
     'ref'?: string;
     /**
-     * Release requests native release semantics for cloud\'s self-publish: compute the next version, build+push ghcr.io/hanzoai/cloud, smoke it, then tag (the receipt) and notify universe. It owns its output image (release.go), and it takes SuperAdmin.
-     * @type {boolean}
-     * @memberof RunnerBuildReq
-     */
-    'release'?: boolean;
-    /**
      * Repo is the repository clone URL to build. Required on the image lane.
      * @type {string}
      * @memberof RunnerBuildReq

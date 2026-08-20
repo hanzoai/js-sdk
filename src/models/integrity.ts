@@ -21,34 +21,40 @@
  */
 export interface Integrity {
     /**
-     * BrokenAt is the seq of the FIRST record that failed verification, or -1 when OK. Reason describes the break (recomputed-hash mismatch, prev-hash discontinuity, or a seq gap).
+     * BrokenAt is the seq of the FIRST record that failed verification, and -1 whenever the walk found no break (including an unread chain, where no seq was reached). Reason describes the break (recomputed-hash mismatch, prev-hash discontinuity, or a seq gap) or why the chain could not be read.
      * @type {number}
      * @memberof Integrity
      */
     'brokenAt'?: number;
     /**
-     * Count is the number of records walked.
+     * Count is the number of records walked. Zero on an unread chain, where it means \"nothing was read\", not \"the chain is empty\".
      * @type {number}
      * @memberof Integrity
      */
     'count'?: number;
     /**
-     * HeadHash is the hash of the last record (or the genesis anchor for an empty chain). Pin this externally over time to detect tail-truncation.
+     * Head is the hash of the last record (or the genesis anchor for an empty chain). Pin this externally over time to detect tail-truncation.
      * @type {string}
      * @memberof Integrity
      */
-    'headHash'?: string;
+    'head'?: string;
     /**
-     * OK is true iff every record\'s stored hash equals the recomputed hash AND the chain links are continuous (each PrevHash == the prior record\'s Hash, seqs gapless from 0).
-     * @type {boolean}
+     * Name is the chain this verdict is about, e.g. \"audit\" or \"audit-iam\". It is carried because a verdict with no chain on it reads as the whole trail\'s, which is what a reader of a 128-chain deployment did.
+     * @type {string}
      * @memberof Integrity
      */
-    'ok'?: boolean;
+    'name'?: string;
     /**
      * 
      * @type {string}
      * @memberof Integrity
      */
     'reason'?: string;
+    /**
+     * Verdict is intact, broken or unread.
+     * @type {string}
+     * @memberof Integrity
+     */
+    'verdict'?: string;
 }
 

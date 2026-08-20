@@ -30,11 +30,15 @@ export const VideosApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Implements GET /v1/videos/{id} — poll a job\'s status.  It authenticates the caller, verifies they OWN the job (the caller\'s billing subject must equal the job\'s), performs ONE upstream status poll, and — the first time the job is observed completed — settles the reservation with the actual cost and records the billable usage event (exactly once). Returns the OpenAI-shaped video object.
          * @summary Implements GET /v1/videos/{id} — poll a job\'s status.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVideosById: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/videos/{id}`;
+        getVideosById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getVideosById', 'id', id)
+            const localVarPath = `/v1/videos/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -64,11 +68,15 @@ export const VideosApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Implements GET /v1/videos/{id}/content — download the finished MP4.  It authenticates + ownership-checks the caller, then proxies the upstream /content endpoint (bounded by the download concurrency ceiling) and streams the raw video bytes back inline. A successful download also bills the job once (for the client that downloads without first polling to completion) — idempotent with the poll path via job.markCompleted.
          * @summary Implements GET /v1/videos/{id}/content — download the finished MP4.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVideosByIdContent: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/videos/{id}/content`;
+        getVideosByIdContent: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getVideosByIdContent', 'id', id)
+            const localVarPath = `/v1/videos/{id}/content`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -142,11 +150,12 @@ export const VideosApiFp = function(configuration?: Configuration) {
         /**
          * Implements GET /v1/videos/{id} — poll a job\'s status.  It authenticates the caller, verifies they OWN the job (the caller\'s billing subject must equal the job\'s), performs ONE upstream status poll, and — the first time the job is observed completed — settles the reservation with the actual cost and records the billable usage event (exactly once). Returns the OpenAI-shaped video object.
          * @summary Implements GET /v1/videos/{id} — poll a job\'s status.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getVideosById(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getVideosById(options);
+        async getVideosById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getVideosById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['VideosApi.getVideosById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -154,11 +163,12 @@ export const VideosApiFp = function(configuration?: Configuration) {
         /**
          * Implements GET /v1/videos/{id}/content — download the finished MP4.  It authenticates + ownership-checks the caller, then proxies the upstream /content endpoint (bounded by the download concurrency ceiling) and streams the raw video bytes back inline. A successful download also bills the job once (for the client that downloads without first polling to completion) — idempotent with the poll path via job.markCompleted.
          * @summary Implements GET /v1/videos/{id}/content — download the finished MP4.
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getVideosByIdContent(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getVideosByIdContent(options);
+        async getVideosByIdContent(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getVideosByIdContent(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['VideosApi.getVideosByIdContent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -188,20 +198,22 @@ export const VideosApiFactory = function (configuration?: Configuration, basePat
         /**
          * Implements GET /v1/videos/{id} — poll a job\'s status.  It authenticates the caller, verifies they OWN the job (the caller\'s billing subject must equal the job\'s), performs ONE upstream status poll, and — the first time the job is observed completed — settles the reservation with the actual cost and records the billable usage event (exactly once). Returns the OpenAI-shaped video object.
          * @summary Implements GET /v1/videos/{id} — poll a job\'s status.
+         * @param {VideosApiGetVideosByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVideosById(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getVideosById(options).then((request) => request(axios, basePath));
+        getVideosById(requestParameters: VideosApiGetVideosByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getVideosById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Implements GET /v1/videos/{id}/content — download the finished MP4.  It authenticates + ownership-checks the caller, then proxies the upstream /content endpoint (bounded by the download concurrency ceiling) and streams the raw video bytes back inline. A successful download also bills the job once (for the client that downloads without first polling to completion) — idempotent with the poll path via job.markCompleted.
          * @summary Implements GET /v1/videos/{id}/content — download the finished MP4.
+         * @param {VideosApiGetVideosByIdContentRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVideosByIdContent(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getVideosByIdContent(options).then((request) => request(axios, basePath));
+        getVideosByIdContent(requestParameters: VideosApiGetVideosByIdContentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getVideosByIdContent(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Implements POST /v1/videos/generations — the ASYNC create.  Body: {\"model\": \"...\", \"prompt\": \"...\", \"size\"?: \"1280x720\", \"seconds\"?: int}  It authenticates the caller, resolves the model to its upstream provider via the shared routing table (zen3-video* / wan2-2-t2v-a14b → the spark-video backend), reserves the per-video budget (the balance gate), creates ONE upstream job, registers it in the in-pod store, and returns the OpenAI-shaped video object with status \"queued\" IMMEDIATELY. The client then polls GET /v1/videos/{id} and downloads GET /v1/videos/{id}/content. Nothing is billed here — the debit lands on completion.
@@ -216,6 +228,34 @@ export const VideosApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
+ * Request parameters for getVideosById operation in VideosApi.
+ * @export
+ * @interface VideosApiGetVideosByIdRequest
+ */
+export interface VideosApiGetVideosByIdRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof VideosApiGetVideosById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getVideosByIdContent operation in VideosApi.
+ * @export
+ * @interface VideosApiGetVideosByIdContentRequest
+ */
+export interface VideosApiGetVideosByIdContentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof VideosApiGetVideosByIdContent
+     */
+    readonly id: string
+}
+
+/**
  * VideosApi - object-oriented interface
  * @export
  * @class VideosApi
@@ -225,23 +265,25 @@ export class VideosApi extends BaseAPI {
     /**
      * Implements GET /v1/videos/{id} — poll a job\'s status.  It authenticates the caller, verifies they OWN the job (the caller\'s billing subject must equal the job\'s), performs ONE upstream status poll, and — the first time the job is observed completed — settles the reservation with the actual cost and records the billable usage event (exactly once). Returns the OpenAI-shaped video object.
      * @summary Implements GET /v1/videos/{id} — poll a job\'s status.
+     * @param {VideosApiGetVideosByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VideosApi
      */
-    public getVideosById(options?: RawAxiosRequestConfig) {
-        return VideosApiFp(this.configuration).getVideosById(options).then((request) => request(this.axios, this.basePath));
+    public getVideosById(requestParameters: VideosApiGetVideosByIdRequest, options?: RawAxiosRequestConfig) {
+        return VideosApiFp(this.configuration).getVideosById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Implements GET /v1/videos/{id}/content — download the finished MP4.  It authenticates + ownership-checks the caller, then proxies the upstream /content endpoint (bounded by the download concurrency ceiling) and streams the raw video bytes back inline. A successful download also bills the job once (for the client that downloads without first polling to completion) — idempotent with the poll path via job.markCompleted.
      * @summary Implements GET /v1/videos/{id}/content — download the finished MP4.
+     * @param {VideosApiGetVideosByIdContentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VideosApi
      */
-    public getVideosByIdContent(options?: RawAxiosRequestConfig) {
-        return VideosApiFp(this.configuration).getVideosByIdContent(options).then((request) => request(this.axios, this.basePath));
+    public getVideosByIdContent(requestParameters: VideosApiGetVideosByIdContentRequest, options?: RawAxiosRequestConfig) {
+        return VideosApiFp(this.configuration).getVideosByIdContent(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

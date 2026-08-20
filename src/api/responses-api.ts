@@ -28,7 +28,7 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const ResponsesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Implements POST /v1/responses. The converted request is passed to ChatCompletions and an installed ResponseWriter converts its OpenAI chat JSON or SSE back into Responses JSON/SSE on the fly.
+         * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
          * @summary Implements POST /v1/responses.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -72,7 +72,7 @@ export const ResponsesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ResponsesApiAxiosParamCreator(configuration)
     return {
         /**
-         * Implements POST /v1/responses. The converted request is passed to ChatCompletions and an installed ResponseWriter converts its OpenAI chat JSON or SSE back into Responses JSON/SSE on the fly.
+         * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
          * @summary Implements POST /v1/responses.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -94,7 +94,7 @@ export const ResponsesApiFactory = function (configuration?: Configuration, base
     const localVarFp = ResponsesApiFp(configuration)
     return {
         /**
-         * Implements POST /v1/responses. The converted request is passed to ChatCompletions and an installed ResponseWriter converts its OpenAI chat JSON or SSE back into Responses JSON/SSE on the fly.
+         * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
          * @summary Implements POST /v1/responses.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -113,7 +113,7 @@ export const ResponsesApiFactory = function (configuration?: Configuration, base
  */
 export class ResponsesApi extends BaseAPI {
     /**
-     * Implements POST /v1/responses. The converted request is passed to ChatCompletions and an installed ResponseWriter converts its OpenAI chat JSON or SSE back into Responses JSON/SSE on the fly.
+     * Implements POST /v1/responses. The converted request is completed by the chat path, which is handed a sink saying where the answer goes: a stream is translated as it is produced, a whole body is translated entire.
      * @summary Implements POST /v1/responses.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

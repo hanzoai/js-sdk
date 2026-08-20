@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { IamAccountBody } from '../models';
+// @ts-ignore
 import type { IamAnswer } from '../models';
 // @ts-ignore
 import type { IamApplication } from '../models';
@@ -29,6 +31,8 @@ import type { IamApplication } from '../models';
 import type { IamApplicationListResult } from '../models';
 // @ts-ignore
 import type { IamApplicationRef } from '../models';
+// @ts-ignore
+import type { IamAssumeBody } from '../models';
 // @ts-ignore
 import type { IamAuditLog } from '../models';
 // @ts-ignore
@@ -142,9 +146,13 @@ import type { IamRolesListOutput } from '../models';
 // @ts-ignore
 import type { IamRolesRef } from '../models';
 // @ts-ignore
+import type { IamSearchOrganizationsOutput } from '../models';
+// @ts-ignore
 import type { IamSession } from '../models';
 // @ts-ignore
 import type { IamSessionRef } from '../models';
+// @ts-ignore
+import type { IamSetAvatarInput } from '../models';
 // @ts-ignore
 import type { IamToken } from '../models';
 // @ts-ignore
@@ -2894,6 +2902,74 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Starts a passkey sign-in: it returns the challenge the person\'s authenticator signs.  The account is named in the query, and the challenge is bound to it, so what may answer is decided here — by the server, from the row — and the finish checks the answer against that decision rather than recomputing it.
+         * @summary Starts a passkey sign-in: it returns the challenge the person\'s authenticator signs.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamWebauthnSigninBegin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/webauthn/signin/begin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Starts enrolling a passkey for the signed-in person: it returns the options their browser hands to the authenticator.  Passkeys already on the account are EXCLUDED, so a second enrollment on a device that already holds one is refused by the authenticator itself rather than silently producing a duplicate the person cannot tell apart.
+         * @summary Starts enrolling a passkey for the signed-in person: it returns the options their browser hands to the authenticator.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamWebauthnSignupBegin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/webauthn/signup/begin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Publishes the public keys that verify the tokens issued here — the one URL you point a service at so it can check a token itself, offline, without calling back and without holding any secret of ours.  Keys appear here before they start signing and stay after they stop, so a rotation never leaves a live token unverifiable. Nothing private is ever published.
          * @summary Publishes the public keys that verify the tokens issued here — the one URL you point a service at so it can check a token itself, offline, without calling back and without holding any secret of ours.
          * @param {*} [options] Override http request option.
@@ -3445,13 +3521,13 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns the passkeys and security keys registered in your organization, newest first — which device each belongs to and when it was last used.
-         * @summary Returns the passkeys and security keys registered in your organization, newest first — which device each belongs to and when it was last used.
-         * @param {string} [owner] 
+         * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list. It used to scope to the ORG, which handed an org admin every member\'s credential rows in one answer, and a SuperAdmin every tenant\'s; a plain member meanwhile could not read even their own, because an unnamed target fails the Guard\'s tenant rule. One scope fixes both halves: the answer is a person\'s, and the caller is the person unless they say otherwise and may.
+         * @summary Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.
+         * @param {string} [user] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listWebauthnCredentials: async (owner?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listWebauthnCredentials: async (user?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/webauthn-credentials`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3468,8 +3544,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (owner !== undefined) {
-                localVarQueryParameter['owner'] = owner;
+            if (user !== undefined) {
+                localVarQueryParameter['user'] = user;
             }
 
 
@@ -4027,6 +4103,54 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(iamApplication, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.  The token still names the operator — stepping in is not becoming somebody else — and records the organization it was scoped to, so everything done with it is attributed to the person who did it. Only a platform operator may, and the attempt is recorded whether or not it succeeds.
+         * @summary Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.
+         * @param {IamAssumeBody} iamAssumeBody 
+         * @param {string} [authorization] 
+         * @param {string} [xForwardedFor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamAssume: async (iamAssumeBody: IamAssumeBody, authorization?: string, xForwardedFor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamAssumeBody' is not null or undefined
+            assertParamExists('postIamAssume', 'iamAssumeBody', iamAssumeBody)
+            const localVarPath = `/v1/iam/assume`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            if (xForwardedFor != null) {
+                localVarHeaderParameter['X-Forwarded-For'] = String(xForwardedFor);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamAssumeBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6044,6 +6168,54 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in. Recorded like the step in.
+         * @summary Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in.
+         * @param {IamAssumeBody} iamAssumeBody 
+         * @param {string} [authorization] 
+         * @param {string} [xForwardedFor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamRelease: async (iamAssumeBody: IamAssumeBody, authorization?: string, xForwardedFor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamAssumeBody' is not null or undefined
+            assertParamExists('postIamRelease', 'iamAssumeBody', iamAssumeBody)
+            const localVarPath = `/v1/iam/release`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            if (xForwardedFor != null) {
+                localVarHeaderParameter['X-Forwarded-For'] = String(xForwardedFor);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamAssumeBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
          * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
          * @param {*} [options] Override http request option.
@@ -6970,6 +7142,74 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Verifies the signed challenge and signs the person in.  It answers exactly as a password sign-in does — the same envelope, through the same grant — so nothing downstream branches on how somebody arrived.
+         * @summary Verifies the signed challenge and signs the person in.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamWebauthnSigninFinish: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/webauthn/signin/finish`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+         * @summary Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamWebauthnSignupFinish: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/webauthn/signup/finish`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Makes a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them. A name already used in the organization is refused.
          * @summary Makes a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.
          * @param {IamWorkspacesInput} iamWorkspacesInput 
@@ -7123,6 +7363,54 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(iamWorkspacesInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.  Only their own: the request names nobody, so it cannot reach another account. Send only what you are changing; a field you leave out keeps the value it had, and a field you send empty is cleared.  A picture is an https link or an inline image up to 96 KiB, the same value an organization\'s mark is (schema.AvatarRef) — one rule for how a subject appears, whether the subject is a person or an organization.
+         * @summary Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.
+         * @param {IamAccountBody} iamAccountBody 
+         * @param {string} [cookie] 
+         * @param {string} [authorization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamAccount: async (iamAccountBody: IamAccountBody, cookie?: string, authorization?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamAccountBody' is not null or undefined
+            assertParamExists('putIamAccount', 'iamAccountBody', iamAccountBody)
+            const localVarPath = `/v1/iam/account`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            if (cookie != null) {
+                localVarHeaderParameter['Cookie'] = String(cookie);
+            }
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamAccountBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7287,6 +7575,99 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.
+         * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
+         * @param {string} [xForwardedFor] 
+         * @param {string} [q] 
+         * @param {number} [limit] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchOrganizations: async (xForwardedFor?: string, q?: string, limit?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/organizations/search`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+
+
+    
+            if (xForwardedFor != null) {
+                localVarHeaderParameter['X-Forwarded-For'] = String(xForwardedFor);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes how an organization appears across Hanzo: the square mark beside its name, as an uploaded image or as a single emoji. Sending an image clears the emoji and sending an emoji clears the image — an organization has one mark, not a preference order — and sending neither clears both, which is how it goes back to being drawn as its initial.  An image is an https link or the bytes inline as a data URL, up to 96 KiB. Anyone who administers the organization may set this; it is not reserved to the platform.  It writes the two fields onto the stored row and touches nothing else, which update cannot do: update replaces the whole record, and a record read back first arrives masked, so a read-modify-write through it would persist the mask over the organization\'s own credential settings.
+         * @summary Changes how an organization appears across Hanzo: the square mark beside its name, as an uploaded image or as a single emoji.
+         * @param {IamSetAvatarInput} iamSetAvatarInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setOrganizationAvatar: async (iamSetAvatarInput: IamSetAvatarInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamSetAvatarInput' is not null or undefined
+            assertParamExists('setOrganizationAvatar', 'iamSetAvatarInput', iamSetAvatarInput)
+            const localVarPath = `/v1/iam/organizations/avatar`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamSetAvatarInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8497,6 +8878,30 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Starts a passkey sign-in: it returns the challenge the person\'s authenticator signs.  The account is named in the query, and the challenge is bound to it, so what may answer is decided here — by the server, from the row — and the finish checks the answer against that decision rather than recomputing it.
+         * @summary Starts a passkey sign-in: it returns the challenge the person\'s authenticator signs.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamWebauthnSigninBegin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamWebauthnSigninBegin(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamWebauthnSigninBegin']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Starts enrolling a passkey for the signed-in person: it returns the options their browser hands to the authenticator.  Passkeys already on the account are EXCLUDED, so a second enrollment on a device that already holds one is refused by the authenticator itself rather than silently producing a duplicate the person cannot tell apart.
+         * @summary Starts enrolling a passkey for the signed-in person: it returns the options their browser hands to the authenticator.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamWebauthnSignupBegin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamWebauthnSignupBegin(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamWebauthnSignupBegin']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Publishes the public keys that verify the tokens issued here — the one URL you point a service at so it can check a token itself, offline, without calling back and without holding any secret of ours.  Keys appear here before they start signing and stay after they stop, so a rotation never leaves a live token unverifiable. Nothing private is ever published.
          * @summary Publishes the public keys that verify the tokens issued here — the one URL you point a service at so it can check a token itself, offline, without calling back and without holding any secret of ours.
          * @param {*} [options] Override http request option.
@@ -8679,14 +9084,14 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the passkeys and security keys registered in your organization, newest first — which device each belongs to and when it was last used.
-         * @summary Returns the passkeys and security keys registered in your organization, newest first — which device each belongs to and when it was last used.
-         * @param {string} [owner] 
+         * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list. It used to scope to the ORG, which handed an org admin every member\'s credential rows in one answer, and a SuperAdmin every tenant\'s; a plain member meanwhile could not read even their own, because an unnamed target fails the Guard\'s tenant rule. One scope fixes both halves: the answer is a person\'s, and the caller is the person unless they say otherwise and may.
+         * @summary Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.
+         * @param {string} [user] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listWebauthnCredentials(owner?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListWebauthnCredentialsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listWebauthnCredentials(owner, options);
+        async listWebauthnCredentials(user?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListWebauthnCredentialsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listWebauthnCredentials(user, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.listWebauthnCredentials']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8870,6 +9275,21 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamApplicationsUpdate(iamApplication, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamApplicationsUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.  The token still names the operator — stepping in is not becoming somebody else — and records the organization it was scoped to, so everything done with it is attributed to the person who did it. Only a platform operator may, and the attempt is recorded whether or not it succeeds.
+         * @summary Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.
+         * @param {IamAssumeBody} iamAssumeBody 
+         * @param {string} [authorization] 
+         * @param {string} [xForwardedFor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIamAssume(iamAssumeBody: IamAssumeBody, authorization?: string, xForwardedFor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAssume(iamAssumeBody, authorization, xForwardedFor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAssume']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -9550,6 +9970,21 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in. Recorded like the step in.
+         * @summary Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in.
+         * @param {IamAssumeBody} iamAssumeBody 
+         * @param {string} [authorization] 
+         * @param {string} [xForwardedFor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIamRelease(iamAssumeBody: IamAssumeBody, authorization?: string, xForwardedFor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamRelease(iamAssumeBody, authorization, xForwardedFor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamRelease']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
          * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
          * @param {*} [options] Override http request option.
@@ -9863,6 +10298,30 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Verifies the signed challenge and signs the person in.  It answers exactly as a password sign-in does — the same envelope, through the same grant — so nothing downstream branches on how somebody arrived.
+         * @summary Verifies the signed challenge and signs the person in.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIamWebauthnSigninFinish(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamWebauthnSigninFinish(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamWebauthnSigninFinish']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+         * @summary Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIamWebauthnSignupFinish(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamWebauthnSignupFinish(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamWebauthnSignupFinish']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Makes a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them. A name already used in the organization is refused.
          * @summary Makes a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.
          * @param {IamWorkspacesInput} iamWorkspacesInput 
@@ -9912,6 +10371,21 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamWorkspacesUpdate(iamWorkspacesInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamWorkspacesUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.  Only their own: the request names nobody, so it cannot reach another account. Send only what you are changing; a field you leave out keeps the value it had, and a field you send empty is cleared.  A picture is an https link or an inline image up to 96 KiB, the same value an organization\'s mark is (schema.AvatarRef) — one rule for how a subject appears, whether the subject is a person or an organization.
+         * @summary Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.
+         * @param {IamAccountBody} iamAccountBody 
+         * @param {string} [cookie] 
+         * @param {string} [authorization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamAccount(iamAccountBody: IamAccountBody, cookie?: string, authorization?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamAccount(iamAccountBody, cookie, authorization, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamAccount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -9966,6 +10440,35 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putIamScimV2UsersByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.putIamScimV2UsersByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.
+         * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
+         * @param {string} [xForwardedFor] 
+         * @param {string} [q] 
+         * @param {number} [limit] 
+         * @param {string} [cursor] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchOrganizations(xForwardedFor?: string, q?: string, limit?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamSearchOrganizationsOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchOrganizations(xForwardedFor, q, limit, cursor, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.searchOrganizations']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes how an organization appears across Hanzo: the square mark beside its name, as an uploaded image or as a single emoji. Sending an image clears the emoji and sending an emoji clears the image — an organization has one mark, not a preference order — and sending neither clears both, which is how it goes back to being drawn as its initial.  An image is an https link or the bytes inline as a data URL, up to 96 KiB. Anyone who administers the organization may set this; it is not reserved to the platform.  It writes the two fields onto the stored row and touches nothing else, which update cannot do: update replaces the whole record, and a record read back first arrives masked, so a read-modify-write through it would persist the mask over the organization\'s own credential settings.
+         * @summary Changes how an organization appears across Hanzo: the square mark beside its name, as an uploaded image or as a single emoji.
+         * @param {IamSetAvatarInput} iamSetAvatarInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async setOrganizationAvatar(iamSetAvatarInput: IamSetAvatarInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamOrganization>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setOrganizationAvatar(iamSetAvatarInput, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.setOrganizationAvatar']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -10747,6 +11250,24 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamWeb3Nonce(options).then((request) => request(axios, basePath));
         },
         /**
+         * Starts a passkey sign-in: it returns the challenge the person\'s authenticator signs.  The account is named in the query, and the challenge is bound to it, so what may answer is decided here — by the server, from the row — and the finish checks the answer against that decision rather than recomputing it.
+         * @summary Starts a passkey sign-in: it returns the challenge the person\'s authenticator signs.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamWebauthnSigninBegin(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIamWebauthnSigninBegin(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Starts enrolling a passkey for the signed-in person: it returns the options their browser hands to the authenticator.  Passkeys already on the account are EXCLUDED, so a second enrollment on a device that already holds one is refused by the authenticator itself rather than silently producing a duplicate the person cannot tell apart.
+         * @summary Starts enrolling a passkey for the signed-in person: it returns the options their browser hands to the authenticator.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamWebauthnSignupBegin(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIamWebauthnSignupBegin(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Publishes the public keys that verify the tokens issued here — the one URL you point a service at so it can check a token itself, offline, without calling back and without holding any secret of ours.  Keys appear here before they start signing and stay after they stop, so a rotation never leaves a live token unverifiable. Nothing private is ever published.
          * @summary Publishes the public keys that verify the tokens issued here — the one URL you point a service at so it can check a token itself, offline, without calling back and without holding any secret of ours.
          * @param {*} [options] Override http request option.
@@ -10883,14 +11404,14 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.listTokens(requestParameters.owner, requestParameters.organization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the passkeys and security keys registered in your organization, newest first — which device each belongs to and when it was last used.
-         * @summary Returns the passkeys and security keys registered in your organization, newest first — which device each belongs to and when it was last used.
+         * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list. It used to scope to the ORG, which handed an org admin every member\'s credential rows in one answer, and a SuperAdmin every tenant\'s; a plain member meanwhile could not read even their own, because an unnamed target fails the Guard\'s tenant rule. One scope fixes both halves: the answer is a person\'s, and the caller is the person unless they say otherwise and may.
+         * @summary Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.
          * @param {IamApiListWebauthnCredentialsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         listWebauthnCredentials(requestParameters: IamApiListWebauthnCredentialsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamListWebauthnCredentialsOut> {
-            return localVarFp.listWebauthnCredentials(requestParameters.owner, options).then((request) => request(axios, basePath));
+            return localVarFp.listWebauthnCredentials(requestParameters.user, options).then((request) => request(axios, basePath));
         },
         /**
          * Applies a partial change from your identity provider — one attribute moved, not the whole record resent.  The change is applied onto the person as they currently are, so everything you did not mention keeps its value, including the parts SCIM does not describe.
@@ -11029,6 +11550,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         postIamApplicationsUpdate(requestParameters: IamApiPostIamApplicationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
             return localVarFp.postIamApplicationsUpdate(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.  The token still names the operator — stepping in is not becoming somebody else — and records the organization it was scoped to, so everything done with it is attributed to the person who did it. Only a platform operator may, and the attempt is recorded whether or not it succeeds.
+         * @summary Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.
+         * @param {IamApiPostIamAssumeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamAssume(requestParameters: IamApiPostIamAssumeRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.postIamAssume(requestParameters.iamAssumeBody, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(axios, basePath));
         },
         /**
          * Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
@@ -11546,6 +12077,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamRegistryToken(options).then((request) => request(axios, basePath));
         },
         /**
+         * Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in. Recorded like the step in.
+         * @summary Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in.
+         * @param {IamApiPostIamReleaseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamRelease(requestParameters: IamApiPostIamReleaseRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.postIamRelease(requestParameters.iamAssumeBody, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
          * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
          * @param {*} [options] Override http request option.
@@ -11784,6 +12325,24 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamWeb3Verify(options).then((request) => request(axios, basePath));
         },
         /**
+         * Verifies the signed challenge and signs the person in.  It answers exactly as a password sign-in does — the same envelope, through the same grant — so nothing downstream branches on how somebody arrived.
+         * @summary Verifies the signed challenge and signs the person in.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamWebauthnSigninFinish(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIamWebauthnSigninFinish(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+         * @summary Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIamWebauthnSignupFinish(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIamWebauthnSignupFinish(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Makes a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them. A name already used in the organization is refused.
          * @summary Makes a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.
          * @param {IamApiPostIamWorkspacesRequest} requestParameters Request parameters.
@@ -11824,6 +12383,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamWorkspacesUpdate(requestParameters.iamWorkspacesInput, options).then((request) => request(axios, basePath));
         },
         /**
+         * Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.  Only their own: the request names nobody, so it cannot reach another account. Send only what you are changing; a field you leave out keeps the value it had, and a field you send empty is cleared.  A picture is an https link or an inline image up to 96 KiB, the same value an organization\'s mark is (schema.AvatarRef) — one rule for how a subject appears, whether the subject is a person or an organization.
+         * @summary Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.
+         * @param {IamApiPutIamAccountRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamAccount(requestParameters: IamApiPutIamAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
+            return localVarFp.putIamAccount(requestParameters.iamAccountBody, requestParameters.cookie, requestParameters.authorization, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
          * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
          * @param {IamApiPutIamApplicationRequest} requestParameters Request parameters.
@@ -11861,6 +12430,26 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         putIamScimV2UsersByOwnerByName(requestParameters: IamApiPutIamScimV2UsersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.putIamScimV2UsersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.
+         * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
+         * @param {IamApiSearchOrganizationsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchOrganizations(requestParameters: IamApiSearchOrganizationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamSearchOrganizationsOutput> {
+            return localVarFp.searchOrganizations(requestParameters.xForwardedFor, requestParameters.q, requestParameters.limit, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes how an organization appears across Hanzo: the square mark beside its name, as an uploaded image or as a single emoji. Sending an image clears the emoji and sending an emoji clears the image — an organization has one mark, not a preference order — and sending neither clears both, which is how it goes back to being drawn as its initial.  An image is an https link or the bytes inline as a data URL, up to 96 KiB. Anyone who administers the organization may set this; it is not reserved to the platform.  It writes the two fields onto the stored row and touches nothing else, which update cannot do: update replaces the whole record, and a record read back first arrives masked, so a read-modify-write through it would persist the mask over the organization\'s own credential settings.
+         * @summary Changes how an organization appears across Hanzo: the square mark beside its name, as an uploaded image or as a single emoji.
+         * @param {IamApiSetOrganizationAvatarRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setOrganizationAvatar(requestParameters: IamApiSetOrganizationAvatarRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamOrganization> {
+            return localVarFp.setOrganizationAvatar(requestParameters.iamSetAvatarInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits. Which organization it is does not change, and neither does when it was created.
@@ -12737,7 +13326,7 @@ export interface IamApiListWebauthnCredentialsRequest {
      * @type {string}
      * @memberof IamApiListWebauthnCredentials
      */
-    readonly owner?: string
+    readonly user?: string
 }
 
 /**
@@ -12913,6 +13502,34 @@ export interface IamApiPostIamApplicationsUpdateRequest {
      * @memberof IamApiPostIamApplicationsUpdate
      */
     readonly iamApplication: IamApplication
+}
+
+/**
+ * Request parameters for postIamAssume operation in IamApi.
+ * @export
+ * @interface IamApiPostIamAssumeRequest
+ */
+export interface IamApiPostIamAssumeRequest {
+    /**
+     * 
+     * @type {IamAssumeBody}
+     * @memberof IamApiPostIamAssume
+     */
+    readonly iamAssumeBody: IamAssumeBody
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamAssume
+     */
+    readonly authorization?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamAssume
+     */
+    readonly xForwardedFor?: string
 }
 
 /**
@@ -13322,6 +13939,34 @@ export interface IamApiPostIamProjectsUpdateRequest {
 }
 
 /**
+ * Request parameters for postIamRelease operation in IamApi.
+ * @export
+ * @interface IamApiPostIamReleaseRequest
+ */
+export interface IamApiPostIamReleaseRequest {
+    /**
+     * 
+     * @type {IamAssumeBody}
+     * @memberof IamApiPostIamRelease
+     */
+    readonly iamAssumeBody: IamAssumeBody
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamRelease
+     */
+    readonly authorization?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPostIamRelease
+     */
+    readonly xForwardedFor?: string
+}
+
+/**
  * Request parameters for postIamRoles operation in IamApi.
  * @export
  * @interface IamApiPostIamRolesRequest
@@ -13560,6 +14205,34 @@ export interface IamApiPostIamWorkspacesUpdateRequest {
 }
 
 /**
+ * Request parameters for putIamAccount operation in IamApi.
+ * @export
+ * @interface IamApiPutIamAccountRequest
+ */
+export interface IamApiPutIamAccountRequest {
+    /**
+     * 
+     * @type {IamAccountBody}
+     * @memberof IamApiPutIamAccount
+     */
+    readonly iamAccountBody: IamAccountBody
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAccount
+     */
+    readonly cookie?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAccount
+     */
+    readonly authorization?: string
+}
+
+/**
  * Request parameters for putIamApplication operation in IamApi.
  * @export
  * @interface IamApiPutIamApplicationRequest
@@ -13620,6 +14293,55 @@ export interface IamApiPutIamScimV2UsersByOwnerByNameRequest {
      * @memberof IamApiPutIamScimV2UsersByOwnerByName
      */
     readonly name: string
+}
+
+/**
+ * Request parameters for searchOrganizations operation in IamApi.
+ * @export
+ * @interface IamApiSearchOrganizationsRequest
+ */
+export interface IamApiSearchOrganizationsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiSearchOrganizations
+     */
+    readonly xForwardedFor?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiSearchOrganizations
+     */
+    readonly q?: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof IamApiSearchOrganizations
+     */
+    readonly limit?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiSearchOrganizations
+     */
+    readonly cursor?: string
+}
+
+/**
+ * Request parameters for setOrganizationAvatar operation in IamApi.
+ * @export
+ * @interface IamApiSetOrganizationAvatarRequest
+ */
+export interface IamApiSetOrganizationAvatarRequest {
+    /**
+     * 
+     * @type {IamSetAvatarInput}
+     * @memberof IamApiSetOrganizationAvatar
+     */
+    readonly iamSetAvatarInput: IamSetAvatarInput
 }
 
 /**
@@ -14559,6 +15281,28 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Starts a passkey sign-in: it returns the challenge the person\'s authenticator signs.  The account is named in the query, and the challenge is bound to it, so what may answer is decided here — by the server, from the row — and the finish checks the answer against that decision rather than recomputing it.
+     * @summary Starts a passkey sign-in: it returns the challenge the person\'s authenticator signs.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamWebauthnSigninBegin(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamWebauthnSigninBegin(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Starts enrolling a passkey for the signed-in person: it returns the options their browser hands to the authenticator.  Passkeys already on the account are EXCLUDED, so a second enrollment on a device that already holds one is refused by the authenticator itself rather than silently producing a duplicate the person cannot tell apart.
+     * @summary Starts enrolling a passkey for the signed-in person: it returns the options their browser hands to the authenticator.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamWebauthnSignupBegin(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamWebauthnSignupBegin(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Publishes the public keys that verify the tokens issued here — the one URL you point a service at so it can check a token itself, offline, without calling back and without holding any secret of ours.  Keys appear here before they start signing and stay after they stop, so a rotation never leaves a live token unverifiable. Nothing private is ever published.
      * @summary Publishes the public keys that verify the tokens issued here — the one URL you point a service at so it can check a token itself, offline, without calling back and without holding any secret of ours.
      * @param {*} [options] Override http request option.
@@ -14723,15 +15467,15 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns the passkeys and security keys registered in your organization, newest first — which device each belongs to and when it was last used.
-     * @summary Returns the passkeys and security keys registered in your organization, newest first — which device each belongs to and when it was last used.
+     * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list. It used to scope to the ORG, which handed an org admin every member\'s credential rows in one answer, and a SuperAdmin every tenant\'s; a plain member meanwhile could not read even their own, because an unnamed target fails the Guard\'s tenant rule. One scope fixes both halves: the answer is a person\'s, and the caller is the person unless they say otherwise and may.
+     * @summary Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.
      * @param {IamApiListWebauthnCredentialsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
     public listWebauthnCredentials(requestParameters: IamApiListWebauthnCredentialsRequest = {}, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).listWebauthnCredentials(requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).listWebauthnCredentials(requestParameters.user, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14898,6 +15642,18 @@ export class IamApi extends BaseAPI {
      */
     public postIamApplicationsUpdate(requestParameters: IamApiPostIamApplicationsUpdateRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamApplicationsUpdate(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.  The token still names the operator — stepping in is not becoming somebody else — and records the organization it was scoped to, so everything done with it is attributed to the person who did it. Only a platform operator may, and the attempt is recorded whether or not it succeeds.
+     * @summary Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.
+     * @param {IamApiPostIamAssumeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postIamAssume(requestParameters: IamApiPostIamAssumeRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamAssume(requestParameters.iamAssumeBody, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15524,6 +16280,18 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in. Recorded like the step in.
+     * @summary Steps a platform operator back out: it returns their own access token with no organization assumed, which is the credential they had before they stepped in.
+     * @param {IamApiPostIamReleaseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postIamRelease(requestParameters: IamApiPostIamReleaseRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamRelease(requestParameters.iamAssumeBody, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
      * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
      * @param {*} [options] Override http request option.
@@ -15812,6 +16580,28 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Verifies the signed challenge and signs the person in.  It answers exactly as a password sign-in does — the same envelope, through the same grant — so nothing downstream branches on how somebody arrived.
+     * @summary Verifies the signed challenge and signs the person in.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postIamWebauthnSigninFinish(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamWebauthnSigninFinish(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+     * @summary Verifies the newly created passkey and stores it, so the person can sign in with their device from then on.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public postIamWebauthnSignupFinish(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamWebauthnSignupFinish(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Makes a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them. A name already used in the organization is refused.
      * @summary Makes a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.
      * @param {IamApiPostIamWorkspacesRequest} requestParameters Request parameters.
@@ -15860,6 +16650,18 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.  Only their own: the request names nobody, so it cannot reach another account. Send only what you are changing; a field you leave out keeps the value it had, and a field you send empty is cleared.  A picture is an https link or an inline image up to 96 KiB, the same value an organization\'s mark is (schema.AvatarRef) — one rule for how a subject appears, whether the subject is a person or an organization.
+     * @summary Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.
+     * @param {IamApiPutIamAccountRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamAccount(requestParameters: IamApiPutIamAccountRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamAccount(requestParameters.iamAccountBody, requestParameters.cookie, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
      * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
      * @param {IamApiPutIamApplicationRequest} requestParameters Request parameters.
@@ -15904,6 +16706,30 @@ export class IamApi extends BaseAPI {
      */
     public putIamScimV2UsersByOwnerByName(requestParameters: IamApiPutIamScimV2UsersByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).putIamScimV2UsersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.
+     * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
+     * @param {IamApiSearchOrganizationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public searchOrganizations(requestParameters: IamApiSearchOrganizationsRequest = {}, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).searchOrganizations(requestParameters.xForwardedFor, requestParameters.q, requestParameters.limit, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes how an organization appears across Hanzo: the square mark beside its name, as an uploaded image or as a single emoji. Sending an image clears the emoji and sending an emoji clears the image — an organization has one mark, not a preference order — and sending neither clears both, which is how it goes back to being drawn as its initial.  An image is an https link or the bytes inline as a data URL, up to 96 KiB. Anyone who administers the organization may set this; it is not reserved to the platform.  It writes the two fields onto the stored row and touches nothing else, which update cannot do: update replaces the whole record, and a record read back first arrives masked, so a read-modify-write through it would persist the mask over the organization\'s own credential settings.
+     * @summary Changes how an organization appears across Hanzo: the square mark beside its name, as an uploaded image or as a single emoji.
+     * @param {IamApiSetOrganizationAvatarRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public setOrganizationAvatar(requestParameters: IamApiSetOrganizationAvatarRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).setOrganizationAvatar(requestParameters.iamSetAvatarInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

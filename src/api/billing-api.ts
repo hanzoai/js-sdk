@@ -396,6 +396,40 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Returns the same balance /v1/billing/credit-balance reports, split by the tag each grant carries, so a reader can tell trial credit from bought credit and show the earliest expiry within each group. A console needs the split to say what will lapse and when; the single number cannot.  The subject is pinned to the caller before the handler runs, exactly as in the sibling reads, so the userId parameter can never name another tenant. A subject with no grants is an empty breakdown and a zero total, which is an answer and not an error.
+         * @summary What is left of your credit, grouped by where it came from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingCreditBalanceBreakdown: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/credit-balance/breakdown`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the caller org\'s credit grants — each with its original amount, what remains and when it expires — so a customer can see what was given and what is left before metered spend draws it down. It is a READ of the caller\'s own subject, pinned before the handler runs, so a grant belonging to another tenant is simply absent. Granting credit is not this route and never has been: minting lands on the mint-gated POST /v1/billing/credit, which no browser can reach. Reading an empty balance is an empty array, not an error.
          * @summary List the credit grants on your org\'s balance
          * @param {*} [options] Override http request option.
@@ -887,6 +921,40 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
          */
         getBillingUsageAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/billing/usage/accounts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers the one read the account page renders: the subject\'s resolved plan, the plan\'s included monthly allotment beside what was actually granted this period, consumption capped at that grant, the overage past it, and the spendable wallet (balance minus holds) — all for the current UTC month, every figure derived from the same transactions the gateway\'s balance gate reads, so this read can never disagree with the gate that admits the next call. It rides the same pinned chain as the sibling reads: the user parameter is overwritten with the validated caller\'s own billing subject before the handler runs, so it can never name another tenant; user is required, which only a service-to-service caller can omit and be refused 400 for, and plan is optional — omitted, it is resolved from the subject\'s subscription. The rule to get right is that the two sides are DIFFERENT MONEY: the included figures are usage the subscription grants and the wallet is prepaid credit the customer bought, so a reader who sums them invents a balance nobody holds — and before the period\'s first allotment grant runs, monthlyCents shows the plan\'s entitlement while grantedCents is zero, which is the figure consumption actually draws down.
+         * @summary What plan you are on and how much of it is left, beside the wallet
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingUsageRollup: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/usage/rollup`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1695,6 +1763,18 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns the same balance /v1/billing/credit-balance reports, split by the tag each grant carries, so a reader can tell trial credit from bought credit and show the earliest expiry within each group. A console needs the split to say what will lapse and when; the single number cannot.  The subject is pinned to the caller before the handler runs, exactly as in the sibling reads, so the userId parameter can never name another tenant. A subject with no grants is an empty breakdown and a zero total, which is an answer and not an error.
+         * @summary What is left of your credit, grouped by where it came from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingCreditBalanceBreakdown(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingCreditBalanceBreakdown(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingCreditBalanceBreakdown']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the caller org\'s credit grants — each with its original amount, what remains and when it expires — so a customer can see what was given and what is left before metered spend draws it down. It is a READ of the caller\'s own subject, pinned before the handler runs, so a grant belonging to another tenant is simply absent. Granting credit is not this route and never has been: minting lands on the mint-gated POST /v1/billing/credit, which no browser can reach. Reading an empty balance is an empty array, not an error.
          * @summary List the credit grants on your org\'s balance
          * @param {*} [options] Override http request option.
@@ -1874,6 +1954,18 @@ export const BillingApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingUsageAccounts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingUsageAccounts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers the one read the account page renders: the subject\'s resolved plan, the plan\'s included monthly allotment beside what was actually granted this period, consumption capped at that grant, the overage past it, and the spendable wallet (balance minus holds) — all for the current UTC month, every figure derived from the same transactions the gateway\'s balance gate reads, so this read can never disagree with the gate that admits the next call. It rides the same pinned chain as the sibling reads: the user parameter is overwritten with the validated caller\'s own billing subject before the handler runs, so it can never name another tenant; user is required, which only a service-to-service caller can omit and be refused 400 for, and plan is optional — omitted, it is resolved from the subject\'s subscription. The rule to get right is that the two sides are DIFFERENT MONEY: the included figures are usage the subscription grants and the wallet is prepaid credit the customer bought, so a reader who sums them invents a balance nobody holds — and before the period\'s first allotment grant runs, monthlyCents shows the plan\'s entitlement while grantedCents is zero, which is the figure consumption actually draws down.
+         * @summary What plan you are on and how much of it is left, beside the wallet
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingUsageRollup(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingUsageRollup(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingUsageRollup']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2206,6 +2298,15 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingCreditBalance(options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns the same balance /v1/billing/credit-balance reports, split by the tag each grant carries, so a reader can tell trial credit from bought credit and show the earliest expiry within each group. A console needs the split to say what will lapse and when; the single number cannot.  The subject is pinned to the caller before the handler runs, exactly as in the sibling reads, so the userId parameter can never name another tenant. A subject with no grants is an empty breakdown and a zero total, which is an answer and not an error.
+         * @summary What is left of your credit, grouped by where it came from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingCreditBalanceBreakdown(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getBillingCreditBalanceBreakdown(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the caller org\'s credit grants — each with its original amount, what remains and when it expires — so a customer can see what was given and what is left before metered spend draws it down. It is a READ of the caller\'s own subject, pinned before the handler runs, so a grant belonging to another tenant is simply absent. Granting credit is not this route and never has been: minting lands on the mint-gated POST /v1/billing/credit, which no browser can reach. Reading an empty balance is an empty array, not an error.
          * @summary List the credit grants on your org\'s balance
          * @param {*} [options] Override http request option.
@@ -2341,6 +2442,15 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          */
         getBillingUsageAccounts(options?: RawAxiosRequestConfig): AxiosPromise<Accounts> {
             return localVarFp.getBillingUsageAccounts(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers the one read the account page renders: the subject\'s resolved plan, the plan\'s included monthly allotment beside what was actually granted this period, consumption capped at that grant, the overage past it, and the spendable wallet (balance minus holds) — all for the current UTC month, every figure derived from the same transactions the gateway\'s balance gate reads, so this read can never disagree with the gate that admits the next call. It rides the same pinned chain as the sibling reads: the user parameter is overwritten with the validated caller\'s own billing subject before the handler runs, so it can never name another tenant; user is required, which only a service-to-service caller can omit and be refused 400 for, and plan is optional — omitted, it is resolved from the subject\'s subscription. The rule to get right is that the two sides are DIFFERENT MONEY: the included figures are usage the subscription grants and the wallet is prepaid credit the customer bought, so a reader who sums them invents a balance nobody holds — and before the period\'s first allotment grant runs, monthlyCents shows the plan\'s entitlement while grantedCents is zero, which is the figure consumption actually draws down.
+         * @summary What plan you are on and how much of it is left, beside the wallet
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingUsageRollup(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getBillingUsageRollup(options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the receiving bank details for the brand this deployment serves — the account the funds actually land in, hydrated per brand rather than hard-coded — together with the payment reference to put on the transfer.  THE REFERENCE IS THE POINT. It carries your own billing key, and it is how an arriving wire is attributed to your account; a transfer sent without it arrives as an unidentified receipt. That is why this read is gated at all: an unpinned caller would be handed an unattributable reference.  Reading it credits nothing and reserves nothing. A wire is settled by an operator when the bank shows the funds, so the balance moves on receipt, not on this call.
@@ -2848,6 +2958,17 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
+     * Returns the same balance /v1/billing/credit-balance reports, split by the tag each grant carries, so a reader can tell trial credit from bought credit and show the earliest expiry within each group. A console needs the split to say what will lapse and when; the single number cannot.  The subject is pinned to the caller before the handler runs, exactly as in the sibling reads, so the userId parameter can never name another tenant. A subject with no grants is an empty breakdown and a zero total, which is an answer and not an error.
+     * @summary What is left of your credit, grouped by where it came from
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingCreditBalanceBreakdown(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingCreditBalanceBreakdown(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the caller org\'s credit grants — each with its original amount, what remains and when it expires — so a customer can see what was given and what is left before metered spend draws it down. It is a READ of the caller\'s own subject, pinned before the handler runs, so a grant belonging to another tenant is simply absent. Granting credit is not this route and never has been: minting lands on the mint-gated POST /v1/billing/credit, which no browser can reach. Reading an empty balance is an empty array, not an error.
      * @summary List the credit grants on your org\'s balance
      * @param {*} [options] Override http request option.
@@ -3012,6 +3133,17 @@ export class BillingApi extends BaseAPI {
      */
     public getBillingUsageAccounts(options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).getBillingUsageAccounts(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers the one read the account page renders: the subject\'s resolved plan, the plan\'s included monthly allotment beside what was actually granted this period, consumption capped at that grant, the overage past it, and the spendable wallet (balance minus holds) — all for the current UTC month, every figure derived from the same transactions the gateway\'s balance gate reads, so this read can never disagree with the gate that admits the next call. It rides the same pinned chain as the sibling reads: the user parameter is overwritten with the validated caller\'s own billing subject before the handler runs, so it can never name another tenant; user is required, which only a service-to-service caller can omit and be refused 400 for, and plan is optional — omitted, it is resolved from the subject\'s subscription. The rule to get right is that the two sides are DIFFERENT MONEY: the included figures are usage the subscription grants and the wallet is prepaid credit the customer bought, so a reader who sums them invents a balance nobody holds — and before the period\'s first allotment grant runs, monthlyCents shows the plan\'s entitlement while grantedCents is zero, which is the figure consumption actually draws down.
+     * @summary What plan you are on and how much of it is left, beside the wallet
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingUsageRollup(options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingUsageRollup(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -21,8 +21,6 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
-// @ts-ignore
-import type { Envelope } from '../models';
 /**
  * RouterApi - axios parameter creator
  * @export
@@ -1077,7 +1075,7 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteRouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
+        async deleteRouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRouterData(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RouterApi.deleteRouterData']?.[localVarOperationServerIndex]?.url;
@@ -1149,7 +1147,7 @@ export const RouterApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getRouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
+        async getRouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRouterData(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RouterApi.getRouterData']?.[localVarOperationServerIndex]?.url;
@@ -1444,7 +1442,7 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRouterData(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
+        deleteRouterData(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteRouterData(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1498,7 +1496,7 @@ export const RouterApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRouterData(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
+        getRouterData(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getRouterData(options).then((request) => request(axios, basePath));
         },
         /**

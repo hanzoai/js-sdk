@@ -30,11 +30,15 @@ export const WecomBotApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Verify WeChat work bot callback URL
          * @summary Verify WeChat work bot callback URL
+         * @param {string} botId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWecomBotCallbackByBotid: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/wecom-bot/callback/{botId}`;
+        getWecomBotCallbackByBotid: async (botId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('getWecomBotCallbackByBotid', 'botId', botId)
+            const localVarPath = `/v1/wecom-bot/callback/{botId}`
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -64,11 +68,15 @@ export const WecomBotApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Process WeChat work bot messages
          * @summary Process WeChat work bot messages
+         * @param {string} botId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWecomBotCallbackByBotid: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/wecom-bot/callback/{botId}`;
+        postWecomBotCallbackByBotid: async (botId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'botId' is not null or undefined
+            assertParamExists('postWecomBotCallbackByBotid', 'botId', botId)
+            const localVarPath = `/v1/wecom-bot/callback/{botId}`
+                .replace(`{${"botId"}}`, encodeURIComponent(String(botId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -108,11 +116,12 @@ export const WecomBotApiFp = function(configuration?: Configuration) {
         /**
          * Verify WeChat work bot callback URL
          * @summary Verify WeChat work bot callback URL
+         * @param {string} botId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWecomBotCallbackByBotid(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getWecomBotCallbackByBotid(options);
+        async getWecomBotCallbackByBotid(botId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWecomBotCallbackByBotid(botId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WecomBotApi.getWecomBotCallbackByBotid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -120,11 +129,12 @@ export const WecomBotApiFp = function(configuration?: Configuration) {
         /**
          * Process WeChat work bot messages
          * @summary Process WeChat work bot messages
+         * @param {string} botId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postWecomBotCallbackByBotid(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postWecomBotCallbackByBotid(options);
+        async postWecomBotCallbackByBotid(botId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postWecomBotCallbackByBotid(botId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WecomBotApi.postWecomBotCallbackByBotid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -142,23 +152,53 @@ export const WecomBotApiFactory = function (configuration?: Configuration, baseP
         /**
          * Verify WeChat work bot callback URL
          * @summary Verify WeChat work bot callback URL
+         * @param {WecomBotApiGetWecomBotCallbackByBotidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWecomBotCallbackByBotid(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getWecomBotCallbackByBotid(options).then((request) => request(axios, basePath));
+        getWecomBotCallbackByBotid(requestParameters: WecomBotApiGetWecomBotCallbackByBotidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getWecomBotCallbackByBotid(requestParameters.botId, options).then((request) => request(axios, basePath));
         },
         /**
          * Process WeChat work bot messages
          * @summary Process WeChat work bot messages
+         * @param {WecomBotApiPostWecomBotCallbackByBotidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postWecomBotCallbackByBotid(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postWecomBotCallbackByBotid(options).then((request) => request(axios, basePath));
+        postWecomBotCallbackByBotid(requestParameters: WecomBotApiPostWecomBotCallbackByBotidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postWecomBotCallbackByBotid(requestParameters.botId, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for getWecomBotCallbackByBotid operation in WecomBotApi.
+ * @export
+ * @interface WecomBotApiGetWecomBotCallbackByBotidRequest
+ */
+export interface WecomBotApiGetWecomBotCallbackByBotidRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WecomBotApiGetWecomBotCallbackByBotid
+     */
+    readonly botId: string
+}
+
+/**
+ * Request parameters for postWecomBotCallbackByBotid operation in WecomBotApi.
+ * @export
+ * @interface WecomBotApiPostWecomBotCallbackByBotidRequest
+ */
+export interface WecomBotApiPostWecomBotCallbackByBotidRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WecomBotApiPostWecomBotCallbackByBotid
+     */
+    readonly botId: string
+}
 
 /**
  * WecomBotApi - object-oriented interface
@@ -170,23 +210,25 @@ export class WecomBotApi extends BaseAPI {
     /**
      * Verify WeChat work bot callback URL
      * @summary Verify WeChat work bot callback URL
+     * @param {WecomBotApiGetWecomBotCallbackByBotidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WecomBotApi
      */
-    public getWecomBotCallbackByBotid(options?: RawAxiosRequestConfig) {
-        return WecomBotApiFp(this.configuration).getWecomBotCallbackByBotid(options).then((request) => request(this.axios, this.basePath));
+    public getWecomBotCallbackByBotid(requestParameters: WecomBotApiGetWecomBotCallbackByBotidRequest, options?: RawAxiosRequestConfig) {
+        return WecomBotApiFp(this.configuration).getWecomBotCallbackByBotid(requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Process WeChat work bot messages
      * @summary Process WeChat work bot messages
+     * @param {WecomBotApiPostWecomBotCallbackByBotidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WecomBotApi
      */
-    public postWecomBotCallbackByBotid(options?: RawAxiosRequestConfig) {
-        return WecomBotApiFp(this.configuration).postWecomBotCallbackByBotid(options).then((request) => request(this.axios, this.basePath));
+    public postWecomBotCallbackByBotid(requestParameters: WecomBotApiPostWecomBotCallbackByBotidRequest, options?: RawAxiosRequestConfig) {
+        return WecomBotApiFp(this.configuration).postWecomBotCallbackByBotid(requestParameters.botId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

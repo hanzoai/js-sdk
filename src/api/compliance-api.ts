@@ -135,8 +135,8 @@ export const ComplianceApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * AuditRead is the compliance-scoped read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
-         * @summary AuditRead is the compliance-scoped read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
+         * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
+         * @summary AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
          * @param {string} [result] Result filters rows by outcome result: success, deny, or error; empty means all.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -751,8 +751,8 @@ export const ComplianceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * AuditRead is the compliance-scoped read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
-         * @summary AuditRead is the compliance-scoped read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
+         * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
+         * @summary AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
          * @param {string} [result] Result filters rows by outcome result: success, deny, or error; empty means all.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -975,8 +975,8 @@ export const ComplianceApiFactory = function (configuration?: Configuration, bas
             return localVarFp.getComplianceAccreditationById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * AuditRead is the compliance-scoped read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
-         * @summary AuditRead is the compliance-scoped read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
+         * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
+         * @summary AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
          * @param {ComplianceApiGetComplianceAuditRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1366,8 +1366,8 @@ export class ComplianceApi extends BaseAPI {
     }
 
     /**
-     * AuditRead is the compliance-scoped read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
-     * @summary AuditRead is the compliance-scoped read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
+     * AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when). The org is PINNED to the caller\'s validated org and the rows are narrowed to compliance.* actions. Fail-closed: no principal is a 403, no configured audit store a 501.
+     * @summary AuditRead is the compliance read of the SHARED tamper-evident audit plane — the SOC 2 posture surface (privileged actions: who started/decided what, when).
      * @param {ComplianceApiGetComplianceAuditRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

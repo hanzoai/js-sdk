@@ -95,6 +95,40 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Serves one completion to a caller with no account.
+         * @summary Serves one completion to a caller with no account.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postChatPublic: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/chat/public`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -129,6 +163,18 @@ export const ChatApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ChatApi.postChatCompletions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Serves one completion to a caller with no account.
+         * @summary Serves one completion to a caller with no account.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postChatPublic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postChatPublic(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChatApi.postChatPublic']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -156,6 +202,15 @@ export const ChatApiFactory = function (configuration?: Configuration, basePath?
          */
         postChatCompletions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postChatCompletions(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Serves one completion to a caller with no account.
+         * @summary Serves one completion to a caller with no account.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postChatPublic(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postChatPublic(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -187,6 +242,17 @@ export class ChatApi extends BaseAPI {
      */
     public postChatCompletions(options?: RawAxiosRequestConfig) {
         return ChatApiFp(this.configuration).postChatCompletions(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Serves one completion to a caller with no account.
+     * @summary Serves one completion to a caller with no account.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatApi
+     */
+    public postChatPublic(options?: RawAxiosRequestConfig) {
+        return ChatApiFp(this.configuration).postChatPublic(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

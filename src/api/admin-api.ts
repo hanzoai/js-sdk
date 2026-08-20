@@ -327,8 +327,8 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Reads cloud\'s tamper-evident audit trail, newest first, with the chain\'s live integrity attached so a listing can be badged as verified.  When cloud has no local store configured it falls back to forwarding IAM\'s own get-records trail verbatim — a DIFFERENT trail, federated so the endpoint never regresses to an empty list. Those rows carry no integrity of ours, so the field is null there.
-         * @summary Reads cloud\'s tamper-evident audit trail, newest first, with the chain\'s live integrity attached so a listing can be badged as verified.
+         * Reads one chain of cloud\'s tamper-evident audit trail, newest first, with that chain\'s live integrity attached so a listing can be badged as verified.  When cloud has no local store configured it falls back to forwarding IAM\'s own get-records trail verbatim — a DIFFERENT trail, federated so the endpoint never regresses to an empty list. Those rows carry no integrity of ours, so the field is null there.
+         * @summary Reads one chain of cloud\'s tamper-evident audit trail, newest first, with that chain\'s live integrity attached so a listing can be badged as verified.
          * @param {string} [org] Org restricts the trail to one tenant.
          * @param {string} [sub] Sub restricts it to one actor (the validated subject that made the request).
          * @param {string} [action] Action restricts it to one action name, e.g. \&quot;admin.waitlist.grant\&quot;.
@@ -411,8 +411,8 @@ export const AdminApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Walks the WHOLE hash chain and reports whether it is intact: how many records were checked, the head hash to pin externally against tail-truncation, and — when the chain is broken — the seq of the first bad record and why.  brokenAt is -1 exactly when ok is true. An unconfigured store is an honest failure here rather than a fabricated pass.
-         * @summary Walks the WHOLE hash chain and reports whether it is intact: how many records were checked, the head hash to pin externally against tail-truncation, and — when the chain is broken — the seq of the first bad record and why.
+         * Walks EVERY hash chain this deployment keeps and reports each one: which chains were checked, how many records each holds, the head hash to pin externally against tail-truncation, and — when a chain is broken — the seq of the first bad record and why.  The trail is a FAMILY of chains, one per process, so the answer is a set and not a boolean: `intact`, `broken` and `unread` count the three verdicts and sum to the number of chains. A chain that could not be READ is reported `unread` and is never a pass — an unreadable chain and a verified one must not render the same, which is the whole reason this is not one flag.  An unconfigured store is an honest failure here rather than a fabricated pass.
+         * @summary Walks EVERY hash chain this deployment keeps and reports each one: which chains were checked, how many records each holds, the head hash to pin externally against tail-truncation, and — when a chain is broken — the seq of the first bad record and why.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3773,8 +3773,8 @@ export const AdminApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reads cloud\'s tamper-evident audit trail, newest first, with the chain\'s live integrity attached so a listing can be badged as verified.  When cloud has no local store configured it falls back to forwarding IAM\'s own get-records trail verbatim — a DIFFERENT trail, federated so the endpoint never regresses to an empty list. Those rows carry no integrity of ours, so the field is null there.
-         * @summary Reads cloud\'s tamper-evident audit trail, newest first, with the chain\'s live integrity attached so a listing can be badged as verified.
+         * Reads one chain of cloud\'s tamper-evident audit trail, newest first, with that chain\'s live integrity attached so a listing can be badged as verified.  When cloud has no local store configured it falls back to forwarding IAM\'s own get-records trail verbatim — a DIFFERENT trail, federated so the endpoint never regresses to an empty list. Those rows carry no integrity of ours, so the field is null there.
+         * @summary Reads one chain of cloud\'s tamper-evident audit trail, newest first, with that chain\'s live integrity attached so a listing can be badged as verified.
          * @param {string} [org] Org restricts the trail to one tenant.
          * @param {string} [sub] Sub restricts it to one actor (the validated subject that made the request).
          * @param {string} [action] Action restricts it to one action name, e.g. \&quot;admin.waitlist.grant\&quot;.
@@ -3795,8 +3795,8 @@ export const AdminApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Walks the WHOLE hash chain and reports whether it is intact: how many records were checked, the head hash to pin externally against tail-truncation, and — when the chain is broken — the seq of the first bad record and why.  brokenAt is -1 exactly when ok is true. An unconfigured store is an honest failure here rather than a fabricated pass.
-         * @summary Walks the WHOLE hash chain and reports whether it is intact: how many records were checked, the head hash to pin externally against tail-truncation, and — when the chain is broken — the seq of the first bad record and why.
+         * Walks EVERY hash chain this deployment keeps and reports each one: which chains were checked, how many records each holds, the head hash to pin externally against tail-truncation, and — when a chain is broken — the seq of the first bad record and why.  The trail is a FAMILY of chains, one per process, so the answer is a set and not a boolean: `intact`, `broken` and `unread` count the three verdicts and sum to the number of chains. A chain that could not be READ is reported `unread` and is never a pass — an unreadable chain and a verified one must not render the same, which is the whole reason this is not one flag.  An unconfigured store is an honest failure here rather than a fabricated pass.
+         * @summary Walks EVERY hash chain this deployment keeps and reports each one: which chains were checked, how many records each holds, the head hash to pin externally against tail-truncation, and — when a chain is broken — the seq of the first bad record and why.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4924,8 +4924,8 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.adminApplications(requestParameters.owner, requestParameters.p, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
-         * Reads cloud\'s tamper-evident audit trail, newest first, with the chain\'s live integrity attached so a listing can be badged as verified.  When cloud has no local store configured it falls back to forwarding IAM\'s own get-records trail verbatim — a DIFFERENT trail, federated so the endpoint never regresses to an empty list. Those rows carry no integrity of ours, so the field is null there.
-         * @summary Reads cloud\'s tamper-evident audit trail, newest first, with the chain\'s live integrity attached so a listing can be badged as verified.
+         * Reads one chain of cloud\'s tamper-evident audit trail, newest first, with that chain\'s live integrity attached so a listing can be badged as verified.  When cloud has no local store configured it falls back to forwarding IAM\'s own get-records trail verbatim — a DIFFERENT trail, federated so the endpoint never regresses to an empty list. Those rows carry no integrity of ours, so the field is null there.
+         * @summary Reads one chain of cloud\'s tamper-evident audit trail, newest first, with that chain\'s live integrity attached so a listing can be badged as verified.
          * @param {AdminApiAdminAuditRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4934,8 +4934,8 @@ export const AdminApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.adminAudit(requestParameters.org, requestParameters.sub, requestParameters.action, requestParameters.resource, requestParameters.resourceId, requestParameters.result, requestParameters.since, requestParameters.until, requestParameters.pageSize, requestParameters.p, options).then((request) => request(axios, basePath));
         },
         /**
-         * Walks the WHOLE hash chain and reports whether it is intact: how many records were checked, the head hash to pin externally against tail-truncation, and — when the chain is broken — the seq of the first bad record and why.  brokenAt is -1 exactly when ok is true. An unconfigured store is an honest failure here rather than a fabricated pass.
-         * @summary Walks the WHOLE hash chain and reports whether it is intact: how many records were checked, the head hash to pin externally against tail-truncation, and — when the chain is broken — the seq of the first bad record and why.
+         * Walks EVERY hash chain this deployment keeps and reports each one: which chains were checked, how many records each holds, the head hash to pin externally against tail-truncation, and — when a chain is broken — the seq of the first bad record and why.  The trail is a FAMILY of chains, one per process, so the answer is a set and not a boolean: `intact`, `broken` and `unread` count the three verdicts and sum to the number of chains. A chain that could not be READ is reported `unread` and is never a pass — an unreadable chain and a verified one must not render the same, which is the whole reason this is not one flag.  An unconfigured store is an honest failure here rather than a fabricated pass.
+         * @summary Walks EVERY hash chain this deployment keeps and reports each one: which chains were checked, how many records each holds, the head hash to pin externally against tail-truncation, and — when a chain is broken — the seq of the first bad record and why.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7058,8 +7058,8 @@ export class AdminApi extends BaseAPI {
     }
 
     /**
-     * Reads cloud\'s tamper-evident audit trail, newest first, with the chain\'s live integrity attached so a listing can be badged as verified.  When cloud has no local store configured it falls back to forwarding IAM\'s own get-records trail verbatim — a DIFFERENT trail, federated so the endpoint never regresses to an empty list. Those rows carry no integrity of ours, so the field is null there.
-     * @summary Reads cloud\'s tamper-evident audit trail, newest first, with the chain\'s live integrity attached so a listing can be badged as verified.
+     * Reads one chain of cloud\'s tamper-evident audit trail, newest first, with that chain\'s live integrity attached so a listing can be badged as verified.  When cloud has no local store configured it falls back to forwarding IAM\'s own get-records trail verbatim — a DIFFERENT trail, federated so the endpoint never regresses to an empty list. Those rows carry no integrity of ours, so the field is null there.
+     * @summary Reads one chain of cloud\'s tamper-evident audit trail, newest first, with that chain\'s live integrity attached so a listing can be badged as verified.
      * @param {AdminApiAdminAuditRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7070,8 +7070,8 @@ export class AdminApi extends BaseAPI {
     }
 
     /**
-     * Walks the WHOLE hash chain and reports whether it is intact: how many records were checked, the head hash to pin externally against tail-truncation, and — when the chain is broken — the seq of the first bad record and why.  brokenAt is -1 exactly when ok is true. An unconfigured store is an honest failure here rather than a fabricated pass.
-     * @summary Walks the WHOLE hash chain and reports whether it is intact: how many records were checked, the head hash to pin externally against tail-truncation, and — when the chain is broken — the seq of the first bad record and why.
+     * Walks EVERY hash chain this deployment keeps and reports each one: which chains were checked, how many records each holds, the head hash to pin externally against tail-truncation, and — when a chain is broken — the seq of the first bad record and why.  The trail is a FAMILY of chains, one per process, so the answer is a set and not a boolean: `intact`, `broken` and `unread` count the three verdicts and sum to the number of chains. A chain that could not be READ is reported `unread` and is never a pass — an unreadable chain and a verified one must not render the same, which is the whole reason this is not one flag.  An unconfigured store is an honest failure here rather than a fabricated pass.
+     * @summary Walks EVERY hash chain this deployment keeps and reports each one: which chains were checked, how many records each holds, the head hash to pin externally against tail-truncation, and — when a chain is broken — the seq of the first bad record and why.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminApi
