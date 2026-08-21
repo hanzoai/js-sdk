@@ -23,6 +23,8 @@
     "build": "tsc && tsc -p tsconfig.esm.json",
     "typecheck": "tsc --noEmit",
     "examples": "tsc -p examples/tsconfig.json",
+    "smoke": "node scripts/smoke.mjs",
+    "test": "npm run build && npm run smoke && npm run examples",
     "generate": "./scripts/generate.sh",
     "prepublishOnly": "npm run build"
   },

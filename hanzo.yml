@@ -6,34 +6,35 @@
 # `v*` tag. Two publish paths would be one too many.
 
 test:
-  - name: build
+  - name: test
     # `npm ci`, not `npm install`: the lockfile is committed and a gate that
     # silently resolves a different axios than the release does is not a gate.
     #
-    # `npm run build` is both halves of the build (CJS + the bundler-facing
-    # ESM), which is the only thing that type-checks the whole generated tree.
+    # Then `npm test` — package.json's own statement of what passing means,
+    # rather than a second one written here that can disagree with it. Three
+    # steps, each proving what the others cannot:
+    #
+    # `build` is both halves (CJS and the bundler-facing ESM), the only thing
+    # that type-checks the whole generated tree.
+    #
+    # `smoke` LOADS the built package by name, through package.json exports —
+    # the door `npm i hanzoai` opens. build and examples both read source; a
+    # broken module graph or an entry point that does not resolve is a fact
+    # about the published artifact that neither of them can see.
+    #
+    # `examples` compiles the six canonical flows — hello, chat, money, store,
+    # agent, tools — against the client the way a consumer does, importing
+    # `from 'hanzoai'` and reading real fields off real response models. It has
+    # already earned its place: `choices[0].message.content` failed to compile
+    # here (TS2339: Property 'message' does not exist on type 'object') because
+    # the spec typed chat choices as a bare object. That became hanzoai/openapi's
+    # ChatChoice schema, which fixed the same hole in every other language at
+    # once. No unit test on generated code would have found it — only calling
+    # the client does.
     run: |
       set -e
       npm ci --no-audit --no-fund
-      npm run build
-
-  - name: examples
-    # The six canonical flows — hello, chat, money, store, agent, tools —
-    # type-checked against the client that was just generated. This is the gate
-    # that has teeth: `npm run build` only proves the generated tree is
-    # internally consistent, while these compile against it the way a consumer
-    # does — importing `from 'hanzoai'`, reading real fields off real response
-    # models.
-    #
-    # It has already earned its place. `choices[0].message.content` failed to
-    # compile here (TS2339: Property 'message' does not exist on type 'object')
-    # because the spec typed chat choices as a bare object; that became
-    # hanzoai/openapi's ChatChoice schema, which fixed the same hole in every
-    # other language at once. No unit test on generated code would have found
-    # it — only calling the client does.
-    run: |
-      set -e
-      npm run examples
+      npm test
 
 # THE CLIENT LANE — this repo is a PROJECTION of one API document at one version.
 #
