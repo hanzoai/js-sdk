@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -21,100 +21,28 @@
  */
 export interface ProductRow {
     /**
-     * hanzo-k8s
+     * Orders is how many order_completed events carried it.
+     * @type {number}
+     * @memberof ProductRow
+     */
+    'orders'?: number;
+    /**
+     * ProductID is the product the order events named.
      * @type {string}
      * @memberof ProductRow
      */
-    'cluster'?: string;
+    'productId'?: string;
     /**
-     * spec.image.tag on the App CR (declared truth)
-     * @type {string}
+     * Revenue is the total they carried, in the events\' own currency unit.
+     * @type {number}
      * @memberof ProductRow
      */
-    'declaredTag'?: string;
+    'revenue'?: number;
     /**
-     * any drift flag present
-     * @type {boolean}
+     * Units is the summed quantity sold.
+     * @type {number}
      * @memberof ProductRow
      */
-    'drift'?: boolean;
-    /**
-     * ok|yellow|red (rolled-up)
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'driftSeverity'?: string;
-    /**
-     * main|test|dev (lifecycle namespace)
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'env'?: string;
-    /**
-     * green|yellow|red|unknown
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'health'?: string;
-    /**
-     * operator App CR spec.role (sql|kv|generic|ingress) or \"\"
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'kind'?: string;
-    /**
-     * newest released tag (GH release reader — empty until wired)
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'latestTag'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'name'?: string;
-    /**
-     * k8s namespace
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'namespace'?: string;
-    /**
-     * image namespace (hanzoai|luxfi|docker.io/…)
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'org'?: string;
-    /**
-     * operator status.phase (Running/Creating/…)
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'phase'?: string;
-    /**
-     * owner/repo image coordinate
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'repo'?: string;
-    /**
-     * observed from the live Deployment
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'runningTag'?: string;
-    /**
-     * derived: cloud|data|edge|daemon|paas|app (grouping)
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'tier'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductRow
-     */
-    'updated'?: string;
+    'units'?: number;
 }
 

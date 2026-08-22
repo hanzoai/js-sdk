@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -21,6 +21,20 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { BucketIn } from '../models';
+// @ts-ignore
+import type { BucketItem } from '../models';
+// @ts-ignore
+import type { BucketList } from '../models';
+// @ts-ignore
+import type { ObjectList } from '../models';
+// @ts-ignore
+import type { PresignResponse } from '../models';
+// @ts-ignore
+import type { S3Health } from '../models';
+// @ts-ignore
+import type { UploadIn } from '../models';
 /**
  * S3Api - axios parameter creator
  * @export
@@ -28,9 +42,9 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Removes one of the caller\'s buckets, and only when it is already EMPTY — a bucket with objects in it answers 409 instead.  That refusal is deliberate rather than a limitation: this API does not cascade a delete of a tenant\'s objects behind a single bucket call, so emptying the bucket stays an explicit act. A bucket that does not exist is 404, and a successful delete answers 204 with no body.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Delete an empty bucket
-         * @param {string} bucket 
+         * Removes an EMPTY bucket and answers 204.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.
+         * @summary Removes an EMPTY bucket and answers 204.
+         * @param {string} bucket Bucket is the bucket\&#39;s friendly name, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -66,50 +80,8 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Removes the single object at the trailing path from one of the caller\'s buckets and answers 204 with no body. The key is path-cleaned first, so the delete cannot reach outside the bucket it names.  It removes one object and never a prefix: a trailing path that looks like a folder deletes the placeholder at that key, not the objects beneath it.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Delete one object
-         * @param {string} bucket 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteS3BucketsByBucketObjectsByWildcard1: async (bucket: string, wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('deleteS3BucketsByBucketObjectsByWildcard1', 'bucket', bucket)
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('deleteS3BucketsByBucketObjectsByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/s3/buckets/{bucket}/objects/{wildcard1}`
-                .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns the caller\'s own buckets under the friendly names they were created with, each with its creation time.  Another tenant\'s bucket is not refused, it is INVISIBLE — a bucket outside the caller\'s namespace is skipped during the listing rather than reported, so the operation cannot be used to discover that a name is taken elsewhere.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary List your org\'s buckets
+         * Lists the caller org\'s own buckets.  Only the caller\'s: every bucket is physically named under a per-org prefix and the listing strips that prefix, so a tenant sees friendly names and another tenant\'s buckets are not in the answer at all.
+         * @summary Lists the caller org\'s own buckets.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -142,13 +114,15 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Lists one folder level of a bucket: each entry\'s key, whether it is a folder, its size, last-modified time and ETag. `prefix` scopes the read to a sub-folder.  Keys come back RELATIVE to the requested prefix, not absolute, which is what lets a client render a breadcrumb without re-deriving it. The default is the folder view — sub-prefixes are returned as directory entries — and `recursive=true` flattens it to every key beneath the prefix instead.  The listing is bounded at 1000 entries so a large bucket cannot exhaust memory; treat a full page as \"there may be more\" rather than as the whole bucket.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Browse one level of a bucket
-         * @param {string} bucket 
+         * Lists one folder level of a bucket.  Folder-style by default: sub-prefixes come back as directory entries, which is the file-manager view. `?recursive=true` lists every key flat under the prefix instead. Keys are RELATIVE to `?prefix=`, and the listing is bounded so a huge bucket cannot exhaust memory — Total is what came back, not what the bucket holds.
+         * @summary Lists one folder level of a bucket.
+         * @param {string} bucket Bucket is the bucket to list, from the path.
+         * @param {string} [prefix] 
+         * @param {string} [recursive] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getS3BucketsByBucketObjects: async (bucket: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getS3BucketsByBucketObjects: async (bucket: string, prefix?: string, recursive?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
             assertParamExists('getS3BucketsByBucketObjects', 'bucket', bucket)
             const localVarPath = `/v1/s3/buckets/{bucket}/objects`
@@ -168,47 +142,13 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a short-lived presigned GET URL for the object at the trailing path, with the method, the key and its remaining lifetime. As with upload, the client fetches from that URL directly and the storage credential stays on the server.  The URL carries a content disposition of attachment with the object\'s file name, so a browser following it downloads the object rather than rendering it in place. Signed against the public host, scoped to the one bucket and key, and good for five minutes; a deployment with no public storage endpoint answers 503.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Get a URL to download one object directly
-         * @param {string} bucket 
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getS3BucketsByBucketObjectsByWildcard1: async (bucket: string, wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'bucket' is not null or undefined
-            assertParamExists('getS3BucketsByBucketObjectsByWildcard1', 'bucket', bucket)
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getS3BucketsByBucketObjectsByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/s3/buckets/{bucket}/objects/{wildcard1}`
-                .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)))
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
+            if (prefix !== undefined) {
+                localVarQueryParameter['prefix'] = prefix;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+            if (recursive !== undefined) {
+                localVarQueryParameter['recursive'] = recursive;
+            }
 
 
     
@@ -222,8 +162,8 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * A real readiness probe rather than a liveness stub: 200 only when the storage credentials are present, and it additionally reports whether presigning is available — the capability the two URL-issuing operations need and refuse without.  An unconfigured deployment answers 503 with `ready:false` and the reason, which is the same state in which every data-plane operation here refuses. Not token-gated, so the platform can probe it without a credential, and it carries no credential, bucket or tenant detail.
-         * @summary Whether object storage is usable here
+         * Health reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
+         * @summary Health reports whether this deployment can serve object storage.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -256,12 +196,15 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Creates a new bucket in the caller\'s own namespace and answers 201 with its friendly name and creation time.  The name is validated exactly as sent and never quietly normalised: it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, so a mixed-case name is a clean 400 rather than a bucket created as `photos` that the caller keeps asking for as `Photos`. A name already in use in the caller\'s own namespace is 409.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Create a bucket in your org
+         * Makes a new bucket for the caller\'s org and answers 201 with it.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.
+         * @summary Makes a new bucket for the caller\'s org and answers 201 with it.
+         * @param {BucketIn} bucketIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postS3Buckets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postS3Buckets: async (bucketIn: BucketIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bucketIn' is not null or undefined
+            assertParamExists('postS3Buckets', 'bucketIn', bucketIn)
             const localVarPath = `/v1/s3/buckets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -280,9 +223,12 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(bucketIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -290,15 +236,18 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Returns a short-lived presigned PUT URL, with the method, the cleaned key and the seconds until it expires. The client uploads to that URL DIRECTLY — the bytes never pass through this API, and the storage credential never leaves the server.  The URL is signed against the public storage host and scoped to exactly one bucket and key, and it expires five minutes after it is issued. The key is path-cleaned before signing, so a traversal cannot escape the bucket. A deployment with no public storage endpoint answers 503, because there is no host to sign a browser-followable URL against.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Get a URL to upload one object directly
-         * @param {string} bucket 
+         * Mints a presigned PUT URL the caller uploads to DIRECTLY.  The bytes never pass through this binary and the admin credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this bucket and key, and expires. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.
+         * @summary Mints a presigned PUT URL the caller uploads to DIRECTLY.
+         * @param {string} bucket Bucket is the bucket to upload into, from the path.
+         * @param {UploadIn} uploadIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postS3BucketsByBucketObjects: async (bucket: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postS3BucketsByBucketObjects: async (bucket: string, uploadIn: UploadIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bucket' is not null or undefined
             assertParamExists('postS3BucketsByBucketObjects', 'bucket', bucket)
+            // verify required parameter 'uploadIn' is not null or undefined
+            assertParamExists('postS3BucketsByBucketObjects', 'uploadIn', uploadIn)
             const localVarPath = `/v1/s3/buckets/{bucket}/objects`
                 .replace(`{${"bucket"}}`, encodeURIComponent(String(bucket)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -318,9 +267,12 @@ export const S3ApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(uploadIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -338,9 +290,9 @@ export const S3ApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = S3ApiAxiosParamCreator(configuration)
     return {
         /**
-         * Removes one of the caller\'s buckets, and only when it is already EMPTY — a bucket with objects in it answers 409 instead.  That refusal is deliberate rather than a limitation: this API does not cascade a delete of a tenant\'s objects behind a single bucket call, so emptying the bucket stays an explicit act. A bucket that does not exist is 404, and a successful delete answers 204 with no body.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Delete an empty bucket
-         * @param {string} bucket 
+         * Removes an EMPTY bucket and answers 204.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.
+         * @summary Removes an EMPTY bucket and answers 204.
+         * @param {string} bucket Bucket is the bucket\&#39;s friendly name, from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -351,91 +303,67 @@ export const S3ApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes the single object at the trailing path from one of the caller\'s buckets and answers 204 with no body. The key is path-cleaned first, so the delete cannot reach outside the bucket it names.  It removes one object and never a prefix: a trailing path that looks like a folder deletes the placeholder at that key, not the objects beneath it.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Delete one object
-         * @param {string} bucket 
-         * @param {string} wildcard1 
+         * Lists the caller org\'s own buckets.  Only the caller\'s: every bucket is physically named under a per-org prefix and the listing strips that prefix, so a tenant sees friendly names and another tenant\'s buckets are not in the answer at all.
+         * @summary Lists the caller org\'s own buckets.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteS3BucketsByBucketObjectsByWildcard1(bucket: string, wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteS3BucketsByBucketObjectsByWildcard1(bucket, wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.deleteS3BucketsByBucketObjectsByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns the caller\'s own buckets under the friendly names they were created with, each with its creation time.  Another tenant\'s bucket is not refused, it is INVISIBLE — a bucket outside the caller\'s namespace is skipped during the listing rather than reported, so the operation cannot be used to discover that a name is taken elsewhere.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary List your org\'s buckets
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getS3Buckets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getS3Buckets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BucketList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getS3Buckets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.getS3Buckets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists one folder level of a bucket: each entry\'s key, whether it is a folder, its size, last-modified time and ETag. `prefix` scopes the read to a sub-folder.  Keys come back RELATIVE to the requested prefix, not absolute, which is what lets a client render a breadcrumb without re-deriving it. The default is the folder view — sub-prefixes are returned as directory entries — and `recursive=true` flattens it to every key beneath the prefix instead.  The listing is bounded at 1000 entries so a large bucket cannot exhaust memory; treat a full page as \"there may be more\" rather than as the whole bucket.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Browse one level of a bucket
-         * @param {string} bucket 
+         * Lists one folder level of a bucket.  Folder-style by default: sub-prefixes come back as directory entries, which is the file-manager view. `?recursive=true` lists every key flat under the prefix instead. Keys are RELATIVE to `?prefix=`, and the listing is bounded so a huge bucket cannot exhaust memory — Total is what came back, not what the bucket holds.
+         * @summary Lists one folder level of a bucket.
+         * @param {string} bucket Bucket is the bucket to list, from the path.
+         * @param {string} [prefix] 
+         * @param {string} [recursive] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getS3BucketsByBucketObjects(bucket: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getS3BucketsByBucketObjects(bucket, options);
+        async getS3BucketsByBucketObjects(bucket: string, prefix?: string, recursive?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ObjectList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getS3BucketsByBucketObjects(bucket, prefix, recursive, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.getS3BucketsByBucketObjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns a short-lived presigned GET URL for the object at the trailing path, with the method, the key and its remaining lifetime. As with upload, the client fetches from that URL directly and the storage credential stays on the server.  The URL carries a content disposition of attachment with the object\'s file name, so a browser following it downloads the object rather than rendering it in place. Signed against the public host, scoped to the one bucket and key, and good for five minutes; a deployment with no public storage endpoint answers 503.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Get a URL to download one object directly
-         * @param {string} bucket 
-         * @param {string} wildcard1 
+         * Health reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
+         * @summary Health reports whether this deployment can serve object storage.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getS3BucketsByBucketObjectsByWildcard1(bucket: string, wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getS3BucketsByBucketObjectsByWildcard1(bucket, wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['S3Api.getS3BucketsByBucketObjectsByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * A real readiness probe rather than a liveness stub: 200 only when the storage credentials are present, and it additionally reports whether presigning is available — the capability the two URL-issuing operations need and refuse without.  An unconfigured deployment answers 503 with `ready:false` and the reason, which is the same state in which every data-plane operation here refuses. Not token-gated, so the platform can probe it without a credential, and it carries no credential, bucket or tenant detail.
-         * @summary Whether object storage is usable here
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getS3Health(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getS3Health(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<S3Health>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getS3Health(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.getS3Health']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a new bucket in the caller\'s own namespace and answers 201 with its friendly name and creation time.  The name is validated exactly as sent and never quietly normalised: it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, so a mixed-case name is a clean 400 rather than a bucket created as `photos` that the caller keeps asking for as `Photos`. A name already in use in the caller\'s own namespace is 409.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Create a bucket in your org
+         * Makes a new bucket for the caller\'s org and answers 201 with it.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.
+         * @summary Makes a new bucket for the caller\'s org and answers 201 with it.
+         * @param {BucketIn} bucketIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postS3Buckets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3Buckets(options);
+        async postS3Buckets(bucketIn: BucketIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BucketItem>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3Buckets(bucketIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.postS3Buckets']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns a short-lived presigned PUT URL, with the method, the cleaned key and the seconds until it expires. The client uploads to that URL DIRECTLY — the bytes never pass through this API, and the storage credential never leaves the server.  The URL is signed against the public storage host and scoped to exactly one bucket and key, and it expires five minutes after it is issued. The key is path-cleaned before signing, so a traversal cannot escape the bucket. A deployment with no public storage endpoint answers 503, because there is no host to sign a browser-followable URL against.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Get a URL to upload one object directly
-         * @param {string} bucket 
+         * Mints a presigned PUT URL the caller uploads to DIRECTLY.  The bytes never pass through this binary and the admin credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this bucket and key, and expires. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.
+         * @summary Mints a presigned PUT URL the caller uploads to DIRECTLY.
+         * @param {string} bucket Bucket is the bucket to upload into, from the path.
+         * @param {UploadIn} uploadIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postS3BucketsByBucketObjects(bucket: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3BucketsByBucketObjects(bucket, options);
+        async postS3BucketsByBucketObjects(bucket: string, uploadIn: UploadIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PresignResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postS3BucketsByBucketObjects(bucket, uploadIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['S3Api.postS3BucketsByBucketObjects']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -451,8 +379,8 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
     const localVarFp = S3ApiFp(configuration)
     return {
         /**
-         * Removes one of the caller\'s buckets, and only when it is already EMPTY — a bucket with objects in it answers 409 instead.  That refusal is deliberate rather than a limitation: this API does not cascade a delete of a tenant\'s objects behind a single bucket call, so emptying the bucket stays an explicit act. A bucket that does not exist is 404, and a successful delete answers 204 with no body.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Delete an empty bucket
+         * Removes an EMPTY bucket and answers 204.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.
+         * @summary Removes an EMPTY bucket and answers 204.
          * @param {S3ApiDeleteS3BucketsByBucketRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -461,71 +389,52 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.deleteS3BucketsByBucket(requestParameters.bucket, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes the single object at the trailing path from one of the caller\'s buckets and answers 204 with no body. The key is path-cleaned first, so the delete cannot reach outside the bucket it names.  It removes one object and never a prefix: a trailing path that looks like a folder deletes the placeholder at that key, not the objects beneath it.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Delete one object
-         * @param {S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
+         * Lists the caller org\'s own buckets.  Only the caller\'s: every bucket is physically named under a per-org prefix and the listing strips that prefix, so a tenant sees friendly names and another tenant\'s buckets are not in the answer at all.
+         * @summary Lists the caller org\'s own buckets.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the caller\'s own buckets under the friendly names they were created with, each with its creation time.  Another tenant\'s bucket is not refused, it is INVISIBLE — a bucket outside the caller\'s namespace is skipped during the listing rather than reported, so the operation cannot be used to discover that a name is taken elsewhere.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary List your org\'s buckets
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getS3Buckets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getS3Buckets(options?: RawAxiosRequestConfig): AxiosPromise<BucketList> {
             return localVarFp.getS3Buckets(options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists one folder level of a bucket: each entry\'s key, whether it is a folder, its size, last-modified time and ETag. `prefix` scopes the read to a sub-folder.  Keys come back RELATIVE to the requested prefix, not absolute, which is what lets a client render a breadcrumb without re-deriving it. The default is the folder view — sub-prefixes are returned as directory entries — and `recursive=true` flattens it to every key beneath the prefix instead.  The listing is bounded at 1000 entries so a large bucket cannot exhaust memory; treat a full page as \"there may be more\" rather than as the whole bucket.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Browse one level of a bucket
+         * Lists one folder level of a bucket.  Folder-style by default: sub-prefixes come back as directory entries, which is the file-manager view. `?recursive=true` lists every key flat under the prefix instead. Keys are RELATIVE to `?prefix=`, and the listing is bounded so a huge bucket cannot exhaust memory — Total is what came back, not what the bucket holds.
+         * @summary Lists one folder level of a bucket.
          * @param {S3ApiGetS3BucketsByBucketObjectsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getS3BucketsByBucketObjects(requestParameters: S3ApiGetS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getS3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(axios, basePath));
+        getS3BucketsByBucketObjects(requestParameters: S3ApiGetS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ObjectList> {
+            return localVarFp.getS3BucketsByBucketObjects(requestParameters.bucket, requestParameters.prefix, requestParameters.recursive, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns a short-lived presigned GET URL for the object at the trailing path, with the method, the key and its remaining lifetime. As with upload, the client fetches from that URL directly and the storage credential stays on the server.  The URL carries a content disposition of attachment with the object\'s file name, so a browser following it downloads the object rather than rendering it in place. Signed against the public host, scoped to the one bucket and key, and good for five minutes; a deployment with no public storage endpoint answers 503.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Get a URL to download one object directly
-         * @param {S3ApiGetS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
+         * Health reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
+         * @summary Health reports whether this deployment can serve object storage.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiGetS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * A real readiness probe rather than a liveness stub: 200 only when the storage credentials are present, and it additionally reports whether presigning is available — the capability the two URL-issuing operations need and refuse without.  An unconfigured deployment answers 503 with `ready:false` and the reason, which is the same state in which every data-plane operation here refuses. Not token-gated, so the platform can probe it without a credential, and it carries no credential, bucket or tenant detail.
-         * @summary Whether object storage is usable here
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getS3Health(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getS3Health(options?: RawAxiosRequestConfig): AxiosPromise<S3Health> {
             return localVarFp.getS3Health(options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a new bucket in the caller\'s own namespace and answers 201 with its friendly name and creation time.  The name is validated exactly as sent and never quietly normalised: it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, so a mixed-case name is a clean 400 rather than a bucket created as `photos` that the caller keeps asking for as `Photos`. A name already in use in the caller\'s own namespace is 409.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Create a bucket in your org
+         * Makes a new bucket for the caller\'s org and answers 201 with it.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.
+         * @summary Makes a new bucket for the caller\'s org and answers 201 with it.
+         * @param {S3ApiPostS3BucketsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postS3Buckets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postS3Buckets(options).then((request) => request(axios, basePath));
+        postS3Buckets(requestParameters: S3ApiPostS3BucketsRequest, options?: RawAxiosRequestConfig): AxiosPromise<BucketItem> {
+            return localVarFp.postS3Buckets(requestParameters.bucketIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns a short-lived presigned PUT URL, with the method, the cleaned key and the seconds until it expires. The client uploads to that URL DIRECTLY — the bytes never pass through this API, and the storage credential never leaves the server.  The URL is signed against the public storage host and scoped to exactly one bucket and key, and it expires five minutes after it is issued. The key is path-cleaned before signing, so a traversal cannot escape the bucket. A deployment with no public storage endpoint answers 503, because there is no host to sign a browser-followable URL against.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-         * @summary Get a URL to upload one object directly
+         * Mints a presigned PUT URL the caller uploads to DIRECTLY.  The bytes never pass through this binary and the admin credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this bucket and key, and expires. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.
+         * @summary Mints a presigned PUT URL the caller uploads to DIRECTLY.
          * @param {S3ApiPostS3BucketsByBucketObjectsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postS3BucketsByBucketObjects(requestParameters: S3ApiPostS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postS3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(axios, basePath));
+        postS3BucketsByBucketObjects(requestParameters: S3ApiPostS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<PresignResponse> {
+            return localVarFp.postS3BucketsByBucketObjects(requestParameters.bucket, requestParameters.uploadIn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -537,32 +446,11 @@ export const S3ApiFactory = function (configuration?: Configuration, basePath?: 
  */
 export interface S3ApiDeleteS3BucketsByBucketRequest {
     /**
-     * 
+     * Bucket is the bucket\&#39;s friendly name, from the path.
      * @type {string}
      * @memberof S3ApiDeleteS3BucketsByBucket
      */
     readonly bucket: string
-}
-
-/**
- * Request parameters for deleteS3BucketsByBucketObjectsByWildcard1 operation in S3Api.
- * @export
- * @interface S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request
- */
-export interface S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof S3ApiDeleteS3BucketsByBucketObjectsByWildcard1
-     */
-    readonly bucket: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof S3ApiDeleteS3BucketsByBucketObjectsByWildcard1
-     */
-    readonly wildcard1: string
 }
 
 /**
@@ -572,32 +460,39 @@ export interface S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request {
  */
 export interface S3ApiGetS3BucketsByBucketObjectsRequest {
     /**
-     * 
+     * Bucket is the bucket to list, from the path.
      * @type {string}
      * @memberof S3ApiGetS3BucketsByBucketObjects
      */
     readonly bucket: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof S3ApiGetS3BucketsByBucketObjects
+     */
+    readonly prefix?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof S3ApiGetS3BucketsByBucketObjects
+     */
+    readonly recursive?: string
 }
 
 /**
- * Request parameters for getS3BucketsByBucketObjectsByWildcard1 operation in S3Api.
+ * Request parameters for postS3Buckets operation in S3Api.
  * @export
- * @interface S3ApiGetS3BucketsByBucketObjectsByWildcard1Request
+ * @interface S3ApiPostS3BucketsRequest
  */
-export interface S3ApiGetS3BucketsByBucketObjectsByWildcard1Request {
+export interface S3ApiPostS3BucketsRequest {
     /**
      * 
-     * @type {string}
-     * @memberof S3ApiGetS3BucketsByBucketObjectsByWildcard1
+     * @type {BucketIn}
+     * @memberof S3ApiPostS3Buckets
      */
-    readonly bucket: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof S3ApiGetS3BucketsByBucketObjectsByWildcard1
-     */
-    readonly wildcard1: string
+    readonly bucketIn: BucketIn
 }
 
 /**
@@ -607,11 +502,18 @@ export interface S3ApiGetS3BucketsByBucketObjectsByWildcard1Request {
  */
 export interface S3ApiPostS3BucketsByBucketObjectsRequest {
     /**
-     * 
+     * Bucket is the bucket to upload into, from the path.
      * @type {string}
      * @memberof S3ApiPostS3BucketsByBucketObjects
      */
     readonly bucket: string
+
+    /**
+     * 
+     * @type {UploadIn}
+     * @memberof S3ApiPostS3BucketsByBucketObjects
+     */
+    readonly uploadIn: UploadIn
 }
 
 /**
@@ -622,8 +524,8 @@ export interface S3ApiPostS3BucketsByBucketObjectsRequest {
  */
 export class S3Api extends BaseAPI {
     /**
-     * Removes one of the caller\'s buckets, and only when it is already EMPTY — a bucket with objects in it answers 409 instead.  That refusal is deliberate rather than a limitation: this API does not cascade a delete of a tenant\'s objects behind a single bucket call, so emptying the bucket stays an explicit act. A bucket that does not exist is 404, and a successful delete answers 204 with no body.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-     * @summary Delete an empty bucket
+     * Removes an EMPTY bucket and answers 204.  A non-empty bucket is 409 rather than a cascade: deleting a tenant\'s objects behind a single bucket call is not a thing this surface will do silently. A bucket the caller\'s org does not own is the same 404 an unknown name gives.
+     * @summary Removes an EMPTY bucket and answers 204.
      * @param {S3ApiDeleteS3BucketsByBucketRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -634,20 +536,8 @@ export class S3Api extends BaseAPI {
     }
 
     /**
-     * Removes the single object at the trailing path from one of the caller\'s buckets and answers 204 with no body. The key is path-cleaned first, so the delete cannot reach outside the bucket it names.  It removes one object and never a prefix: a trailing path that looks like a folder deletes the placeholder at that key, not the objects beneath it.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-     * @summary Delete one object
-     * @param {S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof S3Api
-     */
-    public deleteS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiDeleteS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).deleteS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns the caller\'s own buckets under the friendly names they were created with, each with its creation time.  Another tenant\'s bucket is not refused, it is INVISIBLE — a bucket outside the caller\'s namespace is skipped during the listing rather than reported, so the operation cannot be used to discover that a name is taken elsewhere.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-     * @summary List your org\'s buckets
+     * Lists the caller org\'s own buckets.  Only the caller\'s: every bucket is physically named under a per-org prefix and the listing strips that prefix, so a tenant sees friendly names and another tenant\'s buckets are not in the answer at all.
+     * @summary Lists the caller org\'s own buckets.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
@@ -657,32 +547,20 @@ export class S3Api extends BaseAPI {
     }
 
     /**
-     * Lists one folder level of a bucket: each entry\'s key, whether it is a folder, its size, last-modified time and ETag. `prefix` scopes the read to a sub-folder.  Keys come back RELATIVE to the requested prefix, not absolute, which is what lets a client render a breadcrumb without re-deriving it. The default is the folder view — sub-prefixes are returned as directory entries — and `recursive=true` flattens it to every key beneath the prefix instead.  The listing is bounded at 1000 entries so a large bucket cannot exhaust memory; treat a full page as \"there may be more\" rather than as the whole bucket.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-     * @summary Browse one level of a bucket
+     * Lists one folder level of a bucket.  Folder-style by default: sub-prefixes come back as directory entries, which is the file-manager view. `?recursive=true` lists every key flat under the prefix instead. Keys are RELATIVE to `?prefix=`, and the listing is bounded so a huge bucket cannot exhaust memory — Total is what came back, not what the bucket holds.
+     * @summary Lists one folder level of a bucket.
      * @param {S3ApiGetS3BucketsByBucketObjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
     public getS3BucketsByBucketObjects(requestParameters: S3ApiGetS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).getS3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(this.axios, this.basePath));
+        return S3ApiFp(this.configuration).getS3BucketsByBucketObjects(requestParameters.bucket, requestParameters.prefix, requestParameters.recursive, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns a short-lived presigned GET URL for the object at the trailing path, with the method, the key and its remaining lifetime. As with upload, the client fetches from that URL directly and the storage credential stays on the server.  The URL carries a content disposition of attachment with the object\'s file name, so a browser following it downloads the object rather than rendering it in place. Signed against the public host, scoped to the one bucket and key, and good for five minutes; a deployment with no public storage endpoint answers 503.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-     * @summary Get a URL to download one object directly
-     * @param {S3ApiGetS3BucketsByBucketObjectsByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof S3Api
-     */
-    public getS3BucketsByBucketObjectsByWildcard1(requestParameters: S3ApiGetS3BucketsByBucketObjectsByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).getS3BucketsByBucketObjectsByWildcard1(requestParameters.bucket, requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * A real readiness probe rather than a liveness stub: 200 only when the storage credentials are present, and it additionally reports whether presigning is available — the capability the two URL-issuing operations need and refuse without.  An unconfigured deployment answers 503 with `ready:false` and the reason, which is the same state in which every data-plane operation here refuses. Not token-gated, so the platform can probe it without a credential, and it carries no credential, bucket or tenant detail.
-     * @summary Whether object storage is usable here
+     * Health reports whether this deployment can serve object storage.  It is a REAL probe rather than a constant: 200 when admin credentials are present, so the store is reachable in principle, and 503 with the reason when they are not. It is deliberately NOT gated — liveness has to be probe-able without a token — so it is the one operation here that names no bucket and bills nothing.
+     * @summary Health reports whether this deployment can serve object storage.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
@@ -692,26 +570,27 @@ export class S3Api extends BaseAPI {
     }
 
     /**
-     * Creates a new bucket in the caller\'s own namespace and answers 201 with its friendly name and creation time.  The name is validated exactly as sent and never quietly normalised: it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, so a mixed-case name is a clean 400 rather than a bucket created as `photos` that the caller keeps asking for as `Photos`. A name already in use in the caller\'s own namespace is 409.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-     * @summary Create a bucket in your org
+     * Makes a new bucket for the caller\'s org and answers 201 with it.  The physical name is derived from the caller\'s validated org, so a tenant can only ever create inside its own namespace and no request field can redirect that. A name already taken in the org is 409.
+     * @summary Makes a new bucket for the caller\'s org and answers 201 with it.
+     * @param {S3ApiPostS3BucketsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
-    public postS3Buckets(options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).postS3Buckets(options).then((request) => request(this.axios, this.basePath));
+    public postS3Buckets(requestParameters: S3ApiPostS3BucketsRequest, options?: RawAxiosRequestConfig) {
+        return S3ApiFp(this.configuration).postS3Buckets(requestParameters.bucketIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns a short-lived presigned PUT URL, with the method, the cleaned key and the seconds until it expires. The client uploads to that URL DIRECTLY — the bytes never pass through this API, and the storage credential never leaves the server.  The URL is signed against the public storage host and scoped to exactly one bucket and key, and it expires five minutes after it is issued. The key is path-cleaned before signing, so a traversal cannot escape the bucket. A deployment with no public storage endpoint answers 503, because there is no host to sign a browser-followable URL against.  A validated principal is required, and every bucket and key is resolved inside the caller\'s own org: physical bucket names are derived from the org, so a tenant cannot name another\'s storage. The operation is billed per call — the balance is checked BEFORE anything is touched, so an unfunded org is refused with nothing done, and the debit happens only after the work succeeds. Object storage that is not configured answers 503 under this subsystem\'s own name rather than falling through to another.
-     * @summary Get a URL to upload one object directly
+     * Mints a presigned PUT URL the caller uploads to DIRECTLY.  The bytes never pass through this binary and the admin credential never leaves the server: the URL is signed against the PUBLIC host, scoped to exactly this bucket and key, and expires. A deployment with no public endpoint configured cannot mint one and answers 503 rather than a URL that will not work.
+     * @summary Mints a presigned PUT URL the caller uploads to DIRECTLY.
      * @param {S3ApiPostS3BucketsByBucketObjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof S3Api
      */
     public postS3BucketsByBucketObjects(requestParameters: S3ApiPostS3BucketsByBucketObjectsRequest, options?: RawAxiosRequestConfig) {
-        return S3ApiFp(this.configuration).postS3BucketsByBucketObjects(requestParameters.bucket, options).then((request) => request(this.axios, this.basePath));
+        return S3ApiFp(this.configuration).postS3BucketsByBucketObjects(requestParameters.bucket, requestParameters.uploadIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

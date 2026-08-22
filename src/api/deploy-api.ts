@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -49,44 +49,6 @@ import type { VersionMessage } from '../models';
  */
 export const DeployApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Always answers `yes`, whatever resource, action or subresource the path names. It exists for the ArgoCD-compatible console, which asks this before enabling a control, and it is NOT the authorization decision: nothing downstream consults it, and every route that returns fleet data or mutates a CR carries its own gate. Reaching it at all already requires SuperAdmin, so a caller who can read the `yes` is one for whom it is true.
-         * @summary Compatibility answer the console UI asks before enabling its buttons
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeployAccountCanIByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getDeployAccountCanIByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/deploy/account/can-i/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Returns the fleet as an argocd ApplicationList: one projected Application per operator App CR, carrying the image tag the CR DECLARES, the tag actually RUNNING in the cluster\'s Deployment, the reconciled health, and the sync verdict those two produce (declared == running ⇒ Synced, both known and different ⇒ OutOfSync, either unknown ⇒ Unknown).  It is TENANT-SCOPED: a platform SuperAdmin reads every platform namespace, a validated org member reads only its own org\'s tenant namespace and only the App CRs labelled with its org, and anyone else is refused. A cross-tenant CR is never projected into an answer.
          * @summary Returns the fleet as an argocd ApplicationList: one projected Application per operator App CR, carrying the image tag the CR DECLARES, the tag actually RUNNING in the cluster\'s Deployment, the reconciled health, and the sync verdict those two produce (declared == running ⇒ Synced, both known and different ⇒ OutOfSync, either unknown ⇒ Unknown).
@@ -810,19 +772,6 @@ export const DeployApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DeployApiAxiosParamCreator(configuration)
     return {
         /**
-         * Always answers `yes`, whatever resource, action or subresource the path names. It exists for the ArgoCD-compatible console, which asks this before enabling a control, and it is NOT the authorization decision: nothing downstream consults it, and every route that returns fleet data or mutates a CR carries its own gate. Reaching it at all already requires SuperAdmin, so a caller who can read the `yes` is one for whom it is true.
-         * @summary Compatibility answer the console UI asks before enabling its buttons
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getDeployAccountCanIByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployAccountCanIByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployAccountCanIByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns the fleet as an argocd ApplicationList: one projected Application per operator App CR, carrying the image tag the CR DECLARES, the tag actually RUNNING in the cluster\'s Deployment, the reconciled health, and the sync verdict those two produce (declared == running ⇒ Synced, both known and different ⇒ OutOfSync, either unknown ⇒ Unknown).  It is TENANT-SCOPED: a platform SuperAdmin reads every platform namespace, a validated org member reads only its own org\'s tenant namespace and only the App CRs labelled with its org, and anyone else is refused. A cross-tenant CR is never projected into an answer.
          * @summary Returns the fleet as an argocd ApplicationList: one projected Application per operator App CR, carrying the image tag the CR DECLARES, the tag actually RUNNING in the cluster\'s Deployment, the reconciled health, and the sync verdict those two produce (declared == running ⇒ Synced, both known and different ⇒ OutOfSync, either unknown ⇒ Unknown).
          * @param {*} [options] Override http request option.
@@ -1081,16 +1030,6 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = DeployApiFp(configuration)
     return {
         /**
-         * Always answers `yes`, whatever resource, action or subresource the path names. It exists for the ArgoCD-compatible console, which asks this before enabling a control, and it is NOT the authorization decision: nothing downstream consults it, and every route that returns fleet data or mutates a CR carries its own gate. Reaching it at all already requires SuperAdmin, so a caller who can read the `yes` is one for whom it is true.
-         * @summary Compatibility answer the console UI asks before enabling its buttons
-         * @param {DeployApiGetDeployAccountCanIByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getDeployAccountCanIByWildcard1(requestParameters: DeployApiGetDeployAccountCanIByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getDeployAccountCanIByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns the fleet as an argocd ApplicationList: one projected Application per operator App CR, carrying the image tag the CR DECLARES, the tag actually RUNNING in the cluster\'s Deployment, the reconciled health, and the sync verdict those two produce (declared == running ⇒ Synced, both known and different ⇒ OutOfSync, either unknown ⇒ Unknown).  It is TENANT-SCOPED: a platform SuperAdmin reads every platform namespace, a validated org member reads only its own org\'s tenant namespace and only the App CRs labelled with its org, and anyone else is refused. A cross-tenant CR is never projected into an answer.
          * @summary Returns the fleet as an argocd ApplicationList: one projected Application per operator App CR, carrying the image tag the CR DECLARES, the tag actually RUNNING in the cluster\'s Deployment, the reconciled health, and the sync verdict those two produce (declared == running ⇒ Synced, both known and different ⇒ OutOfSync, either unknown ⇒ Unknown).
          * @param {*} [options] Override http request option.
@@ -1281,20 +1220,6 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
- * Request parameters for getDeployAccountCanIByWildcard1 operation in DeployApi.
- * @export
- * @interface DeployApiGetDeployAccountCanIByWildcard1Request
- */
-export interface DeployApiGetDeployAccountCanIByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof DeployApiGetDeployAccountCanIByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * Request parameters for getDeployApplicationsByName operation in DeployApi.
  * @export
  * @interface DeployApiGetDeployApplicationsByNameRequest
@@ -1406,18 +1331,6 @@ export interface DeployApiPostDeployApplicationsByNameSyncRequest {
  * @extends {BaseAPI}
  */
 export class DeployApi extends BaseAPI {
-    /**
-     * Always answers `yes`, whatever resource, action or subresource the path names. It exists for the ArgoCD-compatible console, which asks this before enabling a control, and it is NOT the authorization decision: nothing downstream consults it, and every route that returns fleet data or mutates a CR carries its own gate. Reaching it at all already requires SuperAdmin, so a caller who can read the `yes` is one for whom it is true.
-     * @summary Compatibility answer the console UI asks before enabling its buttons
-     * @param {DeployApiGetDeployAccountCanIByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DeployApi
-     */
-    public getDeployAccountCanIByWildcard1(requestParameters: DeployApiGetDeployAccountCanIByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return DeployApiFp(this.configuration).getDeployAccountCanIByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Returns the fleet as an argocd ApplicationList: one projected Application per operator App CR, carrying the image tag the CR DECLARES, the tag actually RUNNING in the cluster\'s Deployment, the reconciled health, and the sync verdict those two produce (declared == running ⇒ Synced, both known and different ⇒ OutOfSync, either unknown ⇒ Unknown).  It is TENANT-SCOPED: a platform SuperAdmin reads every platform namespace, a validated org member reads only its own org\'s tenant namespace and only the App CRs labelled with its org, and anyone else is refused. A cross-tenant CR is never projected into an answer.
      * @summary Returns the fleet as an argocd ApplicationList: one projected Application per operator App CR, carrying the image tag the CR DECLARES, the tag actually RUNNING in the cluster\'s Deployment, the reconciled health, and the sync verdict those two produce (declared == running ⇒ Synced, both known and different ⇒ OutOfSync, either unknown ⇒ Unknown).

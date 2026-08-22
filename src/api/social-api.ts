@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -21,6 +21,26 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { SocialAccount } from '../models';
+// @ts-ignore
+import type { SocialAccountBody } from '../models';
+// @ts-ignore
+import type { SocialAccountWrite } from '../models';
+// @ts-ignore
+import type { SocialAccounts } from '../models';
+// @ts-ignore
+import type { SocialPost } from '../models';
+// @ts-ignore
+import type { SocialPostBody } from '../models';
+// @ts-ignore
+import type { SocialPostWrite } from '../models';
+// @ts-ignore
+import type { SocialPosts } from '../models';
+// @ts-ignore
+import type { SocialProviders } from '../models';
+// @ts-ignore
+import type { SocialSummary } from '../models';
 /**
  * SocialApi - axios parameter creator
  * @export
@@ -28,9 +48,9 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const SocialApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Disconnect one account
-         * @param {string} id 
+         * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.
+         * @summary Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.
+         * @param {string} id ID is the account or post to act on, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -66,9 +86,9 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Removes one post from the org and answers 204 with no body; an id that is not there is 404.  It deletes the record here only. A post that has already published is not retracted from the network by deleting it.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Delete one post
-         * @param {string} id 
+         * Removes one post from the org and answers 204 with no body; an id that is not there is 404.  It deletes the record here only. A post that has already published is not retracted from the network by deleting it.
+         * @summary Removes one post from the org and answers 204 with no body; an id that is not there is 404.
+         * @param {string} id ID is the account or post to act on, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -104,12 +124,14 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps. `provider` filters to one network; `limit` bounds the page, defaulting to 200 and capped at 1000.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary List the social accounts connected to your org
+         * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.
+         * @summary Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.
+         * @param {string} [provider] Provider keeps only accounts on one network — x, facebook, instagram, linkedin, tiktok, youtube or threads. Omit it for every network. It is lower-cased and trimmed before it is matched, and a value that names no network simply matches nothing rather than being refused.
+         * @param {string} [limit] Limit bounds the page, defaulting to 200 and capped at 1000. It is a string rather than an integer on purpose: the route parses it with a leading trim and falls back to the default on anything it cannot read, so &#x60;?limit&#x3D;%2050&#x60; is a page of fifty today. An integer field would refuse the space and read an unparseable value as zero, which is a different page.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSocialAccounts: async (provider?: string, limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/social/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -126,6 +148,14 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (provider !== undefined) {
+                localVarQueryParameter['provider'] = provider;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -138,9 +168,9 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404. The provider access token is not part of the response.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Read one connected account
-         * @param {string} id 
+         * Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404. The provider access token is not part of the response.
+         * @summary Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404.
+         * @param {string} id ID is the account or post to act on, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -176,12 +206,14 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps. `status` filters to one of draft, scheduled, published or failed; `limit` bounds the page, defaulting to 200 and capped at 1000.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary List your org\'s posts
+         * Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps — most-recently-updated first.
+         * @summary Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps — most-recently-updated first.
+         * @param {string} [status] Status keeps only posts in one state — draft, scheduled, published or failed. Omit it for every state. The transient publishing claim is not a user-visible state and matching it is not useful.
+         * @param {string} [limit] Limit bounds the page, defaulting to 200 and capped at 1000. A string for the same reason accountFilter.Limit is.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialPosts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSocialPosts: async (status?: string, limit?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/social/posts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -198,6 +230,14 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -210,9 +250,9 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under. 404 when there is no such post for this org.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Read one post
-         * @param {string} id 
+         * Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under. 404 when there is no such post for this org.
+         * @summary Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under.
+         * @param {string} id ID is the account or post to act on, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -248,8 +288,8 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.  This is a live read of the deployment\'s own configuration, not a static list of networks — it answers \"can I connect this today\", which is what a connect affordance and a pre-cutover checklist both need. It says nothing about whether the caller has connected an account; that is the accounts listing.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Which networks this deployment can actually publish to
+         * Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.  This is a live read of the deployment\'s own configuration, not a static list of networks — it answers \"can I connect this today\", which is what a connect affordance and a pre-cutover checklist both need. It says nothing about whether the caller has connected an account; that is the accounts listing.
+         * @summary Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -282,8 +322,8 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected. It is the dashboard roll-up, computed over the org\'s own rows in one read.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Counts across your org\'s social presence
+         * Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected. It is the dashboard roll-up, computed over the org\'s own rows in one read.
+         * @summary Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -316,12 +356,15 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.  `provider` must be one of x, facebook, instagram, linkedin, tiktok, youtube or threads, defaulting to x when omitted. `status` is one of connected, disconnected or error, defaulting to connected. The handle is trimmed and bounded at 1024 characters.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Connect a social account to your org
+         * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
+         * @summary Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
+         * @param {SocialAccountBody} socialAccountBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSocialAccounts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSocialAccounts: async (socialAccountBody: SocialAccountBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'socialAccountBody' is not null or undefined
+            assertParamExists('postSocialAccounts', 'socialAccountBody', socialAccountBody)
             const localVarPath = `/v1/social/accounts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -340,9 +383,12 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(socialAccountBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -350,12 +396,15 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.  `content` is required and bounded at 8192 characters; `channel` is one of the seven supported networks, defaulting to x; `status` is one of draft, scheduled, published or failed, defaulting to draft; up to 10 media URLs are kept, each bounded at 1024 characters.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Create a post, and publish it if it is already due
+         * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.
+         * @summary Stores a post for the org and answers 201 with the stored row.
+         * @param {SocialPostBody} socialPostBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSocialPosts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postSocialPosts: async (socialPostBody: SocialPostBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'socialPostBody' is not null or undefined
+            assertParamExists('postSocialPosts', 'socialPostBody', socialPostBody)
             const localVarPath = `/v1/social/posts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -374,9 +423,12 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(socialPostBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -384,9 +436,9 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.  It is IDEMPOTENT: a post that has already published, or that another caller is publishing right now, comes back unchanged rather than being posted twice. That claim is taken before any network call, which is what makes a double submit safe.  The two failure shapes differ on purpose. Having no connected account for the channel is the caller\'s to fix, so it is recorded ON the post as failed with the reason and answers normally. A deployment that lacks the network\'s own credentials cannot publish for anyone, so that is a 503 naming exactly what is missing.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Publish one post now
-         * @param {string} id 
+         * Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.  It is IDEMPOTENT: a post that has already published, or that another caller is publishing right now, comes back unchanged rather than being posted twice. That claim is taken before any network call, which is what makes a double submit safe.  The two failure shapes differ on purpose. Having no connected account for the channel is the caller\'s to fix, so it is recorded ON the post as failed with the reason and answers normally. A deployment that lacks the network\'s own credentials cannot publish for anyone, so that is a 503 naming exactly what is missing.
+         * @summary Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.
+         * @param {string} id ID is the account or post to act on, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -422,15 +474,18 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Replace one connected account
+         * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.
+         * @summary Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.
          * @param {string} id 
+         * @param {SocialAccountWrite} socialAccountWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putSocialAccountsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putSocialAccountsById: async (id: string, socialAccountWrite: SocialAccountWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putSocialAccountsById', 'id', id)
+            // verify required parameter 'socialAccountWrite' is not null or undefined
+            assertParamExists('putSocialAccountsById', 'socialAccountWrite', socialAccountWrite)
             const localVarPath = `/v1/social/accounts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -450,9 +505,12 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(socialAccountWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -460,15 +518,18 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Replace one post
+         * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.
+         * @summary Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.
          * @param {string} id 
+         * @param {SocialPostWrite} socialPostWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putSocialPostsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putSocialPostsById: async (id: string, socialPostWrite: SocialPostWrite, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('putSocialPostsById', 'id', id)
+            // verify required parameter 'socialPostWrite' is not null or undefined
+            assertParamExists('putSocialPostsById', 'socialPostWrite', socialPostWrite)
             const localVarPath = `/v1/social/posts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -488,9 +549,12 @@ export const SocialApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(socialPostWrite, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -508,9 +572,9 @@ export const SocialApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SocialApiAxiosParamCreator(configuration)
     return {
         /**
-         * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Disconnect one account
-         * @param {string} id 
+         * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.
+         * @summary Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.
+         * @param {string} id ID is the account or post to act on, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -521,9 +585,9 @@ export const SocialApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one post from the org and answers 204 with no body; an id that is not there is 404.  It deletes the record here only. A post that has already published is not retracted from the network by deleting it.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Delete one post
-         * @param {string} id 
+         * Removes one post from the org and answers 204 with no body; an id that is not there is 404.  It deletes the record here only. A post that has already published is not retracted from the network by deleting it.
+         * @summary Removes one post from the org and answers 204 with no body; an id that is not there is 404.
+         * @param {string} id ID is the account or post to act on, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -534,138 +598,146 @@ export const SocialApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps. `provider` filters to one network; `limit` bounds the page, defaulting to 200 and capped at 1000.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary List the social accounts connected to your org
+         * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.
+         * @summary Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.
+         * @param {string} [provider] Provider keeps only accounts on one network — x, facebook, instagram, linkedin, tiktok, youtube or threads. Omit it for every network. It is lower-cased and trimmed before it is matched, and a value that names no network simply matches nothing rather than being refused.
+         * @param {string} [limit] Limit bounds the page, defaulting to 200 and capped at 1000. It is a string rather than an integer on purpose: the route parses it with a leading trim and falls back to the default on anything it cannot read, so &#x60;?limit&#x3D;%2050&#x60; is a page of fifty today. An integer field would refuse the space and read an unparseable value as zero, which is a different page.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialAccounts(options);
+        async getSocialAccounts(provider?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialAccounts>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialAccounts(provider, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404. The provider access token is not part of the response.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Read one connected account
-         * @param {string} id 
+         * Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404. The provider access token is not part of the response.
+         * @summary Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404.
+         * @param {string} id ID is the account or post to act on, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialAccountsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getSocialAccountsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialAccount>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialAccountsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialAccountsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps. `status` filters to one of draft, scheduled, published or failed; `limit` bounds the page, defaulting to 200 and capped at 1000.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary List your org\'s posts
+         * Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps — most-recently-updated first.
+         * @summary Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps — most-recently-updated first.
+         * @param {string} [status] Status keeps only posts in one state — draft, scheduled, published or failed. Omit it for every state. The transient publishing claim is not a user-visible state and matching it is not useful.
+         * @param {string} [limit] Limit bounds the page, defaulting to 200 and capped at 1000. A string for the same reason accountFilter.Limit is.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialPosts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialPosts(options);
+        async getSocialPosts(status?: string, limit?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPosts>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialPosts(status, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialPosts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under. 404 when there is no such post for this org.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Read one post
-         * @param {string} id 
+         * Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under. 404 when there is no such post for this org.
+         * @summary Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under.
+         * @param {string} id ID is the account or post to act on, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialPostsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getSocialPostsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPost>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialPostsById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialPostsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.  This is a live read of the deployment\'s own configuration, not a static list of networks — it answers \"can I connect this today\", which is what a connect affordance and a pre-cutover checklist both need. It says nothing about whether the caller has connected an account; that is the accounts listing.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Which networks this deployment can actually publish to
+         * Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.  This is a live read of the deployment\'s own configuration, not a static list of networks — it answers \"can I connect this today\", which is what a connect affordance and a pre-cutover checklist both need. It says nothing about whether the caller has connected an account; that is the accounts listing.
+         * @summary Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getSocialProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialProviders>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialProviders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected. It is the dashboard roll-up, computed over the org\'s own rows in one read.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Counts across your org\'s social presence
+         * Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected. It is the dashboard roll-up, computed over the org\'s own rows in one read.
+         * @summary Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSocialSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getSocialSummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialSummary>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSocialSummary(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.getSocialSummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.  `provider` must be one of x, facebook, instagram, linkedin, tiktok, youtube or threads, defaulting to x when omitted. `status` is one of connected, disconnected or error, defaulting to connected. The handle is trimmed and bounded at 1024 characters.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Connect a social account to your org
+         * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
+         * @summary Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
+         * @param {SocialAccountBody} socialAccountBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSocialAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialAccounts(options);
+        async postSocialAccounts(socialAccountBody: SocialAccountBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialAccount>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialAccounts(socialAccountBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.postSocialAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.  `content` is required and bounded at 8192 characters; `channel` is one of the seven supported networks, defaulting to x; `status` is one of draft, scheduled, published or failed, defaulting to draft; up to 10 media URLs are kept, each bounded at 1024 characters.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Create a post, and publish it if it is already due
+         * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.
+         * @summary Stores a post for the org and answers 201 with the stored row.
+         * @param {SocialPostBody} socialPostBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSocialPosts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialPosts(options);
+        async postSocialPosts(socialPostBody: SocialPostBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPost>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialPosts(socialPostBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.postSocialPosts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.  It is IDEMPOTENT: a post that has already published, or that another caller is publishing right now, comes back unchanged rather than being posted twice. That claim is taken before any network call, which is what makes a double submit safe.  The two failure shapes differ on purpose. Having no connected account for the channel is the caller\'s to fix, so it is recorded ON the post as failed with the reason and answers normally. A deployment that lacks the network\'s own credentials cannot publish for anyone, so that is a 503 naming exactly what is missing.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Publish one post now
-         * @param {string} id 
+         * Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.  It is IDEMPOTENT: a post that has already published, or that another caller is publishing right now, comes back unchanged rather than being posted twice. That claim is taken before any network call, which is what makes a double submit safe.  The two failure shapes differ on purpose. Having no connected account for the channel is the caller\'s to fix, so it is recorded ON the post as failed with the reason and answers normally. A deployment that lacks the network\'s own credentials cannot publish for anyone, so that is a 503 naming exactly what is missing.
+         * @summary Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.
+         * @param {string} id ID is the account or post to act on, taken from the path.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSocialPostsByIdPublish(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postSocialPostsByIdPublish(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPost>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postSocialPostsByIdPublish(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.postSocialPostsByIdPublish']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Replace one connected account
+         * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.
+         * @summary Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.
          * @param {string} id 
+         * @param {SocialAccountWrite} socialAccountWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putSocialAccountsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialAccountsById(id, options);
+        async putSocialAccountsById(id: string, socialAccountWrite: SocialAccountWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialAccount>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialAccountsById(id, socialAccountWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.putSocialAccountsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Replace one post
+         * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.
+         * @summary Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.
          * @param {string} id 
+         * @param {SocialPostWrite} socialPostWrite 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putSocialPostsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialPostsById(id, options);
+        async putSocialPostsById(id: string, socialPostWrite: SocialPostWrite, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SocialPost>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putSocialPostsById(id, socialPostWrite, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SocialApi.putSocialPostsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -681,8 +753,8 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = SocialApiFp(configuration)
     return {
         /**
-         * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Disconnect one account
+         * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.
+         * @summary Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.
          * @param {SocialApiDeleteSocialAccountsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -691,8 +763,8 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.deleteSocialAccountsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one post from the org and answers 204 with no body; an id that is not there is 404.  It deletes the record here only. A post that has already published is not retracted from the network by deleting it.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Delete one post
+         * Removes one post from the org and answers 204 with no body; an id that is not there is 404.  It deletes the record here only. A post that has already published is not retracted from the network by deleting it.
+         * @summary Removes one post from the org and answers 204 with no body; an id that is not there is 404.
          * @param {SocialApiDeleteSocialPostsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -701,108 +773,112 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.deleteSocialPostsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps. `provider` filters to one network; `limit` bounds the page, defaulting to 200 and capped at 1000.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary List the social accounts connected to your org
+         * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.
+         * @summary Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.
+         * @param {SocialApiGetSocialAccountsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialAccounts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getSocialAccounts(options).then((request) => request(axios, basePath));
+        getSocialAccounts(requestParameters: SocialApiGetSocialAccountsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SocialAccounts> {
+            return localVarFp.getSocialAccounts(requestParameters.provider, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404. The provider access token is not part of the response.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Read one connected account
+         * Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404. The provider access token is not part of the response.
+         * @summary Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404.
          * @param {SocialApiGetSocialAccountsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialAccountsById(requestParameters: SocialApiGetSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getSocialAccountsById(requestParameters: SocialApiGetSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialAccount> {
             return localVarFp.getSocialAccountsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps. `status` filters to one of draft, scheduled, published or failed; `limit` bounds the page, defaulting to 200 and capped at 1000.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary List your org\'s posts
+         * Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps — most-recently-updated first.
+         * @summary Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps — most-recently-updated first.
+         * @param {SocialApiGetSocialPostsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialPosts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getSocialPosts(options).then((request) => request(axios, basePath));
+        getSocialPosts(requestParameters: SocialApiGetSocialPostsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SocialPosts> {
+            return localVarFp.getSocialPosts(requestParameters.status, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under. 404 when there is no such post for this org.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Read one post
+         * Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under. 404 when there is no such post for this org.
+         * @summary Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under.
          * @param {SocialApiGetSocialPostsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialPostsById(requestParameters: SocialApiGetSocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getSocialPostsById(requestParameters: SocialApiGetSocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPost> {
             return localVarFp.getSocialPostsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.  This is a live read of the deployment\'s own configuration, not a static list of networks — it answers \"can I connect this today\", which is what a connect affordance and a pre-cutover checklist both need. It says nothing about whether the caller has connected an account; that is the accounts listing.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Which networks this deployment can actually publish to
+         * Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.  This is a live read of the deployment\'s own configuration, not a static list of networks — it answers \"can I connect this today\", which is what a connect affordance and a pre-cutover checklist both need. It says nothing about whether the caller has connected an account; that is the accounts listing.
+         * @summary Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getSocialProviders(options?: RawAxiosRequestConfig): AxiosPromise<SocialProviders> {
             return localVarFp.getSocialProviders(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected. It is the dashboard roll-up, computed over the org\'s own rows in one read.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Counts across your org\'s social presence
+         * Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected. It is the dashboard roll-up, computed over the org\'s own rows in one read.
+         * @summary Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSocialSummary(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getSocialSummary(options?: RawAxiosRequestConfig): AxiosPromise<SocialSummary> {
             return localVarFp.getSocialSummary(options).then((request) => request(axios, basePath));
         },
         /**
-         * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.  `provider` must be one of x, facebook, instagram, linkedin, tiktok, youtube or threads, defaulting to x when omitted. `status` is one of connected, disconnected or error, defaulting to connected. The handle is trimmed and bounded at 1024 characters.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Connect a social account to your org
+         * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
+         * @summary Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
+         * @param {SocialApiPostSocialAccountsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSocialAccounts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postSocialAccounts(options).then((request) => request(axios, basePath));
+        postSocialAccounts(requestParameters: SocialApiPostSocialAccountsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialAccount> {
+            return localVarFp.postSocialAccounts(requestParameters.socialAccountBody, options).then((request) => request(axios, basePath));
         },
         /**
-         * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.  `content` is required and bounded at 8192 characters; `channel` is one of the seven supported networks, defaulting to x; `status` is one of draft, scheduled, published or failed, defaulting to draft; up to 10 media URLs are kept, each bounded at 1024 characters.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Create a post, and publish it if it is already due
+         * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.
+         * @summary Stores a post for the org and answers 201 with the stored row.
+         * @param {SocialApiPostSocialPostsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSocialPosts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postSocialPosts(options).then((request) => request(axios, basePath));
+        postSocialPosts(requestParameters: SocialApiPostSocialPostsRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPost> {
+            return localVarFp.postSocialPosts(requestParameters.socialPostBody, options).then((request) => request(axios, basePath));
         },
         /**
-         * Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.  It is IDEMPOTENT: a post that has already published, or that another caller is publishing right now, comes back unchanged rather than being posted twice. That claim is taken before any network call, which is what makes a double submit safe.  The two failure shapes differ on purpose. Having no connected account for the channel is the caller\'s to fix, so it is recorded ON the post as failed with the reason and answers normally. A deployment that lacks the network\'s own credentials cannot publish for anyone, so that is a 503 naming exactly what is missing.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Publish one post now
+         * Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.  It is IDEMPOTENT: a post that has already published, or that another caller is publishing right now, comes back unchanged rather than being posted twice. That claim is taken before any network call, which is what makes a double submit safe.  The two failure shapes differ on purpose. Having no connected account for the channel is the caller\'s to fix, so it is recorded ON the post as failed with the reason and answers normally. A deployment that lacks the network\'s own credentials cannot publish for anyone, so that is a 503 naming exactly what is missing.
+         * @summary Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.
          * @param {SocialApiPostSocialPostsByIdPublishRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSocialPostsByIdPublish(requestParameters: SocialApiPostSocialPostsByIdPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postSocialPostsByIdPublish(requestParameters: SocialApiPostSocialPostsByIdPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPost> {
             return localVarFp.postSocialPostsByIdPublish(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Replace one connected account
+         * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.
+         * @summary Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.
          * @param {SocialApiPutSocialAccountsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putSocialAccountsById(requestParameters: SocialApiPutSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putSocialAccountsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        putSocialAccountsById(requestParameters: SocialApiPutSocialAccountsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialAccount> {
+            return localVarFp.putSocialAccountsById(requestParameters.id, requestParameters.socialAccountWrite, options).then((request) => request(axios, basePath));
         },
         /**
-         * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-         * @summary Replace one post
+         * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.
+         * @summary Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.
          * @param {SocialApiPutSocialPostsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putSocialPostsById(requestParameters: SocialApiPutSocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putSocialPostsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        putSocialPostsById(requestParameters: SocialApiPutSocialPostsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<SocialPost> {
+            return localVarFp.putSocialPostsById(requestParameters.id, requestParameters.socialPostWrite, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -814,7 +890,7 @@ export const SocialApiFactory = function (configuration?: Configuration, basePat
  */
 export interface SocialApiDeleteSocialAccountsByIdRequest {
     /**
-     * 
+     * ID is the account or post to act on, taken from the path.
      * @type {string}
      * @memberof SocialApiDeleteSocialAccountsById
      */
@@ -828,11 +904,32 @@ export interface SocialApiDeleteSocialAccountsByIdRequest {
  */
 export interface SocialApiDeleteSocialPostsByIdRequest {
     /**
-     * 
+     * ID is the account or post to act on, taken from the path.
      * @type {string}
      * @memberof SocialApiDeleteSocialPostsById
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for getSocialAccounts operation in SocialApi.
+ * @export
+ * @interface SocialApiGetSocialAccountsRequest
+ */
+export interface SocialApiGetSocialAccountsRequest {
+    /**
+     * Provider keeps only accounts on one network — x, facebook, instagram, linkedin, tiktok, youtube or threads. Omit it for every network. It is lower-cased and trimmed before it is matched, and a value that names no network simply matches nothing rather than being refused.
+     * @type {string}
+     * @memberof SocialApiGetSocialAccounts
+     */
+    readonly provider?: string
+
+    /**
+     * Limit bounds the page, defaulting to 200 and capped at 1000. It is a string rather than an integer on purpose: the route parses it with a leading trim and falls back to the default on anything it cannot read, so &#x60;?limit&#x3D;%2050&#x60; is a page of fifty today. An integer field would refuse the space and read an unparseable value as zero, which is a different page.
+     * @type {string}
+     * @memberof SocialApiGetSocialAccounts
+     */
+    readonly limit?: string
 }
 
 /**
@@ -842,11 +939,32 @@ export interface SocialApiDeleteSocialPostsByIdRequest {
  */
 export interface SocialApiGetSocialAccountsByIdRequest {
     /**
-     * 
+     * ID is the account or post to act on, taken from the path.
      * @type {string}
      * @memberof SocialApiGetSocialAccountsById
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for getSocialPosts operation in SocialApi.
+ * @export
+ * @interface SocialApiGetSocialPostsRequest
+ */
+export interface SocialApiGetSocialPostsRequest {
+    /**
+     * Status keeps only posts in one state — draft, scheduled, published or failed. Omit it for every state. The transient publishing claim is not a user-visible state and matching it is not useful.
+     * @type {string}
+     * @memberof SocialApiGetSocialPosts
+     */
+    readonly status?: string
+
+    /**
+     * Limit bounds the page, defaulting to 200 and capped at 1000. A string for the same reason accountFilter.Limit is.
+     * @type {string}
+     * @memberof SocialApiGetSocialPosts
+     */
+    readonly limit?: string
 }
 
 /**
@@ -856,11 +974,39 @@ export interface SocialApiGetSocialAccountsByIdRequest {
  */
 export interface SocialApiGetSocialPostsByIdRequest {
     /**
-     * 
+     * ID is the account or post to act on, taken from the path.
      * @type {string}
      * @memberof SocialApiGetSocialPostsById
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for postSocialAccounts operation in SocialApi.
+ * @export
+ * @interface SocialApiPostSocialAccountsRequest
+ */
+export interface SocialApiPostSocialAccountsRequest {
+    /**
+     * 
+     * @type {SocialAccountBody}
+     * @memberof SocialApiPostSocialAccounts
+     */
+    readonly socialAccountBody: SocialAccountBody
+}
+
+/**
+ * Request parameters for postSocialPosts operation in SocialApi.
+ * @export
+ * @interface SocialApiPostSocialPostsRequest
+ */
+export interface SocialApiPostSocialPostsRequest {
+    /**
+     * 
+     * @type {SocialPostBody}
+     * @memberof SocialApiPostSocialPosts
+     */
+    readonly socialPostBody: SocialPostBody
 }
 
 /**
@@ -870,7 +1016,7 @@ export interface SocialApiGetSocialPostsByIdRequest {
  */
 export interface SocialApiPostSocialPostsByIdPublishRequest {
     /**
-     * 
+     * ID is the account or post to act on, taken from the path.
      * @type {string}
      * @memberof SocialApiPostSocialPostsByIdPublish
      */
@@ -889,6 +1035,13 @@ export interface SocialApiPutSocialAccountsByIdRequest {
      * @memberof SocialApiPutSocialAccountsById
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {SocialAccountWrite}
+     * @memberof SocialApiPutSocialAccountsById
+     */
+    readonly socialAccountWrite: SocialAccountWrite
 }
 
 /**
@@ -903,6 +1056,13 @@ export interface SocialApiPutSocialPostsByIdRequest {
      * @memberof SocialApiPutSocialPostsById
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {SocialPostWrite}
+     * @memberof SocialApiPutSocialPostsById
+     */
+    readonly socialPostWrite: SocialPostWrite
 }
 
 /**
@@ -913,8 +1073,8 @@ export interface SocialApiPutSocialPostsByIdRequest {
  */
 export class SocialApi extends BaseAPI {
     /**
-     * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary Disconnect one account
+     * Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.  It removes the account record only. Posts that already published through it keep their published state and their recorded external ids — this does not retract anything from the network.
+     * @summary Removes one connected account from the org and answers 204 with no body; an id that is not there is 404.
      * @param {SocialApiDeleteSocialAccountsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -925,8 +1085,8 @@ export class SocialApi extends BaseAPI {
     }
 
     /**
-     * Removes one post from the org and answers 204 with no body; an id that is not there is 404.  It deletes the record here only. A post that has already published is not retracted from the network by deleting it.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary Delete one post
+     * Removes one post from the org and answers 204 with no body; an id that is not there is 404.  It deletes the record here only. A post that has already published is not retracted from the network by deleting it.
+     * @summary Removes one post from the org and answers 204 with no body; an id that is not there is 404.
      * @param {SocialApiDeleteSocialPostsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -937,19 +1097,20 @@ export class SocialApi extends BaseAPI {
     }
 
     /**
-     * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps. `provider` filters to one network; `limit` bounds the page, defaulting to 200 and capped at 1000.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary List the social accounts connected to your org
+     * Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.  An account\'s provider access token is NEVER included in any response on this surface. Only the publisher reads it.
+     * @summary Returns the org\'s connected accounts — each one\'s id, network, handle, status and timestamps, most-recently-updated first.
+     * @param {SocialApiGetSocialAccountsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public getSocialAccounts(options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).getSocialAccounts(options).then((request) => request(this.axios, this.basePath));
+    public getSocialAccounts(requestParameters: SocialApiGetSocialAccountsRequest = {}, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getSocialAccounts(requestParameters.provider, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404. The provider access token is not part of the response.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary Read one connected account
+     * Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404. The provider access token is not part of the response.
+     * @summary Returns one of the org\'s connected accounts by id — its network, handle, status and timestamps — or 404.
      * @param {SocialApiGetSocialAccountsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -960,19 +1121,20 @@ export class SocialApi extends BaseAPI {
     }
 
     /**
-     * Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps. `status` filters to one of draft, scheduled, published or failed; `limit` bounds the page, defaulting to 200 and capped at 1000.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary List your org\'s posts
+     * Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps — most-recently-updated first.
+     * @summary Returns the org\'s posts — content, channel, status, scheduled time, media and timestamps — most-recently-updated first.
+     * @param {SocialApiGetSocialPostsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public getSocialPosts(options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).getSocialPosts(options).then((request) => request(this.axios, this.basePath));
+    public getSocialPosts(requestParameters: SocialApiGetSocialPostsRequest = {}, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).getSocialPosts(requestParameters.status, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under. 404 when there is no such post for this org.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary Read one post
+     * Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under. 404 when there is no such post for this org.
+     * @summary Returns one of the org\'s posts by id, with its current status, scheduled time, media and — once it has published — the account and external id it published under.
      * @param {SocialApiGetSocialPostsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -983,8 +1145,8 @@ export class SocialApi extends BaseAPI {
     }
 
     /**
-     * Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.  This is a live read of the deployment\'s own configuration, not a static list of networks — it answers \"can I connect this today\", which is what a connect affordance and a pre-cutover checklist both need. It says nothing about whether the caller has connected an account; that is the accounts listing.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary Which networks this deployment can actually publish to
+     * Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.  This is a live read of the deployment\'s own configuration, not a static list of networks — it answers \"can I connect this today\", which is what a connect affordance and a pre-cutover checklist both need. It says nothing about whether the caller has connected an account; that is the accounts listing.
+     * @summary Reports each supported network\'s publish-readiness: whether this deployment holds the OAuth application credentials for it and, when it does not, exactly which environment variables are missing.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
@@ -994,8 +1156,8 @@ export class SocialApi extends BaseAPI {
     }
 
     /**
-     * Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected. It is the dashboard roll-up, computed over the org\'s own rows in one read.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary Counts across your org\'s social presence
+     * Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected. It is the dashboard roll-up, computed over the org\'s own rows in one read.
+     * @summary Returns four counts for the caller\'s org: total posts, how many are scheduled, how many have published, and how many accounts are connected.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
@@ -1005,30 +1167,32 @@ export class SocialApi extends BaseAPI {
     }
 
     /**
-     * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.  `provider` must be one of x, facebook, instagram, linkedin, tiktok, youtube or threads, defaulting to x when omitted. `status` is one of connected, disconnected or error, defaulting to connected. The handle is trimmed and bounded at 1024 characters.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary Connect a social account to your org
+     * Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
+     * @summary Records a social account for the org and answers 201 with the stored row, including the generated id later calls address it by.
+     * @param {SocialApiPostSocialAccountsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public postSocialAccounts(options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).postSocialAccounts(options).then((request) => request(this.axios, this.basePath));
+    public postSocialAccounts(requestParameters: SocialApiPostSocialAccountsRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).postSocialAccounts(requestParameters.socialAccountBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.  `content` is required and bounded at 8192 characters; `channel` is one of the seven supported networks, defaulting to x; `status` is one of draft, scheduled, published or failed, defaulting to draft; up to 10 media URLs are kept, each bounded at 1024 characters.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary Create a post, and publish it if it is already due
+     * Stores a post for the org and answers 201 with the stored row.  A post created as scheduled for a time that has already passed is published IMMEDIATELY, and the row returned carries that outcome — this is the one behaviour a reader would otherwise miss. A future-scheduled post is left for the scheduler, and a draft is left alone. Publishing never fails the creation: the post is stored either way, and a publish that could not run leaves the row for the scheduler to retry.
+     * @summary Stores a post for the org and answers 201 with the stored row.
+     * @param {SocialApiPostSocialPostsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
-    public postSocialPosts(options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).postSocialPosts(options).then((request) => request(this.axios, this.basePath));
+    public postSocialPosts(requestParameters: SocialApiPostSocialPostsRequest, options?: RawAxiosRequestConfig) {
+        return SocialApiFp(this.configuration).postSocialPosts(requestParameters.socialPostBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.  It is IDEMPOTENT: a post that has already published, or that another caller is publishing right now, comes back unchanged rather than being posted twice. That claim is taken before any network call, which is what makes a double submit safe.  The two failure shapes differ on purpose. Having no connected account for the channel is the caller\'s to fix, so it is recorded ON the post as failed with the reason and answers normally. A deployment that lacks the network\'s own credentials cannot publish for anyone, so that is a 503 naming exactly what is missing.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary Publish one post now
+     * Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.  It is IDEMPOTENT: a post that has already published, or that another caller is publishing right now, comes back unchanged rather than being posted twice. That claim is taken before any network call, which is what makes a double submit safe.  The two failure shapes differ on purpose. Having no connected account for the channel is the caller\'s to fix, so it is recorded ON the post as failed with the reason and answers normally. A deployment that lacks the network\'s own credentials cannot publish for anyone, so that is a 503 naming exactly what is missing.
+     * @summary Publishes the post immediately to the connected accounts on its channel and answers with the updated row, carrying the account and external id it published under.
      * @param {SocialApiPostSocialPostsByIdPublishRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1039,27 +1203,27 @@ export class SocialApi extends BaseAPI {
     }
 
     /**
-     * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary Replace one connected account
+     * Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.  This is a REPLACEMENT, not a merge, which is the rule most easily got wrong: a field the body omits is written as its default, so leaving out the handle blanks it and leaving out the status resets it to connected. Send the whole record. The same vocabularies as create apply, and an unknown network or status is refused rather than coerced.
+     * @summary Replaces the account\'s network, handle and status with what the body carries, and answers with the stored row.
      * @param {SocialApiPutSocialAccountsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
     public putSocialAccountsById(requestParameters: SocialApiPutSocialAccountsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).putSocialAccountsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return SocialApiFp(this.configuration).putSocialAccountsById(requestParameters.id, requestParameters.socialAccountWrite, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.  A validated principal is required; 403 without one. Every row is keyed by the caller\'s org taken from that principal and never from the request, so an id belonging to another tenant reads as not found rather than as a refusal.
-     * @summary Replace one post
+     * Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.  A REPLACEMENT, not a merge: an omitted field is written as its default, so omitting media clears it and omitting the status resets the post to draft. `content` is required on every update. Unlike create, this never triggers a publish — moving a post\'s scheduled time into the past here leaves it for the scheduler; publish now is its own operation.
+     * @summary Replaces the post\'s content, channel, status, scheduled time and media with what the body carries, and answers with the stored row.
      * @param {SocialApiPutSocialPostsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SocialApi
      */
     public putSocialPostsById(requestParameters: SocialApiPutSocialPostsByIdRequest, options?: RawAxiosRequestConfig) {
-        return SocialApiFp(this.configuration).putSocialPostsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return SocialApiFp(this.configuration).putSocialPostsById(requestParameters.id, requestParameters.socialPostWrite, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

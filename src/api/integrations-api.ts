@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -27,6 +27,22 @@ import type { AuthorizeOut } from '../models';
 import type { ConnectIn } from '../models';
 // @ts-ignore
 import type { ConnectOut } from '../models';
+// @ts-ignore
+import type { ConnectorProvidersOut } from '../models';
+// @ts-ignore
+import type { ConnectorTokenOut } from '../models';
+// @ts-ignore
+import type { ConnectorsOut } from '../models';
+// @ts-ignore
+import type { CredentialIn } from '../models';
+// @ts-ignore
+import type { CredentialOut } from '../models';
+// @ts-ignore
+import type { DevicePollOut } from '../models';
+// @ts-ignore
+import type { DeviceStartIn } from '../models';
+// @ts-ignore
+import type { DeviceStartOut } from '../models';
 // @ts-ignore
 import type { DisconnectOut } from '../models';
 // @ts-ignore
@@ -72,6 +88,8 @@ import type { ListOut } from '../models';
 // @ts-ignore
 import type { ProviderView } from '../models';
 // @ts-ignore
+import type { RefreshOut } from '../models';
+// @ts-ignore
 import type { VerifyOut } from '../models';
 /**
  * IntegrationsApi - axios parameter creator
@@ -79,6 +97,44 @@ import type { VerifyOut } from '../models';
  */
 export const IntegrationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Forgets a connector: every custodied secret, then the row. Idempotent — dropping a never-connected id still answers {disconnected:true} (disconnect() parity). No provider Revoke: none of the user-plane providers exposes a revoke endpoint.
+         * @summary Forgets a connector: every custodied secret, then the row.
+         * @param {string} id ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIntegrationsConnectorsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteIntegrationsConnectorsById', 'id', id)
+            const localVarPath = `/v1/integrations/connectors/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Deletes the repo\'s Pages site. 404 when there is none, so a caller can tell \"turned it off\" from \"there was nothing on\".
          * @summary Deletes the repo\'s Pages site.
@@ -118,7 +174,7 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/connectors surface) are omitted; the two planes are disjoint.
+         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integrations/connectors surface) are omitted; the two planes are disjoint.
          * @summary Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -154,7 +210,7 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
         /**
          * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
          * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -201,6 +257,112 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             assertParamExists('getIntegrationsByProviderCallback', 'provider', provider)
             const localVarPath = `/v1/integrations/{provider}/callback`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the caller\'s OWN connectors across every provider — the set `hanzo connector ls` prints. Rows are keyed (org,user), so this can never surface another user\'s connector, and no secret is in the view.
+         * @summary Lists the caller\'s OWN connectors across every provider — the set `hanzo connector ls` prints.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIntegrationsConnectors: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integrations/connectors`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Hands the custodied access token to its owner — the ONE place custody exits. The (org,user)-keyed row IS the same-user gate: another user\'s id is simply \"no row\" → 404. fresh() auto-rotates within the refreshSkew window; static providers degenerate to a plain kmsGet of Secrets[0]. Refresh tokens are NEVER returned — custody keeps the sink. The token is never logged.
+         * @summary Hands the custodied access token to its owner — the ONE place custody exits.
+         * @param {string} id ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIntegrationsConnectorsByIdToken: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getIntegrationsConnectorsByIdToken', 'id', id)
+            const localVarPath = `/v1/integrations/connectors/{id}/token`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the user-scoped provider cards — the catalog of what a user can connect, and how. Methods derive from capabilities (Device/Adopt/Verify — Mount asserts at least one), never from a parallel kind enum.
+         * @summary Lists the user-scoped provider cards — the catalog of what a user can connect, and how.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIntegrationsConnectorsProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/integrations/connectors/providers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -856,7 +1018,7 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
         /**
          * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
          * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -894,7 +1056,7 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
         /**
          * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
          * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -903,6 +1065,174 @@ export const IntegrationsApiAxiosParamCreator = function (configuration?: Config
             assertParamExists('postIntegrationsByProviderVerify', 'provider', provider)
             const localVarPath = `/v1/integrations/{provider}/verify`
                 .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window. Only providers that declare a Refresh support it.
+         * @summary Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window.
+         * @param {string} id ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsConnectorsByIdRefresh: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postIntegrationsConnectorsByIdRefresh', 'id', id)
+            const localVarPath = `/v1/integrations/connectors/{id}/refresh`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt). ALWAYS verify-before-store: a bad credential is refused and NOTHING is persisted (connectByCredential\'s fail-closed order).
+         * @summary Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt).
+         * @param {string} provider Provider is the user-scoped provider\&#39;s registry id, from the path.
+         * @param {CredentialIn} credentialIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsConnectorsByProviderCredential: async (provider: string, credentialIn: CredentialIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('postIntegrationsConnectorsByProviderCredential', 'provider', provider)
+            // verify required parameter 'credentialIn' is not null or undefined
+            assertParamExists('postIntegrationsConnectorsByProviderCredential', 'credentialIn', credentialIn)
+            const localVarPath = `/v1/integrations/connectors/{provider}/credential`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(credentialIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Begins a device sign-in and returns the code to show the user plus how to poll for completion. KMS readiness is checked NOW rather than dead-ending the user at poll-done (connect() parity), and the per-provider connector cap is checked before the provider is called. The provider\'s device code is persisted only in the encrypted grants table and is NEVER returned.
+         * @summary Begins a device sign-in and returns the code to show the user plus how to poll for completion.
+         * @param {string} provider Provider is the user-scoped provider\&#39;s registry id, from the path.
+         * @param {DeviceStartIn} deviceStartIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsConnectorsByProviderDevice: async (provider: string, deviceStartIn: DeviceStartIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('postIntegrationsConnectorsByProviderDevice', 'provider', provider)
+            // verify required parameter 'deviceStartIn' is not null or undefined
+            assertParamExists('postIntegrationsConnectorsByProviderDevice', 'deviceStartIn', deviceStartIn)
+            const localVarPath = `/v1/integrations/connectors/{provider}/device`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(deviceStartIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Advances a device sign-in. Terminal outcomes are DATA, not errors (verifyConn {active:false} discipline) — the status set is closed: pending|connected|denied|expired. pollSlow collapses to \"pending\" on the wire; the raised cadence rides interval.
+         * @summary Advances a device sign-in.
+         * @param {string} provider Provider is the user-scoped provider\&#39;s registry id, from the path.
+         * @param {string} flow Flow is the id deviceStartOut returned. Expired or another user\&#39;s flow is indistinguishable from an unknown one: 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsConnectorsByProviderDeviceByFlowPoll: async (provider: string, flow: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('postIntegrationsConnectorsByProviderDeviceByFlowPoll', 'provider', provider)
+            // verify required parameter 'flow' is not null or undefined
+            assertParamExists('postIntegrationsConnectorsByProviderDeviceByFlowPoll', 'flow', flow)
+            const localVarPath = `/v1/integrations/connectors/{provider}/device/{flow}/poll`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)))
+                .replace(`{${"flow"}}`, encodeURIComponent(String(flow)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1542,6 +1872,19 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = IntegrationsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Forgets a connector: every custodied secret, then the row. Idempotent — dropping a never-connected id still answers {disconnected:true} (disconnect() parity). No provider Revoke: none of the user-plane providers exposes a revoke endpoint.
+         * @summary Forgets a connector: every custodied secret, then the row.
+         * @param {string} id ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIntegrationsConnectorsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DisconnectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIntegrationsConnectorsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.deleteIntegrationsConnectorsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Deletes the repo\'s Pages site. 404 when there is none, so a caller can tell \"turned it off\" from \"there was nothing on\".
          * @summary Deletes the repo\'s Pages site.
          * @param {string} repo Repo is the repository\&#39;s short name within the org\&#39;s installation, with no owner prefix (the owner is server-derived from the grant). A trailing \&quot;.git\&quot; is stripped.
@@ -1555,7 +1898,7 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/connectors surface) are omitted; the two planes are disjoint.
+         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integrations/connectors surface) are omitted; the two planes are disjoint.
          * @summary Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1569,7 +1912,7 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
         /**
          * Returns ONE provider with this org\'s connection status — the same view list carries, for a single id. An unknown id is 404, and so is a user-plane provider: the org surface never resolves one.
          * @summary Returns ONE provider with this org\'s connection status — the same view list carries, for a single id.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1590,6 +1933,43 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsByProviderCallback(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsByProviderCallback']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the caller\'s OWN connectors across every provider — the set `hanzo connector ls` prints. Rows are keyed (org,user), so this can never surface another user\'s connector, and no secret is in the view.
+         * @summary Lists the caller\'s OWN connectors across every provider — the set `hanzo connector ls` prints.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIntegrationsConnectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsConnectors(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsConnectors']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Hands the custodied access token to its owner — the ONE place custody exits. The (org,user)-keyed row IS the same-user gate: another user\'s id is simply \"no row\" → 404. fresh() auto-rotates within the refreshSkew window; static providers degenerate to a plain kmsGet of Secrets[0]. Refresh tokens are NEVER returned — custody keeps the sink. The token is never logged.
+         * @summary Hands the custodied access token to its owner — the ONE place custody exits.
+         * @param {string} id ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIntegrationsConnectorsByIdToken(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorTokenOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsConnectorsByIdToken(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsConnectorsByIdToken']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the user-scoped provider cards — the catalog of what a user can connect, and how. Methods derive from capabilities (Device/Adopt/Verify — Mount asserts at least one), never from a parallel kind enum.
+         * @summary Lists the user-scoped provider cards — the catalog of what a user can connect, and how.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIntegrationsConnectorsProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConnectorProvidersOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIntegrationsConnectorsProviders(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.getIntegrationsConnectorsProviders']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1814,7 +2194,7 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
         /**
          * Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row. Idempotent — disconnecting a provider that was never connected still returns {disconnected:true}. Symmetric with connect: an AdminOnly connector needs the caller\'s own-org admin bit.
          * @summary Revokes (best-effort) and forgets an org\'s connection: it deletes every custodied KMS secret and the connection row.
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1827,7 +2207,7 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
         /**
          * Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`). Org-scoped (any member may check status); the credential is read from KMS, verified, and NEVER returned or logged. A verification failure is reported as {active:false}, not an error — the console/ CLI renders it. Only apikey providers support verify (OAuth tokens are checked at use, not re-verified here).
          * @summary Re-checks a CONNECTED apikey connector\'s stored credential against the provider, live (`hanzo connector verify`).
-         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+         * @param {string} provider Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1835,6 +2215,61 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsByProviderVerify(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsByProviderVerify']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window. Only providers that declare a Refresh support it.
+         * @summary Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window.
+         * @param {string} id ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIntegrationsConnectorsByIdRefresh(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RefreshOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsConnectorsByIdRefresh(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsConnectorsByIdRefresh']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt). ALWAYS verify-before-store: a bad credential is refused and NOTHING is persisted (connectByCredential\'s fail-closed order).
+         * @summary Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt).
+         * @param {string} provider Provider is the user-scoped provider\&#39;s registry id, from the path.
+         * @param {CredentialIn} credentialIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIntegrationsConnectorsByProviderCredential(provider: string, credentialIn: CredentialIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CredentialOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsConnectorsByProviderCredential(provider, credentialIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsConnectorsByProviderCredential']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Begins a device sign-in and returns the code to show the user plus how to poll for completion. KMS readiness is checked NOW rather than dead-ending the user at poll-done (connect() parity), and the per-provider connector cap is checked before the provider is called. The provider\'s device code is persisted only in the encrypted grants table and is NEVER returned.
+         * @summary Begins a device sign-in and returns the code to show the user plus how to poll for completion.
+         * @param {string} provider Provider is the user-scoped provider\&#39;s registry id, from the path.
+         * @param {DeviceStartIn} deviceStartIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIntegrationsConnectorsByProviderDevice(provider: string, deviceStartIn: DeviceStartIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceStartOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsConnectorsByProviderDevice(provider, deviceStartIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsConnectorsByProviderDevice']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Advances a device sign-in. Terminal outcomes are DATA, not errors (verifyConn {active:false} discipline) — the status set is closed: pending|connected|denied|expired. pollSlow collapses to \"pending\" on the wire; the raised cadence rides interval.
+         * @summary Advances a device sign-in.
+         * @param {string} provider Provider is the user-scoped provider\&#39;s registry id, from the path.
+         * @param {string} flow Flow is the id deviceStartOut returned. Expired or another user\&#39;s flow is indistinguishable from an unknown one: 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postIntegrationsConnectorsByProviderDeviceByFlowPoll(provider: string, flow: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DevicePollOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIntegrationsConnectorsByProviderDeviceByFlowPoll(provider, flow, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IntegrationsApi.postIntegrationsConnectorsByProviderDeviceByFlowPoll']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2051,6 +2486,16 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
     const localVarFp = IntegrationsApiFp(configuration)
     return {
         /**
+         * Forgets a connector: every custodied secret, then the row. Idempotent — dropping a never-connected id still answers {disconnected:true} (disconnect() parity). No provider Revoke: none of the user-plane providers exposes a revoke endpoint.
+         * @summary Forgets a connector: every custodied secret, then the row.
+         * @param {IntegrationsApiDeleteIntegrationsConnectorsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIntegrationsConnectorsById(requestParameters: IntegrationsApiDeleteIntegrationsConnectorsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<DisconnectOut> {
+            return localVarFp.deleteIntegrationsConnectorsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Deletes the repo\'s Pages site. 404 when there is none, so a caller can tell \"turned it off\" from \"there was nothing on\".
          * @summary Deletes the repo\'s Pages site.
          * @param {IntegrationsApiDeleteIntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
@@ -2061,7 +2506,7 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.deleteIntegrationsGithubReposByRepoPages(requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/connectors surface) are omitted; the two planes are disjoint.
+         * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integrations/connectors surface) are omitted; the two planes are disjoint.
          * @summary Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2088,6 +2533,34 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
          */
         getIntegrationsByProviderCallback(requestParameters: IntegrationsApiGetIntegrationsByProviderCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getIntegrationsByProviderCallback(requestParameters.provider, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the caller\'s OWN connectors across every provider — the set `hanzo connector ls` prints. Rows are keyed (org,user), so this can never surface another user\'s connector, and no secret is in the view.
+         * @summary Lists the caller\'s OWN connectors across every provider — the set `hanzo connector ls` prints.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIntegrationsConnectors(options?: RawAxiosRequestConfig): AxiosPromise<ConnectorsOut> {
+            return localVarFp.getIntegrationsConnectors(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Hands the custodied access token to its owner — the ONE place custody exits. The (org,user)-keyed row IS the same-user gate: another user\'s id is simply \"no row\" → 404. fresh() auto-rotates within the refreshSkew window; static providers degenerate to a plain kmsGet of Secrets[0]. Refresh tokens are NEVER returned — custody keeps the sink. The token is never logged.
+         * @summary Hands the custodied access token to its owner — the ONE place custody exits.
+         * @param {IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIntegrationsConnectorsByIdToken(requestParameters: IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConnectorTokenOut> {
+            return localVarFp.getIntegrationsConnectorsByIdToken(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the user-scoped provider cards — the catalog of what a user can connect, and how. Methods derive from capabilities (Device/Adopt/Verify — Mount asserts at least one), never from a parallel kind enum.
+         * @summary Lists the user-scoped provider cards — the catalog of what a user can connect, and how.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIntegrationsConnectorsProviders(options?: RawAxiosRequestConfig): AxiosPromise<ConnectorProvidersOut> {
+            return localVarFp.getIntegrationsConnectorsProviders(options).then((request) => request(axios, basePath));
         },
         /**
          * The entry point behind the connect prompt Hanzo shows in a Discord server. It starts a link session and redirects to Discord\'s OAuth `identify` consent — the narrowest scope that establishes which Discord user is asking, and nothing more.  This is one leg of a three-leg flow, and the legs are not interchangeable: a browser is expected to arrive here only from the leg before it. The link URL\'s state proves the prompt was server-minted and carries the CHAT it started from — it is provenance only, and it never decides which account gets linked. The account identity always comes from the platform\'s own verified sign-in and a host-bound cookie, so forwarding a link to someone else cannot bind their account, and a session lifted into another browser is refused rather than completed. Each link is single-use, and a deployment without linking configured answers 503.
@@ -2274,6 +2747,46 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
             return localVarFp.postIntegrationsByProviderVerify(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
+         * Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window. Only providers that declare a Refresh support it.
+         * @summary Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window.
+         * @param {IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsConnectorsByIdRefresh(requestParameters: IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest, options?: RawAxiosRequestConfig): AxiosPromise<RefreshOut> {
+            return localVarFp.postIntegrationsConnectorsByIdRefresh(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt). ALWAYS verify-before-store: a bad credential is refused and NOTHING is persisted (connectByCredential\'s fail-closed order).
+         * @summary Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt).
+         * @param {IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsConnectorsByProviderCredential(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest, options?: RawAxiosRequestConfig): AxiosPromise<CredentialOut> {
+            return localVarFp.postIntegrationsConnectorsByProviderCredential(requestParameters.provider, requestParameters.credentialIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Begins a device sign-in and returns the code to show the user plus how to poll for completion. KMS readiness is checked NOW rather than dead-ending the user at poll-done (connect() parity), and the per-provider connector cap is checked before the provider is called. The provider\'s device code is persisted only in the encrypted grants table and is NEVER returned.
+         * @summary Begins a device sign-in and returns the code to show the user plus how to poll for completion.
+         * @param {IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsConnectorsByProviderDevice(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceStartOut> {
+            return localVarFp.postIntegrationsConnectorsByProviderDevice(requestParameters.provider, requestParameters.deviceStartIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Advances a device sign-in. Terminal outcomes are DATA, not errors (verifyConn {active:false} discipline) — the status set is closed: pending|connected|denied|expired. pollSlow collapses to \"pending\" on the wire; the raised cadence rides interval.
+         * @summary Advances a device sign-in.
+         * @param {IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postIntegrationsConnectorsByProviderDeviceByFlowPoll(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest, options?: RawAxiosRequestConfig): AxiosPromise<DevicePollOut> {
+            return localVarFp.postIntegrationsConnectorsByProviderDeviceByFlowPoll(requestParameters.provider, requestParameters.flow, options).then((request) => request(axios, basePath));
+        },
+        /**
          * The Interactions Endpoint URL for the Discord app. It answers Discord\'s PING with a PONG, and handles the `/hanzo` slash command by acknowledging with a deferred ephemeral reply and editing that reply with the answer once the agent has run. Any other interaction is acknowledged and ignored.  Requests are verified by ED25519 SIGNATURE over the timestamp and body against the app\'s public key — not by HMAC, unlike the Slack webhooks. Interactions work over plain HTTP, so no gateway connection and no message-content intent is involved.  Discord does not retry, so this is the one channel where being at capacity is shown to the user as an ephemeral ask-to-run-it-again rather than answered as a retriable failure — nothing is recorded either way, so the next attempt is clean.  The caller here is the PLATFORM, not a Hanzo tenant, so there is no bearer and no principal. The signature check IS the authentication, and it fails closed. The tenant is never read from the payload either: it is resolved from the verified platform identifier through the connection map, so an event from a workspace nobody connected does nothing. Refusals are written with their own status rather than being flattened to a 500, so a rejected signature reads as 401 and a malformed body as 400.
          * @summary Discord interactions endpoint
          * @param {*} [options] Override http request option.
@@ -2430,6 +2943,20 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, b
 };
 
 /**
+ * Request parameters for deleteIntegrationsConnectorsById operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiDeleteIntegrationsConnectorsByIdRequest
+ */
+export interface IntegrationsApiDeleteIntegrationsConnectorsByIdRequest {
+    /**
+     * ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
+     * @type {string}
+     * @memberof IntegrationsApiDeleteIntegrationsConnectorsById
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for deleteIntegrationsGithubReposByRepoPages operation in IntegrationsApi.
  * @export
  * @interface IntegrationsApiDeleteIntegrationsGithubReposByRepoPagesRequest
@@ -2450,7 +2977,7 @@ export interface IntegrationsApiDeleteIntegrationsGithubReposByRepoPagesRequest 
  */
 export interface IntegrationsApiGetIntegrationsByProviderRequest {
     /**
-     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
      * @type {string}
      * @memberof IntegrationsApiGetIntegrationsByProvider
      */
@@ -2469,6 +2996,20 @@ export interface IntegrationsApiGetIntegrationsByProviderCallbackRequest {
      * @memberof IntegrationsApiGetIntegrationsByProviderCallback
      */
     readonly provider: string
+}
+
+/**
+ * Request parameters for getIntegrationsConnectorsByIdToken operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest
+ */
+export interface IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest {
+    /**
+     * ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
+     * @type {string}
+     * @memberof IntegrationsApiGetIntegrationsConnectorsByIdToken
+     */
+    readonly id: string
 }
 
 /**
@@ -2513,7 +3054,7 @@ export interface IntegrationsApiPostIntegrationsByProviderConnectRequest {
  */
 export interface IntegrationsApiPostIntegrationsByProviderDisconnectRequest {
     /**
-     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
      * @type {string}
      * @memberof IntegrationsApiPostIntegrationsByProviderDisconnect
      */
@@ -2527,11 +3068,88 @@ export interface IntegrationsApiPostIntegrationsByProviderDisconnectRequest {
  */
 export interface IntegrationsApiPostIntegrationsByProviderVerifyRequest {
     /**
-     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/connectors) providers, which this surface never resolves.
+     * Provider is the registry id of the connector — \&quot;slack\&quot;, \&quot;github\&quot;, \&quot;cloudflare\&quot;. Unknown ids are 404, as are the user-plane (/v1/integrations/connectors) providers, which this surface never resolves.
      * @type {string}
      * @memberof IntegrationsApiPostIntegrationsByProviderVerify
      */
     readonly provider: string
+}
+
+/**
+ * Request parameters for postIntegrationsConnectorsByIdRefresh operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest
+ */
+export interface IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest {
+    /**
+     * ID is the connector id, provider + \&quot;:\&quot; + label (\&quot;openai:default\&quot;) — the auth-profile-id shape. Another user\&#39;s id is simply no row, so 404.
+     * @type {string}
+     * @memberof IntegrationsApiPostIntegrationsConnectorsByIdRefresh
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for postIntegrationsConnectorsByProviderCredential operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest
+ */
+export interface IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest {
+    /**
+     * Provider is the user-scoped provider\&#39;s registry id, from the path.
+     * @type {string}
+     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderCredential
+     */
+    readonly provider: string
+
+    /**
+     * 
+     * @type {CredentialIn}
+     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderCredential
+     */
+    readonly credentialIn: CredentialIn
+}
+
+/**
+ * Request parameters for postIntegrationsConnectorsByProviderDevice operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest
+ */
+export interface IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest {
+    /**
+     * Provider is the user-scoped provider\&#39;s registry id, from the path.
+     * @type {string}
+     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderDevice
+     */
+    readonly provider: string
+
+    /**
+     * 
+     * @type {DeviceStartIn}
+     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderDevice
+     */
+    readonly deviceStartIn: DeviceStartIn
+}
+
+/**
+ * Request parameters for postIntegrationsConnectorsByProviderDeviceByFlowPoll operation in IntegrationsApi.
+ * @export
+ * @interface IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest
+ */
+export interface IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest {
+    /**
+     * Provider is the user-scoped provider\&#39;s registry id, from the path.
+     * @type {string}
+     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPoll
+     */
+    readonly provider: string
+
+    /**
+     * Flow is the id deviceStartOut returned. Expired or another user\&#39;s flow is indistinguishable from an unknown one: 404.
+     * @type {string}
+     * @memberof IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPoll
+     */
+    readonly flow: string
 }
 
 /**
@@ -2682,6 +3300,18 @@ export interface IntegrationsApiPutIntegrationsGithubReposByRepoPagesRequest {
  */
 export class IntegrationsApi extends BaseAPI {
     /**
+     * Forgets a connector: every custodied secret, then the row. Idempotent — dropping a never-connected id still answers {disconnected:true} (disconnect() parity). No provider Revoke: none of the user-plane providers exposes a revoke endpoint.
+     * @summary Forgets a connector: every custodied secret, then the row.
+     * @param {IntegrationsApiDeleteIntegrationsConnectorsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public deleteIntegrationsConnectorsById(requestParameters: IntegrationsApiDeleteIntegrationsConnectorsByIdRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).deleteIntegrationsConnectorsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Deletes the repo\'s Pages site. 404 when there is none, so a caller can tell \"turned it off\" from \"there was nothing on\".
      * @summary Deletes the repo\'s Pages site.
      * @param {IntegrationsApiDeleteIntegrationsGithubReposByRepoPagesRequest} requestParameters Request parameters.
@@ -2694,7 +3324,7 @@ export class IntegrationsApi extends BaseAPI {
     }
 
     /**
-     * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/connectors surface) are omitted; the two planes are disjoint.
+     * Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders. Org-authed: a caller with no validated principal is 403, because the status is per-org and there is no org-less answer. User-plane providers (the /v1/integrations/connectors surface) are omitted; the two planes are disjoint.
      * @summary Returns every registered integration provider together with THIS org\'s connection status for it — the catalog the console\'s Integrations page renders.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2726,6 +3356,40 @@ export class IntegrationsApi extends BaseAPI {
      */
     public getIntegrationsByProviderCallback(requestParameters: IntegrationsApiGetIntegrationsByProviderCallbackRequest, options?: RawAxiosRequestConfig) {
         return IntegrationsApiFp(this.configuration).getIntegrationsByProviderCallback(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the caller\'s OWN connectors across every provider — the set `hanzo connector ls` prints. Rows are keyed (org,user), so this can never surface another user\'s connector, and no secret is in the view.
+     * @summary Lists the caller\'s OWN connectors across every provider — the set `hanzo connector ls` prints.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public getIntegrationsConnectors(options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).getIntegrationsConnectors(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Hands the custodied access token to its owner — the ONE place custody exits. The (org,user)-keyed row IS the same-user gate: another user\'s id is simply \"no row\" → 404. fresh() auto-rotates within the refreshSkew window; static providers degenerate to a plain kmsGet of Secrets[0]. Refresh tokens are NEVER returned — custody keeps the sink. The token is never logged.
+     * @summary Hands the custodied access token to its owner — the ONE place custody exits.
+     * @param {IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public getIntegrationsConnectorsByIdToken(requestParameters: IntegrationsApiGetIntegrationsConnectorsByIdTokenRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).getIntegrationsConnectorsByIdToken(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the user-scoped provider cards — the catalog of what a user can connect, and how. Methods derive from capabilities (Device/Adopt/Verify — Mount asserts at least one), never from a parallel kind enum.
+     * @summary Lists the user-scoped provider cards — the catalog of what a user can connect, and how.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public getIntegrationsConnectorsProviders(options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).getIntegrationsConnectorsProviders(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2950,6 +3614,54 @@ export class IntegrationsApi extends BaseAPI {
      */
     public postIntegrationsByProviderVerify(requestParameters: IntegrationsApiPostIntegrationsByProviderVerifyRequest, options?: RawAxiosRequestConfig) {
         return IntegrationsApiFp(this.configuration).postIntegrationsByProviderVerify(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window. Only providers that declare a Refresh support it.
+     * @summary Forces a token rotation for a connected connector, ahead of the automatic rotation a token read would do inside the expiry window.
+     * @param {IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postIntegrationsConnectorsByIdRefresh(requestParameters: IntegrationsApiPostIntegrationsConnectorsByIdRefreshRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postIntegrationsConnectorsByIdRefresh(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt). ALWAYS verify-before-store: a bad credential is refused and NOTHING is persisted (connectByCredential\'s fail-closed order).
+     * @summary Is the direct intake path: a customer-held token/setup-token (Verify) or an externally obtained OAuth bundle from the CLI\'s local PKCE (Adopt).
+     * @param {IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postIntegrationsConnectorsByProviderCredential(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderCredentialRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postIntegrationsConnectorsByProviderCredential(requestParameters.provider, requestParameters.credentialIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Begins a device sign-in and returns the code to show the user plus how to poll for completion. KMS readiness is checked NOW rather than dead-ending the user at poll-done (connect() parity), and the per-provider connector cap is checked before the provider is called. The provider\'s device code is persisted only in the encrypted grants table and is NEVER returned.
+     * @summary Begins a device sign-in and returns the code to show the user plus how to poll for completion.
+     * @param {IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postIntegrationsConnectorsByProviderDevice(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderDeviceRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postIntegrationsConnectorsByProviderDevice(requestParameters.provider, requestParameters.deviceStartIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Advances a device sign-in. Terminal outcomes are DATA, not errors (verifyConn {active:false} discipline) — the status set is closed: pending|connected|denied|expired. pollSlow collapses to \"pending\" on the wire; the raised cadence rides interval.
+     * @summary Advances a device sign-in.
+     * @param {IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public postIntegrationsConnectorsByProviderDeviceByFlowPoll(requestParameters: IntegrationsApiPostIntegrationsConnectorsByProviderDeviceByFlowPollRequest, options?: RawAxiosRequestConfig) {
+        return IntegrationsApiFp(this.configuration).postIntegrationsConnectorsByProviderDeviceByFlowPoll(requestParameters.provider, requestParameters.flow, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

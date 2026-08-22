@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -26,6 +26,8 @@ import type { AddDomainReq } from '../models';
 // @ts-ignore
 import type { AppView } from '../models';
 // @ts-ignore
+import type { BuildBoard } from '../models';
+// @ts-ignore
 import type { CreateAppReq } from '../models';
 // @ts-ignore
 import type { DeployLogs } from '../models';
@@ -38,39 +40,23 @@ import type { DomainView } from '../models';
 // @ts-ignore
 import type { DriftBoard } from '../models';
 // @ts-ignore
+import type { EnvironmentBoard } from '../models';
+// @ts-ignore
+import type { PipelineBoard } from '../models';
+// @ts-ignore
 import type { PreviewReq } from '../models';
 // @ts-ignore
 import type { PreviewView } from '../models';
 // @ts-ignore
 import type { ProjectView } from '../models';
 // @ts-ignore
-import type { ProjectsBoundDomains } from '../models';
-// @ts-ignore
-import type { ProjectsComplete } from '../models';
-// @ts-ignore
-import type { ProjectsCreate } from '../models';
-// @ts-ignore
-import type { ProjectsDeployStart } from '../models';
-// @ts-ignore
-import type { ProjectsDeployment } from '../models';
-// @ts-ignore
-import type { ProjectsDomain } from '../models';
-// @ts-ignore
-import type { ProjectsDomains } from '../models';
-// @ts-ignore
-import type { ProjectsDomainsBind } from '../models';
-// @ts-ignore
-import type { ProjectsProject } from '../models';
-// @ts-ignore
-import type { ProjectsPublish } from '../models';
-// @ts-ignore
-import type { ProjectsRelease } from '../models';
-// @ts-ignore
-import type { ProjectsUpdate } from '../models';
-// @ts-ignore
 import type { PromoteReq } from '../models';
 // @ts-ignore
+import type { Push } from '../models';
+// @ts-ignore
 import type { Readiness } from '../models';
+// @ts-ignore
+import type { ReleaseBoard } from '../models';
 // @ts-ignore
 import type { RestartRef } from '../models';
 // @ts-ignore
@@ -78,7 +64,17 @@ import type { Restarted } from '../models';
 // @ts-ignore
 import type { RollbackReq } from '../models';
 // @ts-ignore
+import type { RunReq } from '../models';
+// @ts-ignore
+import type { RunView } from '../models';
+// @ts-ignore
+import type { RunnerBuildReq } from '../models';
+// @ts-ignore
+import type { RunnerBuildResp } from '../models';
+// @ts-ignore
 import type { SetEnvReq } from '../models';
+// @ts-ignore
+import type { Verdict } from '../models';
 /**
  * PlatformApi - axios parameter creator
  * @export
@@ -146,86 +142,6 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/v1/platform/projects/{project}/apps/{app}/domains/{host}`
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"app"}}`, encodeURIComponent(String(app)))
-                .replace(`{${"host"}}`, encodeURIComponent(String(host)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the git source is retired on every copy it has so a reclaimed slug never adopts a repository left behind (visibility.go), the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
-         * @summary Deletes a project and takes its site off the internet.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deletePlatformSitesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('deletePlatformSitesBySlug', 'slug', slug)
-            const localVarPath = `/v1/platform/sites/{slug}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Gives a custom hostname back, so the name is free to reuse.  A claim is FIRST-COME and global, so an add-only surface was not ownership but a leak: a customer who mistyped a domain, or claimed one they later moved elsewhere, could neither reuse it nor let anyone else. This is the third writer that closes it. The release is scoped to (host, org, slug), so it can only ever drop THIS tenant\'s own claim, and it is IDEMPOTENT: releasing a host we do not hold is a clean 204, never a 404 that would let a caller probe which hosts other tenants hold. The edge cache-tag is flushed, since the host stops routing here.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Gives a custom hostname back, so the name is free to reuse.
-         * @param {string} slug Slug is the project the host is attached to, from the path.
-         * @param {string} host Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deletePlatformSitesBySlugDomainsByHost: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('deletePlatformSitesBySlugDomainsByHost', 'slug', slug)
-            // verify required parameter 'host' is not null or undefined
-            assertParamExists('deletePlatformSitesBySlugDomainsByHost', 'host', host)
-            const localVarPath = `/v1/platform/sites/{slug}/domains/{host}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"host"}}`, encodeURIComponent(String(host)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -364,6 +280,40 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+         * @summary Returns real build records for your org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPlatformBuilds: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/platform/builds`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Every Hanzo CD Application this caller may observe, with its sync verdict, health, the universe revision last applied, and whether automation and self-heal are on. A SuperAdmin sees the fleet; an org admin sees only Applications whose destination namespace IS its own organization, and never a reserved one.  A cluster with no CD installed answers an empty plane. A plane that cannot be READ answers 503 and says why — the two are opposite facts and never share a shape.
          * @summary The delivery plane
          * @param {*} [options] Override http request option.
@@ -405,6 +355,40 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          */
         getPlatformCi: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/ci`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+         * @summary Returns your deploy targets, and what is running on each.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPlatformEnvironments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/platform/environments`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -536,6 +520,40 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
          */
         getPlatformHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/health`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+         * @summary Returns one build-and-deploy pipeline per app, with its latest run.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPlatformPipelines: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/platform/pipelines`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -891,13 +909,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal\'s org, so it never contains another tenant\'s project.
-         * @summary Returns every project your org owns.
+         * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+         * @summary Returns the versions that actually reached the cluster.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformSites: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/platform/sites`;
+        getPlatformReleases: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/platform/releases`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -918,244 +936,6 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.  Scope: a validated principal is required (403 without one) and the lookup is keyed by (org, slug), so another tenant\'s slug is a 404 exactly like a nonexistent one.
-         * @summary Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformSitesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getPlatformSitesBySlug', 'slug', slug)
-            const localVarPath = `/v1/platform/sites/{slug}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a project\'s deploy history, newest version first.  Every deploy of the project is a row — uploads, generated sites, and git/CI builds alike — carrying its version, status, source, commit, live URL, file count and byte count. The short-lived upload grant a queued git deployment was handed is NOT replayed here: it exists only on the 202 that minted it, so a grant cannot outlive its build by being fetched again.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Returns a project\'s deploy history, newest version first.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformSitesBySlugDeployments: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getPlatformSitesBySlugDeployments', 'slug', slug)
-            const localVarPath = `/v1/platform/sites/{slug}/deployments`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one deployment of a project by id.  It is how a console follows a build: the status (`queued`, `uploading`, `live`, `error`), the message a failure left, and the URL and prefix it went live at. Like the history, it never replays the upload grant.  Scope: a validated principal is required (403 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
-         * @summary Returns one deployment of a project by id.
-         * @param {string} slug Slug is the project the deployment belongs to, from the path.
-         * @param {string} id ID is the deployment id, from the path. A deployment of another project — or of another tenant\&#39;s project — is not found.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformSitesBySlugDeploymentsById: async (slug: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getPlatformSitesBySlugDeploymentsById', 'slug', slug)
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getPlatformSitesBySlugDeploymentsById', 'id', id)
-            const localVarPath = `/v1/platform/sites/{slug}/deployments/{id}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformSitesBySlugDomains: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getPlatformSitesBySlugDomains', 'slug', slug)
-            const localVarPath = `/v1/platform/sites/{slug}/domains`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns a site\'s releases newest-first, marking the active one — the rollback menu.  Each row carries the release id to activate, the source it was promoted from, its object and byte counts, and the URL if it is the one serving. Retention bounds the list, so it is the set that can actually still be rolled back to, not a full history.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Returns a site\'s releases newest-first, marking the active one — the rollback menu.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformSitesBySlugReleases: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('getPlatformSitesBySlugReleases', 'slug', slug)
-            const localVarPath = `/v1/platform/sites/{slug}/releases`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Changes a project\'s settings, and only the settings you send.  Every field is optional and absent means \"leave it\": `name` may not be blanked, `framework` must stay a known build hint, and `cacheControl` is capped at 256 characters with no newlines (it becomes a response header). `visibility` flips public/private under the same rule as create — public is free, private needs a funded org. `upstream` and `license` are free-text credit for third-party work, and sending \"\" clears one. Changing anything reconciles the project\'s canonical git repo, so a visibility change reaches the source and not just the listing.  `hidden`/`hiddenReason` are platform MODERATION and are ignored unless the caller is a platform admin; they remove a project from the public catalogue without touching the publisher\'s own visibility choice, so un-hiding restores exactly what they asked for.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Changes a project\'s settings, and only the settings you send.
-         * @param {string} slug Slug is the project to update, from the path. The URL is the addressing authority — a &#x60;slug&#x60; in the body cannot move the write to another project.
-         * @param {ProjectsUpdate} projectsUpdate 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchPlatformSitesBySlug: async (slug: string, projectsUpdate: ProjectsUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('patchPlatformSitesBySlug', 'slug', slug)
-            // verify required parameter 'projectsUpdate' is not null or undefined
-            assertParamExists('patchPlatformSitesBySlug', 'projectsUpdate', projectsUpdate)
-            const localVarPath = `/v1/platform/sites/{slug}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(projectsUpdate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1234,6 +1014,44 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(restartRef, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two seams a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both seams answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
+         * @summary Receive a push from the forge and trigger its build
+         * @param {Push} [push] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPlatformHook: async (push?: Push, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/platform/hook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(push, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1655,16 +1473,16 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.  `name` is required; `slug` is derived from the name when omitted and is the identifier that matters — it becomes the S3 key segment, the public host `<slug>.hanzo.app`, and the handle every later call addresses, so it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$` and may not be a reserved label such as `api` or `admin`. `framework` is a build hint from a closed set, defaulting to `static`; it never gates a deploy, it only tells CI how to build a linked repo.  Two defaults are worth knowing: the analytics beacon is ON unless `analytics` is explicitly false, and `visibility` is `public` unless asked otherwise. Publishing publicly is free; PRIVATE is the paid feature, and an unfunded org asking for it is refused rather than quietly published as public. Creation also provisions the project\'s data space and a canonical git repo, both best-effort — neither can fail the create.  Scope: a validated principal is required (403 without one) and the project is created in THAT principal\'s org. The slug is unique per org, so a slug already used in the caller\'s own org is a 409 while the same slug in another org is irrelevant.
-         * @summary Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.
-         * @param {ProjectsCreate} projectsCreate 
+         * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 403 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
+         * @summary Runs a container image and gives back a URL.
+         * @param {RunReq} runReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformSites: async (projectsCreate: ProjectsCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'projectsCreate' is not null or undefined
-            assertParamExists('postPlatformSites', 'projectsCreate', projectsCreate)
-            const localVarPath = `/v1/platform/sites`;
+        postPlatformRun: async (runReq: RunReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'runReq' is not null or undefined
+            assertParamExists('postPlatformRun', 'runReq', runReq)
+            const localVarPath = `/v1/platform/run`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1687,7 +1505,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(projectsCreate, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(runReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1695,62 +1513,16 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site\'s own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/sites/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
-         * @summary Upload a built site as one archive and serve it
-         * @param {string} slug 
-         * @param {File} [body] 
+         * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+         * @summary Triggers a native build — an image, or the binaries a repo declares.
+         * @param {RunnerBuildReq} runnerBuildReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformSitesBySlugDeploy: async (slug: string, body?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugDeploy', 'slug', slug)
-            const localVarPath = `/v1/platform/sites/{slug}/deploy`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/octet-stream';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage. Answers 202.  This is the path for a site too large to send as one archive: a real export is hundreds of megabytes against a 16 MiB body limit, so the bytes deliberately do NOT pass through the API. The answer carries `bucket`, `prefix` and `upload` — a presigned POST policy that S3 itself confines to this site\'s prefix (starts-with `<org>/<slug>/`), expires in 30 minutes and bounds each object. So a build writes its own files and holds no standing bucket credential; there is nothing to rotate and nothing that leaks between tenants. Never guess the prefix — it is server-derived, and a guessed one lands where nothing is served.  The deployment is `queued` until POST .../deployments/{id}/complete flips it live (or error). That completion is also where DELETION happens: the grant authorizes writes only, so a build cannot remove a file, and cloud reconciles the prefix against the `keys` manifest the completion carries. A build that dies before completing leaves the deployment queued rather than a half-live site.  The grant is on the 202 and NOWHERE else — it is never stored and never replayed on a later read, so it cannot outlive the build it was minted for. A deployment whose grant could not be minted is still created and still completable; it simply carries no `upload`, and a caller with no other way to write should treat that as the failure it is.  Billing: the hosting gate runs BEFORE anything is created (402 unfunded, 503 commerce unreachable), and the debit lands on the completion that goes live — never on a queued or failed build.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage.
-         * @param {string} slug Slug is the site to deploy, from the path.
-         * @param {ProjectsDeployStart} projectsDeployStart 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugDeployments: async (slug: string, projectsDeployStart: ProjectsDeployStart, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugDeployments', 'slug', slug)
-            // verify required parameter 'projectsDeployStart' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugDeployments', 'projectsDeployStart', projectsDeployStart)
-            const localVarPath = `/v1/platform/sites/{slug}/deployments`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+        postPlatformRunner: async (runnerBuildReq: RunnerBuildReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'runnerBuildReq' is not null or undefined
+            assertParamExists('postPlatformRunner', 'runnerBuildReq', runnerBuildReq)
+            const localVarPath = `/v1/platform/runner`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1773,309 +1545,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(projectsDeployStart, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
-         * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
-         * @param {string} slug Slug is the project the deployment belongs to, from the path.
-         * @param {string} id ID is the queued deployment to complete, from the path.
-         * @param {ProjectsComplete} projectsComplete 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugDeploymentsByIdComplete: async (slug: string, id: string, projectsComplete: ProjectsComplete, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugDeploymentsByIdComplete', 'slug', slug)
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugDeploymentsByIdComplete', 'id', id)
-            // verify required parameter 'projectsComplete' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugDeploymentsByIdComplete', 'projectsComplete', projectsComplete)
-            const localVarPath = `/v1/platform/sites/{slug}/deployments/{id}/complete`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(projectsComplete, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Attaches one or more CUSTOM public hostnames to this org\'s site.  Binding a host you do not own would let you shadow it at the edge, so which outcome you get depends on whether ownership is already established: a SuperAdmin vouches (the operator manages the customer\'s DNS, so its bind IS the proof) and binds VERIFIED immediately; every other caller, INCLUDING an admin of the deployment\'s own brand org, has the host CLAIMED as pending and gets the DNS challenge back in `bound[].records`. A pending claim HOLDS the name so nobody else can take it, but it does not route until POST .../domains/{host}/verify proves control.  A hostname we operate is refused to a non-vouched caller (those are assigned by the platform, never claimed), a host another site already holds is a 409, and a name the platform holds is a 400 for EVERY caller — a vouch skips the ownership proof, never the host table\'s own invariant. Claims and binds are idempotent for the same (org, slug), and re-claiming returns the SAME token rather than invalidating a record the customer has already published. The edge cache-tag is flushed afterwards so a newly-verified host serves the current build immediately.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Attaches one or more CUSTOM public hostnames to this org\'s site.
-         * @param {string} slug Slug is the site the hosts attach to, from the path.
-         * @param {ProjectsDomainsBind} projectsDomainsBind 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugDomains: async (slug: string, projectsDomainsBind: ProjectsDomainsBind, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugDomains', 'slug', slug)
-            // verify required parameter 'projectsDomainsBind' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugDomains', 'projectsDomainsBind', projectsDomainsBind)
-            const localVarPath = `/v1/platform/sites/{slug}/domains`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(projectsDomainsBind, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.  It answers 200 either way, with the host\'s honest current state: verified once the TXT record is found, still pending — with the records to publish and the resolver\'s own explanation in `detail` — when it is not. A not-yet is not an error: the check ran, DNS simply has not propagated, and the customer retries. An already-verified host is returned unchanged without re-resolving. On a successful promotion the edge cache-tag is flushed, since the host routes as of that moment.  Scope: a validated principal is required (403 without one). Both the site and the claim are resolved within that principal\'s org, so a host claimed by another tenant is \"not claimed by this site\".
-         * @summary Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.
-         * @param {string} slug Slug is the project the host is attached to, from the path.
-         * @param {string} host Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugDomainsByHostVerify: async (slug: string, host: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugDomainsByHostVerify', 'slug', slug)
-            // verify required parameter 'host' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugDomainsByHostVerify', 'host', host)
-            const localVarPath = `/v1/platform/sites/{slug}/domains/{host}/verify`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
-                .replace(`{${"host"}}`, encodeURIComponent(String(host)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
-         * @param {string} slug Slug is the site to publish, from the path.
-         * @param {ProjectsPublish} projectsPublish 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugPublish: async (slug: string, projectsPublish: ProjectsPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugPublish', 'slug', slug)
-            // verify required parameter 'projectsPublish' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugPublish', 'projectsPublish', projectsPublish)
-            const localVarPath = `/v1/platform/sites/{slug}/publish`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(projectsPublish, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Flushes the site\'s edge cache without redeploying anything.  It invalidates the edge cache-tag `site-<org>-<slug>` and stamps `lastPurgeAt` (unix seconds), and it NEVER writes or deletes the S3 origin — the live build keeps serving; only stale copies held at the edge drop, so the next request re-fetches the current artifact from origin. Idempotent, and an edge that is unconfigured or failing is not fatal: `lastPurgeAt` is still stamped and the answer is still the updated project.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Flushes the site\'s edge cache without redeploying anything.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugPurge: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugPurge', 'slug', slug)
-            const localVarPath = `/v1/platform/sites/{slug}/purge`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live. Answers 201.  `source` is a path RELATIVE to your org\'s own storage space: the org segment is prepended server-side from the validated principal and the bucket is never in the request at all, so a server-side copy can only ever reach bytes your org already owns. The prefix is listed, content-addressed (SHA-256 over the sorted manifest of key/size/etag), and copied into an immutable `<org>/.releases/<slug>/<id>/` prefix; the row is written LAST, so a partial copy is unreachable rather than merely unlikely. Re-publishing an unchanged source is idempotent BY CONSTRUCTION — same bytes, same id, no copy at all.  The source must contain index.html at its root and stay under the same file and byte caps an artifact deploy does (413 past them); a source that changes mid-copy is a 409 and the release is abandoned. Each publish also reclaims releases past the retention depth, so a site\'s release space stays bounded. This is the billable half — the hosting gate runs before any copy, and the debit lands once the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live.
-         * @param {string} slug Slug is the site to publish, from the path.
-         * @param {ProjectsPublish} projectsPublish 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugReleases: async (slug: string, projectsPublish: ProjectsPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugReleases', 'slug', slug)
-            // verify required parameter 'projectsPublish' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugReleases', 'projectsPublish', projectsPublish)
-            const localVarPath = `/v1/platform/sites/{slug}/releases`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(projectsPublish, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Points the site at an existing release — the go-live, and equally the ROLLBACK.  Aim it at an older release and the site serves that one again: releases are immutable and retained to the retention depth, so nothing is rebuilt or re-copied and the flip is one atomic statement. Before the flip, two conditions run in the order that gives each its own honest answer — the ROW says whether this release exists for this tenant at all (404, with no signal about a foreign id), and only then do the BYTES say whether it can still serve (410 GONE when retention has reclaimed them; that rollback target is not coming back, so publish again). Going live also claims the public host and purges the edge, so the release is reachable and no cached predecessor is served. NOT billed: no new content is produced, only a pointer moved.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Points the site at an existing release — the go-live, and equally the ROLLBACK.
-         * @param {string} slug Slug is the site the release belongs to, from the path.
-         * @param {string} release Release is the content-addressed release id (\&quot;rel_\&quot; + 32 hex chars), from the path. Anything that is not that shape is not found, rather than being interpolated into a storage prefix.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugReleasesByReleaseActivate: async (slug: string, release: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugReleasesByReleaseActivate', 'slug', slug)
-            // verify required parameter 'release' is not null or undefined
-            assertParamExists('postPlatformSitesBySlugReleasesByReleaseActivate', 'release', release)
-            const localVarPath = `/v1/platform/sites/{slug}/releases/{release}/activate`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
-                .replace(`{${"release"}}`, encodeURIComponent(String(release)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(runnerBuildReq, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2170,33 +1640,6 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the git source is retired on every copy it has so a reclaimed slug never adopts a repository left behind (visibility.go), the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
-         * @summary Deletes a project and takes its site off the internet.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deletePlatformSitesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePlatformSitesBySlug(slug, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.deletePlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Gives a custom hostname back, so the name is free to reuse.  A claim is FIRST-COME and global, so an add-only surface was not ownership but a leak: a customer who mistyped a domain, or claimed one they later moved elsewhere, could neither reuse it nor let anyone else. This is the third writer that closes it. The release is scoped to (host, org, slug), so it can only ever drop THIS tenant\'s own claim, and it is IDEMPOTENT: releasing a host we do not hold is a clean 204, never a 404 that would let a caller probe which hosts other tenants hold. The edge cache-tag is flushed, since the host stops routing here.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Gives a custom hostname back, so the name is free to reuse.
-         * @param {string} slug Slug is the project the host is attached to, from the path.
-         * @param {string} host Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deletePlatformSitesBySlugDomainsByHost(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePlatformSitesBySlugDomainsByHost(slug, host, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.deletePlatformSitesBySlugDomainsByHost']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns the declarations in the caller\'s own org directory, each joined with the Hanzo CD Application reconciling it — sync verdict, health, the universe commit last applied. `cd` is null for a declaration the delivery plane has no Application for, which is the normal state of one that exists only on a branch.  If the delivery plane cannot be read, the declarations are still returned and `cdUnavailable` says why. An unreadable plane never renders as \"nothing has been reconciled\".
          * @summary What this organization has declared, and what CD did with it
          * @param {*} [options] Override http request option.
@@ -2235,6 +1678,18 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+         * @summary Returns real build records for your org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPlatformBuilds(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformBuilds(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformBuilds']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Every Hanzo CD Application this caller may observe, with its sync verdict, health, the universe revision last applied, and whether automation and self-heal are on. A SuperAdmin sees the fleet; an org admin sees only Applications whose destination namespace IS its own organization, and never a reserved one.  A cluster with no CD installed answers an empty plane. A plane that cannot be READ answers 503 and says why — the two are opposite facts and never share a shape.
          * @summary The delivery plane
          * @param {*} [options] Override http request option.
@@ -2256,6 +1711,18 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformCi(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformCi']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+         * @summary Returns your deploy targets, and what is running on each.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPlatformEnvironments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EnvironmentBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformEnvironments(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformEnvironments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2298,6 +1765,18 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformHealth']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+         * @summary Returns one build-and-deploy pipeline per app, with its latest run.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPlatformPipelines(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformPipelines(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformPipelines']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2411,95 +1890,15 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal\'s org, so it never contains another tenant\'s project.
-         * @summary Returns every project your org owns.
+         * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+         * @summary Returns the versions that actually reached the cluster.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformSites(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectsProject>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSites(options);
+        async getPlatformReleases(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReleaseBoard>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformReleases(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSites']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.  Scope: a validated principal is required (403 without one) and the lookup is keyed by (org, slug), so another tenant\'s slug is a 404 exactly like a nonexistent one.
-         * @summary Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getPlatformSitesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSitesBySlug(slug, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns a project\'s deploy history, newest version first.  Every deploy of the project is a row — uploads, generated sites, and git/CI builds alike — carrying its version, status, source, commit, live URL, file count and byte count. The short-lived upload grant a queued git deployment was handed is NOT replayed here: it exists only on the 202 that minted it, so a grant cannot outlive its build by being fetched again.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Returns a project\'s deploy history, newest version first.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getPlatformSitesBySlugDeployments(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectsDeployment>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSitesBySlugDeployments(slug, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSitesBySlugDeployments']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one deployment of a project by id.  It is how a console follows a build: the status (`queued`, `uploading`, `live`, `error`), the message a failure left, and the URL and prefix it went live at. Like the history, it never replays the upload grant.  Scope: a validated principal is required (403 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
-         * @summary Returns one deployment of a project by id.
-         * @param {string} slug Slug is the project the deployment belongs to, from the path.
-         * @param {string} id ID is the deployment id, from the path. A deployment of another project — or of another tenant\&#39;s project — is not found.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getPlatformSitesBySlugDeploymentsById(slug: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDeployment>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSitesBySlugDeploymentsById(slug, id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSitesBySlugDeploymentsById']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getPlatformSitesBySlugDomains(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDomains>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSitesBySlugDomains(slug, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSitesBySlugDomains']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns a site\'s releases newest-first, marking the active one — the rollback menu.  Each row carries the release id to activate, the source it was promoted from, its object and byte counts, and the URL if it is the one serving. Retention bounds the list, so it is the set that can actually still be rolled back to, not a full history.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Returns a site\'s releases newest-first, marking the active one — the rollback menu.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getPlatformSitesBySlugReleases(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectsRelease>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformSitesBySlugReleases(slug, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformSitesBySlugReleases']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Changes a project\'s settings, and only the settings you send.  Every field is optional and absent means \"leave it\": `name` may not be blanked, `framework` must stay a known build hint, and `cacheControl` is capped at 256 characters with no newlines (it becomes a response header). `visibility` flips public/private under the same rule as create — public is free, private needs a funded org. `upstream` and `license` are free-text credit for third-party work, and sending \"\" clears one. Changing anything reconciles the project\'s canonical git repo, so a visibility change reaches the source and not just the listing.  `hidden`/`hiddenReason` are platform MODERATION and are ignored unless the caller is a platform admin; they remove a project from the public catalogue without touching the publisher\'s own visibility choice, so un-hiding restores exactly what they asked for.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Changes a project\'s settings, and only the settings you send.
-         * @param {string} slug Slug is the project to update, from the path. The URL is the addressing authority — a &#x60;slug&#x60; in the body cannot move the write to another project.
-         * @param {ProjectsUpdate} projectsUpdate 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async patchPlatformSitesBySlug(slug: string, projectsUpdate: ProjectsUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchPlatformSitesBySlug(slug, projectsUpdate, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.patchPlatformSitesBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformReleases']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2526,6 +1925,19 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformFleetByAppDeploy(app, restartRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformFleetByAppDeploy']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two seams a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both seams answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
+         * @summary Receive a push from the forge and trigger its build
+         * @param {Push} [push] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postPlatformHook(push?: Push, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Verdict>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformHook(push, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformHook']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2661,142 +2073,29 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.  `name` is required; `slug` is derived from the name when omitted and is the identifier that matters — it becomes the S3 key segment, the public host `<slug>.hanzo.app`, and the handle every later call addresses, so it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$` and may not be a reserved label such as `api` or `admin`. `framework` is a build hint from a closed set, defaulting to `static`; it never gates a deploy, it only tells CI how to build a linked repo.  Two defaults are worth knowing: the analytics beacon is ON unless `analytics` is explicitly false, and `visibility` is `public` unless asked otherwise. Publishing publicly is free; PRIVATE is the paid feature, and an unfunded org asking for it is refused rather than quietly published as public. Creation also provisions the project\'s data space and a canonical git repo, both best-effort — neither can fail the create.  Scope: a validated principal is required (403 without one) and the project is created in THAT principal\'s org. The slug is unique per org, so a slug already used in the caller\'s own org is a 409 while the same slug in another org is irrelevant.
-         * @summary Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.
-         * @param {ProjectsCreate} projectsCreate 
+         * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 403 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
+         * @summary Runs a container image and gives back a URL.
+         * @param {RunReq} runReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformSites(projectsCreate: ProjectsCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSites(projectsCreate, options);
+        async postPlatformRun(runReq: RunReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformRun(runReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSites']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformRun']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site\'s own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/sites/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
-         * @summary Upload a built site as one archive and serve it
-         * @param {string} slug 
-         * @param {File} [body] 
+         * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+         * @summary Triggers a native build — an image, or the binaries a repo declares.
+         * @param {RunnerBuildReq} runnerBuildReq 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postPlatformSitesBySlugDeploy(slug: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDeployment>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugDeploy(slug, body, options);
+        async postPlatformRunner(runnerBuildReq: RunnerBuildReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RunnerBuildResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformRunner(runnerBuildReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugDeploy']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage. Answers 202.  This is the path for a site too large to send as one archive: a real export is hundreds of megabytes against a 16 MiB body limit, so the bytes deliberately do NOT pass through the API. The answer carries `bucket`, `prefix` and `upload` — a presigned POST policy that S3 itself confines to this site\'s prefix (starts-with `<org>/<slug>/`), expires in 30 minutes and bounds each object. So a build writes its own files and holds no standing bucket credential; there is nothing to rotate and nothing that leaks between tenants. Never guess the prefix — it is server-derived, and a guessed one lands where nothing is served.  The deployment is `queued` until POST .../deployments/{id}/complete flips it live (or error). That completion is also where DELETION happens: the grant authorizes writes only, so a build cannot remove a file, and cloud reconciles the prefix against the `keys` manifest the completion carries. A build that dies before completing leaves the deployment queued rather than a half-live site.  The grant is on the 202 and NOWHERE else — it is never stored and never replayed on a later read, so it cannot outlive the build it was minted for. A deployment whose grant could not be minted is still created and still completable; it simply carries no `upload`, and a caller with no other way to write should treat that as the failure it is.  Billing: the hosting gate runs BEFORE anything is created (402 unfunded, 503 commerce unreachable), and the debit lands on the completion that goes live — never on a queued or failed build.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage.
-         * @param {string} slug Slug is the site to deploy, from the path.
-         * @param {ProjectsDeployStart} projectsDeployStart 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postPlatformSitesBySlugDeployments(slug: string, projectsDeployStart: ProjectsDeployStart, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDeployment>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugDeployments(slug, projectsDeployStart, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugDeployments']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
-         * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
-         * @param {string} slug Slug is the project the deployment belongs to, from the path.
-         * @param {string} id ID is the queued deployment to complete, from the path.
-         * @param {ProjectsComplete} projectsComplete 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postPlatformSitesBySlugDeploymentsByIdComplete(slug: string, id: string, projectsComplete: ProjectsComplete, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDeployment>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugDeploymentsByIdComplete(slug, id, projectsComplete, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugDeploymentsByIdComplete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Attaches one or more CUSTOM public hostnames to this org\'s site.  Binding a host you do not own would let you shadow it at the edge, so which outcome you get depends on whether ownership is already established: a SuperAdmin vouches (the operator manages the customer\'s DNS, so its bind IS the proof) and binds VERIFIED immediately; every other caller, INCLUDING an admin of the deployment\'s own brand org, has the host CLAIMED as pending and gets the DNS challenge back in `bound[].records`. A pending claim HOLDS the name so nobody else can take it, but it does not route until POST .../domains/{host}/verify proves control.  A hostname we operate is refused to a non-vouched caller (those are assigned by the platform, never claimed), a host another site already holds is a 409, and a name the platform holds is a 400 for EVERY caller — a vouch skips the ownership proof, never the host table\'s own invariant. Claims and binds are idempotent for the same (org, slug), and re-claiming returns the SAME token rather than invalidating a record the customer has already published. The edge cache-tag is flushed afterwards so a newly-verified host serves the current build immediately.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Attaches one or more CUSTOM public hostnames to this org\'s site.
-         * @param {string} slug Slug is the site the hosts attach to, from the path.
-         * @param {ProjectsDomainsBind} projectsDomainsBind 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postPlatformSitesBySlugDomains(slug: string, projectsDomainsBind: ProjectsDomainsBind, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsBoundDomains>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugDomains(slug, projectsDomainsBind, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugDomains']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.  It answers 200 either way, with the host\'s honest current state: verified once the TXT record is found, still pending — with the records to publish and the resolver\'s own explanation in `detail` — when it is not. A not-yet is not an error: the check ran, DNS simply has not propagated, and the customer retries. An already-verified host is returned unchanged without re-resolving. On a successful promotion the edge cache-tag is flushed, since the host routes as of that moment.  Scope: a validated principal is required (403 without one). Both the site and the claim are resolved within that principal\'s org, so a host claimed by another tenant is \"not claimed by this site\".
-         * @summary Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.
-         * @param {string} slug Slug is the project the host is attached to, from the path.
-         * @param {string} host Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postPlatformSitesBySlugDomainsByHostVerify(slug: string, host: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsDomain>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugDomainsByHostVerify(slug, host, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugDomainsByHostVerify']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
-         * @param {string} slug Slug is the site to publish, from the path.
-         * @param {ProjectsPublish} projectsPublish 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postPlatformSitesBySlugPublish(slug: string, projectsPublish: ProjectsPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugPublish(slug, projectsPublish, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugPublish']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Flushes the site\'s edge cache without redeploying anything.  It invalidates the edge cache-tag `site-<org>-<slug>` and stamps `lastPurgeAt` (unix seconds), and it NEVER writes or deletes the S3 origin — the live build keeps serving; only stale copies held at the edge drop, so the next request re-fetches the current artifact from origin. Idempotent, and an edge that is unconfigured or failing is not fatal: `lastPurgeAt` is still stamped and the answer is still the updated project.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Flushes the site\'s edge cache without redeploying anything.
-         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postPlatformSitesBySlugPurge(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugPurge(slug, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugPurge']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live. Answers 201.  `source` is a path RELATIVE to your org\'s own storage space: the org segment is prepended server-side from the validated principal and the bucket is never in the request at all, so a server-side copy can only ever reach bytes your org already owns. The prefix is listed, content-addressed (SHA-256 over the sorted manifest of key/size/etag), and copied into an immutable `<org>/.releases/<slug>/<id>/` prefix; the row is written LAST, so a partial copy is unreachable rather than merely unlikely. Re-publishing an unchanged source is idempotent BY CONSTRUCTION — same bytes, same id, no copy at all.  The source must contain index.html at its root and stay under the same file and byte caps an artifact deploy does (413 past them); a source that changes mid-copy is a 409 and the release is abandoned. Each publish also reclaims releases past the retention depth, so a site\'s release space stays bounded. This is the billable half — the hosting gate runs before any copy, and the debit lands once the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live.
-         * @param {string} slug Slug is the site to publish, from the path.
-         * @param {ProjectsPublish} projectsPublish 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postPlatformSitesBySlugReleases(slug: string, projectsPublish: ProjectsPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugReleases(slug, projectsPublish, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugReleases']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Points the site at an existing release — the go-live, and equally the ROLLBACK.  Aim it at an older release and the site serves that one again: releases are immutable and retained to the retention depth, so nothing is rebuilt or re-copied and the flip is one atomic statement. Before the flip, two conditions run in the order that gives each its own honest answer — the ROW says whether this release exists for this tenant at all (404, with no signal about a foreign id), and only then do the BYTES say whether it can still serve (410 GONE when retention has reclaimed them; that rollback target is not coming back, so publish again). Going live also claims the public host and purges the edge, so the release is reachable and no cached predecessor is served. NOT billed: no new content is produced, only a pointer moved.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Points the site at an existing release — the go-live, and equally the ROLLBACK.
-         * @param {string} slug Slug is the site the release belongs to, from the path.
-         * @param {string} release Release is the content-addressed release id (\&quot;rel_\&quot; + 32 hex chars), from the path. Anything that is not that shape is not found, rather than being interpolated into a storage prefix.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postPlatformSitesBySlugReleasesByReleaseActivate(slug: string, release: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsRelease>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postPlatformSitesBySlugReleasesByReleaseActivate(slug, release, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformSitesBySlugReleasesByReleaseActivate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['PlatformApi.postPlatformRunner']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2845,26 +2144,6 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deletePlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
-         * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the git source is retired on every copy it has so a reclaimed slug never adopts a repository left behind (visibility.go), the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
-         * @summary Deletes a project and takes its site off the internet.
-         * @param {PlatformApiDeletePlatformSitesBySlugRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deletePlatformSitesBySlug(requestParameters: PlatformApiDeletePlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deletePlatformSitesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Gives a custom hostname back, so the name is free to reuse.  A claim is FIRST-COME and global, so an add-only surface was not ownership but a leak: a customer who mistyped a domain, or claimed one they later moved elsewhere, could neither reuse it nor let anyone else. This is the third writer that closes it. The release is scoped to (host, org, slug), so it can only ever drop THIS tenant\'s own claim, and it is IDEMPOTENT: releasing a host we do not hold is a clean 204, never a 404 that would let a caller probe which hosts other tenants hold. The edge cache-tag is flushed, since the host stops routing here.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Gives a custom hostname back, so the name is free to reuse.
-         * @param {PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deletePlatformSitesBySlugDomainsByHost(requestParameters: PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deletePlatformSitesBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns the declarations in the caller\'s own org directory, each joined with the Hanzo CD Application reconciling it — sync verdict, health, the universe commit last applied. `cd` is null for a declaration the delivery plane has no Application for, which is the normal state of one that exists only on a branch.  If the delivery plane cannot be read, the declarations are still returned and `cdUnavailable` says why. An unreadable plane never renders as \"nothing has been reconciled\".
          * @summary What this organization has declared, and what CD did with it
          * @param {*} [options] Override http request option.
@@ -2894,6 +2173,15 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getPlatformAppsByAppCd(requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+         * @summary Returns real build records for your org.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPlatformBuilds(options?: RawAxiosRequestConfig): AxiosPromise<BuildBoard> {
+            return localVarFp.getPlatformBuilds(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Every Hanzo CD Application this caller may observe, with its sync verdict, health, the universe revision last applied, and whether automation and self-heal are on. A SuperAdmin sees the fleet; an org admin sees only Applications whose destination namespace IS its own organization, and never a reserved one.  A cluster with no CD installed answers an empty plane. A plane that cannot be READ answers 503 and says why — the two are opposite facts and never share a shape.
          * @summary The delivery plane
          * @param {*} [options] Override http request option.
@@ -2910,6 +2198,15 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          */
         getPlatformCi(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getPlatformCi(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+         * @summary Returns your deploy targets, and what is running on each.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPlatformEnvironments(options?: RawAxiosRequestConfig): AxiosPromise<EnvironmentBoard> {
+            return localVarFp.getPlatformEnvironments(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the platform\'s own service tier, and where it has drifted.  It returns the board for the services the PLATFORM itself runs — iam, kms, gateway and the rest — as `{apps, summary}`: per service its environment, health, phase, the image tag its CR DECLARES, the tag actually running, and the drift between them, plus a summary counting the board green, yellow and red.  This is not a customer surface. `/v1/platform/projects/:project/apps` is a tenant\'s apps; this is the tier those tenants run ON, which is why the two are named differently rather than sharing a prefix.  Admission is scoped at the SCAN, before any CR is read: a platform SuperAdmin observes the whole fleet, an org admin observes only their own org\'s namespaces, and an org that owns none gets an empty board — a non-super caller never even lists another org\'s services. Narrow further with `env`, `health`, `org`, or `drift=1` for only what has drifted.  It degrades honestly rather than failing whole: a namespace that does not exist is skipped, and a running-state read the caller cannot make leaves the running tag empty — an unknown, never a guess — while the declared, health and phase columns still render.
@@ -2939,6 +2236,15 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          */
         getPlatformHealth(options?: RawAxiosRequestConfig): AxiosPromise<Readiness> {
             return localVarFp.getPlatformHealth(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+         * @summary Returns one build-and-deploy pipeline per app, with its latest run.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPlatformPipelines(options?: RawAxiosRequestConfig): AxiosPromise<PipelineBoard> {
+            return localVarFp.getPlatformPipelines(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns your org\'s projects, each with how many apps live under it.  It lists the caller org\'s projects with the number of platform applications in each. A project is IAM\'s resource — it is created and deleted at /v1/iam/projects, never here — so this is the ONE projection IAM cannot serve: the project plus what the platform has put under it.  Requires a validated principal; 403 without one, and the org comes from that validated identity rather than a request header. This is the console\'s first authenticated read, so a project store that is not yet initialised degrades to an EMPTY list rather than a 500 — a new org genuinely has zero projects — and the real cause is surfaced to operators instead of to the caller.
@@ -3020,73 +2326,13 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getPlatformProjectsByProjectAppsByAppDomains(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal\'s org, so it never contains another tenant\'s project.
-         * @summary Returns every project your org owns.
+         * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+         * @summary Returns the versions that actually reached the cluster.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformSites(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectsProject>> {
-            return localVarFp.getPlatformSites(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.  Scope: a validated principal is required (403 without one) and the lookup is keyed by (org, slug), so another tenant\'s slug is a 404 exactly like a nonexistent one.
-         * @summary Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.
-         * @param {PlatformApiGetPlatformSitesBySlugRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformSitesBySlug(requestParameters: PlatformApiGetPlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
-            return localVarFp.getPlatformSitesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns a project\'s deploy history, newest version first.  Every deploy of the project is a row — uploads, generated sites, and git/CI builds alike — carrying its version, status, source, commit, live URL, file count and byte count. The short-lived upload grant a queued git deployment was handed is NOT replayed here: it exists only on the 202 that minted it, so a grant cannot outlive its build by being fetched again.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Returns a project\'s deploy history, newest version first.
-         * @param {PlatformApiGetPlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformSitesBySlugDeployments(requestParameters: PlatformApiGetPlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectsDeployment>> {
-            return localVarFp.getPlatformSitesBySlugDeployments(requestParameters.slug, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one deployment of a project by id.  It is how a console follows a build: the status (`queued`, `uploading`, `live`, `error`), the message a failure left, and the URL and prefix it went live at. Like the history, it never replays the upload grant.  Scope: a validated principal is required (403 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
-         * @summary Returns one deployment of a project by id.
-         * @param {PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformSitesBySlugDeploymentsById(requestParameters: PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDeployment> {
-            return localVarFp.getPlatformSitesBySlugDeploymentsById(requestParameters.slug, requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
-         * @param {PlatformApiGetPlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformSitesBySlugDomains(requestParameters: PlatformApiGetPlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDomains> {
-            return localVarFp.getPlatformSitesBySlugDomains(requestParameters.slug, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns a site\'s releases newest-first, marking the active one — the rollback menu.  Each row carries the release id to activate, the source it was promoted from, its object and byte counts, and the URL if it is the one serving. Retention bounds the list, so it is the set that can actually still be rolled back to, not a full history.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Returns a site\'s releases newest-first, marking the active one — the rollback menu.
-         * @param {PlatformApiGetPlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPlatformSitesBySlugReleases(requestParameters: PlatformApiGetPlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<ProjectsRelease>> {
-            return localVarFp.getPlatformSitesBySlugReleases(requestParameters.slug, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Changes a project\'s settings, and only the settings you send.  Every field is optional and absent means \"leave it\": `name` may not be blanked, `framework` must stay a known build hint, and `cacheControl` is capped at 256 characters with no newlines (it becomes a response header). `visibility` flips public/private under the same rule as create — public is free, private needs a funded org. `upstream` and `license` are free-text credit for third-party work, and sending \"\" clears one. Changing anything reconciles the project\'s canonical git repo, so a visibility change reaches the source and not just the listing.  `hidden`/`hiddenReason` are platform MODERATION and are ignored unless the caller is a platform admin; they remove a project from the public catalogue without touching the publisher\'s own visibility choice, so un-hiding restores exactly what they asked for.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Changes a project\'s settings, and only the settings you send.
-         * @param {PlatformApiPatchPlatformSitesBySlugRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchPlatformSitesBySlug(requestParameters: PlatformApiPatchPlatformSitesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
-            return localVarFp.patchPlatformSitesBySlug(requestParameters.slug, requestParameters.projectsUpdate, options).then((request) => request(axios, basePath));
+        getPlatformReleases(options?: RawAxiosRequestConfig): AxiosPromise<ReleaseBoard> {
+            return localVarFp.getPlatformReleases(options).then((request) => request(axios, basePath));
         },
         /**
          * Builds a git repository into an image and writes the declaration that names it — a values file in `hanzoai/universe` under `charts/app/values/<namespace>/<name>.yaml`, which the `fleet` ApplicationSet renders as one Application. That file IS the deployment: nothing else has to be applied.  `mode` decides whether anything can go live. The default, `branch`, pushes to `deploy/<namespace>/<name>/<tag>` and returns a review URL; the generator reads main, so a branch declaration deploys NOTHING and merging the review is the deliberate act. `commit` writes main, and proves the image is pullable first — a declaration naming an image the registry cannot serve is an ImagePullBackOff with no rollback path.  Omit `tag` to build; give it to declare an image an earlier call already built, which is how a green build is released without rebuilding it.  An org is its name: the values DIRECTORY, the destination NAMESPACE and the AppProject FENCE are all `<org>`, and the image is `<registry>/<org>/<app>`. None of them is a request field — the directory decides what CD admits the sync under and the repository decides what the cluster pulls, so a caller who could name either could reach outside its own org.  `org` is an ACT-AS, not a placement field: it defaults to the caller\'s own, and naming another requires SuperAdmin. So does naming a RESERVED org — the platform\'s own namespace family (the brands and their environments, the control and delivery planes, `admin`) — even when it is the caller\'s own, because an IAM org named `kube-system` does not own Kubernetes. Both refuse rather than downgrade, so an escape attempt is never indistinguishable from a normal request.  A host outside the caller\'s org subtree is refused: claim and verify a custom domain first.
@@ -3106,6 +2352,16 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
          */
         postPlatformFleetByAppDeploy(requestParameters: PlatformApiPostPlatformFleetByAppDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<Restarted> {
             return localVarFp.postPlatformFleetByAppDeploy(requestParameters.app, requestParameters.restartRef, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two seams a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both seams answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
+         * @summary Receive a push from the forge and trigger its build
+         * @param {PlatformApiPostPlatformHookRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postPlatformHook(requestParameters: PlatformApiPostPlatformHookRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Verdict> {
+            return localVarFp.postPlatformHook(requestParameters.push, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an application from a git repo or a container image.  It registers a new application under one of the caller org\'s projects and answers 201 with it. Creating does NOT deploy: the app lands in `draft` and nothing reaches the cluster until /deploy.  `source` is `git` — which requires `repo.url` — or `image`, which requires `image.repository`; anything else is 400. A git app builds with zero-config `pack` by default and may opt into `dockerfile`; an image app never builds. The repo URL and Dockerfile path are validated here against the SAME allowlist the privileged build enforces, so an unsafe source is refused before it is ever persisted.  The `slug` is the app\'s identity in the cluster: given or derived from `name`, it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$`, and a slug already used in this project is 409. `replicas` and `storageGb` are clamped to the deployment\'s limits rather than refused.  Env keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A variable marked `secret: true` is SEALED into KMS and its plaintext is never written to the database — and if KMS is unavailable the create fails 503 rather than falling back to storing a secret in the clear.  The app is seeded with its canonical default host, so it has a working HTTPS URL the moment it deploys. A bare custom domain cannot be attached here — it has to go through add-domain and DNS verification first. Requires a validated principal; 403 without one, and every cluster object it will later create lands in that org\'s own `tenant-<org>` namespace.
@@ -3198,104 +2454,24 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postPlatformProjectsByProjectAppsByAppStop(requestParameters.project, requestParameters.app, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.  `name` is required; `slug` is derived from the name when omitted and is the identifier that matters — it becomes the S3 key segment, the public host `<slug>.hanzo.app`, and the handle every later call addresses, so it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$` and may not be a reserved label such as `api` or `admin`. `framework` is a build hint from a closed set, defaulting to `static`; it never gates a deploy, it only tells CI how to build a linked repo.  Two defaults are worth knowing: the analytics beacon is ON unless `analytics` is explicitly false, and `visibility` is `public` unless asked otherwise. Publishing publicly is free; PRIVATE is the paid feature, and an unfunded org asking for it is refused rather than quietly published as public. Creation also provisions the project\'s data space and a canonical git repo, both best-effort — neither can fail the create.  Scope: a validated principal is required (403 without one) and the project is created in THAT principal\'s org. The slug is unique per org, so a slug already used in the caller\'s own org is a 409 while the same slug in another org is irrelevant.
-         * @summary Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.
-         * @param {PlatformApiPostPlatformSitesRequest} requestParameters Request parameters.
+         * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 403 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
+         * @summary Runs a container image and gives back a URL.
+         * @param {PlatformApiPostPlatformRunRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformSites(requestParameters: PlatformApiPostPlatformSitesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
-            return localVarFp.postPlatformSites(requestParameters.projectsCreate, options).then((request) => request(axios, basePath));
+        postPlatformRun(requestParameters: PlatformApiPostPlatformRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunView> {
+            return localVarFp.postPlatformRun(requestParameters.runReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site\'s own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/sites/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
-         * @summary Upload a built site as one archive and serve it
-         * @param {PlatformApiPostPlatformSitesBySlugDeployRequest} requestParameters Request parameters.
+         * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+         * @summary Triggers a native build — an image, or the binaries a repo declares.
+         * @param {PlatformApiPostPlatformRunnerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postPlatformSitesBySlugDeploy(requestParameters: PlatformApiPostPlatformSitesBySlugDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDeployment> {
-            return localVarFp.postPlatformSitesBySlugDeploy(requestParameters.slug, requestParameters.body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage. Answers 202.  This is the path for a site too large to send as one archive: a real export is hundreds of megabytes against a 16 MiB body limit, so the bytes deliberately do NOT pass through the API. The answer carries `bucket`, `prefix` and `upload` — a presigned POST policy that S3 itself confines to this site\'s prefix (starts-with `<org>/<slug>/`), expires in 30 minutes and bounds each object. So a build writes its own files and holds no standing bucket credential; there is nothing to rotate and nothing that leaks between tenants. Never guess the prefix — it is server-derived, and a guessed one lands where nothing is served.  The deployment is `queued` until POST .../deployments/{id}/complete flips it live (or error). That completion is also where DELETION happens: the grant authorizes writes only, so a build cannot remove a file, and cloud reconciles the prefix against the `keys` manifest the completion carries. A build that dies before completing leaves the deployment queued rather than a half-live site.  The grant is on the 202 and NOWHERE else — it is never stored and never replayed on a later read, so it cannot outlive the build it was minted for. A deployment whose grant could not be minted is still created and still completable; it simply carries no `upload`, and a caller with no other way to write should treat that as the failure it is.  Billing: the hosting gate runs BEFORE anything is created (402 unfunded, 503 commerce unreachable), and the debit lands on the completion that goes live — never on a queued or failed build.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage.
-         * @param {PlatformApiPostPlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugDeployments(requestParameters: PlatformApiPostPlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDeployment> {
-            return localVarFp.postPlatformSitesBySlugDeployments(requestParameters.slug, requestParameters.projectsDeployStart, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
-         * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
-         * @param {PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugDeploymentsByIdComplete(requestParameters: PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDeployment> {
-            return localVarFp.postPlatformSitesBySlugDeploymentsByIdComplete(requestParameters.slug, requestParameters.id, requestParameters.projectsComplete, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Attaches one or more CUSTOM public hostnames to this org\'s site.  Binding a host you do not own would let you shadow it at the edge, so which outcome you get depends on whether ownership is already established: a SuperAdmin vouches (the operator manages the customer\'s DNS, so its bind IS the proof) and binds VERIFIED immediately; every other caller, INCLUDING an admin of the deployment\'s own brand org, has the host CLAIMED as pending and gets the DNS challenge back in `bound[].records`. A pending claim HOLDS the name so nobody else can take it, but it does not route until POST .../domains/{host}/verify proves control.  A hostname we operate is refused to a non-vouched caller (those are assigned by the platform, never claimed), a host another site already holds is a 409, and a name the platform holds is a 400 for EVERY caller — a vouch skips the ownership proof, never the host table\'s own invariant. Claims and binds are idempotent for the same (org, slug), and re-claiming returns the SAME token rather than invalidating a record the customer has already published. The edge cache-tag is flushed afterwards so a newly-verified host serves the current build immediately.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Attaches one or more CUSTOM public hostnames to this org\'s site.
-         * @param {PlatformApiPostPlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugDomains(requestParameters: PlatformApiPostPlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsBoundDomains> {
-            return localVarFp.postPlatformSitesBySlugDomains(requestParameters.slug, requestParameters.projectsDomainsBind, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.  It answers 200 either way, with the host\'s honest current state: verified once the TXT record is found, still pending — with the records to publish and the resolver\'s own explanation in `detail` — when it is not. A not-yet is not an error: the check ran, DNS simply has not propagated, and the customer retries. An already-verified host is returned unchanged without re-resolving. On a successful promotion the edge cache-tag is flushed, since the host routes as of that moment.  Scope: a validated principal is required (403 without one). Both the site and the claim are resolved within that principal\'s org, so a host claimed by another tenant is \"not claimed by this site\".
-         * @summary Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.
-         * @param {PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugDomainsByHostVerify(requestParameters: PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsDomain> {
-            return localVarFp.postPlatformSitesBySlugDomainsByHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
-         * @param {PlatformApiPostPlatformSitesBySlugPublishRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugPublish(requestParameters: PlatformApiPostPlatformSitesBySlugPublishRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
-            return localVarFp.postPlatformSitesBySlugPublish(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Flushes the site\'s edge cache without redeploying anything.  It invalidates the edge cache-tag `site-<org>-<slug>` and stamps `lastPurgeAt` (unix seconds), and it NEVER writes or deletes the S3 origin — the live build keeps serving; only stale copies held at the edge drop, so the next request re-fetches the current artifact from origin. Idempotent, and an edge that is unconfigured or failing is not fatal: `lastPurgeAt` is still stamped and the answer is still the updated project.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Flushes the site\'s edge cache without redeploying anything.
-         * @param {PlatformApiPostPlatformSitesBySlugPurgeRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugPurge(requestParameters: PlatformApiPostPlatformSitesBySlugPurgeRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsProject> {
-            return localVarFp.postPlatformSitesBySlugPurge(requestParameters.slug, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live. Answers 201.  `source` is a path RELATIVE to your org\'s own storage space: the org segment is prepended server-side from the validated principal and the bucket is never in the request at all, so a server-side copy can only ever reach bytes your org already owns. The prefix is listed, content-addressed (SHA-256 over the sorted manifest of key/size/etag), and copied into an immutable `<org>/.releases/<slug>/<id>/` prefix; the row is written LAST, so a partial copy is unreachable rather than merely unlikely. Re-publishing an unchanged source is idempotent BY CONSTRUCTION — same bytes, same id, no copy at all.  The source must contain index.html at its root and stay under the same file and byte caps an artifact deploy does (413 past them); a source that changes mid-copy is a 409 and the release is abandoned. Each publish also reclaims releases past the retention depth, so a site\'s release space stays bounded. This is the billable half — the hosting gate runs before any copy, and the debit lands once the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live.
-         * @param {PlatformApiPostPlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugReleases(requestParameters: PlatformApiPostPlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
-            return localVarFp.postPlatformSitesBySlugReleases(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Points the site at an existing release — the go-live, and equally the ROLLBACK.  Aim it at an older release and the site serves that one again: releases are immutable and retained to the retention depth, so nothing is rebuilt or re-copied and the flip is one atomic statement. Before the flip, two conditions run in the order that gives each its own honest answer — the ROW says whether this release exists for this tenant at all (404, with no signal about a foreign id), and only then do the BYTES say whether it can still serve (410 GONE when retention has reclaimed them; that rollback target is not coming back, so publish again). Going live also claims the public host and purges the edge, so the release is reachable and no cached predecessor is served. NOT billed: no new content is produced, only a pointer moved.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-         * @summary Points the site at an existing release — the go-live, and equally the ROLLBACK.
-         * @param {PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postPlatformSitesBySlugReleasesByReleaseActivate(requestParameters: PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsRelease> {
-            return localVarFp.postPlatformSitesBySlugReleasesByReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(axios, basePath));
+        postPlatformRunner(requestParameters: PlatformApiPostPlatformRunnerRequest, options?: RawAxiosRequestConfig): AxiosPromise<RunnerBuildResp> {
+            return localVarFp.postPlatformRunner(requestParameters.runnerBuildReq, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces an app\'s environment variables.  It writes the app\'s whole environment set and answers the updated application. This is the one post-create write path for env, and it REPLACES rather than merges: a variable absent from the body is gone, and a secret dropped from the set leaves the app\'s Secret on its next deploy.  Keys must match `^[A-Za-z_][A-Za-z0-9_]*$`. A value marked `secret: true` is sealed into KMS and blanked in the database, so plaintext is never persisted — and the write fails 503 if KMS is unavailable rather than storing one in the clear.  The rule worth knowing: this does not restart anything. Once the app has been deployed the secret sync is re-declared immediately so the operator re-materialises the Secret, but RUNNING pods keep the environment they started with until their next deploy or restart. Requires a validated principal; 403 without one.
@@ -3355,41 +2531,6 @@ export interface PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHos
      * Host is the hostname, from the path.
      * @type {string}
      * @memberof PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHost
-     */
-    readonly host: string
-}
-
-/**
- * Request parameters for deletePlatformSitesBySlug operation in PlatformApi.
- * @export
- * @interface PlatformApiDeletePlatformSitesBySlugRequest
- */
-export interface PlatformApiDeletePlatformSitesBySlugRequest {
-    /**
-     * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-     * @type {string}
-     * @memberof PlatformApiDeletePlatformSitesBySlug
-     */
-    readonly slug: string
-}
-
-/**
- * Request parameters for deletePlatformSitesBySlugDomainsByHost operation in PlatformApi.
- * @export
- * @interface PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest
- */
-export interface PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest {
-    /**
-     * Slug is the project the host is attached to, from the path.
-     * @type {string}
-     * @memberof PlatformApiDeletePlatformSitesBySlugDomainsByHost
-     */
-    readonly slug: string
-
-    /**
-     * Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
-     * @type {string}
-     * @memberof PlatformApiDeletePlatformSitesBySlugDomainsByHost
      */
     readonly host: string
 }
@@ -3626,104 +2767,6 @@ export interface PlatformApiGetPlatformProjectsByProjectAppsByAppDomainsRequest 
 }
 
 /**
- * Request parameters for getPlatformSitesBySlug operation in PlatformApi.
- * @export
- * @interface PlatformApiGetPlatformSitesBySlugRequest
- */
-export interface PlatformApiGetPlatformSitesBySlugRequest {
-    /**
-     * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-     * @type {string}
-     * @memberof PlatformApiGetPlatformSitesBySlug
-     */
-    readonly slug: string
-}
-
-/**
- * Request parameters for getPlatformSitesBySlugDeployments operation in PlatformApi.
- * @export
- * @interface PlatformApiGetPlatformSitesBySlugDeploymentsRequest
- */
-export interface PlatformApiGetPlatformSitesBySlugDeploymentsRequest {
-    /**
-     * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-     * @type {string}
-     * @memberof PlatformApiGetPlatformSitesBySlugDeployments
-     */
-    readonly slug: string
-}
-
-/**
- * Request parameters for getPlatformSitesBySlugDeploymentsById operation in PlatformApi.
- * @export
- * @interface PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest
- */
-export interface PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest {
-    /**
-     * Slug is the project the deployment belongs to, from the path.
-     * @type {string}
-     * @memberof PlatformApiGetPlatformSitesBySlugDeploymentsById
-     */
-    readonly slug: string
-
-    /**
-     * ID is the deployment id, from the path. A deployment of another project — or of another tenant\&#39;s project — is not found.
-     * @type {string}
-     * @memberof PlatformApiGetPlatformSitesBySlugDeploymentsById
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for getPlatformSitesBySlugDomains operation in PlatformApi.
- * @export
- * @interface PlatformApiGetPlatformSitesBySlugDomainsRequest
- */
-export interface PlatformApiGetPlatformSitesBySlugDomainsRequest {
-    /**
-     * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-     * @type {string}
-     * @memberof PlatformApiGetPlatformSitesBySlugDomains
-     */
-    readonly slug: string
-}
-
-/**
- * Request parameters for getPlatformSitesBySlugReleases operation in PlatformApi.
- * @export
- * @interface PlatformApiGetPlatformSitesBySlugReleasesRequest
- */
-export interface PlatformApiGetPlatformSitesBySlugReleasesRequest {
-    /**
-     * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-     * @type {string}
-     * @memberof PlatformApiGetPlatformSitesBySlugReleases
-     */
-    readonly slug: string
-}
-
-/**
- * Request parameters for patchPlatformSitesBySlug operation in PlatformApi.
- * @export
- * @interface PlatformApiPatchPlatformSitesBySlugRequest
- */
-export interface PlatformApiPatchPlatformSitesBySlugRequest {
-    /**
-     * Slug is the project to update, from the path. The URL is the addressing authority — a &#x60;slug&#x60; in the body cannot move the write to another project.
-     * @type {string}
-     * @memberof PlatformApiPatchPlatformSitesBySlug
-     */
-    readonly slug: string
-
-    /**
-     * 
-     * @type {ProjectsUpdate}
-     * @memberof PlatformApiPatchPlatformSitesBySlug
-     */
-    readonly projectsUpdate: ProjectsUpdate
-}
-
-/**
  * Request parameters for postPlatformFleetByAppDeploy operation in PlatformApi.
  * @export
  * @interface PlatformApiPostPlatformFleetByAppDeployRequest
@@ -3742,6 +2785,20 @@ export interface PlatformApiPostPlatformFleetByAppDeployRequest {
      * @memberof PlatformApiPostPlatformFleetByAppDeploy
      */
     readonly restartRef: RestartRef
+}
+
+/**
+ * Request parameters for postPlatformHook operation in PlatformApi.
+ * @export
+ * @interface PlatformApiPostPlatformHookRequest
+ */
+export interface PlatformApiPostPlatformHookRequest {
+    /**
+     * 
+     * @type {Push}
+     * @memberof PlatformApiPostPlatformHook
+     */
+    readonly push?: Push
 }
 
 /**
@@ -3976,206 +3033,31 @@ export interface PlatformApiPostPlatformProjectsByProjectAppsByAppStopRequest {
 }
 
 /**
- * Request parameters for postPlatformSites operation in PlatformApi.
+ * Request parameters for postPlatformRun operation in PlatformApi.
  * @export
- * @interface PlatformApiPostPlatformSitesRequest
+ * @interface PlatformApiPostPlatformRunRequest
  */
-export interface PlatformApiPostPlatformSitesRequest {
+export interface PlatformApiPostPlatformRunRequest {
     /**
      * 
-     * @type {ProjectsCreate}
-     * @memberof PlatformApiPostPlatformSites
+     * @type {RunReq}
+     * @memberof PlatformApiPostPlatformRun
      */
-    readonly projectsCreate: ProjectsCreate
+    readonly runReq: RunReq
 }
 
 /**
- * Request parameters for postPlatformSitesBySlugDeploy operation in PlatformApi.
+ * Request parameters for postPlatformRunner operation in PlatformApi.
  * @export
- * @interface PlatformApiPostPlatformSitesBySlugDeployRequest
+ * @interface PlatformApiPostPlatformRunnerRequest
  */
-export interface PlatformApiPostPlatformSitesBySlugDeployRequest {
+export interface PlatformApiPostPlatformRunnerRequest {
     /**
      * 
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugDeploy
+     * @type {RunnerBuildReq}
+     * @memberof PlatformApiPostPlatformRunner
      */
-    readonly slug: string
-
-    /**
-     * 
-     * @type {File}
-     * @memberof PlatformApiPostPlatformSitesBySlugDeploy
-     */
-    readonly body?: File
-}
-
-/**
- * Request parameters for postPlatformSitesBySlugDeployments operation in PlatformApi.
- * @export
- * @interface PlatformApiPostPlatformSitesBySlugDeploymentsRequest
- */
-export interface PlatformApiPostPlatformSitesBySlugDeploymentsRequest {
-    /**
-     * Slug is the site to deploy, from the path.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugDeployments
-     */
-    readonly slug: string
-
-    /**
-     * 
-     * @type {ProjectsDeployStart}
-     * @memberof PlatformApiPostPlatformSitesBySlugDeployments
-     */
-    readonly projectsDeployStart: ProjectsDeployStart
-}
-
-/**
- * Request parameters for postPlatformSitesBySlugDeploymentsByIdComplete operation in PlatformApi.
- * @export
- * @interface PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest
- */
-export interface PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest {
-    /**
-     * Slug is the project the deployment belongs to, from the path.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugDeploymentsByIdComplete
-     */
-    readonly slug: string
-
-    /**
-     * ID is the queued deployment to complete, from the path.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugDeploymentsByIdComplete
-     */
-    readonly id: string
-
-    /**
-     * 
-     * @type {ProjectsComplete}
-     * @memberof PlatformApiPostPlatformSitesBySlugDeploymentsByIdComplete
-     */
-    readonly projectsComplete: ProjectsComplete
-}
-
-/**
- * Request parameters for postPlatformSitesBySlugDomains operation in PlatformApi.
- * @export
- * @interface PlatformApiPostPlatformSitesBySlugDomainsRequest
- */
-export interface PlatformApiPostPlatformSitesBySlugDomainsRequest {
-    /**
-     * Slug is the site the hosts attach to, from the path.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugDomains
-     */
-    readonly slug: string
-
-    /**
-     * 
-     * @type {ProjectsDomainsBind}
-     * @memberof PlatformApiPostPlatformSitesBySlugDomains
-     */
-    readonly projectsDomainsBind: ProjectsDomainsBind
-}
-
-/**
- * Request parameters for postPlatformSitesBySlugDomainsByHostVerify operation in PlatformApi.
- * @export
- * @interface PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest
- */
-export interface PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest {
-    /**
-     * Slug is the project the host is attached to, from the path.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugDomainsByHostVerify
-     */
-    readonly slug: string
-
-    /**
-     * Host is the custom hostname, from the path. It is cleaned to its canonical form (lowercased, trailing dot dropped) before anything is looked up.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugDomainsByHostVerify
-     */
-    readonly host: string
-}
-
-/**
- * Request parameters for postPlatformSitesBySlugPublish operation in PlatformApi.
- * @export
- * @interface PlatformApiPostPlatformSitesBySlugPublishRequest
- */
-export interface PlatformApiPostPlatformSitesBySlugPublishRequest {
-    /**
-     * Slug is the site to publish, from the path.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugPublish
-     */
-    readonly slug: string
-
-    /**
-     * 
-     * @type {ProjectsPublish}
-     * @memberof PlatformApiPostPlatformSitesBySlugPublish
-     */
-    readonly projectsPublish: ProjectsPublish
-}
-
-/**
- * Request parameters for postPlatformSitesBySlugPurge operation in PlatformApi.
- * @export
- * @interface PlatformApiPostPlatformSitesBySlugPurgeRequest
- */
-export interface PlatformApiPostPlatformSitesBySlugPurgeRequest {
-    /**
-     * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugPurge
-     */
-    readonly slug: string
-}
-
-/**
- * Request parameters for postPlatformSitesBySlugReleases operation in PlatformApi.
- * @export
- * @interface PlatformApiPostPlatformSitesBySlugReleasesRequest
- */
-export interface PlatformApiPostPlatformSitesBySlugReleasesRequest {
-    /**
-     * Slug is the site to publish, from the path.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugReleases
-     */
-    readonly slug: string
-
-    /**
-     * 
-     * @type {ProjectsPublish}
-     * @memberof PlatformApiPostPlatformSitesBySlugReleases
-     */
-    readonly projectsPublish: ProjectsPublish
-}
-
-/**
- * Request parameters for postPlatformSitesBySlugReleasesByReleaseActivate operation in PlatformApi.
- * @export
- * @interface PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest
- */
-export interface PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest {
-    /**
-     * Slug is the site the release belongs to, from the path.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivate
-     */
-    readonly slug: string
-
-    /**
-     * Release is the content-addressed release id (\&quot;rel_\&quot; + 32 hex chars), from the path. Anything that is not that shape is not found, rather than being interpolated into a storage prefix.
-     * @type {string}
-     * @memberof PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivate
-     */
-    readonly release: string
+    readonly runnerBuildReq: RunnerBuildReq
 }
 
 /**
@@ -4238,30 +3120,6 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Deletes a project and takes its site off the internet.  The metadata delete is authoritative and everything after it is best-effort, in this order: the public `<slug>` subdomain binding is released so the slug is free to reclaim, the release rows are dropped so a reclaimed slug never inherits the previous owner\'s rollback menu, the git source is retired on every copy it has so a reclaimed slug never adopts a repository left behind (visibility.go), the S3 origin is purged under BOTH `<org>/<slug>/` and the site\'s sibling release space, and the edge cache-tag is flushed. A failure in any of those is logged and the delete still answers 204 — resurrecting a project because a purge missed would be worse than a leaked prefix.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404 and nothing of theirs is touched.
-     * @summary Deletes a project and takes its site off the internet.
-     * @param {PlatformApiDeletePlatformSitesBySlugRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public deletePlatformSitesBySlug(requestParameters: PlatformApiDeletePlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).deletePlatformSitesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Gives a custom hostname back, so the name is free to reuse.  A claim is FIRST-COME and global, so an add-only surface was not ownership but a leak: a customer who mistyped a domain, or claimed one they later moved elsewhere, could neither reuse it nor let anyone else. This is the third writer that closes it. The release is scoped to (host, org, slug), so it can only ever drop THIS tenant\'s own claim, and it is IDEMPOTENT: releasing a host we do not hold is a clean 204, never a 404 that would let a caller probe which hosts other tenants hold. The edge cache-tag is flushed, since the host stops routing here.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Gives a custom hostname back, so the name is free to reuse.
-     * @param {PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public deletePlatformSitesBySlugDomainsByHost(requestParameters: PlatformApiDeletePlatformSitesBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).deletePlatformSitesBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns the declarations in the caller\'s own org directory, each joined with the Hanzo CD Application reconciling it — sync verdict, health, the universe commit last applied. `cd` is null for a declaration the delivery plane has no Application for, which is the normal state of one that exists only on a branch.  If the delivery plane cannot be read, the declarations are still returned and `cdUnavailable` says why. An unreadable plane never renders as \"nothing has been reconciled\".
      * @summary What this organization has declared, and what CD did with it
      * @param {*} [options] Override http request option.
@@ -4297,6 +3155,17 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
+     * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
+     * @summary Returns real build records for your org.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public getPlatformBuilds(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformBuilds(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Every Hanzo CD Application this caller may observe, with its sync verdict, health, the universe revision last applied, and whether automation and self-heal are on. A SuperAdmin sees the fleet; an org admin sees only Applications whose destination namespace IS its own organization, and never a reserved one.  A cluster with no CD installed answers an empty plane. A plane that cannot be READ answers 503 and says why — the two are opposite facts and never share a shape.
      * @summary The delivery plane
      * @param {*} [options] Override http request option.
@@ -4316,6 +3185,17 @@ export class PlatformApi extends BaseAPI {
      */
     public getPlatformCi(options?: RawAxiosRequestConfig) {
         return PlatformApiFp(this.configuration).getPlatformCi(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns your deploy targets, and what is running on each.  It returns the org\'s environments — the distinct deploy targets its applications name, `production` for anything that names none — each aggregating the apps that target it, a rolled-up status and when it last changed.  An environment is DERIVED, not stored: there is nothing to create or delete here, and an environment exists exactly as long as an app points at it. Requires a validated principal; 403 without one.
+     * @summary Returns your deploy targets, and what is running on each.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public getPlatformEnvironments(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformEnvironments(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4351,6 +3231,17 @@ export class PlatformApi extends BaseAPI {
      */
     public getPlatformHealth(options?: RawAxiosRequestConfig) {
         return PlatformApiFp(this.configuration).getPlatformHealth(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one build-and-deploy pipeline per app, with its latest run.  It returns one pipeline per application in the caller\'s org — its repo or image source, its current status, and when its most recent deployment ran and how long it took. A pipeline is a PROJECTION of an app plus its newest deployment, not a separate record: it comes into existence with the app and is triggered only through /deploy, never here. Requires a validated principal; 403 without one.
+     * @summary Returns one build-and-deploy pipeline per app, with its latest run.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public getPlatformPipelines(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformPipelines(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4449,86 +3340,14 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal\'s org, so it never contains another tenant\'s project.
-     * @summary Returns every project your org owns.
+     * Returns the versions that actually reached the cluster.  It lists the org\'s releases: the deployments that were genuinely applied to the cluster, with the app they belong to, their version, environment, status and when they were released. A deployment that failed or is still building is NOT a release and is excluded — reaching the cluster is what makes one. Requires a validated principal; 403 without one.
+     * @summary Returns the versions that actually reached the cluster.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getPlatformSites(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformSites(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.  Scope: a validated principal is required (403 without one) and the lookup is keyed by (org, slug), so another tenant\'s slug is a 404 exactly like a nonexistent one.
-     * @summary Returns one project of yours by slug — its settings, its live URL and the deployment currently serving it.
-     * @param {PlatformApiGetPlatformSitesBySlugRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public getPlatformSitesBySlug(requestParameters: PlatformApiGetPlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformSitesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns a project\'s deploy history, newest version first.  Every deploy of the project is a row — uploads, generated sites, and git/CI builds alike — carrying its version, status, source, commit, live URL, file count and byte count. The short-lived upload grant a queued git deployment was handed is NOT replayed here: it exists only on the 202 that minted it, so a grant cannot outlive its build by being fetched again.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Returns a project\'s deploy history, newest version first.
-     * @param {PlatformApiGetPlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public getPlatformSitesBySlugDeployments(requestParameters: PlatformApiGetPlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformSitesBySlugDeployments(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one deployment of a project by id.  It is how a console follows a build: the status (`queued`, `uploading`, `live`, `error`), the message a failure left, and the URL and prefix it went live at. Like the history, it never replays the upload grant.  Scope: a validated principal is required (403 without one). Both the project and the deployment are resolved within that principal\'s org, so a deployment of another project — or of another tenant — is a 404.
-     * @summary Returns one deployment of a project by id.
-     * @param {PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public getPlatformSitesBySlugDeploymentsById(requestParameters: PlatformApiGetPlatformSitesBySlugDeploymentsByIdRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformSitesBySlugDeploymentsById(requestParameters.slug, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.  `domains` is the routing answer — the hosts that are verified right now — while `claims` is the full panel, one row per host, each saying whether it is live or pending and, if pending, exactly what to publish.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Returns every custom hostname this site holds: the live ones, plus any pending claim with the DNS records it still owes.
-     * @param {PlatformApiGetPlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public getPlatformSitesBySlugDomains(requestParameters: PlatformApiGetPlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformSitesBySlugDomains(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns a site\'s releases newest-first, marking the active one — the rollback menu.  Each row carries the release id to activate, the source it was promoted from, its object and byte counts, and the URL if it is the one serving. Retention bounds the list, so it is the set that can actually still be rolled back to, not a full history.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Returns a site\'s releases newest-first, marking the active one — the rollback menu.
-     * @param {PlatformApiGetPlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public getPlatformSitesBySlugReleases(requestParameters: PlatformApiGetPlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformSitesBySlugReleases(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Changes a project\'s settings, and only the settings you send.  Every field is optional and absent means \"leave it\": `name` may not be blanked, `framework` must stay a known build hint, and `cacheControl` is capped at 256 characters with no newlines (it becomes a response header). `visibility` flips public/private under the same rule as create — public is free, private needs a funded org. `upstream` and `license` are free-text credit for third-party work, and sending \"\" clears one. Changing anything reconciles the project\'s canonical git repo, so a visibility change reaches the source and not just the listing.  `hidden`/`hiddenReason` are platform MODERATION and are ignored unless the caller is a platform admin; they remove a project from the public catalogue without touching the publisher\'s own visibility choice, so un-hiding restores exactly what they asked for.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Changes a project\'s settings, and only the settings you send.
-     * @param {PlatformApiPatchPlatformSitesBySlugRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public patchPlatformSitesBySlug(requestParameters: PlatformApiPatchPlatformSitesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).patchPlatformSitesBySlug(requestParameters.slug, requestParameters.projectsUpdate, options).then((request) => request(this.axios, this.basePath));
+    public getPlatformReleases(options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformReleases(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4552,6 +3371,18 @@ export class PlatformApi extends BaseAPI {
      */
     public postPlatformFleetByAppDeploy(requestParameters: PlatformApiPostPlatformFleetByAppDeployRequest, options?: RawAxiosRequestConfig) {
         return PlatformApiFp(this.configuration).postPlatformFleetByAppDeploy(requestParameters.app, requestParameters.restartRef, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two seams a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both seams answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
+     * @summary Receive a push from the forge and trigger its build
+     * @param {PlatformApiPostPlatformHookRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PlatformApi
+     */
+    public postPlatformHook(requestParameters: PlatformApiPostPlatformHookRequest = {}, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformHook(requestParameters.push, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4663,123 +3494,27 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.  `name` is required; `slug` is derived from the name when omitted and is the identifier that matters — it becomes the S3 key segment, the public host `<slug>.hanzo.app`, and the handle every later call addresses, so it must match `^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$` and may not be a reserved label such as `api` or `admin`. `framework` is a build hint from a closed set, defaulting to `static`; it never gates a deploy, it only tells CI how to build a linked repo.  Two defaults are worth knowing: the analytics beacon is ON unless `analytics` is explicitly false, and `visibility` is `public` unless asked otherwise. Publishing publicly is free; PRIVATE is the paid feature, and an unfunded org asking for it is refused rather than quietly published as public. Creation also provisions the project\'s data space and a canonical git repo, both best-effort — neither can fail the create.  Scope: a validated principal is required (403 without one) and the project is created in THAT principal\'s org. The slug is unique per org, so a slug already used in the caller\'s own org is a 409 while the same slug in another org is irrelevant.
-     * @summary Creates a project — the handle a site is deployed and served under — and answers 201 with it in `draft`.
-     * @param {PlatformApiPostPlatformSitesRequest} requestParameters Request parameters.
+     * Runs a container image and gives back a URL.  The one-call shortcut over project → app → deploy: give it a `name` and an `image` and it creates or updates an image-source application in your org\'s DEFAULT project, deploys it through the same operator Service-CR writer everything else uses, and answers its id, name, live URL, status and shape. Re-running the same name UPDATES it in place, so the call is idempotent by name.  What it produces is a first-class application, not a special object: it is listable, stoppable and redeployable through the /v1/platform routes like any other app.  `minScale` is the replica floor. `maxScale` above it declares an autoscaling ceiling; `maxScale: 0` means no autoscaler at all — a fixed run at the floor. Both are clamped to the deployment\'s limits. `runtime` and `shape` are accepted for the client contract and echoed back: the image is the runtime unit and sizing is the operator\'s default.  It is BILLING-GATED before it touches the cluster: a flat per-run fee is authorized against the org\'s own prepaid balance first, so an org that cannot pay is refused without anything being created. An unreachable cluster is 503 — a run never reports a URL it did not create. Secret env is sealed into KMS and fails closed without it.  Requires a validated principal; 403 without one. The org is resolved from that validated identity and is what both pays and owns the namespace — it is never read from the body.
+     * @summary Runs a container image and gives back a URL.
+     * @param {PlatformApiPostPlatformRunRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postPlatformSites(requestParameters: PlatformApiPostPlatformSitesRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformSites(requestParameters.projectsCreate, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformRun(requestParameters: PlatformApiPostPlatformRunRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformRun(requestParameters.runReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Takes a built site live at `https://<slug>.hanzo.app` in one call. The body is the site itself — a `zip` or `tar.gz` holding `index.html` at its root (or a single wrapper directory that does), sent raw or as a multipart file part. It is unpacked to the site\'s own storage prefix and served immediately, answering the finished deployment.  It is bounded by the edge body limit (16 MiB by default), and that bound is the whole reason the other path exists: an oversized POST is refused by the server BEFORE any handler runs and surfaces as an opaque `400 Error when parsing request` that reads like a malformed payload rather than a size cap. A site too large for one archive opens a deployment with `POST /v1/sites/{slug}/deployments` instead and writes its files straight to storage against the scoped grant that answers with — no body limit, and no bytes through this API at all.  Billing is fail-closed and fails FIRST: the hosting gate runs before anything is parsed or uploaded, so an unfunded org is 402 and an unreachable commerce is 503 with nothing written. The debit lands only on success — a failed upload is never billed and never flips the live site — and a redeploy answers the SAME URL, because slug and apex are stable.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404. Object storage must be configured (503); an archive that does not walk is a 400 and one over the size cap is a 413.
-     * @summary Upload a built site as one archive and serve it
-     * @param {PlatformApiPostPlatformSitesBySlugDeployRequest} requestParameters Request parameters.
+     * Triggers a native build — an image, or the binaries a repo declares.  The fabric\'s own build trigger, and what `hanzo build` and git-push-to-deploy call. It answers 202 with the build job id: a queued build, not a pushed artifact.  Two lanes, and a build is exactly one of them. The IMAGE lane takes `repo` and the output `image` and launches a BuildKit Job that pushes it. The ARTIFACT lane takes `binaries` — the same recipe the repo\'s hanzo.yml declares — and publishes to object storage instead; it must carry no `image`, because a build produces binaries or an image, never both.  PRIVILEGED, and A BUILD BELONGS TO THE ORGANIZATION ITS CREDENTIAL NAMES. Two credentials, never a third:    - one that NAMES an organization — a person who administers it (the `hanzo     build` path, so one IAM login authorizes a build with no separate build     token), or that organization\'s own machine identity (the pipeline path). The     build is attributed to that org and confined to what it owns.   - the shared build-callback token, compared in constant time. It names NO     organization, which is both why the fabric\'s own release can publish across     brands with it and why anything that CAN name one is read first.  Both are bounded by the owned-registry allowlist. The org path is bounded again, by the org: the image\'s registry namespace must be one that organization owns, so it publishes into its own brand and can never overwrite another\'s through the shared push credential. The same confinement applies to the artifact lane\'s repo owner. There is no request field naming an organization — the attribution is read off the credential, so there is nothing for a caller to write it with.  The output image is parsed and validated as a single well-formed OCI ref before any authorization decision reads it, so a crafted ref cannot smuggle a build-exporter attribute past the check.
+     * @summary Triggers a native build — an image, or the binaries a repo declares.
+     * @param {PlatformApiPostPlatformRunnerRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public postPlatformSitesBySlugDeploy(requestParameters: PlatformApiPostPlatformSitesBySlugDeployRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformSitesBySlugDeploy(requestParameters.slug, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage. Answers 202.  This is the path for a site too large to send as one archive: a real export is hundreds of megabytes against a 16 MiB body limit, so the bytes deliberately do NOT pass through the API. The answer carries `bucket`, `prefix` and `upload` — a presigned POST policy that S3 itself confines to this site\'s prefix (starts-with `<org>/<slug>/`), expires in 30 minutes and bounds each object. So a build writes its own files and holds no standing bucket credential; there is nothing to rotate and nothing that leaks between tenants. Never guess the prefix — it is server-derived, and a guessed one lands where nothing is served.  The deployment is `queued` until POST .../deployments/{id}/complete flips it live (or error). That completion is also where DELETION happens: the grant authorizes writes only, so a build cannot remove a file, and cloud reconciles the prefix against the `keys` manifest the completion carries. A build that dies before completing leaves the deployment queued rather than a half-live site.  The grant is on the 202 and NOWHERE else — it is never stored and never replayed on a later read, so it cannot outlive the build it was minted for. A deployment whose grant could not be minted is still created and still completable; it simply carries no `upload`, and a caller with no other way to write should treat that as the failure it is.  Billing: the hosting gate runs BEFORE anything is created (402 unfunded, 503 commerce unreachable), and the debit lands on the completion that goes live — never on a queued or failed build.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Opens a deployment and hands back a short-lived, prefix-scoped grant to write its bytes straight to object storage.
-     * @param {PlatformApiPostPlatformSitesBySlugDeploymentsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public postPlatformSitesBySlugDeployments(requestParameters: PlatformApiPostPlatformSitesBySlugDeploymentsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformSitesBySlugDeployments(requestParameters.slug, requestParameters.projectsDeployStart, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.  `status` must be `live` or `error`. On a LIVE completion the public host is claimed FIRST, so the deployment reports the URL it actually OWNS — a CI-supplied `liveUrl` is a hint that can refine that URL but can never assert a subdomain another tenant holds. `keys` is the manifest CI just uploaded, relative to the deployment prefix: cloud reconciles the prefix against it so a page deleted from the build actually stops serving. Omit `keys` and nothing is deleted — the prefix only grows. Reconciliation runs only on a live completion (pruning against a failed build\'s manifest would delete the site the last good build is still serving) and is best-effort, so a stale leftover never turns a successful deploy into a 500. A live completion is also the one billable moment on the git path; an error completion bills nothing.  Scope: a validated principal is required (403 without one). CI authenticates with an org-scoped token through the gateway, so the deployment is resolved within that principal\'s org and another tenant\'s slug or deployment id is a 404.
-     * @summary CompleteDeployment is the CI completion hook that flips a queued git deployment to live (or error) once CI has synced the built site to S3.
-     * @param {PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public postPlatformSitesBySlugDeploymentsByIdComplete(requestParameters: PlatformApiPostPlatformSitesBySlugDeploymentsByIdCompleteRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformSitesBySlugDeploymentsByIdComplete(requestParameters.slug, requestParameters.id, requestParameters.projectsComplete, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Attaches one or more CUSTOM public hostnames to this org\'s site.  Binding a host you do not own would let you shadow it at the edge, so which outcome you get depends on whether ownership is already established: a SuperAdmin vouches (the operator manages the customer\'s DNS, so its bind IS the proof) and binds VERIFIED immediately; every other caller, INCLUDING an admin of the deployment\'s own brand org, has the host CLAIMED as pending and gets the DNS challenge back in `bound[].records`. A pending claim HOLDS the name so nobody else can take it, but it does not route until POST .../domains/{host}/verify proves control.  A hostname we operate is refused to a non-vouched caller (those are assigned by the platform, never claimed), a host another site already holds is a 409, and a name the platform holds is a 400 for EVERY caller — a vouch skips the ownership proof, never the host table\'s own invariant. Claims and binds are idempotent for the same (org, slug), and re-claiming returns the SAME token rather than invalidating a record the customer has already published. The edge cache-tag is flushed afterwards so a newly-verified host serves the current build immediately.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Attaches one or more CUSTOM public hostnames to this org\'s site.
-     * @param {PlatformApiPostPlatformSitesBySlugDomainsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public postPlatformSitesBySlugDomains(requestParameters: PlatformApiPostPlatformSitesBySlugDomainsRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformSitesBySlugDomains(requestParameters.slug, requestParameters.projectsDomainsBind, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.  It answers 200 either way, with the host\'s honest current state: verified once the TXT record is found, still pending — with the records to publish and the resolver\'s own explanation in `detail` — when it is not. A not-yet is not an error: the check ran, DNS simply has not propagated, and the customer retries. An already-verified host is returned unchanged without re-resolving. On a successful promotion the edge cache-tag is flushed, since the host routes as of that moment.  Scope: a validated principal is required (403 without one). Both the site and the claim are resolved within that principal\'s org, so a host claimed by another tenant is \"not claimed by this site\".
-     * @summary Checks the DNS challenge for a pending custom hostname and, when it passes, promotes the host so it begins routing at the edge.
-     * @param {PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public postPlatformSitesBySlugDomainsByHostVerify(requestParameters: PlatformApiPostPlatformSitesBySlugDomainsByHostVerifyRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformSitesBySlugDomainsByHostVerify(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.  It is exactly the two halves in sequence with no extra semantics, so the staged flow and the one-shot flow can never drift apart: `source` is promoted under the same org-relative rule and the same guards CreateRelease applies, then the site\'s pointer is flipped to it, the public host is claimed and the edge is purged. Idempotent on unchanged bytes — same manifest, same release id, no copy — and billed once, after the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Promotes a build output into a new release AND goes live with it — create+activate in one call, which is the 99% path.
-     * @param {PlatformApiPostPlatformSitesBySlugPublishRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public postPlatformSitesBySlugPublish(requestParameters: PlatformApiPostPlatformSitesBySlugPublishRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformSitesBySlugPublish(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Flushes the site\'s edge cache without redeploying anything.  It invalidates the edge cache-tag `site-<org>-<slug>` and stamps `lastPurgeAt` (unix seconds), and it NEVER writes or deletes the S3 origin — the live build keeps serving; only stale copies held at the edge drop, so the next request re-fetches the current artifact from origin. Idempotent, and an edge that is unconfigured or failing is not fatal: `lastPurgeAt` is still stamped and the answer is still the updated project.  Scope: a validated principal is required (403 without one) and the project is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Flushes the site\'s edge cache without redeploying anything.
-     * @param {PlatformApiPostPlatformSitesBySlugPurgeRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public postPlatformSitesBySlugPurge(requestParameters: PlatformApiPostPlatformSitesBySlugPurgeRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformSitesBySlugPurge(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live. Answers 201.  `source` is a path RELATIVE to your org\'s own storage space: the org segment is prepended server-side from the validated principal and the bucket is never in the request at all, so a server-side copy can only ever reach bytes your org already owns. The prefix is listed, content-addressed (SHA-256 over the sorted manifest of key/size/etag), and copied into an immutable `<org>/.releases/<slug>/<id>/` prefix; the row is written LAST, so a partial copy is unreachable rather than merely unlikely. Re-publishing an unchanged source is idempotent BY CONSTRUCTION — same bytes, same id, no copy at all.  The source must contain index.html at its root and stay under the same file and byte caps an artifact deploy does (413 past them); a source that changes mid-copy is a 409 and the release is abandoned. Each publish also reclaims releases past the retention depth, so a site\'s release space stays bounded. This is the billable half — the hosting gate runs before any copy, and the debit lands once the release exists.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Promotes a build output into a new immutable release WITHOUT serving it — the staged half of publishing, for when you want to check a release before it goes live.
-     * @param {PlatformApiPostPlatformSitesBySlugReleasesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public postPlatformSitesBySlugReleases(requestParameters: PlatformApiPostPlatformSitesBySlugReleasesRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformSitesBySlugReleases(requestParameters.slug, requestParameters.projectsPublish, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Points the site at an existing release — the go-live, and equally the ROLLBACK.  Aim it at an older release and the site serves that one again: releases are immutable and retained to the retention depth, so nothing is rebuilt or re-copied and the flip is one atomic statement. Before the flip, two conditions run in the order that gives each its own honest answer — the ROW says whether this release exists for this tenant at all (404, with no signal about a foreign id), and only then do the BYTES say whether it can still serve (410 GONE when retention has reclaimed them; that rollback target is not coming back, so publish again). Going live also claims the public host and purges the edge, so the release is reachable and no cached predecessor is served. NOT billed: no new content is produced, only a pointer moved.  Scope: a validated principal is required (403 without one) and the site is resolved within that principal\'s org, so another tenant\'s slug is a 404.
-     * @summary Points the site at an existing release — the go-live, and equally the ROLLBACK.
-     * @param {PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PlatformApi
-     */
-    public postPlatformSitesBySlugReleasesByReleaseActivate(requestParameters: PlatformApiPostPlatformSitesBySlugReleasesByReleaseActivateRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).postPlatformSitesBySlugReleasesByReleaseActivate(requestParameters.slug, requestParameters.release, options).then((request) => request(this.axios, this.basePath));
+    public postPlatformRunner(requestParameters: PlatformApiPostPlatformRunnerRequest, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).postPlatformRunner(requestParameters.runnerBuildReq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

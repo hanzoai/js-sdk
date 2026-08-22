@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -22,21 +22,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ActivityView } from '../models';
-// @ts-ignore
-import type { BackfillQuery } from '../models';
-// @ts-ignore
-import type { BackfillResult } from '../models';
-// @ts-ignore
 import type { DashResp } from '../models';
-// @ts-ignore
-import type { LeaderboardView } from '../models';
-// @ts-ignore
-import type { OptinView } from '../models';
-// @ts-ignore
-import type { OrgOptinReq } from '../models';
-// @ts-ignore
-import type { OrgOptinView } from '../models';
 // @ts-ignore
 import type { ReportReq } from '../models';
 // @ts-ignore
@@ -47,70 +33,12 @@ import type { UsageAnalyticsAccess } from '../models';
 import type { UsageAnalyticsView } from '../models';
 // @ts-ignore
 import type { UsageSummary } from '../models';
-// @ts-ignore
-import type { UserOptinReq } from '../models';
-// @ts-ignore
-import type { UserOptinView } from '../models';
 /**
  * UsageApi - axios parameter creator
  * @export
  */
 export const UsageApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
-         * @summary Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
-         * @param {string} [subject] Subject is what the series is about: \&quot;user\&quot; (default), \&quot;org\&quot; or \&quot;project\&quot;.
-         * @param {string} [id] ID names the subject within what the caller is entitled to see. Omitted (or \&quot;me\&quot;) it is the caller themselves, or their own org. Another user requires org admin and must belong to the caller\&#39;s org; another org requires a SuperAdmin.
-         * @param {string} [from] From is the first day of the range, \&quot;2006-01-02\&quot;. Defaults to 90 days back.
-         * @param {string} [to] To is the last day of the range, \&quot;2006-01-02\&quot;. Defaults to today; the span is clamped to 366 days.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUsageActivity: async (subject?: string, id?: string, from?: string, to?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/usage/activity`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (subject !== undefined) {
-                localVarQueryParameter['subject'] = subject;
-            }
-
-            if (id !== undefined) {
-                localVarQueryParameter['id'] = id;
-            }
-
-            if (from !== undefined) {
-                localVarQueryParameter['from'] = from;
-            }
-
-            if (to !== undefined) {
-                localVarQueryParameter['to'] = to;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from. Basic own-org usage stays ungated at /v1/usage/summary.  A plan that does not grant the analytics datastore is refused with 402, and an unresolvable plan fails closed to the free floor, which does not grant it. The window is clamped forward to the plan\'s retention entitlement, so a tenant can never read older than its plan allows even with a custom start. The response is marked no-store.  INTERIM (mirrors apps/world\'s limits echo): no org→plan resolver exists in cloud yet — the subscription lookup is owned by the billing plane and the gateway principal carries no plan claim — so the caller passes the plan and the gate resolves THAT plan\'s access.
          * @summary Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from.
@@ -192,94 +120,6 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
             if (plan !== undefined) {
                 localVarQueryParameter['plan'] = plan;
             }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
-         * @summary Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
-         * @param {string} [scope] Scope picks the board: \&quot;personal\&quot; (default) ranks the caller among their own org\&#39;s users, \&quot;org\&quot; is that same org board named for an admin, \&quot;global\&quot; ranks organizations against each other.
-         * @param {string} [metric] Metric is the value ranked: tokens (default), requests, or cost.
-         * @param {string} [period] Period is the window ranked: day, week, month (default) or all.
-         * @param {number} [limit] Limit caps the rows returned, clamped to 100. Defaults to 10, which is also what a non-positive or unparseable value takes.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUsageLeaderboard: async (scope?: string, metric?: string, period?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/usage/leaderboard`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (scope !== undefined) {
-                localVarQueryParameter['scope'] = scope;
-            }
-
-            if (metric !== undefined) {
-                localVarQueryParameter['metric'] = metric;
-            }
-
-            if (period !== undefined) {
-                localVarQueryParameter['period'] = period;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it. Public listing is opt-in and private by default, so a fresh caller reads listed=false for both.
-         * @summary Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUsageLeaderboardOptin: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/usage/leaderboard/optin`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -396,7 +236,7 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/links, so there is one and only one way to update an account row.
+         * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/link, so there is one and only one way to update an account row.
          * @summary Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series.
          * @param {ReportReq} reportReq 
          * @param {*} [options] Override http request option.
@@ -435,126 +275,6 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture. SuperAdmin only. Because the rollup accumulates, a second unguarded run would double every day it re-reads, so it refuses with 409 when the rollup already holds rows unless force=true is passed; forcing WILL double-count.
-         * @summary Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture.
-         * @param {BackfillQuery} backfillQuery 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postUsageRollupBackfill: async (backfillQuery: BackfillQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'backfillQuery' is not null or undefined
-            assertParamExists('postUsageRollupBackfill', 'backfillQuery', backfillQuery)
-            const localVarPath = `/v1/usage/rollup/backfill`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(backfillQuery, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Sets the CALLER\'s own public-listing preference on the leaderboard. Self only: the row written is keyed by the caller\'s validated ledger identity, so this can never edit another member\'s visibility whatever the request says. A caller opting in with no handle is given their username, so a listed row never renders as \"Anonymous\" to its own owner.
-         * @summary Sets the CALLER\'s own public-listing preference on the leaderboard.
-         * @param {UserOptinReq} userOptinReq 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putUsageLeaderboardOptin: async (userOptinReq: UserOptinReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userOptinReq' is not null or undefined
-            assertParamExists('putUsageLeaderboardOptin', 'userOptinReq', userOptinReq)
-            const localVarPath = `/v1/usage/leaderboard/optin`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(userOptinReq, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Sets the ORG\'s listing on the cross-org global board. Only an admin of the caller\'s own org — an org admin or a platform SuperAdmin — may change it, and the org written is the caller\'s validated tenant, never a value from the request. Listing consents to publishing the org\'s usage VOLUME; cross-org spend stays restricted to platform admins regardless.
-         * @summary Sets the ORG\'s listing on the cross-org global board.
-         * @param {OrgOptinReq} orgOptinReq 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putUsageLeaderboardOptinOrg: async (orgOptinReq: OrgOptinReq, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orgOptinReq' is not null or undefined
-            assertParamExists('putUsageLeaderboardOptinOrg', 'orgOptinReq', orgOptinReq)
-            const localVarPath = `/v1/usage/leaderboard/optin/org`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(orgOptinReq, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -565,22 +285,6 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
 export const UsageApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UsageApiAxiosParamCreator(configuration)
     return {
-        /**
-         * Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
-         * @summary Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
-         * @param {string} [subject] Subject is what the series is about: \&quot;user\&quot; (default), \&quot;org\&quot; or \&quot;project\&quot;.
-         * @param {string} [id] ID names the subject within what the caller is entitled to see. Omitted (or \&quot;me\&quot;) it is the caller themselves, or their own org. Another user requires org admin and must belong to the caller\&#39;s org; another org requires a SuperAdmin.
-         * @param {string} [from] From is the first day of the range, \&quot;2006-01-02\&quot;. Defaults to 90 days back.
-         * @param {string} [to] To is the last day of the range, \&quot;2006-01-02\&quot;. Defaults to today; the span is clamped to 366 days.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getUsageActivity(subject?: string, id?: string, from?: string, to?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivityView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageActivity(subject, id, from, to, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageActivity']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
         /**
          * Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from. Basic own-org usage stays ungated at /v1/usage/summary.  A plan that does not grant the analytics datastore is refused with 402, and an unresolvable plan fails closed to the free floor, which does not grant it. The window is clamped forward to the plan\'s retention entitlement, so a tenant can never read older than its plan allows even with a custom start. The response is marked no-store.  INTERIM (mirrors apps/world\'s limits echo): no org→plan resolver exists in cloud yet — the subscription lookup is owned by the billing plane and the gateway principal carries no plan claim — so the caller passes the plan and the gate resolves THAT plan\'s access.
          * @summary Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from.
@@ -608,34 +312,6 @@ export const UsageApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageAnalyticsAccess(plan, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageAnalyticsAccess']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
-         * @summary Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
-         * @param {string} [scope] Scope picks the board: \&quot;personal\&quot; (default) ranks the caller among their own org\&#39;s users, \&quot;org\&quot; is that same org board named for an admin, \&quot;global\&quot; ranks organizations against each other.
-         * @param {string} [metric] Metric is the value ranked: tokens (default), requests, or cost.
-         * @param {string} [period] Period is the window ranked: day, week, month (default) or all.
-         * @param {number} [limit] Limit caps the rows returned, clamped to 100. Defaults to 10, which is also what a non-positive or unparseable value takes.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getUsageLeaderboard(scope?: string, metric?: string, period?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LeaderboardView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageLeaderboard(scope, metric, period, limit, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageLeaderboard']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it. Public listing is opt-in and private by default, so a fresh caller reads listed=false for both.
-         * @summary Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getUsageLeaderboardOptin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OptinView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageLeaderboardOptin(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageLeaderboardOptin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -670,7 +346,7 @@ export const UsageApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/links, so there is one and only one way to update an account row.
+         * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/link, so there is one and only one way to update an account row.
          * @summary Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series.
          * @param {ReportReq} reportReq 
          * @param {*} [options] Override http request option.
@@ -680,45 +356,6 @@ export const UsageApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postUsage(reportReq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsageApi.postUsage']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture. SuperAdmin only. Because the rollup accumulates, a second unguarded run would double every day it re-reads, so it refuses with 409 when the rollup already holds rows unless force=true is passed; forcing WILL double-count.
-         * @summary Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture.
-         * @param {BackfillQuery} backfillQuery 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postUsageRollupBackfill(backfillQuery: BackfillQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BackfillResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postUsageRollupBackfill(backfillQuery, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.postUsageRollupBackfill']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Sets the CALLER\'s own public-listing preference on the leaderboard. Self only: the row written is keyed by the caller\'s validated ledger identity, so this can never edit another member\'s visibility whatever the request says. A caller opting in with no handle is given their username, so a listed row never renders as \"Anonymous\" to its own owner.
-         * @summary Sets the CALLER\'s own public-listing preference on the leaderboard.
-         * @param {UserOptinReq} userOptinReq 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async putUsageLeaderboardOptin(userOptinReq: UserOptinReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserOptinView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putUsageLeaderboardOptin(userOptinReq, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.putUsageLeaderboardOptin']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Sets the ORG\'s listing on the cross-org global board. Only an admin of the caller\'s own org — an org admin or a platform SuperAdmin — may change it, and the org written is the caller\'s validated tenant, never a value from the request. Listing consents to publishing the org\'s usage VOLUME; cross-org spend stays restricted to platform admins regardless.
-         * @summary Sets the ORG\'s listing on the cross-org global board.
-         * @param {OrgOptinReq} orgOptinReq 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async putUsageLeaderboardOptinOrg(orgOptinReq: OrgOptinReq, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrgOptinView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putUsageLeaderboardOptinOrg(orgOptinReq, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UsageApi.putUsageLeaderboardOptinOrg']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -731,16 +368,6 @@ export const UsageApiFp = function(configuration?: Configuration) {
 export const UsageApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = UsageApiFp(configuration)
     return {
-        /**
-         * Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
-         * @summary Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
-         * @param {UsageApiGetUsageActivityRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUsageActivity(requestParameters: UsageApiGetUsageActivityRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ActivityView> {
-            return localVarFp.getUsageActivity(requestParameters.subject, requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(axios, basePath));
-        },
         /**
          * Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from. Basic own-org usage stays ungated at /v1/usage/summary.  A plan that does not grant the analytics datastore is refused with 402, and an unresolvable plan fails closed to the free floor, which does not grant it. The window is clamped forward to the plan\'s retention entitlement, so a tenant can never read older than its plan allows even with a custom start. The response is marked no-store.  INTERIM (mirrors apps/world\'s limits echo): no org→plan resolver exists in cloud yet — the subscription lookup is owned by the billing plane and the gateway principal carries no plan claim — so the caller passes the plan and the gate resolves THAT plan\'s access.
          * @summary Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from.
@@ -760,25 +387,6 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
          */
         getUsageAnalyticsAccess(requestParameters: UsageApiGetUsageAnalyticsAccessRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<UsageAnalyticsAccess> {
             return localVarFp.getUsageAnalyticsAccess(requestParameters.plan, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
-         * @summary Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
-         * @param {UsageApiGetUsageLeaderboardRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUsageLeaderboard(requestParameters: UsageApiGetUsageLeaderboardRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<LeaderboardView> {
-            return localVarFp.getUsageLeaderboard(requestParameters.scope, requestParameters.metric, requestParameters.period, requestParameters.limit, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it. Public listing is opt-in and private by default, so a fresh caller reads listed=false for both.
-         * @summary Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUsageLeaderboardOptin(options?: RawAxiosRequestConfig): AxiosPromise<OptinView> {
-            return localVarFp.getUsageLeaderboardOptin(options).then((request) => request(axios, basePath));
         },
         /**
          * Is the PER-PROVIDER view: one connected account\'s own consumption of its own plan — \"my plan is 47% through its 6h window, resets at 14:20\".  `current` is the newest instance of each lane (the headline); `windows` is the history behind it. Both come from ONE deduped read, so they can never disagree. The rows are the caller\'s OWN linked accounts, scoped to the validated principal and its subject — never another user\'s, and never another org\'s.
@@ -801,7 +409,7 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getUsageSummary(requestParameters.range, requestParameters.start, requestParameters.end, options).then((request) => request(axios, basePath));
         },
         /**
-         * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/links, so there is one and only one way to update an account row.
+         * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/link, so there is one and only one way to update an account row.
          * @summary Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series.
          * @param {UsageApiPostUsageRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -810,73 +418,8 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
         postUsage(requestParameters: UsageApiPostUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReportResp> {
             return localVarFp.postUsage(requestParameters.reportReq, options).then((request) => request(axios, basePath));
         },
-        /**
-         * Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture. SuperAdmin only. Because the rollup accumulates, a second unguarded run would double every day it re-reads, so it refuses with 409 when the rollup already holds rows unless force=true is passed; forcing WILL double-count.
-         * @summary Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture.
-         * @param {UsageApiPostUsageRollupBackfillRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postUsageRollupBackfill(requestParameters: UsageApiPostUsageRollupBackfillRequest, options?: RawAxiosRequestConfig): AxiosPromise<BackfillResult> {
-            return localVarFp.postUsageRollupBackfill(requestParameters.backfillQuery, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Sets the CALLER\'s own public-listing preference on the leaderboard. Self only: the row written is keyed by the caller\'s validated ledger identity, so this can never edit another member\'s visibility whatever the request says. A caller opting in with no handle is given their username, so a listed row never renders as \"Anonymous\" to its own owner.
-         * @summary Sets the CALLER\'s own public-listing preference on the leaderboard.
-         * @param {UsageApiPutUsageLeaderboardOptinRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putUsageLeaderboardOptin(requestParameters: UsageApiPutUsageLeaderboardOptinRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserOptinView> {
-            return localVarFp.putUsageLeaderboardOptin(requestParameters.userOptinReq, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Sets the ORG\'s listing on the cross-org global board. Only an admin of the caller\'s own org — an org admin or a platform SuperAdmin — may change it, and the org written is the caller\'s validated tenant, never a value from the request. Listing consents to publishing the org\'s usage VOLUME; cross-org spend stays restricted to platform admins regardless.
-         * @summary Sets the ORG\'s listing on the cross-org global board.
-         * @param {UsageApiPutUsageLeaderboardOptinOrgRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putUsageLeaderboardOptinOrg(requestParameters: UsageApiPutUsageLeaderboardOptinOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<OrgOptinView> {
-            return localVarFp.putUsageLeaderboardOptinOrg(requestParameters.orgOptinReq, options).then((request) => request(axios, basePath));
-        },
     };
 };
-
-/**
- * Request parameters for getUsageActivity operation in UsageApi.
- * @export
- * @interface UsageApiGetUsageActivityRequest
- */
-export interface UsageApiGetUsageActivityRequest {
-    /**
-     * Subject is what the series is about: \&quot;user\&quot; (default), \&quot;org\&quot; or \&quot;project\&quot;.
-     * @type {string}
-     * @memberof UsageApiGetUsageActivity
-     */
-    readonly subject?: string
-
-    /**
-     * ID names the subject within what the caller is entitled to see. Omitted (or \&quot;me\&quot;) it is the caller themselves, or their own org. Another user requires org admin and must belong to the caller\&#39;s org; another org requires a SuperAdmin.
-     * @type {string}
-     * @memberof UsageApiGetUsageActivity
-     */
-    readonly id?: string
-
-    /**
-     * From is the first day of the range, \&quot;2006-01-02\&quot;. Defaults to 90 days back.
-     * @type {string}
-     * @memberof UsageApiGetUsageActivity
-     */
-    readonly from?: string
-
-    /**
-     * To is the last day of the range, \&quot;2006-01-02\&quot;. Defaults to today; the span is clamped to 366 days.
-     * @type {string}
-     * @memberof UsageApiGetUsageActivity
-     */
-    readonly to?: string
-}
 
 /**
  * Request parameters for getUsageAnalytics operation in UsageApi.
@@ -925,41 +468,6 @@ export interface UsageApiGetUsageAnalyticsAccessRequest {
      * @memberof UsageApiGetUsageAnalyticsAccess
      */
     readonly plan?: string
-}
-
-/**
- * Request parameters for getUsageLeaderboard operation in UsageApi.
- * @export
- * @interface UsageApiGetUsageLeaderboardRequest
- */
-export interface UsageApiGetUsageLeaderboardRequest {
-    /**
-     * Scope picks the board: \&quot;personal\&quot; (default) ranks the caller among their own org\&#39;s users, \&quot;org\&quot; is that same org board named for an admin, \&quot;global\&quot; ranks organizations against each other.
-     * @type {string}
-     * @memberof UsageApiGetUsageLeaderboard
-     */
-    readonly scope?: string
-
-    /**
-     * Metric is the value ranked: tokens (default), requests, or cost.
-     * @type {string}
-     * @memberof UsageApiGetUsageLeaderboard
-     */
-    readonly metric?: string
-
-    /**
-     * Period is the window ranked: day, week, month (default) or all.
-     * @type {string}
-     * @memberof UsageApiGetUsageLeaderboard
-     */
-    readonly period?: string
-
-    /**
-     * Limit caps the rows returned, clamped to 100. Defaults to 10, which is also what a non-positive or unparseable value takes.
-     * @type {number}
-     * @memberof UsageApiGetUsageLeaderboard
-     */
-    readonly limit?: number
 }
 
 /**
@@ -1040,66 +548,12 @@ export interface UsageApiPostUsageRequest {
 }
 
 /**
- * Request parameters for postUsageRollupBackfill operation in UsageApi.
- * @export
- * @interface UsageApiPostUsageRollupBackfillRequest
- */
-export interface UsageApiPostUsageRollupBackfillRequest {
-    /**
-     * 
-     * @type {BackfillQuery}
-     * @memberof UsageApiPostUsageRollupBackfill
-     */
-    readonly backfillQuery: BackfillQuery
-}
-
-/**
- * Request parameters for putUsageLeaderboardOptin operation in UsageApi.
- * @export
- * @interface UsageApiPutUsageLeaderboardOptinRequest
- */
-export interface UsageApiPutUsageLeaderboardOptinRequest {
-    /**
-     * 
-     * @type {UserOptinReq}
-     * @memberof UsageApiPutUsageLeaderboardOptin
-     */
-    readonly userOptinReq: UserOptinReq
-}
-
-/**
- * Request parameters for putUsageLeaderboardOptinOrg operation in UsageApi.
- * @export
- * @interface UsageApiPutUsageLeaderboardOptinOrgRequest
- */
-export interface UsageApiPutUsageLeaderboardOptinOrgRequest {
-    /**
-     * 
-     * @type {OrgOptinReq}
-     * @memberof UsageApiPutUsageLeaderboardOptinOrg
-     */
-    readonly orgOptinReq: OrgOptinReq
-}
-
-/**
  * UsageApi - object-oriented interface
  * @export
  * @class UsageApi
  * @extends {BaseAPI}
  */
 export class UsageApi extends BaseAPI {
-    /**
-     * Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present. Authorization is resolved server-side from the validated principal, so a caller can never widen the subject past what they are entitled to: a non-admin reads only themselves and their own org. subject=project answers empty with a note, because the usage ledger records no project column yet. When the warehouse is not connected the series answers empty with available=false rather than fabricated days.
-     * @summary Activity returns the per-day usage series for ONE authorized subject — the points a contribution heatmap and a timeline are drawn from, gap-filled so every day in the range is present.
-     * @param {UsageApiGetUsageActivityRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsageApi
-     */
-    public getUsageActivity(requestParameters: UsageApiGetUsageActivityRequest = {}, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).getUsageActivity(requestParameters.subject, requestParameters.id, requestParameters.from, requestParameters.to, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from. Basic own-org usage stays ungated at /v1/usage/summary.  A plan that does not grant the analytics datastore is refused with 402, and an unresolvable plan fails closed to the free floor, which does not grant it. The window is clamped forward to the plan\'s retention entitlement, so a tenant can never read older than its plan allows even with a custom start. The response is marked no-store.  INTERIM (mirrors apps/world\'s limits echo): no org→plan resolver exists in cloud yet — the subscription lookup is owned by the billing plane and the gateway principal carries no plan claim — so the caller passes the plan and the gate resolves THAT plan\'s access.
      * @summary Is the entitlement-GATED per-provider breakdown of the caller org\'s LLM usage — the paid lens over the same warehouse ledger GET /v1/usage/summary reads its totals from.
@@ -1122,29 +576,6 @@ export class UsageApi extends BaseAPI {
      */
     public getUsageAnalyticsAccess(requestParameters: UsageApiGetUsageAnalyticsAccessRequest = {}, options?: RawAxiosRequestConfig) {
         return UsageApiFp(this.configuration).getUsageAnalyticsAccess(requestParameters.plan, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page. Identities are private by default: a caller sees themselves, plus the peers or orgs that opted into public listing, and only an admin sees their own org\'s members named. Cross-org spend is restricted to platform admins. When the warehouse is not connected the board answers empty with available=false rather than a fabricated rank.
-     * @summary Leaderboard ranks AI usage over a window, either the users of the caller\'s own org or organizations against each other, and always reports the caller\'s own standing even when it falls outside the returned page.
-     * @param {UsageApiGetUsageLeaderboardRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsageApi
-     */
-    public getUsageLeaderboard(requestParameters: UsageApiGetUsageLeaderboardRequest = {}, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).getUsageLeaderboard(requestParameters.scope, requestParameters.metric, requestParameters.period, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it. Public listing is opt-in and private by default, so a fresh caller reads listed=false for both.
-     * @summary Returns the caller\'s own public-listing preference and their org\'s, each with whether the caller may change it.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsageApi
-     */
-    public getUsageLeaderboardOptin(options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).getUsageLeaderboardOptin(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1172,7 +603,7 @@ export class UsageApi extends BaseAPI {
     }
 
     /**
-     * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/links, so there is one and only one way to update an account row.
+     * Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series. Answers 202.  Send either a `samples` array or one sample\'s fields at the top level. Every sample needs a provider, a machine and a known window class; an unknown window or kind is refused rather than silently rewritten, because a dash filled with a class nobody reported is worse than an error. There is no timestamp field: the server owns the observation clock, and a sample says which window it measured with windowStart or resetsAt.  It is FAIL-SOFT on storage: a warehouse outage costs a poll of history (stored:false), never a failed request. It records usage ONLY — the link registry is refreshed separately via POST /v1/link, so there is one and only one way to update an account row.
      * @summary Ingests a batch of account-usage samples — what a developer\'s OWN AI accounts have consumed of their OWN plans, metered from each provider\'s own login — and appends them to the warehouse series.
      * @param {UsageApiPostUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1181,42 +612,6 @@ export class UsageApi extends BaseAPI {
      */
     public postUsage(requestParameters: UsageApiPostUsageRequest, options?: RawAxiosRequestConfig) {
         return UsageApiFp(this.configuration).postUsage(requestParameters.reportReq, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture. SuperAdmin only. Because the rollup accumulates, a second unguarded run would double every day it re-reads, so it refuses with 409 when the rollup already holds rows unless force=true is passed; forcing WILL double-count.
-     * @summary Backfill seeds the derived usage rollup from ledger history — the rows written before the incremental view existed, which that view can never capture.
-     * @param {UsageApiPostUsageRollupBackfillRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsageApi
-     */
-    public postUsageRollupBackfill(requestParameters: UsageApiPostUsageRollupBackfillRequest, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).postUsageRollupBackfill(requestParameters.backfillQuery, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Sets the CALLER\'s own public-listing preference on the leaderboard. Self only: the row written is keyed by the caller\'s validated ledger identity, so this can never edit another member\'s visibility whatever the request says. A caller opting in with no handle is given their username, so a listed row never renders as \"Anonymous\" to its own owner.
-     * @summary Sets the CALLER\'s own public-listing preference on the leaderboard.
-     * @param {UsageApiPutUsageLeaderboardOptinRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsageApi
-     */
-    public putUsageLeaderboardOptin(requestParameters: UsageApiPutUsageLeaderboardOptinRequest, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).putUsageLeaderboardOptin(requestParameters.userOptinReq, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Sets the ORG\'s listing on the cross-org global board. Only an admin of the caller\'s own org — an org admin or a platform SuperAdmin — may change it, and the org written is the caller\'s validated tenant, never a value from the request. Listing consents to publishing the org\'s usage VOLUME; cross-org spend stays restricted to platform admins regardless.
-     * @summary Sets the ORG\'s listing on the cross-org global board.
-     * @param {UsageApiPutUsageLeaderboardOptinOrgRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsageApi
-     */
-    public putUsageLeaderboardOptinOrg(requestParameters: UsageApiPutUsageLeaderboardOptinOrgRequest, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).putUsageLeaderboardOptinOrg(requestParameters.orgOptinReq, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

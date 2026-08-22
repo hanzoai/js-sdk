@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -365,8 +365,8 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
-         * @summary Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
+         * Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
+         * @summary Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
          * @param {string} [status] Status keeps only posts in that state (draft, scheduled, published, failed, canceled). Empty means every post.
          * @param {number} [limit] Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
          * @param {*} [options] Override http request option.
@@ -1626,8 +1626,8 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
-         * @summary Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
+         * Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
+         * @summary Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
          * @param {string} [status] Status keeps only posts in that state (draft, scheduled, published, failed, canceled). Empty means every post.
          * @param {number} [limit] Limit caps the rows returned; 0 means 200 and nothing above 1000 is honoured.
          * @param {*} [options] Override http request option.
@@ -2084,8 +2084,8 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.getMarketingAudiencesByIdPreview(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
-         * @summary Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
+         * Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
+         * @summary Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
          * @param {MarketingApiGetMarketingCalendarRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3051,8 +3051,8 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
-     * @summary Returns the org\'s calendar, soonest scheduled first, optionally narrowed to one status.
+     * Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
+     * @summary Returns the org\'s calendar, latest scheduled first, optionally narrowed to one status.
      * @param {MarketingApiGetMarketingCalendarRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

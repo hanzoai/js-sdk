@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { ProjectsCreateRepo } from './projects-create-repo';
+import type { ProjectsUpdateRepo } from './projects-update-repo';
 
 /**
  * 
@@ -24,19 +24,19 @@ import type { ProjectsCreateRepo } from './projects-create-repo';
  */
 export interface ProjectsUpdate {
     /**
-     * 
+     * CacheControl replaces the Cache-Control policy the edge serves this site\'s HTML under. Absent leaves it.
      * @type {string}
      * @memberof ProjectsUpdate
      */
     'cacheControl'?: string;
     /**
-     * 
+     * Description replaces the one-line summary. Absent leaves it.
      * @type {string}
      * @memberof ProjectsUpdate
      */
     'description'?: string;
     /**
-     * 
+     * Framework replaces the build hint. It affects the NEXT build only — nothing already deployed is rebuilt.
      * @type {string}
      * @memberof ProjectsUpdate
      */
@@ -48,29 +48,29 @@ export interface ProjectsUpdate {
      */
     'hidden'?: boolean;
     /**
-     * 
+     * HiddenReason records WHY moderation hid it, so the action can be explained and reviewed later. Admin-gated like hidden itself.
      * @type {string}
      * @memberof ProjectsUpdate
      */
     'hiddenReason'?: string;
     /**
-     * 
+     * License is the terms that upstream work carries, with the same clear-versus- leave rule.
      * @type {string}
      * @memberof ProjectsUpdate
      */
     'license'?: string;
     /**
-     * 
+     * Name replaces the display name. Absent leaves it; the slug never moves with it.
      * @type {string}
      * @memberof ProjectsUpdate
      */
     'name'?: string;
     /**
      * 
-     * @type {ProjectsCreateRepo}
+     * @type {ProjectsUpdateRepo}
      * @memberof ProjectsUpdate
      */
-    'repo'?: ProjectsCreateRepo;
+    'repo'?: ProjectsUpdateRepo;
     /**
      * Slug is the project to update, from the path. The URL is the addressing authority — a `slug` in the body cannot move the write to another project.
      * @type {string}
@@ -78,13 +78,13 @@ export interface ProjectsUpdate {
      */
     'slug'?: string;
     /**
-     * Tags sets the site\'s browser tag config: platform slug → non-secret pixel id (e.g. {\"ga4\":\"G-…\",\"meta\":\"…\"}). track.js injects these first-party and the server CAPI reads them, per site. Absent LEAVES them; a present object REPLACES the set (send {} to clear). The ids are public — they ship in the page — so this is not the SECRET path (a CAPI token is sealed via POST /v1/destinations).
+     * Tags sets the site\'s browser tag config: platform slug → non-secret pixel id (e.g. {\"ga4\":\"G-…\",\"meta\":\"…\"}). track.js injects these first-party and the server CAPI reads them, per site. Absent LEAVES them; a present object REPLACES the set (send {} to clear). The ids are public — they ship in the page — so this is not the SECRET path (a CAPI token is sealed via POST /v1/destination).
      * @type {{ [key: string]: string; }}
      * @memberof ProjectsUpdate
      */
     'tags'?: { [key: string]: string; };
     /**
-     * Upstream/License credit the third-party work this app was published from — settable after the fact, because the demos that need crediting most are the ones already live. Pointers so \"\" clears a credit and absent leaves it.
+     * Upstream credits the third-party work this project was published from, and is settable after the fact because the live demos are the ones that most need crediting. An explicit empty string CLEARS the credit; absent leaves it.
      * @type {string}
      * @memberof ProjectsUpdate
      */

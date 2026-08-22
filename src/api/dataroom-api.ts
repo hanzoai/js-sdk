@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -47,6 +47,28 @@ import type { DataroomRoomOne } from '../models';
 import type { DataroomRooms } from '../models';
 // @ts-ignore
 import type { DataroomStats } from '../models';
+// @ts-ignore
+import type { TrustAsk } from '../models';
+// @ts-ignore
+import type { TrustAsked } from '../models';
+// @ts-ignore
+import type { TrustDecision } from '../models';
+// @ts-ignore
+import type { TrustDesk } from '../models';
+// @ts-ignore
+import type { TrustEdit } from '../models';
+// @ts-ignore
+import type { TrustGranted } from '../models';
+// @ts-ignore
+import type { TrustItemView } from '../models';
+// @ts-ignore
+import type { TrustPage } from '../models';
+// @ts-ignore
+import type { TrustPublish } from '../models';
+// @ts-ignore
+import type { TrustRefused } from '../models';
+// @ts-ignore
+import type { TrustSettings } from '../models';
 /**
  * DataroomApi - axios parameter creator
  * @export
@@ -380,6 +402,120 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Answers the caller org\'s OWN trust centre: its settings, every item it holds in both tiers, the requests waiting on it, and the grants it has made.  The org is the caller\'s, taken from the validated bearer and from nothing else, so this op cannot be pointed at another tenant — there is no field for one. An org that has never opened a centre reads back an empty one rather than an error, because having no trust centre is an ordinary state and this is the read that tells you so.
+         * @summary Answers the caller org\'s OWN trust centre: its settings, every item it holds in both tiers, the requests waiting on it, and the grants it has made.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDataroomTrust: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/dataroom/trust`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers an org\'s public trust centre: its name, the text a party must accept to ask for a document, and every item it publishes.  An item is either available NOW — the things the org states itself, its policies, its filled questionnaires, its subprocessor list, its knowledge base — or available ON REQUEST, which is everything an independent auditor put their name to. Both are listed by name and kind, so a reader can see WHAT exists before asking for it; only the second withholds the content.  No principal is involved and none is accepted: the org is resolved from the address, which answers only for a centre its owner has published. An address nobody publishes at is not found, the same answer an unpublished one gets.
+         * @summary Answers an org\'s public trust centre: its name, the text a party must accept to ask for a document, and every item it publishes.
+         * @param {string} slug Slug is the centre\&#39;s public address. It resolves only for an org that has published; anything else is not found, so this cannot be used to learn which orgs exist.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDataroomTrustCenterBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('getDataroomTrustCenterBySlug', 'slug', slug)
+            const localVarPath = `/v1/dataroom/trust/center/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Streams the file behind an item a trust centre publishes openly — a policy, a filled questionnaire, a knowledge-base attachment — under its recorded content type.  No principal and no link: these are the things an org states about itself, so they are served to anyone who asks. The narrowing is in the lookup rather than in a check: the item must be public, must not be retired, and must belong to a centre its owner has published, so an item released only on request is NOT FOUND here rather than refused — the same answer an id that never existed gets, which is what stops this reporting what the released-on-request tier holds.  Bytes that cannot be fetched from object storage are 502, never a truncated file.
+         * @summary Read a public trust-centre item\'s bytes
+         * @param {string} slug 
+         * @param {string} item 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDataroomTrustCenterBySlugFileByItem: async (slug: string, item: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('getDataroomTrustCenterBySlugFileByItem', 'slug', slug)
+            // verify required parameter 'item' is not null or undefined
+            assertParamExists('getDataroomTrustCenterBySlugFileByItem', 'item', item)
+            const localVarPath = `/v1/dataroom/trust/center/{slug}/file/{item}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
+                .replace(`{${"item"}}`, encodeURIComponent(String(item)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Answers the pre-auth face of a link to anyone holding its id: name and type, which gates apply (whether an address is required, whether a password is set), whether download is permitted, whether it has expired, and the name and description of the room behind it — or, for a single-document link, that document\'s name and page count.  No principal is involved: the owning org is resolved from the link id through dataroom\'s one cross-tenant routing table, and an unknown or archived link is a 404.  It is metadata only — a room\'s document list and every file stay behind the authenticate step. An expired link is REPORTED as expired here rather than refused, so a visitor learns why the next step will fail; nothing about the password beyond its existence is disclosed.
          * @summary What a share link\'s visitor sees before authenticating
          * @param {string} linkId 
@@ -453,6 +589,50 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Amend changes an item on the caller org\'s trust centre — replace its file with a newer edition, move it between public and gated, rewrite what it says, or retire it — and answers with the item as it now stands.  Retiring is the withdrawal: the item leaves the public centre immediately and can no longer be granted, while grants already made over it stand, because a release that happened is part of the record and un-happening it in the record would be a lie. Restoring is the same call with retired false.  Moving an item an independent auditor signed to the public tier is refused, and refused by the database rather than only here. Only an admin of the org may call it, and the item is resolved in that org\'s own store, so another org\'s id is not found.
+         * @summary Amend changes an item on the caller org\'s trust centre — replace its file with a newer edition, move it between public and gated, rewrite what it says, or retire it — and answers with the item as it now stands.
+         * @param {string} id ID is the item to change, taken from the path.
+         * @param {TrustEdit} trustEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchDataroomTrustArtifactsById: async (id: string, trustEdit: TrustEdit, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('patchDataroomTrustArtifactsById', 'id', id)
+            // verify required parameter 'trustEdit' is not null or undefined
+            assertParamExists('patchDataroomTrustArtifactsById', 'trustEdit', trustEdit)
+            const localVarPath = `/v1/dataroom/trust/artifacts/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trustEdit, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -618,6 +798,178 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Publish puts an item on the caller org\'s trust centre and answers with it.  The item is GATED unless it says otherwise, so a kind nobody has thought of yet arrives private and someone has to release it deliberately — that default is what keeps an auditor\'s report from becoming readable because a field went unset. An item whose attester is \"auditor\" cannot be public at all: the database refuses the pair, so no path through this API can publish one.  A file is optional and is uploaded FIRST, through POST /v1/dataroom/documents, then named here — the data room is the one place bytes enter, so a trust centre document is an ordinary data-room document and inherits its storage, its grants and its page-by-page access record. A gated item that has a file is added to the org\'s release room, which is what lets a party be granted the whole gated tier in one link.  Only an admin of the org may call it.
+         * @summary Publish puts an item on the caller org\'s trust centre and answers with it.
+         * @param {TrustPublish} trustPublish 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postDataroomTrustArtifacts: async (trustPublish: TrustPublish, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'trustPublish' is not null or undefined
+            assertParamExists('postDataroomTrustArtifacts', 'trustPublish', trustPublish)
+            const localVarPath = `/v1/dataroom/trust/artifacts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trustPublish, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Records a request to read what an independent auditor signed, and answers with its id.  The org that owns the centre decides. Nothing is released here and no link is minted: this writes the ask down, which is the whole promise the form makes. The write is the answer — a request that could not be stored is an error, never a receipt, so a form can never appear to have been sent and be gone.  `email` is required and is the ONLY address the eventual grant will admit, so an address the asker cannot read is an ask that cannot be answered. Where the centre states an NDA, `accept` must be true and the text in force is recorded verbatim against the request.  Asking twice for the same thing from the same address is the SAME ask: the second answers with the first\'s id rather than opening a second row, which is also what keeps an anonymous door from filling a tenant\'s store.
+         * @summary Records a request to read what an independent auditor signed, and answers with its id.
+         * @param {string} slug Slug is the centre\&#39;s public address, taken from the path.
+         * @param {TrustAsk} trustAsk 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postDataroomTrustCenterBySlugRequests: async (slug: string, trustAsk: TrustAsk, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('postDataroomTrustCenterBySlugRequests', 'slug', slug)
+            // verify required parameter 'trustAsk' is not null or undefined
+            assertParamExists('postDataroomTrustCenterBySlugRequests', 'trustAsk', trustAsk)
+            const localVarPath = `/v1/dataroom/trust/center/{slug}/requests`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trustAsk, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Grant answers a request by opening access: it mints a share link over what was asked for, addressed to the address that asked and closing at expiry, records the decision, and mails the asker.  The link is NEVER a public URL. It carries the asker\'s address on its allow list, so forwarding it to somebody else does not open it, and it expires. What the party then does with it — which document, which page, for how long — is recorded by the data room\'s own view tracking, which is where the access record for this release lives; there is no second log.  A request that was already answered is refused rather than answered twice, so a second click cannot mint a second link. Only an admin of the org may call it, and the request is resolved in that org\'s own store, so another org\'s request id is not found — which is also what stops one org deciding another\'s queue.  Mail is best effort and the grant does not depend on it: a deployment that sends no mail still records the grant and says so in `delivery`, so the approver knows to pass the address on themselves.
+         * @summary Grant answers a request by opening access: it mints a share link over what was asked for, addressed to the address that asked and closing at expiry, records the decision, and mails the asker.
+         * @param {string} id ID is the request to answer, taken from the path.
+         * @param {TrustDecision} trustDecision 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postDataroomTrustRequestsByIdGrant: async (id: string, trustDecision: TrustDecision, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postDataroomTrustRequestsByIdGrant', 'id', id)
+            // verify required parameter 'trustDecision' is not null or undefined
+            assertParamExists('postDataroomTrustRequestsByIdGrant', 'trustDecision', trustDecision)
+            const localVarPath = `/v1/dataroom/trust/requests/{id}/grant`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trustDecision, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Refuse answers a request by declining it, recording who declined and why.  Nothing is released and no link is minted. The refusal STAYS on the record beside the ask — a request that was turned down is part of the access record exactly as one that was granted is, and deleting it would leave a queue that only ever shows the decisions somebody liked.  A request that was already answered is refused rather than answered twice. Only an admin of the org may call it, and the request is resolved in that org\'s own store, so another org\'s request id is not found.
+         * @summary Refuse answers a request by declining it, recording who declined and why.
+         * @param {string} id ID is the request to answer, taken from the path.
+         * @param {TrustDecision} trustDecision 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postDataroomTrustRequestsByIdRefuse: async (id: string, trustDecision: TrustDecision, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postDataroomTrustRequestsByIdRefuse', 'id', id)
+            // verify required parameter 'trustDecision' is not null or undefined
+            assertParamExists('postDataroomTrustRequestsByIdRefuse', 'trustDecision', trustDecision)
+            const localVarPath = `/v1/dataroom/trust/requests/{id}/refuse`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trustDecision, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Clears the link\'s access controls and answers with the viewing session — a `viewId`, whether download is permitted, and the documents behind the link — which every later viewer call is authorised by.  No principal: the visitor is whoever holds the link id, and the org is resolved from it. The gates run in a fixed order and each is a flat refusal, never a hint. An archived or unknown link is 404 and an expired one 403. A missing address on an email-protected link is 401. An address on the deny list is 403, checked BEFORE the allow list so deny always wins. An address the allow list does not admit is 403 — an EMPTY allow list admits everyone, so a link with no list enforces the email gate alone. A wrong or absent password is 401, decided against the stored bcrypt hash.  The address is taken as stated and recorded UNVERIFIED: it names a viewer for analytics and repeat visits from it reuse one viewer record, but it proves nothing about who is on the other end. A link gated only by email is openable by anyone the link reaches.
          * @summary Pass a share link\'s gates and open a viewing session
          * @param {string} linkId 
@@ -687,6 +1039,46 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * SetCenter opens, publishes or withdraws the caller org\'s trust centre and answers with the centre as it now stands.  Publishing requires a name and an address, and the address must be free: another org already answering there is a conflict, never a takeover. Withdrawing closes the public door only — items, grants and the access record are untouched, so an org can go quiet and come back without losing anything.  Only an admin of the org may call it. The org is the caller\'s own, so there is no field naming one and no way to point this at another tenant.
+         * @summary SetCenter opens, publishes or withdraws the caller org\'s trust centre and answers with the centre as it now stands.
+         * @param {TrustSettings} trustSettings 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putDataroomTrust: async (trustSettings: TrustSettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'trustSettings' is not null or undefined
+            assertParamExists('putDataroomTrust', 'trustSettings', trustSettings)
+            const localVarPath = `/v1/dataroom/trust`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(trustSettings, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -817,6 +1209,45 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers the caller org\'s OWN trust centre: its settings, every item it holds in both tiers, the requests waiting on it, and the grants it has made.  The org is the caller\'s, taken from the validated bearer and from nothing else, so this op cannot be pointed at another tenant — there is no field for one. An org that has never opened a centre reads back an empty one rather than an error, because having no trust centre is an ordinary state and this is the read that tells you so.
+         * @summary Answers the caller org\'s OWN trust centre: its settings, every item it holds in both tiers, the requests waiting on it, and the grants it has made.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDataroomTrust(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustDesk>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDataroomTrust(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.getDataroomTrust']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers an org\'s public trust centre: its name, the text a party must accept to ask for a document, and every item it publishes.  An item is either available NOW — the things the org states itself, its policies, its filled questionnaires, its subprocessor list, its knowledge base — or available ON REQUEST, which is everything an independent auditor put their name to. Both are listed by name and kind, so a reader can see WHAT exists before asking for it; only the second withholds the content.  No principal is involved and none is accepted: the org is resolved from the address, which answers only for a centre its owner has published. An address nobody publishes at is not found, the same answer an unpublished one gets.
+         * @summary Answers an org\'s public trust centre: its name, the text a party must accept to ask for a document, and every item it publishes.
+         * @param {string} slug Slug is the centre\&#39;s public address. It resolves only for an org that has published; anything else is not found, so this cannot be used to learn which orgs exist.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDataroomTrustCenterBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDataroomTrustCenterBySlug(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.getDataroomTrustCenterBySlug']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Streams the file behind an item a trust centre publishes openly — a policy, a filled questionnaire, a knowledge-base attachment — under its recorded content type.  No principal and no link: these are the things an org states about itself, so they are served to anyone who asks. The narrowing is in the lookup rather than in a check: the item must be public, must not be retired, and must belong to a centre its owner has published, so an item released only on request is NOT FOUND here rather than refused — the same answer an id that never existed gets, which is what stops this reporting what the released-on-request tier holds.  Bytes that cannot be fetched from object storage are 502, never a truncated file.
+         * @summary Read a public trust-centre item\'s bytes
+         * @param {string} slug 
+         * @param {string} item 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDataroomTrustCenterBySlugFileByItem(slug: string, item: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDataroomTrustCenterBySlugFileByItem(slug, item, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.getDataroomTrustCenterBySlugFileByItem']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Answers the pre-auth face of a link to anyone holding its id: name and type, which gates apply (whether an address is required, whether a password is set), whether download is permitted, whether it has expired, and the name and description of the room behind it — or, for a single-document link, that document\'s name and page count.  No principal is involved: the owning org is resolved from the link id through dataroom\'s one cross-tenant routing table, and an unknown or archived link is a 404.  It is metadata only — a room\'s document list and every file stay behind the authenticate step. An expired link is REPORTED as expired here rather than refused, so a visitor learns why the next step will fail; nothing about the password beyond its existence is disclosed.
          * @summary What a share link\'s visitor sees before authenticating
          * @param {string} linkId 
@@ -841,6 +1272,20 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDataroomViewByLinkidDocumentByDocumentidFile(linkId, documentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DataroomApi.getDataroomViewByLinkidDocumentByDocumentidFile']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Amend changes an item on the caller org\'s trust centre — replace its file with a newer edition, move it between public and gated, rewrite what it says, or retire it — and answers with the item as it now stands.  Retiring is the withdrawal: the item leaves the public centre immediately and can no longer be granted, while grants already made over it stand, because a release that happened is part of the record and un-happening it in the record would be a lie. Restoring is the same call with retired false.  Moving an item an independent auditor signed to the public tier is refused, and refused by the database rather than only here. Only an admin of the org may call it, and the item is resolved in that org\'s own store, so another org\'s id is not found.
+         * @summary Amend changes an item on the caller org\'s trust centre — replace its file with a newer edition, move it between public and gated, rewrite what it says, or retire it — and answers with the item as it now stands.
+         * @param {string} id ID is the item to change, taken from the path.
+         * @param {TrustEdit} trustEdit 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchDataroomTrustArtifactsById(id: string, trustEdit: TrustEdit, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustItemView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchDataroomTrustArtifactsById(id, trustEdit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.patchDataroomTrustArtifactsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -896,6 +1341,61 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Publish puts an item on the caller org\'s trust centre and answers with it.  The item is GATED unless it says otherwise, so a kind nobody has thought of yet arrives private and someone has to release it deliberately — that default is what keeps an auditor\'s report from becoming readable because a field went unset. An item whose attester is \"auditor\" cannot be public at all: the database refuses the pair, so no path through this API can publish one.  A file is optional and is uploaded FIRST, through POST /v1/dataroom/documents, then named here — the data room is the one place bytes enter, so a trust centre document is an ordinary data-room document and inherits its storage, its grants and its page-by-page access record. A gated item that has a file is added to the org\'s release room, which is what lets a party be granted the whole gated tier in one link.  Only an admin of the org may call it.
+         * @summary Publish puts an item on the caller org\'s trust centre and answers with it.
+         * @param {TrustPublish} trustPublish 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postDataroomTrustArtifacts(trustPublish: TrustPublish, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustItemView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDataroomTrustArtifacts(trustPublish, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.postDataroomTrustArtifacts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Records a request to read what an independent auditor signed, and answers with its id.  The org that owns the centre decides. Nothing is released here and no link is minted: this writes the ask down, which is the whole promise the form makes. The write is the answer — a request that could not be stored is an error, never a receipt, so a form can never appear to have been sent and be gone.  `email` is required and is the ONLY address the eventual grant will admit, so an address the asker cannot read is an ask that cannot be answered. Where the centre states an NDA, `accept` must be true and the text in force is recorded verbatim against the request.  Asking twice for the same thing from the same address is the SAME ask: the second answers with the first\'s id rather than opening a second row, which is also what keeps an anonymous door from filling a tenant\'s store.
+         * @summary Records a request to read what an independent auditor signed, and answers with its id.
+         * @param {string} slug Slug is the centre\&#39;s public address, taken from the path.
+         * @param {TrustAsk} trustAsk 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postDataroomTrustCenterBySlugRequests(slug: string, trustAsk: TrustAsk, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustAsked>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDataroomTrustCenterBySlugRequests(slug, trustAsk, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.postDataroomTrustCenterBySlugRequests']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Grant answers a request by opening access: it mints a share link over what was asked for, addressed to the address that asked and closing at expiry, records the decision, and mails the asker.  The link is NEVER a public URL. It carries the asker\'s address on its allow list, so forwarding it to somebody else does not open it, and it expires. What the party then does with it — which document, which page, for how long — is recorded by the data room\'s own view tracking, which is where the access record for this release lives; there is no second log.  A request that was already answered is refused rather than answered twice, so a second click cannot mint a second link. Only an admin of the org may call it, and the request is resolved in that org\'s own store, so another org\'s request id is not found — which is also what stops one org deciding another\'s queue.  Mail is best effort and the grant does not depend on it: a deployment that sends no mail still records the grant and says so in `delivery`, so the approver knows to pass the address on themselves.
+         * @summary Grant answers a request by opening access: it mints a share link over what was asked for, addressed to the address that asked and closing at expiry, records the decision, and mails the asker.
+         * @param {string} id ID is the request to answer, taken from the path.
+         * @param {TrustDecision} trustDecision 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postDataroomTrustRequestsByIdGrant(id: string, trustDecision: TrustDecision, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustGranted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDataroomTrustRequestsByIdGrant(id, trustDecision, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.postDataroomTrustRequestsByIdGrant']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Refuse answers a request by declining it, recording who declined and why.  Nothing is released and no link is minted. The refusal STAYS on the record beside the ask — a request that was turned down is part of the access record exactly as one that was granted is, and deleting it would leave a queue that only ever shows the decisions somebody liked.  A request that was already answered is refused rather than answered twice. Only an admin of the org may call it, and the request is resolved in that org\'s own store, so another org\'s request id is not found.
+         * @summary Refuse answers a request by declining it, recording who declined and why.
+         * @param {string} id ID is the request to answer, taken from the path.
+         * @param {TrustDecision} trustDecision 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postDataroomTrustRequestsByIdRefuse(id: string, trustDecision: TrustDecision, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustRefused>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDataroomTrustRequestsByIdRefuse(id, trustDecision, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.postDataroomTrustRequestsByIdRefuse']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Clears the link\'s access controls and answers with the viewing session — a `viewId`, whether download is permitted, and the documents behind the link — which every later viewer call is authorised by.  No principal: the visitor is whoever holds the link id, and the org is resolved from it. The gates run in a fixed order and each is a flat refusal, never a hint. An archived or unknown link is 404 and an expired one 403. A missing address on an email-protected link is 401. An address on the deny list is 403, checked BEFORE the allow list so deny always wins. An address the allow list does not admit is 403 — an EMPTY allow list admits everyone, so a link with no list enforces the email gate alone. A wrong or absent password is 401, decided against the stored bcrypt hash.  The address is taken as stated and recorded UNVERIFIED: it names a viewer for analytics and repeat visits from it reuse one viewer record, but it proves nothing about who is on the other end. A link gated only by email is openable by anyone the link reaches.
          * @summary Pass a share link\'s gates and open a viewing session
          * @param {string} linkId 
@@ -919,6 +1419,19 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postDataroomViewByLinkidPageview(linkId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DataroomApi.postDataroomViewByLinkidPageview']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * SetCenter opens, publishes or withdraws the caller org\'s trust centre and answers with the centre as it now stands.  Publishing requires a name and an address, and the address must be free: another org already answering there is a conflict, never a takeover. Withdrawing closes the public door only — items, grants and the access record are untouched, so an org can go quiet and come back without losing anything.  Only an admin of the org may call it. The org is the caller\'s own, so there is no field naming one and no way to point this at another tenant.
+         * @summary SetCenter opens, publishes or withdraws the caller org\'s trust centre and answers with the centre as it now stands.
+         * @param {TrustSettings} trustSettings 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putDataroomTrust(trustSettings: TrustSettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TrustDesk>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putDataroomTrust(trustSettings, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DataroomApi.putDataroomTrust']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1018,6 +1531,35 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getDataroomLinks(options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers the caller org\'s OWN trust centre: its settings, every item it holds in both tiers, the requests waiting on it, and the grants it has made.  The org is the caller\'s, taken from the validated bearer and from nothing else, so this op cannot be pointed at another tenant — there is no field for one. An org that has never opened a centre reads back an empty one rather than an error, because having no trust centre is an ordinary state and this is the read that tells you so.
+         * @summary Answers the caller org\'s OWN trust centre: its settings, every item it holds in both tiers, the requests waiting on it, and the grants it has made.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDataroomTrust(options?: RawAxiosRequestConfig): AxiosPromise<TrustDesk> {
+            return localVarFp.getDataroomTrust(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers an org\'s public trust centre: its name, the text a party must accept to ask for a document, and every item it publishes.  An item is either available NOW — the things the org states itself, its policies, its filled questionnaires, its subprocessor list, its knowledge base — or available ON REQUEST, which is everything an independent auditor put their name to. Both are listed by name and kind, so a reader can see WHAT exists before asking for it; only the second withholds the content.  No principal is involved and none is accepted: the org is resolved from the address, which answers only for a centre its owner has published. An address nobody publishes at is not found, the same answer an unpublished one gets.
+         * @summary Answers an org\'s public trust centre: its name, the text a party must accept to ask for a document, and every item it publishes.
+         * @param {DataroomApiGetDataroomTrustCenterBySlugRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDataroomTrustCenterBySlug(requestParameters: DataroomApiGetDataroomTrustCenterBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrustPage> {
+            return localVarFp.getDataroomTrustCenterBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Streams the file behind an item a trust centre publishes openly — a policy, a filled questionnaire, a knowledge-base attachment — under its recorded content type.  No principal and no link: these are the things an org states about itself, so they are served to anyone who asks. The narrowing is in the lookup rather than in a check: the item must be public, must not be retired, and must belong to a centre its owner has published, so an item released only on request is NOT FOUND here rather than refused — the same answer an id that never existed gets, which is what stops this reporting what the released-on-request tier holds.  Bytes that cannot be fetched from object storage are 502, never a truncated file.
+         * @summary Read a public trust-centre item\'s bytes
+         * @param {DataroomApiGetDataroomTrustCenterBySlugFileByItemRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDataroomTrustCenterBySlugFileByItem(requestParameters: DataroomApiGetDataroomTrustCenterBySlugFileByItemRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getDataroomTrustCenterBySlugFileByItem(requestParameters.slug, requestParameters.item, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Answers the pre-auth face of a link to anyone holding its id: name and type, which gates apply (whether an address is required, whether a password is set), whether download is permitted, whether it has expired, and the name and description of the room behind it — or, for a single-document link, that document\'s name and page count.  No principal is involved: the owning org is resolved from the link id through dataroom\'s one cross-tenant routing table, and an unknown or archived link is a 404.  It is metadata only — a room\'s document list and every file stay behind the authenticate step. An expired link is REPORTED as expired here rather than refused, so a visitor learns why the next step will fail; nothing about the password beyond its existence is disclosed.
          * @summary What a share link\'s visitor sees before authenticating
          * @param {DataroomApiGetDataroomViewByLinkidRequest} requestParameters Request parameters.
@@ -1036,6 +1578,16 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
          */
         getDataroomViewByLinkidDocumentByDocumentidFile(requestParameters: DataroomApiGetDataroomViewByLinkidDocumentByDocumentidFileRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getDataroomViewByLinkidDocumentByDocumentidFile(requestParameters.linkId, requestParameters.documentId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Amend changes an item on the caller org\'s trust centre — replace its file with a newer edition, move it between public and gated, rewrite what it says, or retire it — and answers with the item as it now stands.  Retiring is the withdrawal: the item leaves the public centre immediately and can no longer be granted, while grants already made over it stand, because a release that happened is part of the record and un-happening it in the record would be a lie. Restoring is the same call with retired false.  Moving an item an independent auditor signed to the public tier is refused, and refused by the database rather than only here. Only an admin of the org may call it, and the item is resolved in that org\'s own store, so another org\'s id is not found.
+         * @summary Amend changes an item on the caller org\'s trust centre — replace its file with a newer edition, move it between public and gated, rewrite what it says, or retire it — and answers with the item as it now stands.
+         * @param {DataroomApiPatchDataroomTrustArtifactsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchDataroomTrustArtifactsById(requestParameters: DataroomApiPatchDataroomTrustArtifactsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrustItemView> {
+            return localVarFp.patchDataroomTrustArtifactsById(requestParameters.id, requestParameters.trustEdit, options).then((request) => request(axios, basePath));
         },
         /**
          * Opens a new data room for the caller org and answers with it, including the short public id it is addressed by.  `name` is required; without it the call is refused and the tenant store is untouched, because a dispatch answering 4xx rolls its transaction back. A new room holds no documents and is reachable by NOBODY until a share link is created over it — opening a room and granting access are two separate acts, so a room cannot leak by existing.
@@ -1077,6 +1629,46 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postDataroomLinks(requestParameters.dataroomLinkCreate, options).then((request) => request(axios, basePath));
         },
         /**
+         * Publish puts an item on the caller org\'s trust centre and answers with it.  The item is GATED unless it says otherwise, so a kind nobody has thought of yet arrives private and someone has to release it deliberately — that default is what keeps an auditor\'s report from becoming readable because a field went unset. An item whose attester is \"auditor\" cannot be public at all: the database refuses the pair, so no path through this API can publish one.  A file is optional and is uploaded FIRST, through POST /v1/dataroom/documents, then named here — the data room is the one place bytes enter, so a trust centre document is an ordinary data-room document and inherits its storage, its grants and its page-by-page access record. A gated item that has a file is added to the org\'s release room, which is what lets a party be granted the whole gated tier in one link.  Only an admin of the org may call it.
+         * @summary Publish puts an item on the caller org\'s trust centre and answers with it.
+         * @param {DataroomApiPostDataroomTrustArtifactsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postDataroomTrustArtifacts(requestParameters: DataroomApiPostDataroomTrustArtifactsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrustItemView> {
+            return localVarFp.postDataroomTrustArtifacts(requestParameters.trustPublish, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Records a request to read what an independent auditor signed, and answers with its id.  The org that owns the centre decides. Nothing is released here and no link is minted: this writes the ask down, which is the whole promise the form makes. The write is the answer — a request that could not be stored is an error, never a receipt, so a form can never appear to have been sent and be gone.  `email` is required and is the ONLY address the eventual grant will admit, so an address the asker cannot read is an ask that cannot be answered. Where the centre states an NDA, `accept` must be true and the text in force is recorded verbatim against the request.  Asking twice for the same thing from the same address is the SAME ask: the second answers with the first\'s id rather than opening a second row, which is also what keeps an anonymous door from filling a tenant\'s store.
+         * @summary Records a request to read what an independent auditor signed, and answers with its id.
+         * @param {DataroomApiPostDataroomTrustCenterBySlugRequestsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postDataroomTrustCenterBySlugRequests(requestParameters: DataroomApiPostDataroomTrustCenterBySlugRequestsRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrustAsked> {
+            return localVarFp.postDataroomTrustCenterBySlugRequests(requestParameters.slug, requestParameters.trustAsk, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Grant answers a request by opening access: it mints a share link over what was asked for, addressed to the address that asked and closing at expiry, records the decision, and mails the asker.  The link is NEVER a public URL. It carries the asker\'s address on its allow list, so forwarding it to somebody else does not open it, and it expires. What the party then does with it — which document, which page, for how long — is recorded by the data room\'s own view tracking, which is where the access record for this release lives; there is no second log.  A request that was already answered is refused rather than answered twice, so a second click cannot mint a second link. Only an admin of the org may call it, and the request is resolved in that org\'s own store, so another org\'s request id is not found — which is also what stops one org deciding another\'s queue.  Mail is best effort and the grant does not depend on it: a deployment that sends no mail still records the grant and says so in `delivery`, so the approver knows to pass the address on themselves.
+         * @summary Grant answers a request by opening access: it mints a share link over what was asked for, addressed to the address that asked and closing at expiry, records the decision, and mails the asker.
+         * @param {DataroomApiPostDataroomTrustRequestsByIdGrantRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postDataroomTrustRequestsByIdGrant(requestParameters: DataroomApiPostDataroomTrustRequestsByIdGrantRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrustGranted> {
+            return localVarFp.postDataroomTrustRequestsByIdGrant(requestParameters.id, requestParameters.trustDecision, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Refuse answers a request by declining it, recording who declined and why.  Nothing is released and no link is minted. The refusal STAYS on the record beside the ask — a request that was turned down is part of the access record exactly as one that was granted is, and deleting it would leave a queue that only ever shows the decisions somebody liked.  A request that was already answered is refused rather than answered twice. Only an admin of the org may call it, and the request is resolved in that org\'s own store, so another org\'s request id is not found.
+         * @summary Refuse answers a request by declining it, recording who declined and why.
+         * @param {DataroomApiPostDataroomTrustRequestsByIdRefuseRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postDataroomTrustRequestsByIdRefuse(requestParameters: DataroomApiPostDataroomTrustRequestsByIdRefuseRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrustRefused> {
+            return localVarFp.postDataroomTrustRequestsByIdRefuse(requestParameters.id, requestParameters.trustDecision, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Clears the link\'s access controls and answers with the viewing session — a `viewId`, whether download is permitted, and the documents behind the link — which every later viewer call is authorised by.  No principal: the visitor is whoever holds the link id, and the org is resolved from it. The gates run in a fixed order and each is a flat refusal, never a hint. An archived or unknown link is 404 and an expired one 403. A missing address on an email-protected link is 401. An address on the deny list is 403, checked BEFORE the allow list so deny always wins. An address the allow list does not admit is 403 — an EMPTY allow list admits everyone, so a link with no list enforces the email gate alone. A wrong or absent password is 401, decided against the stored bcrypt hash.  The address is taken as stated and recorded UNVERIFIED: it names a viewer for analytics and repeat visits from it reuse one viewer record, but it proves nothing about who is on the other end. A link gated only by email is openable by anyone the link reaches.
          * @summary Pass a share link\'s gates and open a viewing session
          * @param {DataroomApiPostDataroomViewByLinkidAuthenticateRequest} requestParameters Request parameters.
@@ -1095,6 +1687,16 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
          */
         postDataroomViewByLinkidPageview(requestParameters: DataroomApiPostDataroomViewByLinkidPageviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postDataroomViewByLinkidPageview(requestParameters.linkId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * SetCenter opens, publishes or withdraws the caller org\'s trust centre and answers with the centre as it now stands.  Publishing requires a name and an address, and the address must be free: another org already answering there is a conflict, never a takeover. Withdrawing closes the public door only — items, grants and the access record are untouched, so an org can go quiet and come back without losing anything.  Only an admin of the org may call it. The org is the caller\'s own, so there is no field naming one and no way to point this at another tenant.
+         * @summary SetCenter opens, publishes or withdraws the caller org\'s trust centre and answers with the centre as it now stands.
+         * @param {DataroomApiPutDataroomTrustRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putDataroomTrust(requestParameters: DataroomApiPutDataroomTrustRequest, options?: RawAxiosRequestConfig): AxiosPromise<TrustDesk> {
+            return localVarFp.putDataroomTrust(requestParameters.trustSettings, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1170,6 +1772,41 @@ export interface DataroomApiGetDataroomDocumentsByIdFileRequest {
 }
 
 /**
+ * Request parameters for getDataroomTrustCenterBySlug operation in DataroomApi.
+ * @export
+ * @interface DataroomApiGetDataroomTrustCenterBySlugRequest
+ */
+export interface DataroomApiGetDataroomTrustCenterBySlugRequest {
+    /**
+     * Slug is the centre\&#39;s public address. It resolves only for an org that has published; anything else is not found, so this cannot be used to learn which orgs exist.
+     * @type {string}
+     * @memberof DataroomApiGetDataroomTrustCenterBySlug
+     */
+    readonly slug: string
+}
+
+/**
+ * Request parameters for getDataroomTrustCenterBySlugFileByItem operation in DataroomApi.
+ * @export
+ * @interface DataroomApiGetDataroomTrustCenterBySlugFileByItemRequest
+ */
+export interface DataroomApiGetDataroomTrustCenterBySlugFileByItemRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DataroomApiGetDataroomTrustCenterBySlugFileByItem
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DataroomApiGetDataroomTrustCenterBySlugFileByItem
+     */
+    readonly item: string
+}
+
+/**
  * Request parameters for getDataroomViewByLinkid operation in DataroomApi.
  * @export
  * @interface DataroomApiGetDataroomViewByLinkidRequest
@@ -1202,6 +1839,27 @@ export interface DataroomApiGetDataroomViewByLinkidDocumentByDocumentidFileReque
      * @memberof DataroomApiGetDataroomViewByLinkidDocumentByDocumentidFile
      */
     readonly documentId: string
+}
+
+/**
+ * Request parameters for patchDataroomTrustArtifactsById operation in DataroomApi.
+ * @export
+ * @interface DataroomApiPatchDataroomTrustArtifactsByIdRequest
+ */
+export interface DataroomApiPatchDataroomTrustArtifactsByIdRequest {
+    /**
+     * ID is the item to change, taken from the path.
+     * @type {string}
+     * @memberof DataroomApiPatchDataroomTrustArtifactsById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TrustEdit}
+     * @memberof DataroomApiPatchDataroomTrustArtifactsById
+     */
+    readonly trustEdit: TrustEdit
 }
 
 /**
@@ -1254,6 +1912,83 @@ export interface DataroomApiPostDataroomLinksRequest {
 }
 
 /**
+ * Request parameters for postDataroomTrustArtifacts operation in DataroomApi.
+ * @export
+ * @interface DataroomApiPostDataroomTrustArtifactsRequest
+ */
+export interface DataroomApiPostDataroomTrustArtifactsRequest {
+    /**
+     * 
+     * @type {TrustPublish}
+     * @memberof DataroomApiPostDataroomTrustArtifacts
+     */
+    readonly trustPublish: TrustPublish
+}
+
+/**
+ * Request parameters for postDataroomTrustCenterBySlugRequests operation in DataroomApi.
+ * @export
+ * @interface DataroomApiPostDataroomTrustCenterBySlugRequestsRequest
+ */
+export interface DataroomApiPostDataroomTrustCenterBySlugRequestsRequest {
+    /**
+     * Slug is the centre\&#39;s public address, taken from the path.
+     * @type {string}
+     * @memberof DataroomApiPostDataroomTrustCenterBySlugRequests
+     */
+    readonly slug: string
+
+    /**
+     * 
+     * @type {TrustAsk}
+     * @memberof DataroomApiPostDataroomTrustCenterBySlugRequests
+     */
+    readonly trustAsk: TrustAsk
+}
+
+/**
+ * Request parameters for postDataroomTrustRequestsByIdGrant operation in DataroomApi.
+ * @export
+ * @interface DataroomApiPostDataroomTrustRequestsByIdGrantRequest
+ */
+export interface DataroomApiPostDataroomTrustRequestsByIdGrantRequest {
+    /**
+     * ID is the request to answer, taken from the path.
+     * @type {string}
+     * @memberof DataroomApiPostDataroomTrustRequestsByIdGrant
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TrustDecision}
+     * @memberof DataroomApiPostDataroomTrustRequestsByIdGrant
+     */
+    readonly trustDecision: TrustDecision
+}
+
+/**
+ * Request parameters for postDataroomTrustRequestsByIdRefuse operation in DataroomApi.
+ * @export
+ * @interface DataroomApiPostDataroomTrustRequestsByIdRefuseRequest
+ */
+export interface DataroomApiPostDataroomTrustRequestsByIdRefuseRequest {
+    /**
+     * ID is the request to answer, taken from the path.
+     * @type {string}
+     * @memberof DataroomApiPostDataroomTrustRequestsByIdRefuse
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TrustDecision}
+     * @memberof DataroomApiPostDataroomTrustRequestsByIdRefuse
+     */
+    readonly trustDecision: TrustDecision
+}
+
+/**
  * Request parameters for postDataroomViewByLinkidAuthenticate operation in DataroomApi.
  * @export
  * @interface DataroomApiPostDataroomViewByLinkidAuthenticateRequest
@@ -1279,6 +2014,20 @@ export interface DataroomApiPostDataroomViewByLinkidPageviewRequest {
      * @memberof DataroomApiPostDataroomViewByLinkidPageview
      */
     readonly linkId: string
+}
+
+/**
+ * Request parameters for putDataroomTrust operation in DataroomApi.
+ * @export
+ * @interface DataroomApiPutDataroomTrustRequest
+ */
+export interface DataroomApiPutDataroomTrustRequest {
+    /**
+     * 
+     * @type {TrustSettings}
+     * @memberof DataroomApiPutDataroomTrust
+     */
+    readonly trustSettings: TrustSettings
 }
 
 /**
@@ -1393,6 +2142,41 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
+     * Answers the caller org\'s OWN trust centre: its settings, every item it holds in both tiers, the requests waiting on it, and the grants it has made.  The org is the caller\'s, taken from the validated bearer and from nothing else, so this op cannot be pointed at another tenant — there is no field for one. An org that has never opened a centre reads back an empty one rather than an error, because having no trust centre is an ordinary state and this is the read that tells you so.
+     * @summary Answers the caller org\'s OWN trust centre: its settings, every item it holds in both tiers, the requests waiting on it, and the grants it has made.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataroomApi
+     */
+    public getDataroomTrust(options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).getDataroomTrust(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers an org\'s public trust centre: its name, the text a party must accept to ask for a document, and every item it publishes.  An item is either available NOW — the things the org states itself, its policies, its filled questionnaires, its subprocessor list, its knowledge base — or available ON REQUEST, which is everything an independent auditor put their name to. Both are listed by name and kind, so a reader can see WHAT exists before asking for it; only the second withholds the content.  No principal is involved and none is accepted: the org is resolved from the address, which answers only for a centre its owner has published. An address nobody publishes at is not found, the same answer an unpublished one gets.
+     * @summary Answers an org\'s public trust centre: its name, the text a party must accept to ask for a document, and every item it publishes.
+     * @param {DataroomApiGetDataroomTrustCenterBySlugRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataroomApi
+     */
+    public getDataroomTrustCenterBySlug(requestParameters: DataroomApiGetDataroomTrustCenterBySlugRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).getDataroomTrustCenterBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Streams the file behind an item a trust centre publishes openly — a policy, a filled questionnaire, a knowledge-base attachment — under its recorded content type.  No principal and no link: these are the things an org states about itself, so they are served to anyone who asks. The narrowing is in the lookup rather than in a check: the item must be public, must not be retired, and must belong to a centre its owner has published, so an item released only on request is NOT FOUND here rather than refused — the same answer an id that never existed gets, which is what stops this reporting what the released-on-request tier holds.  Bytes that cannot be fetched from object storage are 502, never a truncated file.
+     * @summary Read a public trust-centre item\'s bytes
+     * @param {DataroomApiGetDataroomTrustCenterBySlugFileByItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataroomApi
+     */
+    public getDataroomTrustCenterBySlugFileByItem(requestParameters: DataroomApiGetDataroomTrustCenterBySlugFileByItemRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).getDataroomTrustCenterBySlugFileByItem(requestParameters.slug, requestParameters.item, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Answers the pre-auth face of a link to anyone holding its id: name and type, which gates apply (whether an address is required, whether a password is set), whether download is permitted, whether it has expired, and the name and description of the room behind it — or, for a single-document link, that document\'s name and page count.  No principal is involved: the owning org is resolved from the link id through dataroom\'s one cross-tenant routing table, and an unknown or archived link is a 404.  It is metadata only — a room\'s document list and every file stay behind the authenticate step. An expired link is REPORTED as expired here rather than refused, so a visitor learns why the next step will fail; nothing about the password beyond its existence is disclosed.
      * @summary What a share link\'s visitor sees before authenticating
      * @param {DataroomApiGetDataroomViewByLinkidRequest} requestParameters Request parameters.
@@ -1414,6 +2198,18 @@ export class DataroomApi extends BaseAPI {
      */
     public getDataroomViewByLinkidDocumentByDocumentidFile(requestParameters: DataroomApiGetDataroomViewByLinkidDocumentByDocumentidFileRequest, options?: RawAxiosRequestConfig) {
         return DataroomApiFp(this.configuration).getDataroomViewByLinkidDocumentByDocumentidFile(requestParameters.linkId, requestParameters.documentId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Amend changes an item on the caller org\'s trust centre — replace its file with a newer edition, move it between public and gated, rewrite what it says, or retire it — and answers with the item as it now stands.  Retiring is the withdrawal: the item leaves the public centre immediately and can no longer be granted, while grants already made over it stand, because a release that happened is part of the record and un-happening it in the record would be a lie. Restoring is the same call with retired false.  Moving an item an independent auditor signed to the public tier is refused, and refused by the database rather than only here. Only an admin of the org may call it, and the item is resolved in that org\'s own store, so another org\'s id is not found.
+     * @summary Amend changes an item on the caller org\'s trust centre — replace its file with a newer edition, move it between public and gated, rewrite what it says, or retire it — and answers with the item as it now stands.
+     * @param {DataroomApiPatchDataroomTrustArtifactsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataroomApi
+     */
+    public patchDataroomTrustArtifactsById(requestParameters: DataroomApiPatchDataroomTrustArtifactsByIdRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).patchDataroomTrustArtifactsById(requestParameters.id, requestParameters.trustEdit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1464,6 +2260,54 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
+     * Publish puts an item on the caller org\'s trust centre and answers with it.  The item is GATED unless it says otherwise, so a kind nobody has thought of yet arrives private and someone has to release it deliberately — that default is what keeps an auditor\'s report from becoming readable because a field went unset. An item whose attester is \"auditor\" cannot be public at all: the database refuses the pair, so no path through this API can publish one.  A file is optional and is uploaded FIRST, through POST /v1/dataroom/documents, then named here — the data room is the one place bytes enter, so a trust centre document is an ordinary data-room document and inherits its storage, its grants and its page-by-page access record. A gated item that has a file is added to the org\'s release room, which is what lets a party be granted the whole gated tier in one link.  Only an admin of the org may call it.
+     * @summary Publish puts an item on the caller org\'s trust centre and answers with it.
+     * @param {DataroomApiPostDataroomTrustArtifactsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataroomApi
+     */
+    public postDataroomTrustArtifacts(requestParameters: DataroomApiPostDataroomTrustArtifactsRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).postDataroomTrustArtifacts(requestParameters.trustPublish, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Records a request to read what an independent auditor signed, and answers with its id.  The org that owns the centre decides. Nothing is released here and no link is minted: this writes the ask down, which is the whole promise the form makes. The write is the answer — a request that could not be stored is an error, never a receipt, so a form can never appear to have been sent and be gone.  `email` is required and is the ONLY address the eventual grant will admit, so an address the asker cannot read is an ask that cannot be answered. Where the centre states an NDA, `accept` must be true and the text in force is recorded verbatim against the request.  Asking twice for the same thing from the same address is the SAME ask: the second answers with the first\'s id rather than opening a second row, which is also what keeps an anonymous door from filling a tenant\'s store.
+     * @summary Records a request to read what an independent auditor signed, and answers with its id.
+     * @param {DataroomApiPostDataroomTrustCenterBySlugRequestsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataroomApi
+     */
+    public postDataroomTrustCenterBySlugRequests(requestParameters: DataroomApiPostDataroomTrustCenterBySlugRequestsRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).postDataroomTrustCenterBySlugRequests(requestParameters.slug, requestParameters.trustAsk, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Grant answers a request by opening access: it mints a share link over what was asked for, addressed to the address that asked and closing at expiry, records the decision, and mails the asker.  The link is NEVER a public URL. It carries the asker\'s address on its allow list, so forwarding it to somebody else does not open it, and it expires. What the party then does with it — which document, which page, for how long — is recorded by the data room\'s own view tracking, which is where the access record for this release lives; there is no second log.  A request that was already answered is refused rather than answered twice, so a second click cannot mint a second link. Only an admin of the org may call it, and the request is resolved in that org\'s own store, so another org\'s request id is not found — which is also what stops one org deciding another\'s queue.  Mail is best effort and the grant does not depend on it: a deployment that sends no mail still records the grant and says so in `delivery`, so the approver knows to pass the address on themselves.
+     * @summary Grant answers a request by opening access: it mints a share link over what was asked for, addressed to the address that asked and closing at expiry, records the decision, and mails the asker.
+     * @param {DataroomApiPostDataroomTrustRequestsByIdGrantRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataroomApi
+     */
+    public postDataroomTrustRequestsByIdGrant(requestParameters: DataroomApiPostDataroomTrustRequestsByIdGrantRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).postDataroomTrustRequestsByIdGrant(requestParameters.id, requestParameters.trustDecision, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Refuse answers a request by declining it, recording who declined and why.  Nothing is released and no link is minted. The refusal STAYS on the record beside the ask — a request that was turned down is part of the access record exactly as one that was granted is, and deleting it would leave a queue that only ever shows the decisions somebody liked.  A request that was already answered is refused rather than answered twice. Only an admin of the org may call it, and the request is resolved in that org\'s own store, so another org\'s request id is not found.
+     * @summary Refuse answers a request by declining it, recording who declined and why.
+     * @param {DataroomApiPostDataroomTrustRequestsByIdRefuseRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataroomApi
+     */
+    public postDataroomTrustRequestsByIdRefuse(requestParameters: DataroomApiPostDataroomTrustRequestsByIdRefuseRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).postDataroomTrustRequestsByIdRefuse(requestParameters.id, requestParameters.trustDecision, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Clears the link\'s access controls and answers with the viewing session — a `viewId`, whether download is permitted, and the documents behind the link — which every later viewer call is authorised by.  No principal: the visitor is whoever holds the link id, and the org is resolved from it. The gates run in a fixed order and each is a flat refusal, never a hint. An archived or unknown link is 404 and an expired one 403. A missing address on an email-protected link is 401. An address on the deny list is 403, checked BEFORE the allow list so deny always wins. An address the allow list does not admit is 403 — an EMPTY allow list admits everyone, so a link with no list enforces the email gate alone. A wrong or absent password is 401, decided against the stored bcrypt hash.  The address is taken as stated and recorded UNVERIFIED: it names a viewer for analytics and repeat visits from it reuse one viewer record, but it proves nothing about who is on the other end. A link gated only by email is openable by anyone the link reaches.
      * @summary Pass a share link\'s gates and open a viewing session
      * @param {DataroomApiPostDataroomViewByLinkidAuthenticateRequest} requestParameters Request parameters.
@@ -1485,6 +2329,18 @@ export class DataroomApi extends BaseAPI {
      */
     public postDataroomViewByLinkidPageview(requestParameters: DataroomApiPostDataroomViewByLinkidPageviewRequest, options?: RawAxiosRequestConfig) {
         return DataroomApiFp(this.configuration).postDataroomViewByLinkidPageview(requestParameters.linkId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * SetCenter opens, publishes or withdraws the caller org\'s trust centre and answers with the centre as it now stands.  Publishing requires a name and an address, and the address must be free: another org already answering there is a conflict, never a takeover. Withdrawing closes the public door only — items, grants and the access record are untouched, so an org can go quiet and come back without losing anything.  Only an admin of the org may call it. The org is the caller\'s own, so there is no field naming one and no way to point this at another tenant.
+     * @summary SetCenter opens, publishes or withdraws the caller org\'s trust centre and answers with the centre as it now stands.
+     * @param {DataroomApiPutDataroomTrustRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataroomApi
+     */
+    public putDataroomTrust(requestParameters: DataroomApiPutDataroomTrustRequest, options?: RawAxiosRequestConfig) {
+        return DataroomApiFp(this.configuration).putDataroomTrust(requestParameters.trustSettings, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

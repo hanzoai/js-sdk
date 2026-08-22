@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { O11yAvailabilityResponseRange } from './o11y-availability-response-range';
+import type { O11yMetricsResponseRange } from './o11y-metrics-response-range';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { O11yMetricsResponseSeries } from './o11y-metrics-response-series';
@@ -33,17 +33,17 @@ import type { O11yMetricsResponseUsage } from './o11y-metrics-response-usage';
  */
 export interface O11yMetricsResponse {
     /**
-     * 
+     * Product is the service these numbers are about, echoed back.
      * @type {string}
      * @memberof O11yMetricsResponse
      */
     'product'?: string;
     /**
      * 
-     * @type {O11yAvailabilityResponseRange}
+     * @type {O11yMetricsResponseRange}
      * @memberof O11yMetricsResponse
      */
-    'range'?: O11yAvailabilityResponseRange;
+    'range'?: O11yMetricsResponseRange;
     /**
      * 
      * @type {O11yMetricsResponseSeries}

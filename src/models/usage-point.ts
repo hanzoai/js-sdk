@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -21,25 +21,25 @@
  */
 export interface UsagePoint {
     /**
-     * 
-     * @type {string}
-     * @memberof UsagePoint
-     */
-    'date'?: string;
-    /**
-     * 
+     * Requests is how many LLM calls fell in this bucket.
      * @type {number}
      * @memberof UsagePoint
      */
     'requests'?: number;
     /**
-     * 
+     * SpendCents is what they cost, in cents.
      * @type {number}
      * @memberof UsagePoint
      */
     'spendCents'?: number;
     /**
-     * 
+     * T is the bucket\'s start, RFC3339 UTC, aligned to the interval.
+     * @type {string}
+     * @memberof UsagePoint
+     */
+    't'?: string;
+    /**
+     * Tokens is prompt plus completion tokens over those calls.
      * @type {number}
      * @memberof UsagePoint
      */

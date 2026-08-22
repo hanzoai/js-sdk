@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -24,55 +24,55 @@ import type { O11yStatusComponent } from './o11y-status-component';
  */
 export interface O11yStatusMaintenance {
     /**
-     * 
+     * AffectedComponents is what the window touches.
      * @type {Array<O11yStatusComponent>}
      * @memberof O11yStatusMaintenance
      */
     'affected_components'?: Array<O11yStatusComponent>;
     /**
-     * 
+     * EndsAt is when it is expected to finish, RFC3339 UTC.
      * @type {string}
      * @memberof O11yStatusMaintenance
      */
     'ends_at'?: string;
     /**
-     * 
+     * ID is the window\'s handle.
      * @type {string}
      * @memberof O11yStatusMaintenance
      */
     'id'?: string;
     /**
-     * 
+     * LastUpdateAt is when the window was last revised, RFC3339 UTC.
      * @type {string}
      * @memberof O11yStatusMaintenance
      */
     'last_update_at'?: string;
     /**
-     * 
+     * LastUpdateMessage is the text of that revision.
      * @type {string}
      * @memberof O11yStatusMaintenance
      */
     'last_update_message'?: string;
     /**
-     * 
+     * Name is its one-line headline.
      * @type {string}
      * @memberof O11yStatusMaintenance
      */
     'name'?: string;
     /**
-     * 
+     * StartsAt is when work begins, RFC3339 UTC.
      * @type {string}
      * @memberof O11yStatusMaintenance
      */
     'starts_at'?: string;
     /**
-     * 
+     * Status is where the window is in its life, in the client\'s own vocabulary.
      * @type {string}
      * @memberof O11yStatusMaintenance
      */
     'status'?: string;
     /**
-     * 
+     * URL points at the human status page, as every link in this document does.
      * @type {string}
      * @memberof O11yStatusMaintenance
      */

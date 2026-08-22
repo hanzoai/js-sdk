@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -21,31 +21,31 @@
  */
 export interface BackendStatus {
     /**
-     * 
+     * Error is the failure text from a leg whose status is degraded — the reason a configured backend could not answer. Absent otherwise.
      * @type {string}
      * @memberof BackendStatus
      */
     'error'?: string;
     /**
-     * 
+     * Hits is how many results this leg returned, counted BEFORE fusion, so it is not the number that survived into Response.Hits — fusion merges what both legs found and the caller\'s limit and offset then page it. 0 for a leg that did not run.
      * @type {number}
      * @memberof BackendStatus
      */
     'hits'?: number;
     /**
-     * 
+     * Name is which leg this reports: \"index\", the lexical store, \"vector\", the semantic one, or \"code\", the org\'s own repositories. Match.Backend uses the same three names.
      * @type {string}
      * @memberof BackendStatus
      */
     'name'?: string;
     /**
-     * 
+     * Status is one of ok, degraded, disabled, skipped — four distinct operational facts that are never collapsed. It ran and answered; it is configured and FAILED (Error says how, and only this one is a fault); this deployment never provisioned it; or the request\'s mode excluded it.
      * @type {string}
      * @memberof BackendStatus
      */
     'status'?: string;
     /**
-     * 
+     * TookMS is how long this leg took, in milliseconds, timed around its own call and excluding fusion. 0 for a leg that was skipped or is disabled, since nothing was called.
      * @type {number}
      * @memberof BackendStatus
      */

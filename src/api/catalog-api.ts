@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -29,44 +29,6 @@ import type { CatalogPage } from '../models';
  */
 export const CatalogApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Deletes the entry with the addressed slug and answers 204. The slug is matched as a trailing wildcard, not a single segment, because a model slug contains a slash. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404, so the call is safe to repeat but not silently idempotent.
-         * @summary Remove a catalog entry
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteCatalogEntriesByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('deleteCatalogEntriesByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/catalog/entries/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
          * @summary Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
@@ -151,214 +113,6 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Returns every catalog row as stored — the admin view, which unlike the public projection includes entries that are not published. It is cross-tenant platform data, so the gate is a PLATFORM admin: an org-level admin is refused 403 no matter how privileged they are inside their own org, enforced by the handler itself and not only by the route\'s token middleware.
-         * @summary The raw catalog entries, including the unpublished ones
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCatalogEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/catalog/entries`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates a catalog row from the body and answers it at 201. The slug is required and is the globally-unique catalog key, so a second entry claiming a slug already in use is refused 409 rather than shadowing the first. PLATFORM admin only — this is cross-tenant pricing and packaging data, and an org-level admin is refused 403.
-         * @summary Add a catalog entry
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCatalogEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/catalog/entries`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Takes a batch of model rows and upserts each one\'s upstream COST and machine-observable facts, answering what was created and changed. It deliberately touches nothing a human owns — not the retail price, not the markup, not the entitlement tier — so a sync can never overwrite an administrator\'s pricing decision. The gate is a PLATFORM principal rather than a platform ADMIN, because the caller is normally a scheduled job holding the internal service token, which carries platform scope but no admin claim.
-         * @summary Land a syncer\'s view of the model catalog: upstream costs and machine facts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCatalogModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/catalog/models`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Pulls the upstream model list and lands it through the same upsert the push door uses, so the rule that a sync owns cost and an administrator owns price holds no matter which door a row came through. It takes no body — the upstream is READ rather than told. If that upstream cannot be read the call answers 502 and writes NOTHING: a sync that cannot see its source must never conclude the source is empty, because that conclusion would withdraw every model on sale. The gate is a PLATFORM principal so the scheduled job\'s service token qualifies.
-         * @summary Refresh the model catalog by reading the upstream provider
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCatalogModelsRefresh: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/catalog/models/refresh`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Upserts the shipped catalog seed and answers how many entries it created. It is idempotent and non-destructive — an entry an administrator has since edited is left alone — so it is safe to run against a live catalog to fill in what is missing. PLATFORM admin only; an org-level admin is refused 403.
-         * @summary Seed the embedded catalog, without disturbing edits already made
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCatalogSeed: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/catalog/seed`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Loads the addressed entry, applies the body over it and answers the stored result. The slug is the entry\'s IDENTITY and is re-stamped from the path after decoding, so a slug in the body is ignored and a rename is impossible through this address. The slug is matched as a trailing wildcard rather than one path segment because a model\'s slug IS its callable id and those contain a slash — a segment parameter would stop at it and leave most catalog rows unaddressable. PLATFORM admin only; an unknown slug is 404.
-         * @summary Replace a catalog entry, keeping its slug
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putCatalogEntriesByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('putCatalogEntriesByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/catalog/entries/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -369,19 +123,6 @@ export const CatalogApiAxiosParamCreator = function (configuration?: Configurati
 export const CatalogApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CatalogApiAxiosParamCreator(configuration)
     return {
-        /**
-         * Deletes the entry with the addressed slug and answers 204. The slug is matched as a trailing wildcard, not a single segment, because a model slug contains a slash. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404, so the call is safe to repeat but not silently idempotent.
-         * @summary Remove a catalog entry
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteCatalogEntriesByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCatalogEntriesByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.deleteCatalogEntriesByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
         /**
          * Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
          * @summary Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
@@ -404,79 +145,6 @@ export const CatalogApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['CatalogApi.getCatalog']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Returns every catalog row as stored — the admin view, which unlike the public projection includes entries that are not published. It is cross-tenant platform data, so the gate is a PLATFORM admin: an org-level admin is refused 403 no matter how privileged they are inside their own org, enforced by the handler itself and not only by the route\'s token middleware.
-         * @summary The raw catalog entries, including the unpublished ones
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getCatalogEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCatalogEntries(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.getCatalogEntries']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates a catalog row from the body and answers it at 201. The slug is required and is the globally-unique catalog key, so a second entry claiming a slug already in use is refused 409 rather than shadowing the first. PLATFORM admin only — this is cross-tenant pricing and packaging data, and an org-level admin is refused 403.
-         * @summary Add a catalog entry
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCatalogEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCatalogEntries(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postCatalogEntries']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Takes a batch of model rows and upserts each one\'s upstream COST and machine-observable facts, answering what was created and changed. It deliberately touches nothing a human owns — not the retail price, not the markup, not the entitlement tier — so a sync can never overwrite an administrator\'s pricing decision. The gate is a PLATFORM principal rather than a platform ADMIN, because the caller is normally a scheduled job holding the internal service token, which carries platform scope but no admin claim.
-         * @summary Land a syncer\'s view of the model catalog: upstream costs and machine facts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCatalogModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCatalogModels(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postCatalogModels']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Pulls the upstream model list and lands it through the same upsert the push door uses, so the rule that a sync owns cost and an administrator owns price holds no matter which door a row came through. It takes no body — the upstream is READ rather than told. If that upstream cannot be read the call answers 502 and writes NOTHING: a sync that cannot see its source must never conclude the source is empty, because that conclusion would withdraw every model on sale. The gate is a PLATFORM principal so the scheduled job\'s service token qualifies.
-         * @summary Refresh the model catalog by reading the upstream provider
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCatalogModelsRefresh(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCatalogModelsRefresh(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postCatalogModelsRefresh']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Upserts the shipped catalog seed and answers how many entries it created. It is idempotent and non-destructive — an entry an administrator has since edited is left alone — so it is safe to run against a live catalog to fill in what is missing. PLATFORM admin only; an org-level admin is refused 403.
-         * @summary Seed the embedded catalog, without disturbing edits already made
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCatalogSeed(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCatalogSeed(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.postCatalogSeed']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Loads the addressed entry, applies the body over it and answers the stored result. The slug is the entry\'s IDENTITY and is re-stamped from the path after decoding, so a slug in the body is ignored and a rename is impossible through this address. The slug is matched as a trailing wildcard rather than one path segment because a model\'s slug IS its callable id and those contain a slash — a segment parameter would stop at it and leave most catalog rows unaddressable. PLATFORM admin only; an unknown slug is 404.
-         * @summary Replace a catalog entry, keeping its slug
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async putCatalogEntriesByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putCatalogEntriesByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CatalogApi.putCatalogEntriesByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -488,16 +156,6 @@ export const CatalogApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = CatalogApiFp(configuration)
     return {
         /**
-         * Deletes the entry with the addressed slug and answers 204. The slug is matched as a trailing wildcard, not a single segment, because a model slug contains a slash. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404, so the call is safe to repeat but not silently idempotent.
-         * @summary Remove a catalog entry
-         * @param {CatalogApiDeleteCatalogEntriesByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteCatalogEntriesByWildcard1(requestParameters: CatalogApiDeleteCatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteCatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
          * @summary Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
          * @param {CatalogApiGetCatalogRequest} requestParameters Request parameters.
@@ -507,77 +165,8 @@ export const CatalogApiFactory = function (configuration?: Configuration, basePa
         getCatalog(requestParameters: CatalogApiGetCatalogRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CatalogPage> {
             return localVarFp.getCatalog(requestParameters.q, requestParameters.org, requestParameters.kind, requestParameters.origin, requestParameters.archetype, requestParameters.language, requestParameters.template, requestParameters.forkable, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
-        /**
-         * Returns every catalog row as stored — the admin view, which unlike the public projection includes entries that are not published. It is cross-tenant platform data, so the gate is a PLATFORM admin: an org-level admin is refused 403 no matter how privileged they are inside their own org, enforced by the handler itself and not only by the route\'s token middleware.
-         * @summary The raw catalog entries, including the unpublished ones
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCatalogEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getCatalogEntries(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a catalog row from the body and answers it at 201. The slug is required and is the globally-unique catalog key, so a second entry claiming a slug already in use is refused 409 rather than shadowing the first. PLATFORM admin only — this is cross-tenant pricing and packaging data, and an org-level admin is refused 403.
-         * @summary Add a catalog entry
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCatalogEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postCatalogEntries(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Takes a batch of model rows and upserts each one\'s upstream COST and machine-observable facts, answering what was created and changed. It deliberately touches nothing a human owns — not the retail price, not the markup, not the entitlement tier — so a sync can never overwrite an administrator\'s pricing decision. The gate is a PLATFORM principal rather than a platform ADMIN, because the caller is normally a scheduled job holding the internal service token, which carries platform scope but no admin claim.
-         * @summary Land a syncer\'s view of the model catalog: upstream costs and machine facts
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCatalogModels(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postCatalogModels(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Pulls the upstream model list and lands it through the same upsert the push door uses, so the rule that a sync owns cost and an administrator owns price holds no matter which door a row came through. It takes no body — the upstream is READ rather than told. If that upstream cannot be read the call answers 502 and writes NOTHING: a sync that cannot see its source must never conclude the source is empty, because that conclusion would withdraw every model on sale. The gate is a PLATFORM principal so the scheduled job\'s service token qualifies.
-         * @summary Refresh the model catalog by reading the upstream provider
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCatalogModelsRefresh(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postCatalogModelsRefresh(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Upserts the shipped catalog seed and answers how many entries it created. It is idempotent and non-destructive — an entry an administrator has since edited is left alone — so it is safe to run against a live catalog to fill in what is missing. PLATFORM admin only; an org-level admin is refused 403.
-         * @summary Seed the embedded catalog, without disturbing edits already made
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCatalogSeed(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postCatalogSeed(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Loads the addressed entry, applies the body over it and answers the stored result. The slug is the entry\'s IDENTITY and is re-stamped from the path after decoding, so a slug in the body is ignored and a rename is impossible through this address. The slug is matched as a trailing wildcard rather than one path segment because a model\'s slug IS its callable id and those contain a slash — a segment parameter would stop at it and leave most catalog rows unaddressable. PLATFORM admin only; an unknown slug is 404.
-         * @summary Replace a catalog entry, keeping its slug
-         * @param {CatalogApiPutCatalogEntriesByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        putCatalogEntriesByWildcard1(requestParameters: CatalogApiPutCatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putCatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
     };
 };
-
-/**
- * Request parameters for deleteCatalogEntriesByWildcard1 operation in CatalogApi.
- * @export
- * @interface CatalogApiDeleteCatalogEntriesByWildcard1Request
- */
-export interface CatalogApiDeleteCatalogEntriesByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof CatalogApiDeleteCatalogEntriesByWildcard1
-     */
-    readonly wildcard1: string
-}
 
 /**
  * Request parameters for getCatalog operation in CatalogApi.
@@ -657,38 +246,12 @@ export interface CatalogApiGetCatalogRequest {
 }
 
 /**
- * Request parameters for putCatalogEntriesByWildcard1 operation in CatalogApi.
- * @export
- * @interface CatalogApiPutCatalogEntriesByWildcard1Request
- */
-export interface CatalogApiPutCatalogEntriesByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof CatalogApiPutCatalogEntriesByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * CatalogApi - object-oriented interface
  * @export
  * @class CatalogApi
  * @extends {BaseAPI}
  */
 export class CatalogApi extends BaseAPI {
-    /**
-     * Deletes the entry with the addressed slug and answers 204. The slug is matched as a trailing wildcard, not a single segment, because a model slug contains a slash. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404, so the call is safe to repeat but not silently idempotent.
-     * @summary Remove a catalog entry
-     * @param {CatalogApiDeleteCatalogEntriesByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CatalogApi
-     */
-    public deleteCatalogEntriesByWildcard1(requestParameters: CatalogApiDeleteCatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).deleteCatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.  It reads TWO corpora and returns them as one page — the published, world-readable catalog that every caller sees, plus the caller\'s OWN org\'s private entries when the request carries a validated principal. Each row says which it came from in `scope`, so a client can warn before sharing a link. An anonymous caller simply gets the published one; no filter can ever widen a caller into another tenant\'s corpus, because the query that would return it is never run for them.  A request with no q is a browse rather than a search, and both answer the same shape: the page, the total before paging, and the facet counts over the whole matching set.
      * @summary Browse searches AND browses the cross-org catalog: every project, app and site the fleet has built, whichever org built it.
@@ -699,73 +262,6 @@ export class CatalogApi extends BaseAPI {
      */
     public getCatalog(requestParameters: CatalogApiGetCatalogRequest = {}, options?: RawAxiosRequestConfig) {
         return CatalogApiFp(this.configuration).getCatalog(requestParameters.q, requestParameters.org, requestParameters.kind, requestParameters.origin, requestParameters.archetype, requestParameters.language, requestParameters.template, requestParameters.forkable, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns every catalog row as stored — the admin view, which unlike the public projection includes entries that are not published. It is cross-tenant platform data, so the gate is a PLATFORM admin: an org-level admin is refused 403 no matter how privileged they are inside their own org, enforced by the handler itself and not only by the route\'s token middleware.
-     * @summary The raw catalog entries, including the unpublished ones
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CatalogApi
-     */
-    public getCatalogEntries(options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).getCatalogEntries(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a catalog row from the body and answers it at 201. The slug is required and is the globally-unique catalog key, so a second entry claiming a slug already in use is refused 409 rather than shadowing the first. PLATFORM admin only — this is cross-tenant pricing and packaging data, and an org-level admin is refused 403.
-     * @summary Add a catalog entry
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CatalogApi
-     */
-    public postCatalogEntries(options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).postCatalogEntries(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Takes a batch of model rows and upserts each one\'s upstream COST and machine-observable facts, answering what was created and changed. It deliberately touches nothing a human owns — not the retail price, not the markup, not the entitlement tier — so a sync can never overwrite an administrator\'s pricing decision. The gate is a PLATFORM principal rather than a platform ADMIN, because the caller is normally a scheduled job holding the internal service token, which carries platform scope but no admin claim.
-     * @summary Land a syncer\'s view of the model catalog: upstream costs and machine facts
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CatalogApi
-     */
-    public postCatalogModels(options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).postCatalogModels(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Pulls the upstream model list and lands it through the same upsert the push door uses, so the rule that a sync owns cost and an administrator owns price holds no matter which door a row came through. It takes no body — the upstream is READ rather than told. If that upstream cannot be read the call answers 502 and writes NOTHING: a sync that cannot see its source must never conclude the source is empty, because that conclusion would withdraw every model on sale. The gate is a PLATFORM principal so the scheduled job\'s service token qualifies.
-     * @summary Refresh the model catalog by reading the upstream provider
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CatalogApi
-     */
-    public postCatalogModelsRefresh(options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).postCatalogModelsRefresh(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Upserts the shipped catalog seed and answers how many entries it created. It is idempotent and non-destructive — an entry an administrator has since edited is left alone — so it is safe to run against a live catalog to fill in what is missing. PLATFORM admin only; an org-level admin is refused 403.
-     * @summary Seed the embedded catalog, without disturbing edits already made
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CatalogApi
-     */
-    public postCatalogSeed(options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).postCatalogSeed(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Loads the addressed entry, applies the body over it and answers the stored result. The slug is the entry\'s IDENTITY and is re-stamped from the path after decoding, so a slug in the body is ignored and a rename is impossible through this address. The slug is matched as a trailing wildcard rather than one path segment because a model\'s slug IS its callable id and those contain a slash — a segment parameter would stop at it and leave most catalog rows unaddressable. PLATFORM admin only; an unknown slug is 404.
-     * @summary Replace a catalog entry, keeping its slug
-     * @param {CatalogApiPutCatalogEntriesByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CatalogApi
-     */
-    public putCatalogEntriesByWildcard1(requestParameters: CatalogApiPutCatalogEntriesByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return CatalogApiFp(this.configuration).putCatalogEntriesByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

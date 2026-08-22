@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -24,17 +24,109 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { Accounts } from '../models';
 // @ts-ignore
-import type { CollectOut } from '../models';
+import type { Alert } from '../models';
 // @ts-ignore
-import type { InvoiceOut } from '../models';
+import type { AlertPatch } from '../models';
 // @ts-ignore
-import type { RaiseInvoiceIn } from '../models';
+import type { AlertSpec } from '../models';
+// @ts-ignore
+import type { BillingAccount } from '../models';
+// @ts-ignore
+import type { CapVerdict } from '../models';
+// @ts-ignore
+import type { Collected } from '../models';
+// @ts-ignore
+import type { CreditBalance } from '../models';
+// @ts-ignore
+import type { CreditGrants } from '../models';
+// @ts-ignore
+import type { CryptoAsset } from '../models';
+// @ts-ignore
+import type { CryptoDeposit } from '../models';
+// @ts-ignore
+import type { CryptoOptions } from '../models';
+// @ts-ignore
+import type { FinanceLedgerEntry } from '../models';
+// @ts-ignore
+import type { Holder } from '../models';
+// @ts-ignore
+import type { Invoice } from '../models';
+// @ts-ignore
+import type { Invoices } from '../models';
+// @ts-ignore
+import type { Mode } from '../models';
+// @ts-ignore
+import type { ModeIn } from '../models';
+// @ts-ignore
+import type { PaymentConfig } from '../models';
+// @ts-ignore
+import type { Payout } from '../models';
+// @ts-ignore
+import type { RaiseIn } from '../models';
+// @ts-ignore
+import type { Rollup } from '../models';
+// @ts-ignore
+import type { Subscription } from '../models';
+// @ts-ignore
+import type { SubscriptionRef } from '../models';
+// @ts-ignore
+import type { Subscriptions } from '../models';
+// @ts-ignore
+import type { Tier } from '../models';
+// @ts-ignore
+import type { Transactions } from '../models';
+// @ts-ignore
+import type { WireInstructions } from '../models';
 /**
  * BillingApi - axios parameter creator
  * @export
  */
 export const BillingApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  A subscription from another org is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary End a subscription
+         * @param {string} id 
+         * @param {SubscriptionRef} subscriptionRef 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelSubscription: async (id: string, subscriptionRef: SubscriptionRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('cancelSubscription', 'id', id)
+            // verify required parameter 'subscriptionRef' is not null or undefined
+            assertParamExists('cancelSubscription', 'subscriptionRef', subscriptionRef)
+            const localVarPath = `/v1/billing/subscriptions/{id}/cancel`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(subscriptionRef, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Collects an issued invoice: credit grants first, then prepaid balance, then the card on file — the same waterfall the dunning workflow runs.  A DECLINE IS NOT AN ERROR. It answers with paid=false, a reason, and the invoice still open, because a declined collection is a normal business outcome that must remain retryable — and because sealing it as a failure would wedge dunning behind a replayed decline. Only a successful collection is sealed, so a retry of a paid invoice replays the receipt instead of charging again.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Collect an issued invoice from credits, balance, then card
@@ -74,8 +166,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Deletes the addressed cap and answers 204. Requires an ORG ADMIN, a platform admin, or the internal service token — deleting a cap uncaps the org\'s spend, so a plain member is refused 403. Ownership is checked per row and a cap the caller does not own is refused as 404 rather than 403, so the response cannot confirm that another org\'s id exists.
-         * @summary Remove one of your org\'s spend caps
+         * Deletes a budget the caller\'s org owns and answers 204.  Removing a cap REMOVES A CEILING, so it takes the same bar as setting one: a validated org admin, the platform SuperAdmin, or the trusted in-process service token. A member who could delete the org\'s cap would have unbounded spend.  A cap this org does not own is NOT FOUND rather than refused — the same answer whether the id is unknown or belongs to another customer — so an id cannot be probed for existence by trying to delete it.
+         * @summary Remove one spend cap
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -112,8 +204,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Detaches the addressed card: the stored reference is removed here AND withdrawn from the processor\'s vault, so nothing is left that a later charge could bill.  The customer twin of DELETE /v1/billing/portal/methods/{id}. The id is resolved INSIDE your own org namespace, so a card that is not yours is simply not found there and answers 404 — never 403, which would confirm the id exists.  Removing the card an auto-recharge or a running lease bills leaves that arrangement with nothing to charge; that is yours to decide.
-         * @summary Remove one of your saved cards
+         * Detaches the method at the processor and drops the row.  A method the caller does not own is NOT FOUND rather than refused — the same answer whether the id names nothing or names somebody else\'s card — so an id cannot be probed for existence.  A platform operator or the trusted in-process service token may act on any subject inside the org; everyone else may only remove their own.
+         * @summary Remove one saved card or account
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -150,8 +242,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Detaches the addressed card: the stored reference is removed here AND withdrawn from the processor\'s vault, so nothing is left that a later charge could bill.  The service-token twin of the customer\'s DELETE /v1/billing/methods/{id}, at its own address for the same reason the portal list is — a different principal, on the same rows, in this same process.  The id is resolved INSIDE the caller\'s org namespace, so another tenant\'s card is not found there and answers 404 — never 403, which would confirm the id exists. That bound holds for the service token too: it may act for any subject within the org the gateway pinned, and for no subject outside it.  Removing the card an auto-recharge or a running lease bills leaves that arrangement with nothing to charge; that is the customer\'s call to make.
-         * @summary Remove a saved card — the portal detach
+         * Detaches the method at the processor and drops the row.  A method the caller does not own is NOT FOUND rather than refused — the same answer whether the id names nothing or names somebody else\'s card — so an id cannot be probed for existence.  A platform operator or the trusted in-process service token may act on any subject inside the org; everyone else may only remove their own.
+         * @summary Remove one saved card or account
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -188,8 +280,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the billing accounts visible to the caller. One organisation is exactly one billing account here, so an authenticated caller sees precisely one: their own. The list shape is the honest one — it is what a caller with access to several would receive — rather than a promise that more will ever appear for a token scoped to a single org.  The account is derived from the validated org claim and from nothing the caller sends, so there is no account parameter and a cross-tenant read is not expressible. An unauthenticated call is 401.
-         * @summary The billing account you are signed in to
+         * Answers the caller\'s billing accounts: the org itself, its currency, when it was opened, and the caller\'s own standing in it.  The standing is the caller\'s, resolved from the validated principal here and sent to the store rather than looked up there — the membership roster is IAM\'s and commerce keeps none, so a callee that answered \"what role is this\" would be inventing it. An anonymous read gets the account with no role rather than an implied membership.  Scoped to the caller\'s own org, which is the whole tenancy story: there is no org field on the wire and none on the input.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the caller\'s billing accounts: the org itself, its currency, when it was opened, and the caller\'s own standing in it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -222,9 +314,9 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the members of one billing account. The id must be the caller\'s OWN account — the handler compares it against the org resolved from the token and answers 403 when they differ, which is what guards this route: unlike its siblings it carries no subject key for the pin to overwrite, so it checks the path segment itself.  The roster it can answer is currently the requesting user alone. Membership lives in IAM, not in the ledger, and this operation reports what commerce actually holds rather than inventing a roster from a source it does not read. An unauthenticated call is 401.
-         * @summary Who is on a billing account
-         * @param {string} id 
+         * Answers one billing account\'s roster.  commerce stores no roster — that is IAM\'s — so the only member it can name is the caller, and that is what comes back. What it does enforce is that the account named in the path is the caller\'s own: a foreign id is 403, not an empty list, because \"no members\" and \"not your account\" are different answers.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers one billing account\'s roster.
+         * @param {string} id ID is the billing account id, which for this store is the org\&#39;s own id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -260,8 +352,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
-         * @summary List your org\'s spend caps and rate limits
+         * Lists this org\'s spend caps: the ceiling, its scope, whether it enforces, and how much of it has been spent this period.  `periodSpentCents`, `over` and `warn` are ABSENT rather than zero when the spend could not be read, because \"nothing spent\" and \"spend unknown\" are different answers and a customer acting on the first when the second is true would be reading a ceiling that is not there. The policy row is reported either way.  The period is the UTC calendar month and `resetsAt` is when the count starts again, so a surface can say \"resets on\" without a second call.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists this org\'s spend caps: the ceiling, its scope, whether it enforces, and how much of it has been spent this period.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -294,12 +386,16 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
-         * @summary The per-request spend-cap verdict the metering gate consumes
+         * Answers whether one proposed spend fits inside this org\'s caps.  It is the per-request verdict the metering edge consumes before every priced call, and its caller is a SERVICE rather than a person: a service token plus the gateway-pinned org, with no user behind it. So this admits that principal where the CRUD beside it does not.  Every covering row is evaluated, most-restrictive-wins, and the tightest one is what `capCents`, `spentCents` and `reason` describe. Soft rows never deny; nor does a project-scoped enforcing row whose project axis the caller could not establish — `pv=1` is how a caller states that it did, and an unproven claim must not be able to refuse traffic.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers whether one proposed spend fits inside this org\'s caps.
+         * @param {string} [project] Project narrows the verdict to one project\&#39;s caps. Empty is the org-wide row.
+         * @param {string} [service] Service narrows it to one service\&#39;s caps. Empty is every service.
+         * @param {string} [amount] Amount is the proposed spend in cents.
+         * @param {string} [pv] PV is \&quot;1\&quot; when the caller ESTABLISHED the project rather than merely carrying a claim of one. An unproven project may not deny traffic.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingAlertsAuthorize: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBillingAlertsAuthorize: async (project?: string, service?: string, amount?: string, pv?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/billing/alerts/authorize`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -315,6 +411,22 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (project !== undefined) {
+                localVarQueryParameter['project'] = project;
+            }
+
+            if (service !== undefined) {
+                localVarQueryParameter['service'] = service;
+            }
+
+            if (amount !== undefined) {
+                localVarQueryParameter['amount'] = amount;
+            }
+
+            if (pv !== undefined) {
+                localVarQueryParameter['pv'] = pv;
+            }
 
 
     
@@ -362,8 +474,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the total credit still available to the caller\'s own subject — the sum of what the grants have left, which is the figure the console shows above the usage meter. It is the balance a metered act draws down, so it answers the one question a customer asks before spending: how much is there.  Like every read in this family the subject is pinned to the caller before the handler runs, so the userId parameter the handler reads can never name another tenant. For the grants BEHIND this number — each with its original amount and its expiry — read /v1/billing/credits. A subject with no credit is zero, which is an answer and not an error.
-         * @summary What is left of your credit, as one number
+         * Answers what the caller can spend right now, one entry per currency.  Only ACTIVE grants count: a voided, exhausted or lapsed grant contributes nothing, which is why this number can be smaller than the grant list suggests and why the two reads exist separately. It is credit, not prepaid balance — /v1/billing/balance is the wallet, and the two are added by the gate, never by a reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers what the caller can spend right now, one entry per currency.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -396,8 +508,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the same balance /v1/billing/credit-balance reports, split by the tag each grant carries, so a reader can tell trial credit from bought credit and show the earliest expiry within each group. A console needs the split to say what will lapse and when; the single number cannot.  The subject is pinned to the caller before the handler runs, exactly as in the sibling reads, so the userId parameter can never name another tenant. A subject with no grants is an empty breakdown and a zero total, which is an answer and not an error.
-         * @summary What is left of your credit, grouped by where it came from
+         * Answers that same spendable credit split by grant tag, with the earliest expiry under each and the total across all of them.  The split is the point: it is how trial credit is told apart from bought credit, which is what a surface asks before it decides whether to spend any. An unregistered address answers 404 and a caller reads that as \"no credit\", so this being served is the difference between a customer with a trial grant being offered their trial and being told they have none.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers that same spendable credit split by grant tag, with the earliest expiry under each and the total across all of them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -430,8 +542,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the caller org\'s credit grants — each with its original amount, what remains and when it expires — so a customer can see what was given and what is left before metered spend draws it down. It is a READ of the caller\'s own subject, pinned before the handler runs, so a grant belonging to another tenant is simply absent. Granting credit is not this route and never has been: minting lands on the mint-gated POST /v1/billing/credit, which no browser can reach. Reading an empty balance is an empty array, not an error.
-         * @summary List the credit grants on your org\'s balance
+         * Lists the caller\'s credit grants — every one of them, spent and lapsed and voided included.  That is deliberate and it is what makes the list useful: a grant list is a LEDGER, and one that hid its spent rows could not be reconciled against a burn-down. What is spendable right now is the sibling read, /v1/billing/ credit-balance, and the two are different questions.  Scoped to the caller\'s own wallet, resolved server-side.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the caller\'s credit grants — every one of them, spent and lapsed and voided included.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -464,9 +576,9 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers the addressed deposit intent\'s current state — pending until a transfer is seen, confirming while the chain buries it, succeeded once it is credited — so a payment page can poll one deposit rather than the whole balance.  Scoped to the caller: an intent belonging to another payer is not found and answers 404, never another account\'s state. The credit itself is the chain watcher\'s to make; this read reports it and never performs it.
-         * @summary Follow one crypto deposit to settlement
-         * @param {string} id 
+         * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.
+         * @param {string} id ID is the deposit intent id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -502,8 +614,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers the custody processor\'s LIVE capability list — the chains and the tokens on each that this deployment can actually take a deposit on. A payment page renders its asset picker straight from it rather than from a list of its own, so a chain the processor stops supporting disappears from the picker instead of minting an address nothing watches.  It is a capability read, not an account read: it says what may be paid with, never anything about this caller\'s balance or deposits.
-         * @summary Which chains and tokens a crypto top-up can use
+         * Answers which chains and tokens the crypto rail accepts — what an asset picker renders.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -536,8 +648,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the caller org\'s invoices with a count, read from that org\'s own namespaced store, narrowable by userId, status or subscriptionId. The org is the one the gateway validated and the caller\'s billing subject is pinned into the query before the handler runs, so a read can never widen past the caller. A request that carries no resolvable org gets an honest empty list rather than an error or another tenant\'s rows.
-         * @summary List your org\'s billing invoices
+         * Lists the caller\'s invoices, newest first, with the count beside them.  It is scoped to the caller\'s own billing subject — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org. An org with no invoices is an empty list, not a refusal.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the caller\'s invoices, newest first, with the count beside them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -570,8 +682,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Renders the addressed invoice as a single-page PDF and answers it as an attachment named after the invoice number. The render is a pure function of the invoice — no timestamps, no random ids — so the same invoice always produces identical bytes and a re-download is stable. The invoice is resolved inside the caller org\'s own namespace, so an id belonging to another tenant is simply absent and reads as 404; a caller with no validated org gets 401 rather than a document.
-         * @summary Download one invoice as a PDF attachment
+         * Answers the invoice as an attachment — `application/pdf` under a Content-Disposition naming the invoice number — rather than as a JSON value, which is why this one route is untyped where its five siblings are typed: a PDF is bytes with a filename, and the two headers are the whole contract.  The render is a PURE function of the invoice: one page, no timestamps and no random ids, so the same invoice renders the same bytes however often it is asked for and a retry after a dropped connection costs a re-render and nothing else.  The invoice is read from the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header, and the lookup is scoped at the storage layer — so an id belonging to another customer resolves to nothing and answers 404 rather than being found and then refused.
+         * @summary Download one invoice as a PDF
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -608,8 +720,47 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers the cards saved against your own account as masked descriptors: brand, last four, expiry and the processor\'s reusable reference. No card number and no security code exist here to return; both live at the processor and never enter this system. It is what a checkout prefills its payment step from.  The customer face of the list a service token reads at /v1/billing/portal/methods — same rows, different principal, no hop between them.  The subject filter is pinned to the VALIDATED caller before the handler runs, so the answer is your own account\'s cards whatever customerId the request carries, and another org\'s rows are outside the namespace entirely. A caller who is not signed in is refused before the read.
-         * @summary Your saved cards, masked — the customer read
+         * Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags. The sign is the posting\'s own meaning, read through ONE vocabulary shared with the ledger that wrote it — a reader with its own spelling for `deposit` rendered a customer\'s grant as a charge.  This is the closest projection of the truth. The org\'s double-entry postings are the source of record — balanced, only ever appended, one file per org — and this lane is that list, wider than either half of it: the deposits are the grants /v1/billing/credits lists and the debits are the spend /v1/billing/usage rolls up. It answers 503 where this deployment runs no ledger, rather than reporting an empty wallet.  A row whose timestamp will not parse is KEPT rather than dropped — a malformed date must show up in a money list, not vanish from it. `balanceCents` is omitted: these are MOVEMENTS, and the standing balance is /v1/billing/balance.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org, where the org\'s ledger file is the tenant boundary; 401 without a validated principal.
+         * @summary Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags.
+         * @param {string} [range] Range is the window: 24h, 7d, 30d or 90d. Anything else — including absent — is 30d, so a typo silently widens the window to a month rather than failing.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingLedger: async (range?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/billing/ledger`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (range !== undefined) {
+                localVarQueryParameter['range'] = range;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers every payment method the caller has saved, newest first.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  A store that cannot be read answers an EMPTY LIST rather than a failure: the saved-cards panel renders empty instead of breaking the page around it.
+         * @summary Cards and accounts on file for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -642,8 +793,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the caller org\'s payout records ordered by creation time descending, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs, so the list is the caller\'s own and cannot be widened. A request with no resolvable org gets an empty array rather than an error.
-         * @summary List your org\'s payouts, newest first
+         * Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.  A payout is ORG-scoped rather than subject-scoped, so there is nothing to pin beyond the tenant the caller already is, and no query can widen it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -676,8 +827,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns every subscription tier a buyer can choose, each carrying the platform promo currently in effect, optionally narrowed with the category query. Prices come from the admin-editable plan authority in the database; the embedded catalog is only a loud-failing fallback, so a failed seed or a query error serves the known plans rather than a silently blank list. It is a catalog read, not an entitlement read — it says what may be bought, never what this caller has.
-         * @summary The public plan catalog, annotated with the active platform promotion
+         * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  It is the public catalog and needs no tenant: this is what anyone may buy.
+         * @summary The plan catalog, priced with whatever offer is in force
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -710,8 +861,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers the org\'s saved payment methods as masked descriptors: brand, last four, expiry and the processor\'s reusable reference. No card number and no security code exist here to return; both live at the processor and never enter this system.  This is the SERVICE-TOKEN face of the same list a customer reads at /v1/billing/methods. Both are served here, in this process, and answer the same rows; they are two addresses because they admit two different principals, not because either forwards to the other.  The customer filter is pinned to the VALIDATED caller before the handler runs, so a browser sees only its own subject\'s cards whatever customerId it sends; only a caller holding the internal service token may name the subject, and the org it may name it within is fixed by the gateway. Cross-tenant is closed by the org namespace for both, so an id or a subject from another org resolves to nothing. A caller who is neither is refused before the read.
-         * @summary Cards saved against the caller\'s org, masked — the portal read
+         * Answers every payment method the caller has saved, newest first.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  A store that cannot be read answers an EMPTY LIST rather than a failure: the saved-cards panel renders empty instead of breaking the page around it.
+         * @summary Cards and accounts on file for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -744,8 +895,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers the Square application id, location id, environment and live flag the browser\'s card iframe boots against — public values only, never a secret. Resolution lives in one place shared with the public tenant projection, so the card form can never initialize against a different Square application than the one commerce will actually charge. It deliberately does NOT hydrate credentials from KMS: the dialog blocks on this call, so it answers from the org and the deployment environment without a round trip, and an org with no per-org credentials gets the deployment\'s own public app id.
-         * @summary The public payment-provider config your card form needs to initialize
+         * Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.  It carries no secret: an application id is published to every checkout page by design. What matters is that it names the SAME processor account the charge will be made on, because a card vaulted against one account and charged against another is a card that saves and then cannot be used.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -778,8 +929,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the caller org\'s subscriptions with a count, narrowable by userId or status, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs. A request with no resolvable org gets an empty list and a zero count rather than an error.
-         * @summary List your org\'s subscriptions
+         * Lists the plans the caller holds, with the count beside them.  It is scoped to the caller\'s own org, so a query cannot widen it to another customer\'s. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the plans the caller holds, with the count beside them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -812,8 +963,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers one subject\'s resolved tier — name, display name, agent ceiling and allowed models — with the balance that admits their next metered call: prepaidAvailable, creditsRemaining, dailyRemaining and the effectiveAvailable those fold into. The ai router reads it per request to pick that caller\'s rate-limit tier. It sits on the org-resolving chain because a tier is org state, and the subject keys are pinned to the validated caller before the handler runs, so a browser read is always the caller\'s own; user is required, which only a service-to-service caller can omit and be refused 400 for. The tier is an upstream tier claim, or an explicit tier override, when either is present — that is the service-to-service contract — and is otherwise DERIVED from the org\'s active and trialing subscriptions, the highest one winning, its paid-ness read from the plan catalog by slug rather than from the subscription\'s own stored copy. The rule to get right is effectiveAvailable and not prepaidAvailable: granted credits spend too, credits first, so an account funded only by a grant reads zero prepaid while holding real spendable credit — and with the daily term zero on every tier there is no free allowance behind it, so a zero-balance account is gated. A subscription-store error answers 500 rather than downgrading to free, so a transient failure never reports a paid subscriber as unsubscribed.
-         * @summary The subject\'s plan tier and the balance a metered call is admitted on
+         * Answers which tier the caller is on, what it allows, and what is left to spend.  `effectiveAvailable` is the ONLY figure to compare against zero. The others are its parts — prepaid money, granted credits and the daily term are three sources of one spend, not three balances to add up a second time.  A tier that cannot be READ is an error, never Free. The router in front of the models maps any non-2xx to Free, so answering Free from a question nobody could answer would pin every paying customer to the most restrictive row with nothing anywhere to find.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers which tier the caller is on, what it allows, and what is left to spend.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -846,12 +997,15 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns the caller\'s own ledger movements — every credit and debit against the subject the usage gate charges — newest first, with a count and the subject they belong to, so a customer can reconcile a bill against the acts that produced it. Paging is limit and offset, and the currency can be narrowed.  The subject is NOT the caller\'s to choose. The handler filters on a user parameter, and that parameter is overwritten with the caller\'s own billing subject before the handler runs — so naming another subject returns your own rows rather than theirs, and the read can never disagree with the wallet it describes. An unauthenticated call is 401 rather than 403, because a browser re-authenticates on the first and only reports the second. No movements is an empty list, not an error.
-         * @summary List the movements on your own balance, newest first
+         * Answers one page of the caller\'s own ledger, newest first: what moved, how much, when, and what it was tagged with.  `count` is the size of the WHOLE history rather than of the page, which is how a reader knows there is more to ask for, and `user` echoes the wallet the page was read for — the same subject the spend gate debits, so a customer can see which account answered rather than guessing from their own token.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers one page of the caller\'s own ledger, newest first: what moved, how much, when, and what it was tagged with.
+         * @param {string} [currency] Currency filters to one currency. Empty reads every currency.
+         * @param {string} [limit] Limit is the page size; absent or non-positive takes the default 100.
+         * @param {string} [offset] Offset is how far into the history the page starts.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingTransactions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBillingTransactions: async (currency?: string, limit?: string, offset?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/billing/transactions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -867,6 +1021,18 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (currency !== undefined) {
+                localVarQueryParameter['currency'] = currency;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
 
 
     
@@ -948,8 +1114,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers the one read the account page renders: the subject\'s resolved plan, the plan\'s included monthly allotment beside what was actually granted this period, consumption capped at that grant, the overage past it, and the spendable wallet (balance minus holds) — all for the current UTC month, every figure derived from the same transactions the gateway\'s balance gate reads, so this read can never disagree with the gate that admits the next call. It rides the same pinned chain as the sibling reads: the user parameter is overwritten with the validated caller\'s own billing subject before the handler runs, so it can never name another tenant; user is required, which only a service-to-service caller can omit and be refused 400 for, and plan is optional — omitted, it is resolved from the subject\'s subscription. The rule to get right is that the two sides are DIFFERENT MONEY: the included figures are usage the subscription grants and the wallet is prepaid credit the customer bought, so a reader who sums them invents a balance nobody holds — and before the period\'s first allotment grant runs, monthlyCents shows the plan\'s entitlement while grantedCents is zero, which is the figure consumption actually draws down.
-         * @summary What plan you are on and how much of it is left, beside the wallet
+         * Answers the caller\'s month: what their plan includes, what has been consumed against it, and the wallet beside it.  The two blocks are SEPARATE monies and are never added. One is usage a plan granted; the other is prepaid credit bought with a card. Their sum is not a number anyone holds, and a reader that formed it would be inventing a balance.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the caller\'s month: what their plan includes, what has been consumed against it, and the wallet beside it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -982,8 +1148,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Answers the receiving bank details for the brand this deployment serves — the account the funds actually land in, hydrated per brand rather than hard-coded — together with the payment reference to put on the transfer.  THE REFERENCE IS THE POINT. It carries your own billing key, and it is how an arriving wire is attributed to your account; a transfer sent without it arrives as an unidentified receipt. That is why this read is gated at all: an unpinned caller would be handed an unattributable reference.  Reading it credits nothing and reserves nothing. A wire is settled by an operator when the bank shows the funds, so the balance moves on receipt, not on this call.
-         * @summary Where to wire funds, and the reference that credits them to you
+         * Answers where to send a wire top-up: the receiving bank details, with the caller\'s own payment reference.  The account is the SERVING BRAND\'S — resolved from the host the customer is paying on, so paying on one brand never shows another\'s bank — and the reference carries the caller\'s billing key, which is how an arriving wire names who it credits. Nothing mints here; a receipt is settled by an operator once the bank confirms it.  It is all-or-nothing: no configured account is 503 rather than a partial form, because nobody can wire to three fields out of five.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers where to send a wire top-up: the receiving bank details, with the caller\'s own payment reference.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1092,15 +1258,18 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Applies only the fields the body actually carries — title, threshold, project, service, enforce, softPct, rateLimitRpm — and leaves the rest as stored, answering the merged row with its current period spend. Requires an ORG ADMIN, a platform admin, or the internal service token, for the same reason creation does: a member who could edit the cap could raise it to nothing or drop it to a punitive floor. Ownership is checked per row and a cap the caller does not own is refused as 404, never 403, so the id space cannot be probed.
-         * @summary Change one of your org\'s spend caps
+         * Changes one spend cap: raise or lower the ceiling, flip enforcement, retune the rate limit.  Only the fields the body carries move. Every mutable field is optional, and an absent one is PRESERVED rather than reset — so a change that flips enforcement cannot silently wipe the threshold it enforces.  A cap belonging to another org is a 404, not a 403: a guessed id must not become an oracle for what anyone else holds.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Changes one spend cap: raise or lower the ceiling, flip enforcement, retune the rate limit.
          * @param {string} id 
+         * @param {AlertPatch} alertPatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchBillingAlertsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        patchBillingAlertsById: async (id: string, alertPatch: AlertPatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('patchBillingAlertsById', 'id', id)
+            // verify required parameter 'alertPatch' is not null or undefined
+            assertParamExists('patchBillingAlertsById', 'alertPatch', alertPatch)
             const localVarPath = `/v1/billing/alerts/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1120,9 +1289,12 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alertPatch, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1130,12 +1302,15 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
-         * @summary Set a spend cap or rate limit on your org
+         * Opens a spend cap on the caller\'s own org.  At least one limit must mean something: a threshold above zero (a spend cap) or a requests-per-minute above zero (a rate limit). A row that bounds neither is refused rather than stored, because a ceiling nothing measures against is a ceiling a customer believes in and does not have.  The cap is keyed on the caller\'s own billing subject, resolved server-side — the SAME key the verdict looks it up under, which is what makes enforcement bind rather than merely record.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Opens a spend cap on the caller\'s own org.
+         * @param {AlertSpec} alertSpec 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBillingAlerts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postBillingAlerts: async (alertSpec: AlertSpec, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'alertSpec' is not null or undefined
+            assertParamExists('postBillingAlerts', 'alertSpec', alertSpec)
             const localVarPath = `/v1/billing/alerts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1154,9 +1329,12 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(alertSpec, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1164,12 +1342,15 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Mints a deposit address held by the MPC signer fleet — no single party holds the key — on the chain and token you name, and returns it with the intent that tracks it.  The account credited is the PINNED caller\'s, never a value in the body, so a deposit cannot be aimed at someone else\'s balance. A caller who already has an open intent gets that same address back rather than a new one, so reloading the page cannot spray keygens across the signer fleet.  NO BALANCE MOVES HERE. This hands out an address; the chain watcher credits the account when a real transfer confirms, which is also why an address handed out and never funded costs nothing and expires nothing.
-         * @summary Get a deposit address for a crypto top-up
+         * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address and a status, not a receipt.  An asset this rail cannot mint on is 400 — ask for another. A rail that is shut for that asset is 503 — nothing sent now can be credited.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Issues a deposit address the caller can send crypto to, on the asset they ask for.
+         * @param {CryptoAsset} cryptoAsset 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBillingCryptoDeposit: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postBillingCryptoDeposit: async (cryptoAsset: CryptoAsset, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cryptoAsset' is not null or undefined
+            assertParamExists('postBillingCryptoDeposit', 'cryptoAsset', cryptoAsset)
             const localVarPath = `/v1/billing/crypto/deposit`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1188,9 +1369,12 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cryptoAsset, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1198,8 +1382,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Vaults the card the processor already holds — you send its one-time reference, never a card number — as a reusable card on file, and stores the billing address with it. That vaulted card is what a subscription renewal or an auto-recharge charges later, which is why saving one is the step that makes a monthly plan billable at all.  It charges nothing. Saving a card moves no money; the first charge is whatever arrangement you then attach it to.  The subject is pinned from the validated caller and OVERWRITES the customerId in the body while leaving the card fields untouched, so a card can only ever be attached to the caller\'s OWN account whatever the body claims. That pin is the whole control on this write, not decoration: this is the one handler in the family that reads its subject from the body.
-         * @summary Save a card for later charges
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1232,12 +1416,15 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Flips the org\'s live flag, which is the single authority for both the payment environment and the ledger bucket its transactions land in. This is a money-MINT control, not a customer action: it is gated on the internal service token AND platform scope, so an ORG ADMIN CANNOT move their own org — otherwise a tenant could drop itself into sandbox and stop paying. The rule most callers get wrong is the default: an org that has never been flipped transacts in SANDBOX, which is why a production-credentialled deployment can still hand a buyer a sandbox card form. When the deployment pins the payment environment explicitly, that pin governs and this flag only marks the transactions.
-         * @summary Move an org between sandbox and live billing
+         * Moves this org between sandbox money and real money.  It decides whether a charge hits a real card, so it is the one posture change that is not self-service: the platform bar, never an org owner, because an org that could put itself in test mode could take priced work for free.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Moves this org between sandbox money and real money.
+         * @param {ModeIn} modeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBillingMode: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postBillingMode: async (modeIn: ModeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'modeIn' is not null or undefined
+            assertParamExists('postBillingMode', 'modeIn', modeIn)
             const localVarPath = `/v1/billing/mode`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1256,9 +1443,12 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(modeIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1266,8 +1456,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * The service-token twin of POST /v1/billing/methods: it vaults the processor\'s one-time reference as a reusable card on file for the named subject, with its billing address, and moves no money doing it.  It exists so an internal caller can complete the family it can already read and detach. The subject it may name is pinned to the org the gateway fixed, so the service token acts WITHIN one tenant and never across tenants; a caller holding no service token is refused before the write.
-         * @summary Save a card on a subject\'s behalf — the portal attach
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1300,8 +1490,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Walks every organization and, for those that enabled auto-recharge and whose available balance (balance minus holds) has fallen under their configured threshold, charges their default payment method off-session and credits the balance, answering a per-org result row for each one it touched. This is the platform cron\'s door, not a customer\'s: it is gated on the internal service token AND platform scope, so an org admin cannot run the fleet-wide sweep. An org above its threshold is skipped silently; an org with no default payment method is reported as an uncharged row with the reason rather than failing the whole run.
-         * @summary Platform sweep: top up every org whose balance has fallen below its own threshold
+         * Sweeps every organization and, for those with auto-recharge on whose available balance has dropped below their own threshold, charges the default card and credits the balance.  It charges cards across EVERY tenant, so it is platform authority only — never an org owner, who could otherwise sweep-charge saved cards estate-wide. Its caller is a schedule, not a person.  `orgs` is the population considered, not the row count: that difference is how a reader tells \'nobody was below threshold\' from \'the sweep never ran\'. One org\'s failure is reported in its own row and does not stop the rest.
+         * @summary Recharge every org that has fallen below its threshold
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1334,8 +1524,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Vaults the tokenized card as a reusable card-on-file, charges the first period, and creates the subscription — answering the subscription and invoice ids with the amount charged. The price is SERVER-AUTHORITATIVE: it is the plan\'s catalog price times billable seats and a client-supplied amount is never consulted, so a scripted request cannot underpay; a per-seat plan below its minimum seats is refused, and a free plan is refused outright because this address is the paid path. The card PAN never reaches this service — the browser tokenizes it and only the single-use nonce arrives here. The subject is the caller\'s own org, with an in-org user honored only inside that bound, and an idempotency key (or, absent one, the nonce itself) makes a retry replay the first result instead of charging twice.
-         * @summary Subscribe to a paid plan with a card, charged for the first period immediately
+         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.
+         * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1368,84 +1558,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Cancels the addressed subscription and answers its updated state, emitting the cancellation event the rest of the platform keys on. The default is to cancel AT PERIOD END — a body that fails to parse falls back to it — so the customer keeps what they paid for unless atPeriodEnd is explicitly false. The subscription is resolved inside the caller\'s own org namespace, so another tenant\'s id is a 404, and the write carries the browser anti-CSRF gate because it is reachable with an ambient cookie.
-         * @summary Cancel a subscription, at period end by default
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBillingSubscriptionsByIdCancel: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('postBillingSubscriptionsByIdCancel', 'id', id)
-            const localVarPath = `/v1/billing/subscriptions/{id}/cancel`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Clears the scheduled cancellation on the addressed subscription and answers its updated state. It is the inverse of cancel and applies to a subscription that is still within its period; one the engine will not reactivate is refused 400 with the reason. The subscription is resolved inside the caller\'s own org namespace, so another tenant\'s id reads as 404, and the write carries the browser anti-CSRF gate.
-         * @summary Undo a pending cancellation and keep the subscription running
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBillingSubscriptionsByIdReactivate: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('postBillingSubscriptionsByIdReactivate', 'id', id)
-            const localVarPath = `/v1/billing/subscriptions/{id}/reactivate`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Charges a card the caller already has on file, named by paymentMethodId, and credits the caller\'s own balance — the SAVED-card twin of topup/token, sharing the one charge-and-credit core the auto-recharge cron runs on. The credit lands on the caller\'s OWN billing subject: the request body\'s subject field is pinned to the caller before the handler sees it, so a top-up can never be redirected to another subject or outside the caller\'s org. It is screened for risk before any money moves, exactly as the token path is, because both credit the SPENDABLE wallet. The rule most callers get wrong is that paymentMethodId is NOT covered by that subject pin — it is a card id, not a subject key — so it is checked separately, and a card belonging to any other subject answers 404 rather than 403: a permission error would confirm the id exists, which is an ownership oracle over other people\'s cards.
-         * @summary Add credit to your balance by charging one of your saved cards
+         * Charges a saved card and credits the caller\'s prepaid wallet.  The method must belong to the caller: one that does not is NOT FOUND rather than refused, so an id cannot be probed for existence. A saved row whose card is no longer chargeable is 422 — add the card again — which is a different thing to do than a decline (402) or a bad amount (400).  Retries behave exactly as they do for a token top-up: same key, same replay, same exactly-once at the processor.
+         * @summary Add funds with a card already on file
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1478,8 +1592,8 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Charges the single-use card token for the given amount and credits the caller\'s own balance, answering the transaction id and the new balance — the one-time top-up path, with no payment method saved. The amount is bounded SERVER-SIDE (roughly a one dollar floor and a five thousand dollar ceiling by deployment policy) and the check runs before any money moves, because the browser cap is not a control against a scripted request. The credit lands on the caller\'s OWN billing subject — the same key the usage gate debits — and can never be redirected outside the caller\'s org. Retries are safe: an idempotency key, or absent one the amount within a short window, replays the first result, and if that guard store is unreachable the call is refused with 503 rather than risking a second real charge.
-         * @summary Add credit to your balance by charging a tokenized card once
+         * Charges a card token from the browser\'s payment SDK and credits the caller\'s prepaid wallet — the cold-customer path, where nothing has to be saved first.  The wallet credited is the CALLER\'S OWN, resolved from their signed identity. It is never a value in the request: a client-set selector is how a customer once topped up one account while their usage drew from another.  `X-Idempotency-Key` makes a retry safe. With one, a repeat replays the first result; without one, the same amount from the same subject inside a short window does too. The key reaches the processor as well as our own guard, so the charge is exactly-once at the gateway even if our guard store is down.  The amount is bounded server-side. A decline is 402 and nothing is credited.
+         * @summary Add funds with a single-use card token
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1512,53 +1626,15 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
-         * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
-         * @param {string} provider 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBillingWebhooksByProvider: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provider' is not null or undefined
-            assertParamExists('postBillingWebhooksByProvider', 'provider', provider)
-            const localVarPath = `/v1/billing/webhooks/{provider}`
-                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Raises a DRAFT invoice against a customer in the caller\'s own org.  The invoice is not collectible yet: a draft exists so it can be read and corrected, and issueInvoice is the separate act that turns it into a demand for payment. The subtotal and amount due are computed from the lines, so there is no total to send and none to get wrong.  The billing org is the caller\'s, taken from the validated principal, so an invoice can only ever be raised on the caller\'s own books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Raise a draft invoice against a customer
-         * @param {RaiseInvoiceIn} raiseInvoiceIn 
+         * @param {RaiseIn} raiseIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        raiseInvoice: async (raiseInvoiceIn: RaiseInvoiceIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'raiseInvoiceIn' is not null or undefined
-            assertParamExists('raiseInvoice', 'raiseInvoiceIn', raiseInvoiceIn)
+        raiseInvoice: async (raiseIn: RaiseIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'raiseIn' is not null or undefined
+            assertParamExists('raiseInvoice', 'raiseIn', raiseIn)
             const localVarPath = `/v1/billing/invoices`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1582,7 +1658,51 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(raiseInvoiceIn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(raiseIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Put a canceled subscription back on its plan
+         * @param {string} id 
+         * @param {SubscriptionRef} subscriptionRef 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reactivateSubscription: async (id: string, subscriptionRef: SubscriptionRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('reactivateSubscription', 'id', id)
+            // verify required parameter 'subscriptionRef' is not null or undefined
+            assertParamExists('reactivateSubscription', 'subscriptionRef', subscriptionRef)
+            const localVarPath = `/v1/billing/subscriptions/{id}/reactivate`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(subscriptionRef, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1638,21 +1758,35 @@ export const BillingApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BillingApiAxiosParamCreator(configuration)
     return {
         /**
+         * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  A subscription from another org is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary End a subscription
+         * @param {string} id 
+         * @param {SubscriptionRef} subscriptionRef 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cancelSubscription(id: string, subscriptionRef: SubscriptionRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Subscription>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelSubscription(id, subscriptionRef, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.cancelSubscription']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Collects an issued invoice: credit grants first, then prepaid balance, then the card on file — the same waterfall the dunning workflow runs.  A DECLINE IS NOT AN ERROR. It answers with paid=false, a reason, and the invoice still open, because a declined collection is a normal business outcome that must remain retryable — and because sealing it as a failure would wedge dunning behind a replayed decline. Only a successful collection is sealed, so a retry of a paid invoice replays the receipt instead of charging again.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Collect an issued invoice from credits, balance, then card
          * @param {string} id ID is the invoice id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async collectInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CollectOut>> {
+        async collectInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Collected>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.collectInvoice(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.collectInvoice']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Deletes the addressed cap and answers 204. Requires an ORG ADMIN, a platform admin, or the internal service token — deleting a cap uncaps the org\'s spend, so a plain member is refused 403. Ownership is checked per row and a cap the caller does not own is refused as 404 rather than 403, so the response cannot confirm that another org\'s id exists.
-         * @summary Remove one of your org\'s spend caps
+         * Deletes a budget the caller\'s org owns and answers 204.  Removing a cap REMOVES A CEILING, so it takes the same bar as setting one: a validated org admin, the platform SuperAdmin, or the trusted in-process service token. A member who could delete the org\'s cap would have unbounded spend.  A cap this org does not own is NOT FOUND rather than refused — the same answer whether the id is unknown or belongs to another customer — so an id cannot be probed for existence by trying to delete it.
+         * @summary Remove one spend cap
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1664,8 +1798,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Detaches the addressed card: the stored reference is removed here AND withdrawn from the processor\'s vault, so nothing is left that a later charge could bill.  The customer twin of DELETE /v1/billing/portal/methods/{id}. The id is resolved INSIDE your own org namespace, so a card that is not yours is simply not found there and answers 404 — never 403, which would confirm the id exists.  Removing the card an auto-recharge or a running lease bills leaves that arrangement with nothing to charge; that is yours to decide.
-         * @summary Remove one of your saved cards
+         * Detaches the method at the processor and drops the row.  A method the caller does not own is NOT FOUND rather than refused — the same answer whether the id names nothing or names somebody else\'s card — so an id cannot be probed for existence.  A platform operator or the trusted in-process service token may act on any subject inside the org; everyone else may only remove their own.
+         * @summary Remove one saved card or account
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1677,8 +1811,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Detaches the addressed card: the stored reference is removed here AND withdrawn from the processor\'s vault, so nothing is left that a later charge could bill.  The service-token twin of the customer\'s DELETE /v1/billing/methods/{id}, at its own address for the same reason the portal list is — a different principal, on the same rows, in this same process.  The id is resolved INSIDE the caller\'s org namespace, so another tenant\'s card is not found there and answers 404 — never 403, which would confirm the id exists. That bound holds for the service token too: it may act for any subject within the org the gateway pinned, and for no subject outside it.  Removing the card an auto-recharge or a running lease bills leaves that arrangement with nothing to charge; that is the customer\'s call to make.
-         * @summary Remove a saved card — the portal detach
+         * Detaches the method at the processor and drops the row.  A method the caller does not own is NOT FOUND rather than refused — the same answer whether the id names nothing or names somebody else\'s card — so an id cannot be probed for existence.  A platform operator or the trusted in-process service token may act on any subject inside the org; everyone else may only remove their own.
+         * @summary Remove one saved card or account
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1690,50 +1824,54 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the billing accounts visible to the caller. One organisation is exactly one billing account here, so an authenticated caller sees precisely one: their own. The list shape is the honest one — it is what a caller with access to several would receive — rather than a promise that more will ever appear for a token scoped to a single org.  The account is derived from the validated org claim and from nothing the caller sends, so there is no account parameter and a cross-tenant read is not expressible. An unauthenticated call is 401.
-         * @summary The billing account you are signed in to
+         * Answers the caller\'s billing accounts: the org itself, its currency, when it was opened, and the caller\'s own standing in it.  The standing is the caller\'s, resolved from the validated principal here and sent to the store rather than looked up there — the membership roster is IAM\'s and commerce keeps none, so a callee that answered \"what role is this\" would be inventing it. An anonymous read gets the account with no role rather than an implied membership.  Scoped to the caller\'s own org, which is the whole tenancy story: there is no org field on the wire and none on the input.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the caller\'s billing accounts: the org itself, its currency, when it was opened, and the caller\'s own standing in it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingAccounts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BillingAccount>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingAccounts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingAccounts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the members of one billing account. The id must be the caller\'s OWN account — the handler compares it against the org resolved from the token and answers 403 when they differ, which is what guards this route: unlike its siblings it carries no subject key for the pin to overwrite, so it checks the path segment itself.  The roster it can answer is currently the requesting user alone. Membership lives in IAM, not in the ledger, and this operation reports what commerce actually holds rather than inventing a roster from a source it does not read. An unauthenticated call is 401.
-         * @summary Who is on a billing account
-         * @param {string} id 
+         * Answers one billing account\'s roster.  commerce stores no roster — that is IAM\'s — so the only member it can name is the caller, and that is what comes back. What it does enforce is that the account named in the path is the caller\'s own: a foreign id is 403, not an empty list, because \"no members\" and \"not your account\" are different answers.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers one billing account\'s roster.
+         * @param {string} id ID is the billing account id, which for this store is the org\&#39;s own id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingAccountsByIdMembers(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingAccountsByIdMembers(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Holder>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingAccountsByIdMembers(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingAccountsByIdMembers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
-         * @summary List your org\'s spend caps and rate limits
+         * Lists this org\'s spend caps: the ceiling, its scope, whether it enforces, and how much of it has been spent this period.  `periodSpentCents`, `over` and `warn` are ABSENT rather than zero when the spend could not be read, because \"nothing spent\" and \"spend unknown\" are different answers and a customer acting on the first when the second is true would be reading a ceiling that is not there. The policy row is reported either way.  The period is the UTC calendar month and `resetsAt` is when the count starts again, so a surface can say \"resets on\" without a second call.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists this org\'s spend caps: the ceiling, its scope, whether it enforces, and how much of it has been spent this period.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingAlerts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingAlerts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Alert>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingAlerts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingAlerts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
-         * @summary The per-request spend-cap verdict the metering gate consumes
+         * Answers whether one proposed spend fits inside this org\'s caps.  It is the per-request verdict the metering edge consumes before every priced call, and its caller is a SERVICE rather than a person: a service token plus the gateway-pinned org, with no user behind it. So this admits that principal where the CRUD beside it does not.  Every covering row is evaluated, most-restrictive-wins, and the tightest one is what `capCents`, `spentCents` and `reason` describe. Soft rows never deny; nor does a project-scoped enforcing row whose project axis the caller could not establish — `pv=1` is how a caller states that it did, and an unproven claim must not be able to refuse traffic.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers whether one proposed spend fits inside this org\'s caps.
+         * @param {string} [project] Project narrows the verdict to one project\&#39;s caps. Empty is the org-wide row.
+         * @param {string} [service] Service narrows it to one service\&#39;s caps. Empty is every service.
+         * @param {string} [amount] Amount is the proposed spend in cents.
+         * @param {string} [pv] PV is \&quot;1\&quot; when the caller ESTABLISHED the project rather than merely carrying a claim of one. An unproven project may not deny traffic.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingAlertsAuthorize(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingAlertsAuthorize(options);
+        async getBillingAlertsAuthorize(project?: string, service?: string, amount?: string, pv?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CapVerdict>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingAlertsAuthorize(project, service, amount, pv, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingAlertsAuthorize']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1751,81 +1889,81 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the total credit still available to the caller\'s own subject — the sum of what the grants have left, which is the figure the console shows above the usage meter. It is the balance a metered act draws down, so it answers the one question a customer asks before spending: how much is there.  Like every read in this family the subject is pinned to the caller before the handler runs, so the userId parameter the handler reads can never name another tenant. For the grants BEHIND this number — each with its original amount and its expiry — read /v1/billing/credits. A subject with no credit is zero, which is an answer and not an error.
-         * @summary What is left of your credit, as one number
+         * Answers what the caller can spend right now, one entry per currency.  Only ACTIVE grants count: a voided, exhausted or lapsed grant contributes nothing, which is why this number can be smaller than the grant list suggests and why the two reads exist separately. It is credit, not prepaid balance — /v1/billing/balance is the wallet, and the two are added by the gate, never by a reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers what the caller can spend right now, one entry per currency.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingCreditBalance(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingCreditBalance(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditBalance>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingCreditBalance(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingCreditBalance']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the same balance /v1/billing/credit-balance reports, split by the tag each grant carries, so a reader can tell trial credit from bought credit and show the earliest expiry within each group. A console needs the split to say what will lapse and when; the single number cannot.  The subject is pinned to the caller before the handler runs, exactly as in the sibling reads, so the userId parameter can never name another tenant. A subject with no grants is an empty breakdown and a zero total, which is an answer and not an error.
-         * @summary What is left of your credit, grouped by where it came from
+         * Answers that same spendable credit split by grant tag, with the earliest expiry under each and the total across all of them.  The split is the point: it is how trial credit is told apart from bought credit, which is what a surface asks before it decides whether to spend any. An unregistered address answers 404 and a caller reads that as \"no credit\", so this being served is the difference between a customer with a trial grant being offered their trial and being told they have none.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers that same spendable credit split by grant tag, with the earliest expiry under each and the total across all of them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingCreditBalanceBreakdown(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingCreditBalanceBreakdown(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingCreditBalanceBreakdown(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingCreditBalanceBreakdown']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s credit grants — each with its original amount, what remains and when it expires — so a customer can see what was given and what is left before metered spend draws it down. It is a READ of the caller\'s own subject, pinned before the handler runs, so a grant belonging to another tenant is simply absent. Granting credit is not this route and never has been: minting lands on the mint-gated POST /v1/billing/credit, which no browser can reach. Reading an empty balance is an empty array, not an error.
-         * @summary List the credit grants on your org\'s balance
+         * Lists the caller\'s credit grants — every one of them, spent and lapsed and voided included.  That is deliberate and it is what makes the list useful: a grant list is a LEDGER, and one that hid its spent rows could not be reconciled against a burn-down. What is spendable right now is the sibling read, /v1/billing/ credit-balance, and the two are different questions.  Scoped to the caller\'s own wallet, resolved server-side.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the caller\'s credit grants — every one of them, spent and lapsed and voided included.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingCredits(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingCredits(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreditGrants>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingCredits(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingCredits']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers the addressed deposit intent\'s current state — pending until a transfer is seen, confirming while the chain buries it, succeeded once it is credited — so a payment page can poll one deposit rather than the whole balance.  Scoped to the caller: an intent belonging to another payer is not found and answers 404, never another account\'s state. The credit itself is the chain watcher\'s to make; this read reports it and never performs it.
-         * @summary Follow one crypto deposit to settlement
-         * @param {string} id 
+         * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.
+         * @param {string} id ID is the deposit intent id.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingCryptoDepositById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingCryptoDepositById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CryptoDeposit>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingCryptoDepositById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingCryptoDepositById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers the custody processor\'s LIVE capability list — the chains and the tokens on each that this deployment can actually take a deposit on. A payment page renders its asset picker straight from it rather than from a list of its own, so a chain the processor stops supporting disappears from the picker instead of minting an address nothing watches.  It is a capability read, not an account read: it says what may be paid with, never anything about this caller\'s balance or deposits.
-         * @summary Which chains and tokens a crypto top-up can use
+         * Answers which chains and tokens the crypto rail accepts — what an asset picker renders.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingCryptoOptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingCryptoOptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CryptoOptions>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingCryptoOptions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingCryptoOptions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s invoices with a count, read from that org\'s own namespaced store, narrowable by userId, status or subscriptionId. The org is the one the gateway validated and the caller\'s billing subject is pinned into the query before the handler runs, so a read can never widen past the caller. A request that carries no resolvable org gets an honest empty list rather than an error or another tenant\'s rows.
-         * @summary List your org\'s billing invoices
+         * Lists the caller\'s invoices, newest first, with the count beside them.  It is scoped to the caller\'s own billing subject — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org. An org with no invoices is an empty list, not a refusal.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the caller\'s invoices, newest first, with the count beside them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingInvoices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingInvoices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Invoices>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingInvoices(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingInvoices']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Renders the addressed invoice as a single-page PDF and answers it as an attachment named after the invoice number. The render is a pure function of the invoice — no timestamps, no random ids — so the same invoice always produces identical bytes and a re-download is stable. The invoice is resolved inside the caller org\'s own namespace, so an id belonging to another tenant is simply absent and reads as 404; a caller with no validated org gets 401 rather than a document.
-         * @summary Download one invoice as a PDF attachment
+         * Answers the invoice as an attachment — `application/pdf` under a Content-Disposition naming the invoice number — rather than as a JSON value, which is why this one route is untyped where its five siblings are typed: a PDF is bytes with a filename, and the two headers are the whole contract.  The render is a PURE function of the invoice: one page, no timestamps and no random ids, so the same invoice renders the same bytes however often it is asked for and a retry after a dropped connection costs a re-render and nothing else.  The invoice is read from the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header, and the lookup is scoped at the storage layer — so an id belonging to another customer resolves to nothing and answers 404 rather than being found and then refused.
+         * @summary Download one invoice as a PDF
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1837,8 +1975,21 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers the cards saved against your own account as masked descriptors: brand, last four, expiry and the processor\'s reusable reference. No card number and no security code exist here to return; both live at the processor and never enter this system. It is what a checkout prefills its payment step from.  The customer face of the list a service token reads at /v1/billing/portal/methods — same rows, different principal, no hop between them.  The subject filter is pinned to the VALIDATED caller before the handler runs, so the answer is your own account\'s cards whatever customerId the request carries, and another org\'s rows are outside the namespace entirely. A caller who is not signed in is refused before the read.
-         * @summary Your saved cards, masked — the customer read
+         * Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags. The sign is the posting\'s own meaning, read through ONE vocabulary shared with the ledger that wrote it — a reader with its own spelling for `deposit` rendered a customer\'s grant as a charge.  This is the closest projection of the truth. The org\'s double-entry postings are the source of record — balanced, only ever appended, one file per org — and this lane is that list, wider than either half of it: the deposits are the grants /v1/billing/credits lists and the debits are the spend /v1/billing/usage rolls up. It answers 503 where this deployment runs no ledger, rather than reporting an empty wallet.  A row whose timestamp will not parse is KEPT rather than dropped — a malformed date must show up in a money list, not vanish from it. `balanceCents` is omitted: these are MOVEMENTS, and the standing balance is /v1/billing/balance.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org, where the org\'s ledger file is the tenant boundary; 401 without a validated principal.
+         * @summary Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags.
+         * @param {string} [range] Range is the window: 24h, 7d, 30d or 90d. Anything else — including absent — is 30d, so a typo silently widens the window to a month rather than failing.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingLedger(range?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FinanceLedgerEntry>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingLedger(range, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingLedger']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers every payment method the caller has saved, newest first.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  A store that cannot be read answers an EMPTY LIST rather than a failure: the saved-cards panel renders empty instead of breaking the page around it.
+         * @summary Cards and accounts on file for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1849,20 +2000,20 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s payout records ordered by creation time descending, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs, so the list is the caller\'s own and cannot be widened. A request with no resolvable org gets an empty array rather than an error.
-         * @summary List your org\'s payouts, newest first
+         * Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.  A payout is ORG-scoped rather than subject-scoped, so there is nothing to pin beyond the tenant the caller already is, and no query can widen it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingPayouts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingPayouts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Payout>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingPayouts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingPayouts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every subscription tier a buyer can choose, each carrying the platform promo currently in effect, optionally narrowed with the category query. Prices come from the admin-editable plan authority in the database; the embedded catalog is only a loud-failing fallback, so a failed seed or a query error serves the known plans rather than a silently blank list. It is a catalog read, not an entitlement read — it says what may be bought, never what this caller has.
-         * @summary The public plan catalog, annotated with the active platform promotion
+         * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  It is the public catalog and needs no tenant: this is what anyone may buy.
+         * @summary The plan catalog, priced with whatever offer is in force
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1873,8 +2024,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers the org\'s saved payment methods as masked descriptors: brand, last four, expiry and the processor\'s reusable reference. No card number and no security code exist here to return; both live at the processor and never enter this system.  This is the SERVICE-TOKEN face of the same list a customer reads at /v1/billing/methods. Both are served here, in this process, and answer the same rows; they are two addresses because they admit two different principals, not because either forwards to the other.  The customer filter is pinned to the VALIDATED caller before the handler runs, so a browser sees only its own subject\'s cards whatever customerId it sends; only a caller holding the internal service token may name the subject, and the org it may name it within is fixed by the gateway. Cross-tenant is closed by the org namespace for both, so an id or a subject from another org resolves to nothing. A caller who is neither is refused before the read.
-         * @summary Cards saved against the caller\'s org, masked — the portal read
+         * Answers every payment method the caller has saved, newest first.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  A store that cannot be read answers an EMPTY LIST rather than a failure: the saved-cards panel renders empty instead of breaking the page around it.
+         * @summary Cards and accounts on file for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1885,49 +2036,52 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers the Square application id, location id, environment and live flag the browser\'s card iframe boots against — public values only, never a secret. Resolution lives in one place shared with the public tenant projection, so the card form can never initialize against a different Square application than the one commerce will actually charge. It deliberately does NOT hydrate credentials from KMS: the dialog blocks on this call, so it answers from the org and the deployment environment without a round trip, and an org with no per-org credentials gets the deployment\'s own public app id.
-         * @summary The public payment-provider config your card form needs to initialize
+         * Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.  It carries no secret: an application id is published to every checkout page by design. What matters is that it names the SAME processor account the charge will be made on, because a card vaulted against one account and charged against another is a card that saves and then cannot be used.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentConfig>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingSettings']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller org\'s subscriptions with a count, narrowable by userId or status, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs. A request with no resolvable org gets an empty list and a zero count rather than an error.
-         * @summary List your org\'s subscriptions
+         * Lists the plans the caller holds, with the count beside them.  It is scoped to the caller\'s own org, so a query cannot widen it to another customer\'s. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the plans the caller holds, with the count beside them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingSubscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingSubscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Subscriptions>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingSubscriptions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingSubscriptions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers one subject\'s resolved tier — name, display name, agent ceiling and allowed models — with the balance that admits their next metered call: prepaidAvailable, creditsRemaining, dailyRemaining and the effectiveAvailable those fold into. The ai router reads it per request to pick that caller\'s rate-limit tier. It sits on the org-resolving chain because a tier is org state, and the subject keys are pinned to the validated caller before the handler runs, so a browser read is always the caller\'s own; user is required, which only a service-to-service caller can omit and be refused 400 for. The tier is an upstream tier claim, or an explicit tier override, when either is present — that is the service-to-service contract — and is otherwise DERIVED from the org\'s active and trialing subscriptions, the highest one winning, its paid-ness read from the plan catalog by slug rather than from the subscription\'s own stored copy. The rule to get right is effectiveAvailable and not prepaidAvailable: granted credits spend too, credits first, so an account funded only by a grant reads zero prepaid while holding real spendable credit — and with the daily term zero on every tier there is no free allowance behind it, so a zero-balance account is gated. A subscription-store error answers 500 rather than downgrading to free, so a transient failure never reports a paid subscriber as unsubscribed.
-         * @summary The subject\'s plan tier and the balance a metered call is admitted on
+         * Answers which tier the caller is on, what it allows, and what is left to spend.  `effectiveAvailable` is the ONLY figure to compare against zero. The others are its parts — prepaid money, granted credits and the daily term are three sources of one spend, not three balances to add up a second time.  A tier that cannot be READ is an error, never Free. The router in front of the models maps any non-2xx to Free, so answering Free from a question nobody could answer would pin every paying customer to the most restrictive row with nothing anywhere to find.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers which tier the caller is on, what it allows, and what is left to spend.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingTier(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingTier(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Tier>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingTier(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingTier']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the caller\'s own ledger movements — every credit and debit against the subject the usage gate charges — newest first, with a count and the subject they belong to, so a customer can reconcile a bill against the acts that produced it. Paging is limit and offset, and the currency can be narrowed.  The subject is NOT the caller\'s to choose. The handler filters on a user parameter, and that parameter is overwritten with the caller\'s own billing subject before the handler runs — so naming another subject returns your own rows rather than theirs, and the read can never disagree with the wallet it describes. An unauthenticated call is 401 rather than 403, because a browser re-authenticates on the first and only reports the second. No movements is an empty list, not an error.
-         * @summary List the movements on your own balance, newest first
+         * Answers one page of the caller\'s own ledger, newest first: what moved, how much, when, and what it was tagged with.  `count` is the size of the WHOLE history rather than of the page, which is how a reader knows there is more to ask for, and `user` echoes the wallet the page was read for — the same subject the spend gate debits, so a customer can see which account answered rather than guessing from their own token.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers one page of the caller\'s own ledger, newest first: what moved, how much, when, and what it was tagged with.
+         * @param {string} [currency] Currency filters to one currency. Empty reads every currency.
+         * @param {string} [limit] Limit is the page size; absent or non-positive takes the default 100.
+         * @param {string} [offset] Offset is how far into the history the page starts.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingTransactions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingTransactions(options);
+        async getBillingTransactions(currency?: string, limit?: string, offset?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Transactions>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingTransactions(currency, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingTransactions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1957,24 +2111,24 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers the one read the account page renders: the subject\'s resolved plan, the plan\'s included monthly allotment beside what was actually granted this period, consumption capped at that grant, the overage past it, and the spendable wallet (balance minus holds) — all for the current UTC month, every figure derived from the same transactions the gateway\'s balance gate reads, so this read can never disagree with the gate that admits the next call. It rides the same pinned chain as the sibling reads: the user parameter is overwritten with the validated caller\'s own billing subject before the handler runs, so it can never name another tenant; user is required, which only a service-to-service caller can omit and be refused 400 for, and plan is optional — omitted, it is resolved from the subject\'s subscription. The rule to get right is that the two sides are DIFFERENT MONEY: the included figures are usage the subscription grants and the wallet is prepaid credit the customer bought, so a reader who sums them invents a balance nobody holds — and before the period\'s first allotment grant runs, monthlyCents shows the plan\'s entitlement while grantedCents is zero, which is the figure consumption actually draws down.
-         * @summary What plan you are on and how much of it is left, beside the wallet
+         * Answers the caller\'s month: what their plan includes, what has been consumed against it, and the wallet beside it.  The two blocks are SEPARATE monies and are never added. One is usage a plan granted; the other is prepaid credit bought with a card. Their sum is not a number anyone holds, and a reader that formed it would be inventing a balance.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the caller\'s month: what their plan includes, what has been consumed against it, and the wallet beside it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingUsageRollup(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingUsageRollup(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Rollup>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingUsageRollup(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingUsageRollup']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers the receiving bank details for the brand this deployment serves — the account the funds actually land in, hydrated per brand rather than hard-coded — together with the payment reference to put on the transfer.  THE REFERENCE IS THE POINT. It carries your own billing key, and it is how an arriving wire is attributed to your account; a transfer sent without it arrives as an unidentified receipt. That is why this read is gated at all: an unpinned caller would be handed an unattributable reference.  Reading it credits nothing and reserves nothing. A wire is settled by an operator when the bank shows the funds, so the balance moves on receipt, not on this call.
-         * @summary Where to wire funds, and the reference that credits them to you
+         * Answers where to send a wire top-up: the receiving bank details, with the caller\'s own payment reference.  The account is the SERVING BRAND\'S — resolved from the host the customer is paying on, so paying on one brand never shows another\'s bank — and the reference carries the caller\'s billing key, which is how an arriving wire names who it credits. Nothing mints here; a receipt is settled by an operator once the bank confirms it.  It is all-or-nothing: no configured account is 503 rather than a partial form, because nobody can wire to three fields out of five.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers where to send a wire top-up: the receiving bank details, with the caller\'s own payment reference.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBillingWire(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getBillingWire(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WireInstructions>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBillingWire(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getBillingWire']?.[localVarOperationServerIndex]?.url;
@@ -1987,7 +2141,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InvoiceOut>> {
+        async getInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Invoice>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getInvoice(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.getInvoice']?.[localVarOperationServerIndex]?.url;
@@ -2000,52 +2154,55 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async issueInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InvoiceOut>> {
+        async issueInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Invoice>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.issueInvoice(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.issueInvoice']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Applies only the fields the body actually carries — title, threshold, project, service, enforce, softPct, rateLimitRpm — and leaves the rest as stored, answering the merged row with its current period spend. Requires an ORG ADMIN, a platform admin, or the internal service token, for the same reason creation does: a member who could edit the cap could raise it to nothing or drop it to a punitive floor. Ownership is checked per row and a cap the caller does not own is refused as 404, never 403, so the id space cannot be probed.
-         * @summary Change one of your org\'s spend caps
+         * Changes one spend cap: raise or lower the ceiling, flip enforcement, retune the rate limit.  Only the fields the body carries move. Every mutable field is optional, and an absent one is PRESERVED rather than reset — so a change that flips enforcement cannot silently wipe the threshold it enforces.  A cap belonging to another org is a 404, not a 403: a guessed id must not become an oracle for what anyone else holds.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Changes one spend cap: raise or lower the ceiling, flip enforcement, retune the rate limit.
          * @param {string} id 
+         * @param {AlertPatch} alertPatch 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchBillingAlertsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.patchBillingAlertsById(id, options);
+        async patchBillingAlertsById(id: string, alertPatch: AlertPatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Alert>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchBillingAlertsById(id, alertPatch, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.patchBillingAlertsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
-         * @summary Set a spend cap or rate limit on your org
+         * Opens a spend cap on the caller\'s own org.  At least one limit must mean something: a threshold above zero (a spend cap) or a requests-per-minute above zero (a rate limit). A row that bounds neither is refused rather than stored, because a ceiling nothing measures against is a ceiling a customer believes in and does not have.  The cap is keyed on the caller\'s own billing subject, resolved server-side — the SAME key the verdict looks it up under, which is what makes enforcement bind rather than merely record.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Opens a spend cap on the caller\'s own org.
+         * @param {AlertSpec} alertSpec 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBillingAlerts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingAlerts(options);
+        async postBillingAlerts(alertSpec: AlertSpec, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Alert>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingAlerts(alertSpec, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingAlerts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Mints a deposit address held by the MPC signer fleet — no single party holds the key — on the chain and token you name, and returns it with the intent that tracks it.  The account credited is the PINNED caller\'s, never a value in the body, so a deposit cannot be aimed at someone else\'s balance. A caller who already has an open intent gets that same address back rather than a new one, so reloading the page cannot spray keygens across the signer fleet.  NO BALANCE MOVES HERE. This hands out an address; the chain watcher credits the account when a real transfer confirms, which is also why an address handed out and never funded costs nothing and expires nothing.
-         * @summary Get a deposit address for a crypto top-up
+         * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address and a status, not a receipt.  An asset this rail cannot mint on is 400 — ask for another. A rail that is shut for that asset is 503 — nothing sent now can be credited.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Issues a deposit address the caller can send crypto to, on the asset they ask for.
+         * @param {CryptoAsset} cryptoAsset 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBillingCryptoDeposit(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingCryptoDeposit(options);
+        async postBillingCryptoDeposit(cryptoAsset: CryptoAsset, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CryptoDeposit>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingCryptoDeposit(cryptoAsset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingCryptoDeposit']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Vaults the card the processor already holds — you send its one-time reference, never a card number — as a reusable card on file, and stores the billing address with it. That vaulted card is what a subscription renewal or an auto-recharge charges later, which is why saving one is the step that makes a monthly plan billable at all.  It charges nothing. Saving a card moves no money; the first charge is whatever arrangement you then attach it to.  The subject is pinned from the validated caller and OVERWRITES the customerId in the body while leaving the card fields untouched, so a card can only ever be attached to the caller\'s OWN account whatever the body claims. That pin is the whole control on this write, not decoration: this is the one handler in the family that reads its subject from the body.
-         * @summary Save a card for later charges
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2056,20 +2213,21 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Flips the org\'s live flag, which is the single authority for both the payment environment and the ledger bucket its transactions land in. This is a money-MINT control, not a customer action: it is gated on the internal service token AND platform scope, so an ORG ADMIN CANNOT move their own org — otherwise a tenant could drop itself into sandbox and stop paying. The rule most callers get wrong is the default: an org that has never been flipped transacts in SANDBOX, which is why a production-credentialled deployment can still hand a buyer a sandbox card form. When the deployment pins the payment environment explicitly, that pin governs and this flag only marks the transactions.
-         * @summary Move an org between sandbox and live billing
+         * Moves this org between sandbox money and real money.  It decides whether a charge hits a real card, so it is the one posture change that is not self-service: the platform bar, never an org owner, because an org that could put itself in test mode could take priced work for free.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Moves this org between sandbox money and real money.
+         * @param {ModeIn} modeIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBillingMode(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingMode(options);
+        async postBillingMode(modeIn: ModeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Mode>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingMode(modeIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingMode']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The service-token twin of POST /v1/billing/methods: it vaults the processor\'s one-time reference as a reusable card on file for the named subject, with its billing address, and moves no money doing it.  It exists so an internal caller can complete the family it can already read and detach. The subject it may name is pinned to the org the gateway fixed, so the service token acts WITHIN one tenant and never across tenants; a caller holding no service token is refused before the write.
-         * @summary Save a card on a subject\'s behalf — the portal attach
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2080,8 +2238,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Walks every organization and, for those that enabled auto-recharge and whose available balance (balance minus holds) has fallen under their configured threshold, charges their default payment method off-session and credits the balance, answering a per-org result row for each one it touched. This is the platform cron\'s door, not a customer\'s: it is gated on the internal service token AND platform scope, so an org admin cannot run the fleet-wide sweep. An org above its threshold is skipped silently; an org with no default payment method is reported as an uncharged row with the reason rather than failing the whole run.
-         * @summary Platform sweep: top up every org whose balance has fallen below its own threshold
+         * Sweeps every organization and, for those with auto-recharge on whose available balance has dropped below their own threshold, charges the default card and credits the balance.  It charges cards across EVERY tenant, so it is platform authority only — never an org owner, who could otherwise sweep-charge saved cards estate-wide. Its caller is a schedule, not a person.  `orgs` is the population considered, not the row count: that difference is how a reader tells \'nobody was below threshold\' from \'the sweep never ran\'. One org\'s failure is reported in its own row and does not stop the rest.
+         * @summary Recharge every org that has fallen below its threshold
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2092,8 +2250,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Vaults the tokenized card as a reusable card-on-file, charges the first period, and creates the subscription — answering the subscription and invoice ids with the amount charged. The price is SERVER-AUTHORITATIVE: it is the plan\'s catalog price times billable seats and a client-supplied amount is never consulted, so a scripted request cannot underpay; a per-seat plan below its minimum seats is refused, and a free plan is refused outright because this address is the paid path. The card PAN never reaches this service — the browser tokenizes it and only the single-use nonce arrives here. The subject is the caller\'s own org, with an in-org user honored only inside that bound, and an idempotency key (or, absent one, the nonce itself) makes a retry replay the first result instead of charging twice.
-         * @summary Subscribe to a paid plan with a card, charged for the first period immediately
+         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.
+         * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2104,34 +2262,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Cancels the addressed subscription and answers its updated state, emitting the cancellation event the rest of the platform keys on. The default is to cancel AT PERIOD END — a body that fails to parse falls back to it — so the customer keeps what they paid for unless atPeriodEnd is explicitly false. The subscription is resolved inside the caller\'s own org namespace, so another tenant\'s id is a 404, and the write carries the browser anti-CSRF gate because it is reachable with an ambient cookie.
-         * @summary Cancel a subscription, at period end by default
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postBillingSubscriptionsByIdCancel(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingSubscriptionsByIdCancel(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingSubscriptionsByIdCancel']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Clears the scheduled cancellation on the addressed subscription and answers its updated state. It is the inverse of cancel and applies to a subscription that is still within its period; one the engine will not reactivate is refused 400 with the reason. The subscription is resolved inside the caller\'s own org namespace, so another tenant\'s id reads as 404, and the write carries the browser anti-CSRF gate.
-         * @summary Undo a pending cancellation and keep the subscription running
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postBillingSubscriptionsByIdReactivate(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingSubscriptionsByIdReactivate(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingSubscriptionsByIdReactivate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Charges a card the caller already has on file, named by paymentMethodId, and credits the caller\'s own balance — the SAVED-card twin of topup/token, sharing the one charge-and-credit core the auto-recharge cron runs on. The credit lands on the caller\'s OWN billing subject: the request body\'s subject field is pinned to the caller before the handler sees it, so a top-up can never be redirected to another subject or outside the caller\'s org. It is screened for risk before any money moves, exactly as the token path is, because both credit the SPENDABLE wallet. The rule most callers get wrong is that paymentMethodId is NOT covered by that subject pin — it is a card id, not a subject key — so it is checked separately, and a card belonging to any other subject answers 404 rather than 403: a permission error would confirm the id exists, which is an ownership oracle over other people\'s cards.
-         * @summary Add credit to your balance by charging one of your saved cards
+         * Charges a saved card and credits the caller\'s prepaid wallet.  The method must belong to the caller: one that does not is NOT FOUND rather than refused, so an id cannot be probed for existence. A saved row whose card is no longer chargeable is 422 — add the card again — which is a different thing to do than a decline (402) or a bad amount (400).  Retries behave exactly as they do for a token top-up: same key, same replay, same exactly-once at the processor.
+         * @summary Add funds with a card already on file
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2142,8 +2274,8 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Charges the single-use card token for the given amount and credits the caller\'s own balance, answering the transaction id and the new balance — the one-time top-up path, with no payment method saved. The amount is bounded SERVER-SIDE (roughly a one dollar floor and a five thousand dollar ceiling by deployment policy) and the check runs before any money moves, because the browser cap is not a control against a scripted request. The credit lands on the caller\'s OWN billing subject — the same key the usage gate debits — and can never be redirected outside the caller\'s org. Retries are safe: an idempotency key, or absent one the amount within a short window, replays the first result, and if that guard store is unreachable the call is refused with 503 rather than risking a second real charge.
-         * @summary Add credit to your balance by charging a tokenized card once
+         * Charges a card token from the browser\'s payment SDK and credits the caller\'s prepaid wallet — the cold-customer path, where nothing has to be saved first.  The wallet credited is the CALLER\'S OWN, resolved from their signed identity. It is never a value in the request: a client-set selector is how a customer once topped up one account while their usage drew from another.  `X-Idempotency-Key` makes a retry safe. With one, a repeat replays the first result; without one, the same amount from the same subject inside a short window does too. The key reaches the processor as well as our own guard, so the charge is exactly-once at the gateway even if our guard store is down.  The amount is bounded server-side. A decline is 402 and nothing is credited.
+         * @summary Add funds with a single-use card token
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2154,29 +2286,30 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
-         * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
-         * @param {string} provider 
+         * Raises a DRAFT invoice against a customer in the caller\'s own org.  The invoice is not collectible yet: a draft exists so it can be read and corrected, and issueInvoice is the separate act that turns it into a demand for payment. The subtotal and amount due are computed from the lines, so there is no total to send and none to get wrong.  The billing org is the caller\'s, taken from the validated principal, so an invoice can only ever be raised on the caller\'s own books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Raise a draft invoice against a customer
+         * @param {RaiseIn} raiseIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postBillingWebhooksByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postBillingWebhooksByProvider(provider, options);
+        async raiseInvoice(raiseIn: RaiseIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Invoice>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.raiseInvoice(raiseIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.postBillingWebhooksByProvider']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.raiseInvoice']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Raises a DRAFT invoice against a customer in the caller\'s own org.  The invoice is not collectible yet: a draft exists so it can be read and corrected, and issueInvoice is the separate act that turns it into a demand for payment. The subtotal and amount due are computed from the lines, so there is no total to send and none to get wrong.  The billing org is the caller\'s, taken from the validated principal, so an invoice can only ever be raised on the caller\'s own books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Raise a draft invoice against a customer
-         * @param {RaiseInvoiceIn} raiseInvoiceIn 
+         * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Put a canceled subscription back on its plan
+         * @param {string} id 
+         * @param {SubscriptionRef} subscriptionRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async raiseInvoice(raiseInvoiceIn: RaiseInvoiceIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InvoiceOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.raiseInvoice(raiseInvoiceIn, options);
+        async reactivateSubscription(id: string, subscriptionRef: SubscriptionRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Subscription>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reactivateSubscription(id, subscriptionRef, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BillingApi.raiseInvoice']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BillingApi.reactivateSubscription']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2186,7 +2319,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async voidInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InvoiceOut>> {
+        async voidInvoice(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Invoice>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.voidInvoice(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BillingApi.voidInvoice']?.[localVarOperationServerIndex]?.url;
@@ -2203,18 +2336,28 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = BillingApiFp(configuration)
     return {
         /**
+         * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  A subscription from another org is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary End a subscription
+         * @param {BillingApiCancelSubscriptionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelSubscription(requestParameters: BillingApiCancelSubscriptionRequest, options?: RawAxiosRequestConfig): AxiosPromise<Subscription> {
+            return localVarFp.cancelSubscription(requestParameters.id, requestParameters.subscriptionRef, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Collects an issued invoice: credit grants first, then prepaid balance, then the card on file — the same waterfall the dunning workflow runs.  A DECLINE IS NOT AN ERROR. It answers with paid=false, a reason, and the invoice still open, because a declined collection is a normal business outcome that must remain retryable — and because sealing it as a failure would wedge dunning behind a replayed decline. Only a successful collection is sealed, so a retry of a paid invoice replays the receipt instead of charging again.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
          * @summary Collect an issued invoice from credits, balance, then card
          * @param {BillingApiCollectInvoiceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        collectInvoice(requestParameters: BillingApiCollectInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<CollectOut> {
+        collectInvoice(requestParameters: BillingApiCollectInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<Collected> {
             return localVarFp.collectInvoice(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Deletes the addressed cap and answers 204. Requires an ORG ADMIN, a platform admin, or the internal service token — deleting a cap uncaps the org\'s spend, so a plain member is refused 403. Ownership is checked per row and a cap the caller does not own is refused as 404 rather than 403, so the response cannot confirm that another org\'s id exists.
-         * @summary Remove one of your org\'s spend caps
+         * Deletes a budget the caller\'s org owns and answers 204.  Removing a cap REMOVES A CEILING, so it takes the same bar as setting one: a validated org admin, the platform SuperAdmin, or the trusted in-process service token. A member who could delete the org\'s cap would have unbounded spend.  A cap this org does not own is NOT FOUND rather than refused — the same answer whether the id is unknown or belongs to another customer — so an id cannot be probed for existence by trying to delete it.
+         * @summary Remove one spend cap
          * @param {BillingApiDeleteBillingAlertsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2223,8 +2366,8 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.deleteBillingAlertsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Detaches the addressed card: the stored reference is removed here AND withdrawn from the processor\'s vault, so nothing is left that a later charge could bill.  The customer twin of DELETE /v1/billing/portal/methods/{id}. The id is resolved INSIDE your own org namespace, so a card that is not yours is simply not found there and answers 404 — never 403, which would confirm the id exists.  Removing the card an auto-recharge or a running lease bills leaves that arrangement with nothing to charge; that is yours to decide.
-         * @summary Remove one of your saved cards
+         * Detaches the method at the processor and drops the row.  A method the caller does not own is NOT FOUND rather than refused — the same answer whether the id names nothing or names somebody else\'s card — so an id cannot be probed for existence.  A platform operator or the trusted in-process service token may act on any subject inside the org; everyone else may only remove their own.
+         * @summary Remove one saved card or account
          * @param {BillingApiDeleteBillingMethodsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2233,8 +2376,8 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.deleteBillingMethodsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Detaches the addressed card: the stored reference is removed here AND withdrawn from the processor\'s vault, so nothing is left that a later charge could bill.  The service-token twin of the customer\'s DELETE /v1/billing/methods/{id}, at its own address for the same reason the portal list is — a different principal, on the same rows, in this same process.  The id is resolved INSIDE the caller\'s org namespace, so another tenant\'s card is not found there and answers 404 — never 403, which would confirm the id exists. That bound holds for the service token too: it may act for any subject within the org the gateway pinned, and for no subject outside it.  Removing the card an auto-recharge or a running lease bills leaves that arrangement with nothing to charge; that is the customer\'s call to make.
-         * @summary Remove a saved card — the portal detach
+         * Detaches the method at the processor and drops the row.  A method the caller does not own is NOT FOUND rather than refused — the same answer whether the id names nothing or names somebody else\'s card — so an id cannot be probed for existence.  A platform operator or the trusted in-process service token may act on any subject inside the org; everyone else may only remove their own.
+         * @summary Remove one saved card or account
          * @param {BillingApiDeleteBillingPortalMethodsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2243,41 +2386,42 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.deleteBillingPortalMethodsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the billing accounts visible to the caller. One organisation is exactly one billing account here, so an authenticated caller sees precisely one: their own. The list shape is the honest one — it is what a caller with access to several would receive — rather than a promise that more will ever appear for a token scoped to a single org.  The account is derived from the validated org claim and from nothing the caller sends, so there is no account parameter and a cross-tenant read is not expressible. An unauthenticated call is 401.
-         * @summary The billing account you are signed in to
+         * Answers the caller\'s billing accounts: the org itself, its currency, when it was opened, and the caller\'s own standing in it.  The standing is the caller\'s, resolved from the validated principal here and sent to the store rather than looked up there — the membership roster is IAM\'s and commerce keeps none, so a callee that answered \"what role is this\" would be inventing it. An anonymous read gets the account with no role rather than an implied membership.  Scoped to the caller\'s own org, which is the whole tenancy story: there is no org field on the wire and none on the input.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the caller\'s billing accounts: the org itself, its currency, when it was opened, and the caller\'s own standing in it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingAccounts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingAccounts(options?: RawAxiosRequestConfig): AxiosPromise<Array<BillingAccount>> {
             return localVarFp.getBillingAccounts(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the members of one billing account. The id must be the caller\'s OWN account — the handler compares it against the org resolved from the token and answers 403 when they differ, which is what guards this route: unlike its siblings it carries no subject key for the pin to overwrite, so it checks the path segment itself.  The roster it can answer is currently the requesting user alone. Membership lives in IAM, not in the ledger, and this operation reports what commerce actually holds rather than inventing a roster from a source it does not read. An unauthenticated call is 401.
-         * @summary Who is on a billing account
+         * Answers one billing account\'s roster.  commerce stores no roster — that is IAM\'s — so the only member it can name is the caller, and that is what comes back. What it does enforce is that the account named in the path is the caller\'s own: a foreign id is 403, not an empty list, because \"no members\" and \"not your account\" are different answers.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers one billing account\'s roster.
          * @param {BillingApiGetBillingAccountsByIdMembersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingAccountsByIdMembers(requestParameters: BillingApiGetBillingAccountsByIdMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingAccountsByIdMembers(requestParameters: BillingApiGetBillingAccountsByIdMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<Holder>> {
             return localVarFp.getBillingAccountsByIdMembers(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
-         * @summary List your org\'s spend caps and rate limits
+         * Lists this org\'s spend caps: the ceiling, its scope, whether it enforces, and how much of it has been spent this period.  `periodSpentCents`, `over` and `warn` are ABSENT rather than zero when the spend could not be read, because \"nothing spent\" and \"spend unknown\" are different answers and a customer acting on the first when the second is true would be reading a ceiling that is not there. The policy row is reported either way.  The period is the UTC calendar month and `resetsAt` is when the count starts again, so a surface can say \"resets on\" without a second call.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists this org\'s spend caps: the ceiling, its scope, whether it enforces, and how much of it has been spent this period.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingAlerts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingAlerts(options?: RawAxiosRequestConfig): AxiosPromise<Array<Alert>> {
             return localVarFp.getBillingAlerts(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
-         * @summary The per-request spend-cap verdict the metering gate consumes
+         * Answers whether one proposed spend fits inside this org\'s caps.  It is the per-request verdict the metering edge consumes before every priced call, and its caller is a SERVICE rather than a person: a service token plus the gateway-pinned org, with no user behind it. So this admits that principal where the CRUD beside it does not.  Every covering row is evaluated, most-restrictive-wins, and the tightest one is what `capCents`, `spentCents` and `reason` describe. Soft rows never deny; nor does a project-scoped enforcing row whose project axis the caller could not establish — `pv=1` is how a caller states that it did, and an unproven claim must not be able to refuse traffic.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers whether one proposed spend fits inside this org\'s caps.
+         * @param {BillingApiGetBillingAlertsAuthorizeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingAlertsAuthorize(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getBillingAlertsAuthorize(options).then((request) => request(axios, basePath));
+        getBillingAlertsAuthorize(requestParameters: BillingApiGetBillingAlertsAuthorizeRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<CapVerdict> {
+            return localVarFp.getBillingAlertsAuthorize(requestParameters.project, requestParameters.service, requestParameters.amount, requestParameters.pv, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers the spendable prepaid balance of the wallet this caller bills from — the same wallet the AI prepaid gate reads before admitting a paid request, the edge meter debits, and a top-up credits.  The wallet is an ADDRESS, not an org: `account` echoes the key resolved within the ledger — the org\'s shared pool for a tenant org, a personal account for a member of the shared signup org. The echo is the point. A browser could only GUESS its own payer by decoding its own token, and a guess that disagrees with the server is how money lands in an account the gate never reads.  `balance`, `holds` and `available` are whole USD cents, ROUNDED from the ledger\'s exact 18-decimal value. On the co-resident ledger `holds` is 0 and `available` equals `balance`: the gate\'s reservations live in its own pod and are never posted, so the settled balance IS the spendable one.  The ledger is the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header. No validated principal is 401 — with one exception, the trusted in-process service token the AI gate itself presents, which reads the gateway-pinned org and nothing it could name. A balance that cannot be READ is 502, never 0: unknown is not broke.
@@ -2289,63 +2433,63 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingBalance(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the total credit still available to the caller\'s own subject — the sum of what the grants have left, which is the figure the console shows above the usage meter. It is the balance a metered act draws down, so it answers the one question a customer asks before spending: how much is there.  Like every read in this family the subject is pinned to the caller before the handler runs, so the userId parameter the handler reads can never name another tenant. For the grants BEHIND this number — each with its original amount and its expiry — read /v1/billing/credits. A subject with no credit is zero, which is an answer and not an error.
-         * @summary What is left of your credit, as one number
+         * Answers what the caller can spend right now, one entry per currency.  Only ACTIVE grants count: a voided, exhausted or lapsed grant contributes nothing, which is why this number can be smaller than the grant list suggests and why the two reads exist separately. It is credit, not prepaid balance — /v1/billing/balance is the wallet, and the two are added by the gate, never by a reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers what the caller can spend right now, one entry per currency.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingCreditBalance(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingCreditBalance(options?: RawAxiosRequestConfig): AxiosPromise<CreditBalance> {
             return localVarFp.getBillingCreditBalance(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the same balance /v1/billing/credit-balance reports, split by the tag each grant carries, so a reader can tell trial credit from bought credit and show the earliest expiry within each group. A console needs the split to say what will lapse and when; the single number cannot.  The subject is pinned to the caller before the handler runs, exactly as in the sibling reads, so the userId parameter can never name another tenant. A subject with no grants is an empty breakdown and a zero total, which is an answer and not an error.
-         * @summary What is left of your credit, grouped by where it came from
+         * Answers that same spendable credit split by grant tag, with the earliest expiry under each and the total across all of them.  The split is the point: it is how trial credit is told apart from bought credit, which is what a surface asks before it decides whether to spend any. An unregistered address answers 404 and a caller reads that as \"no credit\", so this being served is the difference between a customer with a trial grant being offered their trial and being told they have none.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers that same spendable credit split by grant tag, with the earliest expiry under each and the total across all of them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingCreditBalanceBreakdown(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingCreditBalanceBreakdown(options?: RawAxiosRequestConfig): AxiosPromise<any> {
             return localVarFp.getBillingCreditBalanceBreakdown(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s credit grants — each with its original amount, what remains and when it expires — so a customer can see what was given and what is left before metered spend draws it down. It is a READ of the caller\'s own subject, pinned before the handler runs, so a grant belonging to another tenant is simply absent. Granting credit is not this route and never has been: minting lands on the mint-gated POST /v1/billing/credit, which no browser can reach. Reading an empty balance is an empty array, not an error.
-         * @summary List the credit grants on your org\'s balance
+         * Lists the caller\'s credit grants — every one of them, spent and lapsed and voided included.  That is deliberate and it is what makes the list useful: a grant list is a LEDGER, and one that hid its spent rows could not be reconciled against a burn-down. What is spendable right now is the sibling read, /v1/billing/ credit-balance, and the two are different questions.  Scoped to the caller\'s own wallet, resolved server-side.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the caller\'s credit grants — every one of them, spent and lapsed and voided included.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingCredits(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingCredits(options?: RawAxiosRequestConfig): AxiosPromise<CreditGrants> {
             return localVarFp.getBillingCredits(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers the addressed deposit intent\'s current state — pending until a transfer is seen, confirming while the chain buries it, succeeded once it is credited — so a payment page can poll one deposit rather than the whole balance.  Scoped to the caller: an intent belonging to another payer is not found and answers 404, never another account\'s state. The credit itself is the chain watcher\'s to make; this read reports it and never performs it.
-         * @summary Follow one crypto deposit to settlement
+         * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.
          * @param {BillingApiGetBillingCryptoDepositByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingCryptoDepositById(requestParameters: BillingApiGetBillingCryptoDepositByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingCryptoDepositById(requestParameters: BillingApiGetBillingCryptoDepositByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CryptoDeposit> {
             return localVarFp.getBillingCryptoDepositById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers the custody processor\'s LIVE capability list — the chains and the tokens on each that this deployment can actually take a deposit on. A payment page renders its asset picker straight from it rather than from a list of its own, so a chain the processor stops supporting disappears from the picker instead of minting an address nothing watches.  It is a capability read, not an account read: it says what may be paid with, never anything about this caller\'s balance or deposits.
-         * @summary Which chains and tokens a crypto top-up can use
+         * Answers which chains and tokens the crypto rail accepts — what an asset picker renders.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingCryptoOptions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingCryptoOptions(options?: RawAxiosRequestConfig): AxiosPromise<CryptoOptions> {
             return localVarFp.getBillingCryptoOptions(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s invoices with a count, read from that org\'s own namespaced store, narrowable by userId, status or subscriptionId. The org is the one the gateway validated and the caller\'s billing subject is pinned into the query before the handler runs, so a read can never widen past the caller. A request that carries no resolvable org gets an honest empty list rather than an error or another tenant\'s rows.
-         * @summary List your org\'s billing invoices
+         * Lists the caller\'s invoices, newest first, with the count beside them.  It is scoped to the caller\'s own billing subject — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org. An org with no invoices is an empty list, not a refusal.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the caller\'s invoices, newest first, with the count beside them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingInvoices(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingInvoices(options?: RawAxiosRequestConfig): AxiosPromise<Invoices> {
             return localVarFp.getBillingInvoices(options).then((request) => request(axios, basePath));
         },
         /**
-         * Renders the addressed invoice as a single-page PDF and answers it as an attachment named after the invoice number. The render is a pure function of the invoice — no timestamps, no random ids — so the same invoice always produces identical bytes and a re-download is stable. The invoice is resolved inside the caller org\'s own namespace, so an id belonging to another tenant is simply absent and reads as 404; a caller with no validated org gets 401 rather than a document.
-         * @summary Download one invoice as a PDF attachment
+         * Answers the invoice as an attachment — `application/pdf` under a Content-Disposition naming the invoice number — rather than as a JSON value, which is why this one route is untyped where its five siblings are typed: a PDF is bytes with a filename, and the two headers are the whole contract.  The render is a PURE function of the invoice: one page, no timestamps and no random ids, so the same invoice renders the same bytes however often it is asked for and a retry after a dropped connection costs a re-render and nothing else.  The invoice is read from the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header, and the lookup is scoped at the storage layer — so an id belonging to another customer resolves to nothing and answers 404 rather than being found and then refused.
+         * @summary Download one invoice as a PDF
          * @param {BillingApiGetBillingInvoicesByIdPdfRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2354,8 +2498,18 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingInvoicesByIdPdf(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers the cards saved against your own account as masked descriptors: brand, last four, expiry and the processor\'s reusable reference. No card number and no security code exist here to return; both live at the processor and never enter this system. It is what a checkout prefills its payment step from.  The customer face of the list a service token reads at /v1/billing/portal/methods — same rows, different principal, no hop between them.  The subject filter is pinned to the VALIDATED caller before the handler runs, so the answer is your own account\'s cards whatever customerId the request carries, and another org\'s rows are outside the namespace entirely. A caller who is not signed in is refused before the read.
-         * @summary Your saved cards, masked — the customer read
+         * Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags. The sign is the posting\'s own meaning, read through ONE vocabulary shared with the ledger that wrote it — a reader with its own spelling for `deposit` rendered a customer\'s grant as a charge.  This is the closest projection of the truth. The org\'s double-entry postings are the source of record — balanced, only ever appended, one file per org — and this lane is that list, wider than either half of it: the deposits are the grants /v1/billing/credits lists and the debits are the spend /v1/billing/usage rolls up. It answers 503 where this deployment runs no ledger, rather than reporting an empty wallet.  A row whose timestamp will not parse is KEPT rather than dropped — a malformed date must show up in a money list, not vanish from it. `balanceCents` is omitted: these are MOVEMENTS, and the standing balance is /v1/billing/balance.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org, where the org\'s ledger file is the tenant boundary; 401 without a validated principal.
+         * @summary Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags.
+         * @param {BillingApiGetBillingLedgerRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingLedger(requestParameters: BillingApiGetBillingLedgerRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Array<FinanceLedgerEntry>> {
+            return localVarFp.getBillingLedger(requestParameters.range, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers every payment method the caller has saved, newest first.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  A store that cannot be read answers an EMPTY LIST rather than a failure: the saved-cards panel renders empty instead of breaking the page around it.
+         * @summary Cards and accounts on file for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2363,17 +2517,17 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingMethods(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s payout records ordered by creation time descending, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs, so the list is the caller\'s own and cannot be widened. A request with no resolvable org gets an empty array rather than an error.
-         * @summary List your org\'s payouts, newest first
+         * Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.  A payout is ORG-scoped rather than subject-scoped, so there is nothing to pin beyond the tenant the caller already is, and no query can widen it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingPayouts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingPayouts(options?: RawAxiosRequestConfig): AxiosPromise<Array<Payout>> {
             return localVarFp.getBillingPayouts(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns every subscription tier a buyer can choose, each carrying the platform promo currently in effect, optionally narrowed with the category query. Prices come from the admin-editable plan authority in the database; the embedded catalog is only a loud-failing fallback, so a failed seed or a query error serves the known plans rather than a silently blank list. It is a catalog read, not an entitlement read — it says what may be bought, never what this caller has.
-         * @summary The public plan catalog, annotated with the active platform promotion
+         * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  It is the public catalog and needs no tenant: this is what anyone may buy.
+         * @summary The plan catalog, priced with whatever offer is in force
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2381,8 +2535,8 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingPlans(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers the org\'s saved payment methods as masked descriptors: brand, last four, expiry and the processor\'s reusable reference. No card number and no security code exist here to return; both live at the processor and never enter this system.  This is the SERVICE-TOKEN face of the same list a customer reads at /v1/billing/methods. Both are served here, in this process, and answer the same rows; they are two addresses because they admit two different principals, not because either forwards to the other.  The customer filter is pinned to the VALIDATED caller before the handler runs, so a browser sees only its own subject\'s cards whatever customerId it sends; only a caller holding the internal service token may name the subject, and the org it may name it within is fixed by the gateway. Cross-tenant is closed by the org namespace for both, so an id or a subject from another org resolves to nothing. A caller who is neither is refused before the read.
-         * @summary Cards saved against the caller\'s org, masked — the portal read
+         * Answers every payment method the caller has saved, newest first.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  A store that cannot be read answers an EMPTY LIST rather than a failure: the saved-cards panel renders empty instead of breaking the page around it.
+         * @summary Cards and accounts on file for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2390,40 +2544,41 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingPortalMethods(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers the Square application id, location id, environment and live flag the browser\'s card iframe boots against — public values only, never a secret. Resolution lives in one place shared with the public tenant projection, so the card form can never initialize against a different Square application than the one commerce will actually charge. It deliberately does NOT hydrate credentials from KMS: the dialog blocks on this call, so it answers from the org and the deployment environment without a round trip, and an org with no per-org credentials gets the deployment\'s own public app id.
-         * @summary The public payment-provider config your card form needs to initialize
+         * Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.  It carries no secret: an application id is published to every checkout page by design. What matters is that it names the SAME processor account the charge will be made on, because a card vaulted against one account and charged against another is a card that saves and then cannot be used.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingSettings(options?: RawAxiosRequestConfig): AxiosPromise<PaymentConfig> {
             return localVarFp.getBillingSettings(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller org\'s subscriptions with a count, narrowable by userId or status, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs. A request with no resolvable org gets an empty list and a zero count rather than an error.
-         * @summary List your org\'s subscriptions
+         * Lists the plans the caller holds, with the count beside them.  It is scoped to the caller\'s own org, so a query cannot widen it to another customer\'s. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Lists the plans the caller holds, with the count beside them.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingSubscriptions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingSubscriptions(options?: RawAxiosRequestConfig): AxiosPromise<Subscriptions> {
             return localVarFp.getBillingSubscriptions(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers one subject\'s resolved tier — name, display name, agent ceiling and allowed models — with the balance that admits their next metered call: prepaidAvailable, creditsRemaining, dailyRemaining and the effectiveAvailable those fold into. The ai router reads it per request to pick that caller\'s rate-limit tier. It sits on the org-resolving chain because a tier is org state, and the subject keys are pinned to the validated caller before the handler runs, so a browser read is always the caller\'s own; user is required, which only a service-to-service caller can omit and be refused 400 for. The tier is an upstream tier claim, or an explicit tier override, when either is present — that is the service-to-service contract — and is otherwise DERIVED from the org\'s active and trialing subscriptions, the highest one winning, its paid-ness read from the plan catalog by slug rather than from the subscription\'s own stored copy. The rule to get right is effectiveAvailable and not prepaidAvailable: granted credits spend too, credits first, so an account funded only by a grant reads zero prepaid while holding real spendable credit — and with the daily term zero on every tier there is no free allowance behind it, so a zero-balance account is gated. A subscription-store error answers 500 rather than downgrading to free, so a transient failure never reports a paid subscriber as unsubscribed.
-         * @summary The subject\'s plan tier and the balance a metered call is admitted on
+         * Answers which tier the caller is on, what it allows, and what is left to spend.  `effectiveAvailable` is the ONLY figure to compare against zero. The others are its parts — prepaid money, granted credits and the daily term are three sources of one spend, not three balances to add up a second time.  A tier that cannot be READ is an error, never Free. The router in front of the models maps any non-2xx to Free, so answering Free from a question nobody could answer would pin every paying customer to the most restrictive row with nothing anywhere to find.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers which tier the caller is on, what it allows, and what is left to spend.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingTier(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingTier(options?: RawAxiosRequestConfig): AxiosPromise<Tier> {
             return localVarFp.getBillingTier(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the caller\'s own ledger movements — every credit and debit against the subject the usage gate charges — newest first, with a count and the subject they belong to, so a customer can reconcile a bill against the acts that produced it. Paging is limit and offset, and the currency can be narrowed.  The subject is NOT the caller\'s to choose. The handler filters on a user parameter, and that parameter is overwritten with the caller\'s own billing subject before the handler runs — so naming another subject returns your own rows rather than theirs, and the read can never disagree with the wallet it describes. An unauthenticated call is 401 rather than 403, because a browser re-authenticates on the first and only reports the second. No movements is an empty list, not an error.
-         * @summary List the movements on your own balance, newest first
+         * Answers one page of the caller\'s own ledger, newest first: what moved, how much, when, and what it was tagged with.  `count` is the size of the WHOLE history rather than of the page, which is how a reader knows there is more to ask for, and `user` echoes the wallet the page was read for — the same subject the spend gate debits, so a customer can see which account answered rather than guessing from their own token.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers one page of the caller\'s own ledger, newest first: what moved, how much, when, and what it was tagged with.
+         * @param {BillingApiGetBillingTransactionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingTransactions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getBillingTransactions(options).then((request) => request(axios, basePath));
+        getBillingTransactions(requestParameters: BillingApiGetBillingTransactionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Transactions> {
+            return localVarFp.getBillingTransactions(requestParameters.currency, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers one row per BILLED call against the caller\'s org — transaction id, amount, timestamp and the metered unit. This is the raw charged ledger, not a rollup.  Each row is stamped with a canonical `metadata.product` derived from what the meter persisted: `agent` becomes agents, `provisioning` becomes the provisioned kind, a token-metered row becomes inference, anything else keeps its metering surface. The ledger has no product field of its own, so this read is where that dimension is made real — from the SAME charged rows, never a second meter. A row that already carries its own product WINS, so the derivation stops the day the meter records one.  `product=<id>` filters to one product server-side. `groupBy=product` reduces to `{product,requests,amountCents}` rollups instead of rows.  `amount` is whole USD cents, ROUNDED; `decimal` beside it is the SAME debit exact, as an 18-decimal USD string. Sum `decimal`. A page of sub-cent token calls totals correctly there and totals ZERO in `amount` — that difference is real money.  Scoped to the caller\'s own org\'s books, where the org\'s ledger file IS the tenant boundary; no client-supplied subject is ever forwarded. 401 without a validated principal. The co-resident read returns the 2000 most recent debits, newest first; `start` and `end` narrow the window only on the split-deploy upstream.
@@ -2444,21 +2599,21 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getBillingUsageAccounts(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers the one read the account page renders: the subject\'s resolved plan, the plan\'s included monthly allotment beside what was actually granted this period, consumption capped at that grant, the overage past it, and the spendable wallet (balance minus holds) — all for the current UTC month, every figure derived from the same transactions the gateway\'s balance gate reads, so this read can never disagree with the gate that admits the next call. It rides the same pinned chain as the sibling reads: the user parameter is overwritten with the validated caller\'s own billing subject before the handler runs, so it can never name another tenant; user is required, which only a service-to-service caller can omit and be refused 400 for, and plan is optional — omitted, it is resolved from the subject\'s subscription. The rule to get right is that the two sides are DIFFERENT MONEY: the included figures are usage the subscription grants and the wallet is prepaid credit the customer bought, so a reader who sums them invents a balance nobody holds — and before the period\'s first allotment grant runs, monthlyCents shows the plan\'s entitlement while grantedCents is zero, which is the figure consumption actually draws down.
-         * @summary What plan you are on and how much of it is left, beside the wallet
+         * Answers the caller\'s month: what their plan includes, what has been consumed against it, and the wallet beside it.  The two blocks are SEPARATE monies and are never added. One is usage a plan granted; the other is prepaid credit bought with a card. Their sum is not a number anyone holds, and a reader that formed it would be inventing a balance.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers the caller\'s month: what their plan includes, what has been consumed against it, and the wallet beside it.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingUsageRollup(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingUsageRollup(options?: RawAxiosRequestConfig): AxiosPromise<Rollup> {
             return localVarFp.getBillingUsageRollup(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers the receiving bank details for the brand this deployment serves — the account the funds actually land in, hydrated per brand rather than hard-coded — together with the payment reference to put on the transfer.  THE REFERENCE IS THE POINT. It carries your own billing key, and it is how an arriving wire is attributed to your account; a transfer sent without it arrives as an unidentified receipt. That is why this read is gated at all: an unpinned caller would be handed an unattributable reference.  Reading it credits nothing and reserves nothing. A wire is settled by an operator when the bank shows the funds, so the balance moves on receipt, not on this call.
-         * @summary Where to wire funds, and the reference that credits them to you
+         * Answers where to send a wire top-up: the receiving bank details, with the caller\'s own payment reference.  The account is the SERVING BRAND\'S — resolved from the host the customer is paying on, so paying on one brand never shows another\'s bank — and the reference carries the caller\'s billing key, which is how an arriving wire names who it credits. Nothing mints here; a receipt is settled by an operator once the bank confirms it.  It is all-or-nothing: no configured account is 503 rather than a partial form, because nobody can wire to three fields out of five.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers where to send a wire top-up: the receiving bank details, with the caller\'s own payment reference.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBillingWire(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getBillingWire(options?: RawAxiosRequestConfig): AxiosPromise<WireInstructions> {
             return localVarFp.getBillingWire(options).then((request) => request(axios, basePath));
         },
         /**
@@ -2468,7 +2623,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getInvoice(requestParameters: BillingApiGetInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<InvoiceOut> {
+        getInvoice(requestParameters: BillingApiGetInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<Invoice> {
             return localVarFp.getInvoice(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2478,40 +2633,42 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        issueInvoice(requestParameters: BillingApiIssueInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<InvoiceOut> {
+        issueInvoice(requestParameters: BillingApiIssueInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<Invoice> {
             return localVarFp.issueInvoice(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Applies only the fields the body actually carries — title, threshold, project, service, enforce, softPct, rateLimitRpm — and leaves the rest as stored, answering the merged row with its current period spend. Requires an ORG ADMIN, a platform admin, or the internal service token, for the same reason creation does: a member who could edit the cap could raise it to nothing or drop it to a punitive floor. Ownership is checked per row and a cap the caller does not own is refused as 404, never 403, so the id space cannot be probed.
-         * @summary Change one of your org\'s spend caps
+         * Changes one spend cap: raise or lower the ceiling, flip enforcement, retune the rate limit.  Only the fields the body carries move. Every mutable field is optional, and an absent one is PRESERVED rather than reset — so a change that flips enforcement cannot silently wipe the threshold it enforces.  A cap belonging to another org is a 404, not a 403: a guessed id must not become an oracle for what anyone else holds.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Changes one spend cap: raise or lower the ceiling, flip enforcement, retune the rate limit.
          * @param {BillingApiPatchBillingAlertsByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchBillingAlertsById(requestParameters: BillingApiPatchBillingAlertsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.patchBillingAlertsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        patchBillingAlertsById(requestParameters: BillingApiPatchBillingAlertsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<Alert> {
+            return localVarFp.patchBillingAlertsById(requestParameters.id, requestParameters.alertPatch, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
-         * @summary Set a spend cap or rate limit on your org
+         * Opens a spend cap on the caller\'s own org.  At least one limit must mean something: a threshold above zero (a spend cap) or a requests-per-minute above zero (a rate limit). A row that bounds neither is refused rather than stored, because a ceiling nothing measures against is a ceiling a customer believes in and does not have.  The cap is keyed on the caller\'s own billing subject, resolved server-side — the SAME key the verdict looks it up under, which is what makes enforcement bind rather than merely record.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Opens a spend cap on the caller\'s own org.
+         * @param {BillingApiPostBillingAlertsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBillingAlerts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postBillingAlerts(options).then((request) => request(axios, basePath));
+        postBillingAlerts(requestParameters: BillingApiPostBillingAlertsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Alert> {
+            return localVarFp.postBillingAlerts(requestParameters.alertSpec, options).then((request) => request(axios, basePath));
         },
         /**
-         * Mints a deposit address held by the MPC signer fleet — no single party holds the key — on the chain and token you name, and returns it with the intent that tracks it.  The account credited is the PINNED caller\'s, never a value in the body, so a deposit cannot be aimed at someone else\'s balance. A caller who already has an open intent gets that same address back rather than a new one, so reloading the page cannot spray keygens across the signer fleet.  NO BALANCE MOVES HERE. This hands out an address; the chain watcher credits the account when a real transfer confirms, which is also why an address handed out and never funded costs nothing and expires nothing.
-         * @summary Get a deposit address for a crypto top-up
+         * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address and a status, not a receipt.  An asset this rail cannot mint on is 400 — ask for another. A rail that is shut for that asset is 503 — nothing sent now can be credited.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Issues a deposit address the caller can send crypto to, on the asset they ask for.
+         * @param {BillingApiPostBillingCryptoDepositRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBillingCryptoDeposit(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postBillingCryptoDeposit(options).then((request) => request(axios, basePath));
+        postBillingCryptoDeposit(requestParameters: BillingApiPostBillingCryptoDepositRequest, options?: RawAxiosRequestConfig): AxiosPromise<CryptoDeposit> {
+            return localVarFp.postBillingCryptoDeposit(requestParameters.cryptoAsset, options).then((request) => request(axios, basePath));
         },
         /**
-         * Vaults the card the processor already holds — you send its one-time reference, never a card number — as a reusable card on file, and stores the billing address with it. That vaulted card is what a subscription renewal or an auto-recharge charges later, which is why saving one is the step that makes a monthly plan billable at all.  It charges nothing. Saving a card moves no money; the first charge is whatever arrangement you then attach it to.  The subject is pinned from the validated caller and OVERWRITES the customerId in the body while leaving the card fields untouched, so a card can only ever be attached to the caller\'s OWN account whatever the body claims. That pin is the whole control on this write, not decoration: this is the one handler in the family that reads its subject from the body.
-         * @summary Save a card for later charges
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2519,17 +2676,18 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingMethods(options).then((request) => request(axios, basePath));
         },
         /**
-         * Flips the org\'s live flag, which is the single authority for both the payment environment and the ledger bucket its transactions land in. This is a money-MINT control, not a customer action: it is gated on the internal service token AND platform scope, so an ORG ADMIN CANNOT move their own org — otherwise a tenant could drop itself into sandbox and stop paying. The rule most callers get wrong is the default: an org that has never been flipped transacts in SANDBOX, which is why a production-credentialled deployment can still hand a buyer a sandbox card form. When the deployment pins the payment environment explicitly, that pin governs and this flag only marks the transactions.
-         * @summary Move an org between sandbox and live billing
+         * Moves this org between sandbox money and real money.  It decides whether a charge hits a real card, so it is the one posture change that is not self-service: the platform bar, never an org owner, because an org that could put itself in test mode could take priced work for free.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Moves this org between sandbox money and real money.
+         * @param {BillingApiPostBillingModeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postBillingMode(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postBillingMode(options).then((request) => request(axios, basePath));
+        postBillingMode(requestParameters: BillingApiPostBillingModeRequest, options?: RawAxiosRequestConfig): AxiosPromise<Mode> {
+            return localVarFp.postBillingMode(requestParameters.modeIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * The service-token twin of POST /v1/billing/methods: it vaults the processor\'s one-time reference as a reusable card on file for the named subject, with its billing address, and moves no money doing it.  It exists so an internal caller can complete the family it can already read and detach. The subject it may name is pinned to the org the gateway fixed, so the service token acts WITHIN one tenant and never across tenants; a caller holding no service token is refused before the write.
-         * @summary Save a card on a subject\'s behalf — the portal attach
+         * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+         * @summary Save a card or account for the caller
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2537,8 +2695,8 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingPortalMethods(options).then((request) => request(axios, basePath));
         },
         /**
-         * Walks every organization and, for those that enabled auto-recharge and whose available balance (balance minus holds) has fallen under their configured threshold, charges their default payment method off-session and credits the balance, answering a per-org result row for each one it touched. This is the platform cron\'s door, not a customer\'s: it is gated on the internal service token AND platform scope, so an org admin cannot run the fleet-wide sweep. An org above its threshold is skipped silently; an org with no default payment method is reported as an uncharged row with the reason rather than failing the whole run.
-         * @summary Platform sweep: top up every org whose balance has fallen below its own threshold
+         * Sweeps every organization and, for those with auto-recharge on whose available balance has dropped below their own threshold, charges the default card and credits the balance.  It charges cards across EVERY tenant, so it is platform authority only — never an org owner, who could otherwise sweep-charge saved cards estate-wide. Its caller is a schedule, not a person.  `orgs` is the population considered, not the row count: that difference is how a reader tells \'nobody was below threshold\' from \'the sweep never ran\'. One org\'s failure is reported in its own row and does not stop the rest.
+         * @summary Recharge every org that has fallen below its threshold
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2546,8 +2704,8 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingRechargeRunAll(options).then((request) => request(axios, basePath));
         },
         /**
-         * Vaults the tokenized card as a reusable card-on-file, charges the first period, and creates the subscription — answering the subscription and invoice ids with the amount charged. The price is SERVER-AUTHORITATIVE: it is the plan\'s catalog price times billable seats and a client-supplied amount is never consulted, so a scripted request cannot underpay; a per-seat plan below its minimum seats is refused, and a free plan is refused outright because this address is the paid path. The card PAN never reaches this service — the browser tokenizes it and only the single-use nonce arrives here. The subject is the caller\'s own org, with an in-org user honored only inside that bound, and an idempotency key (or, absent one, the nonce itself) makes a retry replay the first result instead of charging twice.
-         * @summary Subscribe to a paid plan with a card, charged for the first period immediately
+         * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.
+         * @summary Buy a plan with a card
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2555,28 +2713,8 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingSubscribeCard(options).then((request) => request(axios, basePath));
         },
         /**
-         * Cancels the addressed subscription and answers its updated state, emitting the cancellation event the rest of the platform keys on. The default is to cancel AT PERIOD END — a body that fails to parse falls back to it — so the customer keeps what they paid for unless atPeriodEnd is explicitly false. The subscription is resolved inside the caller\'s own org namespace, so another tenant\'s id is a 404, and the write carries the browser anti-CSRF gate because it is reachable with an ambient cookie.
-         * @summary Cancel a subscription, at period end by default
-         * @param {BillingApiPostBillingSubscriptionsByIdCancelRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBillingSubscriptionsByIdCancel(requestParameters: BillingApiPostBillingSubscriptionsByIdCancelRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postBillingSubscriptionsByIdCancel(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Clears the scheduled cancellation on the addressed subscription and answers its updated state. It is the inverse of cancel and applies to a subscription that is still within its period; one the engine will not reactivate is refused 400 with the reason. The subscription is resolved inside the caller\'s own org namespace, so another tenant\'s id reads as 404, and the write carries the browser anti-CSRF gate.
-         * @summary Undo a pending cancellation and keep the subscription running
-         * @param {BillingApiPostBillingSubscriptionsByIdReactivateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBillingSubscriptionsByIdReactivate(requestParameters: BillingApiPostBillingSubscriptionsByIdReactivateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postBillingSubscriptionsByIdReactivate(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Charges a card the caller already has on file, named by paymentMethodId, and credits the caller\'s own balance — the SAVED-card twin of topup/token, sharing the one charge-and-credit core the auto-recharge cron runs on. The credit lands on the caller\'s OWN billing subject: the request body\'s subject field is pinned to the caller before the handler sees it, so a top-up can never be redirected to another subject or outside the caller\'s org. It is screened for risk before any money moves, exactly as the token path is, because both credit the SPENDABLE wallet. The rule most callers get wrong is that paymentMethodId is NOT covered by that subject pin — it is a card id, not a subject key — so it is checked separately, and a card belonging to any other subject answers 404 rather than 403: a permission error would confirm the id exists, which is an ownership oracle over other people\'s cards.
-         * @summary Add credit to your balance by charging one of your saved cards
+         * Charges a saved card and credits the caller\'s prepaid wallet.  The method must belong to the caller: one that does not is NOT FOUND rather than refused, so an id cannot be probed for existence. A saved row whose card is no longer chargeable is 422 — add the card again — which is a different thing to do than a decline (402) or a bad amount (400).  Retries behave exactly as they do for a token top-up: same key, same replay, same exactly-once at the processor.
+         * @summary Add funds with a card already on file
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2584,23 +2722,13 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingTopup(options).then((request) => request(axios, basePath));
         },
         /**
-         * Charges the single-use card token for the given amount and credits the caller\'s own balance, answering the transaction id and the new balance — the one-time top-up path, with no payment method saved. The amount is bounded SERVER-SIDE (roughly a one dollar floor and a five thousand dollar ceiling by deployment policy) and the check runs before any money moves, because the browser cap is not a control against a scripted request. The credit lands on the caller\'s OWN billing subject — the same key the usage gate debits — and can never be redirected outside the caller\'s org. Retries are safe: an idempotency key, or absent one the amount within a short window, replays the first result, and if that guard store is unreachable the call is refused with 503 rather than risking a second real charge.
-         * @summary Add credit to your balance by charging a tokenized card once
+         * Charges a card token from the browser\'s payment SDK and credits the caller\'s prepaid wallet — the cold-customer path, where nothing has to be saved first.  The wallet credited is the CALLER\'S OWN, resolved from their signed identity. It is never a value in the request: a client-set selector is how a customer once topped up one account while their usage drew from another.  `X-Idempotency-Key` makes a retry safe. With one, a repeat replays the first result; without one, the same amount from the same subject inside a short window does too. The key reaches the processor as well as our own guard, so the charge is exactly-once at the gateway even if our guard store is down.  The amount is bounded server-side. A decline is 402 and nothing is credited.
+         * @summary Add funds with a single-use card token
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postBillingTopupToken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postBillingTopupToken(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
-         * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
-         * @param {BillingApiPostBillingWebhooksByProviderRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postBillingWebhooksByProvider(requestParameters: BillingApiPostBillingWebhooksByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postBillingWebhooksByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
          * Raises a DRAFT invoice against a customer in the caller\'s own org.  The invoice is not collectible yet: a draft exists so it can be read and corrected, and issueInvoice is the separate act that turns it into a demand for payment. The subtotal and amount due are computed from the lines, so there is no total to send and none to get wrong.  The billing org is the caller\'s, taken from the validated principal, so an invoice can only ever be raised on the caller\'s own books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -2609,8 +2737,18 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        raiseInvoice(requestParameters: BillingApiRaiseInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<InvoiceOut> {
-            return localVarFp.raiseInvoice(requestParameters.raiseInvoiceIn, options).then((request) => request(axios, basePath));
+        raiseInvoice(requestParameters: BillingApiRaiseInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<Invoice> {
+            return localVarFp.raiseInvoice(requestParameters.raiseIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Put a canceled subscription back on its plan
+         * @param {BillingApiReactivateSubscriptionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reactivateSubscription(requestParameters: BillingApiReactivateSubscriptionRequest, options?: RawAxiosRequestConfig): AxiosPromise<Subscription> {
+            return localVarFp.reactivateSubscription(requestParameters.id, requestParameters.subscriptionRef, options).then((request) => request(axios, basePath));
         },
         /**
          * Voids a draft or issued invoice — the cancel.  A paid invoice cannot be voided: money has moved, and the correction for that is a refund, not an erasure. The state machine refuses it and that refusal is the answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -2619,11 +2757,32 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        voidInvoice(requestParameters: BillingApiVoidInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<InvoiceOut> {
+        voidInvoice(requestParameters: BillingApiVoidInvoiceRequest, options?: RawAxiosRequestConfig): AxiosPromise<Invoice> {
             return localVarFp.voidInvoice(requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for cancelSubscription operation in BillingApi.
+ * @export
+ * @interface BillingApiCancelSubscriptionRequest
+ */
+export interface BillingApiCancelSubscriptionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingApiCancelSubscription
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {SubscriptionRef}
+     * @memberof BillingApiCancelSubscription
+     */
+    readonly subscriptionRef: SubscriptionRef
+}
 
 /**
  * Request parameters for collectInvoice operation in BillingApi.
@@ -2688,11 +2847,46 @@ export interface BillingApiDeleteBillingPortalMethodsByIdRequest {
  */
 export interface BillingApiGetBillingAccountsByIdMembersRequest {
     /**
-     * 
+     * ID is the billing account id, which for this store is the org\&#39;s own id.
      * @type {string}
      * @memberof BillingApiGetBillingAccountsByIdMembers
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for getBillingAlertsAuthorize operation in BillingApi.
+ * @export
+ * @interface BillingApiGetBillingAlertsAuthorizeRequest
+ */
+export interface BillingApiGetBillingAlertsAuthorizeRequest {
+    /**
+     * Project narrows the verdict to one project\&#39;s caps. Empty is the org-wide row.
+     * @type {string}
+     * @memberof BillingApiGetBillingAlertsAuthorize
+     */
+    readonly project?: string
+
+    /**
+     * Service narrows it to one service\&#39;s caps. Empty is every service.
+     * @type {string}
+     * @memberof BillingApiGetBillingAlertsAuthorize
+     */
+    readonly service?: string
+
+    /**
+     * Amount is the proposed spend in cents.
+     * @type {string}
+     * @memberof BillingApiGetBillingAlertsAuthorize
+     */
+    readonly amount?: string
+
+    /**
+     * PV is \&quot;1\&quot; when the caller ESTABLISHED the project rather than merely carrying a claim of one. An unproven project may not deny traffic.
+     * @type {string}
+     * @memberof BillingApiGetBillingAlertsAuthorize
+     */
+    readonly pv?: string
 }
 
 /**
@@ -2702,7 +2896,7 @@ export interface BillingApiGetBillingAccountsByIdMembersRequest {
  */
 export interface BillingApiGetBillingCryptoDepositByIdRequest {
     /**
-     * 
+     * ID is the deposit intent id.
      * @type {string}
      * @memberof BillingApiGetBillingCryptoDepositById
      */
@@ -2721,6 +2915,48 @@ export interface BillingApiGetBillingInvoicesByIdPdfRequest {
      * @memberof BillingApiGetBillingInvoicesByIdPdf
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for getBillingLedger operation in BillingApi.
+ * @export
+ * @interface BillingApiGetBillingLedgerRequest
+ */
+export interface BillingApiGetBillingLedgerRequest {
+    /**
+     * Range is the window: 24h, 7d, 30d or 90d. Anything else — including absent — is 30d, so a typo silently widens the window to a month rather than failing.
+     * @type {string}
+     * @memberof BillingApiGetBillingLedger
+     */
+    readonly range?: string
+}
+
+/**
+ * Request parameters for getBillingTransactions operation in BillingApi.
+ * @export
+ * @interface BillingApiGetBillingTransactionsRequest
+ */
+export interface BillingApiGetBillingTransactionsRequest {
+    /**
+     * Currency filters to one currency. Empty reads every currency.
+     * @type {string}
+     * @memberof BillingApiGetBillingTransactions
+     */
+    readonly currency?: string
+
+    /**
+     * Limit is the page size; absent or non-positive takes the default 100.
+     * @type {string}
+     * @memberof BillingApiGetBillingTransactions
+     */
+    readonly limit?: string
+
+    /**
+     * Offset is how far into the history the page starts.
+     * @type {string}
+     * @memberof BillingApiGetBillingTransactions
+     */
+    readonly offset?: string
 }
 
 /**
@@ -2763,48 +2999,55 @@ export interface BillingApiPatchBillingAlertsByIdRequest {
      * @memberof BillingApiPatchBillingAlertsById
      */
     readonly id: string
+
+    /**
+     * 
+     * @type {AlertPatch}
+     * @memberof BillingApiPatchBillingAlertsById
+     */
+    readonly alertPatch: AlertPatch
 }
 
 /**
- * Request parameters for postBillingSubscriptionsByIdCancel operation in BillingApi.
+ * Request parameters for postBillingAlerts operation in BillingApi.
  * @export
- * @interface BillingApiPostBillingSubscriptionsByIdCancelRequest
+ * @interface BillingApiPostBillingAlertsRequest
  */
-export interface BillingApiPostBillingSubscriptionsByIdCancelRequest {
+export interface BillingApiPostBillingAlertsRequest {
     /**
      * 
-     * @type {string}
-     * @memberof BillingApiPostBillingSubscriptionsByIdCancel
+     * @type {AlertSpec}
+     * @memberof BillingApiPostBillingAlerts
      */
-    readonly id: string
+    readonly alertSpec: AlertSpec
 }
 
 /**
- * Request parameters for postBillingSubscriptionsByIdReactivate operation in BillingApi.
+ * Request parameters for postBillingCryptoDeposit operation in BillingApi.
  * @export
- * @interface BillingApiPostBillingSubscriptionsByIdReactivateRequest
+ * @interface BillingApiPostBillingCryptoDepositRequest
  */
-export interface BillingApiPostBillingSubscriptionsByIdReactivateRequest {
+export interface BillingApiPostBillingCryptoDepositRequest {
     /**
      * 
-     * @type {string}
-     * @memberof BillingApiPostBillingSubscriptionsByIdReactivate
+     * @type {CryptoAsset}
+     * @memberof BillingApiPostBillingCryptoDeposit
      */
-    readonly id: string
+    readonly cryptoAsset: CryptoAsset
 }
 
 /**
- * Request parameters for postBillingWebhooksByProvider operation in BillingApi.
+ * Request parameters for postBillingMode operation in BillingApi.
  * @export
- * @interface BillingApiPostBillingWebhooksByProviderRequest
+ * @interface BillingApiPostBillingModeRequest
  */
-export interface BillingApiPostBillingWebhooksByProviderRequest {
+export interface BillingApiPostBillingModeRequest {
     /**
      * 
-     * @type {string}
-     * @memberof BillingApiPostBillingWebhooksByProvider
+     * @type {ModeIn}
+     * @memberof BillingApiPostBillingMode
      */
-    readonly provider: string
+    readonly modeIn: ModeIn
 }
 
 /**
@@ -2815,10 +3058,31 @@ export interface BillingApiPostBillingWebhooksByProviderRequest {
 export interface BillingApiRaiseInvoiceRequest {
     /**
      * 
-     * @type {RaiseInvoiceIn}
+     * @type {RaiseIn}
      * @memberof BillingApiRaiseInvoice
      */
-    readonly raiseInvoiceIn: RaiseInvoiceIn
+    readonly raiseIn: RaiseIn
+}
+
+/**
+ * Request parameters for reactivateSubscription operation in BillingApi.
+ * @export
+ * @interface BillingApiReactivateSubscriptionRequest
+ */
+export interface BillingApiReactivateSubscriptionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof BillingApiReactivateSubscription
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {SubscriptionRef}
+     * @memberof BillingApiReactivateSubscription
+     */
+    readonly subscriptionRef: SubscriptionRef
 }
 
 /**
@@ -2843,6 +3107,18 @@ export interface BillingApiVoidInvoiceRequest {
  */
 export class BillingApi extends BaseAPI {
     /**
+     * Ends a subscription.  It cancels at the END OF THE PAID PERIOD by default, because a customer who cancels has already paid for the period they are in and taking it away is taking money for nothing. `atPeriodEnd: false` ends it at once, which is the caller asking for that.  A subscription from another org is not found rather than refused, so an id cannot be probed for existence.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary End a subscription
+     * @param {BillingApiCancelSubscriptionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public cancelSubscription(requestParameters: BillingApiCancelSubscriptionRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).cancelSubscription(requestParameters.id, requestParameters.subscriptionRef, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Collects an issued invoice: credit grants first, then prepaid balance, then the card on file — the same waterfall the dunning workflow runs.  A DECLINE IS NOT AN ERROR. It answers with paid=false, a reason, and the invoice still open, because a declined collection is a normal business outcome that must remain retryable — and because sealing it as a failure would wedge dunning behind a replayed decline. Only a successful collection is sealed, so a retry of a paid invoice replays the receipt instead of charging again.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
      * @summary Collect an issued invoice from credits, balance, then card
      * @param {BillingApiCollectInvoiceRequest} requestParameters Request parameters.
@@ -2855,8 +3131,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Deletes the addressed cap and answers 204. Requires an ORG ADMIN, a platform admin, or the internal service token — deleting a cap uncaps the org\'s spend, so a plain member is refused 403. Ownership is checked per row and a cap the caller does not own is refused as 404 rather than 403, so the response cannot confirm that another org\'s id exists.
-     * @summary Remove one of your org\'s spend caps
+     * Deletes a budget the caller\'s org owns and answers 204.  Removing a cap REMOVES A CEILING, so it takes the same bar as setting one: a validated org admin, the platform SuperAdmin, or the trusted in-process service token. A member who could delete the org\'s cap would have unbounded spend.  A cap this org does not own is NOT FOUND rather than refused — the same answer whether the id is unknown or belongs to another customer — so an id cannot be probed for existence by trying to delete it.
+     * @summary Remove one spend cap
      * @param {BillingApiDeleteBillingAlertsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2867,8 +3143,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Detaches the addressed card: the stored reference is removed here AND withdrawn from the processor\'s vault, so nothing is left that a later charge could bill.  The customer twin of DELETE /v1/billing/portal/methods/{id}. The id is resolved INSIDE your own org namespace, so a card that is not yours is simply not found there and answers 404 — never 403, which would confirm the id exists.  Removing the card an auto-recharge or a running lease bills leaves that arrangement with nothing to charge; that is yours to decide.
-     * @summary Remove one of your saved cards
+     * Detaches the method at the processor and drops the row.  A method the caller does not own is NOT FOUND rather than refused — the same answer whether the id names nothing or names somebody else\'s card — so an id cannot be probed for existence.  A platform operator or the trusted in-process service token may act on any subject inside the org; everyone else may only remove their own.
+     * @summary Remove one saved card or account
      * @param {BillingApiDeleteBillingMethodsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2879,8 +3155,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Detaches the addressed card: the stored reference is removed here AND withdrawn from the processor\'s vault, so nothing is left that a later charge could bill.  The service-token twin of the customer\'s DELETE /v1/billing/methods/{id}, at its own address for the same reason the portal list is — a different principal, on the same rows, in this same process.  The id is resolved INSIDE the caller\'s org namespace, so another tenant\'s card is not found there and answers 404 — never 403, which would confirm the id exists. That bound holds for the service token too: it may act for any subject within the org the gateway pinned, and for no subject outside it.  Removing the card an auto-recharge or a running lease bills leaves that arrangement with nothing to charge; that is the customer\'s call to make.
-     * @summary Remove a saved card — the portal detach
+     * Detaches the method at the processor and drops the row.  A method the caller does not own is NOT FOUND rather than refused — the same answer whether the id names nothing or names somebody else\'s card — so an id cannot be probed for existence.  A platform operator or the trusted in-process service token may act on any subject inside the org; everyone else may only remove their own.
+     * @summary Remove one saved card or account
      * @param {BillingApiDeleteBillingPortalMethodsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2891,8 +3167,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns the billing accounts visible to the caller. One organisation is exactly one billing account here, so an authenticated caller sees precisely one: their own. The list shape is the honest one — it is what a caller with access to several would receive — rather than a promise that more will ever appear for a token scoped to a single org.  The account is derived from the validated org claim and from nothing the caller sends, so there is no account parameter and a cross-tenant read is not expressible. An unauthenticated call is 401.
-     * @summary The billing account you are signed in to
+     * Answers the caller\'s billing accounts: the org itself, its currency, when it was opened, and the caller\'s own standing in it.  The standing is the caller\'s, resolved from the validated principal here and sent to the store rather than looked up there — the membership roster is IAM\'s and commerce keeps none, so a callee that answered \"what role is this\" would be inventing it. An anonymous read gets the account with no role rather than an implied membership.  Scoped to the caller\'s own org, which is the whole tenancy story: there is no org field on the wire and none on the input.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers the caller\'s billing accounts: the org itself, its currency, when it was opened, and the caller\'s own standing in it.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -2902,8 +3178,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns the members of one billing account. The id must be the caller\'s OWN account — the handler compares it against the org resolved from the token and answers 403 when they differ, which is what guards this route: unlike its siblings it carries no subject key for the pin to overwrite, so it checks the path segment itself.  The roster it can answer is currently the requesting user alone. Membership lives in IAM, not in the ledger, and this operation reports what commerce actually holds rather than inventing a roster from a source it does not read. An unauthenticated call is 401.
-     * @summary Who is on a billing account
+     * Answers one billing account\'s roster.  commerce stores no roster — that is IAM\'s — so the only member it can name is the caller, and that is what comes back. What it does enforce is that the account named in the path is the caller\'s own: a foreign id is 403, not an empty list, because \"no members\" and \"not your account\" are different answers.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers one billing account\'s roster.
      * @param {BillingApiGetBillingAccountsByIdMembersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2914,8 +3190,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns the caps and alerts keyed to the caller\'s own billing subject, each with its threshold, enforcement flag, soft-warning percentage and current period spend. Any authenticated member of the org may read them — only the writes require an admin. The rows are keyed on the org subject the enforcement gate itself reads, which is why a cap created here is the one that actually binds. A caller with no resolvable org or subject gets an empty list, never another tenant\'s caps.
-     * @summary List your org\'s spend caps and rate limits
+     * Lists this org\'s spend caps: the ceiling, its scope, whether it enforces, and how much of it has been spent this period.  `periodSpentCents`, `over` and `warn` are ABSENT rather than zero when the spend could not be read, because \"nothing spent\" and \"spend unknown\" are different answers and a customer acting on the first when the second is true would be reading a ceiling that is not there. The policy row is reported either way.  The period is the UTC calendar month and `resetsAt` is when the count starts again, so a surface can say \"resets on\" without a second call.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Lists this org\'s spend caps: the ceiling, its scope, whether it enforces, and how much of it has been spent this period.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -2925,14 +3201,15 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers allow, reason, capCents, spentCents and warnPct for a proposed amount against a (project, service) scope — the verdict the request-edge metering gate reads before admitting a call. It evaluates EVERY covering cap and the most restrictive enforcing one wins; soft caps and an enforcing project cap whose project axis is not validated never block, they only raise the warning utilization. It is a service-to-service read authenticated by the internal service token with the org pinned by the gateway, not a browser call. Two rules matter: the spend it scores comes from the finance ledger\'s current-month total, and it FAILS OPEN on unknown spend — a transient read failure allows rather than denies, so a backend blip never bills-blocks an under-cap customer, while a known overage still denies.
-     * @summary The per-request spend-cap verdict the metering gate consumes
+     * Answers whether one proposed spend fits inside this org\'s caps.  It is the per-request verdict the metering edge consumes before every priced call, and its caller is a SERVICE rather than a person: a service token plus the gateway-pinned org, with no user behind it. So this admits that principal where the CRUD beside it does not.  Every covering row is evaluated, most-restrictive-wins, and the tightest one is what `capCents`, `spentCents` and `reason` describe. Soft rows never deny; nor does a project-scoped enforcing row whose project axis the caller could not establish — `pv=1` is how a caller states that it did, and an unproven claim must not be able to refuse traffic.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers whether one proposed spend fits inside this org\'s caps.
+     * @param {BillingApiGetBillingAlertsAuthorizeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
      */
-    public getBillingAlertsAuthorize(options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).getBillingAlertsAuthorize(options).then((request) => request(this.axios, this.basePath));
+    public getBillingAlertsAuthorize(requestParameters: BillingApiGetBillingAlertsAuthorizeRequest = {}, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingAlertsAuthorize(requestParameters.project, requestParameters.service, requestParameters.amount, requestParameters.pv, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2947,8 +3224,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns the total credit still available to the caller\'s own subject — the sum of what the grants have left, which is the figure the console shows above the usage meter. It is the balance a metered act draws down, so it answers the one question a customer asks before spending: how much is there.  Like every read in this family the subject is pinned to the caller before the handler runs, so the userId parameter the handler reads can never name another tenant. For the grants BEHIND this number — each with its original amount and its expiry — read /v1/billing/credits. A subject with no credit is zero, which is an answer and not an error.
-     * @summary What is left of your credit, as one number
+     * Answers what the caller can spend right now, one entry per currency.  Only ACTIVE grants count: a voided, exhausted or lapsed grant contributes nothing, which is why this number can be smaller than the grant list suggests and why the two reads exist separately. It is credit, not prepaid balance — /v1/billing/balance is the wallet, and the two are added by the gate, never by a reader.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers what the caller can spend right now, one entry per currency.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -2958,8 +3235,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns the same balance /v1/billing/credit-balance reports, split by the tag each grant carries, so a reader can tell trial credit from bought credit and show the earliest expiry within each group. A console needs the split to say what will lapse and when; the single number cannot.  The subject is pinned to the caller before the handler runs, exactly as in the sibling reads, so the userId parameter can never name another tenant. A subject with no grants is an empty breakdown and a zero total, which is an answer and not an error.
-     * @summary What is left of your credit, grouped by where it came from
+     * Answers that same spendable credit split by grant tag, with the earliest expiry under each and the total across all of them.  The split is the point: it is how trial credit is told apart from bought credit, which is what a surface asks before it decides whether to spend any. An unregistered address answers 404 and a caller reads that as \"no credit\", so this being served is the difference between a customer with a trial grant being offered their trial and being told they have none.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers that same spendable credit split by grant tag, with the earliest expiry under each and the total across all of them.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -2969,8 +3246,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s credit grants — each with its original amount, what remains and when it expires — so a customer can see what was given and what is left before metered spend draws it down. It is a READ of the caller\'s own subject, pinned before the handler runs, so a grant belonging to another tenant is simply absent. Granting credit is not this route and never has been: minting lands on the mint-gated POST /v1/billing/credit, which no browser can reach. Reading an empty balance is an empty array, not an error.
-     * @summary List the credit grants on your org\'s balance
+     * Lists the caller\'s credit grants — every one of them, spent and lapsed and voided included.  That is deliberate and it is what makes the list useful: a grant list is a LEDGER, and one that hid its spent rows could not be reconciled against a burn-down. What is spendable right now is the sibling read, /v1/billing/ credit-balance, and the two are different questions.  Scoped to the caller\'s own wallet, resolved server-side.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Lists the caller\'s credit grants — every one of them, spent and lapsed and voided included.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -2980,8 +3257,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers the addressed deposit intent\'s current state — pending until a transfer is seen, confirming while the chain buries it, succeeded once it is credited — so a payment page can poll one deposit rather than the whole balance.  Scoped to the caller: an intent belonging to another payer is not found and answers 404, never another account\'s state. The credit itself is the chain watcher\'s to make; this read reports it and never performs it.
-     * @summary Follow one crypto deposit to settlement
+     * Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.  An intent belonging to another payer answers 404, exactly as an id that names nothing, so a guessed id cannot confirm that somebody else\'s deposit exists.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Reads one of the caller\'s own deposit intents back — pending, confirming, or succeeded.
      * @param {BillingApiGetBillingCryptoDepositByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2992,8 +3269,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers the custody processor\'s LIVE capability list — the chains and the tokens on each that this deployment can actually take a deposit on. A payment page renders its asset picker straight from it rather than from a list of its own, so a chain the processor stops supporting disappears from the picker instead of minting an address nothing watches.  It is a capability read, not an account read: it says what may be paid with, never anything about this caller\'s balance or deposits.
-     * @summary Which chains and tokens a crypto top-up can use
+     * Answers which chains and tokens the crypto rail accepts — what an asset picker renders.  It is the intersection of two live facts rather than a configured list: an asset appears only if something is WATCHING it and the custody processor supports it. An address nobody watches credits nobody, so offering one would take a customer\'s money and lose it. A rail with nothing armed answers 503, not an empty menu — \"no rail\" and \"no assets\" are different, and only one of them means try again later.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers which chains and tokens the crypto rail accepts — what an asset picker renders.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3003,8 +3280,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s invoices with a count, read from that org\'s own namespaced store, narrowable by userId, status or subscriptionId. The org is the one the gateway validated and the caller\'s billing subject is pinned into the query before the handler runs, so a read can never widen past the caller. A request that carries no resolvable org gets an honest empty list rather than an error or another tenant\'s rows.
-     * @summary List your org\'s billing invoices
+     * Lists the caller\'s invoices, newest first, with the count beside them.  It is scoped to the caller\'s own billing subject — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org. An org with no invoices is an empty list, not a refusal.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Lists the caller\'s invoices, newest first, with the count beside them.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3014,8 +3291,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Renders the addressed invoice as a single-page PDF and answers it as an attachment named after the invoice number. The render is a pure function of the invoice — no timestamps, no random ids — so the same invoice always produces identical bytes and a re-download is stable. The invoice is resolved inside the caller org\'s own namespace, so an id belonging to another tenant is simply absent and reads as 404; a caller with no validated org gets 401 rather than a document.
-     * @summary Download one invoice as a PDF attachment
+     * Answers the invoice as an attachment — `application/pdf` under a Content-Disposition naming the invoice number — rather than as a JSON value, which is why this one route is untyped where its five siblings are typed: a PDF is bytes with a filename, and the two headers are the whole contract.  The render is a PURE function of the invoice: one page, no timestamps and no random ids, so the same invoice renders the same bytes however often it is asked for and a retry after a dropped connection costs a re-render and nothing else.  The invoice is read from the caller\'s own org, taken from the VALIDATED IAM owner claim and never from a client header, and the lookup is scoped at the storage layer — so an id belonging to another customer resolves to nothing and answers 404 rather than being found and then refused.
+     * @summary Download one invoice as a PDF
      * @param {BillingApiGetBillingInvoicesByIdPdfRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3026,8 +3303,20 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers the cards saved against your own account as masked descriptors: brand, last four, expiry and the processor\'s reusable reference. No card number and no security code exist here to return; both live at the processor and never enter this system. It is what a checkout prefills its payment step from.  The customer face of the list a service token reads at /v1/billing/portal/methods — same rows, different principal, no hop between them.  The subject filter is pinned to the VALIDATED caller before the handler runs, so the answer is your own account\'s cards whatever customerId the request carries, and another org\'s rows are outside the namespace entirely. A caller who is not signed in is refused before the read.
-     * @summary Your saved cards, masked — the customer read
+     * Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags. The sign is the posting\'s own meaning, read through ONE vocabulary shared with the ledger that wrote it — a reader with its own spelling for `deposit` rendered a customer\'s grant as a charge.  This is the closest projection of the truth. The org\'s double-entry postings are the source of record — balanced, only ever appended, one file per org — and this lane is that list, wider than either half of it: the deposits are the grants /v1/billing/credits lists and the debits are the spend /v1/billing/usage rolls up. It answers 503 where this deployment runs no ledger, rather than reporting an empty wallet.  A row whose timestamp will not parse is KEPT rather than dropped — a malformed date must show up in a money list, not vanish from it. `balanceCents` is omitted: these are MOVEMENTS, and the standing balance is /v1/billing/balance.  Cents are ROUNDED from the ledger\'s exact 18-decimal USD. Scoped to the caller\'s own org, where the org\'s ledger file is the tenant boundary; 401 without a validated principal.
+     * @summary Answers the org\'s own postings inside `range=`, each as a signed entry: a DEPOSIT CREDITS the wallet (positive, account `credits:<org>`) and every other posting DEBITS it (negative, account `usage:<org>`), described by its notes or its tags.
+     * @param {BillingApiGetBillingLedgerRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public getBillingLedger(requestParameters: BillingApiGetBillingLedgerRequest = {}, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingLedger(requestParameters.range, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers every payment method the caller has saved, newest first.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  A store that cannot be read answers an EMPTY LIST rather than a failure: the saved-cards panel renders empty instead of breaking the page around it.
+     * @summary Cards and accounts on file for the caller
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3037,8 +3326,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s payout records ordered by creation time descending, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs, so the list is the caller\'s own and cannot be widened. A request with no resolvable org gets an empty array rather than an error.
-     * @summary List your org\'s payouts, newest first
+     * Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.  A payout is ORG-scoped rather than subject-scoped, so there is nothing to pin beyond the tenant the caller already is, and no query can widen it.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers the org\'s outbound payouts, newest first — amount, destination, status, and the failure reason where one applies.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3048,8 +3337,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns every subscription tier a buyer can choose, each carrying the platform promo currently in effect, optionally narrowed with the category query. Prices come from the admin-editable plan authority in the database; the embedded catalog is only a loud-failing fallback, so a failed seed or a query error serves the known plans rather than a silently blank list. It is a catalog read, not an entitlement read — it says what may be bought, never what this caller has.
-     * @summary The public plan catalog, annotated with the active platform promotion
+     * Answers every plan on sale — its price, what it includes, and the limits it carries — optionally narrowed to one `?category=`.  The prices are what the CHECKOUT will charge: any active promotion is applied before they leave the store, so a reader never applies a discount a second time and a quote can never disagree with the sale.  It is the public catalog and needs no tenant: this is what anyone may buy.
+     * @summary The plan catalog, priced with whatever offer is in force
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3059,8 +3348,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers the org\'s saved payment methods as masked descriptors: brand, last four, expiry and the processor\'s reusable reference. No card number and no security code exist here to return; both live at the processor and never enter this system.  This is the SERVICE-TOKEN face of the same list a customer reads at /v1/billing/methods. Both are served here, in this process, and answer the same rows; they are two addresses because they admit two different principals, not because either forwards to the other.  The customer filter is pinned to the VALIDATED caller before the handler runs, so a browser sees only its own subject\'s cards whatever customerId it sends; only a caller holding the internal service token may name the subject, and the org it may name it within is fixed by the gateway. Cross-tenant is closed by the org namespace for both, so an id or a subject from another org resolves to nothing. A caller who is neither is refused before the read.
-     * @summary Cards saved against the caller\'s org, masked — the portal read
+     * Answers every payment method the caller has saved, newest first.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  A store that cannot be read answers an EMPTY LIST rather than a failure: the saved-cards panel renders empty instead of breaking the page around it.
+     * @summary Cards and accounts on file for the caller
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3070,8 +3359,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers the Square application id, location id, environment and live flag the browser\'s card iframe boots against — public values only, never a secret. Resolution lives in one place shared with the public tenant projection, so the card form can never initialize against a different Square application than the one commerce will actually charge. It deliberately does NOT hydrate credentials from KMS: the dialog blocks on this call, so it answers from the org and the deployment environment without a round trip, and an org with no per-org credentials gets the deployment\'s own public app id.
-     * @summary The public payment-provider config your card form needs to initialize
+     * Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.  It carries no secret: an application id is published to every checkout page by design. What matters is that it names the SAME processor account the charge will be made on, because a card vaulted against one account and charged against another is a card that saves and then cannot be used.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers the PUBLIC half of this org\'s processor configuration — the ids a browser needs to tokenize a card, and the environment it must tokenize against.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3081,8 +3370,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller org\'s subscriptions with a count, narrowable by userId or status, read from that org\'s own namespaced store. The org is the gateway-validated one and the caller\'s billing subject is pinned before the handler runs. A request with no resolvable org gets an empty list and a zero count rather than an error.
-     * @summary List your org\'s subscriptions
+     * Lists the plans the caller holds, with the count beside them.  It is scoped to the caller\'s own org, so a query cannot widen it to another customer\'s. An org on nothing is an empty list, not a refusal — being on no plan is an answer.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Lists the plans the caller holds, with the count beside them.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3092,8 +3381,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers one subject\'s resolved tier — name, display name, agent ceiling and allowed models — with the balance that admits their next metered call: prepaidAvailable, creditsRemaining, dailyRemaining and the effectiveAvailable those fold into. The ai router reads it per request to pick that caller\'s rate-limit tier. It sits on the org-resolving chain because a tier is org state, and the subject keys are pinned to the validated caller before the handler runs, so a browser read is always the caller\'s own; user is required, which only a service-to-service caller can omit and be refused 400 for. The tier is an upstream tier claim, or an explicit tier override, when either is present — that is the service-to-service contract — and is otherwise DERIVED from the org\'s active and trialing subscriptions, the highest one winning, its paid-ness read from the plan catalog by slug rather than from the subscription\'s own stored copy. The rule to get right is effectiveAvailable and not prepaidAvailable: granted credits spend too, credits first, so an account funded only by a grant reads zero prepaid while holding real spendable credit — and with the daily term zero on every tier there is no free allowance behind it, so a zero-balance account is gated. A subscription-store error answers 500 rather than downgrading to free, so a transient failure never reports a paid subscriber as unsubscribed.
-     * @summary The subject\'s plan tier and the balance a metered call is admitted on
+     * Answers which tier the caller is on, what it allows, and what is left to spend.  `effectiveAvailable` is the ONLY figure to compare against zero. The others are its parts — prepaid money, granted credits and the daily term are three sources of one spend, not three balances to add up a second time.  A tier that cannot be READ is an error, never Free. The router in front of the models maps any non-2xx to Free, so answering Free from a question nobody could answer would pin every paying customer to the most restrictive row with nothing anywhere to find.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers which tier the caller is on, what it allows, and what is left to spend.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3103,14 +3392,15 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Returns the caller\'s own ledger movements — every credit and debit against the subject the usage gate charges — newest first, with a count and the subject they belong to, so a customer can reconcile a bill against the acts that produced it. Paging is limit and offset, and the currency can be narrowed.  The subject is NOT the caller\'s to choose. The handler filters on a user parameter, and that parameter is overwritten with the caller\'s own billing subject before the handler runs — so naming another subject returns your own rows rather than theirs, and the read can never disagree with the wallet it describes. An unauthenticated call is 401 rather than 403, because a browser re-authenticates on the first and only reports the second. No movements is an empty list, not an error.
-     * @summary List the movements on your own balance, newest first
+     * Answers one page of the caller\'s own ledger, newest first: what moved, how much, when, and what it was tagged with.  `count` is the size of the WHOLE history rather than of the page, which is how a reader knows there is more to ask for, and `user` echoes the wallet the page was read for — the same subject the spend gate debits, so a customer can see which account answered rather than guessing from their own token.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers one page of the caller\'s own ledger, newest first: what moved, how much, when, and what it was tagged with.
+     * @param {BillingApiGetBillingTransactionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
      */
-    public getBillingTransactions(options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).getBillingTransactions(options).then((request) => request(this.axios, this.basePath));
+    public getBillingTransactions(requestParameters: BillingApiGetBillingTransactionsRequest = {}, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).getBillingTransactions(requestParameters.currency, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3136,8 +3426,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers the one read the account page renders: the subject\'s resolved plan, the plan\'s included monthly allotment beside what was actually granted this period, consumption capped at that grant, the overage past it, and the spendable wallet (balance minus holds) — all for the current UTC month, every figure derived from the same transactions the gateway\'s balance gate reads, so this read can never disagree with the gate that admits the next call. It rides the same pinned chain as the sibling reads: the user parameter is overwritten with the validated caller\'s own billing subject before the handler runs, so it can never name another tenant; user is required, which only a service-to-service caller can omit and be refused 400 for, and plan is optional — omitted, it is resolved from the subject\'s subscription. The rule to get right is that the two sides are DIFFERENT MONEY: the included figures are usage the subscription grants and the wallet is prepaid credit the customer bought, so a reader who sums them invents a balance nobody holds — and before the period\'s first allotment grant runs, monthlyCents shows the plan\'s entitlement while grantedCents is zero, which is the figure consumption actually draws down.
-     * @summary What plan you are on and how much of it is left, beside the wallet
+     * Answers the caller\'s month: what their plan includes, what has been consumed against it, and the wallet beside it.  The two blocks are SEPARATE monies and are never added. One is usage a plan granted; the other is prepaid credit bought with a card. Their sum is not a number anyone holds, and a reader that formed it would be inventing a balance.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers the caller\'s month: what their plan includes, what has been consumed against it, and the wallet beside it.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3147,8 +3437,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Answers the receiving bank details for the brand this deployment serves — the account the funds actually land in, hydrated per brand rather than hard-coded — together with the payment reference to put on the transfer.  THE REFERENCE IS THE POINT. It carries your own billing key, and it is how an arriving wire is attributed to your account; a transfer sent without it arrives as an unidentified receipt. That is why this read is gated at all: an unpinned caller would be handed an unattributable reference.  Reading it credits nothing and reserves nothing. A wire is settled by an operator when the bank shows the funds, so the balance moves on receipt, not on this call.
-     * @summary Where to wire funds, and the reference that credits them to you
+     * Answers where to send a wire top-up: the receiving bank details, with the caller\'s own payment reference.  The account is the SERVING BRAND\'S — resolved from the host the customer is paying on, so paying on one brand never shows another\'s bank — and the reference carries the caller\'s billing key, which is how an arriving wire names who it credits. Nothing mints here; a receipt is settled by an operator once the bank confirms it.  It is all-or-nothing: no configured account is 503 rather than a partial form, because nobody can wire to three fields out of five.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers where to send a wire top-up: the receiving bank details, with the caller\'s own payment reference.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3182,42 +3472,44 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Applies only the fields the body actually carries — title, threshold, project, service, enforce, softPct, rateLimitRpm — and leaves the rest as stored, answering the merged row with its current period spend. Requires an ORG ADMIN, a platform admin, or the internal service token, for the same reason creation does: a member who could edit the cap could raise it to nothing or drop it to a punitive floor. Ownership is checked per row and a cap the caller does not own is refused as 404, never 403, so the id space cannot be probed.
-     * @summary Change one of your org\'s spend caps
+     * Changes one spend cap: raise or lower the ceiling, flip enforcement, retune the rate limit.  Only the fields the body carries move. Every mutable field is optional, and an absent one is PRESERVED rather than reset — so a change that flips enforcement cannot silently wipe the threshold it enforces.  A cap belonging to another org is a 404, not a 403: a guessed id must not become an oracle for what anyone else holds.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Changes one spend cap: raise or lower the ceiling, flip enforcement, retune the rate limit.
      * @param {BillingApiPatchBillingAlertsByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
      */
     public patchBillingAlertsById(requestParameters: BillingApiPatchBillingAlertsByIdRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).patchBillingAlertsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+        return BillingApiFp(this.configuration).patchBillingAlertsById(requestParameters.id, requestParameters.alertPatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Creates a cap for the caller\'s own org and answers the stored row with its current period spend. A spend cap is a FINANCIAL SAFETY control, so writing one requires an ORG ADMIN, a platform admin, or the internal service token — a plain authenticated member is refused 403, because a member who could delete the cap could uncap the org\'s spend and a member who could set a one-cent enforcing cap could deny the whole org. The cap is always keyed to the caller\'s own billing subject: a userId in the body is overwritten, never honored, so a cap cannot be planted on another subject. At least one of a positive threshold or a positive rateLimitRpm is required, softPct must be within 0 to 100, and an org that has reached its row limit is refused 400.
-     * @summary Set a spend cap or rate limit on your org
+     * Opens a spend cap on the caller\'s own org.  At least one limit must mean something: a threshold above zero (a spend cap) or a requests-per-minute above zero (a rate limit). A row that bounds neither is refused rather than stored, because a ceiling nothing measures against is a ceiling a customer believes in and does not have.  The cap is keyed on the caller\'s own billing subject, resolved server-side — the SAME key the verdict looks it up under, which is what makes enforcement bind rather than merely record.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Opens a spend cap on the caller\'s own org.
+     * @param {BillingApiPostBillingAlertsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
      */
-    public postBillingAlerts(options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).postBillingAlerts(options).then((request) => request(this.axios, this.basePath));
+    public postBillingAlerts(requestParameters: BillingApiPostBillingAlertsRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingAlerts(requestParameters.alertSpec, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Mints a deposit address held by the MPC signer fleet — no single party holds the key — on the chain and token you name, and returns it with the intent that tracks it.  The account credited is the PINNED caller\'s, never a value in the body, so a deposit cannot be aimed at someone else\'s balance. A caller who already has an open intent gets that same address back rather than a new one, so reloading the page cannot spray keygens across the signer fleet.  NO BALANCE MOVES HERE. This hands out an address; the chain watcher credits the account when a real transfer confirms, which is also why an address handed out and never funded costs nothing and expires nothing.
-     * @summary Get a deposit address for a crypto top-up
+     * Issues a deposit address the caller can send crypto to, on the asset they ask for.  The address credits the CALLER\'S own wallet and nobody else\'s: the payer is the validated principal, never a body value. Asking again reuses the caller\'s open intent rather than minting a second address, so a refresh cannot spray key generations — and a payer who sent to the address they saw earlier is still credited.  No balance moves here. The chain watcher credits on real confirmations, so what comes back is an address and a status, not a receipt.  An asset this rail cannot mint on is 400 — ask for another. A rail that is shut for that asset is 503 — nothing sent now can be credited.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Issues a deposit address the caller can send crypto to, on the asset they ask for.
+     * @param {BillingApiPostBillingCryptoDepositRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
      */
-    public postBillingCryptoDeposit(options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).postBillingCryptoDeposit(options).then((request) => request(this.axios, this.basePath));
+    public postBillingCryptoDeposit(requestParameters: BillingApiPostBillingCryptoDepositRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingCryptoDeposit(requestParameters.cryptoAsset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Vaults the card the processor already holds — you send its one-time reference, never a card number — as a reusable card on file, and stores the billing address with it. That vaulted card is what a subscription renewal or an auto-recharge charges later, which is why saving one is the step that makes a monthly plan billable at all.  It charges nothing. Saving a card moves no money; the first charge is whatever arrangement you then attach it to.  The subject is pinned from the validated caller and OVERWRITES the customerId in the body while leaving the card fields untouched, so a card can only ever be attached to the caller\'s OWN account whatever the body claims. That pin is the whole control on this write, not decoration: this is the one handler in the family that reads its subject from the body.
-     * @summary Save a card for later charges
+     * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+     * @summary Save a card or account for the caller
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3227,19 +3519,20 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Flips the org\'s live flag, which is the single authority for both the payment environment and the ledger bucket its transactions land in. This is a money-MINT control, not a customer action: it is gated on the internal service token AND platform scope, so an ORG ADMIN CANNOT move their own org — otherwise a tenant could drop itself into sandbox and stop paying. The rule most callers get wrong is the default: an org that has never been flipped transacts in SANDBOX, which is why a production-credentialled deployment can still hand a buyer a sandbox card form. When the deployment pins the payment environment explicitly, that pin governs and this flag only marks the transactions.
-     * @summary Move an org between sandbox and live billing
+     * Moves this org between sandbox money and real money.  It decides whether a charge hits a real card, so it is the one posture change that is not self-service: the platform bar, never an org owner, because an org that could put itself in test mode could take priced work for free.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Moves this org between sandbox money and real money.
+     * @param {BillingApiPostBillingModeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
      */
-    public postBillingMode(options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).postBillingMode(options).then((request) => request(this.axios, this.basePath));
+    public postBillingMode(requestParameters: BillingApiPostBillingModeRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).postBillingMode(requestParameters.modeIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * The service-token twin of POST /v1/billing/methods: it vaults the processor\'s one-time reference as a reusable card on file for the named subject, with its billing address, and moves no money doing it.  It exists so an internal caller can complete the family it can already read and detach. The subject it may name is pinned to the org the gateway fixed, so the service token acts WITHIN one tenant and never across tenants; a caller holding no service token is refused before the write.
-     * @summary Save a card on a subject\'s behalf — the portal attach
+     * Vaults the instrument at the processor and stores the row.  A saved method is a card or account VAULTED at the processor: what is stored here is the processor\'s token for it plus the last four digits and the expiry a customer recognises it by, never a card number.  The list is the caller\'s OWN — the wallet this request bills from, resolved server-side — so a query cannot widen it to another customer of the same org.  `/v1/billing/portal/methods` answers the same list under the name a hosted checkout addresses it by. One set of rows, two spellings; a card added at either is present at both.  Saving a card ALREADY on file answers with the row that already holds it rather than stacking a duplicate — 200 for that, 201 for a genuinely new row, so a client can tell which happened. A card the processor declines is 402 and nothing is stored.
+     * @summary Save a card or account for the caller
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3249,8 +3542,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Walks every organization and, for those that enabled auto-recharge and whose available balance (balance minus holds) has fallen under their configured threshold, charges their default payment method off-session and credits the balance, answering a per-org result row for each one it touched. This is the platform cron\'s door, not a customer\'s: it is gated on the internal service token AND platform scope, so an org admin cannot run the fleet-wide sweep. An org above its threshold is skipped silently; an org with no default payment method is reported as an uncharged row with the reason rather than failing the whole run.
-     * @summary Platform sweep: top up every org whose balance has fallen below its own threshold
+     * Sweeps every organization and, for those with auto-recharge on whose available balance has dropped below their own threshold, charges the default card and credits the balance.  It charges cards across EVERY tenant, so it is platform authority only — never an org owner, who could otherwise sweep-charge saved cards estate-wide. Its caller is a schedule, not a person.  `orgs` is the population considered, not the row count: that difference is how a reader tells \'nobody was below threshold\' from \'the sweep never ran\'. One org\'s failure is reported in its own row and does not stop the rest.
+     * @summary Recharge every org that has fallen below its threshold
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3260,8 +3553,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Vaults the tokenized card as a reusable card-on-file, charges the first period, and creates the subscription — answering the subscription and invoice ids with the amount charged. The price is SERVER-AUTHORITATIVE: it is the plan\'s catalog price times billable seats and a client-supplied amount is never consulted, so a scripted request cannot underpay; a per-seat plan below its minimum seats is refused, and a free plan is refused outright because this address is the paid path. The card PAN never reaches this service — the browser tokenizes it and only the single-use nonce arrives here. The subject is the caller\'s own org, with an in-org user honored only inside that bound, and an idempotency key (or, absent one, the nonce itself) makes a retry replay the first result instead of charging twice.
-     * @summary Subscribe to a paid plan with a card, charged for the first period immediately
+     * Vaults the card (or reuses one already on file), charges the plan\'s FIRST period at the catalog price, and opens the subscription — one act, all of it server-side.  There is NO AMOUNT in the request. `level` picks which of the plan\'s published prices to buy at — an index, never a number — so what the card is charged is decided by the catalog and underpaying cannot be expressed.  A fresh sale answers 201 with the receipt. An identical retry answers 200 with the FIRST sale\'s body, byte for byte, so a client cannot read a replay as a second subscription having been opened. A caller already on a paid plan is 409 rather than charged again.
+     * @summary Buy a plan with a card
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3271,32 +3564,8 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Cancels the addressed subscription and answers its updated state, emitting the cancellation event the rest of the platform keys on. The default is to cancel AT PERIOD END — a body that fails to parse falls back to it — so the customer keeps what they paid for unless atPeriodEnd is explicitly false. The subscription is resolved inside the caller\'s own org namespace, so another tenant\'s id is a 404, and the write carries the browser anti-CSRF gate because it is reachable with an ambient cookie.
-     * @summary Cancel a subscription, at period end by default
-     * @param {BillingApiPostBillingSubscriptionsByIdCancelRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public postBillingSubscriptionsByIdCancel(requestParameters: BillingApiPostBillingSubscriptionsByIdCancelRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).postBillingSubscriptionsByIdCancel(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Clears the scheduled cancellation on the addressed subscription and answers its updated state. It is the inverse of cancel and applies to a subscription that is still within its period; one the engine will not reactivate is refused 400 with the reason. The subscription is resolved inside the caller\'s own org namespace, so another tenant\'s id reads as 404, and the write carries the browser anti-CSRF gate.
-     * @summary Undo a pending cancellation and keep the subscription running
-     * @param {BillingApiPostBillingSubscriptionsByIdReactivateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public postBillingSubscriptionsByIdReactivate(requestParameters: BillingApiPostBillingSubscriptionsByIdReactivateRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).postBillingSubscriptionsByIdReactivate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Charges a card the caller already has on file, named by paymentMethodId, and credits the caller\'s own balance — the SAVED-card twin of topup/token, sharing the one charge-and-credit core the auto-recharge cron runs on. The credit lands on the caller\'s OWN billing subject: the request body\'s subject field is pinned to the caller before the handler sees it, so a top-up can never be redirected to another subject or outside the caller\'s org. It is screened for risk before any money moves, exactly as the token path is, because both credit the SPENDABLE wallet. The rule most callers get wrong is that paymentMethodId is NOT covered by that subject pin — it is a card id, not a subject key — so it is checked separately, and a card belonging to any other subject answers 404 rather than 403: a permission error would confirm the id exists, which is an ownership oracle over other people\'s cards.
-     * @summary Add credit to your balance by charging one of your saved cards
+     * Charges a saved card and credits the caller\'s prepaid wallet.  The method must belong to the caller: one that does not is NOT FOUND rather than refused, so an id cannot be probed for existence. A saved row whose card is no longer chargeable is 422 — add the card again — which is a different thing to do than a decline (402) or a bad amount (400).  Retries behave exactly as they do for a token top-up: same key, same replay, same exactly-once at the processor.
+     * @summary Add funds with a card already on file
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
@@ -3306,26 +3575,14 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Charges the single-use card token for the given amount and credits the caller\'s own balance, answering the transaction id and the new balance — the one-time top-up path, with no payment method saved. The amount is bounded SERVER-SIDE (roughly a one dollar floor and a five thousand dollar ceiling by deployment policy) and the check runs before any money moves, because the browser cap is not a control against a scripted request. The credit lands on the caller\'s OWN billing subject — the same key the usage gate debits — and can never be redirected outside the caller\'s org. Retries are safe: an idempotency key, or absent one the amount within a short window, replays the first result, and if that guard store is unreachable the call is refused with 503 rather than risking a second real charge.
-     * @summary Add credit to your balance by charging a tokenized card once
+     * Charges a card token from the browser\'s payment SDK and credits the caller\'s prepaid wallet — the cold-customer path, where nothing has to be saved first.  The wallet credited is the CALLER\'S OWN, resolved from their signed identity. It is never a value in the request: a client-set selector is how a customer once topped up one account while their usage drew from another.  `X-Idempotency-Key` makes a retry safe. With one, a repeat replays the first result; without one, the same amount from the same subject inside a short window does too. The key reaches the processor as well as our own guard, so the charge is exactly-once at the gateway even if our guard store is down.  The amount is bounded server-side. A decline is 402 and nothing is credited.
+     * @summary Add funds with a single-use card token
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BillingApi
      */
     public postBillingTopupToken(options?: RawAxiosRequestConfig) {
         return BillingApiFp(this.configuration).postBillingTopupToken(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
-     * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
-     * @param {BillingApiPostBillingWebhooksByProviderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingApi
-     */
-    public postBillingWebhooksByProvider(requestParameters: BillingApiPostBillingWebhooksByProviderRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).postBillingWebhooksByProvider(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3337,7 +3594,19 @@ export class BillingApi extends BaseAPI {
      * @memberof BillingApi
      */
     public raiseInvoice(requestParameters: BillingApiRaiseInvoiceRequest, options?: RawAxiosRequestConfig) {
-        return BillingApiFp(this.configuration).raiseInvoice(requestParameters.raiseInvoiceIn, options).then((request) => request(this.axios, this.basePath));
+        return BillingApiFp(this.configuration).raiseInvoice(requestParameters.raiseIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Puts a canceled subscription back on its plan.  What asks for this is usually a recovered payment method or a support tool rather than a browser, which is most of the argument for it having an address at all. The engine decides whether the move is legal; a row it will not reactivate comes back with its own reason.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Put a canceled subscription back on its plan
+     * @param {BillingApiReactivateSubscriptionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingApi
+     */
+    public reactivateSubscription(requestParameters: BillingApiReactivateSubscriptionRequest, options?: RawAxiosRequestConfig) {
+        return BillingApiFp(this.configuration).reactivateSubscription(requestParameters.id, requestParameters.subscriptionRef, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

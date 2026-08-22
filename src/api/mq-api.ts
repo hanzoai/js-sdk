@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -58,10 +58,10 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMqStreamsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMqStreamByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteMqStreamsByName', 'name', name)
-            const localVarPath = `/v1/mq/streams/{name}`
+            assertParamExists('deleteMqStreamByName', 'name', name)
+            const localVarPath = `/v1/mq/stream/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -97,12 +97,12 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMqStreamsByNameMessagesBySeq: async (name: string, seq: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMqStreamByNameMessageBySeq: async (name: string, seq: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteMqStreamsByNameMessagesBySeq', 'name', name)
+            assertParamExists('deleteMqStreamByNameMessageBySeq', 'name', name)
             // verify required parameter 'seq' is not null or undefined
-            assertParamExists('deleteMqStreamsByNameMessagesBySeq', 'seq', seq)
-            const localVarPath = `/v1/mq/streams/{name}/messages/{seq}`
+            assertParamExists('deleteMqStreamByNameMessageBySeq', 'seq', seq)
+            const localVarPath = `/v1/mq/stream/{name}/message/{seq}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)))
                 .replace(`{${"seq"}}`, encodeURIComponent(String(seq)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -139,12 +139,12 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMqStreamsByStreamConsumersByName: async (stream: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteMqStreamByStreamConsumerByName: async (stream: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('deleteMqStreamsByStreamConsumersByName', 'stream', stream)
+            assertParamExists('deleteMqStreamByStreamConsumerByName', 'stream', stream)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteMqStreamsByStreamConsumersByName', 'name', name)
-            const localVarPath = `/v1/mq/streams/{stream}/consumers/{name}`
+            assertParamExists('deleteMqStreamByStreamConsumerByName', 'name', name)
+            const localVarPath = `/v1/mq/stream/{stream}/consumer/{name}`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -249,8 +249,8 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMqStreams: async (limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/mq/streams`;
+        getMqStream: async (limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/mq/stream`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -292,10 +292,10 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMqStreamsByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMqStreamByName: async (name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getMqStreamsByName', 'name', name)
-            const localVarPath = `/v1/mq/streams/{name}`
+            assertParamExists('getMqStreamByName', 'name', name)
+            const localVarPath = `/v1/mq/stream/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -334,10 +334,10 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMqStreamsByNameMessages: async (name: string, seq?: number, lastBySubject?: string, nextBySubject?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMqStreamByNameMessage: async (name: string, seq?: number, lastBySubject?: string, nextBySubject?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getMqStreamsByNameMessages', 'name', name)
-            const localVarPath = `/v1/mq/streams/{name}/messages`
+            assertParamExists('getMqStreamByNameMessage', 'name', name)
+            const localVarPath = `/v1/mq/stream/{name}/message`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -390,10 +390,10 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMqStreamsByStreamConsumers: async (stream: string, limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMqStreamByStreamConsumer: async (stream: string, limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('getMqStreamsByStreamConsumers', 'stream', stream)
-            const localVarPath = `/v1/mq/streams/{stream}/consumers`
+            assertParamExists('getMqStreamByStreamConsumer', 'stream', stream)
+            const localVarPath = `/v1/mq/stream/{stream}/consumer`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -437,12 +437,12 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMqStreamsByStreamConsumersByName: async (stream: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getMqStreamByStreamConsumerByName: async (stream: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('getMqStreamsByStreamConsumersByName', 'stream', stream)
+            assertParamExists('getMqStreamByStreamConsumerByName', 'stream', stream)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getMqStreamsByStreamConsumersByName', 'name', name)
-            const localVarPath = `/v1/mq/streams/{stream}/consumers/{name}`
+            assertParamExists('getMqStreamByStreamConsumerByName', 'name', name)
+            const localVarPath = `/v1/mq/stream/{stream}/consumer/{name}`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -478,10 +478,10 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMqStreams: async (config: Config, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMqStream: async (config: Config, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'config' is not null or undefined
-            assertParamExists('postMqStreams', 'config', config)
-            const localVarPath = `/v1/mq/streams`;
+            assertParamExists('postMqStream', 'config', config)
+            const localVarPath = `/v1/mq/stream`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -519,12 +519,12 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMqStreamsByNamePurge: async (name: string, purge: Purge, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMqStreamByNamePurge: async (name: string, purge: Purge, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postMqStreamsByNamePurge', 'name', name)
+            assertParamExists('postMqStreamByNamePurge', 'name', name)
             // verify required parameter 'purge' is not null or undefined
-            assertParamExists('postMqStreamsByNamePurge', 'purge', purge)
-            const localVarPath = `/v1/mq/streams/{name}/purge`
+            assertParamExists('postMqStreamByNamePurge', 'purge', purge)
+            const localVarPath = `/v1/mq/stream/{name}/purge`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -563,12 +563,12 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMqStreamsByStreamConsumers: async (stream: string, makeIn: MakeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMqStreamByStreamConsumer: async (stream: string, makeIn: MakeIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('postMqStreamsByStreamConsumers', 'stream', stream)
+            assertParamExists('postMqStreamByStreamConsumer', 'stream', stream)
             // verify required parameter 'makeIn' is not null or undefined
-            assertParamExists('postMqStreamsByStreamConsumers', 'makeIn', makeIn)
-            const localVarPath = `/v1/mq/streams/{stream}/consumers`
+            assertParamExists('postMqStreamByStreamConsumer', 'makeIn', makeIn)
+            const localVarPath = `/v1/mq/stream/{stream}/consumer`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -608,14 +608,14 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMqStreamsByStreamConsumersByNameNext: async (stream: string, name: string, nextIn: NextIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMqStreamByStreamConsumerByNameNext: async (stream: string, name: string, nextIn: NextIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stream' is not null or undefined
-            assertParamExists('postMqStreamsByStreamConsumersByNameNext', 'stream', stream)
+            assertParamExists('postMqStreamByStreamConsumerByNameNext', 'stream', stream)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('postMqStreamsByStreamConsumersByNameNext', 'name', name)
+            assertParamExists('postMqStreamByStreamConsumerByNameNext', 'name', name)
             // verify required parameter 'nextIn' is not null or undefined
-            assertParamExists('postMqStreamsByStreamConsumersByNameNext', 'nextIn', nextIn)
-            const localVarPath = `/v1/mq/streams/{stream}/consumers/{name}/next`
+            assertParamExists('postMqStreamByStreamConsumerByNameNext', 'nextIn', nextIn)
+            const localVarPath = `/v1/mq/stream/{stream}/consumer/{name}/next`
                 .replace(`{${"stream"}}`, encodeURIComponent(String(stream)))
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -655,12 +655,12 @@ export const MqApiAxiosParamCreator = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putMqStreamsByName: async (name: string, config: Config, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putMqStreamByName: async (name: string, config: Config, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('putMqStreamsByName', 'name', name)
+            assertParamExists('putMqStreamByName', 'name', name)
             // verify required parameter 'config' is not null or undefined
-            assertParamExists('putMqStreamsByName', 'config', config)
-            const localVarPath = `/v1/mq/streams/{name}`
+            assertParamExists('putMqStreamByName', 'config', config)
+            const localVarPath = `/v1/mq/stream/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -708,10 +708,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteMqStreamsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMqStreamsByName(name, options);
+        async deleteMqStreamByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMqStreamByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.deleteMqStreamsByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.deleteMqStreamByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -722,10 +722,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteMqStreamsByNameMessagesBySeq(name: string, seq: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMqStreamsByNameMessagesBySeq(name, seq, options);
+        async deleteMqStreamByNameMessageBySeq(name: string, seq: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMqStreamByNameMessageBySeq(name, seq, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.deleteMqStreamsByNameMessagesBySeq']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.deleteMqStreamByNameMessageBySeq']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -736,10 +736,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteMqStreamsByStreamConsumersByName(stream: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMqStreamsByStreamConsumersByName(stream, name, options);
+        async deleteMqStreamByStreamConsumerByName(stream: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMqStreamByStreamConsumerByName(stream, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.deleteMqStreamsByStreamConsumersByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.deleteMqStreamByStreamConsumerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -774,10 +774,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMqStreams(limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Streams>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMqStreams(limit, offset, options);
+        async getMqStream(limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Streams>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMqStream(limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.getMqStreams']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.getMqStream']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -787,10 +787,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMqStreamsByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Stream>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMqStreamsByName(name, options);
+        async getMqStreamByName(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Stream>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMqStreamByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.getMqStreamsByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.getMqStreamByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -804,10 +804,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMqStreamsByNameMessages(name: string, seq?: number, lastBySubject?: string, nextBySubject?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReadOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMqStreamsByNameMessages(name, seq, lastBySubject, nextBySubject, limit, options);
+        async getMqStreamByNameMessage(name: string, seq?: number, lastBySubject?: string, nextBySubject?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReadOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMqStreamByNameMessage(name, seq, lastBySubject, nextBySubject, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.getMqStreamsByNameMessages']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.getMqStreamByNameMessage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -819,10 +819,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMqStreamsByStreamConsumers(stream: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PickOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMqStreamsByStreamConsumers(stream, limit, offset, options);
+        async getMqStreamByStreamConsumer(stream: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PickOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMqStreamByStreamConsumer(stream, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.getMqStreamsByStreamConsumers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.getMqStreamByStreamConsumer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -833,10 +833,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMqStreamsByStreamConsumersByName(stream: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Consumer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMqStreamsByStreamConsumersByName(stream, name, options);
+        async getMqStreamByStreamConsumerByName(stream: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Consumer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMqStreamByStreamConsumerByName(stream, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.getMqStreamsByStreamConsumersByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.getMqStreamByStreamConsumerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -846,10 +846,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMqStreams(config: Config, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Stream>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMqStreams(config, options);
+        async postMqStream(config: Config, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Stream>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMqStream(config, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.postMqStreams']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.postMqStream']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -860,10 +860,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMqStreamsByNamePurge(name: string, purge: Purge, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PurgeOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMqStreamsByNamePurge(name, purge, options);
+        async postMqStreamByNamePurge(name: string, purge: Purge, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PurgeOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMqStreamByNamePurge(name, purge, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.postMqStreamsByNamePurge']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.postMqStreamByNamePurge']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -874,10 +874,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMqStreamsByStreamConsumers(stream: string, makeIn: MakeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Consumer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMqStreamsByStreamConsumers(stream, makeIn, options);
+        async postMqStreamByStreamConsumer(stream: string, makeIn: MakeIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Consumer>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMqStreamByStreamConsumer(stream, makeIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.postMqStreamsByStreamConsumers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.postMqStreamByStreamConsumer']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -889,10 +889,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMqStreamsByStreamConsumersByNameNext(stream: string, name: string, nextIn: NextIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReadOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMqStreamsByStreamConsumersByNameNext(stream, name, nextIn, options);
+        async postMqStreamByStreamConsumerByNameNext(stream: string, name: string, nextIn: NextIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReadOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMqStreamByStreamConsumerByNameNext(stream, name, nextIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.postMqStreamsByStreamConsumersByNameNext']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.postMqStreamByStreamConsumerByNameNext']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -903,10 +903,10 @@ export const MqApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putMqStreamsByName(name: string, config: Config, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Stream>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putMqStreamsByName(name, config, options);
+        async putMqStreamByName(name: string, config: Config, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Stream>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMqStreamByName(name, config, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['MqApi.putMqStreamsByName']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['MqApi.putMqStreamByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -922,32 +922,32 @@ export const MqApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * Removes a stream with all its messages and consumers. Irreversible.
          * @summary Removes a stream with all its messages and consumers.
-         * @param {MqApiDeleteMqStreamsByNameRequest} requestParameters Request parameters.
+         * @param {MqApiDeleteMqStreamByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMqStreamsByName(requestParameters: MqApiDeleteMqStreamsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteMqStreamsByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteMqStreamByName(requestParameters: MqApiDeleteMqStreamByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMqStreamByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Erases one message by sequence; the sequence gap remains.
          * @summary Erases one message by sequence; the sequence gap remains.
-         * @param {MqApiDeleteMqStreamsByNameMessagesBySeqRequest} requestParameters Request parameters.
+         * @param {MqApiDeleteMqStreamByNameMessageBySeqRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMqStreamsByNameMessagesBySeq(requestParameters: MqApiDeleteMqStreamsByNameMessagesBySeqRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteMqStreamsByNameMessagesBySeq(requestParameters.name, requestParameters.seq, options).then((request) => request(axios, basePath));
+        deleteMqStreamByNameMessageBySeq(requestParameters: MqApiDeleteMqStreamByNameMessageBySeqRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMqStreamByNameMessageBySeq(requestParameters.name, requestParameters.seq, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a consumer and its delivery state; unacknowledged messages stay in the stream.
          * @summary Removes a consumer and its delivery state; unacknowledged messages stay in the stream.
-         * @param {MqApiDeleteMqStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
+         * @param {MqApiDeleteMqStreamByStreamConsumerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteMqStreamsByStreamConsumersByName(requestParameters: MqApiDeleteMqStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteMqStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteMqStreamByStreamConsumerByName(requestParameters: MqApiDeleteMqStreamByStreamConsumerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteMqStreamByStreamConsumerByName(requestParameters.stream, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Reports whether the message plane behind this surface answers.
@@ -970,389 +970,389 @@ export const MqApiFactory = function (configuration?: Configuration, basePath?: 
         /**
          * Returns the org\'s streams, name-ordered, with their live state.
          * @summary Returns the org\'s streams, name-ordered, with their live state.
-         * @param {MqApiGetMqStreamsRequest} requestParameters Request parameters.
+         * @param {MqApiGetMqStreamRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMqStreams(requestParameters: MqApiGetMqStreamsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Streams> {
-            return localVarFp.getMqStreams(requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
+        getMqStream(requestParameters: MqApiGetMqStreamRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<Streams> {
+            return localVarFp.getMqStream(requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one stream\'s configuration and live state.
          * @summary Returns one stream\'s configuration and live state.
-         * @param {MqApiGetMqStreamsByNameRequest} requestParameters Request parameters.
+         * @param {MqApiGetMqStreamByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMqStreamsByName(requestParameters: MqApiGetMqStreamsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<Stream> {
-            return localVarFp.getMqStreamsByName(requestParameters.name, options).then((request) => request(axios, basePath));
+        getMqStreamByName(requestParameters: MqApiGetMqStreamByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<Stream> {
+            return localVarFp.getMqStreamByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Reads stored messages without a consumer: by sequence, by newest on a subject, or walking a subject forward from a sequence.
          * @summary Reads stored messages without a consumer: by sequence, by newest on a subject, or walking a subject forward from a sequence.
-         * @param {MqApiGetMqStreamsByNameMessagesRequest} requestParameters Request parameters.
+         * @param {MqApiGetMqStreamByNameMessageRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMqStreamsByNameMessages(requestParameters: MqApiGetMqStreamsByNameMessagesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReadOut> {
-            return localVarFp.getMqStreamsByNameMessages(requestParameters.name, requestParameters.seq, requestParameters.lastBySubject, requestParameters.nextBySubject, requestParameters.limit, options).then((request) => request(axios, basePath));
+        getMqStreamByNameMessage(requestParameters: MqApiGetMqStreamByNameMessageRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReadOut> {
+            return localVarFp.getMqStreamByNameMessage(requestParameters.name, requestParameters.seq, requestParameters.lastBySubject, requestParameters.nextBySubject, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a stream\'s consumers, name-ordered, with delivery state.
          * @summary Returns a stream\'s consumers, name-ordered, with delivery state.
-         * @param {MqApiGetMqStreamsByStreamConsumersRequest} requestParameters Request parameters.
+         * @param {MqApiGetMqStreamByStreamConsumerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMqStreamsByStreamConsumers(requestParameters: MqApiGetMqStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig): AxiosPromise<PickOut> {
-            return localVarFp.getMqStreamsByStreamConsumers(requestParameters.stream, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
+        getMqStreamByStreamConsumer(requestParameters: MqApiGetMqStreamByStreamConsumerRequest, options?: RawAxiosRequestConfig): AxiosPromise<PickOut> {
+            return localVarFp.getMqStreamByStreamConsumer(requestParameters.stream, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one consumer\'s configuration and delivery state.
          * @summary Returns one consumer\'s configuration and delivery state.
-         * @param {MqApiGetMqStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
+         * @param {MqApiGetMqStreamByStreamConsumerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMqStreamsByStreamConsumersByName(requestParameters: MqApiGetMqStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<Consumer> {
-            return localVarFp.getMqStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(axios, basePath));
+        getMqStreamByStreamConsumerByName(requestParameters: MqApiGetMqStreamByStreamConsumerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<Consumer> {
+            return localVarFp.getMqStreamByStreamConsumerByName(requestParameters.stream, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a durable stream in the org\'s namespace and returns it.
          * @summary Creates a durable stream in the org\'s namespace and returns it.
-         * @param {MqApiPostMqStreamsRequest} requestParameters Request parameters.
+         * @param {MqApiPostMqStreamRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMqStreams(requestParameters: MqApiPostMqStreamsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Stream> {
-            return localVarFp.postMqStreams(requestParameters.config, options).then((request) => request(axios, basePath));
+        postMqStream(requestParameters: MqApiPostMqStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<Stream> {
+            return localVarFp.postMqStream(requestParameters.config, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes messages from a stream, leaving its consumers in place.
          * @summary Removes messages from a stream, leaving its consumers in place.
-         * @param {MqApiPostMqStreamsByNamePurgeRequest} requestParameters Request parameters.
+         * @param {MqApiPostMqStreamByNamePurgeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMqStreamsByNamePurge(requestParameters: MqApiPostMqStreamsByNamePurgeRequest, options?: RawAxiosRequestConfig): AxiosPromise<PurgeOut> {
-            return localVarFp.postMqStreamsByNamePurge(requestParameters.name, requestParameters.purge, options).then((request) => request(axios, basePath));
+        postMqStreamByNamePurge(requestParameters: MqApiPostMqStreamByNamePurgeRequest, options?: RawAxiosRequestConfig): AxiosPromise<PurgeOut> {
+            return localVarFp.postMqStreamByNamePurge(requestParameters.name, requestParameters.purge, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a durable pull consumer on a stream and returns it.
          * @summary Creates a durable pull consumer on a stream and returns it.
-         * @param {MqApiPostMqStreamsByStreamConsumersRequest} requestParameters Request parameters.
+         * @param {MqApiPostMqStreamByStreamConsumerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMqStreamsByStreamConsumers(requestParameters: MqApiPostMqStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig): AxiosPromise<Consumer> {
-            return localVarFp.postMqStreamsByStreamConsumers(requestParameters.stream, requestParameters.makeIn, options).then((request) => request(axios, basePath));
+        postMqStreamByStreamConsumer(requestParameters: MqApiPostMqStreamByStreamConsumerRequest, options?: RawAxiosRequestConfig): AxiosPromise<Consumer> {
+            return localVarFp.postMqStreamByStreamConsumer(requestParameters.stream, requestParameters.makeIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Pulls the consumer\'s next batch. Delivered messages are acknowledged on delivery — the broker will not redeliver what this call returns; an empty wait answers 408.
          * @summary Pulls the consumer\'s next batch.
-         * @param {MqApiPostMqStreamsByStreamConsumersByNameNextRequest} requestParameters Request parameters.
+         * @param {MqApiPostMqStreamByStreamConsumerByNameNextRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMqStreamsByStreamConsumersByNameNext(requestParameters: MqApiPostMqStreamsByStreamConsumersByNameNextRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReadOut> {
-            return localVarFp.postMqStreamsByStreamConsumersByNameNext(requestParameters.stream, requestParameters.name, requestParameters.nextIn, options).then((request) => request(axios, basePath));
+        postMqStreamByStreamConsumerByNameNext(requestParameters: MqApiPostMqStreamByStreamConsumerByNameNextRequest, options?: RawAxiosRequestConfig): AxiosPromise<ReadOut> {
+            return localVarFp.postMqStreamByStreamConsumerByNameNext(requestParameters.stream, requestParameters.name, requestParameters.nextIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Reconfigures an existing stream; the path names the stream, and the immutable fields (storage, retention) must restate what they are.
          * @summary Reconfigures an existing stream; the path names the stream, and the immutable fields (storage, retention) must restate what they are.
-         * @param {MqApiPutMqStreamsByNameRequest} requestParameters Request parameters.
+         * @param {MqApiPutMqStreamByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putMqStreamsByName(requestParameters: MqApiPutMqStreamsByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<Stream> {
-            return localVarFp.putMqStreamsByName(requestParameters.name, requestParameters.config, options).then((request) => request(axios, basePath));
+        putMqStreamByName(requestParameters: MqApiPutMqStreamByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<Stream> {
+            return localVarFp.putMqStreamByName(requestParameters.name, requestParameters.config, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for deleteMqStreamsByName operation in MqApi.
+ * Request parameters for deleteMqStreamByName operation in MqApi.
  * @export
- * @interface MqApiDeleteMqStreamsByNameRequest
+ * @interface MqApiDeleteMqStreamByNameRequest
  */
-export interface MqApiDeleteMqStreamsByNameRequest {
+export interface MqApiDeleteMqStreamByNameRequest {
     /**
      * Name is the stream name, from the path.
      * @type {string}
-     * @memberof MqApiDeleteMqStreamsByName
+     * @memberof MqApiDeleteMqStreamByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for deleteMqStreamsByNameMessagesBySeq operation in MqApi.
+ * Request parameters for deleteMqStreamByNameMessageBySeq operation in MqApi.
  * @export
- * @interface MqApiDeleteMqStreamsByNameMessagesBySeqRequest
+ * @interface MqApiDeleteMqStreamByNameMessageBySeqRequest
  */
-export interface MqApiDeleteMqStreamsByNameMessagesBySeqRequest {
+export interface MqApiDeleteMqStreamByNameMessageBySeqRequest {
     /**
      * Name is the stream name, from the path.
      * @type {string}
-     * @memberof MqApiDeleteMqStreamsByNameMessagesBySeq
+     * @memberof MqApiDeleteMqStreamByNameMessageBySeq
      */
     readonly name: string
 
     /**
      * Seq is the message\&#39;s stream sequence, from the path.
      * @type {number}
-     * @memberof MqApiDeleteMqStreamsByNameMessagesBySeq
+     * @memberof MqApiDeleteMqStreamByNameMessageBySeq
      */
     readonly seq: number
 }
 
 /**
- * Request parameters for deleteMqStreamsByStreamConsumersByName operation in MqApi.
+ * Request parameters for deleteMqStreamByStreamConsumerByName operation in MqApi.
  * @export
- * @interface MqApiDeleteMqStreamsByStreamConsumersByNameRequest
+ * @interface MqApiDeleteMqStreamByStreamConsumerByNameRequest
  */
-export interface MqApiDeleteMqStreamsByStreamConsumersByNameRequest {
+export interface MqApiDeleteMqStreamByStreamConsumerByNameRequest {
     /**
      * Stream is the stream name, from the path.
      * @type {string}
-     * @memberof MqApiDeleteMqStreamsByStreamConsumersByName
+     * @memberof MqApiDeleteMqStreamByStreamConsumerByName
      */
     readonly stream: string
 
     /**
      * Name is the consumer name, from the path.
      * @type {string}
-     * @memberof MqApiDeleteMqStreamsByStreamConsumersByName
+     * @memberof MqApiDeleteMqStreamByStreamConsumerByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getMqStreams operation in MqApi.
+ * Request parameters for getMqStream operation in MqApi.
  * @export
- * @interface MqApiGetMqStreamsRequest
+ * @interface MqApiGetMqStreamRequest
  */
-export interface MqApiGetMqStreamsRequest {
+export interface MqApiGetMqStreamRequest {
     /**
      * Limit caps the streams returned (1–1000, default 100).
      * @type {number}
-     * @memberof MqApiGetMqStreams
+     * @memberof MqApiGetMqStream
      */
     readonly limit?: number
 
     /**
      * Offset skips that many streams, name-ordered.
      * @type {number}
-     * @memberof MqApiGetMqStreams
+     * @memberof MqApiGetMqStream
      */
     readonly offset?: number
 }
 
 /**
- * Request parameters for getMqStreamsByName operation in MqApi.
+ * Request parameters for getMqStreamByName operation in MqApi.
  * @export
- * @interface MqApiGetMqStreamsByNameRequest
+ * @interface MqApiGetMqStreamByNameRequest
  */
-export interface MqApiGetMqStreamsByNameRequest {
+export interface MqApiGetMqStreamByNameRequest {
     /**
      * Name is the stream name, from the path.
      * @type {string}
-     * @memberof MqApiGetMqStreamsByName
+     * @memberof MqApiGetMqStreamByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for getMqStreamsByNameMessages operation in MqApi.
+ * Request parameters for getMqStreamByNameMessage operation in MqApi.
  * @export
- * @interface MqApiGetMqStreamsByNameMessagesRequest
+ * @interface MqApiGetMqStreamByNameMessageRequest
  */
-export interface MqApiGetMqStreamsByNameMessagesRequest {
+export interface MqApiGetMqStreamByNameMessageRequest {
     /**
      * Name is the stream name, from the path.
      * @type {string}
-     * @memberof MqApiGetMqStreamsByNameMessages
+     * @memberof MqApiGetMqStreamByNameMessage
      */
     readonly name: string
 
     /**
      * Seq reads the message at this sequence (with next_by_subject: the walk\&#39;s start).
      * @type {number}
-     * @memberof MqApiGetMqStreamsByNameMessages
+     * @memberof MqApiGetMqStreamByNameMessage
      */
     readonly seq?: number
 
     /**
      * LastBySubject reads the newest message on this org-relative subject.
      * @type {string}
-     * @memberof MqApiGetMqStreamsByNameMessages
+     * @memberof MqApiGetMqStreamByNameMessage
      */
     readonly lastBySubject?: string
 
     /**
      * NextBySubject walks forward from seq collecting messages on this org-relative subject (wildcards supported).
      * @type {string}
-     * @memberof MqApiGetMqStreamsByNameMessages
+     * @memberof MqApiGetMqStreamByNameMessage
      */
     readonly nextBySubject?: string
 
     /**
      * Limit caps a next_by_subject walk (1–1000, default 100).
      * @type {number}
-     * @memberof MqApiGetMqStreamsByNameMessages
+     * @memberof MqApiGetMqStreamByNameMessage
      */
     readonly limit?: number
 }
 
 /**
- * Request parameters for getMqStreamsByStreamConsumers operation in MqApi.
+ * Request parameters for getMqStreamByStreamConsumer operation in MqApi.
  * @export
- * @interface MqApiGetMqStreamsByStreamConsumersRequest
+ * @interface MqApiGetMqStreamByStreamConsumerRequest
  */
-export interface MqApiGetMqStreamsByStreamConsumersRequest {
+export interface MqApiGetMqStreamByStreamConsumerRequest {
     /**
      * Stream is the stream name, from the path.
      * @type {string}
-     * @memberof MqApiGetMqStreamsByStreamConsumers
+     * @memberof MqApiGetMqStreamByStreamConsumer
      */
     readonly stream: string
 
     /**
      * Limit caps the consumers returned (1–1000, default 100).
      * @type {number}
-     * @memberof MqApiGetMqStreamsByStreamConsumers
+     * @memberof MqApiGetMqStreamByStreamConsumer
      */
     readonly limit?: number
 
     /**
      * Offset skips that many consumers, name-ordered.
      * @type {number}
-     * @memberof MqApiGetMqStreamsByStreamConsumers
+     * @memberof MqApiGetMqStreamByStreamConsumer
      */
     readonly offset?: number
 }
 
 /**
- * Request parameters for getMqStreamsByStreamConsumersByName operation in MqApi.
+ * Request parameters for getMqStreamByStreamConsumerByName operation in MqApi.
  * @export
- * @interface MqApiGetMqStreamsByStreamConsumersByNameRequest
+ * @interface MqApiGetMqStreamByStreamConsumerByNameRequest
  */
-export interface MqApiGetMqStreamsByStreamConsumersByNameRequest {
+export interface MqApiGetMqStreamByStreamConsumerByNameRequest {
     /**
      * Stream is the stream name, from the path.
      * @type {string}
-     * @memberof MqApiGetMqStreamsByStreamConsumersByName
+     * @memberof MqApiGetMqStreamByStreamConsumerByName
      */
     readonly stream: string
 
     /**
      * Name is the consumer name, from the path.
      * @type {string}
-     * @memberof MqApiGetMqStreamsByStreamConsumersByName
+     * @memberof MqApiGetMqStreamByStreamConsumerByName
      */
     readonly name: string
 }
 
 /**
- * Request parameters for postMqStreams operation in MqApi.
+ * Request parameters for postMqStream operation in MqApi.
  * @export
- * @interface MqApiPostMqStreamsRequest
+ * @interface MqApiPostMqStreamRequest
  */
-export interface MqApiPostMqStreamsRequest {
+export interface MqApiPostMqStreamRequest {
     /**
      * 
      * @type {Config}
-     * @memberof MqApiPostMqStreams
+     * @memberof MqApiPostMqStream
      */
     readonly config: Config
 }
 
 /**
- * Request parameters for postMqStreamsByNamePurge operation in MqApi.
+ * Request parameters for postMqStreamByNamePurge operation in MqApi.
  * @export
- * @interface MqApiPostMqStreamsByNamePurgeRequest
+ * @interface MqApiPostMqStreamByNamePurgeRequest
  */
-export interface MqApiPostMqStreamsByNamePurgeRequest {
+export interface MqApiPostMqStreamByNamePurgeRequest {
     /**
      * Name is the stream name, from the path.
      * @type {string}
-     * @memberof MqApiPostMqStreamsByNamePurge
+     * @memberof MqApiPostMqStreamByNamePurge
      */
     readonly name: string
 
     /**
      * 
      * @type {Purge}
-     * @memberof MqApiPostMqStreamsByNamePurge
+     * @memberof MqApiPostMqStreamByNamePurge
      */
     readonly purge: Purge
 }
 
 /**
- * Request parameters for postMqStreamsByStreamConsumers operation in MqApi.
+ * Request parameters for postMqStreamByStreamConsumer operation in MqApi.
  * @export
- * @interface MqApiPostMqStreamsByStreamConsumersRequest
+ * @interface MqApiPostMqStreamByStreamConsumerRequest
  */
-export interface MqApiPostMqStreamsByStreamConsumersRequest {
+export interface MqApiPostMqStreamByStreamConsumerRequest {
     /**
      * Stream is the stream name, from the path.
      * @type {string}
-     * @memberof MqApiPostMqStreamsByStreamConsumers
+     * @memberof MqApiPostMqStreamByStreamConsumer
      */
     readonly stream: string
 
     /**
      * 
      * @type {MakeIn}
-     * @memberof MqApiPostMqStreamsByStreamConsumers
+     * @memberof MqApiPostMqStreamByStreamConsumer
      */
     readonly makeIn: MakeIn
 }
 
 /**
- * Request parameters for postMqStreamsByStreamConsumersByNameNext operation in MqApi.
+ * Request parameters for postMqStreamByStreamConsumerByNameNext operation in MqApi.
  * @export
- * @interface MqApiPostMqStreamsByStreamConsumersByNameNextRequest
+ * @interface MqApiPostMqStreamByStreamConsumerByNameNextRequest
  */
-export interface MqApiPostMqStreamsByStreamConsumersByNameNextRequest {
+export interface MqApiPostMqStreamByStreamConsumerByNameNextRequest {
     /**
      * Stream is the stream name, from the path.
      * @type {string}
-     * @memberof MqApiPostMqStreamsByStreamConsumersByNameNext
+     * @memberof MqApiPostMqStreamByStreamConsumerByNameNext
      */
     readonly stream: string
 
     /**
      * Name is the consumer name, from the path.
      * @type {string}
-     * @memberof MqApiPostMqStreamsByStreamConsumersByNameNext
+     * @memberof MqApiPostMqStreamByStreamConsumerByNameNext
      */
     readonly name: string
 
     /**
      * 
      * @type {NextIn}
-     * @memberof MqApiPostMqStreamsByStreamConsumersByNameNext
+     * @memberof MqApiPostMqStreamByStreamConsumerByNameNext
      */
     readonly nextIn: NextIn
 }
 
 /**
- * Request parameters for putMqStreamsByName operation in MqApi.
+ * Request parameters for putMqStreamByName operation in MqApi.
  * @export
- * @interface MqApiPutMqStreamsByNameRequest
+ * @interface MqApiPutMqStreamByNameRequest
  */
-export interface MqApiPutMqStreamsByNameRequest {
+export interface MqApiPutMqStreamByNameRequest {
     /**
      * Name is the stream name, unique within the org (alphanumeric, hyphens, underscores).
      * @type {string}
-     * @memberof MqApiPutMqStreamsByName
+     * @memberof MqApiPutMqStreamByName
      */
     readonly name: string
 
     /**
      * 
      * @type {Config}
-     * @memberof MqApiPutMqStreamsByName
+     * @memberof MqApiPutMqStreamByName
      */
     readonly config: Config
 }
@@ -1367,37 +1367,37 @@ export class MqApi extends BaseAPI {
     /**
      * Removes a stream with all its messages and consumers. Irreversible.
      * @summary Removes a stream with all its messages and consumers.
-     * @param {MqApiDeleteMqStreamsByNameRequest} requestParameters Request parameters.
+     * @param {MqApiDeleteMqStreamByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public deleteMqStreamsByName(requestParameters: MqApiDeleteMqStreamsByNameRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).deleteMqStreamsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteMqStreamByName(requestParameters: MqApiDeleteMqStreamByNameRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).deleteMqStreamByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Erases one message by sequence; the sequence gap remains.
      * @summary Erases one message by sequence; the sequence gap remains.
-     * @param {MqApiDeleteMqStreamsByNameMessagesBySeqRequest} requestParameters Request parameters.
+     * @param {MqApiDeleteMqStreamByNameMessageBySeqRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public deleteMqStreamsByNameMessagesBySeq(requestParameters: MqApiDeleteMqStreamsByNameMessagesBySeqRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).deleteMqStreamsByNameMessagesBySeq(requestParameters.name, requestParameters.seq, options).then((request) => request(this.axios, this.basePath));
+    public deleteMqStreamByNameMessageBySeq(requestParameters: MqApiDeleteMqStreamByNameMessageBySeqRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).deleteMqStreamByNameMessageBySeq(requestParameters.name, requestParameters.seq, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes a consumer and its delivery state; unacknowledged messages stay in the stream.
      * @summary Removes a consumer and its delivery state; unacknowledged messages stay in the stream.
-     * @param {MqApiDeleteMqStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
+     * @param {MqApiDeleteMqStreamByStreamConsumerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public deleteMqStreamsByStreamConsumersByName(requestParameters: MqApiDeleteMqStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).deleteMqStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteMqStreamByStreamConsumerByName(requestParameters: MqApiDeleteMqStreamByStreamConsumerByNameRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).deleteMqStreamByStreamConsumerByName(requestParameters.stream, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1425,121 +1425,121 @@ export class MqApi extends BaseAPI {
     /**
      * Returns the org\'s streams, name-ordered, with their live state.
      * @summary Returns the org\'s streams, name-ordered, with their live state.
-     * @param {MqApiGetMqStreamsRequest} requestParameters Request parameters.
+     * @param {MqApiGetMqStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public getMqStreams(requestParameters: MqApiGetMqStreamsRequest = {}, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).getMqStreams(requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
+    public getMqStream(requestParameters: MqApiGetMqStreamRequest = {}, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).getMqStream(requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one stream\'s configuration and live state.
      * @summary Returns one stream\'s configuration and live state.
-     * @param {MqApiGetMqStreamsByNameRequest} requestParameters Request parameters.
+     * @param {MqApiGetMqStreamByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public getMqStreamsByName(requestParameters: MqApiGetMqStreamsByNameRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).getMqStreamsByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getMqStreamByName(requestParameters: MqApiGetMqStreamByNameRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).getMqStreamByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reads stored messages without a consumer: by sequence, by newest on a subject, or walking a subject forward from a sequence.
      * @summary Reads stored messages without a consumer: by sequence, by newest on a subject, or walking a subject forward from a sequence.
-     * @param {MqApiGetMqStreamsByNameMessagesRequest} requestParameters Request parameters.
+     * @param {MqApiGetMqStreamByNameMessageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public getMqStreamsByNameMessages(requestParameters: MqApiGetMqStreamsByNameMessagesRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).getMqStreamsByNameMessages(requestParameters.name, requestParameters.seq, requestParameters.lastBySubject, requestParameters.nextBySubject, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    public getMqStreamByNameMessage(requestParameters: MqApiGetMqStreamByNameMessageRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).getMqStreamByNameMessage(requestParameters.name, requestParameters.seq, requestParameters.lastBySubject, requestParameters.nextBySubject, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns a stream\'s consumers, name-ordered, with delivery state.
      * @summary Returns a stream\'s consumers, name-ordered, with delivery state.
-     * @param {MqApiGetMqStreamsByStreamConsumersRequest} requestParameters Request parameters.
+     * @param {MqApiGetMqStreamByStreamConsumerRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public getMqStreamsByStreamConsumers(requestParameters: MqApiGetMqStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).getMqStreamsByStreamConsumers(requestParameters.stream, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
+    public getMqStreamByStreamConsumer(requestParameters: MqApiGetMqStreamByStreamConsumerRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).getMqStreamByStreamConsumer(requestParameters.stream, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one consumer\'s configuration and delivery state.
      * @summary Returns one consumer\'s configuration and delivery state.
-     * @param {MqApiGetMqStreamsByStreamConsumersByNameRequest} requestParameters Request parameters.
+     * @param {MqApiGetMqStreamByStreamConsumerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public getMqStreamsByStreamConsumersByName(requestParameters: MqApiGetMqStreamsByStreamConsumersByNameRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).getMqStreamsByStreamConsumersByName(requestParameters.stream, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getMqStreamByStreamConsumerByName(requestParameters: MqApiGetMqStreamByStreamConsumerByNameRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).getMqStreamByStreamConsumerByName(requestParameters.stream, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a durable stream in the org\'s namespace and returns it.
      * @summary Creates a durable stream in the org\'s namespace and returns it.
-     * @param {MqApiPostMqStreamsRequest} requestParameters Request parameters.
+     * @param {MqApiPostMqStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public postMqStreams(requestParameters: MqApiPostMqStreamsRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).postMqStreams(requestParameters.config, options).then((request) => request(this.axios, this.basePath));
+    public postMqStream(requestParameters: MqApiPostMqStreamRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).postMqStream(requestParameters.config, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Removes messages from a stream, leaving its consumers in place.
      * @summary Removes messages from a stream, leaving its consumers in place.
-     * @param {MqApiPostMqStreamsByNamePurgeRequest} requestParameters Request parameters.
+     * @param {MqApiPostMqStreamByNamePurgeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public postMqStreamsByNamePurge(requestParameters: MqApiPostMqStreamsByNamePurgeRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).postMqStreamsByNamePurge(requestParameters.name, requestParameters.purge, options).then((request) => request(this.axios, this.basePath));
+    public postMqStreamByNamePurge(requestParameters: MqApiPostMqStreamByNamePurgeRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).postMqStreamByNamePurge(requestParameters.name, requestParameters.purge, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a durable pull consumer on a stream and returns it.
      * @summary Creates a durable pull consumer on a stream and returns it.
-     * @param {MqApiPostMqStreamsByStreamConsumersRequest} requestParameters Request parameters.
+     * @param {MqApiPostMqStreamByStreamConsumerRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public postMqStreamsByStreamConsumers(requestParameters: MqApiPostMqStreamsByStreamConsumersRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).postMqStreamsByStreamConsumers(requestParameters.stream, requestParameters.makeIn, options).then((request) => request(this.axios, this.basePath));
+    public postMqStreamByStreamConsumer(requestParameters: MqApiPostMqStreamByStreamConsumerRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).postMqStreamByStreamConsumer(requestParameters.stream, requestParameters.makeIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Pulls the consumer\'s next batch. Delivered messages are acknowledged on delivery — the broker will not redeliver what this call returns; an empty wait answers 408.
      * @summary Pulls the consumer\'s next batch.
-     * @param {MqApiPostMqStreamsByStreamConsumersByNameNextRequest} requestParameters Request parameters.
+     * @param {MqApiPostMqStreamByStreamConsumerByNameNextRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public postMqStreamsByStreamConsumersByNameNext(requestParameters: MqApiPostMqStreamsByStreamConsumersByNameNextRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).postMqStreamsByStreamConsumersByNameNext(requestParameters.stream, requestParameters.name, requestParameters.nextIn, options).then((request) => request(this.axios, this.basePath));
+    public postMqStreamByStreamConsumerByNameNext(requestParameters: MqApiPostMqStreamByStreamConsumerByNameNextRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).postMqStreamByStreamConsumerByNameNext(requestParameters.stream, requestParameters.name, requestParameters.nextIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Reconfigures an existing stream; the path names the stream, and the immutable fields (storage, retention) must restate what they are.
      * @summary Reconfigures an existing stream; the path names the stream, and the immutable fields (storage, retention) must restate what they are.
-     * @param {MqApiPutMqStreamsByNameRequest} requestParameters Request parameters.
+     * @param {MqApiPutMqStreamByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MqApi
      */
-    public putMqStreamsByName(requestParameters: MqApiPutMqStreamsByNameRequest, options?: RawAxiosRequestConfig) {
-        return MqApiFp(this.configuration).putMqStreamsByName(requestParameters.name, requestParameters.config, options).then((request) => request(this.axios, this.basePath));
+    public putMqStreamByName(requestParameters: MqApiPutMqStreamByNameRequest, options?: RawAxiosRequestConfig) {
+        return MqApiFp(this.configuration).putMqStreamByName(requestParameters.name, requestParameters.config, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

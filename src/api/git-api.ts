@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -244,6 +244,40 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Browse your org\'s repositories
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGit: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/git`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
@@ -290,6 +324,90 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Open a repository\'s home page
+         * @param {string} org 
+         * @param {string} repo 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitByOrgByRepo: async (org: string, repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'org' is not null or undefined
+            assertParamExists('getGitByOrgByRepo', 'org', org)
+            // verify required parameter 'repo' is not null or undefined
+            assertParamExists('getGitByOrgByRepo', 'repo', repo)
+            const localVarPath = `/v1/git/{org}/{repo}`
+                .replace(`{${"org"}}`, encodeURIComponent(String(org)))
+                .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Read a repository\'s commit log
+         * @param {string} org 
+         * @param {string} repo 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitByOrgByRepoCommits: async (org: string, repo: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'org' is not null or undefined
+            assertParamExists('getGitByOrgByRepoCommits', 'org', org)
+            // verify required parameter 'repo' is not null or undefined
+            assertParamExists('getGitByOrgByRepoCommits', 'repo', repo)
+            const localVarPath = `/v1/git/{org}/{repo}/commits`
+                .replace(`{${"org"}}`, encodeURIComponent(String(org)))
+                .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
@@ -305,6 +423,40 @@ export const GitApiAxiosParamCreator = function (configuration?: Configuration) 
             const localVarPath = `/v1/git/{org}/{repo}/info/refs`
                 .replace(`{${"org"}}`, encodeURIComponent(String(org)))
                 .replace(`{${"repo"}}`, encodeURIComponent(String(repo)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Discover public repositories across every org
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitExplore: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/git/explore`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1807,6 +1959,18 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Browse your org\'s repositories
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGit(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGit(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGit']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
@@ -1822,6 +1986,34 @@ export const GitApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Open a repository\'s home page
+         * @param {string} org 
+         * @param {string} repo 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitByOrgByRepo(org: string, repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitByOrgByRepo(org, repo, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitByOrgByRepo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Read a repository\'s commit log
+         * @param {string} org 
+         * @param {string} repo 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitByOrgByRepoCommits(org: string, repo: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitByOrgByRepoCommits(org, repo, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitByOrgByRepoCommits']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Advertise a repository\'s refs to a git client
          * @param {string} org 
@@ -1833,6 +2025,18 @@ export const GitApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGitByOrgByRepoInfoRefs(org, repo, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GitApi.getGitByOrgByRepoInfoRefs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Discover public repositories across every org
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGitExplore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGitExplore(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GitApi.getGitExplore']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2351,6 +2555,15 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.deleteGitReposByNameSubscriptionsById(requestParameters.name, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Browse your org\'s repositories
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGit(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getGit(options).then((request) => request(axios, basePath));
+        },
+        /**
          * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Advertise a repository\'s refs to a git client
          * @param {GitApiGetGitByOrgByProjectByRepoInfoRefsRequest} requestParameters Request parameters.
@@ -2361,6 +2574,26 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getGitByOrgByProjectByRepoInfoRefs(requestParameters.org, requestParameters.project, requestParameters.repo, options).then((request) => request(axios, basePath));
         },
         /**
+         * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Open a repository\'s home page
+         * @param {GitApiGetGitByOrgByRepoRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitByOrgByRepo(requestParameters: GitApiGetGitByOrgByRepoRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getGitByOrgByRepo(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Read a repository\'s commit log
+         * @param {GitApiGetGitByOrgByRepoCommitsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitByOrgByRepoCommits(requestParameters: GitApiGetGitByOrgByRepoCommitsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getGitByOrgByRepoCommits(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
+        },
+        /**
          * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
          * @summary Advertise a repository\'s refs to a git client
          * @param {GitApiGetGitByOrgByRepoInfoRefsRequest} requestParameters Request parameters.
@@ -2369,6 +2602,15 @@ export const GitApiFactory = function (configuration?: Configuration, basePath?:
          */
         getGitByOrgByRepoInfoRefs(requestParameters: GitApiGetGitByOrgByRepoInfoRefsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getGitByOrgByRepoInfoRefs(requestParameters.org, requestParameters.repo, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+         * @summary Discover public repositories across every org
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGitExplore(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getGitExplore(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the SSH public keys registered to the caller\'s org — the keys that authenticate `git clone git@<host>:<org>/<repo>.git`. Keys are org-scoped on read even though the fingerprint index is global, so one org never sees another\'s.
@@ -2801,6 +3043,48 @@ export interface GitApiGetGitByOrgByProjectByRepoInfoRefsRequest {
      * 
      * @type {string}
      * @memberof GitApiGetGitByOrgByProjectByRepoInfoRefs
+     */
+    readonly repo: string
+}
+
+/**
+ * Request parameters for getGitByOrgByRepo operation in GitApi.
+ * @export
+ * @interface GitApiGetGitByOrgByRepoRequest
+ */
+export interface GitApiGetGitByOrgByRepoRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiGetGitByOrgByRepo
+     */
+    readonly org: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiGetGitByOrgByRepo
+     */
+    readonly repo: string
+}
+
+/**
+ * Request parameters for getGitByOrgByRepoCommits operation in GitApi.
+ * @export
+ * @interface GitApiGetGitByOrgByRepoCommitsRequest
+ */
+export interface GitApiGetGitByOrgByRepoCommitsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiGetGitByOrgByRepoCommits
+     */
+    readonly org: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof GitApiGetGitByOrgByRepoCommits
      */
     readonly repo: string
 }
@@ -3477,6 +3761,17 @@ export class GitApi extends BaseAPI {
     }
 
     /**
+     * The repository list for the signed-in caller\'s org — each repo with its description, default branch, size and last update. SIGNED OUT it renders the public explore page instead of refusing, because most Hanzo repos are open source and the open face is the default one; signed in, the caller\'s own org shows its private repositories alongside its public ones. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+     * @summary Browse your org\'s repositories
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGit(options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGit(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, with the PROJECT as a middle path segment: project scope otherwise rides a header a git client cannot send, so this path is the only usable remote for a project-scoped repository. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
      * @summary Advertise a repository\'s refs to a git client
      * @param {GitApiGetGitByOrgByProjectByRepoInfoRefsRequest} requestParameters Request parameters.
@@ -3489,6 +3784,30 @@ export class GitApi extends BaseAPI {
     }
 
     /**
+     * A repository at a glance: its branches, the tree at the tip, its most recent commits, its README rendered, and the HTTPS and SSH clone URLs. `?ref=` selects a branch, tag or commit; the default branch is used when it is omitted. A repository with no commits yet renders its clone instructions rather than an error, which is what a caller who has just created one needs to see. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+     * @summary Open a repository\'s home page
+     * @param {GitApiGetGitByOrgByRepoRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitByOrgByRepo(requestParameters: GitApiGetGitByOrgByRepoRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitByOrgByRepo(requestParameters.org, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The hundred most recent commits on one ref, each with its author, message and date. `?ref=` selects the branch, tag or commit, defaulting to the repository\'s default branch; an unknown one is 404. A public repository is readable by anyone; a private one only by its own org. A repository that does not exist and one belonging to another org answer the SAME 404, so the page is never an existence oracle. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+     * @summary Read a repository\'s commit log
+     * @param {GitApiGetGitByOrgByRepoCommitsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitByOrgByRepoCommits(requestParameters: GitApiGetGitByOrgByRepoCommitsRequest, options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitByOrgByRepoCommits(requestParameters.org, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * The ref-advertisement phase of git\'s smart-HTTP protocol — the first request a clone, a fetch and a push all make. `?service=` selects which: `git-upload-pack` advertises for a fetch, `git-receive-pack` for a push, and any other value is 400.  ANONYMOUS ONLY FOR FETCH, AND ONLY ON A PUBLIC REPOSITORY. The push advertisement always requires an authenticated org, and where a path org is present it must equal the authenticated one. A private repository reached without its org is 404, indistinguishable from one that does not exist. Addressed under the API prefix, so `git clone https://<host>/v1/git/<org>/<repo>.git` works on any host the binary serves. This is git\'s own wire protocol, not an API call to make by hand: point a git client at the clone URL and it makes this request itself.
      * @summary Advertise a repository\'s refs to a git client
      * @param {GitApiGetGitByOrgByRepoInfoRefsRequest} requestParameters Request parameters.
@@ -3498,6 +3817,17 @@ export class GitApi extends BaseAPI {
      */
     public getGitByOrgByRepoInfoRefs(requestParameters: GitApiGetGitByOrgByRepoInfoRefsRequest, options?: RawAxiosRequestConfig) {
         return GitApiFp(this.configuration).getGitByOrgByRepoInfoRefs(requestParameters.org, requestParameters.repo, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The open, unauthenticated face of the git host: every PUBLIC repository in the fleet, org-qualified, so a project can be found and cloned with no account at all — signing in is for private repos and for writes. Repositories live in per-org stores with no global index, so this unions each org\'s public rows and is bounded to a fixed number of stores per request, keeping discovery quick however many orgs exist. A fleet with no orgs yet is an empty page, not an error. This is a server-rendered browser page, not JSON — the console repo-browser reads the same repository through the JSON ops under /v1/git/repos. Repository names, paths and file contents all render through auto-escaping templates rather than being concatenated into HTML.
+     * @summary Discover public repositories across every org
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GitApi
+     */
+    public getGitExplore(options?: RawAxiosRequestConfig) {
+        return GitApiFp(this.configuration).getGitExplore(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

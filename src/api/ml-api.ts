@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -21,6 +21,8 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { MlCreate } from '../models';
 // @ts-ignore
 import type { MlResource } from '../models';
 // @ts-ignore
@@ -214,12 +216,15 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
             };
         },
         /**
-         * Deploys a model into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the kserve InferenceService spec, relayed as given, so anything kserve serves is deployable here without this layer knowing what it is.  THE BALANCE GATE RUNS FIRST, before a namespace or a resource exists, so an unfunded org cannot start GPU compute and then be billed for it. It fails CLOSED: a commerce that cannot be reached refuses rather than admits. The refusal carries the fleet\'s nested error body — the 402 shape a funded-balance client already parses — which is precisely why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort; ongoing GPU-hour cost is metered elsewhere.  The tenant namespace is derived from the VALIDATED org and project — never from a field — and the mapping is injective in both, so two tenants can never land in one namespace. An unvalidated caller is refused before any of that. The name must be a DNS-1123 label; a name already taken in the tenant\'s namespace is a 409.
-         * @summary Deploy an inference model
+         * Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.  The `spec` is a kserve InferenceService spec, passed through unchanged — this plane owns the tenancy, the billing and the namespace, and kserve owns what a model IS. An unfunded org is refused BEFORE anything is created, so nobody runs free GPU compute and nobody is charged for a resource that was never made.
+         * @summary Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.
+         * @param {MlCreate} mlCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMlModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMlModels: async (mlCreate: MlCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'mlCreate' is not null or undefined
+            assertParamExists('postMlModels', 'mlCreate', mlCreate)
             const localVarPath = `/v1/ml/models`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -238,9 +243,12 @@ export const MlApiAxiosParamCreator = function (configuration?: Configuration) {
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(mlCreate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -359,13 +367,14 @@ export const MlApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Deploys a model into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the kserve InferenceService spec, relayed as given, so anything kserve serves is deployable here without this layer knowing what it is.  THE BALANCE GATE RUNS FIRST, before a namespace or a resource exists, so an unfunded org cannot start GPU compute and then be billed for it. It fails CLOSED: a commerce that cannot be reached refuses rather than admits. The refusal carries the fleet\'s nested error body — the 402 shape a funded-balance client already parses — which is precisely why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort; ongoing GPU-hour cost is metered elsewhere.  The tenant namespace is derived from the VALIDATED org and project — never from a field — and the mapping is injective in both, so two tenants can never land in one namespace. An unvalidated caller is refused before any of that. The name must be a DNS-1123 label; a name already taken in the tenant\'s namespace is a 409.
-         * @summary Deploy an inference model
+         * Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.  The `spec` is a kserve InferenceService spec, passed through unchanged — this plane owns the tenancy, the billing and the namespace, and kserve owns what a model IS. An unfunded org is refused BEFORE anything is created, so nobody runs free GPU compute and nobody is charged for a resource that was never made.
+         * @summary Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.
+         * @param {MlCreate} mlCreate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMlModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMlModels(options);
+        async postMlModels(mlCreate: MlCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MlResource>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMlModels(mlCreate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MlApi.postMlModels']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -442,13 +451,14 @@ export const MlApiFactory = function (configuration?: Configuration, basePath?: 
             return localVarFp.patchMlModelsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Deploys a model into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the kserve InferenceService spec, relayed as given, so anything kserve serves is deployable here without this layer knowing what it is.  THE BALANCE GATE RUNS FIRST, before a namespace or a resource exists, so an unfunded org cannot start GPU compute and then be billed for it. It fails CLOSED: a commerce that cannot be reached refuses rather than admits. The refusal carries the fleet\'s nested error body — the 402 shape a funded-balance client already parses — which is precisely why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort; ongoing GPU-hour cost is metered elsewhere.  The tenant namespace is derived from the VALIDATED org and project — never from a field — and the mapping is injective in both, so two tenants can never land in one namespace. An unvalidated caller is refused before any of that. The name must be a DNS-1123 label; a name already taken in the tenant\'s namespace is a 409.
-         * @summary Deploy an inference model
+         * Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.  The `spec` is a kserve InferenceService spec, passed through unchanged — this plane owns the tenancy, the billing and the namespace, and kserve owns what a model IS. An unfunded org is refused BEFORE anything is created, so nobody runs free GPU compute and nobody is charged for a resource that was never made.
+         * @summary Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.
+         * @param {MlApiPostMlModelsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMlModels(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postMlModels(options).then((request) => request(axios, basePath));
+        postMlModels(requestParameters: MlApiPostMlModelsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MlResource> {
+            return localVarFp.postMlModels(requestParameters.mlCreate, options).then((request) => request(axios, basePath));
         },
         /**
          * Sends the request body to the named model\'s predictor and answers the predictor\'s reply — its status code, its body bytes and its Content-Type, all unchanged. This is the inference call itself, not a description of one.  VERBATIM IS THE CONTRACT, and it is why this route is not a typed op: a model-side error has to surface as the model\'s own error, not as this layer\'s paraphrase of it. The body shape is the kserve v2 inference protocol\'s, which means the runtime decides it, not this API. The v2 model name defaults to the resource name — kserve\'s single-model convention — and a multi-model runtime selects one with the `model` query parameter.  A model that exists but has no serving address yet answers 503 \'not ready\' rather than a confusing connection error: deployed is not the same as serving. Scoped to the caller\'s own tenant namespace from the validated org and project, so a name another tenant owns is simply a 404. The predictor\'s response body is read up to a fixed ceiling.
@@ -503,6 +513,20 @@ export interface MlApiPatchMlModelsByNameRequest {
      * @memberof MlApiPatchMlModelsByName
      */
     readonly name: string
+}
+
+/**
+ * Request parameters for postMlModels operation in MlApi.
+ * @export
+ * @interface MlApiPostMlModelsRequest
+ */
+export interface MlApiPostMlModelsRequest {
+    /**
+     * 
+     * @type {MlCreate}
+     * @memberof MlApiPostMlModels
+     */
+    readonly mlCreate: MlCreate
 }
 
 /**
@@ -585,14 +609,15 @@ export class MlApi extends BaseAPI {
     }
 
     /**
-     * Deploys a model into the caller\'s own tenant namespace and answers the created resource, 201. The spec is the kserve InferenceService spec, relayed as given, so anything kserve serves is deployable here without this layer knowing what it is.  THE BALANCE GATE RUNS FIRST, before a namespace or a resource exists, so an unfunded org cannot start GPU compute and then be billed for it. It fails CLOSED: a commerce that cannot be reached refuses rather than admits. The refusal carries the fleet\'s nested error body — the 402 shape a funded-balance client already parses — which is precisely why this route is not a typed op. On success the submission fee is debited from the caller org\'s own ledger, asynchronously and best-effort; ongoing GPU-hour cost is metered elsewhere.  The tenant namespace is derived from the VALIDATED org and project — never from a field — and the mapping is injective in both, so two tenants can never land in one namespace. An unvalidated caller is refused before any of that. The name must be a DNS-1123 label; a name already taken in the tenant\'s namespace is a 409.
-     * @summary Deploy an inference model
+     * Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.  The `spec` is a kserve InferenceService spec, passed through unchanged — this plane owns the tenancy, the billing and the namespace, and kserve owns what a model IS. An unfunded org is refused BEFORE anything is created, so nobody runs free GPU compute and nobody is charged for a resource that was never made.
+     * @summary Deploys one inference model for the caller\'s org, and answers 201 with the model as Kubernetes admitted it.
+     * @param {MlApiPostMlModelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MlApi
      */
-    public postMlModels(options?: RawAxiosRequestConfig) {
-        return MlApiFp(this.configuration).postMlModels(options).then((request) => request(this.axios, this.basePath));
+    public postMlModels(requestParameters: MlApiPostMlModelsRequest, options?: RawAxiosRequestConfig) {
+        return MlApiFp(this.configuration).postMlModels(requestParameters.mlCreate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

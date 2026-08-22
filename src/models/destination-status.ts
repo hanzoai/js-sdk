@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -60,7 +60,7 @@ export interface DestinationStatus {
      */
     'fields'?: Array<DestinationField>;
     /**
-     * Live is whether a credential resolves RIGHT NOW: a KMS-sealed secret for this org, else the integrations connection named by the platform\'s Fallback, else no credential needed at all (a public-ingest sink like Umami). False on a connected destination whose secret has gone missing — Connected && !Live is exactly the \"reconnect me\" state.
+     * Live is whether a credential resolves RIGHT NOW: a KMS-sealed secret for this org, else the integrations connection named by the platform\'s Fallback, else no credential needed at all (a public-ingest sink like Analytics). False on a connected destination whose secret has gone missing — Connected && !Live is exactly the \"reconnect me\" state.
      * @type {boolean}
      * @memberof DestinationStatus
      */
@@ -71,6 +71,12 @@ export interface DestinationStatus {
      * @memberof DestinationStatus
      */
     'name'?: string;
+    /**
+     * Pixel is whether the hosted tag can inject a browser pixel for this platform, so a console offers a per-SITE pixel input for exactly these. False means the platform receives conversions server-side only, and an input would promise an injection that never happens. Derived from the tag\'s own map (event.BrowserTags), never restated — a second list is how a console offers a pixel nothing fires.
+     * @type {boolean}
+     * @memberof DestinationStatus
+     */
+    'pixel'?: boolean;
     /**
      * the platform slug, and the path segment every route addresses it by
      * @type {string}

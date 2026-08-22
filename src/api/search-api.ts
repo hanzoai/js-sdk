@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -25,92 +25,12 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 import type { Request } from '../models';
 // @ts-ignore
 import type { Response } from '../models';
-// @ts-ignore
-import type { SearchIndexList } from '../models';
-// @ts-ignore
-import type { SearchStats } from '../models';
 /**
  * SearchApi - axios parameter creator
  * @export
  */
 export const SearchApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
-         * @summary Lists the search indexes with their document counts and timestamps.
-         * @param {string} [authorization] Authorization carries the surface\&#39;s bearer key (&#x60;Bearer &lt;key&gt;&#x60;); the bare key is accepted too. Search and vector are two surfaces with two keys. It is not &#x60;validate:\&quot;required\&quot;&#x60; on purpose: requireKey answers absence itself, so an unconfigured surface 503s and a missing bearer 401s — a validation refusal would rewrite both statuses.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSearchIndexes: async (authorization?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/search/indexes`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Totals the documents across every search index.  totalDocuments is summed from Meilisearch\'s own per-index counts. The other three fields are structurally zero rather than estimated: Meilisearch keeps no query-history counters, so searches, sessions and the per-day series are not derivable from the index and this surface reports the honest zero instead of a fabricated number. An unreachable Meilisearch answers 200 with all zeros.
-         * @summary Totals the documents across every search index.
-         * @param {string} [authorization] Authorization carries the surface\&#39;s bearer key (&#x60;Bearer &lt;key&gt;&#x60;); the bare key is accepted too. Search and vector are two surfaces with two keys. It is not &#x60;validate:\&quot;required\&quot;&#x60; on purpose: requireKey answers absence itself, so an unconfigured surface 503s and a missing bearer 401s — a validation refusal would rewrite both statuses.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSearchStats: async (authorization?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/search/stats`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Is the typed op behind POST /v1/search. It does exactly two things the in-process entry point must not do: resolve the tenant from the validated principal, and refuse when there is none. Everything else is ForOrg.
          * @summary Hybrid search over the org\'s own corpora
@@ -162,32 +82,6 @@ export const SearchApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SearchApiAxiosParamCreator(configuration)
     return {
         /**
-         * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
-         * @summary Lists the search indexes with their document counts and timestamps.
-         * @param {string} [authorization] Authorization carries the surface\&#39;s bearer key (&#x60;Bearer &lt;key&gt;&#x60;); the bare key is accepted too. Search and vector are two surfaces with two keys. It is not &#x60;validate:\&quot;required\&quot;&#x60; on purpose: requireKey answers absence itself, so an unconfigured surface 503s and a missing bearer 401s — a validation refusal would rewrite both statuses.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getSearchIndexes(authorization?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchIndexList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSearchIndexes(authorization, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SearchApi.getSearchIndexes']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Totals the documents across every search index.  totalDocuments is summed from Meilisearch\'s own per-index counts. The other three fields are structurally zero rather than estimated: Meilisearch keeps no query-history counters, so searches, sessions and the per-day series are not derivable from the index and this surface reports the honest zero instead of a fabricated number. An unreachable Meilisearch answers 200 with all zeros.
-         * @summary Totals the documents across every search index.
-         * @param {string} [authorization] Authorization carries the surface\&#39;s bearer key (&#x60;Bearer &lt;key&gt;&#x60;); the bare key is accepted too. Search and vector are two surfaces with two keys. It is not &#x60;validate:\&quot;required\&quot;&#x60; on purpose: requireKey answers absence itself, so an unconfigured surface 503s and a missing bearer 401s — a validation refusal would rewrite both statuses.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getSearchStats(authorization?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchStats>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSearchStats(authorization, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SearchApi.getSearchStats']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Is the typed op behind POST /v1/search. It does exactly two things the in-process entry point must not do: resolve the tenant from the validated principal, and refuse when there is none. Everything else is ForOrg.
          * @summary Hybrid search over the org\'s own corpora
          * @param {Request} request 
@@ -211,26 +105,6 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = SearchApiFp(configuration)
     return {
         /**
-         * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
-         * @summary Lists the search indexes with their document counts and timestamps.
-         * @param {SearchApiGetSearchIndexesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSearchIndexes(requestParameters: SearchApiGetSearchIndexesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SearchIndexList> {
-            return localVarFp.getSearchIndexes(requestParameters.authorization, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Totals the documents across every search index.  totalDocuments is summed from Meilisearch\'s own per-index counts. The other three fields are structurally zero rather than estimated: Meilisearch keeps no query-history counters, so searches, sessions and the per-day series are not derivable from the index and this surface reports the honest zero instead of a fabricated number. An unreachable Meilisearch answers 200 with all zeros.
-         * @summary Totals the documents across every search index.
-         * @param {SearchApiGetSearchStatsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSearchStats(requestParameters: SearchApiGetSearchStatsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SearchStats> {
-            return localVarFp.getSearchStats(requestParameters.authorization, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Is the typed op behind POST /v1/search. It does exactly two things the in-process entry point must not do: resolve the tenant from the validated principal, and refuse when there is none. Everything else is ForOrg.
          * @summary Hybrid search over the org\'s own corpora
          * @param {SearchApiSearchRequest} requestParameters Request parameters.
@@ -242,34 +116,6 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
         },
     };
 };
-
-/**
- * Request parameters for getSearchIndexes operation in SearchApi.
- * @export
- * @interface SearchApiGetSearchIndexesRequest
- */
-export interface SearchApiGetSearchIndexesRequest {
-    /**
-     * Authorization carries the surface\&#39;s bearer key (&#x60;Bearer &lt;key&gt;&#x60;); the bare key is accepted too. Search and vector are two surfaces with two keys. It is not &#x60;validate:\&quot;required\&quot;&#x60; on purpose: requireKey answers absence itself, so an unconfigured surface 503s and a missing bearer 401s — a validation refusal would rewrite both statuses.
-     * @type {string}
-     * @memberof SearchApiGetSearchIndexes
-     */
-    readonly authorization?: string
-}
-
-/**
- * Request parameters for getSearchStats operation in SearchApi.
- * @export
- * @interface SearchApiGetSearchStatsRequest
- */
-export interface SearchApiGetSearchStatsRequest {
-    /**
-     * Authorization carries the surface\&#39;s bearer key (&#x60;Bearer &lt;key&gt;&#x60;); the bare key is accepted too. Search and vector are two surfaces with two keys. It is not &#x60;validate:\&quot;required\&quot;&#x60; on purpose: requireKey answers absence itself, so an unconfigured surface 503s and a missing bearer 401s — a validation refusal would rewrite both statuses.
-     * @type {string}
-     * @memberof SearchApiGetSearchStats
-     */
-    readonly authorization?: string
-}
 
 /**
  * Request parameters for search operation in SearchApi.
@@ -292,30 +138,6 @@ export interface SearchApiSearchRequest {
  * @extends {BaseAPI}
  */
 export class SearchApi extends BaseAPI {
-    /**
-     * Lists the search indexes with their document counts and timestamps.  It reads the in-cluster Meilisearch service and reshapes its /stats and /indexes replies into the rows the console\'s Search panel renders. The read is degrade-friendly by design: an unreachable Meilisearch answers 200 with an EMPTY list, so the panel shows an honest empty state instead of an error. createdAt falls back to now and lastIndexedAt to null when the index list is unavailable.
-     * @summary Lists the search indexes with their document counts and timestamps.
-     * @param {SearchApiGetSearchIndexesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SearchApi
-     */
-    public getSearchIndexes(requestParameters: SearchApiGetSearchIndexesRequest = {}, options?: RawAxiosRequestConfig) {
-        return SearchApiFp(this.configuration).getSearchIndexes(requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Totals the documents across every search index.  totalDocuments is summed from Meilisearch\'s own per-index counts. The other three fields are structurally zero rather than estimated: Meilisearch keeps no query-history counters, so searches, sessions and the per-day series are not derivable from the index and this surface reports the honest zero instead of a fabricated number. An unreachable Meilisearch answers 200 with all zeros.
-     * @summary Totals the documents across every search index.
-     * @param {SearchApiGetSearchStatsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SearchApi
-     */
-    public getSearchStats(requestParameters: SearchApiGetSearchStatsRequest = {}, options?: RawAxiosRequestConfig) {
-        return SearchApiFp(this.configuration).getSearchStats(requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Is the typed op behind POST /v1/search. It does exactly two things the in-process entry point must not do: resolve the tenant from the validated principal, and refuse when there is none. Everything else is ForOrg.
      * @summary Hybrid search over the org\'s own corpora
