@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -35,6 +35,10 @@ import type { BuildList } from '../models';
 import type { BuildView } from '../models';
 // @ts-ignore
 import type { ClaimKeyOut } from '../models';
+// @ts-ignore
+import type { CodingStartIn } from '../models';
+// @ts-ignore
+import type { CodingStarted } from '../models';
 // @ts-ignore
 import type { ControlDrain } from '../models';
 // @ts-ignore
@@ -373,6 +377,112 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a summary of every agent conversation in the caller\'s org — id, derived title, and when it was last appended to — for populating a thread list.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required; 403 without one.
+         * @summary List the agent threads in your org
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentsChatConversations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/agents/chat/conversations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns every message of one conversation in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  The lookup happens inside the caller\'s OWN per-org store, so an id belonging to another tenant is not refused, it is simply absent: the answer is 200 with an empty message list. Read it as \"no such conversation for you\" rather than as an empty thread. A validated principal with a non-empty org is required; 403 without one.
+         * @summary Read one agent thread in full
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentsChatConversationsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getAgentsChatConversationsById', 'id', id)
+            const localVarPath = `/v1/agents/chat/conversations/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the preset catalog: each entry\'s id, its description and whether it is server-executing — the flag that decides if a preset\'s tool calls run here or come back for the client to apply. The ids are what the round accepts in `preset`.  The catalog is compiled into the build, identical for every caller, and this is the one read in the group that needs no principal.
+         * @summary List the agent presets available to a caller
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentsChatPresets: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/agents/chat/presets`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -963,6 +1073,80 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Answers one turn of a conversation with four things: the model\'s `reply`, the `actions` the server executed on the caller\'s behalf, the `ops` the client must apply itself, and the `conversationId` the turn was recorded under.  The split between actions and ops is the rule most easily got wrong. A tool call is executed HERE only when the chosen preset is server-executing AND the tool resolves in the caller\'s own scope; every other call is handed back as an op for the client to apply to its own graph or UI. A tool that fails still comes back as an action, carrying its error rather than failing the round.  `preset` selects the system prompt and the tool set (`capability` is a legacy alias for it); an unknown one is refused. `conversationId` continues an existing thread, and its absence starts one. A validated principal with a non-empty org is required — the org is the sole authority for both persistence and tool scope, and is NEVER read from the body.  A completion refused for the caller\'s own reason — 402 insufficient balance, 429, 403 — is relayed with its own status and body verbatim, so the real billing message reaches the client instead of an opaque gateway error. Only a genuine upstream fault becomes a 502.
+         * @summary Run one tool-calling round against your org\'s own tools
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentsChat: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/agents/chat`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+         * @summary Start one autonomous coding run against a repo in the caller\'s org
+         * @param {CodingStartIn} codingStartIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentsCoding: async (codingStartIn: CodingStartIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'codingStartIn' is not null or undefined
+            assertParamExists('postAgentsCoding', 'codingStartIn', codingStartIn)
+            const localVarPath = `/v1/agents/coding`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(codingStartIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off. A session with a parentSessionId becomes a subagent of that session and inherits its root, so one flow is one tree; without one it is itself a root. Registering with a terminal status records a session that has already finished.
          * @summary Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off.
          * @param {RegisterReq} registerReq 
@@ -1471,6 +1655,43 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns a summary of every agent conversation in the caller\'s org — id, derived title, and when it was last appended to — for populating a thread list.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required; 403 without one.
+         * @summary List the agent threads in your org
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgentsChatConversations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsChatConversations(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsChatConversations']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns every message of one conversation in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  The lookup happens inside the caller\'s OWN per-org store, so an id belonging to another tenant is not refused, it is simply absent: the answer is 200 with an empty message list. Read it as \"no such conversation for you\" rather than as an empty thread. A validated principal with a non-empty org is required; 403 without one.
+         * @summary Read one agent thread in full
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgentsChatConversationsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsChatConversationsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsChatConversationsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the preset catalog: each entry\'s id, its description and whether it is server-executing — the flag that decides if a preset\'s tool calls run here or come back for the client to apply. The ids are what the round accepts in `preset`.  The catalog is compiled into the build, identical for every caller, and this is the one read in the group that needs no principal.
+         * @summary List the agent presets available to a caller
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgentsChatPresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsChatPresets(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsChatPresets']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Serves the invocations-over-time histogram for the org\'s Agents dashboard. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
          * @summary Serves the invocations-over-time histogram for the org\'s Agents dashboard.
          * @param {string} [range] Range is the window to bucket: 24H, 7D or 30D. Anything else reads as 30D.
@@ -1657,6 +1878,31 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsByRefRun(ref, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsByRefRun']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers one turn of a conversation with four things: the model\'s `reply`, the `actions` the server executed on the caller\'s behalf, the `ops` the client must apply itself, and the `conversationId` the turn was recorded under.  The split between actions and ops is the rule most easily got wrong. A tool call is executed HERE only when the chosen preset is server-executing AND the tool resolves in the caller\'s own scope; every other call is handed back as an op for the client to apply to its own graph or UI. A tool that fails still comes back as an action, carrying its error rather than failing the round.  `preset` selects the system prompt and the tool set (`capability` is a legacy alias for it); an unknown one is refused. `conversationId` continues an existing thread, and its absence starts one. A validated principal with a non-empty org is required — the org is the sole authority for both persistence and tool scope, and is NEVER read from the body.  A completion refused for the caller\'s own reason — 402 insufficient balance, 429, 403 — is relayed with its own status and body verbatim, so the real billing message reaches the client instead of an opaque gateway error. Only a genuine upstream fault becomes a 502.
+         * @summary Run one tool-calling round against your org\'s own tools
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentsChat(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsChat(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsChat']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+         * @summary Start one autonomous coding run against a repo in the caller\'s org
+         * @param {CodingStartIn} codingStartIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAgentsCoding(codingStartIn: CodingStartIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CodingStarted>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAgentsCoding(codingStartIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.postAgentsCoding']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1880,6 +2126,34 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getAgentsByRefRuns(requestParameters.ref, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns a summary of every agent conversation in the caller\'s org — id, derived title, and when it was last appended to — for populating a thread list.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required; 403 without one.
+         * @summary List the agent threads in your org
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentsChatConversations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getAgentsChatConversations(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns every message of one conversation in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  The lookup happens inside the caller\'s OWN per-org store, so an id belonging to another tenant is not refused, it is simply absent: the answer is 200 with an empty message list. Read it as \"no such conversation for you\" rather than as an empty thread. A validated principal with a non-empty org is required; 403 without one.
+         * @summary Read one agent thread in full
+         * @param {AgentsApiGetAgentsChatConversationsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentsChatConversationsById(requestParameters: AgentsApiGetAgentsChatConversationsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getAgentsChatConversationsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the preset catalog: each entry\'s id, its description and whether it is server-executing — the flag that decides if a preset\'s tool calls run here or come back for the client to apply. The ids are what the round accepts in `preset`.  The catalog is compiled into the build, identical for every caller, and this is the one read in the group that needs no principal.
+         * @summary List the agent presets available to a caller
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentsChatPresets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getAgentsChatPresets(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Serves the invocations-over-time histogram for the org\'s Agents dashboard. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
          * @summary Serves the invocations-over-time histogram for the org\'s Agents dashboard.
          * @param {AgentsApiGetAgentsMetricsRequest} requestParameters Request parameters.
@@ -2016,6 +2290,25 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
          */
         postAgentsByRefRun(requestParameters: AgentsApiPostAgentsByRefRunRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postAgentsByRefRun(requestParameters.ref, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers one turn of a conversation with four things: the model\'s `reply`, the `actions` the server executed on the caller\'s behalf, the `ops` the client must apply itself, and the `conversationId` the turn was recorded under.  The split between actions and ops is the rule most easily got wrong. A tool call is executed HERE only when the chosen preset is server-executing AND the tool resolves in the caller\'s own scope; every other call is handed back as an op for the client to apply to its own graph or UI. A tool that fails still comes back as an action, carrying its error rather than failing the round.  `preset` selects the system prompt and the tool set (`capability` is a legacy alias for it); an unknown one is refused. `conversationId` continues an existing thread, and its absence starts one. A validated principal with a non-empty org is required — the org is the sole authority for both persistence and tool scope, and is NEVER read from the body.  A completion refused for the caller\'s own reason — 402 insufficient balance, 429, 403 — is relayed with its own status and body verbatim, so the real billing message reaches the client instead of an opaque gateway error. Only a genuine upstream fault becomes a 502.
+         * @summary Run one tool-calling round against your org\'s own tools
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentsChat(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAgentsChat(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+         * @summary Start one autonomous coding run against a repo in the caller\'s org
+         * @param {AgentsApiPostAgentsCodingRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAgentsCoding(requestParameters: AgentsApiPostAgentsCodingRequest, options?: RawAxiosRequestConfig): AxiosPromise<CodingStarted> {
+            return localVarFp.postAgentsCoding(requestParameters.codingStartIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Opens a live agent session in the caller\'s org — the row every surface (the CLI\'s outer agent, hanzo.bot, the console, chat) hangs its activity off. A session with a parentSessionId becomes a subagent of that session and inherits its root, so one flow is one tree; without one it is itself a root. Registering with a terminal status records a session that has already finished.
@@ -2216,6 +2509,20 @@ export interface AgentsApiGetAgentsByRefRunsRequest {
      * @memberof AgentsApiGetAgentsByRefRuns
      */
     readonly limit?: number
+}
+
+/**
+ * Request parameters for getAgentsChatConversationsById operation in AgentsApi.
+ * @export
+ * @interface AgentsApiGetAgentsChatConversationsByIdRequest
+ */
+export interface AgentsApiGetAgentsChatConversationsByIdRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentsApiGetAgentsChatConversationsById
+     */
+    readonly id: string
 }
 
 /**
@@ -2447,6 +2754,20 @@ export interface AgentsApiPostAgentsByRefRunRequest {
      * @memberof AgentsApiPostAgentsByRefRun
      */
     readonly ref: string
+}
+
+/**
+ * Request parameters for postAgentsCoding operation in AgentsApi.
+ * @export
+ * @interface AgentsApiPostAgentsCodingRequest
+ */
+export interface AgentsApiPostAgentsCodingRequest {
+    /**
+     * 
+     * @type {CodingStartIn}
+     * @memberof AgentsApiPostAgentsCoding
+     */
+    readonly codingStartIn: CodingStartIn
 }
 
 /**
@@ -2705,6 +3026,40 @@ export class AgentsApi extends BaseAPI {
     }
 
     /**
+     * Returns a summary of every agent conversation in the caller\'s org — id, derived title, and when it was last appended to — for populating a thread list.  Scoped to the caller\'s org and nothing else, and that isolation is structural rather than a filter: conversations are persisted in a store opened PER ORG, so there is no query in which another tenant\'s threads could appear. A validated principal with a non-empty org is required; 403 without one.
+     * @summary List the agent threads in your org
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public getAgentsChatConversations(options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsChatConversations(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns every message of one conversation in order — role, content, the assistant\'s tool calls where it made any, and each message\'s creation time — which is the transcript a client replays to resume a thread.  The lookup happens inside the caller\'s OWN per-org store, so an id belonging to another tenant is not refused, it is simply absent: the answer is 200 with an empty message list. Read it as \"no such conversation for you\" rather than as an empty thread. A validated principal with a non-empty org is required; 403 without one.
+     * @summary Read one agent thread in full
+     * @param {AgentsApiGetAgentsChatConversationsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public getAgentsChatConversationsById(requestParameters: AgentsApiGetAgentsChatConversationsByIdRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsChatConversationsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the preset catalog: each entry\'s id, its description and whether it is server-executing — the flag that decides if a preset\'s tool calls run here or come back for the client to apply. The ids are what the round accepts in `preset`.  The catalog is compiled into the build, identical for every caller, and this is the one read in the group that needs no principal.
+     * @summary List the agent presets available to a caller
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public getAgentsChatPresets(options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsChatPresets(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Serves the invocations-over-time histogram for the org\'s Agents dashboard. Every point is a REAL count of recorded runs in that time bucket — one series line per agent that ran in the window. The Resource Usage rollup is all-null because this store meters no CPU/memory/storage/cost; the console renders those as \"—\" rather than a fabricated figure. No runs => empty series (an honest \"not connected / no activity yet\"), never a synthesized trend.
      * @summary Serves the invocations-over-time histogram for the org\'s Agents dashboard.
      * @param {AgentsApiGetAgentsMetricsRequest} requestParameters Request parameters.
@@ -2868,6 +3223,29 @@ export class AgentsApi extends BaseAPI {
      */
     public postAgentsByRefRun(requestParameters: AgentsApiPostAgentsByRefRunRequest, options?: RawAxiosRequestConfig) {
         return AgentsApiFp(this.configuration).postAgentsByRefRun(requestParameters.ref, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers one turn of a conversation with four things: the model\'s `reply`, the `actions` the server executed on the caller\'s behalf, the `ops` the client must apply itself, and the `conversationId` the turn was recorded under.  The split between actions and ops is the rule most easily got wrong. A tool call is executed HERE only when the chosen preset is server-executing AND the tool resolves in the caller\'s own scope; every other call is handed back as an op for the client to apply to its own graph or UI. A tool that fails still comes back as an action, carrying its error rather than failing the round.  `preset` selects the system prompt and the tool set (`capability` is a legacy alias for it); an unknown one is refused. `conversationId` continues an existing thread, and its absence starts one. A validated principal with a non-empty org is required — the org is the sole authority for both persistence and tool scope, and is NEVER read from the body.  A completion refused for the caller\'s own reason — 402 insufficient balance, 429, 403 — is relayed with its own status and body verbatim, so the real billing message reaches the client instead of an opaque gateway error. Only a genuine upstream fault becomes a 502.
+     * @summary Run one tool-calling round against your org\'s own tools
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public postAgentsChat(options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsChat(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+     * @summary Start one autonomous coding run against a repo in the caller\'s org
+     * @param {AgentsApiPostAgentsCodingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public postAgentsCoding(requestParameters: AgentsApiPostAgentsCodingRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).postAgentsCoding(requestParameters.codingStartIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

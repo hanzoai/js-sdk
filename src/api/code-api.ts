@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -22,8 +22,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Answer } from '../models';
-// @ts-ignore
 import type { AskAnswer } from '../models';
 // @ts-ignore
 import type { AskPostIn } from '../models';
@@ -37,8 +35,6 @@ import type { FileContent } from '../models';
 import type { IndexIn } from '../models';
 // @ts-ignore
 import type { IndexResult } from '../models';
-// @ts-ignore
-import type { Query } from '../models';
 // @ts-ignore
 import type { RepoTree } from '../models';
 // @ts-ignore
@@ -350,206 +346,6 @@ export const CodeApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-         * @summary Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-         * @param {Query} query 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCodeLspComplete: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'query' is not null or undefined
-            assertParamExists('postCodeLspComplete', 'query', query)
-            const localVarPath = `/v1/code/lsp/complete`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(query, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint). The position is ignored.
-         * @summary Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint).
-         * @param {Query} query 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCodeLspDiagnostics: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'query' is not null or undefined
-            assertParamExists('postCodeLspDiagnostics', 'query', query)
-            const localVarPath = `/v1/code/lsp/diagnostics`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(query, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Renders the type and documentation of the symbol at a position, as the language server itself renders it.  Positions are the LSP\'s: line and character are 0-BASED and character counts UTF-16 code units, so an editor\'s 1-based line must have 1 subtracted before it is sent. The repository is named by slug and is always one in the caller\'s own org; rev pins a branch, tag or commit sha, and empty means the default branch.
-         * @summary Renders the type and documentation of the symbol at a position, as the language server itself renders it.
-         * @param {Query} query 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCodeLspHover: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'query' is not null or undefined
-            assertParamExists('postCodeLspHover', 'query', query)
-            const localVarPath = `/v1/code/lsp/hover`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(query, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).  It resolves THROUGH dependencies. An answer whose external flag is set left the repository, and its path is then the module coordinate it landed in — which is the question a static index cannot answer and this service exists for.
-         * @summary Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).
-         * @param {Query} query 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCodeLspLocate: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'query' is not null or undefined
-            assertParamExists('postCodeLspLocate', 'query', query)
-            const localVarPath = `/v1/code/lsp/locate`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(query, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Outlines one file: every declaration in it, with its kind and its span. The position is ignored — the answer is the whole file.
-         * @summary Outlines one file: every declaration in it, with its kind and its span.
-         * @param {Query} query 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCodeLspSymbols: async (query: Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'query' is not null or undefined
-            assertParamExists('postCodeLspSymbols', 'query', query)
-            const localVarPath = `/v1/code/lsp/symbols`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(query, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -656,71 +452,6 @@ export const CodeApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeIndex']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-         * @summary Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-         * @param {Query} query 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCodeLspComplete(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeLspComplete(query, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeLspComplete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint). The position is ignored.
-         * @summary Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint).
-         * @param {Query} query 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCodeLspDiagnostics(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeLspDiagnostics(query, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeLspDiagnostics']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Renders the type and documentation of the symbol at a position, as the language server itself renders it.  Positions are the LSP\'s: line and character are 0-BASED and character counts UTF-16 code units, so an editor\'s 1-based line must have 1 subtracted before it is sent. The repository is named by slug and is always one in the caller\'s own org; rev pins a branch, tag or commit sha, and empty means the default branch.
-         * @summary Renders the type and documentation of the symbol at a position, as the language server itself renders it.
-         * @param {Query} query 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCodeLspHover(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeLspHover(query, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeLspHover']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).  It resolves THROUGH dependencies. An answer whose external flag is set left the repository, and its path is then the module coordinate it landed in — which is the question a static index cannot answer and this service exists for.
-         * @summary Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).
-         * @param {Query} query 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCodeLspLocate(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeLspLocate(query, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeLspLocate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Outlines one file: every declaration in it, with its kind and its span. The position is ignored — the answer is the whole file.
-         * @summary Outlines one file: every declaration in it, with its kind and its span.
-         * @param {Query} query 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCodeLspSymbols(query: Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Answer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCodeLspSymbols(query, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CodeApi.postCodeLspSymbols']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -800,56 +531,6 @@ export const CodeApiFactory = function (configuration?: Configuration, basePath?
          */
         postCodeIndex(requestParameters: CodeApiPostCodeIndexRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexResult> {
             return localVarFp.postCodeIndex(requestParameters.indexIn, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-         * @summary Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-         * @param {CodeApiPostCodeLspCompleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCodeLspComplete(requestParameters: CodeApiPostCodeLspCompleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postCodeLspComplete(requestParameters.query, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint). The position is ignored.
-         * @summary Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint).
-         * @param {CodeApiPostCodeLspDiagnosticsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCodeLspDiagnostics(requestParameters: CodeApiPostCodeLspDiagnosticsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postCodeLspDiagnostics(requestParameters.query, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Renders the type and documentation of the symbol at a position, as the language server itself renders it.  Positions are the LSP\'s: line and character are 0-BASED and character counts UTF-16 code units, so an editor\'s 1-based line must have 1 subtracted before it is sent. The repository is named by slug and is always one in the caller\'s own org; rev pins a branch, tag or commit sha, and empty means the default branch.
-         * @summary Renders the type and documentation of the symbol at a position, as the language server itself renders it.
-         * @param {CodeApiPostCodeLspHoverRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCodeLspHover(requestParameters: CodeApiPostCodeLspHoverRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postCodeLspHover(requestParameters.query, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).  It resolves THROUGH dependencies. An answer whose external flag is set left the repository, and its path is then the module coordinate it landed in — which is the question a static index cannot answer and this service exists for.
-         * @summary Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).
-         * @param {CodeApiPostCodeLspLocateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCodeLspLocate(requestParameters: CodeApiPostCodeLspLocateRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postCodeLspLocate(requestParameters.query, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Outlines one file: every declaration in it, with its kind and its span. The position is ignored — the answer is the whole file.
-         * @summary Outlines one file: every declaration in it, with its kind and its span.
-         * @param {CodeApiPostCodeLspSymbolsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCodeLspSymbols(requestParameters: CodeApiPostCodeLspSymbolsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Answer> {
-            return localVarFp.postCodeLspSymbols(requestParameters.query, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -988,76 +669,6 @@ export interface CodeApiPostCodeIndexRequest {
 }
 
 /**
- * Request parameters for postCodeLspComplete operation in CodeApi.
- * @export
- * @interface CodeApiPostCodeLspCompleteRequest
- */
-export interface CodeApiPostCodeLspCompleteRequest {
-    /**
-     * 
-     * @type {Query}
-     * @memberof CodeApiPostCodeLspComplete
-     */
-    readonly query: Query
-}
-
-/**
- * Request parameters for postCodeLspDiagnostics operation in CodeApi.
- * @export
- * @interface CodeApiPostCodeLspDiagnosticsRequest
- */
-export interface CodeApiPostCodeLspDiagnosticsRequest {
-    /**
-     * 
-     * @type {Query}
-     * @memberof CodeApiPostCodeLspDiagnostics
-     */
-    readonly query: Query
-}
-
-/**
- * Request parameters for postCodeLspHover operation in CodeApi.
- * @export
- * @interface CodeApiPostCodeLspHoverRequest
- */
-export interface CodeApiPostCodeLspHoverRequest {
-    /**
-     * 
-     * @type {Query}
-     * @memberof CodeApiPostCodeLspHover
-     */
-    readonly query: Query
-}
-
-/**
- * Request parameters for postCodeLspLocate operation in CodeApi.
- * @export
- * @interface CodeApiPostCodeLspLocateRequest
- */
-export interface CodeApiPostCodeLspLocateRequest {
-    /**
-     * 
-     * @type {Query}
-     * @memberof CodeApiPostCodeLspLocate
-     */
-    readonly query: Query
-}
-
-/**
- * Request parameters for postCodeLspSymbols operation in CodeApi.
- * @export
- * @interface CodeApiPostCodeLspSymbolsRequest
- */
-export interface CodeApiPostCodeLspSymbolsRequest {
-    /**
-     * 
-     * @type {Query}
-     * @memberof CodeApiPostCodeLspSymbols
-     */
-    readonly query: Query
-}
-
-/**
  * CodeApi - object-oriented interface
  * @export
  * @class CodeApi
@@ -1146,66 +757,6 @@ export class CodeApi extends BaseAPI {
      */
     public postCodeIndex(requestParameters: CodeApiPostCodeIndexRequest, options?: RawAxiosRequestConfig) {
         return CodeApiFp(this.configuration).postCodeIndex(requestParameters.indexIn, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-     * @summary Offers the candidates a language server has at a position, typed and resolved through the repository\'s dependencies rather than guessed from text.
-     * @param {CodeApiPostCodeLspCompleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CodeApi
-     */
-    public postCodeLspComplete(requestParameters: CodeApiPostCodeLspCompleteRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postCodeLspComplete(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint). The position is ignored.
-     * @summary Reports every problem the language server finds in one file — compile errors, type errors and lints, each with its span and its severity (1 error, 2 warning, 3 information, 4 hint).
-     * @param {CodeApiPostCodeLspDiagnosticsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CodeApi
-     */
-    public postCodeLspDiagnostics(requestParameters: CodeApiPostCodeLspDiagnosticsRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postCodeLspDiagnostics(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Renders the type and documentation of the symbol at a position, as the language server itself renders it.  Positions are the LSP\'s: line and character are 0-BASED and character counts UTF-16 code units, so an editor\'s 1-based line must have 1 subtracted before it is sent. The repository is named by slug and is always one in the caller\'s own org; rev pins a branch, tag or commit sha, and empty means the default branch.
-     * @summary Renders the type and documentation of the symbol at a position, as the language server itself renders it.
-     * @param {CodeApiPostCodeLspHoverRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CodeApi
-     */
-    public postCodeLspHover(requestParameters: CodeApiPostCodeLspHoverRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postCodeLspHover(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).  It resolves THROUGH dependencies. An answer whose external flag is set left the repository, and its path is then the module coordinate it landed in — which is the question a static index cannot answer and this service exists for.
-     * @summary Finds where a symbol lives: its definition, its references, its type or its implementations, chosen by relation (definition, reference, type, implementation — empty means definition).
-     * @param {CodeApiPostCodeLspLocateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CodeApi
-     */
-    public postCodeLspLocate(requestParameters: CodeApiPostCodeLspLocateRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postCodeLspLocate(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Outlines one file: every declaration in it, with its kind and its span. The position is ignored — the answer is the whole file.
-     * @summary Outlines one file: every declaration in it, with its kind and its span.
-     * @param {CodeApiPostCodeLspSymbolsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CodeApi
-     */
-    public postCodeLspSymbols(requestParameters: CodeApiPostCodeLspSymbolsRequest, options?: RawAxiosRequestConfig) {
-        return CodeApiFp(this.configuration).postCodeLspSymbols(requestParameters.query, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

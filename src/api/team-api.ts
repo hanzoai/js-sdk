@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -25,6 +25,10 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 import type { BotRoster } from '../models';
 // @ts-ignore
 import type { BotSync } from '../models';
+// @ts-ignore
+import type { CollabRequest } from '../models';
+// @ts-ignore
+import type { CollabResult } from '../models';
 // @ts-ignore
 import type { CookieAck } from '../models';
 // @ts-ignore
@@ -299,17 +303,13 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Serves one file of the embedded wallet bundle — a content-hashed script or stylesheet under assets/, an icon, or the page shell itself.  A path that names NO REAL FILE falls back to the shell instead of 404ing, which is what makes a deep link into the page\'s own routes survive a hard refresh. So a 200 here is not proof the asset exists — a typo answers HTML.  assets/ is immutable for a year (the names carry the content hash); the shell is no-cache, so a deploy is picked up on the next load. Gated exactly like the page: 401 without a verified session, 503 when the bundle was never built.
-         * @summary Load an asset of the wallet page
-         * @param {string} wildcard1 
+         * Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
+         * @summary Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamBillingUiByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('getTeamBillingUiByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/team/billing/ui/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
+        getTeamBots: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/team/bots`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -337,13 +337,13 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
-         * @summary Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by.
+         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * @summary Open the live collaborative-editing socket
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamBots: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/team/bots`;
+        getTeamCollaborator: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/team/collaborator`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -597,6 +597,50 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or workspace token: the documentId\'s workspace must be the token\'s workspace when the token names one, and the caller must be a member of it. An unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists.
+         * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
+         * @param {string} documentId DocumentID addresses the document field, as \&quot;&lt;workspaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
+         * @param {CollabRequest} collabRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamCollaboratorRpcByDocumentid: async (documentId: string, collabRequest: CollabRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'documentId' is not null or undefined
+            assertParamExists('postTeamCollaboratorRpcByDocumentid', 'documentId', documentId)
+            // verify required parameter 'collabRequest' is not null or undefined
+            assertParamExists('postTeamCollaboratorRpcByDocumentid', 'collabRequest', collabRequest)
+            const localVarPath = `/v1/team/collaborator/rpc/{documentId}`
+                .replace(`{${"documentId"}}`, encodeURIComponent(String(documentId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(collabRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Stores one file in a workspace\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or workspace token AND be a member of the workspace; an unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the workspace, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
          * @summary Upload a file into a workspace
          * @param {string} workspace 
@@ -768,19 +812,6 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves one file of the embedded wallet bundle — a content-hashed script or stylesheet under assets/, an icon, or the page shell itself.  A path that names NO REAL FILE falls back to the shell instead of 404ing, which is what makes a deep link into the page\'s own routes survive a hard refresh. So a 200 here is not proof the asset exists — a typo answers HTML.  assets/ is immutable for a year (the names carry the content hash); the shell is no-cache, so a deploy is picked up on the next load. Gated exactly like the page: 401 without a verified session, 503 when the bundle was never built.
-         * @summary Load an asset of the wallet page
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getTeamBillingUiByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamBillingUiByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamBillingUiByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
          * @summary Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by.
          * @param {*} [options] Override http request option.
@@ -790,6 +821,18 @@ export const TeamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamBots(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamBots']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * @summary Open the live collaborative-editing socket
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamCollaborator(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamCollaborator(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamCollaborator']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -867,6 +910,20 @@ export const TeamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamBotsSync(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamBotsSync']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or workspace token: the documentId\'s workspace must be the token\'s workspace when the token names one, and the caller must be a member of it. An unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists.
+         * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
+         * @param {string} documentId DocumentID addresses the document field, as \&quot;&lt;workspaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
+         * @param {CollabRequest} collabRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postTeamCollaboratorRpcByDocumentid(documentId: string, collabRequest: CollabRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CollabResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamCollaboratorRpcByDocumentid(documentId, collabRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamCollaboratorRpcByDocumentid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -971,16 +1028,6 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamBillingUi(options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves one file of the embedded wallet bundle — a content-hashed script or stylesheet under assets/, an icon, or the page shell itself.  A path that names NO REAL FILE falls back to the shell instead of 404ing, which is what makes a deep link into the page\'s own routes survive a hard refresh. So a 200 here is not proof the asset exists — a typo answers HTML.  assets/ is immutable for a year (the names carry the content hash); the shell is no-cache, so a deploy is picked up on the next load. Gated exactly like the page: 401 without a verified session, 503 when the bundle was never built.
-         * @summary Load an asset of the wallet page
-         * @param {TeamApiGetTeamBillingUiByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTeamBillingUiByWildcard1(requestParameters: TeamApiGetTeamBillingUiByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getTeamBillingUiByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
          * @summary Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by.
          * @param {*} [options] Override http request option.
@@ -988,6 +1035,15 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          */
         getTeamBots(options?: RawAxiosRequestConfig): AxiosPromise<BotRoster> {
             return localVarFp.getTeamBots(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+         * @summary Open the live collaborative-editing socket
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamCollaborator(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getTeamCollaborator(options).then((request) => request(axios, basePath));
         },
         /**
          * Streams one blob\'s raw BYTES back — this is the read side of the workspace file store, not a JSON envelope around it.  THE BLOB IS NAMED BY THE `file` QUERY PARAMETER, NOT BY :filename. The path segment is only the name a browser saves the download under; a request without ?file= is a 400 no matter what the path says.  The Content-Type is derived from the STORED BYTES, never from the name: only png, jpeg, gif and webp, recognized by their magic bytes, are served inline under their true type, and everything else is served inert as application/octet-stream with an attachment disposition. Every response carries nosniff, so a file uploaded under an .svg or .html name cannot be talked into executing in a viewer\'s origin. Blobs are immutable, so a hit caches privately for a year.  Same gate as the upload: verified token, membership of the workspace. A genuine miss, another tenant\'s workspace, a workspace the caller is not in, and a blob id belonging to a different workspace are ONE answer — 404 — because the physical key is org- and workspace-scoped and a foreign id is simply a key that does not exist. An unavailable backend is a 502, never an empty 200.
@@ -1046,6 +1102,16 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          */
         postTeamBotsSync(options?: RawAxiosRequestConfig): AxiosPromise<BotSync> {
             return localVarFp.postTeamBotsSync(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or workspace token: the documentId\'s workspace must be the token\'s workspace when the token names one, and the caller must be a member of it. An unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists.
+         * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
+         * @param {TeamApiPostTeamCollaboratorRpcByDocumentidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postTeamCollaboratorRpcByDocumentid(requestParameters: TeamApiPostTeamCollaboratorRpcByDocumentidRequest, options?: RawAxiosRequestConfig): AxiosPromise<CollabResult> {
+            return localVarFp.postTeamCollaboratorRpcByDocumentid(requestParameters.documentId, requestParameters.collabRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Stores one file in a workspace\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or workspace token AND be a member of the workspace; an unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the workspace, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
@@ -1126,20 +1192,6 @@ export interface TeamApiGetTeamAccountAuthByProviderCallbackRequest {
 }
 
 /**
- * Request parameters for getTeamBillingUiByWildcard1 operation in TeamApi.
- * @export
- * @interface TeamApiGetTeamBillingUiByWildcard1Request
- */
-export interface TeamApiGetTeamBillingUiByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof TeamApiGetTeamBillingUiByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * Request parameters for getTeamFilesByWorkspaceByFilename operation in TeamApi.
  * @export
  * @interface TeamApiGetTeamFilesByWorkspaceByFilenameRequest
@@ -1200,6 +1252,27 @@ export interface TeamApiGetTeamTransactorStatisticsRequest {
      * @memberof TeamApiGetTeamTransactorStatistics
      */
     readonly token?: string
+}
+
+/**
+ * Request parameters for postTeamCollaboratorRpcByDocumentid operation in TeamApi.
+ * @export
+ * @interface TeamApiPostTeamCollaboratorRpcByDocumentidRequest
+ */
+export interface TeamApiPostTeamCollaboratorRpcByDocumentidRequest {
+    /**
+     * DocumentID addresses the document field, as \&quot;&lt;workspaceUuid&gt;|&lt;objectClass&gt;|&lt;objectId&gt;|&lt;objectAttr&gt;\&quot; — the collaborator-client encodeDocumentId shape, from the path.
+     * @type {string}
+     * @memberof TeamApiPostTeamCollaboratorRpcByDocumentid
+     */
+    readonly documentId: string
+
+    /**
+     * 
+     * @type {CollabRequest}
+     * @memberof TeamApiPostTeamCollaboratorRpcByDocumentid
+     */
+    readonly collabRequest: CollabRequest
 }
 
 /**
@@ -1304,18 +1377,6 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Serves one file of the embedded wallet bundle — a content-hashed script or stylesheet under assets/, an icon, or the page shell itself.  A path that names NO REAL FILE falls back to the shell instead of 404ing, which is what makes a deep link into the page\'s own routes survive a hard refresh. So a 200 here is not proof the asset exists — a typo answers HTML.  assets/ is immutable for a year (the names carry the content hash); the shell is no-cache, so a deploy is picked up on the next load. Gated exactly like the page: 401 without a verified session, 503 when the bundle was never built.
-     * @summary Load an asset of the wallet page
-     * @param {TeamApiGetTeamBillingUiByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TeamApi
-     */
-    public getTeamBillingUiByWildcard1(requestParameters: TeamApiGetTeamBillingUiByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getTeamBillingUiByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by. An agents subsystem that is not mounted answers an empty list, never an error.
      * @summary Returns the caller org\'s bot members — the org\'s agents projected as the workspace Employees they become, each with the member account uuid and Person reference the roster addresses it by.
      * @param {*} [options] Override http request option.
@@ -1324,6 +1385,17 @@ export class TeamApi extends BaseAPI {
      */
     public getTeamBots(options?: RawAxiosRequestConfig) {
         return TeamApiFp(this.configuration).getTeamBots(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Upgrades to the hocuspocus WebSocket the Team editor syncs its Y.js documents over: binary frames of document name, message type and payload, with ONE socket multiplexing every document a tab has open. The server is a relay and an ordered update log, not a CRDT engine — it replays the log to each joining peer and broadcasts every update to the rest, which converges because Y.js updates are commutative and idempotent. There is no body; the response is a protocol upgrade.  BOTH LANES SHARE ONE ROOT. The client derives them from one configured URL — this socket at its root, the markup-snapshot RPC one segment in — so pointing the editor at this service is one value, and the two lanes cannot drift apart.  AUTH IS IN-BAND, PER DOCUMENT, NOT ON THE UPGRADE. The handshake gates only on browser Origin (403 outside the team surfaces; no Origin at all is admitted, which is what a non-browser sends), and then the first frame for a document must be an Auth message carrying the same session or workspace token every other team route verifies — a browser WebSocket cannot set an Authorization header, which is why the token rides inside the protocol. Anything else on an unauthenticated document is answered with one permission denial and nothing further.  Every document is authorized on its own: the document\'s workspace must be the token\'s workspace when the token pins one, and the caller must be a member of it. A mismatch, an unknown workspace and a non-member deny alike with \"document not found\". Rooms are keyed by org and workspace and the persisted log\'s key embeds both, so a foreign document id can neither join a room nor read a blob.  The server pings every twenty seconds and drops a socket silent for sixty, so a backgrounded tab — whose JS timers are throttled but whose network stack still auto-pongs — stays connected instead of dying into a reconnect loop.
+     * @summary Open the live collaborative-editing socket
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamCollaborator(options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamCollaborator(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1394,6 +1466,18 @@ export class TeamApi extends BaseAPI {
      */
     public postTeamBotsSync(options?: RawAxiosRequestConfig) {
         return TeamApiFp(this.configuration).postTeamBotsSync(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.  createContent ALSO seeds the live-editing update log from the front-supplied Y.js update, so a dialog-authored description is visible in the collaborative editor — which replays that log — and not only in snapshot reads. updateContent never touches that log: peers may be live-editing the document, and their edits are not this call\'s to overwrite.  Every call is scoped to the caller\'s VERIFIED session or workspace token: the documentId\'s workspace must be the token\'s workspace when the token names one, and the caller must be a member of it. An unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists.
+     * @summary CollabRPC is the collaborative-markup snapshot plane the Team front\'s editor speaks: createContent stores a document field\'s markup at a fresh, immutable blob ref and returns it, updateContent stores a new snapshot and answers nothing, and getContent reads back the exact snapshot a ref names.
+     * @param {TeamApiPostTeamCollaboratorRpcByDocumentidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public postTeamCollaboratorRpcByDocumentid(requestParameters: TeamApiPostTeamCollaboratorRpcByDocumentidRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).postTeamCollaboratorRpcByDocumentid(requestParameters.documentId, requestParameters.collabRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

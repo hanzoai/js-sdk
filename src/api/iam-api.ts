@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -30,21 +30,15 @@ import type { IamApplication } from '../models';
 // @ts-ignore
 import type { IamApplicationListResult } from '../models';
 // @ts-ignore
-import type { IamApplicationRef } from '../models';
-// @ts-ignore
 import type { IamAssumeBody } from '../models';
 // @ts-ignore
 import type { IamAuditLog } from '../models';
-// @ts-ignore
-import type { IamAuditlogsInput } from '../models';
 // @ts-ignore
 import type { IamCert } from '../models';
 // @ts-ignore
 import type { IamCertsDeleteOutput } from '../models';
 // @ts-ignore
 import type { IamCertsListOutput } from '../models';
-// @ts-ignore
-import type { IamCertsRef } from '../models';
 // @ts-ignore
 import type { IamConfig } from '../models';
 // @ts-ignore
@@ -53,8 +47,6 @@ import type { IamCreateInput } from '../models';
 import type { IamCreateOrganizationInput } from '../models';
 // @ts-ignore
 import type { IamCreateSessionIn } from '../models';
-// @ts-ignore
-import type { IamDeleteOrganizationInput } from '../models';
 // @ts-ignore
 import type { IamDeleteOrganizationOutput } from '../models';
 // @ts-ignore
@@ -76,11 +68,7 @@ import type { IamInvitationsInput } from '../models';
 // @ts-ignore
 import type { IamInvitationsListOutput } from '../models';
 // @ts-ignore
-import type { IamInvitationsRef } from '../models';
-// @ts-ignore
 import type { IamKey } from '../models';
-// @ts-ignore
-import type { IamKeysRef } from '../models';
 // @ts-ignore
 import type { IamListOrganizationsOutput } from '../models';
 // @ts-ignore
@@ -89,8 +77,6 @@ import type { IamListOutput } from '../models';
 import type { IamListProvidersOut } from '../models';
 // @ts-ignore
 import type { IamListResponse } from '../models';
-// @ts-ignore
-import type { IamListSessionsIn } from '../models';
 // @ts-ignore
 import type { IamListSessionsOut } from '../models';
 // @ts-ignore
@@ -110,31 +96,23 @@ import type { IamPermissionDeleteResponse } from '../models';
 // @ts-ignore
 import type { IamPermissionListResponse } from '../models';
 // @ts-ignore
-import type { IamPermissionRef } from '../models';
-// @ts-ignore
 import type { IamPerson } from '../models';
 // @ts-ignore
 import type { IamProject } from '../models';
 // @ts-ignore
 import type { IamProjectsDeleteOutput } from '../models';
 // @ts-ignore
-import type { IamProjectsListOutput } from '../models';
+import type { IamProjectsInput } from '../models';
 // @ts-ignore
-import type { IamProjectsRef } from '../models';
+import type { IamProjectsListOutput } from '../models';
 // @ts-ignore
 import type { IamProvider } from '../models';
 // @ts-ignore
-import type { IamProviderKey } from '../models';
-// @ts-ignore
 import type { IamProviderResult } from '../models';
-// @ts-ignore
-import type { IamRef } from '../models';
 // @ts-ignore
 import type { IamRegistration } from '../models';
 // @ts-ignore
 import type { IamReply } from '../models';
-// @ts-ignore
-import type { IamResponse } from '../models';
 // @ts-ignore
 import type { IamRole } from '../models';
 // @ts-ignore
@@ -144,19 +122,11 @@ import type { IamRolesInput } from '../models';
 // @ts-ignore
 import type { IamRolesListOutput } from '../models';
 // @ts-ignore
-import type { IamRolesRef } from '../models';
-// @ts-ignore
-import type { IamSearchOrganizationsOutput } from '../models';
-// @ts-ignore
 import type { IamSession } from '../models';
-// @ts-ignore
-import type { IamSessionRef } from '../models';
 // @ts-ignore
 import type { IamSetAvatarInput } from '../models';
 // @ts-ignore
 import type { IamToken } from '../models';
-// @ts-ignore
-import type { IamTokenKey } from '../models';
 // @ts-ignore
 import type { IamTokenMutation } from '../models';
 // @ts-ignore
@@ -170,17 +140,11 @@ import type { IamUpdateSessionIn } from '../models';
 // @ts-ignore
 import type { IamUser } from '../models';
 // @ts-ignore
-import type { IamUserBody } from '../models';
-// @ts-ignore
 import type { IamUsersDeleteOutput } from '../models';
 // @ts-ignore
 import type { IamUsersListOutput } from '../models';
 // @ts-ignore
-import type { IamUsersRef } from '../models';
-// @ts-ignore
 import type { IamWebauthnCredential } from '../models';
-// @ts-ignore
-import type { IamWebauthnCredentialKey } from '../models';
 // @ts-ignore
 import type { IamWebauthnCredentialMutationResult } from '../models';
 // @ts-ignore
@@ -193,8 +157,6 @@ import type { IamWorkspacesDeleteOutput } from '../models';
 import type { IamWorkspacesInput } from '../models';
 // @ts-ignore
 import type { IamWorkspacesListOutput } from '../models';
-// @ts-ignore
-import type { IamWorkspacesRef } from '../models';
 /**
  * IamApi - axios parameter creator
  * @export
@@ -371,7 +333,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         createSession: async (iamCreateSessionIn: IamCreateSessionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamCreateSessionIn' is not null or undefined
             assertParamExists('createSession', 'iamCreateSessionIn', iamCreateSessionIn)
-            const localVarPath = `/v1/iam/sessions/create`;
+            const localVarPath = `/v1/iam/sessions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -409,12 +371,14 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIamApplication: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteIamApplicationsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
-            assertParamExists('deleteIamApplication', 'owner', owner)
+            assertParamExists('deleteIamApplicationsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('deleteIamApplication', 'name', name)
-            const localVarPath = `/v1/iam/application`;
+            assertParamExists('deleteIamApplicationsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/applications/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -430,13 +394,333 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (owner !== undefined) {
-                localVarQueryParameter['owner'] = owner;
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes an audit entry. Retention policy is normally what should expire a trail; deleting by hand leaves a gap a reviewer will notice.
+         * @summary Removes an audit entry.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamAuditLogsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteIamAuditLogsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteIamAuditLogsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/audit-logs/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
             }
 
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes a signing certificate. Tokens signed with it can no longer be verified, so retire it only once nothing is still presenting them.
+         * @summary Removes a signing certificate.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamCertsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteIamCertsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteIamCertsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/certs/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
             }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Withdraws an invitation. It stops being redeemable at once; anyone who already joined through it keeps their account.
+         * @summary Withdraws an invitation.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamInvitationsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteIamInvitationsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteIamInvitationsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/invitations/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Revokes an API key. Anything still presenting it stops being authorized at once, so roll the replacement out before you revoke.
+         * @summary Revokes an API key.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamKeysByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteIamKeysByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteIamKeysByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/keys/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+         * @summary Turns a factor off, so sign-in stops asking for it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamMfa: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/mfa`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Revokes a permission. Everyone who held access only through it loses that access immediately; grants they hold by another route are untouched.
+         * @summary Revokes a permission.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamPermissionsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteIamPermissionsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteIamPermissionsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/permissions/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so move anything addressed by it first.
+         * @summary Removes a project.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamProjectsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteIamProjectsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteIamProjectsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/projects/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes a role. Everyone in it loses the access it carried; their accounts, and any other role they hold, are untouched.
+         * @summary Removes a role.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamRolesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteIamRolesByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteIamRolesByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/roles/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -530,16 +814,21 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Removes an organization and everything named inside it. There is no undo, and every session issued under it stops working.  The built-in admin organization cannot be deleted — losing it would leave the account with no way back in.
-         * @summary Removes an organization and everything named inside it.
-         * @param {IamDeleteOrganizationInput} iamDeleteOrganizationInput 
+         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
+         * @summary Removes a person from your organization.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteOrganization: async (iamDeleteOrganizationInput: IamDeleteOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamDeleteOrganizationInput' is not null or undefined
-            assertParamExists('deleteOrganization', 'iamDeleteOrganizationInput', iamDeleteOrganizationInput)
-            const localVarPath = `/v1/iam/organizations/delete`;
+        deleteIamUsersByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteIamUsersByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteIamUsersByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/users/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -547,7 +836,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -557,12 +846,135 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamDeleteOrganizationInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
+         * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamUsersByOwnerByNameKeys: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteIamUsersByOwnerByNameKeys', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteIamUsersByOwnerByNameKeys', 'name', name)
+            const localVarPath = `/v1/iam/users/{owner}/{name}/keys`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.
+         * @summary Removes a workspace.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamWorkspacesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteIamWorkspacesByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteIamWorkspacesByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/workspaces/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes an organization and everything named inside it. There is no undo, and every session issued under it stops working.  The built-in admin organization cannot be deleted — losing it would leave the account with no way back in.
+         * @summary Removes an organization and everything named inside it.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteOrganization: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteOrganization', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteOrganization', 'name', name)
+            const localVarPath = `/v1/iam/organizations/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -572,14 +984,19 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Removes a provider. Sign-in through it stops for every application that used it, so give those applications another method first.  A provider that is already gone answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Removes a provider.
-         * @param {IamProviderKey} iamProviderKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteProvider: async (iamProviderKey: IamProviderKey, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamProviderKey' is not null or undefined
-            assertParamExists('deleteProvider', 'iamProviderKey', iamProviderKey)
-            const localVarPath = `/v1/iam/providers/delete`;
+        deleteProvider: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteProvider', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteProvider', 'name', name)
+            const localVarPath = `/v1/iam/providers/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -587,7 +1004,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -597,12 +1014,9 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamProviderKey, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -612,14 +1026,23 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Signs a person out of one application — the session ends and every browser carrying it stops being authenticated.  A session that is already gone reports that nothing was deleted rather than an error, so the call is safe to repeat.
          * @summary Signs a person out of one application — the session ends and every browser carrying it stops being authenticated.
-         * @param {IamSessionRef} iamSessionRef 
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {string} application 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteSession: async (iamSessionRef: IamSessionRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamSessionRef' is not null or undefined
-            assertParamExists('deleteSession', 'iamSessionRef', iamSessionRef)
-            const localVarPath = `/v1/iam/sessions/delete`;
+        deleteSession: async (owner: string, name: string, application: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteSession', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteSession', 'name', name)
+            // verify required parameter 'application' is not null or undefined
+            assertParamExists('deleteSession', 'application', application)
+            const localVarPath = `/v1/iam/sessions/{owner}/{name}/{application}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"application"}}`, encodeURIComponent(String(application)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -627,7 +1050,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -637,12 +1060,9 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamSessionRef, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -652,14 +1072,19 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Revokes an access token. Whatever was using it stops being authorized at once.  A token that is already gone answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Revokes an access token.
-         * @param {IamTokenKey} iamTokenKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteToken: async (iamTokenKey: IamTokenKey, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamTokenKey' is not null or undefined
-            assertParamExists('deleteToken', 'iamTokenKey', iamTokenKey)
-            const localVarPath = `/v1/iam/tokens/delete`;
+        deleteToken: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteToken', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteToken', 'name', name)
+            const localVarPath = `/v1/iam/tokens/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -667,7 +1092,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -677,12 +1102,9 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamTokenKey, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -692,14 +1114,19 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Removes a passkey or security key — what you call when a device is lost. Make sure the person has another way to sign in first.  A credential that is already gone answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Removes a passkey or security key — what you call when a device is lost.
-         * @param {IamWebauthnCredentialKey} iamWebauthnCredentialKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteWebauthnCredential: async (iamWebauthnCredentialKey: IamWebauthnCredentialKey, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamWebauthnCredentialKey' is not null or undefined
-            assertParamExists('deleteWebauthnCredential', 'iamWebauthnCredentialKey', iamWebauthnCredentialKey)
-            const localVarPath = `/v1/iam/webauthn-credentials/delete`;
+        deleteWebauthnCredential: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('deleteWebauthnCredential', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('deleteWebauthnCredential', 'name', name)
+            const localVarPath = `/v1/iam/webauthn-credentials/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -707,7 +1134,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -717,12 +1144,9 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamWebauthnCredentialKey, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -751,54 +1175,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-         * @summary Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-         * @param {string} owner 
-         * @param {string} name 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamApplication: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'owner' is not null or undefined
-            assertParamExists('getIamApplication', 'owner', owner)
-            // verify required parameter 'name' is not null or undefined
-            assertParamExists('getIamApplication', 'name', name)
-            const localVarPath = `/v1/iam/application`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (owner !== undefined) {
-                localVarQueryParameter['owner'] = owner;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
 
 
     
@@ -860,12 +1236,14 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamApplicationsGet: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIamApplicationsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
-            assertParamExists('getIamApplicationsGet', 'owner', owner)
+            assertParamExists('getIamApplicationsByOwnerByName', 'owner', owner)
             // verify required parameter 'name' is not null or undefined
-            assertParamExists('getIamApplicationsGet', 'name', name)
-            const localVarPath = `/v1/iam/applications/get`;
+            assertParamExists('getIamApplicationsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/applications/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -880,14 +1258,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (owner !== undefined) {
-                localVarQueryParameter['owner'] = owner;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
 
 
     
@@ -927,6 +1297,48 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             if (owner !== undefined) {
                 localVarQueryParameter['owner'] = owner;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
+         * @summary Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamAuditLogsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getIamAuditLogsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getIamAuditLogsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/audit-logs/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -1062,6 +1474,48 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Returns one signing certificate — its algorithm, its validity window and its public half. The private key is masked.
+         * @summary Returns one signing certificate — its algorithm, its validity window and its public half.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamCertsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getIamCertsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getIamCertsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/certs/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show — insights on, and training UNANSWERED, which is the state that means the screen still has to ask.
          * @summary Returns the calling person\'s own privacy and communication choices.
          * @param {*} [options] Override http request option.
@@ -1174,696 +1628,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetApplication: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-application`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetApplications: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-applications`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetCert: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-cert`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetCerts: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-certs`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetGlobalUsers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-global-users`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetInvitations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-invitations`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
-         * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
-         * @param {string} [user] User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
-         * @param {string} [org] Org is an organization — who may act in it.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetMemberships: async (user?: string, org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-memberships`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (user !== undefined) {
-                localVarQueryParameter['user'] = user;
-            }
-
-            if (org !== undefined) {
-                localVarQueryParameter['org'] = org;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetOrganization: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-organization`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one organization\'s projects — what a scope switcher lists so somebody can move between them.  You see your own organization and no other, whatever the request asks for.
-         * @summary Returns one organization\'s projects — what a scope switcher lists so somebody can move between them.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetOrganizationProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-organization-projects`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one organization\'s workspaces — what a scope switcher lists so somebody can move between them.  You see your own organization and no other, whatever the request asks for.
-         * @summary Returns one organization\'s workspaces — what a scope switcher lists so somebody can move between them.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetOrganizationWorkspaces: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-organization-workspaces`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetOrganizations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-organizations`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetPermission: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-permission`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetPermissions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-permissions`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetProvider: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-provider`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetProviders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-providers`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetRecords: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-records`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetRole: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-role`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetRoles: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-roles`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Reads one person, two ways.  Name them and it is an ordinary read, with secrets stripped. Or hand it a SECRET API key and it answers with the person that key belongs to — how a service of yours turns a credential on an incoming request into an identity.  A publishable key resolves to nobody here, deliberately: it is safe to ship in a browser precisely because it names an organization and never a person.  get-user is handler-authorized (authz.handlerAuthorizedExact) because the key variant carries no owner/name for the Guard to authorize; so the owner/name variant reinstates the SAME read authorization the Guard applies, through the ONE policy function (authz.Can) — identical behavior, a cross-tenant or non-self read still refused 403 — then reuses the generic getHandler verbatim for resolution and redaction. No authz and no CRUD is reimplemented.
-         * @summary Reads one person, two ways.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetUser: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-user`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetUsers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-users`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
          * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
          * @param {string} [owner] 
@@ -1890,6 +1654,48 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             if (owner !== undefined) {
                 localVarQueryParameter['owner'] = owner;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
+         * @summary Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamInvitationsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getIamInvitationsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getIamInvitationsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/invitations/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -1944,13 +1750,19 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns one API key: what it is called, what it may reach, and when it was issued.
          * @summary Returns one API key: what it is called, what it may reach, and when it was issued.
-         * @param {string} [owner] 
-         * @param {string} [name] 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamKeysGet: async (owner?: string, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/keys/get`;
+        getIamKeysByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getIamKeysByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getIamKeysByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/keys/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1966,13 +1778,73 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (owner !== undefined) {
-                localVarQueryParameter['owner'] = owner;
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate door from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
+         * @summary Resolve a PUBLISHABLE key to the organization that owns it
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamKeysOrg: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/keys/org`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
             }
 
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-door from unknown, so the holder can be told which one cure applies.
+         * @summary Resolve a SECRET key to the principal it authenticates
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamKeysPrincipal: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/iam/keys/principal`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
             }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -2132,7 +2004,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out, which is worth stating because the endpoint spent a release not doing it: the whole body computed a redirect and answered {\"status\":\"ok\"} unconditionally — no session ended, no token revoked. A logout that reports success while leaving the session live is worse than no logout at all, because the person on the shared machine believes it worked. Three things happen here now, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2241,13 +2113,19 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns one permission: who it grants to, what it allows, and the resources it covers.
          * @summary Returns one permission: who it grants to, what it allows, and the resources it covers.
-         * @param {string} [owner] 
-         * @param {string} [name] 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamPermissionsGet: async (owner?: string, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/permissions/get`;
+        getIamPermissionsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getIamPermissionsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getIamPermissionsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/permissions/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2262,14 +2140,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (owner !== undefined) {
-                localVarQueryParameter['owner'] = owner;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
 
 
     
@@ -2309,6 +2179,48 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             if (owner !== undefined) {
                 localVarQueryParameter['owner'] = owner;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one project: what it is called and how it is set up.
+         * @summary Returns one project: what it is called and how it is set up.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamProjectsByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getIamProjectsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getIamProjectsByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/projects/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -2390,40 +2302,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Answers which organization a PUBLISHABLE key belongs to — what a service of yours calls to attribute a request that arrived carrying a key shipped in a browser.  It names an organization and never a person: no path through it can load or return a user, so a key you put in client code cannot become a way to learn who anyone is. A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence, and with a `code` saying which of those it was. Only a confidential service that already proved it may resolve keys at all ever reads that code — there is no anonymous caller here to probe for which keys exist — and telling it apart is what lets the holder be told to re-mint an expired key instead of hunting a configuration error.
-         * @summary Answers which organization a PUBLISHABLE key belongs to — what a service of yours calls to attribute a request that arrived carrying a key shipped in a browser.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamResolveKey: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/resolve-key`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.  You see your own organization\'s roles and no one else\'s; which organization that is comes from your credentials, not from the request.
          * @summary Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.
          * @param {string} [owner] 
@@ -2450,6 +2328,48 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             if (owner !== undefined) {
                 localVarQueryParameter['owner'] = owner;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one role: who is in it, and the roles it includes.
+         * @summary Returns one role: who is in it, and the roles it includes.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamRolesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getIamRolesByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getIamRolesByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/roles/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -2769,12 +2689,13 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * Returns a page of the people in your organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.
          * @summary Returns a page of the people in your organization, with the total so you can page through the rest.
          * @param {string} owner 
+         * @param {string} [email] Email narrows the page to the accounts carrying one address. Looking a person up by their address is a QUERY over the collection, not an item read: an address is not the natural key, two rows in one org can carry one, and a caller that gets a page SEES both — where a single-item read would have to choose, and choosing is how somebody joins a team under a colleague\&#39;s identity.
          * @param {number} [limit] 
          * @param {number} [offset] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamUsers: async (owner: string, limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIamUsers: async (owner: string, email?: string, limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
             assertParamExists('getIamUsers', 'owner', owner)
             const localVarPath = `/v1/iam/users`;
@@ -2795,6 +2716,10 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
 
             if (owner !== undefined) {
                 localVarQueryParameter['owner'] = owner;
+            }
+
+            if (email !== undefined) {
+                localVarQueryParameter['email'] = email;
             }
 
             if (limit !== undefined) {
@@ -2820,15 +2745,19 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * Returns one person in your organization, addressed by their username or by their email address. Passwords, API secrets and MFA material are stripped from the response.  An address that names two accounts names none: the read refuses rather than picking one, and says so instead of reporting \"no such user\". Handing back an arbitrary one of two rows is how somebody gets added to a team under a colleague\'s identity.
          * @summary Returns one person in your organization, addressed by their username or by their email address.
          * @param {string} owner 
-         * @param {string} [name] 
+         * @param {string} name 
          * @param {string} [email] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamUsersGet: async (owner: string, name?: string, email?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getIamUsersByOwnerByName: async (owner: string, name: string, email?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'owner' is not null or undefined
-            assertParamExists('getIamUsersGet', 'owner', owner)
-            const localVarPath = `/v1/iam/users/get`;
+            assertParamExists('getIamUsersByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getIamUsersByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/users/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2843,14 +2772,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (owner !== undefined) {
-                localVarQueryParameter['owner'] = owner;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
 
             if (email !== undefined) {
                 localVarQueryParameter['email'] = email;
@@ -3145,15 +3066,21 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
-         * @summary Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
-         * @param {string} [owner] 
-         * @param {string} [name] 
+         * Returns one workspace: what it is called and how it is set up.
+         * @summary Returns one workspace: what it is called and how it is set up.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganization: async (owner?: string, name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/organizations/get`;
+        getIamWorkspacesByOwnerByName: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getIamWorkspacesByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getIamWorkspacesByOwnerByName', 'name', name)
+            const localVarPath = `/v1/iam/workspaces/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3169,13 +3096,47 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (owner !== undefined) {
-                localVarQueryParameter['owner'] = owner;
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
+         * @summary Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganization: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getOrganization', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getOrganization', 'name', name)
+            const localVarPath = `/v1/iam/organizations/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
             }
 
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -3191,14 +3152,19 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns one provider: what it connects to and how it is configured. Its credentials come back masked.
          * @summary Returns one provider: what it connects to and how it is configured.
-         * @param {IamProviderKey} iamProviderKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProvider: async (iamProviderKey: IamProviderKey, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamProviderKey' is not null or undefined
-            assertParamExists('getProvider', 'iamProviderKey', iamProviderKey)
-            const localVarPath = `/v1/iam/providers/get`;
+        getProvider: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getProvider', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getProvider', 'name', name)
+            const localVarPath = `/v1/iam/providers/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3206,7 +3172,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3216,12 +3182,9 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamProviderKey, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3231,14 +3194,23 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns one person\'s session in one application — when it began and which browsers or devices are still carrying it.
          * @summary Returns one person\'s session in one application — when it began and which browsers or devices are still carrying it.
-         * @param {IamSessionRef} iamSessionRef 
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {string} application 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSession: async (iamSessionRef: IamSessionRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamSessionRef' is not null or undefined
-            assertParamExists('getSession', 'iamSessionRef', iamSessionRef)
-            const localVarPath = `/v1/iam/sessions/get`;
+        getSession: async (owner: string, name: string, application: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getSession', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getSession', 'name', name)
+            // verify required parameter 'application' is not null or undefined
+            assertParamExists('getSession', 'application', application)
+            const localVarPath = `/v1/iam/sessions/{owner}/{name}/{application}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"application"}}`, encodeURIComponent(String(application)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3246,7 +3218,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3256,12 +3228,9 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamSessionRef, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3271,14 +3240,19 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns one access token: who and what it was issued to, and when it expires.
          * @summary Returns one access token: who and what it was issued to, and when it expires.
-         * @param {IamTokenKey} iamTokenKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getToken: async (iamTokenKey: IamTokenKey, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamTokenKey' is not null or undefined
-            assertParamExists('getToken', 'iamTokenKey', iamTokenKey)
-            const localVarPath = `/v1/iam/tokens/get`;
+        getToken: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getToken', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getToken', 'name', name)
+            const localVarPath = `/v1/iam/tokens/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3286,7 +3260,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3296,12 +3270,9 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamTokenKey, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3311,14 +3282,19 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns one passkey or security key: whose it is, what device it lives on, and when it was registered.
          * @summary Returns one passkey or security key: whose it is, what device it lives on, and when it was registered.
-         * @param {IamWebauthnCredentialKey} iamWebauthnCredentialKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWebauthnCredential: async (iamWebauthnCredentialKey: IamWebauthnCredentialKey, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamWebauthnCredentialKey' is not null or undefined
-            assertParamExists('getWebauthnCredential', 'iamWebauthnCredentialKey', iamWebauthnCredentialKey)
-            const localVarPath = `/v1/iam/webauthn-credentials/get`;
+        getWebauthnCredential: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('getWebauthnCredential', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('getWebauthnCredential', 'name', name)
+            const localVarPath = `/v1/iam/webauthn-credentials/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3326,7 +3302,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3336,12 +3312,9 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamWebauthnCredentialKey, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3349,15 +3322,16 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns the organizations you can see, newest first. Narrow it to one parent account, and set a limit and offset to page through the rest.
-         * @summary Returns the organizations you can see, newest first.
-         * @param {string} [owner] 
+         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every door. The Guard refuses a bearerless request before this runs, but the agent door carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
+         * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
+         * @param {string} [xForwardedFor] 
+         * @param {string} [q] 
          * @param {number} [limit] 
-         * @param {number} [offset] 
+         * @param {string} [cursor] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrganizations: async (owner?: string, limit?: number, offset?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listOrganizations: async (xForwardedFor?: string, q?: string, limit?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/organizations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3374,20 +3348,23 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (owner !== undefined) {
-                localVarQueryParameter['owner'] = owner;
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
             }
 
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
             }
 
-            if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
             }
 
 
     
+            if (xForwardedFor != null) {
+                localVarHeaderParameter['X-Forwarded-For'] = String(xForwardedFor);
+            }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -3439,14 +3416,16 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application. It is what you read before signing someone out.
          * @summary Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application.
-         * @param {IamListSessionsIn} iamListSessionsIn 
+         * @param {string} owner 
+         * @param {string} [name] 
+         * @param {string} [application] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listSessions: async (iamListSessionsIn: IamListSessionsIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamListSessionsIn' is not null or undefined
-            assertParamExists('listSessions', 'iamListSessionsIn', iamListSessionsIn)
-            const localVarPath = `/v1/iam/sessions/list`;
+        listSessions: async (owner: string, name?: string, application?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('listSessions', 'owner', owner)
+            const localVarPath = `/v1/iam/sessions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3454,7 +3433,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3462,14 +3441,23 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (owner !== undefined) {
+                localVarQueryParameter['owner'] = owner;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (application !== undefined) {
+                localVarQueryParameter['application'] = application;
+            }
+
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamListSessionsIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3521,7 +3509,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list. It used to scope to the ORG, which handed an org admin every member\'s credential rows in one answer, and a SuperAdmin every tenant\'s; a plain member meanwhile could not read even their own, because an unnamed target fails the Guard\'s tenant rule. One scope fixes both halves: the answer is a person\'s, and the caller is the person unless they say otherwise and may.
+         * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list, by design. Scoping to the ORG would hand an org admin every member\'s credential rows in one answer and a SuperAdmin every tenant\'s, while a plain member could not read even their own (an unnamed target fails the Guard\'s tenant rule). One scope answers both halves cleanly: the answer is a person\'s, and the caller is that person unless they say otherwise and may.
          * @summary Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.
          * @param {string} [user] 
          * @param {*} [options] Override http request option.
@@ -3602,320 +3590,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.  The older spelling of POST /v1/iam/application. A name already used in the organization is refused rather than overwritten.
-         * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-         * @param {IamApplication} iamApplication 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamApplication' is not null or undefined
-            assertParamExists('postIamAddApplication', 'iamApplication', iamApplication)
-            const localVarPath = `/v1/iam/add-application`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamApplication, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Lets a person or an application act in an organization. It is the grant behind \"add someone to the team\", and it is safe to repeat — granting a membership that already exists changes nothing. Granting membership IS the org\'s authority to give, so it takes the same gate a write to that org\'s own registry row takes: a SuperAdmin, an admin of the org itself, or an org-admin-capable confidential client. One rule, one place (internal/authz).
-         * @summary Lets a person or an application act in an organization.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddMembership: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/add-membership`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates an organization — the account everything else in your directory hangs from. Users, applications, roles, projects and workspaces are all named inside one organization, so this is the first write in a new tenant.  The older spelling of POST /v1/iam/organizations. Both reach the same create, so a name already taken is refused here too.
-         * @summary Creates an organization — the account everything else in your directory hangs from.
-         * @param {IamCreateOrganizationInput} iamCreateOrganizationInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddOrganization: async (iamCreateOrganizationInput: IamCreateOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamCreateOrganizationInput' is not null or undefined
-            assertParamExists('postIamAddOrganization', 'iamCreateOrganizationInput', iamCreateOrganizationInput)
-            const localVarPath = `/v1/iam/add-organization`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamCreateOrganizationInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.  The older spelling of POST /v1/iam/projects. Creating one takes an administrator of the owning organization.
-         * @summary Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.
-         * @param {IamInput} iamInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddProject: async (iamInput: IamInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamInput' is not null or undefined
-            assertParamExists('postIamAddProject', 'iamInput', iamInput)
-            const localVarPath = `/v1/iam/add-project`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.  A provider is configured once here and then switched on per application, so several applications can share one set of credentials.  The older spelling of POST /v1/iam/providers.
-         * @summary Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.
-         * @param {IamProvider} iamProvider 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddProvider: async (iamProvider: IamProvider, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamProvider' is not null or undefined
-            assertParamExists('postIamAddProvider', 'iamProvider', iamProvider)
-            const localVarPath = `/v1/iam/add-provider`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamProvider, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do.  The older spelling of POST /v1/iam/roles.
-         * @summary Creates a role — a named group of people that permissions are granted to.
-         * @param {IamRolesInput} iamRolesInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddRole: async (iamRolesInput: IamRolesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamRolesInput' is not null or undefined
-            assertParamExists('postIamAddRole', 'iamRolesInput', iamRolesInput)
-            const localVarPath = `/v1/iam/add-role`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamRolesInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Adds a person to your organization and, if you send a password, sets the one they will sign in with. The password is hashed before it is stored and is never returned to you or to anyone else.  Usernames are checked against one rule wherever an account is created — this verb, password signup, a social sign-in, or SCIM — so a name accepted here is a name accepted everywhere.  The older spelling of POST /v1/iam/users, and it posts the user\'s fields at the top level rather than wrapped in {user, password}.
-         * @summary Adds a person to your organization and, if you send a password, sets the one they will sign in with.
-         * @param {IamUserBody} iamUserBody 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddUser: async (iamUserBody: IamUserBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamUserBody' is not null or undefined
-            assertParamExists('postIamAddUser', 'iamUserBody', iamUserBody)
-            const localVarPath = `/v1/iam/add-user`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamUserBody, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.  The older spelling of POST /v1/iam/workspaces. Creating one takes an administrator of the owning organization.
-         * @summary Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.
-         * @param {IamWorkspacesInput} iamWorkspacesInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddWorkspace: async (iamWorkspacesInput: IamWorkspacesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamWorkspacesInput' is not null or undefined
-            assertParamExists('postIamAddWorkspace', 'iamWorkspacesInput', iamWorkspacesInput)
-            const localVarPath = `/v1/iam/add-workspace`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamWorkspacesInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
          * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
          * @param {*} [options] Override http request option.
@@ -3956,130 +3630,10 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIamApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamApplication' is not null or undefined
-            assertParamExists('postIamApplication', 'iamApplication', iamApplication)
-            const localVarPath = `/v1/iam/application`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamApplication, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
-         * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-         * @param {IamApplication} iamApplication 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         postIamApplications: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'iamApplication' is not null or undefined
             assertParamExists('postIamApplications', 'iamApplication', iamApplication)
             const localVarPath = `/v1/iam/applications`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamApplication, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Removes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration before deleting it.
-         * @summary Removes an application.
-         * @param {IamApplicationRef} iamApplicationRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamApplicationsDelete: async (iamApplicationRef: IamApplicationRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamApplicationRef' is not null or undefined
-            assertParamExists('postIamApplicationsDelete', 'iamApplicationRef', iamApplicationRef)
-            const localVarPath = `/v1/iam/applications/delete`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamApplicationRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
-         * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
-         * @param {IamApplication} iamApplication 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamApplicationsUpdate: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamApplication' is not null or undefined
-            assertParamExists('postIamApplicationsUpdate', 'iamApplication', iamApplication)
-            const localVarPath = `/v1/iam/applications/update`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4160,13 +3714,13 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
          * @summary Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
-         * @param {IamAuditlogsInput} iamAuditlogsInput 
+         * @param {IamInput} iamInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIamAuditLogs: async (iamAuditlogsInput: IamAuditlogsInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamAuditlogsInput' is not null or undefined
-            assertParamExists('postIamAuditLogs', 'iamAuditlogsInput', iamAuditlogsInput)
+        postIamAuditLogs: async (iamInput: IamInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamInput' is not null or undefined
+            assertParamExists('postIamAuditLogs', 'iamInput', iamInput)
             const localVarPath = `/v1/iam/audit-logs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4190,7 +3744,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamAuditlogsInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(iamInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4198,128 +3752,8 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Removes an audit entry. Retention policy is normally what should expire a trail; deleting by hand leaves a gap a reviewer will notice.
-         * @summary Removes an audit entry.
-         * @param {IamRef} iamRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAuditLogsDelete: async (iamRef: IamRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamRef' is not null or undefined
-            assertParamExists('postIamAuditLogsDelete', 'iamRef', iamRef)
-            const localVarPath = `/v1/iam/audit-logs/delete`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
-         * @summary Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
-         * @param {IamRef} iamRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAuditLogsGet: async (iamRef: IamRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamRef' is not null or undefined
-            assertParamExists('postIamAuditLogsGet', 'iamRef', iamRef)
-            const localVarPath = `/v1/iam/audit-logs/get`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Corrects an audit entry. The trail is append-only in normal operation and nothing in the Hanzo Cloud rewrites it — this exists for an administrator to correct an entry their own systems recorded wrongly.
-         * @summary Corrects an audit entry.
-         * @param {IamAuditlogsInput} iamAuditlogsInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAuditLogsUpdate: async (iamAuditlogsInput: IamAuditlogsInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamAuditlogsInput' is not null or undefined
-            assertParamExists('postIamAuditLogsUpdate', 'iamAuditlogsInput', iamAuditlogsInput)
-            const localVarPath = `/v1/iam/audit-logs/update`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamAuditlogsInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Adds a signing certificate your applications can verify tokens against — the call you make to bring your own key, or to stage the next one before a rotation. A name already used in your organization is refused.
-         * @summary Adds a signing certificate your applications can verify tokens against — the call you make to bring your own key, or to stage the next one before a rotation.
+         * Adds a signing certificate your applications can verify tokens against — the call you make to stage the next one before a rotation. A name already used in your organization is refused.  It registers the certificate\'s IDENTITY: its name (which is the JWKS `kid`), its algorithm, its expiry. Key material does not travel this way and cannot: the private key is not part of the Cert\'s JSON, so it is neither served here nor accepted here. It is supplied to the process by the deployment, under the name registered here (internal/keyring). Staging a rotation is therefore two halves — this call names the key, and the deployment provides it.
+         * @summary Adds a signing certificate your applications can verify tokens against — the call you make to stage the next one before a rotation.
          * @param {IamCert} iamCert 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4351,166 +3785,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(iamCert, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Removes a signing certificate. Tokens signed with it can no longer be verified, so retire it only once nothing is still presenting them.
-         * @summary Removes a signing certificate.
-         * @param {IamCertsRef} iamCertsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamCertsDelete: async (iamCertsRef: IamCertsRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamCertsRef' is not null or undefined
-            assertParamExists('postIamCertsDelete', 'iamCertsRef', iamCertsRef)
-            const localVarPath = `/v1/iam/certs/delete`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamCertsRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one signing certificate — its algorithm, its validity window and its public half. The private key is masked.
-         * @summary Returns one signing certificate — its algorithm, its validity window and its public half.
-         * @param {IamCertsRef} iamCertsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamCertsGet: async (iamCertsRef: IamCertsRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamCertsRef' is not null or undefined
-            assertParamExists('postIamCertsGet', 'iamCertsRef', iamCertsRef)
-            const localVarPath = `/v1/iam/certs/get`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamCertsRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Changes a signing certificate\'s settings. What it is called does not change, and neither does when it was added.
-         * @summary Changes a signing certificate\'s settings.
-         * @param {IamCert} iamCert 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamCertsUpdate: async (iamCert: IamCert, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamCert' is not null or undefined
-            assertParamExists('postIamCertsUpdate', 'iamCert', iamCert)
-            const localVarPath = `/v1/iam/certs/update`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamCert, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Deletes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration first.  The older spelling of DELETE /v1/iam/application.
-         * @summary Deletes an application.
-         * @param {IamApplication} iamApplication 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamApplication' is not null or undefined
-            assertParamExists('postIamDeleteApplication', 'iamApplication', iamApplication)
-            const localVarPath = `/v1/iam/delete-application`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamApplication, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4586,246 +3860,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces. There is no undo, and every session issued under it stops working.  The older spelling of POST /v1/iam/organizations/delete.
-         * @summary Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces.
-         * @param {IamDeleteOrganizationInput} iamDeleteOrganizationInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteOrganization: async (iamDeleteOrganizationInput: IamDeleteOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamDeleteOrganizationInput' is not null or undefined
-            assertParamExists('postIamDeleteOrganization', 'iamDeleteOrganizationInput', iamDeleteOrganizationInput)
-            const localVarPath = `/v1/iam/delete-organization`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamDeleteOrganizationInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Deletes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so anything addressed by it must move first.  The older spelling of POST /v1/iam/projects/delete.
-         * @summary Deletes a project.
-         * @param {IamProjectsRef} iamProjectsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteProject: async (iamProjectsRef: IamProjectsRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamProjectsRef' is not null or undefined
-            assertParamExists('postIamDeleteProject', 'iamProjectsRef', iamProjectsRef)
-            const localVarPath = `/v1/iam/delete-project`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamProjectsRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Removes a provider. Sign-in through it stops for every application that used it, so detach those applications first if they have no other method.  The older spelling of POST /v1/iam/providers/delete.
-         * @summary Removes a provider.
-         * @param {IamProvider} iamProvider 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteProvider: async (iamProvider: IamProvider, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamProvider' is not null or undefined
-            assertParamExists('postIamDeleteProvider', 'iamProvider', iamProvider)
-            const localVarPath = `/v1/iam/delete-provider`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamProvider, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Deletes a role. Everyone in it loses the access it carried; their accounts and any other roles they hold are untouched.  The older spelling of POST /v1/iam/roles/delete.
-         * @summary Deletes a role.
-         * @param {IamRolesRef} iamRolesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteRole: async (iamRolesRef: IamRolesRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamRolesRef' is not null or undefined
-            assertParamExists('postIamDeleteRole', 'iamRolesRef', iamRolesRef)
-            const localVarPath = `/v1/iam/delete-role`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamRolesRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Removes a person from your organization. Their sessions stop working and the account is gone, not suspended — to keep the record and only stop sign-in, update the user instead.  The older spelling of POST /v1/iam/users/delete.
-         * @summary Removes a person from your organization.
-         * @param {IamUserBody} iamUserBody 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteUser: async (iamUserBody: IamUserBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamUserBody' is not null or undefined
-            assertParamExists('postIamDeleteUser', 'iamUserBody', iamUserBody)
-            const localVarPath = `/v1/iam/delete-user`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamUserBody, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Deletes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.  The older spelling of POST /v1/iam/workspaces/delete.
-         * @summary Deletes a workspace.
-         * @param {IamWorkspacesRef} iamWorkspacesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteWorkspace: async (iamWorkspacesRef: IamWorkspacesRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamWorkspacesRef' is not null or undefined
-            assertParamExists('postIamDeleteWorkspace', 'iamWorkspacesRef', iamWorkspacesRef)
-            const localVarPath = `/v1/iam/delete-workspace`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamWorkspacesRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working. A name already used in the organization is refused.
          * @summary Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working.
          * @param {IamInvitationsInput} iamInvitationsInput 
@@ -4836,126 +3870,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // verify required parameter 'iamInvitationsInput' is not null or undefined
             assertParamExists('postIamInvitations', 'iamInvitationsInput', iamInvitationsInput)
             const localVarPath = `/v1/iam/invitations`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamInvitationsInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Withdraws an invitation. It stops being redeemable at once; anyone who already joined through it keeps their account.
-         * @summary Withdraws an invitation.
-         * @param {IamInvitationsRef} iamInvitationsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamInvitationsDelete: async (iamInvitationsRef: IamInvitationsRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamInvitationsRef' is not null or undefined
-            assertParamExists('postIamInvitationsDelete', 'iamInvitationsRef', iamInvitationsRef)
-            const localVarPath = `/v1/iam/invitations/delete`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamInvitationsRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
-         * @summary Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
-         * @param {IamInvitationsRef} iamInvitationsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamInvitationsGet: async (iamInvitationsRef: IamInvitationsRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamInvitationsRef' is not null or undefined
-            assertParamExists('postIamInvitationsGet', 'iamInvitationsRef', iamInvitationsRef)
-            const localVarPath = `/v1/iam/invitations/get`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamInvitationsRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires. What it is called does not change.
-         * @summary Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires.
-         * @param {IamInvitationsInput} iamInvitationsInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamInvitationsUpdate: async (iamInvitationsInput: IamInvitationsInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamInvitationsInput' is not null or undefined
-            assertParamExists('postIamInvitationsUpdate', 'iamInvitationsInput', iamInvitationsInput)
-            const localVarPath = `/v1/iam/invitations/update`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5030,154 +3944,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // verify required parameter 'iamKey' is not null or undefined
             assertParamExists('postIamKeys', 'iamKey', iamKey)
             const localVarPath = `/v1/iam/keys`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamKey, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Revokes an API key. Anything still presenting it stops being authorized at once, so roll the replacement out before you revoke.
-         * @summary Revokes an API key.
-         * @param {IamKeysRef} iamKeysRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamKeysDelete: async (iamKeysRef: IamKeysRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamKeysRef' is not null or undefined
-            assertParamExists('postIamKeysDelete', 'iamKeysRef', iamKeysRef)
-            const localVarPath = `/v1/iam/keys/delete`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamKeysRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
-         * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamKeysMint: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/keys/mint`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
-         * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamKeysRevoke: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/keys/revoke`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
-         * @summary Changes what a key is called or what it may reach.
-         * @param {IamKey} iamKey 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamKeysUpdate: async (iamKey: IamKey, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamKey' is not null or undefined
-            assertParamExists('postIamKeysUpdate', 'iamKey', iamKey)
-            const localVarPath = `/v1/iam/keys/update`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5310,40 +4076,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
-         * @summary Turns a factor off, so sign-in stops asking for it.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamMfaDisable: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/mfa/disable`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
          * @summary Picks which second factor an account is asked for first when it has more than one.
          * @param {*} [options] Override http request option.
@@ -5378,7 +4110,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  It used to write on the strength of a `secret` field alone. A client that skipped the verify step, scanned the QR into the wrong app, or was simply buggy switched on a factor no code would ever satisfy, and the account was then locked out with no self-service way back: the gate holds the sign-in before minting, so the person cannot obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
+         * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  Verifying BEFORE writing is what keeps a client that never completed the proof — a skipped verify step, a QR scanned into the wrong app, a bug — from switching on a factor no code can satisfy. That would lock the account out with no self-service way back: the gate holds the sign-in before minting, so the person could not obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
          * @summary Finishes the enrolment: from here the account\'s sign-ins ask for this factor.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5548,7 +4280,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names the wrong one defeats the control it implements. It used to render the portal\'s own app name — a constant, `hanzo-console` for every code — so a device code minted by `hanzo-cli` was approved under a screen naming a different application entirely. The client is a property of the CODE, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
+         * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names any other one defeats the control it implements. The client is a property of the CODE, not of the page or of whatever app the browser happens to be signed in to, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
          * @summary Answers \"what am I approving?\" for a pending device code.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5650,7 +4382,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out, which is worth stating because the endpoint spent a release not doing it: the whole body computed a redirect and answered {\"status\":\"ok\"} unconditionally — no session ended, no token revoked. A logout that reports success while leaving the session live is worse than no logout at all, because the person on the shared machine believes it worked. Three things happen here now, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5684,7 +4416,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. hanzo-cli is a public PKCE client holding a 30-day rotating refresh token, so a confidential-only revocation endpoint made `hanzo auth logout` a LOCAL DELETE — the credential it dropped stayed spendable at hanzo.id for the rest of the month, with nothing able to kill it. Measured 2026-08-01: revoke answered 401 invalid_client and the refresh token went on minting access tokens.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
+         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. A native app or CLI is a public PKCE client and holds no secret, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
          * @summary Retires a token before it expires — what you call when someone signs out or a credential may have leaked.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5860,86 +4592,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Revokes a permission. Everyone who held access only through it loses that access immediately; grants they hold by another route are untouched.
-         * @summary Revokes a permission.
-         * @param {IamPermissionRef} iamPermissionRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamPermissionsDelete: async (iamPermissionRef: IamPermissionRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamPermissionRef' is not null or undefined
-            assertParamExists('postIamPermissionsDelete', 'iamPermissionRef', iamPermissionRef)
-            const localVarPath = `/v1/iam/permissions/delete`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamPermissionRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Changes who a permission grants to, what it allows, or the resources it covers. Access changes as soon as the write lands. What the permission is called does not change, and neither does when it was created.
-         * @summary Changes who a permission grants to, what it allows, or the resources it covers.
-         * @param {IamPermission} iamPermission 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamPermissionsUpdate: async (iamPermission: IamPermission, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamPermission' is not null or undefined
-            assertParamExists('postIamPermissionsUpdate', 'iamPermission', iamPermission)
-            const localVarPath = `/v1/iam/permissions/update`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamPermission, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
          * @summary Saves the calling person\'s own settings and returns the full set afterwards.
          * @param {*} [options] Override http request option.
@@ -5976,13 +4628,13 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Makes a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team. A name already used in the organization is refused.
          * @summary Makes a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.
-         * @param {IamInput} iamInput 
+         * @param {IamProjectsInput} iamProjectsInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIamProjects: async (iamInput: IamInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamInput' is not null or undefined
-            assertParamExists('postIamProjects', 'iamInput', iamInput)
+        postIamProjects: async (iamProjectsInput: IamProjectsInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'iamProjectsInput' is not null or undefined
+            assertParamExists('postIamProjects', 'iamProjectsInput', iamProjectsInput)
             const localVarPath = `/v1/iam/projects`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6006,127 +4658,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Removes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so move anything addressed by it first.
-         * @summary Removes a project.
-         * @param {IamProjectsRef} iamProjectsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamProjectsDelete: async (iamProjectsRef: IamProjectsRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamProjectsRef' is not null or undefined
-            assertParamExists('postIamProjectsDelete', 'iamProjectsRef', iamProjectsRef)
-            const localVarPath = `/v1/iam/projects/delete`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamProjectsRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one project: what it is called and how it is set up.
-         * @summary Returns one project: what it is called and how it is set up.
-         * @param {IamProjectsRef} iamProjectsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamProjectsGet: async (iamProjectsRef: IamProjectsRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamProjectsRef' is not null or undefined
-            assertParamExists('postIamProjectsGet', 'iamProjectsRef', iamProjectsRef)
-            const localVarPath = `/v1/iam/projects/get`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamProjectsRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Changes a project\'s settings. What it is called does not change, and neither does when it was created.
-         * @summary Changes a project\'s settings.
-         * @param {IamInput} iamInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamProjectsUpdate: async (iamInput: IamInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamInput' is not null or undefined
-            assertParamExists('postIamProjectsUpdate', 'iamInput', iamInput)
-            const localVarPath = `/v1/iam/projects/update`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamInput, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(iamProjectsInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6260,126 +4792,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // verify required parameter 'iamRolesInput' is not null or undefined
             assertParamExists('postIamRoles', 'iamRolesInput', iamRolesInput)
             const localVarPath = `/v1/iam/roles`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamRolesInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Removes a role. Everyone in it loses the access it carried; their accounts, and any other role they hold, are untouched.
-         * @summary Removes a role.
-         * @param {IamRolesRef} iamRolesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamRolesDelete: async (iamRolesRef: IamRolesRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamRolesRef' is not null or undefined
-            assertParamExists('postIamRolesDelete', 'iamRolesRef', iamRolesRef)
-            const localVarPath = `/v1/iam/roles/delete`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamRolesRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one role: who is in it, and the roles it includes.
-         * @summary Returns one role: who is in it, and the roles it includes.
-         * @param {IamRolesRef} iamRolesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamRolesGet: async (iamRolesRef: IamRolesRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamRolesRef' is not null or undefined
-            assertParamExists('postIamRolesGet', 'iamRolesRef', iamRolesRef)
-            const localVarPath = `/v1/iam/roles/get`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamRolesRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
-         * @summary Changes who is in a role, or which roles it includes.
-         * @param {IamRolesInput} iamRolesInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamRolesUpdate: async (iamRolesInput: IamRolesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamRolesInput' is not null or undefined
-            assertParamExists('postIamRolesUpdate', 'iamRolesInput', iamRolesInput)
-            const localVarPath = `/v1/iam/roles/update`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -6720,86 +5132,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to. Which organization and name the application has are fixed when it is created and are not editable here.  A redirect URI you add becomes an allowed sign-in origin, so this is the call that makes login work from a new host.  The older spelling of PUT /v1/iam/application.
-         * @summary Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to.
-         * @param {IamApplication} iamApplication 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdateApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamApplication' is not null or undefined
-            assertParamExists('postIamUpdateApplication', 'iamApplication', iamApplication)
-            const localVarPath = `/v1/iam/update-application`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamApplication, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.  The older spelling of POST /v1/iam/organizations/update.
-         * @summary Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.
-         * @param {IamUpdateOrganizationInput} iamUpdateOrganizationInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdateOrganization: async (iamUpdateOrganizationInput: IamUpdateOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamUpdateOrganizationInput' is not null or undefined
-            assertParamExists('postIamUpdateOrganization', 'iamUpdateOrganizationInput', iamUpdateOrganizationInput)
-            const localVarPath = `/v1/iam/update-organization`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamUpdateOrganizationInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
          * @summary Saves the calling person\'s own settings and returns the full set afterwards.
          * @param {*} [options] Override http request option.
@@ -6827,126 +5159,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Updates a provider\'s settings or rotates the credentials it holds. The change takes effect on the next sign-in through it — sessions already issued are unaffected.  The older spelling of POST /v1/iam/providers/update.
-         * @summary Updates a provider\'s settings or rotates the credentials it holds.
-         * @param {IamProvider} iamProvider 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdateProvider: async (iamProvider: IamProvider, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamProvider' is not null or undefined
-            assertParamExists('postIamUpdateProvider', 'iamProvider', iamProvider)
-            const localVarPath = `/v1/iam/update-provider`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamProvider, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Updates a role\'s members or the roles it includes. Access changes for everyone in it as soon as the write lands.  The older spelling of POST /v1/iam/roles/update.
-         * @summary Updates a role\'s members or the roles it includes.
-         * @param {IamRolesInput} iamRolesInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdateRole: async (iamRolesInput: IamRolesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamRolesInput' is not null or undefined
-            assertParamExists('postIamUpdateRole', 'iamRolesInput', iamRolesInput)
-            const localVarPath = `/v1/iam/update-role`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamRolesInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Updates one of your users\' profile, roles or credentials. Send a password to reset it; leave it out and the current one stands.  The older spelling of POST /v1/iam/users/update, with the user\'s fields at the top level rather than wrapped in {user, password}.
-         * @summary Updates one of your users\' profile, roles or credentials.
-         * @param {IamUserBody} iamUserBody 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdateUser: async (iamUserBody: IamUserBody, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamUserBody' is not null or undefined
-            assertParamExists('postIamUpdateUser', 'iamUserBody', iamUserBody)
-            const localVarPath = `/v1/iam/update-user`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamUserBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6994,16 +5206,21 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
-         * @summary Removes a person from your organization.
-         * @param {IamUsersRef} iamUsersRef 
+         * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
+         * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIamUsersDelete: async (iamUsersRef: IamUsersRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamUsersRef' is not null or undefined
-            assertParamExists('postIamUsersDelete', 'iamUsersRef', iamUsersRef)
-            const localVarPath = `/v1/iam/users/delete`;
+        postIamUsersByOwnerByNameKeys: async (owner: string, name: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('postIamUsersByOwnerByNameKeys', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('postIamUsersByOwnerByNameKeys', 'name', name)
+            const localVarPath = `/v1/iam/users/{owner}/{name}/keys`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7021,52 +5238,9 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamUsersRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
-         * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
-         * @param {IamUpdateInput} iamUpdateInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUsersUpdate: async (iamUpdateInput: IamUpdateInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamUpdateInput' is not null or undefined
-            assertParamExists('postIamUsersUpdate', 'iamUpdateInput', iamUpdateInput)
-            const localVarPath = `/v1/iam/users/update`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamUpdateInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7250,126 +5424,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Removes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.
-         * @summary Removes a workspace.
-         * @param {IamWorkspacesRef} iamWorkspacesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamWorkspacesDelete: async (iamWorkspacesRef: IamWorkspacesRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamWorkspacesRef' is not null or undefined
-            assertParamExists('postIamWorkspacesDelete', 'iamWorkspacesRef', iamWorkspacesRef)
-            const localVarPath = `/v1/iam/workspaces/delete`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamWorkspacesRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns one workspace: what it is called and how it is set up.
-         * @summary Returns one workspace: what it is called and how it is set up.
-         * @param {IamWorkspacesRef} iamWorkspacesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamWorkspacesGet: async (iamWorkspacesRef: IamWorkspacesRef, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamWorkspacesRef' is not null or undefined
-            assertParamExists('postIamWorkspacesGet', 'iamWorkspacesRef', iamWorkspacesRef)
-            const localVarPath = `/v1/iam/workspaces/get`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamWorkspacesRef, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Changes a workspace\'s settings. What it is called does not change, and neither does when it was created.
-         * @summary Changes a workspace\'s settings.
-         * @param {IamWorkspacesInput} iamWorkspacesInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamWorkspacesUpdate: async (iamWorkspacesInput: IamWorkspacesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'iamWorkspacesInput' is not null or undefined
-            assertParamExists('postIamWorkspacesUpdate', 'iamWorkspacesInput', iamWorkspacesInput)
-            const localVarPath = `/v1/iam/workspaces/update`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(iamWorkspacesInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.  Only their own: the request names nobody, so it cannot reach another account. Send only what you are changing; a field you leave out keeps the value it had, and a field you send empty is cleared.  A picture is an https link or an inline image up to 96 KiB, the same value an organization\'s mark is (schema.AvatarRef) — one rule for how a subject appears, whether the subject is a person or an organization.
          * @summary Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.
          * @param {IamAccountBody} iamAccountBody 
@@ -7420,14 +5474,22 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
          * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {IamApplication} iamApplication 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIamApplication: async (iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putIamApplicationsByOwnerByName: async (owner: string, name: string, iamApplication: IamApplication, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('putIamApplicationsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('putIamApplicationsByOwnerByName', 'name', name)
             // verify required parameter 'iamApplication' is not null or undefined
-            assertParamExists('putIamApplication', 'iamApplication', iamApplication)
-            const localVarPath = `/v1/iam/application`;
+            assertParamExists('putIamApplicationsByOwnerByName', 'iamApplication', iamApplication)
+            const localVarPath = `/v1/iam/applications/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7451,6 +5513,102 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(iamApplication, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Corrects an audit entry. The trail is append-only in normal operation and nothing in the Hanzo Cloud rewrites it — this exists for an administrator to correct an entry their own systems recorded wrongly.
+         * @summary Corrects an audit entry.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamInput} iamInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamAuditLogsByOwnerByName: async (owner: string, name: string, iamInput: IamInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('putIamAuditLogsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('putIamAuditLogsByOwnerByName', 'name', name)
+            // verify required parameter 'iamInput' is not null or undefined
+            assertParamExists('putIamAuditLogsByOwnerByName', 'iamInput', iamInput)
+            const localVarPath = `/v1/iam/audit-logs/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes a signing certificate\'s settings. What it is called does not change, and neither does when it was added.  A PUT here is a METADATA edit — display name, expiry, provider. It overlays only the fields the request actually SET onto the loaded row: a field the JSON omits (or leaves at its zero value) keeps what the row holds, rather than blanking it. That is load-bearing, not a nicety. A read serves the public Certificate (Mask hides only PrivateKey and AccessSecret), so a client that reads a cert, changes one field, and writes it back sends the masked halves empty and every other field it did not touch at its zero value — and the old full-struct overlay wrote all of those blanks back. Blanking CryptoAlgorithm alone drops the cert from the JWKS (oidc.Publishes turns false), so every token under its `kid` stops verifying; blanking Provider/Account/ExpireTime breaks ACME renewal and expiry — all from a request that only meant to rename it. Absent-or-zero means \"unchanged\", so the deployment (key) and a rotation (cert) remain the only way key or published material changes; the metadata API cannot clear it.  The overlay is generic — it copies every set field, so a field nobody has added yet is carried without a line here — and leaves three things the request may not move: the bound Model (id, createdAt, key, snapshot), the natural key (owner/name address the row, they do not mutate it), and the creation stamp.
+         * @summary Changes a signing certificate\'s settings.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamCert} iamCert 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamCertsByOwnerByName: async (owner: string, name: string, iamCert: IamCert, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('putIamCertsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('putIamCertsByOwnerByName', 'name', name)
+            // verify required parameter 'iamCert' is not null or undefined
+            assertParamExists('putIamCertsByOwnerByName', 'iamCert', iamCert)
+            const localVarPath = `/v1/iam/certs/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamCert, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7485,6 +5643,102 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires. What it is called does not change.
+         * @summary Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamInvitationsInput} iamInvitationsInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamInvitationsByOwnerByName: async (owner: string, name: string, iamInvitationsInput: IamInvitationsInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('putIamInvitationsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('putIamInvitationsByOwnerByName', 'name', name)
+            // verify required parameter 'iamInvitationsInput' is not null or undefined
+            assertParamExists('putIamInvitationsByOwnerByName', 'iamInvitationsInput', iamInvitationsInput)
+            const localVarPath = `/v1/iam/invitations/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamInvitationsInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
+         * @summary Changes what a key is called or what it may reach.
+         * @param {string} owner Owner is the tenant that holds the key; Name is unique within Owner.
+         * @param {string} name 
+         * @param {IamKey} iamKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamKeysByOwnerByName: async (owner: string, name: string, iamKey: IamKey, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('putIamKeysByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('putIamKeysByOwnerByName', 'name', name)
+            // verify required parameter 'iamKey' is not null or undefined
+            assertParamExists('putIamKeysByOwnerByName', 'iamKey', iamKey)
+            const localVarPath = `/v1/iam/keys/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamKey, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7540,6 +5794,150 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Changes who a permission grants to, what it allows, or the resources it covers. Access changes as soon as the write lands. What the permission is called does not change, and neither does when it was created.
+         * @summary Changes who a permission grants to, what it allows, or the resources it covers.
+         * @param {string} owner Identity — the (owner, name) natural key.
+         * @param {string} name 
+         * @param {IamPermission} iamPermission 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamPermissionsByOwnerByName: async (owner: string, name: string, iamPermission: IamPermission, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('putIamPermissionsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('putIamPermissionsByOwnerByName', 'name', name)
+            // verify required parameter 'iamPermission' is not null or undefined
+            assertParamExists('putIamPermissionsByOwnerByName', 'iamPermission', iamPermission)
+            const localVarPath = `/v1/iam/permissions/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamPermission, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes a project\'s settings. What it is called does not change, and neither does when it was created.
+         * @summary Changes a project\'s settings.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamProjectsInput} iamProjectsInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamProjectsByOwnerByName: async (owner: string, name: string, iamProjectsInput: IamProjectsInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('putIamProjectsByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('putIamProjectsByOwnerByName', 'name', name)
+            // verify required parameter 'iamProjectsInput' is not null or undefined
+            assertParamExists('putIamProjectsByOwnerByName', 'iamProjectsInput', iamProjectsInput)
+            const localVarPath = `/v1/iam/projects/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamProjectsInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
+         * @summary Changes who is in a role, or which roles it includes.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamRolesInput} iamRolesInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamRolesByOwnerByName: async (owner: string, name: string, iamRolesInput: IamRolesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('putIamRolesByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('putIamRolesByOwnerByName', 'name', name)
+            // verify required parameter 'iamRolesInput' is not null or undefined
+            assertParamExists('putIamRolesByOwnerByName', 'iamRolesInput', iamRolesInput)
+            const localVarPath = `/v1/iam/roles/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamRolesInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Overwrites a person\'s SCIM attributes with what your identity provider sends — how a change made there lands here.  Only the attributes SCIM describes are replaced. Anything the standard does not cover — their multi-factor enrolment above all — survives untouched, so a routine sync from your IdP can never quietly strip someone\'s second factor or bring a deleted account back.
          * @summary Overwrites a person\'s SCIM attributes with what your identity provider sends — how a change made there lands here.
          * @param {string} owner 
@@ -7582,17 +5980,24 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.
-         * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
-         * @param {string} [xForwardedFor] 
-         * @param {string} [q] 
-         * @param {number} [limit] 
-         * @param {string} [cursor] 
+         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
+         * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamUpdateInput} iamUpdateInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchOrganizations: async (xForwardedFor?: string, q?: string, limit?: number, cursor?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/organizations/search`;
+        putIamUsersByOwnerByName: async (owner: string, name: string, iamUpdateInput: IamUpdateInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('putIamUsersByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('putIamUsersByOwnerByName', 'name', name)
+            // verify required parameter 'iamUpdateInput' is not null or undefined
+            assertParamExists('putIamUsersByOwnerByName', 'iamUpdateInput', iamUpdateInput)
+            const localVarPath = `/v1/iam/users/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7600,7 +6005,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -7608,26 +6013,62 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (q !== undefined) {
-                localVarQueryParameter['q'] = q;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-            if (cursor !== undefined) {
-                localVarQueryParameter['cursor'] = cursor;
-            }
-
 
     
-            if (xForwardedFor != null) {
-                localVarHeaderParameter['X-Forwarded-For'] = String(xForwardedFor);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamUpdateInput, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes a workspace\'s settings. What it is called does not change, and neither does when it was created.
+         * @summary Changes a workspace\'s settings.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamWorkspacesInput} iamWorkspacesInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamWorkspacesByOwnerByName: async (owner: string, name: string, iamWorkspacesInput: IamWorkspacesInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('putIamWorkspacesByOwnerByName', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('putIamWorkspacesByOwnerByName', 'name', name)
+            // verify required parameter 'iamWorkspacesInput' is not null or undefined
+            assertParamExists('putIamWorkspacesByOwnerByName', 'iamWorkspacesInput', iamWorkspacesInput)
+            const localVarPath = `/v1/iam/workspaces/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(iamWorkspacesInput, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7677,14 +6118,22 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits. Which organization it is does not change, and neither does when it was created.
          * @summary Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {IamUpdateOrganizationInput} iamUpdateOrganizationInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOrganization: async (iamUpdateOrganizationInput: IamUpdateOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateOrganization: async (owner: string, name: string, iamUpdateOrganizationInput: IamUpdateOrganizationInput, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('updateOrganization', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('updateOrganization', 'name', name)
             // verify required parameter 'iamUpdateOrganizationInput' is not null or undefined
             assertParamExists('updateOrganization', 'iamUpdateOrganizationInput', iamUpdateOrganizationInput)
-            const localVarPath = `/v1/iam/organizations/update`;
+            const localVarPath = `/v1/iam/organizations/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7692,7 +6141,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -7717,14 +6166,22 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Changes a provider\'s settings or rotates the credentials it holds. The change takes effect on the next sign-in through it — sessions already issued are unaffected.  A provider that is not there answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Changes a provider\'s settings or rotates the credentials it holds.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {IamProvider} iamProvider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateProvider: async (iamProvider: IamProvider, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateProvider: async (owner: string, name: string, iamProvider: IamProvider, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('updateProvider', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('updateProvider', 'name', name)
             // verify required parameter 'iamProvider' is not null or undefined
             assertParamExists('updateProvider', 'iamProvider', iamProvider)
-            const localVarPath = `/v1/iam/providers/update`;
+            const localVarPath = `/v1/iam/providers/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7732,7 +6189,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -7757,14 +6214,26 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live. A session that does not exist is reported as missing rather than created.
          * @summary Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {string} application 
          * @param {IamUpdateSessionIn} iamUpdateSessionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateSession: async (iamUpdateSessionIn: IamUpdateSessionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateSession: async (owner: string, name: string, application: string, iamUpdateSessionIn: IamUpdateSessionIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('updateSession', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('updateSession', 'name', name)
+            // verify required parameter 'application' is not null or undefined
+            assertParamExists('updateSession', 'application', application)
             // verify required parameter 'iamUpdateSessionIn' is not null or undefined
             assertParamExists('updateSession', 'iamUpdateSessionIn', iamUpdateSessionIn)
-            const localVarPath = `/v1/iam/sessions/update`;
+            const localVarPath = `/v1/iam/sessions/{owner}/{name}/{application}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)))
+                .replace(`{${"application"}}`, encodeURIComponent(String(application)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7772,7 +6241,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -7797,14 +6266,22 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Changes an access token\'s scope or expiry.  A token that is not there answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Changes an access token\'s scope or expiry.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {IamToken} iamToken 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateToken: async (iamToken: IamToken, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateToken: async (owner: string, name: string, iamToken: IamToken, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('updateToken', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('updateToken', 'name', name)
             // verify required parameter 'iamToken' is not null or undefined
             assertParamExists('updateToken', 'iamToken', iamToken)
-            const localVarPath = `/v1/iam/tokens/update`;
+            const localVarPath = `/v1/iam/tokens/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7812,7 +6289,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -7837,14 +6314,22 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Renames a registered passkey or security key, so a person can tell their devices apart.  A credential that is not there answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Renames a registered passkey or security key, so a person can tell their devices apart.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {IamWebauthnCredential} iamWebauthnCredential 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateWebauthnCredential: async (iamWebauthnCredential: IamWebauthnCredential, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateWebauthnCredential: async (owner: string, name: string, iamWebauthnCredential: IamWebauthnCredential, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'owner' is not null or undefined
+            assertParamExists('updateWebauthnCredential', 'owner', owner)
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('updateWebauthnCredential', 'name', name)
             // verify required parameter 'iamWebauthnCredential' is not null or undefined
             assertParamExists('updateWebauthnCredential', 'iamWebauthnCredential', iamWebauthnCredential)
-            const localVarPath = `/v1/iam/webauthn-credentials/update`;
+            const localVarPath = `/v1/iam/webauthn-credentials/{owner}/{name}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7852,7 +6337,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -7919,7 +6404,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
+         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.
          * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
          * @param {IamPerson} iamPerson 
          * @param {string} [authorization] 
@@ -8045,10 +6530,120 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteIamApplication(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamApplication(owner, name, options);
+        async deleteIamApplicationsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamApplicationsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamApplication']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamApplicationsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes an audit entry. Retention policy is normally what should expire a trail; deleting by hand leaves a gap a reviewer will notice.
+         * @summary Removes an audit entry.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIamAuditLogsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamAuditLogsByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamAuditLogsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes a signing certificate. Tokens signed with it can no longer be verified, so retire it only once nothing is still presenting them.
+         * @summary Removes a signing certificate.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIamCertsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamCertsDeleteOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamCertsByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamCertsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Withdraws an invitation. It stops being redeemable at once; anyone who already joined through it keeps their account.
+         * @summary Withdraws an invitation.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIamInvitationsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamInvitationsDeleteOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamInvitationsByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamInvitationsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Revokes an API key. Anything still presenting it stops being authorized at once, so roll the replacement out before you revoke.
+         * @summary Revokes an API key.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIamKeysByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamKeysByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamKeysByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+         * @summary Turns a factor off, so sign-in stops asking for it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIamMfa(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamMfa(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamMfa']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Revokes a permission. Everyone who held access only through it loses that access immediately; grants they hold by another route are untouched.
+         * @summary Revokes a permission.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIamPermissionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamPermissionDeleteResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamPermissionsByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamPermissionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so move anything addressed by it first.
+         * @summary Removes a project.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIamProjectsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamProjectsDeleteOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamProjectsByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamProjectsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes a role. Everyone in it loses the access it carried; their accounts, and any other role they hold, are untouched.
+         * @summary Removes a role.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIamRolesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamRolesDeleteOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamRolesByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamRolesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8079,14 +6674,57 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes an organization and everything named inside it. There is no undo, and every session issued under it stops working.  The built-in admin organization cannot be deleted — losing it would leave the account with no way back in.
-         * @summary Removes an organization and everything named inside it.
-         * @param {IamDeleteOrganizationInput} iamDeleteOrganizationInput 
+         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
+         * @summary Removes a person from your organization.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteOrganization(iamDeleteOrganizationInput: IamDeleteOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteOrganizationOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganization(iamDeleteOrganizationInput, options);
+        async deleteIamUsersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUsersDeleteOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamUsersByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamUsersByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
+         * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIamUsersByOwnerByNameKeys(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamUsersByOwnerByNameKeys(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamUsersByOwnerByNameKeys']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.
+         * @summary Removes a workspace.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteIamWorkspacesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWorkspacesDeleteOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteIamWorkspacesByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.deleteIamWorkspacesByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes an organization and everything named inside it. There is no undo, and every session issued under it stops working.  The built-in admin organization cannot be deleted — losing it would leave the account with no way back in.
+         * @summary Removes an organization and everything named inside it.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteOrganization(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteOrganizationOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteOrganization(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.deleteOrganization']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8094,12 +6732,13 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Removes a provider. Sign-in through it stops for every application that used it, so give those applications another method first.  A provider that is already gone answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Removes a provider.
-         * @param {IamProviderKey} iamProviderKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteProvider(iamProviderKey: IamProviderKey, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamMutationResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteProvider(iamProviderKey, options);
+        async deleteProvider(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamMutationResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteProvider(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.deleteProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8107,12 +6746,14 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Signs a person out of one application — the session ends and every browser carrying it stops being authenticated.  A session that is already gone reports that nothing was deleted rather than an error, so the call is safe to repeat.
          * @summary Signs a person out of one application — the session ends and every browser carrying it stops being authenticated.
-         * @param {IamSessionRef} iamSessionRef 
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {string} application 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteSession(iamSessionRef: IamSessionRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteSessionOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSession(iamSessionRef, options);
+        async deleteSession(owner: string, name: string, application: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteSessionOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSession(owner, name, application, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.deleteSession']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8120,12 +6761,13 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Revokes an access token. Whatever was using it stops being authorized at once.  A token that is already gone answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Revokes an access token.
-         * @param {IamTokenKey} iamTokenKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteToken(iamTokenKey: IamTokenKey, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTokenMutation>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteToken(iamTokenKey, options);
+        async deleteToken(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTokenMutation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteToken(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.deleteToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8133,12 +6775,13 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Removes a passkey or security key — what you call when a device is lost. Make sure the person has another way to sign in first.  A credential that is already gone answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Removes a passkey or security key — what you call when a device is lost.
-         * @param {IamWebauthnCredentialKey} iamWebauthnCredentialKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteWebauthnCredential(iamWebauthnCredentialKey: IamWebauthnCredentialKey, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWebauthnCredentialMutationResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteWebauthnCredential(iamWebauthnCredentialKey, options);
+        async deleteWebauthnCredential(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWebauthnCredentialMutationResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteWebauthnCredential(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.deleteWebauthnCredential']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8153,20 +6796,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIamAccount(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamAccount']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-         * @summary Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-         * @param {string} owner 
-         * @param {string} name 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamApplication(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamApplication(owner, name, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8190,10 +6819,10 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamApplicationsGet(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamApplicationsGet(owner, name, options);
+        async getIamApplicationsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamApplicationsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamApplicationsGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamApplicationsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8207,6 +6836,20 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIamAuditLogs(owner, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamAuditLogs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
+         * @summary Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamAuditLogsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditLog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamAuditLogsByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamAuditLogsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8250,6 +6893,20 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns one signing certificate — its algorithm, its validity window and its public half. The private key is masked.
+         * @summary Returns one signing certificate — its algorithm, its validity window and its public half.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamCertsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamCert>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamCertsByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamCertsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show — insights on, and training UNANSWERED, which is the state that means the screen still has to ask.
          * @summary Returns the calling person\'s own privacy and communication choices.
          * @param {*} [options] Override http request option.
@@ -8288,248 +6945,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetApplication(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetApplication(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetApplication']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetApplications(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetApplications(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetApplications']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetCert(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetCert(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetCert']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetCerts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetCerts(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetCerts']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetGlobalUsers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetGlobalUsers(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetGlobalUsers']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetInvitations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetInvitations(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetInvitations']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
-         * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
-         * @param {string} [user] User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
-         * @param {string} [org] Org is an organization — who may act in it.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetMemberships(user?: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetMemberships(user, org, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetMemberships']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetOrganization(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetOrganization(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetOrganization']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one organization\'s projects — what a scope switcher lists so somebody can move between them.  You see your own organization and no other, whatever the request asks for.
-         * @summary Returns one organization\'s projects — what a scope switcher lists so somebody can move between them.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetOrganizationProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetOrganizationProjects(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetOrganizationProjects']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one organization\'s workspaces — what a scope switcher lists so somebody can move between them.  You see your own organization and no other, whatever the request asks for.
-         * @summary Returns one organization\'s workspaces — what a scope switcher lists so somebody can move between them.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetOrganizationWorkspaces(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetOrganizationWorkspaces(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetOrganizationWorkspaces']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetOrganizations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetOrganizations(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetOrganizations']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetPermission(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetPermission(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetPermission']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetPermissions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetPermissions(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetPermissions']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetProvider(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetProvider(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetProvider']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetProviders(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetProviders']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetRecords(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetRecords(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetRecords']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetRole(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetRole(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetRole']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetRoles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetRoles(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetRoles']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Reads one person, two ways.  Name them and it is an ordinary read, with secrets stripped. Or hand it a SECRET API key and it answers with the person that key belongs to — how a service of yours turns a credential on an incoming request into an identity.  A publishable key resolves to nobody here, deliberately: it is safe to ship in a browser precisely because it names an organization and never a person.  get-user is handler-authorized (authz.handlerAuthorizedExact) because the key variant carries no owner/name for the Guard to authorize; so the owner/name variant reinstates the SAME read authorization the Guard applies, through the ONE policy function (authz.Can) — identical behavior, a cross-tenant or non-self read still refused 403 — then reuses the generic getHandler verbatim for resolution and redaction. No authz and no CRUD is reimplemented.
-         * @summary Reads one person, two ways.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetUser(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetUser']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetUsers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetUsers(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetUsers']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
          * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
          * @param {string} [owner] 
@@ -8540,6 +6955,20 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIamInvitations(owner, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamInvitations']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
+         * @summary Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamInvitationsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamInvitation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamInvitationsByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamInvitationsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8558,15 +6987,39 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns one API key: what it is called, what it may reach, and when it was issued.
          * @summary Returns one API key: what it is called, what it may reach, and when it was issued.
-         * @param {string} [owner] 
-         * @param {string} [name] 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamKeysGet(owner?: string, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamKey>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamKeysGet(owner, name, options);
+        async getIamKeysByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamKey>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamKeysByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamKeysGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamKeysByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate door from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
+         * @summary Resolve a PUBLISHABLE key to the organization that owns it
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamKeysOrg(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamKeysOrg(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamKeysOrg']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-door from unknown, so the holder can be told which one cure applies.
+         * @summary Resolve a SECRET key to the principal it authenticates
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamKeysPrincipal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamKeysPrincipal(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamKeysPrincipal']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8620,7 +7073,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out, which is worth stating because the endpoint spent a release not doing it: the whole body computed a redirect and answered {\"status\":\"ok\"} unconditionally — no session ended, no token revoked. A logout that reports success while leaving the session live is worse than no logout at all, because the person on the shared machine believes it worked. Three things happen here now, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8659,15 +7112,15 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns one permission: who it grants to, what it allows, and the resources it covers.
          * @summary Returns one permission: who it grants to, what it allows, and the resources it covers.
-         * @param {string} [owner] 
-         * @param {string} [name] 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamPermissionsGet(owner?: string, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamPermission>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamPermissionsGet(owner, name, options);
+        async getIamPermissionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamPermission>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamPermissionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamPermissionsGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamPermissionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8681,6 +7134,20 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIamProjects(owner, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamProjects']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one project: what it is called and how it is set up.
+         * @summary Returns one project: what it is called and how it is set up.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamProjectsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamProjectsByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamProjectsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8708,18 +7175,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers which organization a PUBLISHABLE key belongs to — what a service of yours calls to attribute a request that arrived carrying a key shipped in a browser.  It names an organization and never a person: no path through it can load or return a user, so a key you put in client code cannot become a way to learn who anyone is. A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence, and with a `code` saying which of those it was. Only a confidential service that already proved it may resolve keys at all ever reads that code — there is no anonymous caller here to probe for which keys exist — and telling it apart is what lets the holder be told to re-mint an expired key instead of hunting a configuration error.
-         * @summary Answers which organization a PUBLISHABLE key belongs to — what a service of yours calls to attribute a request that arrived carrying a key shipped in a browser.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamResolveKey(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamResolveKey(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamResolveKey']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.  You see your own organization\'s roles and no one else\'s; which organization that is comes from your credentials, not from the request.
          * @summary Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.
          * @param {string} [owner] 
@@ -8730,6 +7185,20 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getIamRoles(owner, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamRoles']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one role: who is in it, and the roles it includes.
+         * @summary Returns one role: who is in it, and the roles it includes.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getIamRolesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamRole>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamRolesByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamRolesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8839,13 +7308,14 @@ export const IamApiFp = function(configuration?: Configuration) {
          * Returns a page of the people in your organization, with the total so you can page through the rest. Passwords, API secrets and MFA material are stripped from every entry.
          * @summary Returns a page of the people in your organization, with the total so you can page through the rest.
          * @param {string} owner 
+         * @param {string} [email] Email narrows the page to the accounts carrying one address. Looking a person up by their address is a QUERY over the collection, not an item read: an address is not the natural key, two rows in one org can carry one, and a caller that gets a page SEES both — where a single-item read would have to choose, and choosing is how somebody joins a team under a colleague\&#39;s identity.
          * @param {number} [limit] 
          * @param {number} [offset] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamUsers(owner: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUsersListOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamUsers(owner, limit, offset, options);
+        async getIamUsers(owner: string, email?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUsersListOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamUsers(owner, email, limit, offset, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getIamUsers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8854,15 +7324,15 @@ export const IamApiFp = function(configuration?: Configuration) {
          * Returns one person in your organization, addressed by their username or by their email address. Passwords, API secrets and MFA material are stripped from the response.  An address that names two accounts names none: the read refuses rather than picking one, and says so instead of reporting \"no such user\". Handing back an arbitrary one of two rows is how somebody gets added to a team under a colleague\'s identity.
          * @summary Returns one person in your organization, addressed by their username or by their email address.
          * @param {string} owner 
-         * @param {string} [name] 
+         * @param {string} name 
          * @param {string} [email] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getIamUsersGet(owner: string, name?: string, email?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUser>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamUsersGet(owner, name, email, options);
+        async getIamUsersByOwnerByName(owner: string, name: string, email?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamUsersByOwnerByName(owner, name, email, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamUsersGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamUsersByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8963,14 +7433,28 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
-         * @summary Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
-         * @param {string} [owner] 
-         * @param {string} [name] 
+         * Returns one workspace: what it is called and how it is set up.
+         * @summary Returns one workspace: what it is called and how it is set up.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrganization(owner?: string, name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamOrganization>> {
+        async getIamWorkspacesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWorkspace>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamWorkspacesByOwnerByName(owner, name, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamWorkspacesByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
+         * @summary Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganization(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamOrganization>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganization(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getOrganization']?.[localVarOperationServerIndex]?.url;
@@ -8979,12 +7463,13 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns one provider: what it connects to and how it is configured. Its credentials come back masked.
          * @summary Returns one provider: what it connects to and how it is configured.
-         * @param {IamProviderKey} iamProviderKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProvider(iamProviderKey: IamProviderKey, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamProviderResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getProvider(iamProviderKey, options);
+        async getProvider(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamProviderResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProvider(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8992,12 +7477,14 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns one person\'s session in one application — when it began and which browsers or devices are still carrying it.
          * @summary Returns one person\'s session in one application — when it began and which browsers or devices are still carrying it.
-         * @param {IamSessionRef} iamSessionRef 
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {string} application 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSession(iamSessionRef: IamSessionRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamSession>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSession(iamSessionRef, options);
+        async getSession(owner: string, name: string, application: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamSession>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSession(owner, name, application, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getSession']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9005,12 +7492,13 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns one access token: who and what it was issued to, and when it expires.
          * @summary Returns one access token: who and what it was issued to, and when it expires.
-         * @param {IamTokenKey} iamTokenKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getToken(iamTokenKey: IamTokenKey, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTokenResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getToken(iamTokenKey, options);
+        async getToken(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTokenResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getToken(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9018,27 +7506,29 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns one passkey or security key: whose it is, what device it lives on, and when it was registered.
          * @summary Returns one passkey or security key: whose it is, what device it lives on, and when it was registered.
-         * @param {IamWebauthnCredentialKey} iamWebauthnCredentialKey 
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWebauthnCredential(iamWebauthnCredentialKey: IamWebauthnCredentialKey, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWebauthnCredentialResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getWebauthnCredential(iamWebauthnCredentialKey, options);
+        async getWebauthnCredential(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWebauthnCredentialResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWebauthnCredential(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.getWebauthnCredential']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the organizations you can see, newest first. Narrow it to one parent account, and set a limit and offset to page through the rest.
-         * @summary Returns the organizations you can see, newest first.
-         * @param {string} [owner] 
+         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every door. The Guard refuses a bearerless request before this runs, but the agent door carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
+         * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
+         * @param {string} [xForwardedFor] 
+         * @param {string} [q] 
          * @param {number} [limit] 
-         * @param {number} [offset] 
+         * @param {string} [cursor] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listOrganizations(owner?: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListOrganizationsOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizations(owner, limit, offset, options);
+        async listOrganizations(xForwardedFor?: string, q?: string, limit?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListOrganizationsOutput>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrganizations(xForwardedFor, q, limit, cursor, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.listOrganizations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9059,12 +7549,14 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application. It is what you read before signing someone out.
          * @summary Returns who is currently signed in to your organization, newest first, and can be narrowed to one person or one application.
-         * @param {IamListSessionsIn} iamListSessionsIn 
+         * @param {string} owner 
+         * @param {string} [name] 
+         * @param {string} [application] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listSessions(iamListSessionsIn: IamListSessionsIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListSessionsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listSessions(iamListSessionsIn, options);
+        async listSessions(owner: string, name?: string, application?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamListSessionsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listSessions(owner, name, application, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.listSessions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9084,7 +7576,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list. It used to scope to the ORG, which handed an org admin every member\'s credential rows in one answer, and a SuperAdmin every tenant\'s; a plain member meanwhile could not read even their own, because an unnamed target fails the Guard\'s tenant rule. One scope fixes both halves: the answer is a person\'s, and the caller is the person unless they say otherwise and may.
+         * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list, by design. Scoping to the ORG would hand an org admin every member\'s credential rows in one answer and a SuperAdmin every tenant\'s, while a plain member could not read even their own (an unnamed target fails the Guard\'s tenant rule). One scope answers both halves cleanly: the answer is a person\'s, and the caller is that person unless they say otherwise and may.
          * @summary Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.
          * @param {string} [user] 
          * @param {*} [options] Override http request option.
@@ -9111,109 +7603,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.  The older spelling of POST /v1/iam/application. A name already used in the organization is refused rather than overwritten.
-         * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-         * @param {IamApplication} iamApplication 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAddApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddApplication(iamApplication, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAddApplication']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Lets a person or an application act in an organization. It is the grant behind \"add someone to the team\", and it is safe to repeat — granting a membership that already exists changes nothing. Granting membership IS the org\'s authority to give, so it takes the same gate a write to that org\'s own registry row takes: a SuperAdmin, an admin of the org itself, or an org-admin-capable confidential client. One rule, one place (internal/authz).
-         * @summary Lets a person or an application act in an organization.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAddMembership(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddMembership(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAddMembership']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates an organization — the account everything else in your directory hangs from. Users, applications, roles, projects and workspaces are all named inside one organization, so this is the first write in a new tenant.  The older spelling of POST /v1/iam/organizations. Both reach the same create, so a name already taken is refused here too.
-         * @summary Creates an organization — the account everything else in your directory hangs from.
-         * @param {IamCreateOrganizationInput} iamCreateOrganizationInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAddOrganization(iamCreateOrganizationInput: IamCreateOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddOrganization(iamCreateOrganizationInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAddOrganization']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.  The older spelling of POST /v1/iam/projects. Creating one takes an administrator of the owning organization.
-         * @summary Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.
-         * @param {IamInput} iamInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAddProject(iamInput: IamInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddProject(iamInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAddProject']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.  A provider is configured once here and then switched on per application, so several applications can share one set of credentials.  The older spelling of POST /v1/iam/providers.
-         * @summary Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.
-         * @param {IamProvider} iamProvider 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAddProvider(iamProvider: IamProvider, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddProvider(iamProvider, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAddProvider']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do.  The older spelling of POST /v1/iam/roles.
-         * @summary Creates a role — a named group of people that permissions are granted to.
-         * @param {IamRolesInput} iamRolesInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAddRole(iamRolesInput: IamRolesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddRole(iamRolesInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAddRole']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Adds a person to your organization and, if you send a password, sets the one they will sign in with. The password is hashed before it is stored and is never returned to you or to anyone else.  Usernames are checked against one rule wherever an account is created — this verb, password signup, a social sign-in, or SCIM — so a name accepted here is a name accepted everywhere.  The older spelling of POST /v1/iam/users, and it posts the user\'s fields at the top level rather than wrapped in {user, password}.
-         * @summary Adds a person to your organization and, if you send a password, sets the one they will sign in with.
-         * @param {IamUserBody} iamUserBody 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAddUser(iamUserBody: IamUserBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddUser(iamUserBody, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAddUser']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.  The older spelling of POST /v1/iam/workspaces. Creating one takes an administrator of the owning organization.
-         * @summary Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.
-         * @param {IamWorkspacesInput} iamWorkspacesInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAddWorkspace(iamWorkspacesInput: IamWorkspacesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAddWorkspace(iamWorkspacesInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAddWorkspace']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
          * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
          * @param {*} [options] Override http request option.
@@ -9232,49 +7621,10 @@ export const IamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIamApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamApplication(iamApplication, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamApplication']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
-         * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-         * @param {IamApplication} iamApplication 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         async postIamApplications(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamApplications(iamApplication, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamApplications']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Removes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration before deleting it.
-         * @summary Removes an application.
-         * @param {IamApplicationRef} iamApplicationRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamApplicationsDelete(iamApplicationRef: IamApplicationRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamApplicationsDelete(iamApplicationRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamApplicationsDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
-         * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
-         * @param {IamApplication} iamApplication 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamApplicationsUpdate(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamApplicationsUpdate(iamApplication, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamApplicationsUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -9295,58 +7645,19 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
          * @summary Records an audit entry, so activity from your own systems lands in the same trail as everything the Hanzo Cloud records for you.
-         * @param {IamAuditlogsInput} iamAuditlogsInput 
+         * @param {IamInput} iamInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIamAuditLogs(iamAuditlogsInput: IamAuditlogsInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditLog>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAuditLogs(iamAuditlogsInput, options);
+        async postIamAuditLogs(iamInput: IamInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditLog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAuditLogs(iamInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAuditLogs']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes an audit entry. Retention policy is normally what should expire a trail; deleting by hand leaves a gap a reviewer will notice.
-         * @summary Removes an audit entry.
-         * @param {IamRef} iamRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAuditLogsDelete(iamRef: IamRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAuditLogsDelete(iamRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAuditLogsDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
-         * @summary Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
-         * @param {IamRef} iamRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAuditLogsGet(iamRef: IamRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditLog>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAuditLogsGet(iamRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAuditLogsGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Corrects an audit entry. The trail is append-only in normal operation and nothing in the Hanzo Cloud rewrites it — this exists for an administrator to correct an entry their own systems recorded wrongly.
-         * @summary Corrects an audit entry.
-         * @param {IamAuditlogsInput} iamAuditlogsInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamAuditLogsUpdate(iamAuditlogsInput: IamAuditlogsInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditLog>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamAuditLogsUpdate(iamAuditlogsInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamAuditLogsUpdate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Adds a signing certificate your applications can verify tokens against — the call you make to bring your own key, or to stage the next one before a rotation. A name already used in your organization is refused.
-         * @summary Adds a signing certificate your applications can verify tokens against — the call you make to bring your own key, or to stage the next one before a rotation.
+         * Adds a signing certificate your applications can verify tokens against — the call you make to stage the next one before a rotation. A name already used in your organization is refused.  It registers the certificate\'s IDENTITY: its name (which is the JWKS `kid`), its algorithm, its expiry. Key material does not travel this way and cannot: the private key is not part of the Cert\'s JSON, so it is neither served here nor accepted here. It is supplied to the process by the deployment, under the name registered here (internal/keyring). Staging a rotation is therefore two halves — this call names the key, and the deployment provides it.
+         * @summary Adds a signing certificate your applications can verify tokens against — the call you make to stage the next one before a rotation.
          * @param {IamCert} iamCert 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9355,58 +7666,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamCerts(iamCert, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamCerts']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Removes a signing certificate. Tokens signed with it can no longer be verified, so retire it only once nothing is still presenting them.
-         * @summary Removes a signing certificate.
-         * @param {IamCertsRef} iamCertsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamCertsDelete(iamCertsRef: IamCertsRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamCertsDeleteOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamCertsDelete(iamCertsRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamCertsDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one signing certificate — its algorithm, its validity window and its public half. The private key is masked.
-         * @summary Returns one signing certificate — its algorithm, its validity window and its public half.
-         * @param {IamCertsRef} iamCertsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamCertsGet(iamCertsRef: IamCertsRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamCert>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamCertsGet(iamCertsRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamCertsGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Changes a signing certificate\'s settings. What it is called does not change, and neither does when it was added.
-         * @summary Changes a signing certificate\'s settings.
-         * @param {IamCert} iamCert 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamCertsUpdate(iamCert: IamCert, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamCert>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamCertsUpdate(iamCert, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamCertsUpdate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Deletes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration first.  The older spelling of DELETE /v1/iam/application.
-         * @summary Deletes an application.
-         * @param {IamApplication} iamApplication 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamDeleteApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteApplication(iamApplication, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamDeleteApplication']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -9434,84 +7693,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces. There is no undo, and every session issued under it stops working.  The older spelling of POST /v1/iam/organizations/delete.
-         * @summary Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces.
-         * @param {IamDeleteOrganizationInput} iamDeleteOrganizationInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamDeleteOrganization(iamDeleteOrganizationInput: IamDeleteOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteOrganization(iamDeleteOrganizationInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamDeleteOrganization']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Deletes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so anything addressed by it must move first.  The older spelling of POST /v1/iam/projects/delete.
-         * @summary Deletes a project.
-         * @param {IamProjectsRef} iamProjectsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamDeleteProject(iamProjectsRef: IamProjectsRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteProject(iamProjectsRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamDeleteProject']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Removes a provider. Sign-in through it stops for every application that used it, so detach those applications first if they have no other method.  The older spelling of POST /v1/iam/providers/delete.
-         * @summary Removes a provider.
-         * @param {IamProvider} iamProvider 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamDeleteProvider(iamProvider: IamProvider, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteProvider(iamProvider, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamDeleteProvider']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Deletes a role. Everyone in it loses the access it carried; their accounts and any other roles they hold are untouched.  The older spelling of POST /v1/iam/roles/delete.
-         * @summary Deletes a role.
-         * @param {IamRolesRef} iamRolesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamDeleteRole(iamRolesRef: IamRolesRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteRole(iamRolesRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamDeleteRole']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Removes a person from your organization. Their sessions stop working and the account is gone, not suspended — to keep the record and only stop sign-in, update the user instead.  The older spelling of POST /v1/iam/users/delete.
-         * @summary Removes a person from your organization.
-         * @param {IamUserBody} iamUserBody 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamDeleteUser(iamUserBody: IamUserBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteUser(iamUserBody, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamDeleteUser']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Deletes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.  The older spelling of POST /v1/iam/workspaces/delete.
-         * @summary Deletes a workspace.
-         * @param {IamWorkspacesRef} iamWorkspacesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamDeleteWorkspace(iamWorkspacesRef: IamWorkspacesRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteWorkspace(iamWorkspacesRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamDeleteWorkspace']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working. A name already used in the organization is refused.
          * @summary Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working.
          * @param {IamInvitationsInput} iamInvitationsInput 
@@ -9522,45 +7703,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamInvitations(iamInvitationsInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamInvitations']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Withdraws an invitation. It stops being redeemable at once; anyone who already joined through it keeps their account.
-         * @summary Withdraws an invitation.
-         * @param {IamInvitationsRef} iamInvitationsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamInvitationsDelete(iamInvitationsRef: IamInvitationsRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamInvitationsDeleteOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamInvitationsDelete(iamInvitationsRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamInvitationsDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
-         * @summary Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
-         * @param {IamInvitationsRef} iamInvitationsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamInvitationsGet(iamInvitationsRef: IamInvitationsRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamInvitation>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamInvitationsGet(iamInvitationsRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamInvitationsGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires. What it is called does not change.
-         * @summary Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires.
-         * @param {IamInvitationsInput} iamInvitationsInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamInvitationsUpdate(iamInvitationsInput: IamInvitationsInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamInvitation>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamInvitationsUpdate(iamInvitationsInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamInvitationsUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -9586,56 +7728,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamKeys(iamKey, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamKeys']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Revokes an API key. Anything still presenting it stops being authorized at once, so roll the replacement out before you revoke.
-         * @summary Revokes an API key.
-         * @param {IamKeysRef} iamKeysRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamKeysDelete(iamKeysRef: IamKeysRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamDeleteResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamKeysDelete(iamKeysRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamKeysDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
-         * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamKeysMint(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamKeysMint(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamKeysMint']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
-         * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamKeysRevoke(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamKeysRevoke(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamKeysRevoke']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
-         * @summary Changes what a key is called or what it may reach.
-         * @param {IamKey} iamKey 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamKeysUpdate(iamKey: IamKey, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamKey>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamKeysUpdate(iamKey, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamKeysUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -9675,18 +7767,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
-         * @summary Turns a factor off, so sign-in stops asking for it.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamMfaDisable(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamMfaDisable(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamMfaDisable']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
          * @summary Picks which second factor an account is asked for first when it has more than one.
          * @param {*} [options] Override http request option.
@@ -9699,7 +7779,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  It used to write on the strength of a `secret` field alone. A client that skipped the verify step, scanned the QR into the wrong app, or was simply buggy switched on a factor no code would ever satisfy, and the account was then locked out with no self-service way back: the gate holds the sign-in before minting, so the person cannot obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
+         * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  Verifying BEFORE writing is what keeps a client that never completed the proof — a skipped verify step, a QR scanned into the wrong app, a bug — from switching on a factor no code can satisfy. That would lock the account out with no self-service way back: the gate holds the sign-in before minting, so the person could not obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
          * @summary Finishes the enrolment: from here the account\'s sign-ins ask for this factor.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9759,7 +7839,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names the wrong one defeats the control it implements. It used to render the portal\'s own app name — a constant, `hanzo-console` for every code — so a device code minted by `hanzo-cli` was approved under a screen naming a different application entirely. The client is a property of the CODE, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
+         * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names any other one defeats the control it implements. The client is a property of the CODE, not of the page or of whatever app the browser happens to be signed in to, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
          * @summary Answers \"what am I approving?\" for a pending device code.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9795,7 +7875,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out, which is worth stating because the endpoint spent a release not doing it: the whole body computed a redirect and answered {\"status\":\"ok\"} unconditionally — no session ended, no token revoked. A logout that reports success while leaving the session live is worse than no logout at all, because the person on the shared machine believes it worked. Three things happen here now, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9807,7 +7887,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. hanzo-cli is a public PKCE client holding a 30-day rotating refresh token, so a confidential-only revocation endpoint made `hanzo auth logout` a LOCAL DELETE — the credential it dropped stayed spendable at hanzo.id for the rest of the month, with nothing able to kill it. Measured 2026-08-01: revoke answered 401 invalid_client and the refresh token went on minting access tokens.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
+         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. A native app or CLI is a public PKCE client and holds no secret, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
          * @summary Retires a token before it expires — what you call when someone signs out or a credential may have leaked.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9868,32 +7948,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Revokes a permission. Everyone who held access only through it loses that access immediately; grants they hold by another route are untouched.
-         * @summary Revokes a permission.
-         * @param {IamPermissionRef} iamPermissionRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamPermissionsDelete(iamPermissionRef: IamPermissionRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamPermissionDeleteResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamPermissionsDelete(iamPermissionRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamPermissionsDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Changes who a permission grants to, what it allows, or the resources it covers. Access changes as soon as the write lands. What the permission is called does not change, and neither does when it was created.
-         * @summary Changes who a permission grants to, what it allows, or the resources it covers.
-         * @param {IamPermission} iamPermission 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamPermissionsUpdate(iamPermission: IamPermission, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamPermission>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamPermissionsUpdate(iamPermission, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamPermissionsUpdate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
          * @summary Saves the calling person\'s own settings and returns the full set afterwards.
          * @param {*} [options] Override http request option.
@@ -9908,53 +7962,14 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Makes a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team. A name already used in the organization is refused.
          * @summary Makes a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.
-         * @param {IamInput} iamInput 
+         * @param {IamProjectsInput} iamProjectsInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIamProjects(iamInput: IamInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamProjects(iamInput, options);
+        async postIamProjects(iamProjectsInput: IamProjectsInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamProjects(iamProjectsInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamProjects']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Removes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so move anything addressed by it first.
-         * @summary Removes a project.
-         * @param {IamProjectsRef} iamProjectsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamProjectsDelete(iamProjectsRef: IamProjectsRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamProjectsDeleteOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamProjectsDelete(iamProjectsRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamProjectsDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one project: what it is called and how it is set up.
-         * @summary Returns one project: what it is called and how it is set up.
-         * @param {IamProjectsRef} iamProjectsRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamProjectsGet(iamProjectsRef: IamProjectsRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamProjectsGet(iamProjectsRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamProjectsGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Changes a project\'s settings. What it is called does not change, and neither does when it was created.
-         * @summary Changes a project\'s settings.
-         * @param {IamInput} iamInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamProjectsUpdate(iamInput: IamInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamProject>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamProjectsUpdate(iamInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamProjectsUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -10007,45 +8022,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamRoles(iamRolesInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamRoles']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Removes a role. Everyone in it loses the access it carried; their accounts, and any other role they hold, are untouched.
-         * @summary Removes a role.
-         * @param {IamRolesRef} iamRolesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamRolesDelete(iamRolesRef: IamRolesRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamRolesDeleteOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamRolesDelete(iamRolesRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamRolesDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one role: who is in it, and the roles it includes.
-         * @summary Returns one role: who is in it, and the roles it includes.
-         * @param {IamRolesRef} iamRolesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamRolesGet(iamRolesRef: IamRolesRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamRole>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamRolesGet(iamRolesRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamRolesGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
-         * @summary Changes who is in a role, or which roles it includes.
-         * @param {IamRolesInput} iamRolesInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamRolesUpdate(iamRolesInput: IamRolesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamRole>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamRolesUpdate(iamRolesInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamRolesUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -10158,32 +8134,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to. Which organization and name the application has are fixed when it is created and are not editable here.  A redirect URI you add becomes an allowed sign-in origin, so this is the call that makes login work from a new host.  The older spelling of PUT /v1/iam/application.
-         * @summary Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to.
-         * @param {IamApplication} iamApplication 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamUpdateApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdateApplication(iamApplication, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamUpdateApplication']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.  The older spelling of POST /v1/iam/organizations/update.
-         * @summary Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.
-         * @param {IamUpdateOrganizationInput} iamUpdateOrganizationInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamUpdateOrganization(iamUpdateOrganizationInput: IamUpdateOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdateOrganization(iamUpdateOrganizationInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamUpdateOrganization']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
          * @summary Saves the calling person\'s own settings and returns the full set afterwards.
          * @param {*} [options] Override http request option.
@@ -10193,45 +8143,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdatePreferences(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamUpdatePreferences']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Updates a provider\'s settings or rotates the credentials it holds. The change takes effect on the next sign-in through it — sessions already issued are unaffected.  The older spelling of POST /v1/iam/providers/update.
-         * @summary Updates a provider\'s settings or rotates the credentials it holds.
-         * @param {IamProvider} iamProvider 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamUpdateProvider(iamProvider: IamProvider, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdateProvider(iamProvider, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamUpdateProvider']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Updates a role\'s members or the roles it includes. Access changes for everyone in it as soon as the write lands.  The older spelling of POST /v1/iam/roles/update.
-         * @summary Updates a role\'s members or the roles it includes.
-         * @param {IamRolesInput} iamRolesInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamUpdateRole(iamRolesInput: IamRolesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdateRole(iamRolesInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamUpdateRole']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Updates one of your users\' profile, roles or credentials. Send a password to reset it; leave it out and the current one stands.  The older spelling of POST /v1/iam/users/update, with the user\'s fields at the top level rather than wrapped in {user, password}.
-         * @summary Updates one of your users\' profile, roles or credentials.
-         * @param {IamUserBody} iamUserBody 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamUpdateUser(iamUserBody: IamUserBody, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdateUser(iamUserBody, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamUpdateUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -10248,29 +8159,17 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
-         * @summary Removes a person from your organization.
-         * @param {IamUsersRef} iamUsersRef 
+         * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
+         * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIamUsersDelete(iamUsersRef: IamUsersRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUsersDeleteOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUsersDelete(iamUsersRef, options);
+        async postIamUsersByOwnerByNameKeys(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUsersByOwnerByNameKeys(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamUsersDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
-         * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
-         * @param {IamUpdateInput} iamUpdateInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamUsersUpdate(iamUpdateInput: IamUpdateInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUser>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUsersUpdate(iamUpdateInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamUsersUpdate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamUsersByOwnerByNameKeys']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -10335,45 +8234,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.
-         * @summary Removes a workspace.
-         * @param {IamWorkspacesRef} iamWorkspacesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamWorkspacesDelete(iamWorkspacesRef: IamWorkspacesRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWorkspacesDeleteOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamWorkspacesDelete(iamWorkspacesRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamWorkspacesDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns one workspace: what it is called and how it is set up.
-         * @summary Returns one workspace: what it is called and how it is set up.
-         * @param {IamWorkspacesRef} iamWorkspacesRef 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamWorkspacesGet(iamWorkspacesRef: IamWorkspacesRef, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWorkspace>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamWorkspacesGet(iamWorkspacesRef, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamWorkspacesGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Changes a workspace\'s settings. What it is called does not change, and neither does when it was created.
-         * @summary Changes a workspace\'s settings.
-         * @param {IamWorkspacesInput} iamWorkspacesInput 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamWorkspacesUpdate(iamWorkspacesInput: IamWorkspacesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWorkspace>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamWorkspacesUpdate(iamWorkspacesInput, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamWorkspacesUpdate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.  Only their own: the request names nobody, so it cannot reach another account. Send only what you are changing; a field you leave out keeps the value it had, and a field you send empty is cleared.  A picture is an https link or an inline image up to 96 KiB, the same value an organization\'s mark is (schema.AvatarRef) — one rule for how a subject appears, whether the subject is a person or an organization.
          * @summary Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.
          * @param {IamAccountBody} iamAccountBody 
@@ -10391,14 +8251,46 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
          * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {IamApplication} iamApplication 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putIamApplication(iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamApplication(iamApplication, options);
+        async putIamApplicationsByOwnerByName(owner: string, name: string, iamApplication: IamApplication, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamApplication>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamApplicationsByOwnerByName(owner, name, iamApplication, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamApplication']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamApplicationsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Corrects an audit entry. The trail is append-only in normal operation and nothing in the Hanzo Cloud rewrites it — this exists for an administrator to correct an entry their own systems recorded wrongly.
+         * @summary Corrects an audit entry.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamInput} iamInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamAuditLogsByOwnerByName(owner: string, name: string, iamInput: IamInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAuditLog>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamAuditLogsByOwnerByName(owner, name, iamInput, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamAuditLogsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes a signing certificate\'s settings. What it is called does not change, and neither does when it was added.  A PUT here is a METADATA edit — display name, expiry, provider. It overlays only the fields the request actually SET onto the loaded row: a field the JSON omits (or leaves at its zero value) keeps what the row holds, rather than blanking it. That is load-bearing, not a nicety. A read serves the public Certificate (Mask hides only PrivateKey and AccessSecret), so a client that reads a cert, changes one field, and writes it back sends the masked halves empty and every other field it did not touch at its zero value — and the old full-struct overlay wrote all of those blanks back. Blanking CryptoAlgorithm alone drops the cert from the JWKS (oidc.Publishes turns false), so every token under its `kid` stops verifying; blanking Provider/Account/ExpireTime breaks ACME renewal and expiry — all from a request that only meant to rename it. Absent-or-zero means \"unchanged\", so the deployment (key) and a rotation (cert) remain the only way key or published material changes; the metadata API cannot clear it.  The overlay is generic — it copies every set field, so a field nobody has added yet is carried without a line here — and leaves three things the request may not move: the bound Model (id, createdAt, key, snapshot), the natural key (owner/name address the row, they do not mutate it), and the creation stamp.
+         * @summary Changes a signing certificate\'s settings.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamCert} iamCert 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamCertsByOwnerByName(owner: string, name: string, iamCert: IamCert, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamCert>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamCertsByOwnerByName(owner, name, iamCert, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamCertsByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -10411,6 +8303,36 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putIamConsent(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.putIamConsent']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires. What it is called does not change.
+         * @summary Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamInvitationsInput} iamInvitationsInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamInvitationsByOwnerByName(owner: string, name: string, iamInvitationsInput: IamInvitationsInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamInvitation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamInvitationsByOwnerByName(owner, name, iamInvitationsInput, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamInvitationsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
+         * @summary Changes what a key is called or what it may reach.
+         * @param {string} owner Owner is the tenant that holds the key; Name is unique within Owner.
+         * @param {string} name 
+         * @param {IamKey} iamKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamKeysByOwnerByName(owner: string, name: string, iamKey: IamKey, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamKey>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamKeysByOwnerByName(owner, name, iamKey, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamKeysByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -10429,6 +8351,51 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Changes who a permission grants to, what it allows, or the resources it covers. Access changes as soon as the write lands. What the permission is called does not change, and neither does when it was created.
+         * @summary Changes who a permission grants to, what it allows, or the resources it covers.
+         * @param {string} owner Identity — the (owner, name) natural key.
+         * @param {string} name 
+         * @param {IamPermission} iamPermission 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamPermissionsByOwnerByName(owner: string, name: string, iamPermission: IamPermission, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamPermission>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamPermissionsByOwnerByName(owner, name, iamPermission, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamPermissionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes a project\'s settings. What it is called does not change, and neither does when it was created.
+         * @summary Changes a project\'s settings.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamProjectsInput} iamProjectsInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamProjectsByOwnerByName(owner: string, name: string, iamProjectsInput: IamProjectsInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamProject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamProjectsByOwnerByName(owner, name, iamProjectsInput, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamProjectsByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
+         * @summary Changes who is in a role, or which roles it includes.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamRolesInput} iamRolesInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamRolesByOwnerByName(owner: string, name: string, iamRolesInput: IamRolesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamRole>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamRolesByOwnerByName(owner, name, iamRolesInput, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamRolesByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Overwrites a person\'s SCIM attributes with what your identity provider sends — how a change made there lands here.  Only the attributes SCIM describes are replaced. Anything the standard does not cover — their multi-factor enrolment above all — survives untouched, so a routine sync from your IdP can never quietly strip someone\'s second factor or bring a deleted account back.
          * @summary Overwrites a person\'s SCIM attributes with what your identity provider sends — how a change made there lands here.
          * @param {string} owner 
@@ -10443,19 +8410,33 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.
-         * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
-         * @param {string} [xForwardedFor] 
-         * @param {string} [q] 
-         * @param {number} [limit] 
-         * @param {string} [cursor] 
+         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
+         * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamUpdateInput} iamUpdateInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchOrganizations(xForwardedFor?: string, q?: string, limit?: number, cursor?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamSearchOrganizationsOutput>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchOrganizations(xForwardedFor, q, limit, cursor, options);
+        async putIamUsersByOwnerByName(owner: string, name: string, iamUpdateInput: IamUpdateInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamUsersByOwnerByName(owner, name, iamUpdateInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.searchOrganizations']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamUsersByOwnerByName']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes a workspace\'s settings. What it is called does not change, and neither does when it was created.
+         * @summary Changes a workspace\'s settings.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {IamWorkspacesInput} iamWorkspacesInput 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putIamWorkspacesByOwnerByName(owner: string, name: string, iamWorkspacesInput: IamWorkspacesInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWorkspace>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putIamWorkspacesByOwnerByName(owner, name, iamWorkspacesInput, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['IamApi.putIamWorkspacesByOwnerByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -10474,12 +8455,14 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits. Which organization it is does not change, and neither does when it was created.
          * @summary Changes an organization\'s display, its defaults and the sign-in rules everyone in it inherits.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {IamUpdateOrganizationInput} iamUpdateOrganizationInput 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateOrganization(iamUpdateOrganizationInput: IamUpdateOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamOrganization>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateOrganization(iamUpdateOrganizationInput, options);
+        async updateOrganization(owner: string, name: string, iamUpdateOrganizationInput: IamUpdateOrganizationInput, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamOrganization>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateOrganization(owner, name, iamUpdateOrganizationInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.updateOrganization']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10487,12 +8470,14 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Changes a provider\'s settings or rotates the credentials it holds. The change takes effect on the next sign-in through it — sessions already issued are unaffected.  A provider that is not there answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Changes a provider\'s settings or rotates the credentials it holds.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {IamProvider} iamProvider 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateProvider(iamProvider: IamProvider, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamMutationResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateProvider(iamProvider, options);
+        async updateProvider(owner: string, name: string, iamProvider: IamProvider, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamMutationResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateProvider(owner, name, iamProvider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.updateProvider']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10500,12 +8485,15 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live. A session that does not exist is reported as missing rather than created.
          * @summary Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live.
+         * @param {string} owner 
+         * @param {string} name 
+         * @param {string} application 
          * @param {IamUpdateSessionIn} iamUpdateSessionIn 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateSession(iamUpdateSessionIn: IamUpdateSessionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamSession>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateSession(iamUpdateSessionIn, options);
+        async updateSession(owner: string, name: string, application: string, iamUpdateSessionIn: IamUpdateSessionIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamSession>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateSession(owner, name, application, iamUpdateSessionIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.updateSession']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10513,12 +8501,14 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Changes an access token\'s scope or expiry.  A token that is not there answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Changes an access token\'s scope or expiry.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {IamToken} iamToken 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateToken(iamToken: IamToken, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTokenMutation>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateToken(iamToken, options);
+        async updateToken(owner: string, name: string, iamToken: IamToken, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamTokenMutation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateToken(owner, name, iamToken, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.updateToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10526,12 +8516,14 @@ export const IamApiFp = function(configuration?: Configuration) {
         /**
          * Renames a registered passkey or security key, so a person can tell their devices apart.  A credential that is not there answers \"nothing changed\" rather than an error, so the call is safe to repeat.
          * @summary Renames a registered passkey or security key, so a person can tell their devices apart.
+         * @param {string} owner 
+         * @param {string} name 
          * @param {IamWebauthnCredential} iamWebauthnCredential 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateWebauthnCredential(iamWebauthnCredential: IamWebauthnCredential, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWebauthnCredentialMutationResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateWebauthnCredential(iamWebauthnCredential, options);
+        async updateWebauthnCredential(owner: string, name: string, iamWebauthnCredential: IamWebauthnCredential, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamWebauthnCredentialMutationResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateWebauthnCredential(owner, name, iamWebauthnCredential, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.updateWebauthnCredential']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10551,7 +8543,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
+         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.
          * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
          * @param {IamPerson} iamPerson 
          * @param {string} [authorization] 
@@ -10627,12 +8619,91 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Removes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration before deleting it.
          * @summary Removes an application.
-         * @param {IamApiDeleteIamApplicationRequest} requestParameters Request parameters.
+         * @param {IamApiDeleteIamApplicationsByOwnerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteIamApplication(requestParameters: IamApiDeleteIamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteResult> {
-            return localVarFp.deleteIamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        deleteIamApplicationsByOwnerByName(requestParameters: IamApiDeleteIamApplicationsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteResult> {
+            return localVarFp.deleteIamApplicationsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes an audit entry. Retention policy is normally what should expire a trail; deleting by hand leaves a gap a reviewer will notice.
+         * @summary Removes an audit entry.
+         * @param {IamApiDeleteIamAuditLogsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamAuditLogsByOwnerByName(requestParameters: IamApiDeleteIamAuditLogsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteOutput> {
+            return localVarFp.deleteIamAuditLogsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes a signing certificate. Tokens signed with it can no longer be verified, so retire it only once nothing is still presenting them.
+         * @summary Removes a signing certificate.
+         * @param {IamApiDeleteIamCertsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamCertsByOwnerByName(requestParameters: IamApiDeleteIamCertsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamCertsDeleteOutput> {
+            return localVarFp.deleteIamCertsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Withdraws an invitation. It stops being redeemable at once; anyone who already joined through it keeps their account.
+         * @summary Withdraws an invitation.
+         * @param {IamApiDeleteIamInvitationsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamInvitationsByOwnerByName(requestParameters: IamApiDeleteIamInvitationsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamInvitationsDeleteOutput> {
+            return localVarFp.deleteIamInvitationsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Revokes an API key. Anything still presenting it stops being authorized at once, so roll the replacement out before you revoke.
+         * @summary Revokes an API key.
+         * @param {IamApiDeleteIamKeysByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamKeysByOwnerByName(requestParameters: IamApiDeleteIamKeysByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteResponse> {
+            return localVarFp.deleteIamKeysByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+         * @summary Turns a factor off, so sign-in stops asking for it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamMfa(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteIamMfa(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Revokes a permission. Everyone who held access only through it loses that access immediately; grants they hold by another route are untouched.
+         * @summary Revokes a permission.
+         * @param {IamApiDeleteIamPermissionsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamPermissionsByOwnerByName(requestParameters: IamApiDeleteIamPermissionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamPermissionDeleteResponse> {
+            return localVarFp.deleteIamPermissionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so move anything addressed by it first.
+         * @summary Removes a project.
+         * @param {IamApiDeleteIamProjectsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamProjectsByOwnerByName(requestParameters: IamApiDeleteIamProjectsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamProjectsDeleteOutput> {
+            return localVarFp.deleteIamProjectsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes a role. Everyone in it loses the access it carried; their accounts, and any other role they hold, are untouched.
+         * @summary Removes a role.
+         * @param {IamApiDeleteIamRolesByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamRolesByOwnerByName(requestParameters: IamApiDeleteIamRolesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamRolesDeleteOutput> {
+            return localVarFp.deleteIamRolesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Deprovisions a person — how removing someone in your identity provider removes their access here. Their sessions stop working immediately. Takes an administrator.
@@ -10655,6 +8726,36 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.deleteIamServiceAccountsByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
+         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
+         * @summary Removes a person from your organization.
+         * @param {IamApiDeleteIamUsersByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamUsersByOwnerByName(requestParameters: IamApiDeleteIamUsersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamUsersDeleteOutput> {
+            return localVarFp.deleteIamUsersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
+         * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
+         * @param {IamApiDeleteIamUsersByOwnerByNameKeysRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamUsersByOwnerByNameKeys(requestParameters: IamApiDeleteIamUsersByOwnerByNameKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteIamUsersByOwnerByNameKeys(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.
+         * @summary Removes a workspace.
+         * @param {IamApiDeleteIamWorkspacesByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteIamWorkspacesByOwnerByName(requestParameters: IamApiDeleteIamWorkspacesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamWorkspacesDeleteOutput> {
+            return localVarFp.deleteIamWorkspacesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Removes an organization and everything named inside it. There is no undo, and every session issued under it stops working.  The built-in admin organization cannot be deleted — losing it would leave the account with no way back in.
          * @summary Removes an organization and everything named inside it.
          * @param {IamApiDeleteOrganizationRequest} requestParameters Request parameters.
@@ -10662,7 +8763,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         deleteOrganization(requestParameters: IamApiDeleteOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteOrganizationOutput> {
-            return localVarFp.deleteOrganization(requestParameters.iamDeleteOrganizationInput, options).then((request) => request(axios, basePath));
+            return localVarFp.deleteOrganization(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a provider. Sign-in through it stops for every application that used it, so give those applications another method first.  A provider that is already gone answers \"nothing changed\" rather than an error, so the call is safe to repeat.
@@ -10672,7 +8773,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         deleteProvider(requestParameters: IamApiDeleteProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamMutationResult> {
-            return localVarFp.deleteProvider(requestParameters.iamProviderKey, options).then((request) => request(axios, basePath));
+            return localVarFp.deleteProvider(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Signs a person out of one application — the session ends and every browser carrying it stops being authenticated.  A session that is already gone reports that nothing was deleted rather than an error, so the call is safe to repeat.
@@ -10682,7 +8783,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         deleteSession(requestParameters: IamApiDeleteSessionRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteSessionOut> {
-            return localVarFp.deleteSession(requestParameters.iamSessionRef, options).then((request) => request(axios, basePath));
+            return localVarFp.deleteSession(requestParameters.owner, requestParameters.name, requestParameters.application, options).then((request) => request(axios, basePath));
         },
         /**
          * Revokes an access token. Whatever was using it stops being authorized at once.  A token that is already gone answers \"nothing changed\" rather than an error, so the call is safe to repeat.
@@ -10692,7 +8793,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         deleteToken(requestParameters: IamApiDeleteTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamTokenMutation> {
-            return localVarFp.deleteToken(requestParameters.iamTokenKey, options).then((request) => request(axios, basePath));
+            return localVarFp.deleteToken(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Removes a passkey or security key — what you call when a device is lost. Make sure the person has another way to sign in first.  A credential that is already gone answers \"nothing changed\" rather than an error, so the call is safe to repeat.
@@ -10702,7 +8803,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         deleteWebauthnCredential(requestParameters: IamApiDeleteWebauthnCredentialRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamWebauthnCredentialMutationResult> {
-            return localVarFp.deleteWebauthnCredential(requestParameters.iamWebauthnCredentialKey, options).then((request) => request(axios, basePath));
+            return localVarFp.deleteWebauthnCredential(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the signed-in person\'s own account and the organization they belong to — what a console reads to draw the account menu.  Passwords, API secrets and MFA material are stripped. It answers for a session cookie or a bearer token alike.
@@ -10712,16 +8813,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         getIamAccount(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getIamAccount(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-         * @summary Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-         * @param {IamApiGetIamApplicationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamApplication(requestParameters: IamApiGetIamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
-            return localVarFp.getIamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the applications in one organization, newest first — each product or site your people sign in to, with the sign-in methods and redirect URIs it allows.
@@ -10736,12 +8827,12 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
          * @summary Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-         * @param {IamApiGetIamApplicationsGetRequest} requestParameters Request parameters.
+         * @param {IamApiGetIamApplicationsByOwnerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamApplicationsGet(requestParameters: IamApiGetIamApplicationsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
-            return localVarFp.getIamApplicationsGet(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        getIamApplicationsByOwnerByName(requestParameters: IamApiGetIamApplicationsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
+            return localVarFp.getIamApplicationsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns your organization\'s audit trail, newest first — who did what, when, and from where. It is the record you reach for during a security review or an incident.  You see your own organization\'s audit trail and no one else\'s; which organization that is comes from your credentials, not from the request.
@@ -10752,6 +8843,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         getIamAuditLogs(requestParameters: IamApiGetIamAuditLogsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamListOutput> {
             return localVarFp.getIamAuditLogs(requestParameters.owner, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
+         * @summary Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
+         * @param {IamApiGetIamAuditLogsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamAuditLogsByOwnerByName(requestParameters: IamApiGetIamAuditLogsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAuditLog> {
+            return localVarFp.getIamAuditLogsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
@@ -10784,6 +8885,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamCerts(requestParameters.owner, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns one signing certificate — its algorithm, its validity window and its public half. The private key is masked.
+         * @summary Returns one signing certificate — its algorithm, its validity window and its public half.
+         * @param {IamApiGetIamCertsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamCertsByOwnerByName(requestParameters: IamApiGetIamCertsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamCert> {
+            return localVarFp.getIamCertsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show — insights on, and training UNANSWERED, which is the state that means the screen still has to ask.
          * @summary Returns the calling person\'s own privacy and communication choices.
          * @param {*} [options] Override http request option.
@@ -10812,187 +8923,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamGetAppLogin(requestParameters.clientId, requestParameters.responseType, options).then((request) => request(axios, basePath));
         },
         /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetApplication(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetApplication(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetApplications(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetApplications(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetCert(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetCert(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetCerts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetCerts(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetGlobalUsers(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetGlobalUsers(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetInvitations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetInvitations(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
-         * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
-         * @param {IamApiGetIamGetMembershipsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetMemberships(requestParameters: IamApiGetIamGetMembershipsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
-            return localVarFp.getIamGetMemberships(requestParameters.user, requestParameters.org, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetOrganization(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetOrganization(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one organization\'s projects — what a scope switcher lists so somebody can move between them.  You see your own organization and no other, whatever the request asks for.
-         * @summary Returns one organization\'s projects — what a scope switcher lists so somebody can move between them.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetOrganizationProjects(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetOrganizationProjects(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one organization\'s workspaces — what a scope switcher lists so somebody can move between them.  You see your own organization and no other, whatever the request asks for.
-         * @summary Returns one organization\'s workspaces — what a scope switcher lists so somebody can move between them.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetOrganizationWorkspaces(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetOrganizationWorkspaces(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetOrganizations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetOrganizations(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetPermission(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetPermission(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetPermissions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetPermissions(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetProvider(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetProvider(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetProviders(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetRecords(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetRecords(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-         * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetRole(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetRole(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetRoles(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetRoles(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Reads one person, two ways.  Name them and it is an ordinary read, with secrets stripped. Or hand it a SECRET API key and it answers with the person that key belongs to — how a service of yours turns a credential on an incoming request into an identity.  A publishable key resolves to nobody here, deliberately: it is safe to ship in a browser precisely because it names an organization and never a person.  get-user is handler-authorized (authz.handlerAuthorizedExact) because the key variant carries no owner/name for the Guard to authorize; so the owner/name variant reinstates the SAME read authorization the Guard applies, through the ONE policy function (authz.Can) — identical behavior, a cross-tenant or non-self read still refused 403 — then reuses the generic getHandler verbatim for resolution and redaction. No authz and no CRUD is reimplemented.
-         * @summary Reads one person, two ways.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetUser(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetUser(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-         * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetUsers(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetUsers(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
          * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
          * @param {IamApiGetIamInvitationsRequest} requestParameters Request parameters.
@@ -11001,6 +8931,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         getIamInvitations(requestParameters: IamApiGetIamInvitationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamInvitationsListOutput> {
             return localVarFp.getIamInvitations(requestParameters.owner, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
+         * @summary Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
+         * @param {IamApiGetIamInvitationsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamInvitationsByOwnerByName(requestParameters: IamApiGetIamInvitationsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamInvitation> {
+            return localVarFp.getIamInvitationsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns your organization\'s API keys, newest first — what each is called, what it may reach, and its publishable half. Secret halves are never listed.
@@ -11015,12 +8955,30 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Returns one API key: what it is called, what it may reach, and when it was issued.
          * @summary Returns one API key: what it is called, what it may reach, and when it was issued.
-         * @param {IamApiGetIamKeysGetRequest} requestParameters Request parameters.
+         * @param {IamApiGetIamKeysByOwnerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamKeysGet(requestParameters: IamApiGetIamKeysGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamKey> {
-            return localVarFp.getIamKeysGet(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        getIamKeysByOwnerByName(requestParameters: IamApiGetIamKeysByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamKey> {
+            return localVarFp.getIamKeysByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate door from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
+         * @summary Resolve a PUBLISHABLE key to the organization that owns it
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamKeysOrg(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIamKeysOrg(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-door from unknown, so the holder can be told which one cure applies.
+         * @summary Resolve a SECRET key to the principal it authenticates
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamKeysPrincipal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getIamKeysPrincipal(options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the sign-in identities linked to the calling person\'s account — every provider they can currently sign in with. It is what a security page lists next to the option to disconnect one.
@@ -11060,7 +9018,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamOauthCallback(options).then((request) => request(axios, basePath));
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out, which is worth stating because the endpoint spent a release not doing it: the whole body computed a redirect and answered {\"status\":\"ok\"} unconditionally — no session ended, no token revoked. A logout that reports success while leaving the session live is worse than no logout at all, because the person on the shared machine believes it worked. Three things happen here now, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11090,12 +9048,12 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Returns one permission: who it grants to, what it allows, and the resources it covers.
          * @summary Returns one permission: who it grants to, what it allows, and the resources it covers.
-         * @param {IamApiGetIamPermissionsGetRequest} requestParameters Request parameters.
+         * @param {IamApiGetIamPermissionsByOwnerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamPermissionsGet(requestParameters: IamApiGetIamPermissionsGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamPermission> {
-            return localVarFp.getIamPermissionsGet(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        getIamPermissionsByOwnerByName(requestParameters: IamApiGetIamPermissionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamPermission> {
+            return localVarFp.getIamPermissionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns your organization\'s projects, newest first — the scope people pick between when their work is separated by product or client rather than by team.  You see your own organization\'s projects and no one else\'s; which organization that is comes from your credentials, not from the request.
@@ -11106,6 +9064,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         getIamProjects(requestParameters: IamApiGetIamProjectsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamProjectsListOutput> {
             return localVarFp.getIamProjects(requestParameters.owner, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one project: what it is called and how it is set up.
+         * @summary Returns one project: what it is called and how it is set up.
+         * @param {IamApiGetIamProjectsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamProjectsByOwnerByName(requestParameters: IamApiGetIamProjectsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamProject> {
+            return localVarFp.getIamProjectsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Publishes the public key your registry uses to verify the tokens issued above — the one URL to configure so the registry trusts logins without holding any secret of its own.  If no signing key is available it refuses rather than publishing an empty set, because a registry that trusts nothing looks identical to one that trusts everything until somebody tries to push.
@@ -11126,15 +9094,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamRegistryToken(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers which organization a PUBLISHABLE key belongs to — what a service of yours calls to attribute a request that arrived carrying a key shipped in a browser.  It names an organization and never a person: no path through it can load or return a user, so a key you put in client code cannot become a way to learn who anyone is. A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence, and with a `code` saying which of those it was. Only a confidential service that already proved it may resolve keys at all ever reads that code — there is no anonymous caller here to probe for which keys exist — and telling it apart is what lets the holder be told to re-mint an expired key instead of hunting a configuration error.
-         * @summary Answers which organization a PUBLISHABLE key belongs to — what a service of yours calls to attribute a request that arrived carrying a key shipped in a browser.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamResolveKey(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamResolveKey(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.  You see your own organization\'s roles and no one else\'s; which organization that is comes from your credentials, not from the request.
          * @summary Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.
          * @param {IamApiGetIamRolesRequest} requestParameters Request parameters.
@@ -11143,6 +9102,16 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         getIamRoles(requestParameters: IamApiGetIamRolesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamRolesListOutput> {
             return localVarFp.getIamRoles(requestParameters.owner, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one role: who is in it, and the roles it includes.
+         * @summary Returns one role: who is in it, and the roles it includes.
+         * @param {IamApiGetIamRolesByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamRolesByOwnerByName(requestParameters: IamApiGetIamRolesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamRole> {
+            return localVarFp.getIamRolesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the kinds of record this directory provisions and the address of each, so your identity provider discovers them rather than having them configured by hand.
@@ -11228,17 +9197,17 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         getIamUsers(requestParameters: IamApiGetIamUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamUsersListOutput> {
-            return localVarFp.getIamUsers(requestParameters.owner, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
+            return localVarFp.getIamUsers(requestParameters.owner, requestParameters.email, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one person in your organization, addressed by their username or by their email address. Passwords, API secrets and MFA material are stripped from the response.  An address that names two accounts names none: the read refuses rather than picking one, and says so instead of reporting \"no such user\". Handing back an arbitrary one of two rows is how somebody gets added to a team under a colleague\'s identity.
          * @summary Returns one person in your organization, addressed by their username or by their email address.
-         * @param {IamApiGetIamUsersGetRequest} requestParameters Request parameters.
+         * @param {IamApiGetIamUsersByOwnerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIamUsersGet(requestParameters: IamApiGetIamUsersGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamUser> {
-            return localVarFp.getIamUsersGet(requestParameters.owner, requestParameters.name, requestParameters.email, options).then((request) => request(axios, basePath));
+        getIamUsersByOwnerByName(requestParameters: IamApiGetIamUsersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamUser> {
+            return localVarFp.getIamUsersByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.email, options).then((request) => request(axios, basePath));
         },
         /**
          * Starts a wallet sign-in: it returns a one-time challenge for the wallet to sign. The challenge is good once and is tied to the site that asked for it, so a signature collected elsewhere cannot be replayed here.
@@ -11314,13 +9283,23 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamWorkspaces(requestParameters.owner, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns one workspace: what it is called and how it is set up.
+         * @summary Returns one workspace: what it is called and how it is set up.
+         * @param {IamApiGetIamWorkspacesByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getIamWorkspacesByOwnerByName(requestParameters: IamApiGetIamWorkspacesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamWorkspace> {
+            return localVarFp.getIamWorkspacesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
          * @summary Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
          * @param {IamApiGetOrganizationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganization(requestParameters: IamApiGetOrganizationRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamOrganization> {
+        getOrganization(requestParameters: IamApiGetOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamOrganization> {
             return localVarFp.getOrganization(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -11331,7 +9310,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         getProvider(requestParameters: IamApiGetProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamProviderResult> {
-            return localVarFp.getProvider(requestParameters.iamProviderKey, options).then((request) => request(axios, basePath));
+            return localVarFp.getProvider(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one person\'s session in one application — when it began and which browsers or devices are still carrying it.
@@ -11341,7 +9320,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         getSession(requestParameters: IamApiGetSessionRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamSession> {
-            return localVarFp.getSession(requestParameters.iamSessionRef, options).then((request) => request(axios, basePath));
+            return localVarFp.getSession(requestParameters.owner, requestParameters.name, requestParameters.application, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one access token: who and what it was issued to, and when it expires.
@@ -11351,7 +9330,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         getToken(requestParameters: IamApiGetTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamTokenResult> {
-            return localVarFp.getToken(requestParameters.iamTokenKey, options).then((request) => request(axios, basePath));
+            return localVarFp.getToken(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one passkey or security key: whose it is, what device it lives on, and when it was registered.
@@ -11361,17 +9340,17 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         getWebauthnCredential(requestParameters: IamApiGetWebauthnCredentialRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamWebauthnCredentialResult> {
-            return localVarFp.getWebauthnCredential(requestParameters.iamWebauthnCredentialKey, options).then((request) => request(axios, basePath));
+            return localVarFp.getWebauthnCredential(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the organizations you can see, newest first. Narrow it to one parent account, and set a limit and offset to page through the rest.
-         * @summary Returns the organizations you can see, newest first.
+         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every door. The Guard refuses a bearerless request before this runs, but the agent door carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
+         * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
          * @param {IamApiListOrganizationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         listOrganizations(requestParameters: IamApiListOrganizationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamListOrganizationsOutput> {
-            return localVarFp.listOrganizations(requestParameters.owner, requestParameters.limit, requestParameters.offset, options).then((request) => request(axios, basePath));
+            return localVarFp.listOrganizations(requestParameters.xForwardedFor, requestParameters.q, requestParameters.limit, requestParameters.cursor, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns your organization\'s providers, newest first — the identity providers your people sign in with, and the senders and connectors your applications go through.  You see your own organization\'s providers and no one else\'s; which organization that is comes from your credentials, not from the request.
@@ -11391,7 +9370,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         listSessions(requestParameters: IamApiListSessionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamListSessionsOut> {
-            return localVarFp.listSessions(requestParameters.iamListSessionsIn, options).then((request) => request(axios, basePath));
+            return localVarFp.listSessions(requestParameters.owner, requestParameters.name, requestParameters.application, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the access tokens issued in your organization, newest first, and can be narrowed to one organization. Use it to see what is currently authorized before revoking anything.
@@ -11404,7 +9383,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.listTokens(requestParameters.owner, requestParameters.organization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list. It used to scope to the ORG, which handed an org admin every member\'s credential rows in one answer, and a SuperAdmin every tenant\'s; a plain member meanwhile could not read even their own, because an unnamed target fails the Guard\'s tenant rule. One scope fixes both halves: the answer is a person\'s, and the caller is the person unless they say otherwise and may.
+         * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list, by design. Scoping to the ORG would hand an org admin every member\'s credential rows in one answer and a SuperAdmin every tenant\'s, while a plain member could not read even their own (an unnamed target fails the Guard\'s tenant rule). One scope answers both halves cleanly: the answer is a person\'s, and the caller is that person unless they say otherwise and may.
          * @summary Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.
          * @param {IamApiListWebauthnCredentialsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -11424,85 +9403,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.patchIamScimV2UsersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.  The older spelling of POST /v1/iam/application. A name already used in the organization is refused rather than overwritten.
-         * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-         * @param {IamApiPostIamAddApplicationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddApplication(requestParameters: IamApiPostIamAddApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamAddApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Lets a person or an application act in an organization. It is the grant behind \"add someone to the team\", and it is safe to repeat — granting a membership that already exists changes nothing. Granting membership IS the org\'s authority to give, so it takes the same gate a write to that org\'s own registry row takes: a SuperAdmin, an admin of the org itself, or an org-admin-capable confidential client. One rule, one place (internal/authz).
-         * @summary Lets a person or an application act in an organization.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddMembership(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIamAddMembership(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates an organization — the account everything else in your directory hangs from. Users, applications, roles, projects and workspaces are all named inside one organization, so this is the first write in a new tenant.  The older spelling of POST /v1/iam/organizations. Both reach the same create, so a name already taken is refused here too.
-         * @summary Creates an organization — the account everything else in your directory hangs from.
-         * @param {IamApiPostIamAddOrganizationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddOrganization(requestParameters: IamApiPostIamAddOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamAddOrganization(requestParameters.iamCreateOrganizationInput, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.  The older spelling of POST /v1/iam/projects. Creating one takes an administrator of the owning organization.
-         * @summary Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.
-         * @param {IamApiPostIamAddProjectRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddProject(requestParameters: IamApiPostIamAddProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamAddProject(requestParameters.iamInput, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.  A provider is configured once here and then switched on per application, so several applications can share one set of credentials.  The older spelling of POST /v1/iam/providers.
-         * @summary Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.
-         * @param {IamApiPostIamAddProviderRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddProvider(requestParameters: IamApiPostIamAddProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamAddProvider(requestParameters.iamProvider, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do.  The older spelling of POST /v1/iam/roles.
-         * @summary Creates a role — a named group of people that permissions are granted to.
-         * @param {IamApiPostIamAddRoleRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddRole(requestParameters: IamApiPostIamAddRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamAddRole(requestParameters.iamRolesInput, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Adds a person to your organization and, if you send a password, sets the one they will sign in with. The password is hashed before it is stored and is never returned to you or to anyone else.  Usernames are checked against one rule wherever an account is created — this verb, password signup, a social sign-in, or SCIM — so a name accepted here is a name accepted everywhere.  The older spelling of POST /v1/iam/users, and it posts the user\'s fields at the top level rather than wrapped in {user, password}.
-         * @summary Adds a person to your organization and, if you send a password, sets the one they will sign in with.
-         * @param {IamApiPostIamAddUserRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddUser(requestParameters: IamApiPostIamAddUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamAddUser(requestParameters.iamUserBody, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.  The older spelling of POST /v1/iam/workspaces. Creating one takes an administrator of the owning organization.
-         * @summary Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.
-         * @param {IamApiPostIamAddWorkspaceRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAddWorkspace(requestParameters: IamApiPostIamAddWorkspaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamAddWorkspace(requestParameters.iamWorkspacesInput, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
          * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
          * @param {*} [options] Override http request option.
@@ -11514,42 +9414,12 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
          * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-         * @param {IamApiPostIamApplicationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamApplication(requestParameters: IamApiPostIamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
-            return localVarFp.postIamApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
-         * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
          * @param {IamApiPostIamApplicationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postIamApplications(requestParameters: IamApiPostIamApplicationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
             return localVarFp.postIamApplications(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration before deleting it.
-         * @summary Removes an application.
-         * @param {IamApiPostIamApplicationsDeleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamApplicationsDelete(requestParameters: IamApiPostIamApplicationsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteResult> {
-            return localVarFp.postIamApplicationsDelete(requestParameters.iamApplicationRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
-         * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
-         * @param {IamApiPostIamApplicationsUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamApplicationsUpdate(requestParameters: IamApiPostIamApplicationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
-            return localVarFp.postIamApplicationsUpdate(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
         },
         /**
          * Steps a platform operator into an organization: it returns their own access token re-scoped to that tenant, so they see what the tenant sees.  The token still names the operator — stepping in is not becoming somebody else — and records the organization it was scoped to, so everything done with it is attributed to the person who did it. Only a platform operator may, and the attempt is recorded whether or not it succeeds.
@@ -11569,87 +9439,17 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         postIamAuditLogs(requestParameters: IamApiPostIamAuditLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAuditLog> {
-            return localVarFp.postIamAuditLogs(requestParameters.iamAuditlogsInput, options).then((request) => request(axios, basePath));
+            return localVarFp.postIamAuditLogs(requestParameters.iamInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes an audit entry. Retention policy is normally what should expire a trail; deleting by hand leaves a gap a reviewer will notice.
-         * @summary Removes an audit entry.
-         * @param {IamApiPostIamAuditLogsDeleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAuditLogsDelete(requestParameters: IamApiPostIamAuditLogsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteOutput> {
-            return localVarFp.postIamAuditLogsDelete(requestParameters.iamRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
-         * @summary Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
-         * @param {IamApiPostIamAuditLogsGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAuditLogsGet(requestParameters: IamApiPostIamAuditLogsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAuditLog> {
-            return localVarFp.postIamAuditLogsGet(requestParameters.iamRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Corrects an audit entry. The trail is append-only in normal operation and nothing in the Hanzo Cloud rewrites it — this exists for an administrator to correct an entry their own systems recorded wrongly.
-         * @summary Corrects an audit entry.
-         * @param {IamApiPostIamAuditLogsUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamAuditLogsUpdate(requestParameters: IamApiPostIamAuditLogsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAuditLog> {
-            return localVarFp.postIamAuditLogsUpdate(requestParameters.iamAuditlogsInput, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Adds a signing certificate your applications can verify tokens against — the call you make to bring your own key, or to stage the next one before a rotation. A name already used in your organization is refused.
-         * @summary Adds a signing certificate your applications can verify tokens against — the call you make to bring your own key, or to stage the next one before a rotation.
+         * Adds a signing certificate your applications can verify tokens against — the call you make to stage the next one before a rotation. A name already used in your organization is refused.  It registers the certificate\'s IDENTITY: its name (which is the JWKS `kid`), its algorithm, its expiry. Key material does not travel this way and cannot: the private key is not part of the Cert\'s JSON, so it is neither served here nor accepted here. It is supplied to the process by the deployment, under the name registered here (internal/keyring). Staging a rotation is therefore two halves — this call names the key, and the deployment provides it.
+         * @summary Adds a signing certificate your applications can verify tokens against — the call you make to stage the next one before a rotation.
          * @param {IamApiPostIamCertsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         postIamCerts(requestParameters: IamApiPostIamCertsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamCert> {
             return localVarFp.postIamCerts(requestParameters.iamCert, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes a signing certificate. Tokens signed with it can no longer be verified, so retire it only once nothing is still presenting them.
-         * @summary Removes a signing certificate.
-         * @param {IamApiPostIamCertsDeleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamCertsDelete(requestParameters: IamApiPostIamCertsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamCertsDeleteOutput> {
-            return localVarFp.postIamCertsDelete(requestParameters.iamCertsRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one signing certificate — its algorithm, its validity window and its public half. The private key is masked.
-         * @summary Returns one signing certificate — its algorithm, its validity window and its public half.
-         * @param {IamApiPostIamCertsGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamCertsGet(requestParameters: IamApiPostIamCertsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamCert> {
-            return localVarFp.postIamCertsGet(requestParameters.iamCertsRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Changes a signing certificate\'s settings. What it is called does not change, and neither does when it was added.
-         * @summary Changes a signing certificate\'s settings.
-         * @param {IamApiPostIamCertsUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamCertsUpdate(requestParameters: IamApiPostIamCertsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamCert> {
-            return localVarFp.postIamCertsUpdate(requestParameters.iamCert, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Deletes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration first.  The older spelling of DELETE /v1/iam/application.
-         * @summary Deletes an application.
-         * @param {IamApiPostIamDeleteApplicationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteApplication(requestParameters: IamApiPostIamDeleteApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamDeleteApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
         },
         /**
          * Takes away a person\'s or an application\'s right to act in an organization. Their account survives; what ends is their access to that organization. Revoking a membership that is already gone reports that nothing was removed rather than failing, so a retry is safe. It is the mirror of ensure and takes the SAME gate: revoking membership is the org\'s authority to give or take, so a SuperAdmin, an admin of the org itself, or an org-admin-capable confidential client. Idempotent through the store — deleting an absent membership reports removed=false, never an error — so a retried revoke is safe.
@@ -11670,66 +9470,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamDeleteMfa(options).then((request) => request(axios, basePath));
         },
         /**
-         * Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces. There is no undo, and every session issued under it stops working.  The older spelling of POST /v1/iam/organizations/delete.
-         * @summary Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces.
-         * @param {IamApiPostIamDeleteOrganizationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteOrganization(requestParameters: IamApiPostIamDeleteOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamDeleteOrganization(requestParameters.iamDeleteOrganizationInput, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Deletes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so anything addressed by it must move first.  The older spelling of POST /v1/iam/projects/delete.
-         * @summary Deletes a project.
-         * @param {IamApiPostIamDeleteProjectRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteProject(requestParameters: IamApiPostIamDeleteProjectRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamDeleteProject(requestParameters.iamProjectsRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes a provider. Sign-in through it stops for every application that used it, so detach those applications first if they have no other method.  The older spelling of POST /v1/iam/providers/delete.
-         * @summary Removes a provider.
-         * @param {IamApiPostIamDeleteProviderRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteProvider(requestParameters: IamApiPostIamDeleteProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamDeleteProvider(requestParameters.iamProvider, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Deletes a role. Everyone in it loses the access it carried; their accounts and any other roles they hold are untouched.  The older spelling of POST /v1/iam/roles/delete.
-         * @summary Deletes a role.
-         * @param {IamApiPostIamDeleteRoleRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteRole(requestParameters: IamApiPostIamDeleteRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamDeleteRole(requestParameters.iamRolesRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes a person from your organization. Their sessions stop working and the account is gone, not suspended — to keep the record and only stop sign-in, update the user instead.  The older spelling of POST /v1/iam/users/delete.
-         * @summary Removes a person from your organization.
-         * @param {IamApiPostIamDeleteUserRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteUser(requestParameters: IamApiPostIamDeleteUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamDeleteUser(requestParameters.iamUserBody, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Deletes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.  The older spelling of POST /v1/iam/workspaces/delete.
-         * @summary Deletes a workspace.
-         * @param {IamApiPostIamDeleteWorkspaceRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteWorkspace(requestParameters: IamApiPostIamDeleteWorkspaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamDeleteWorkspace(requestParameters.iamWorkspacesRef, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working. A name already used in the organization is refused.
          * @summary Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working.
          * @param {IamApiPostIamInvitationsRequest} requestParameters Request parameters.
@@ -11738,36 +9478,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         postIamInvitations(requestParameters: IamApiPostIamInvitationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamInvitation> {
             return localVarFp.postIamInvitations(requestParameters.iamInvitationsInput, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Withdraws an invitation. It stops being redeemable at once; anyone who already joined through it keeps their account.
-         * @summary Withdraws an invitation.
-         * @param {IamApiPostIamInvitationsDeleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamInvitationsDelete(requestParameters: IamApiPostIamInvitationsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamInvitationsDeleteOutput> {
-            return localVarFp.postIamInvitationsDelete(requestParameters.iamInvitationsRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
-         * @summary Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
-         * @param {IamApiPostIamInvitationsGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamInvitationsGet(requestParameters: IamApiPostIamInvitationsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamInvitation> {
-            return localVarFp.postIamInvitationsGet(requestParameters.iamInvitationsRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires. What it is called does not change.
-         * @summary Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires.
-         * @param {IamApiPostIamInvitationsUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamInvitationsUpdate(requestParameters: IamApiPostIamInvitationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamInvitation> {
-            return localVarFp.postIamInvitationsUpdate(requestParameters.iamInvitationsInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client. The token\'s subject + owner are the TARGET USER\'s, so a resource server scopes on the validated owner claim to the user\'s tenant — indistinguishable from a token the user obtained directly. Response is the camelCase `{accessToken, expiresIn}` body identity.ts consumes. Equivalent to the RFC 8693 token-exchange grant, minus the subject_token proof (the console has the user\'s id, not a token) — the reason this compat shim exists.
@@ -11787,44 +9497,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         postIamKeys(requestParameters: IamApiPostIamKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamKey> {
             return localVarFp.postIamKeys(requestParameters.iamKey, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Revokes an API key. Anything still presenting it stops being authorized at once, so roll the replacement out before you revoke.
-         * @summary Revokes an API key.
-         * @param {IamApiPostIamKeysDeleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamKeysDelete(requestParameters: IamApiPostIamKeysDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamDeleteResponse> {
-            return localVarFp.postIamKeysDelete(requestParameters.iamKeysRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
-         * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamKeysMint(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIamKeysMint(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
-         * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamKeysRevoke(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIamKeysRevoke(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
-         * @summary Changes what a key is called or what it may reach.
-         * @param {IamApiPostIamKeysUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamKeysUpdate(requestParameters: IamApiPostIamKeysUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamKey> {
-            return localVarFp.postIamKeysUpdate(requestParameters.iamKey, options).then((request) => request(axios, basePath));
         },
         /**
          * Starts connecting another sign-in identity to the account you are already signed in as. It answers with the provider\'s URL for the browser to follow; when the provider returns, that identity is attached and you come back to returnUri.  Your account is fixed here, from the credential you are already holding, and is carried server-side for the rest of the round-trip — so nothing that happens at the provider can point the link at somebody else.
@@ -11854,15 +9526,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamMemberships(options).then((request) => request(axios, basePath));
         },
         /**
-         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
-         * @summary Turns a factor off, so sign-in stops asking for it.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamMfaDisable(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIamMfaDisable(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
          * @summary Picks which second factor an account is asked for first when it has more than one.
          * @param {*} [options] Override http request option.
@@ -11872,7 +9535,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamMfaPreferred(options).then((request) => request(axios, basePath));
         },
         /**
-         * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  It used to write on the strength of a `secret` field alone. A client that skipped the verify step, scanned the QR into the wrong app, or was simply buggy switched on a factor no code would ever satisfy, and the account was then locked out with no self-service way back: the gate holds the sign-in before minting, so the person cannot obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
+         * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  Verifying BEFORE writing is what keeps a client that never completed the proof — a skipped verify step, a QR scanned into the wrong app, a bug — from switching on a factor no code can satisfy. That would lock the account out with no self-service way back: the gate holds the sign-in before minting, so the person could not obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
          * @summary Finishes the enrolment: from here the account\'s sign-ins ask for this factor.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11917,7 +9580,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamOauthDevice(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names the wrong one defeats the control it implements. It used to render the portal\'s own app name — a constant, `hanzo-console` for every code — so a device code minted by `hanzo-cli` was approved under a screen naming a different application entirely. The client is a property of the CODE, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
+         * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names any other one defeats the control it implements. The client is a property of the CODE, not of the page or of whatever app the browser happens to be signed in to, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
          * @summary Answers \"what am I approving?\" for a pending device code.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11944,7 +9607,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamOauthIntrospect(options).then((request) => request(axios, basePath));
         },
         /**
-         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out, which is worth stating because the endpoint spent a release not doing it: the whole body computed a redirect and answered {\"status\":\"ok\"} unconditionally — no session ended, no token revoked. A logout that reports success while leaving the session live is worse than no logout at all, because the person on the shared machine believes it worked. Three things happen here now, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+         * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
          * @summary Ends a sign-in and sends the browser somewhere sensible.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11953,7 +9616,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamOauthLogout(options).then((request) => request(axios, basePath));
         },
         /**
-         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. hanzo-cli is a public PKCE client holding a 30-day rotating refresh token, so a confidential-only revocation endpoint made `hanzo auth logout` a LOCAL DELETE — the credential it dropped stayed spendable at hanzo.id for the rest of the month, with nothing able to kill it. Measured 2026-08-01: revoke answered 401 invalid_client and the refresh token went on minting access tokens.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
+         * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. A native app or CLI is a public PKCE client and holds no secret, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
          * @summary Retires a token before it expires — what you call when someone signs out or a credential may have leaked.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11999,26 +9662,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamPermissions(requestParameters.iamPermission, options).then((request) => request(axios, basePath));
         },
         /**
-         * Revokes a permission. Everyone who held access only through it loses that access immediately; grants they hold by another route are untouched.
-         * @summary Revokes a permission.
-         * @param {IamApiPostIamPermissionsDeleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamPermissionsDelete(requestParameters: IamApiPostIamPermissionsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamPermissionDeleteResponse> {
-            return localVarFp.postIamPermissionsDelete(requestParameters.iamPermissionRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Changes who a permission grants to, what it allows, or the resources it covers. Access changes as soon as the write lands. What the permission is called does not change, and neither does when it was created.
-         * @summary Changes who a permission grants to, what it allows, or the resources it covers.
-         * @param {IamApiPostIamPermissionsUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamPermissionsUpdate(requestParameters: IamApiPostIamPermissionsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamPermission> {
-            return localVarFp.postIamPermissionsUpdate(requestParameters.iamPermission, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
          * @summary Saves the calling person\'s own settings and returns the full set afterwards.
          * @param {*} [options] Override http request option.
@@ -12035,37 +9678,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         postIamProjects(requestParameters: IamApiPostIamProjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamProject> {
-            return localVarFp.postIamProjects(requestParameters.iamInput, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so move anything addressed by it first.
-         * @summary Removes a project.
-         * @param {IamApiPostIamProjectsDeleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamProjectsDelete(requestParameters: IamApiPostIamProjectsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamProjectsDeleteOutput> {
-            return localVarFp.postIamProjectsDelete(requestParameters.iamProjectsRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one project: what it is called and how it is set up.
-         * @summary Returns one project: what it is called and how it is set up.
-         * @param {IamApiPostIamProjectsGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamProjectsGet(requestParameters: IamApiPostIamProjectsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamProject> {
-            return localVarFp.postIamProjectsGet(requestParameters.iamProjectsRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Changes a project\'s settings. What it is called does not change, and neither does when it was created.
-         * @summary Changes a project\'s settings.
-         * @param {IamApiPostIamProjectsUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamProjectsUpdate(requestParameters: IamApiPostIamProjectsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamProject> {
-            return localVarFp.postIamProjectsUpdate(requestParameters.iamInput, options).then((request) => request(axios, basePath));
+            return localVarFp.postIamProjects(requestParameters.iamProjectsInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Signs a container client in to your registry. `docker login`, and every build tool that pushes or pulls images, lands here: it exchanges the credential for a short-lived token scoped to exactly the repositories that credential may touch.  Both of the shapes container tooling uses are accepted, so the same login works whichever client your pipeline runs.
@@ -12104,36 +9717,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         postIamRoles(requestParameters: IamApiPostIamRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamRole> {
             return localVarFp.postIamRoles(requestParameters.iamRolesInput, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Removes a role. Everyone in it loses the access it carried; their accounts, and any other role they hold, are untouched.
-         * @summary Removes a role.
-         * @param {IamApiPostIamRolesDeleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamRolesDelete(requestParameters: IamApiPostIamRolesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamRolesDeleteOutput> {
-            return localVarFp.postIamRolesDelete(requestParameters.iamRolesRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one role: who is in it, and the roles it includes.
-         * @summary Returns one role: who is in it, and the roles it includes.
-         * @param {IamApiPostIamRolesGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamRolesGet(requestParameters: IamApiPostIamRolesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamRole> {
-            return localVarFp.postIamRolesGet(requestParameters.iamRolesRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
-         * @summary Changes who is in a role, or which roles it includes.
-         * @param {IamApiPostIamRolesUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamRolesUpdate(requestParameters: IamApiPostIamRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamRole> {
-            return localVarFp.postIamRolesUpdate(requestParameters.iamRolesInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Provisions a person from your identity provider — how a new hire gets an account here automatically when they are added over there.  Takes an administrator. Making someone an administrator takes more than that, so an IdP integration cannot escalate anyone by setting a flag.
@@ -12218,26 +9801,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamUnlink(options).then((request) => request(axios, basePath));
         },
         /**
-         * Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to. Which organization and name the application has are fixed when it is created and are not editable here.  A redirect URI you add becomes an allowed sign-in origin, so this is the call that makes login work from a new host.  The older spelling of PUT /v1/iam/application.
-         * @summary Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to.
-         * @param {IamApiPostIamUpdateApplicationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdateApplication(requestParameters: IamApiPostIamUpdateApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamUpdateApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.  The older spelling of POST /v1/iam/organizations/update.
-         * @summary Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.
-         * @param {IamApiPostIamUpdateOrganizationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdateOrganization(requestParameters: IamApiPostIamUpdateOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamUpdateOrganization(requestParameters.iamUpdateOrganizationInput, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
          * @summary Saves the calling person\'s own settings and returns the full set afterwards.
          * @param {*} [options] Override http request option.
@@ -12245,36 +9808,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         postIamUpdatePreferences(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postIamUpdatePreferences(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Updates a provider\'s settings or rotates the credentials it holds. The change takes effect on the next sign-in through it — sessions already issued are unaffected.  The older spelling of POST /v1/iam/providers/update.
-         * @summary Updates a provider\'s settings or rotates the credentials it holds.
-         * @param {IamApiPostIamUpdateProviderRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdateProvider(requestParameters: IamApiPostIamUpdateProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamUpdateProvider(requestParameters.iamProvider, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Updates a role\'s members or the roles it includes. Access changes for everyone in it as soon as the write lands.  The older spelling of POST /v1/iam/roles/update.
-         * @summary Updates a role\'s members or the roles it includes.
-         * @param {IamApiPostIamUpdateRoleRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdateRole(requestParameters: IamApiPostIamUpdateRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamUpdateRole(requestParameters.iamRolesInput, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Updates one of your users\' profile, roles or credentials. Send a password to reset it; leave it out and the current one stands.  The older spelling of POST /v1/iam/users/update, with the user\'s fields at the top level rather than wrapped in {user, password}.
-         * @summary Updates one of your users\' profile, roles or credentials.
-         * @param {IamApiPostIamUpdateUserRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdateUser(requestParameters: IamApiPostIamUpdateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamResponse> {
-            return localVarFp.postIamUpdateUser(requestParameters.iamUserBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a person to your organization. Send a password and it becomes the one they sign in with; it is hashed before it is stored and never comes back in any response.  The username is checked against the same rule every account in the Hanzo Cloud is held to, whichever way it was created — this call, password signup, a social sign-in, or SCIM — so a name accepted here works everywhere.  A name already taken in your organization is refused rather than overwritten.
@@ -12287,24 +9820,14 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamUsers(requestParameters.iamCreateInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
-         * @summary Removes a person from your organization.
-         * @param {IamApiPostIamUsersDeleteRequest} requestParameters Request parameters.
+         * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
+         * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
+         * @param {IamApiPostIamUsersByOwnerByNameKeysRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIamUsersDelete(requestParameters: IamApiPostIamUsersDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamUsersDeleteOutput> {
-            return localVarFp.postIamUsersDelete(requestParameters.iamUsersRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
-         * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
-         * @param {IamApiPostIamUsersUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUsersUpdate(requestParameters: IamApiPostIamUsersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamUser> {
-            return localVarFp.postIamUsersUpdate(requestParameters.iamUpdateInput, options).then((request) => request(axios, basePath));
+        postIamUsersByOwnerByNameKeys(requestParameters: IamApiPostIamUsersByOwnerByNameKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postIamUsersByOwnerByNameKeys(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
@@ -12353,36 +9876,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamWorkspaces(requestParameters.iamWorkspacesInput, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.
-         * @summary Removes a workspace.
-         * @param {IamApiPostIamWorkspacesDeleteRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamWorkspacesDelete(requestParameters: IamApiPostIamWorkspacesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamWorkspacesDeleteOutput> {
-            return localVarFp.postIamWorkspacesDelete(requestParameters.iamWorkspacesRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns one workspace: what it is called and how it is set up.
-         * @summary Returns one workspace: what it is called and how it is set up.
-         * @param {IamApiPostIamWorkspacesGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamWorkspacesGet(requestParameters: IamApiPostIamWorkspacesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamWorkspace> {
-            return localVarFp.postIamWorkspacesGet(requestParameters.iamWorkspacesRef, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Changes a workspace\'s settings. What it is called does not change, and neither does when it was created.
-         * @summary Changes a workspace\'s settings.
-         * @param {IamApiPostIamWorkspacesUpdateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamWorkspacesUpdate(requestParameters: IamApiPostIamWorkspacesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamWorkspace> {
-            return localVarFp.postIamWorkspacesUpdate(requestParameters.iamWorkspacesInput, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.  Only their own: the request names nobody, so it cannot reach another account. Send only what you are changing; a field you leave out keeps the value it had, and a field you send empty is cleared.  A picture is an https link or an inline image up to 96 KiB, the same value an organization\'s mark is (schema.AvatarRef) — one rule for how a subject appears, whether the subject is a person or an organization.
          * @summary Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.
          * @param {IamApiPutIamAccountRequest} requestParameters Request parameters.
@@ -12395,12 +9888,32 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
          * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
-         * @param {IamApiPutIamApplicationRequest} requestParameters Request parameters.
+         * @param {IamApiPutIamApplicationsByOwnerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putIamApplication(requestParameters: IamApiPutIamApplicationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
-            return localVarFp.putIamApplication(requestParameters.iamApplication, options).then((request) => request(axios, basePath));
+        putIamApplicationsByOwnerByName(requestParameters: IamApiPutIamApplicationsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamApplication> {
+            return localVarFp.putIamApplicationsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamApplication, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Corrects an audit entry. The trail is append-only in normal operation and nothing in the Hanzo Cloud rewrites it — this exists for an administrator to correct an entry their own systems recorded wrongly.
+         * @summary Corrects an audit entry.
+         * @param {IamApiPutIamAuditLogsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamAuditLogsByOwnerByName(requestParameters: IamApiPutIamAuditLogsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamAuditLog> {
+            return localVarFp.putIamAuditLogsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamInput, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes a signing certificate\'s settings. What it is called does not change, and neither does when it was added.  A PUT here is a METADATA edit — display name, expiry, provider. It overlays only the fields the request actually SET onto the loaded row: a field the JSON omits (or leaves at its zero value) keeps what the row holds, rather than blanking it. That is load-bearing, not a nicety. A read serves the public Certificate (Mask hides only PrivateKey and AccessSecret), so a client that reads a cert, changes one field, and writes it back sends the masked halves empty and every other field it did not touch at its zero value — and the old full-struct overlay wrote all of those blanks back. Blanking CryptoAlgorithm alone drops the cert from the JWKS (oidc.Publishes turns false), so every token under its `kid` stops verifying; blanking Provider/Account/ExpireTime breaks ACME renewal and expiry — all from a request that only meant to rename it. Absent-or-zero means \"unchanged\", so the deployment (key) and a rotation (cert) remain the only way key or published material changes; the metadata API cannot clear it.  The overlay is generic — it copies every set field, so a field nobody has added yet is carried without a line here — and leaves three things the request may not move: the bound Model (id, createdAt, key, snapshot), the natural key (owner/name address the row, they do not mutate it), and the creation stamp.
+         * @summary Changes a signing certificate\'s settings.
+         * @param {IamApiPutIamCertsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamCertsByOwnerByName(requestParameters: IamApiPutIamCertsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamCert> {
+            return localVarFp.putIamCertsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamCert, options).then((request) => request(axios, basePath));
         },
         /**
          * Records the calling person\'s privacy and communication choices. Only their own — there is no way to set consent for somebody else.  Send only the answers you are changing. A question you leave out keeps the answer it already had, so a screen that saves one switch never revokes the other, and two screens saving at once do not undo each other.  An answer this version does not recognize is refused here rather than stored, so nothing is ever persisted for a later reader to have to interpret.
@@ -12410,6 +9923,26 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         putIamConsent(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.putIamConsent(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires. What it is called does not change.
+         * @summary Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires.
+         * @param {IamApiPutIamInvitationsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamInvitationsByOwnerByName(requestParameters: IamApiPutIamInvitationsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamInvitation> {
+            return localVarFp.putIamInvitationsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamInvitationsInput, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
+         * @summary Changes what a key is called or what it may reach.
+         * @param {IamApiPutIamKeysByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamKeysByOwnerByName(requestParameters: IamApiPutIamKeysByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamKey> {
+            return localVarFp.putIamKeysByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamKey, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces the calling person\'s password. Only their own — there is no shape of this request that writes somebody else\'s.  Prove who you are with the password you are replacing, or — when you cannot sign in at all — with a code sent to the address the account already holds. Exactly one of the two: a request carrying both proves nothing more than either, and answering it would mean deciding which one mattered.  A reset also clears the account lockout, in the SAME transaction as the digest. Replacing a credential retires the run of guesses against the old one, and without this a person who reset a forgotten password was still refused for up to fifteen more minutes — with the brand-new password they had just chosen.
@@ -12422,6 +9955,36 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.putIamPassword(requestParameters.iamPasswordBody, requestParameters.cookie, requestParameters.authorization, options).then((request) => request(axios, basePath));
         },
         /**
+         * Changes who a permission grants to, what it allows, or the resources it covers. Access changes as soon as the write lands. What the permission is called does not change, and neither does when it was created.
+         * @summary Changes who a permission grants to, what it allows, or the resources it covers.
+         * @param {IamApiPutIamPermissionsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamPermissionsByOwnerByName(requestParameters: IamApiPutIamPermissionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamPermission> {
+            return localVarFp.putIamPermissionsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamPermission, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes a project\'s settings. What it is called does not change, and neither does when it was created.
+         * @summary Changes a project\'s settings.
+         * @param {IamApiPutIamProjectsByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamProjectsByOwnerByName(requestParameters: IamApiPutIamProjectsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamProject> {
+            return localVarFp.putIamProjectsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamProjectsInput, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
+         * @summary Changes who is in a role, or which roles it includes.
+         * @param {IamApiPutIamRolesByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamRolesByOwnerByName(requestParameters: IamApiPutIamRolesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamRole> {
+            return localVarFp.putIamRolesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamRolesInput, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Overwrites a person\'s SCIM attributes with what your identity provider sends — how a change made there lands here.  Only the attributes SCIM describes are replaced. Anything the standard does not cover — their multi-factor enrolment above all — survives untouched, so a routine sync from your IdP can never quietly strip someone\'s second factor or bring a deleted account back.
          * @summary Overwrites a person\'s SCIM attributes with what your identity provider sends — how a change made there lands here.
          * @param {IamApiPutIamScimV2UsersByOwnerByNameRequest} requestParameters Request parameters.
@@ -12432,14 +9995,24 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.putIamScimV2UsersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.
-         * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
-         * @param {IamApiSearchOrganizationsRequest} requestParameters Request parameters.
+         * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
+         * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
+         * @param {IamApiPutIamUsersByOwnerByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchOrganizations(requestParameters: IamApiSearchOrganizationsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamSearchOrganizationsOutput> {
-            return localVarFp.searchOrganizations(requestParameters.xForwardedFor, requestParameters.q, requestParameters.limit, requestParameters.cursor, options).then((request) => request(axios, basePath));
+        putIamUsersByOwnerByName(requestParameters: IamApiPutIamUsersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamUser> {
+            return localVarFp.putIamUsersByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamUpdateInput, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes a workspace\'s settings. What it is called does not change, and neither does when it was created.
+         * @summary Changes a workspace\'s settings.
+         * @param {IamApiPutIamWorkspacesByOwnerByNameRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putIamWorkspacesByOwnerByName(requestParameters: IamApiPutIamWorkspacesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamWorkspace> {
+            return localVarFp.putIamWorkspacesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamWorkspacesInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes how an organization appears across Hanzo: the square mark beside its name, as an uploaded image or as a single emoji. Sending an image clears the emoji and sending an emoji clears the image — an organization has one mark, not a preference order — and sending neither clears both, which is how it goes back to being drawn as its initial.  An image is an https link or the bytes inline as a data URL, up to 96 KiB. Anyone who administers the organization may set this; it is not reserved to the platform.  It writes the two fields onto the stored row and touches nothing else, which update cannot do: update replaces the whole record, and a record read back first arrives masked, so a read-modify-write through it would persist the mask over the organization\'s own credential settings.
@@ -12459,7 +10032,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         updateOrganization(requestParameters: IamApiUpdateOrganizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamOrganization> {
-            return localVarFp.updateOrganization(requestParameters.iamUpdateOrganizationInput, options).then((request) => request(axios, basePath));
+            return localVarFp.updateOrganization(requestParameters.owner, requestParameters.name, requestParameters.iamUpdateOrganizationInput, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes a provider\'s settings or rotates the credentials it holds. The change takes effect on the next sign-in through it — sessions already issued are unaffected.  A provider that is not there answers \"nothing changed\" rather than an error, so the call is safe to repeat.
@@ -12469,7 +10042,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         updateProvider(requestParameters: IamApiUpdateProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamMutationResult> {
-            return localVarFp.updateProvider(requestParameters.iamProvider, options).then((request) => request(axios, basePath));
+            return localVarFp.updateProvider(requestParameters.owner, requestParameters.name, requestParameters.iamProvider, options).then((request) => request(axios, basePath));
         },
         /**
          * Replaces the set of browsers a session covers — signing out the ones you leave off while the session itself stays live. A session that does not exist is reported as missing rather than created.
@@ -12479,7 +10052,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         updateSession(requestParameters: IamApiUpdateSessionRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamSession> {
-            return localVarFp.updateSession(requestParameters.iamUpdateSessionIn, options).then((request) => request(axios, basePath));
+            return localVarFp.updateSession(requestParameters.owner, requestParameters.name, requestParameters.application, requestParameters.iamUpdateSessionIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Changes an access token\'s scope or expiry.  A token that is not there answers \"nothing changed\" rather than an error, so the call is safe to repeat.
@@ -12489,7 +10062,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         updateToken(requestParameters: IamApiUpdateTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamTokenMutation> {
-            return localVarFp.updateToken(requestParameters.iamToken, options).then((request) => request(axios, basePath));
+            return localVarFp.updateToken(requestParameters.owner, requestParameters.name, requestParameters.iamToken, options).then((request) => request(axios, basePath));
         },
         /**
          * Renames a registered passkey or security key, so a person can tell their devices apart.  A credential that is not there answers \"nothing changed\" rather than an error, so the call is safe to repeat.
@@ -12499,7 +10072,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          * @throws {RequiredError}
          */
         updateWebauthnCredential(requestParameters: IamApiUpdateWebauthnCredentialRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamWebauthnCredentialMutationResult> {
-            return localVarFp.updateWebauthnCredential(requestParameters.iamWebauthnCredential, options).then((request) => request(axios, basePath));
+            return localVarFp.updateWebauthnCredential(requestParameters.owner, requestParameters.name, requestParameters.iamWebauthnCredential, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates an application or updates it in place, so a deployment can declare the applications it needs and run the same declaration on every environment and on every redeploy.  It says which of the two it did. Leave the client secret out and the existing one is kept — so re-running your deployment does not rotate a credential your running services are holding.
@@ -12512,7 +10085,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.upsertApplication(requestParameters.iamRegistration, requestParameters.authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
+         * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.
          * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
          * @param {IamApiUpsertUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -12595,22 +10168,169 @@ export interface IamApiCreateSessionRequest {
 }
 
 /**
- * Request parameters for deleteIamApplication operation in IamApi.
+ * Request parameters for deleteIamApplicationsByOwnerByName operation in IamApi.
  * @export
- * @interface IamApiDeleteIamApplicationRequest
+ * @interface IamApiDeleteIamApplicationsByOwnerByNameRequest
  */
-export interface IamApiDeleteIamApplicationRequest {
+export interface IamApiDeleteIamApplicationsByOwnerByNameRequest {
     /**
      * 
      * @type {string}
-     * @memberof IamApiDeleteIamApplication
+     * @memberof IamApiDeleteIamApplicationsByOwnerByName
      */
     readonly owner: string
 
     /**
      * 
      * @type {string}
-     * @memberof IamApiDeleteIamApplication
+     * @memberof IamApiDeleteIamApplicationsByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for deleteIamAuditLogsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiDeleteIamAuditLogsByOwnerByNameRequest
+ */
+export interface IamApiDeleteIamAuditLogsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamAuditLogsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamAuditLogsByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for deleteIamCertsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiDeleteIamCertsByOwnerByNameRequest
+ */
+export interface IamApiDeleteIamCertsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamCertsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamCertsByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for deleteIamInvitationsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiDeleteIamInvitationsByOwnerByNameRequest
+ */
+export interface IamApiDeleteIamInvitationsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamInvitationsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamInvitationsByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for deleteIamKeysByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiDeleteIamKeysByOwnerByNameRequest
+ */
+export interface IamApiDeleteIamKeysByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamKeysByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamKeysByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for deleteIamPermissionsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiDeleteIamPermissionsByOwnerByNameRequest
+ */
+export interface IamApiDeleteIamPermissionsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamPermissionsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamPermissionsByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for deleteIamProjectsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiDeleteIamProjectsByOwnerByNameRequest
+ */
+export interface IamApiDeleteIamProjectsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamProjectsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamProjectsByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for deleteIamRolesByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiDeleteIamRolesByOwnerByNameRequest
+ */
+export interface IamApiDeleteIamRolesByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamRolesByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamRolesByOwnerByName
      */
     readonly name: string
 }
@@ -12651,6 +10371,69 @@ export interface IamApiDeleteIamServiceAccountsByNameRequest {
 }
 
 /**
+ * Request parameters for deleteIamUsersByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiDeleteIamUsersByOwnerByNameRequest
+ */
+export interface IamApiDeleteIamUsersByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamUsersByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamUsersByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for deleteIamUsersByOwnerByNameKeys operation in IamApi.
+ * @export
+ * @interface IamApiDeleteIamUsersByOwnerByNameKeysRequest
+ */
+export interface IamApiDeleteIamUsersByOwnerByNameKeysRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamUsersByOwnerByNameKeys
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamUsersByOwnerByNameKeys
+     */
+    readonly name: string
+}
+
+/**
+ * Request parameters for deleteIamWorkspacesByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiDeleteIamWorkspacesByOwnerByNameRequest
+ */
+export interface IamApiDeleteIamWorkspacesByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamWorkspacesByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteIamWorkspacesByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
  * Request parameters for deleteOrganization operation in IamApi.
  * @export
  * @interface IamApiDeleteOrganizationRequest
@@ -12658,10 +10441,17 @@ export interface IamApiDeleteIamServiceAccountsByNameRequest {
 export interface IamApiDeleteOrganizationRequest {
     /**
      * 
-     * @type {IamDeleteOrganizationInput}
+     * @type {string}
      * @memberof IamApiDeleteOrganization
      */
-    readonly iamDeleteOrganizationInput: IamDeleteOrganizationInput
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteOrganization
+     */
+    readonly name: string
 }
 
 /**
@@ -12672,10 +10462,17 @@ export interface IamApiDeleteOrganizationRequest {
 export interface IamApiDeleteProviderRequest {
     /**
      * 
-     * @type {IamProviderKey}
+     * @type {string}
      * @memberof IamApiDeleteProvider
      */
-    readonly iamProviderKey: IamProviderKey
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteProvider
+     */
+    readonly name: string
 }
 
 /**
@@ -12686,10 +10483,24 @@ export interface IamApiDeleteProviderRequest {
 export interface IamApiDeleteSessionRequest {
     /**
      * 
-     * @type {IamSessionRef}
+     * @type {string}
      * @memberof IamApiDeleteSession
      */
-    readonly iamSessionRef: IamSessionRef
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteSession
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteSession
+     */
+    readonly application: string
 }
 
 /**
@@ -12700,10 +10511,17 @@ export interface IamApiDeleteSessionRequest {
 export interface IamApiDeleteTokenRequest {
     /**
      * 
-     * @type {IamTokenKey}
+     * @type {string}
      * @memberof IamApiDeleteToken
      */
-    readonly iamTokenKey: IamTokenKey
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiDeleteToken
+     */
+    readonly name: string
 }
 
 /**
@@ -12714,29 +10532,15 @@ export interface IamApiDeleteTokenRequest {
 export interface IamApiDeleteWebauthnCredentialRequest {
     /**
      * 
-     * @type {IamWebauthnCredentialKey}
-     * @memberof IamApiDeleteWebauthnCredential
-     */
-    readonly iamWebauthnCredentialKey: IamWebauthnCredentialKey
-}
-
-/**
- * Request parameters for getIamApplication operation in IamApi.
- * @export
- * @interface IamApiGetIamApplicationRequest
- */
-export interface IamApiGetIamApplicationRequest {
-    /**
-     * 
      * @type {string}
-     * @memberof IamApiGetIamApplication
+     * @memberof IamApiDeleteWebauthnCredential
      */
     readonly owner: string
 
     /**
      * 
      * @type {string}
-     * @memberof IamApiGetIamApplication
+     * @memberof IamApiDeleteWebauthnCredential
      */
     readonly name: string
 }
@@ -12756,22 +10560,22 @@ export interface IamApiGetIamApplicationsRequest {
 }
 
 /**
- * Request parameters for getIamApplicationsGet operation in IamApi.
+ * Request parameters for getIamApplicationsByOwnerByName operation in IamApi.
  * @export
- * @interface IamApiGetIamApplicationsGetRequest
+ * @interface IamApiGetIamApplicationsByOwnerByNameRequest
  */
-export interface IamApiGetIamApplicationsGetRequest {
+export interface IamApiGetIamApplicationsByOwnerByNameRequest {
     /**
      * 
      * @type {string}
-     * @memberof IamApiGetIamApplicationsGet
+     * @memberof IamApiGetIamApplicationsByOwnerByName
      */
     readonly owner: string
 
     /**
      * 
      * @type {string}
-     * @memberof IamApiGetIamApplicationsGet
+     * @memberof IamApiGetIamApplicationsByOwnerByName
      */
     readonly name: string
 }
@@ -12788,6 +10592,27 @@ export interface IamApiGetIamAuditLogsRequest {
      * @memberof IamApiGetIamAuditLogs
      */
     readonly owner?: string
+}
+
+/**
+ * Request parameters for getIamAuditLogsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiGetIamAuditLogsByOwnerByNameRequest
+ */
+export interface IamApiGetIamAuditLogsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamAuditLogsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamAuditLogsByOwnerByName
+     */
+    readonly name: string
 }
 
 /**
@@ -12840,6 +10665,27 @@ export interface IamApiGetIamCertsRequest {
 }
 
 /**
+ * Request parameters for getIamCertsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiGetIamCertsByOwnerByNameRequest
+ */
+export interface IamApiGetIamCertsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamCertsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamCertsByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
  * Request parameters for getIamGetAppLogin operation in IamApi.
  * @export
  * @interface IamApiGetIamGetAppLoginRequest
@@ -12861,27 +10707,6 @@ export interface IamApiGetIamGetAppLoginRequest {
 }
 
 /**
- * Request parameters for getIamGetMemberships operation in IamApi.
- * @export
- * @interface IamApiGetIamGetMembershipsRequest
- */
-export interface IamApiGetIamGetMembershipsRequest {
-    /**
-     * User is \&quot;&lt;homeOrg&gt;/&lt;username&gt;\&quot; — which organizations that identity may act in.
-     * @type {string}
-     * @memberof IamApiGetIamGetMemberships
-     */
-    readonly user?: string
-
-    /**
-     * Org is an organization — who may act in it.
-     * @type {string}
-     * @memberof IamApiGetIamGetMemberships
-     */
-    readonly org?: string
-}
-
-/**
  * Request parameters for getIamInvitations operation in IamApi.
  * @export
  * @interface IamApiGetIamInvitationsRequest
@@ -12893,6 +10718,27 @@ export interface IamApiGetIamInvitationsRequest {
      * @memberof IamApiGetIamInvitations
      */
     readonly owner?: string
+}
+
+/**
+ * Request parameters for getIamInvitationsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiGetIamInvitationsByOwnerByNameRequest
+ */
+export interface IamApiGetIamInvitationsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamInvitationsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamInvitationsByOwnerByName
+     */
+    readonly name: string
 }
 
 /**
@@ -12910,24 +10756,24 @@ export interface IamApiGetIamKeysRequest {
 }
 
 /**
- * Request parameters for getIamKeysGet operation in IamApi.
+ * Request parameters for getIamKeysByOwnerByName operation in IamApi.
  * @export
- * @interface IamApiGetIamKeysGetRequest
+ * @interface IamApiGetIamKeysByOwnerByNameRequest
  */
-export interface IamApiGetIamKeysGetRequest {
+export interface IamApiGetIamKeysByOwnerByNameRequest {
     /**
      * 
      * @type {string}
-     * @memberof IamApiGetIamKeysGet
+     * @memberof IamApiGetIamKeysByOwnerByName
      */
-    readonly owner?: string
+    readonly owner: string
 
     /**
      * 
      * @type {string}
-     * @memberof IamApiGetIamKeysGet
+     * @memberof IamApiGetIamKeysByOwnerByName
      */
-    readonly name?: string
+    readonly name: string
 }
 
 /**
@@ -12966,24 +10812,24 @@ export interface IamApiGetIamPermissionsRequest {
 }
 
 /**
- * Request parameters for getIamPermissionsGet operation in IamApi.
+ * Request parameters for getIamPermissionsByOwnerByName operation in IamApi.
  * @export
- * @interface IamApiGetIamPermissionsGetRequest
+ * @interface IamApiGetIamPermissionsByOwnerByNameRequest
  */
-export interface IamApiGetIamPermissionsGetRequest {
+export interface IamApiGetIamPermissionsByOwnerByNameRequest {
     /**
      * 
      * @type {string}
-     * @memberof IamApiGetIamPermissionsGet
+     * @memberof IamApiGetIamPermissionsByOwnerByName
      */
-    readonly owner?: string
+    readonly owner: string
 
     /**
      * 
      * @type {string}
-     * @memberof IamApiGetIamPermissionsGet
+     * @memberof IamApiGetIamPermissionsByOwnerByName
      */
-    readonly name?: string
+    readonly name: string
 }
 
 /**
@@ -13001,6 +10847,27 @@ export interface IamApiGetIamProjectsRequest {
 }
 
 /**
+ * Request parameters for getIamProjectsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiGetIamProjectsByOwnerByNameRequest
+ */
+export interface IamApiGetIamProjectsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamProjectsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamProjectsByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
  * Request parameters for getIamRoles operation in IamApi.
  * @export
  * @interface IamApiGetIamRolesRequest
@@ -13012,6 +10879,27 @@ export interface IamApiGetIamRolesRequest {
      * @memberof IamApiGetIamRoles
      */
     readonly owner?: string
+}
+
+/**
+ * Request parameters for getIamRolesByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiGetIamRolesByOwnerByNameRequest
+ */
+export interface IamApiGetIamRolesByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamRolesByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamRolesByOwnerByName
+     */
+    readonly name: string
 }
 
 /**
@@ -13105,6 +10993,13 @@ export interface IamApiGetIamUsersRequest {
     readonly owner: string
 
     /**
+     * Email narrows the page to the accounts carrying one address. Looking a person up by their address is a QUERY over the collection, not an item read: an address is not the natural key, two rows in one org can carry one, and a caller that gets a page SEES both — where a single-item read would have to choose, and choosing is how somebody joins a team under a colleague\&#39;s identity.
+     * @type {string}
+     * @memberof IamApiGetIamUsers
+     */
+    readonly email?: string
+
+    /**
      * 
      * @type {number}
      * @memberof IamApiGetIamUsers
@@ -13120,29 +11015,29 @@ export interface IamApiGetIamUsersRequest {
 }
 
 /**
- * Request parameters for getIamUsersGet operation in IamApi.
+ * Request parameters for getIamUsersByOwnerByName operation in IamApi.
  * @export
- * @interface IamApiGetIamUsersGetRequest
+ * @interface IamApiGetIamUsersByOwnerByNameRequest
  */
-export interface IamApiGetIamUsersGetRequest {
+export interface IamApiGetIamUsersByOwnerByNameRequest {
     /**
      * 
      * @type {string}
-     * @memberof IamApiGetIamUsersGet
+     * @memberof IamApiGetIamUsersByOwnerByName
      */
     readonly owner: string
 
     /**
      * 
      * @type {string}
-     * @memberof IamApiGetIamUsersGet
+     * @memberof IamApiGetIamUsersByOwnerByName
      */
-    readonly name?: string
+    readonly name: string
 
     /**
      * 
      * @type {string}
-     * @memberof IamApiGetIamUsersGet
+     * @memberof IamApiGetIamUsersByOwnerByName
      */
     readonly email?: string
 }
@@ -13162,6 +11057,27 @@ export interface IamApiGetIamWorkspacesRequest {
 }
 
 /**
+ * Request parameters for getIamWorkspacesByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiGetIamWorkspacesByOwnerByNameRequest
+ */
+export interface IamApiGetIamWorkspacesByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamWorkspacesByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetIamWorkspacesByOwnerByName
+     */
+    readonly name: string
+}
+
+/**
  * Request parameters for getOrganization operation in IamApi.
  * @export
  * @interface IamApiGetOrganizationRequest
@@ -13172,14 +11088,14 @@ export interface IamApiGetOrganizationRequest {
      * @type {string}
      * @memberof IamApiGetOrganization
      */
-    readonly owner?: string
+    readonly owner: string
 
     /**
      * 
      * @type {string}
      * @memberof IamApiGetOrganization
      */
-    readonly name?: string
+    readonly name: string
 }
 
 /**
@@ -13190,10 +11106,17 @@ export interface IamApiGetOrganizationRequest {
 export interface IamApiGetProviderRequest {
     /**
      * 
-     * @type {IamProviderKey}
+     * @type {string}
      * @memberof IamApiGetProvider
      */
-    readonly iamProviderKey: IamProviderKey
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetProvider
+     */
+    readonly name: string
 }
 
 /**
@@ -13204,10 +11127,24 @@ export interface IamApiGetProviderRequest {
 export interface IamApiGetSessionRequest {
     /**
      * 
-     * @type {IamSessionRef}
+     * @type {string}
      * @memberof IamApiGetSession
      */
-    readonly iamSessionRef: IamSessionRef
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetSession
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetSession
+     */
+    readonly application: string
 }
 
 /**
@@ -13218,10 +11155,17 @@ export interface IamApiGetSessionRequest {
 export interface IamApiGetTokenRequest {
     /**
      * 
-     * @type {IamTokenKey}
+     * @type {string}
      * @memberof IamApiGetToken
      */
-    readonly iamTokenKey: IamTokenKey
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetToken
+     */
+    readonly name: string
 }
 
 /**
@@ -13232,10 +11176,17 @@ export interface IamApiGetTokenRequest {
 export interface IamApiGetWebauthnCredentialRequest {
     /**
      * 
-     * @type {IamWebauthnCredentialKey}
+     * @type {string}
      * @memberof IamApiGetWebauthnCredential
      */
-    readonly iamWebauthnCredentialKey: IamWebauthnCredentialKey
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiGetWebauthnCredential
+     */
+    readonly name: string
 }
 
 /**
@@ -13249,7 +11200,14 @@ export interface IamApiListOrganizationsRequest {
      * @type {string}
      * @memberof IamApiListOrganizations
      */
-    readonly owner?: string
+    readonly xForwardedFor?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiListOrganizations
+     */
+    readonly q?: string
 
     /**
      * 
@@ -13260,10 +11218,10 @@ export interface IamApiListOrganizationsRequest {
 
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof IamApiListOrganizations
      */
-    readonly offset?: number
+    readonly cursor?: string
 }
 
 /**
@@ -13288,10 +11246,24 @@ export interface IamApiListProvidersRequest {
 export interface IamApiListSessionsRequest {
     /**
      * 
-     * @type {IamListSessionsIn}
+     * @type {string}
      * @memberof IamApiListSessions
      */
-    readonly iamListSessionsIn: IamListSessionsIn
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiListSessions
+     */
+    readonly name?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiListSessions
+     */
+    readonly application?: string
 }
 
 /**
@@ -13351,118 +11323,6 @@ export interface IamApiPatchIamScimV2UsersByOwnerByNameRequest {
 }
 
 /**
- * Request parameters for postIamAddApplication operation in IamApi.
- * @export
- * @interface IamApiPostIamAddApplicationRequest
- */
-export interface IamApiPostIamAddApplicationRequest {
-    /**
-     * 
-     * @type {IamApplication}
-     * @memberof IamApiPostIamAddApplication
-     */
-    readonly iamApplication: IamApplication
-}
-
-/**
- * Request parameters for postIamAddOrganization operation in IamApi.
- * @export
- * @interface IamApiPostIamAddOrganizationRequest
- */
-export interface IamApiPostIamAddOrganizationRequest {
-    /**
-     * 
-     * @type {IamCreateOrganizationInput}
-     * @memberof IamApiPostIamAddOrganization
-     */
-    readonly iamCreateOrganizationInput: IamCreateOrganizationInput
-}
-
-/**
- * Request parameters for postIamAddProject operation in IamApi.
- * @export
- * @interface IamApiPostIamAddProjectRequest
- */
-export interface IamApiPostIamAddProjectRequest {
-    /**
-     * 
-     * @type {IamInput}
-     * @memberof IamApiPostIamAddProject
-     */
-    readonly iamInput: IamInput
-}
-
-/**
- * Request parameters for postIamAddProvider operation in IamApi.
- * @export
- * @interface IamApiPostIamAddProviderRequest
- */
-export interface IamApiPostIamAddProviderRequest {
-    /**
-     * 
-     * @type {IamProvider}
-     * @memberof IamApiPostIamAddProvider
-     */
-    readonly iamProvider: IamProvider
-}
-
-/**
- * Request parameters for postIamAddRole operation in IamApi.
- * @export
- * @interface IamApiPostIamAddRoleRequest
- */
-export interface IamApiPostIamAddRoleRequest {
-    /**
-     * 
-     * @type {IamRolesInput}
-     * @memberof IamApiPostIamAddRole
-     */
-    readonly iamRolesInput: IamRolesInput
-}
-
-/**
- * Request parameters for postIamAddUser operation in IamApi.
- * @export
- * @interface IamApiPostIamAddUserRequest
- */
-export interface IamApiPostIamAddUserRequest {
-    /**
-     * 
-     * @type {IamUserBody}
-     * @memberof IamApiPostIamAddUser
-     */
-    readonly iamUserBody: IamUserBody
-}
-
-/**
- * Request parameters for postIamAddWorkspace operation in IamApi.
- * @export
- * @interface IamApiPostIamAddWorkspaceRequest
- */
-export interface IamApiPostIamAddWorkspaceRequest {
-    /**
-     * 
-     * @type {IamWorkspacesInput}
-     * @memberof IamApiPostIamAddWorkspace
-     */
-    readonly iamWorkspacesInput: IamWorkspacesInput
-}
-
-/**
- * Request parameters for postIamApplication operation in IamApi.
- * @export
- * @interface IamApiPostIamApplicationRequest
- */
-export interface IamApiPostIamApplicationRequest {
-    /**
-     * 
-     * @type {IamApplication}
-     * @memberof IamApiPostIamApplication
-     */
-    readonly iamApplication: IamApplication
-}
-
-/**
  * Request parameters for postIamApplications operation in IamApi.
  * @export
  * @interface IamApiPostIamApplicationsRequest
@@ -13472,34 +11332,6 @@ export interface IamApiPostIamApplicationsRequest {
      * 
      * @type {IamApplication}
      * @memberof IamApiPostIamApplications
-     */
-    readonly iamApplication: IamApplication
-}
-
-/**
- * Request parameters for postIamApplicationsDelete operation in IamApi.
- * @export
- * @interface IamApiPostIamApplicationsDeleteRequest
- */
-export interface IamApiPostIamApplicationsDeleteRequest {
-    /**
-     * 
-     * @type {IamApplicationRef}
-     * @memberof IamApiPostIamApplicationsDelete
-     */
-    readonly iamApplicationRef: IamApplicationRef
-}
-
-/**
- * Request parameters for postIamApplicationsUpdate operation in IamApi.
- * @export
- * @interface IamApiPostIamApplicationsUpdateRequest
- */
-export interface IamApiPostIamApplicationsUpdateRequest {
-    /**
-     * 
-     * @type {IamApplication}
-     * @memberof IamApiPostIamApplicationsUpdate
      */
     readonly iamApplication: IamApplication
 }
@@ -13540,52 +11372,10 @@ export interface IamApiPostIamAssumeRequest {
 export interface IamApiPostIamAuditLogsRequest {
     /**
      * 
-     * @type {IamAuditlogsInput}
+     * @type {IamInput}
      * @memberof IamApiPostIamAuditLogs
      */
-    readonly iamAuditlogsInput: IamAuditlogsInput
-}
-
-/**
- * Request parameters for postIamAuditLogsDelete operation in IamApi.
- * @export
- * @interface IamApiPostIamAuditLogsDeleteRequest
- */
-export interface IamApiPostIamAuditLogsDeleteRequest {
-    /**
-     * 
-     * @type {IamRef}
-     * @memberof IamApiPostIamAuditLogsDelete
-     */
-    readonly iamRef: IamRef
-}
-
-/**
- * Request parameters for postIamAuditLogsGet operation in IamApi.
- * @export
- * @interface IamApiPostIamAuditLogsGetRequest
- */
-export interface IamApiPostIamAuditLogsGetRequest {
-    /**
-     * 
-     * @type {IamRef}
-     * @memberof IamApiPostIamAuditLogsGet
-     */
-    readonly iamRef: IamRef
-}
-
-/**
- * Request parameters for postIamAuditLogsUpdate operation in IamApi.
- * @export
- * @interface IamApiPostIamAuditLogsUpdateRequest
- */
-export interface IamApiPostIamAuditLogsUpdateRequest {
-    /**
-     * 
-     * @type {IamAuditlogsInput}
-     * @memberof IamApiPostIamAuditLogsUpdate
-     */
-    readonly iamAuditlogsInput: IamAuditlogsInput
+    readonly iamInput: IamInput
 }
 
 /**
@@ -13603,146 +11393,6 @@ export interface IamApiPostIamCertsRequest {
 }
 
 /**
- * Request parameters for postIamCertsDelete operation in IamApi.
- * @export
- * @interface IamApiPostIamCertsDeleteRequest
- */
-export interface IamApiPostIamCertsDeleteRequest {
-    /**
-     * 
-     * @type {IamCertsRef}
-     * @memberof IamApiPostIamCertsDelete
-     */
-    readonly iamCertsRef: IamCertsRef
-}
-
-/**
- * Request parameters for postIamCertsGet operation in IamApi.
- * @export
- * @interface IamApiPostIamCertsGetRequest
- */
-export interface IamApiPostIamCertsGetRequest {
-    /**
-     * 
-     * @type {IamCertsRef}
-     * @memberof IamApiPostIamCertsGet
-     */
-    readonly iamCertsRef: IamCertsRef
-}
-
-/**
- * Request parameters for postIamCertsUpdate operation in IamApi.
- * @export
- * @interface IamApiPostIamCertsUpdateRequest
- */
-export interface IamApiPostIamCertsUpdateRequest {
-    /**
-     * 
-     * @type {IamCert}
-     * @memberof IamApiPostIamCertsUpdate
-     */
-    readonly iamCert: IamCert
-}
-
-/**
- * Request parameters for postIamDeleteApplication operation in IamApi.
- * @export
- * @interface IamApiPostIamDeleteApplicationRequest
- */
-export interface IamApiPostIamDeleteApplicationRequest {
-    /**
-     * 
-     * @type {IamApplication}
-     * @memberof IamApiPostIamDeleteApplication
-     */
-    readonly iamApplication: IamApplication
-}
-
-/**
- * Request parameters for postIamDeleteOrganization operation in IamApi.
- * @export
- * @interface IamApiPostIamDeleteOrganizationRequest
- */
-export interface IamApiPostIamDeleteOrganizationRequest {
-    /**
-     * 
-     * @type {IamDeleteOrganizationInput}
-     * @memberof IamApiPostIamDeleteOrganization
-     */
-    readonly iamDeleteOrganizationInput: IamDeleteOrganizationInput
-}
-
-/**
- * Request parameters for postIamDeleteProject operation in IamApi.
- * @export
- * @interface IamApiPostIamDeleteProjectRequest
- */
-export interface IamApiPostIamDeleteProjectRequest {
-    /**
-     * 
-     * @type {IamProjectsRef}
-     * @memberof IamApiPostIamDeleteProject
-     */
-    readonly iamProjectsRef: IamProjectsRef
-}
-
-/**
- * Request parameters for postIamDeleteProvider operation in IamApi.
- * @export
- * @interface IamApiPostIamDeleteProviderRequest
- */
-export interface IamApiPostIamDeleteProviderRequest {
-    /**
-     * 
-     * @type {IamProvider}
-     * @memberof IamApiPostIamDeleteProvider
-     */
-    readonly iamProvider: IamProvider
-}
-
-/**
- * Request parameters for postIamDeleteRole operation in IamApi.
- * @export
- * @interface IamApiPostIamDeleteRoleRequest
- */
-export interface IamApiPostIamDeleteRoleRequest {
-    /**
-     * 
-     * @type {IamRolesRef}
-     * @memberof IamApiPostIamDeleteRole
-     */
-    readonly iamRolesRef: IamRolesRef
-}
-
-/**
- * Request parameters for postIamDeleteUser operation in IamApi.
- * @export
- * @interface IamApiPostIamDeleteUserRequest
- */
-export interface IamApiPostIamDeleteUserRequest {
-    /**
-     * 
-     * @type {IamUserBody}
-     * @memberof IamApiPostIamDeleteUser
-     */
-    readonly iamUserBody: IamUserBody
-}
-
-/**
- * Request parameters for postIamDeleteWorkspace operation in IamApi.
- * @export
- * @interface IamApiPostIamDeleteWorkspaceRequest
- */
-export interface IamApiPostIamDeleteWorkspaceRequest {
-    /**
-     * 
-     * @type {IamWorkspacesRef}
-     * @memberof IamApiPostIamDeleteWorkspace
-     */
-    readonly iamWorkspacesRef: IamWorkspacesRef
-}
-
-/**
  * Request parameters for postIamInvitations operation in IamApi.
  * @export
  * @interface IamApiPostIamInvitationsRequest
@@ -13752,48 +11402,6 @@ export interface IamApiPostIamInvitationsRequest {
      * 
      * @type {IamInvitationsInput}
      * @memberof IamApiPostIamInvitations
-     */
-    readonly iamInvitationsInput: IamInvitationsInput
-}
-
-/**
- * Request parameters for postIamInvitationsDelete operation in IamApi.
- * @export
- * @interface IamApiPostIamInvitationsDeleteRequest
- */
-export interface IamApiPostIamInvitationsDeleteRequest {
-    /**
-     * 
-     * @type {IamInvitationsRef}
-     * @memberof IamApiPostIamInvitationsDelete
-     */
-    readonly iamInvitationsRef: IamInvitationsRef
-}
-
-/**
- * Request parameters for postIamInvitationsGet operation in IamApi.
- * @export
- * @interface IamApiPostIamInvitationsGetRequest
- */
-export interface IamApiPostIamInvitationsGetRequest {
-    /**
-     * 
-     * @type {IamInvitationsRef}
-     * @memberof IamApiPostIamInvitationsGet
-     */
-    readonly iamInvitationsRef: IamInvitationsRef
-}
-
-/**
- * Request parameters for postIamInvitationsUpdate operation in IamApi.
- * @export
- * @interface IamApiPostIamInvitationsUpdateRequest
- */
-export interface IamApiPostIamInvitationsUpdateRequest {
-    /**
-     * 
-     * @type {IamInvitationsInput}
-     * @memberof IamApiPostIamInvitationsUpdate
      */
     readonly iamInvitationsInput: IamInvitationsInput
 }
@@ -13813,34 +11421,6 @@ export interface IamApiPostIamKeysRequest {
 }
 
 /**
- * Request parameters for postIamKeysDelete operation in IamApi.
- * @export
- * @interface IamApiPostIamKeysDeleteRequest
- */
-export interface IamApiPostIamKeysDeleteRequest {
-    /**
-     * 
-     * @type {IamKeysRef}
-     * @memberof IamApiPostIamKeysDelete
-     */
-    readonly iamKeysRef: IamKeysRef
-}
-
-/**
- * Request parameters for postIamKeysUpdate operation in IamApi.
- * @export
- * @interface IamApiPostIamKeysUpdateRequest
- */
-export interface IamApiPostIamKeysUpdateRequest {
-    /**
-     * 
-     * @type {IamKey}
-     * @memberof IamApiPostIamKeysUpdate
-     */
-    readonly iamKey: IamKey
-}
-
-/**
  * Request parameters for postIamPermissions operation in IamApi.
  * @export
  * @interface IamApiPostIamPermissionsRequest
@@ -13855,34 +11435,6 @@ export interface IamApiPostIamPermissionsRequest {
 }
 
 /**
- * Request parameters for postIamPermissionsDelete operation in IamApi.
- * @export
- * @interface IamApiPostIamPermissionsDeleteRequest
- */
-export interface IamApiPostIamPermissionsDeleteRequest {
-    /**
-     * 
-     * @type {IamPermissionRef}
-     * @memberof IamApiPostIamPermissionsDelete
-     */
-    readonly iamPermissionRef: IamPermissionRef
-}
-
-/**
- * Request parameters for postIamPermissionsUpdate operation in IamApi.
- * @export
- * @interface IamApiPostIamPermissionsUpdateRequest
- */
-export interface IamApiPostIamPermissionsUpdateRequest {
-    /**
-     * 
-     * @type {IamPermission}
-     * @memberof IamApiPostIamPermissionsUpdate
-     */
-    readonly iamPermission: IamPermission
-}
-
-/**
  * Request parameters for postIamProjects operation in IamApi.
  * @export
  * @interface IamApiPostIamProjectsRequest
@@ -13890,52 +11442,10 @@ export interface IamApiPostIamPermissionsUpdateRequest {
 export interface IamApiPostIamProjectsRequest {
     /**
      * 
-     * @type {IamInput}
+     * @type {IamProjectsInput}
      * @memberof IamApiPostIamProjects
      */
-    readonly iamInput: IamInput
-}
-
-/**
- * Request parameters for postIamProjectsDelete operation in IamApi.
- * @export
- * @interface IamApiPostIamProjectsDeleteRequest
- */
-export interface IamApiPostIamProjectsDeleteRequest {
-    /**
-     * 
-     * @type {IamProjectsRef}
-     * @memberof IamApiPostIamProjectsDelete
-     */
-    readonly iamProjectsRef: IamProjectsRef
-}
-
-/**
- * Request parameters for postIamProjectsGet operation in IamApi.
- * @export
- * @interface IamApiPostIamProjectsGetRequest
- */
-export interface IamApiPostIamProjectsGetRequest {
-    /**
-     * 
-     * @type {IamProjectsRef}
-     * @memberof IamApiPostIamProjectsGet
-     */
-    readonly iamProjectsRef: IamProjectsRef
-}
-
-/**
- * Request parameters for postIamProjectsUpdate operation in IamApi.
- * @export
- * @interface IamApiPostIamProjectsUpdateRequest
- */
-export interface IamApiPostIamProjectsUpdateRequest {
-    /**
-     * 
-     * @type {IamInput}
-     * @memberof IamApiPostIamProjectsUpdate
-     */
-    readonly iamInput: IamInput
+    readonly iamProjectsInput: IamProjectsInput
 }
 
 /**
@@ -13981,48 +11491,6 @@ export interface IamApiPostIamRolesRequest {
 }
 
 /**
- * Request parameters for postIamRolesDelete operation in IamApi.
- * @export
- * @interface IamApiPostIamRolesDeleteRequest
- */
-export interface IamApiPostIamRolesDeleteRequest {
-    /**
-     * 
-     * @type {IamRolesRef}
-     * @memberof IamApiPostIamRolesDelete
-     */
-    readonly iamRolesRef: IamRolesRef
-}
-
-/**
- * Request parameters for postIamRolesGet operation in IamApi.
- * @export
- * @interface IamApiPostIamRolesGetRequest
- */
-export interface IamApiPostIamRolesGetRequest {
-    /**
-     * 
-     * @type {IamRolesRef}
-     * @memberof IamApiPostIamRolesGet
-     */
-    readonly iamRolesRef: IamRolesRef
-}
-
-/**
- * Request parameters for postIamRolesUpdate operation in IamApi.
- * @export
- * @interface IamApiPostIamRolesUpdateRequest
- */
-export interface IamApiPostIamRolesUpdateRequest {
-    /**
-     * 
-     * @type {IamRolesInput}
-     * @memberof IamApiPostIamRolesUpdate
-     */
-    readonly iamRolesInput: IamRolesInput
-}
-
-/**
  * Request parameters for postIamServiceAccountsByNameKeys operation in IamApi.
  * @export
  * @interface IamApiPostIamServiceAccountsByNameKeysRequest
@@ -14034,76 +11502,6 @@ export interface IamApiPostIamServiceAccountsByNameKeysRequest {
      * @memberof IamApiPostIamServiceAccountsByNameKeys
      */
     readonly name: string
-}
-
-/**
- * Request parameters for postIamUpdateApplication operation in IamApi.
- * @export
- * @interface IamApiPostIamUpdateApplicationRequest
- */
-export interface IamApiPostIamUpdateApplicationRequest {
-    /**
-     * 
-     * @type {IamApplication}
-     * @memberof IamApiPostIamUpdateApplication
-     */
-    readonly iamApplication: IamApplication
-}
-
-/**
- * Request parameters for postIamUpdateOrganization operation in IamApi.
- * @export
- * @interface IamApiPostIamUpdateOrganizationRequest
- */
-export interface IamApiPostIamUpdateOrganizationRequest {
-    /**
-     * 
-     * @type {IamUpdateOrganizationInput}
-     * @memberof IamApiPostIamUpdateOrganization
-     */
-    readonly iamUpdateOrganizationInput: IamUpdateOrganizationInput
-}
-
-/**
- * Request parameters for postIamUpdateProvider operation in IamApi.
- * @export
- * @interface IamApiPostIamUpdateProviderRequest
- */
-export interface IamApiPostIamUpdateProviderRequest {
-    /**
-     * 
-     * @type {IamProvider}
-     * @memberof IamApiPostIamUpdateProvider
-     */
-    readonly iamProvider: IamProvider
-}
-
-/**
- * Request parameters for postIamUpdateRole operation in IamApi.
- * @export
- * @interface IamApiPostIamUpdateRoleRequest
- */
-export interface IamApiPostIamUpdateRoleRequest {
-    /**
-     * 
-     * @type {IamRolesInput}
-     * @memberof IamApiPostIamUpdateRole
-     */
-    readonly iamRolesInput: IamRolesInput
-}
-
-/**
- * Request parameters for postIamUpdateUser operation in IamApi.
- * @export
- * @interface IamApiPostIamUpdateUserRequest
- */
-export interface IamApiPostIamUpdateUserRequest {
-    /**
-     * 
-     * @type {IamUserBody}
-     * @memberof IamApiPostIamUpdateUser
-     */
-    readonly iamUserBody: IamUserBody
 }
 
 /**
@@ -14121,31 +11519,24 @@ export interface IamApiPostIamUsersRequest {
 }
 
 /**
- * Request parameters for postIamUsersDelete operation in IamApi.
+ * Request parameters for postIamUsersByOwnerByNameKeys operation in IamApi.
  * @export
- * @interface IamApiPostIamUsersDeleteRequest
+ * @interface IamApiPostIamUsersByOwnerByNameKeysRequest
  */
-export interface IamApiPostIamUsersDeleteRequest {
+export interface IamApiPostIamUsersByOwnerByNameKeysRequest {
     /**
      * 
-     * @type {IamUsersRef}
-     * @memberof IamApiPostIamUsersDelete
+     * @type {string}
+     * @memberof IamApiPostIamUsersByOwnerByNameKeys
      */
-    readonly iamUsersRef: IamUsersRef
-}
+    readonly owner: string
 
-/**
- * Request parameters for postIamUsersUpdate operation in IamApi.
- * @export
- * @interface IamApiPostIamUsersUpdateRequest
- */
-export interface IamApiPostIamUsersUpdateRequest {
     /**
      * 
-     * @type {IamUpdateInput}
-     * @memberof IamApiPostIamUsersUpdate
+     * @type {string}
+     * @memberof IamApiPostIamUsersByOwnerByNameKeys
      */
-    readonly iamUpdateInput: IamUpdateInput
+    readonly name: string
 }
 
 /**
@@ -14158,48 +11549,6 @@ export interface IamApiPostIamWorkspacesRequest {
      * 
      * @type {IamWorkspacesInput}
      * @memberof IamApiPostIamWorkspaces
-     */
-    readonly iamWorkspacesInput: IamWorkspacesInput
-}
-
-/**
- * Request parameters for postIamWorkspacesDelete operation in IamApi.
- * @export
- * @interface IamApiPostIamWorkspacesDeleteRequest
- */
-export interface IamApiPostIamWorkspacesDeleteRequest {
-    /**
-     * 
-     * @type {IamWorkspacesRef}
-     * @memberof IamApiPostIamWorkspacesDelete
-     */
-    readonly iamWorkspacesRef: IamWorkspacesRef
-}
-
-/**
- * Request parameters for postIamWorkspacesGet operation in IamApi.
- * @export
- * @interface IamApiPostIamWorkspacesGetRequest
- */
-export interface IamApiPostIamWorkspacesGetRequest {
-    /**
-     * 
-     * @type {IamWorkspacesRef}
-     * @memberof IamApiPostIamWorkspacesGet
-     */
-    readonly iamWorkspacesRef: IamWorkspacesRef
-}
-
-/**
- * Request parameters for postIamWorkspacesUpdate operation in IamApi.
- * @export
- * @interface IamApiPostIamWorkspacesUpdateRequest
- */
-export interface IamApiPostIamWorkspacesUpdateRequest {
-    /**
-     * 
-     * @type {IamWorkspacesInput}
-     * @memberof IamApiPostIamWorkspacesUpdate
      */
     readonly iamWorkspacesInput: IamWorkspacesInput
 }
@@ -14233,17 +11582,143 @@ export interface IamApiPutIamAccountRequest {
 }
 
 /**
- * Request parameters for putIamApplication operation in IamApi.
+ * Request parameters for putIamApplicationsByOwnerByName operation in IamApi.
  * @export
- * @interface IamApiPutIamApplicationRequest
+ * @interface IamApiPutIamApplicationsByOwnerByNameRequest
  */
-export interface IamApiPutIamApplicationRequest {
+export interface IamApiPutIamApplicationsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamApplicationsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamApplicationsByOwnerByName
+     */
+    readonly name: string
+
     /**
      * 
      * @type {IamApplication}
-     * @memberof IamApiPutIamApplication
+     * @memberof IamApiPutIamApplicationsByOwnerByName
      */
     readonly iamApplication: IamApplication
+}
+
+/**
+ * Request parameters for putIamAuditLogsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiPutIamAuditLogsByOwnerByNameRequest
+ */
+export interface IamApiPutIamAuditLogsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAuditLogsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamAuditLogsByOwnerByName
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {IamInput}
+     * @memberof IamApiPutIamAuditLogsByOwnerByName
+     */
+    readonly iamInput: IamInput
+}
+
+/**
+ * Request parameters for putIamCertsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiPutIamCertsByOwnerByNameRequest
+ */
+export interface IamApiPutIamCertsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamCertsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamCertsByOwnerByName
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {IamCert}
+     * @memberof IamApiPutIamCertsByOwnerByName
+     */
+    readonly iamCert: IamCert
+}
+
+/**
+ * Request parameters for putIamInvitationsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiPutIamInvitationsByOwnerByNameRequest
+ */
+export interface IamApiPutIamInvitationsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamInvitationsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamInvitationsByOwnerByName
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {IamInvitationsInput}
+     * @memberof IamApiPutIamInvitationsByOwnerByName
+     */
+    readonly iamInvitationsInput: IamInvitationsInput
+}
+
+/**
+ * Request parameters for putIamKeysByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiPutIamKeysByOwnerByNameRequest
+ */
+export interface IamApiPutIamKeysByOwnerByNameRequest {
+    /**
+     * Owner is the tenant that holds the key; Name is unique within Owner.
+     * @type {string}
+     * @memberof IamApiPutIamKeysByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamKeysByOwnerByName
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {IamKey}
+     * @memberof IamApiPutIamKeysByOwnerByName
+     */
+    readonly iamKey: IamKey
 }
 
 /**
@@ -14275,6 +11750,90 @@ export interface IamApiPutIamPasswordRequest {
 }
 
 /**
+ * Request parameters for putIamPermissionsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiPutIamPermissionsByOwnerByNameRequest
+ */
+export interface IamApiPutIamPermissionsByOwnerByNameRequest {
+    /**
+     * Identity — the (owner, name) natural key.
+     * @type {string}
+     * @memberof IamApiPutIamPermissionsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamPermissionsByOwnerByName
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {IamPermission}
+     * @memberof IamApiPutIamPermissionsByOwnerByName
+     */
+    readonly iamPermission: IamPermission
+}
+
+/**
+ * Request parameters for putIamProjectsByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiPutIamProjectsByOwnerByNameRequest
+ */
+export interface IamApiPutIamProjectsByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamProjectsByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamProjectsByOwnerByName
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {IamProjectsInput}
+     * @memberof IamApiPutIamProjectsByOwnerByName
+     */
+    readonly iamProjectsInput: IamProjectsInput
+}
+
+/**
+ * Request parameters for putIamRolesByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiPutIamRolesByOwnerByNameRequest
+ */
+export interface IamApiPutIamRolesByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamRolesByOwnerByName
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamRolesByOwnerByName
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {IamRolesInput}
+     * @memberof IamApiPutIamRolesByOwnerByName
+     */
+    readonly iamRolesInput: IamRolesInput
+}
+
+/**
  * Request parameters for putIamScimV2UsersByOwnerByName operation in IamApi.
  * @export
  * @interface IamApiPutIamScimV2UsersByOwnerByNameRequest
@@ -14296,38 +11855,59 @@ export interface IamApiPutIamScimV2UsersByOwnerByNameRequest {
 }
 
 /**
- * Request parameters for searchOrganizations operation in IamApi.
+ * Request parameters for putIamUsersByOwnerByName operation in IamApi.
  * @export
- * @interface IamApiSearchOrganizationsRequest
+ * @interface IamApiPutIamUsersByOwnerByNameRequest
  */
-export interface IamApiSearchOrganizationsRequest {
+export interface IamApiPutIamUsersByOwnerByNameRequest {
     /**
      * 
      * @type {string}
-     * @memberof IamApiSearchOrganizations
+     * @memberof IamApiPutIamUsersByOwnerByName
      */
-    readonly xForwardedFor?: string
+    readonly owner: string
 
     /**
      * 
      * @type {string}
-     * @memberof IamApiSearchOrganizations
+     * @memberof IamApiPutIamUsersByOwnerByName
      */
-    readonly q?: string
+    readonly name: string
 
     /**
      * 
-     * @type {number}
-     * @memberof IamApiSearchOrganizations
+     * @type {IamUpdateInput}
+     * @memberof IamApiPutIamUsersByOwnerByName
      */
-    readonly limit?: number
+    readonly iamUpdateInput: IamUpdateInput
+}
+
+/**
+ * Request parameters for putIamWorkspacesByOwnerByName operation in IamApi.
+ * @export
+ * @interface IamApiPutIamWorkspacesByOwnerByNameRequest
+ */
+export interface IamApiPutIamWorkspacesByOwnerByNameRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiPutIamWorkspacesByOwnerByName
+     */
+    readonly owner: string
 
     /**
      * 
      * @type {string}
-     * @memberof IamApiSearchOrganizations
+     * @memberof IamApiPutIamWorkspacesByOwnerByName
      */
-    readonly cursor?: string
+    readonly name: string
+
+    /**
+     * 
+     * @type {IamWorkspacesInput}
+     * @memberof IamApiPutIamWorkspacesByOwnerByName
+     */
+    readonly iamWorkspacesInput: IamWorkspacesInput
 }
 
 /**
@@ -14352,6 +11932,20 @@ export interface IamApiSetOrganizationAvatarRequest {
 export interface IamApiUpdateOrganizationRequest {
     /**
      * 
+     * @type {string}
+     * @memberof IamApiUpdateOrganization
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiUpdateOrganization
+     */
+    readonly name: string
+
+    /**
+     * 
      * @type {IamUpdateOrganizationInput}
      * @memberof IamApiUpdateOrganization
      */
@@ -14364,6 +11958,20 @@ export interface IamApiUpdateOrganizationRequest {
  * @interface IamApiUpdateProviderRequest
  */
 export interface IamApiUpdateProviderRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiUpdateProvider
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiUpdateProvider
+     */
+    readonly name: string
+
     /**
      * 
      * @type {IamProvider}
@@ -14380,6 +11988,27 @@ export interface IamApiUpdateProviderRequest {
 export interface IamApiUpdateSessionRequest {
     /**
      * 
+     * @type {string}
+     * @memberof IamApiUpdateSession
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiUpdateSession
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiUpdateSession
+     */
+    readonly application: string
+
+    /**
+     * 
      * @type {IamUpdateSessionIn}
      * @memberof IamApiUpdateSession
      */
@@ -14394,6 +12023,20 @@ export interface IamApiUpdateSessionRequest {
 export interface IamApiUpdateTokenRequest {
     /**
      * 
+     * @type {string}
+     * @memberof IamApiUpdateToken
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiUpdateToken
+     */
+    readonly name: string
+
+    /**
+     * 
      * @type {IamToken}
      * @memberof IamApiUpdateToken
      */
@@ -14406,6 +12049,20 @@ export interface IamApiUpdateTokenRequest {
  * @interface IamApiUpdateWebauthnCredentialRequest
  */
 export interface IamApiUpdateWebauthnCredentialRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiUpdateWebauthnCredential
+     */
+    readonly owner: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof IamApiUpdateWebauthnCredential
+     */
+    readonly name: string
+
     /**
      * 
      * @type {IamWebauthnCredential}
@@ -14526,13 +12183,108 @@ export class IamApi extends BaseAPI {
     /**
      * Removes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration before deleting it.
      * @summary Removes an application.
-     * @param {IamApiDeleteIamApplicationRequest} requestParameters Request parameters.
+     * @param {IamApiDeleteIamApplicationsByOwnerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public deleteIamApplication(requestParameters: IamApiDeleteIamApplicationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).deleteIamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public deleteIamApplicationsByOwnerByName(requestParameters: IamApiDeleteIamApplicationsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamApplicationsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes an audit entry. Retention policy is normally what should expire a trail; deleting by hand leaves a gap a reviewer will notice.
+     * @summary Removes an audit entry.
+     * @param {IamApiDeleteIamAuditLogsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamAuditLogsByOwnerByName(requestParameters: IamApiDeleteIamAuditLogsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamAuditLogsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes a signing certificate. Tokens signed with it can no longer be verified, so retire it only once nothing is still presenting them.
+     * @summary Removes a signing certificate.
+     * @param {IamApiDeleteIamCertsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamCertsByOwnerByName(requestParameters: IamApiDeleteIamCertsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamCertsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Withdraws an invitation. It stops being redeemable at once; anyone who already joined through it keeps their account.
+     * @summary Withdraws an invitation.
+     * @param {IamApiDeleteIamInvitationsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamInvitationsByOwnerByName(requestParameters: IamApiDeleteIamInvitationsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamInvitationsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Revokes an API key. Anything still presenting it stops being authorized at once, so roll the replacement out before you revoke.
+     * @summary Revokes an API key.
+     * @param {IamApiDeleteIamKeysByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamKeysByOwnerByName(requestParameters: IamApiDeleteIamKeysByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamKeysByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
+     * @summary Turns a factor off, so sign-in stops asking for it.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamMfa(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamMfa(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Revokes a permission. Everyone who held access only through it loses that access immediately; grants they hold by another route are untouched.
+     * @summary Revokes a permission.
+     * @param {IamApiDeleteIamPermissionsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamPermissionsByOwnerByName(requestParameters: IamApiDeleteIamPermissionsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamPermissionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so move anything addressed by it first.
+     * @summary Removes a project.
+     * @param {IamApiDeleteIamProjectsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamProjectsByOwnerByName(requestParameters: IamApiDeleteIamProjectsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamProjectsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes a role. Everyone in it loses the access it carried; their accounts, and any other role they hold, are untouched.
+     * @summary Removes a role.
+     * @param {IamApiDeleteIamRolesByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamRolesByOwnerByName(requestParameters: IamApiDeleteIamRolesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamRolesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14560,6 +12312,42 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
+     * @summary Removes a person from your organization.
+     * @param {IamApiDeleteIamUsersByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamUsersByOwnerByName(requestParameters: IamApiDeleteIamUsersByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamUsersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
+     * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
+     * @param {IamApiDeleteIamUsersByOwnerByNameKeysRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamUsersByOwnerByNameKeys(requestParameters: IamApiDeleteIamUsersByOwnerByNameKeysRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamUsersByOwnerByNameKeys(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.
+     * @summary Removes a workspace.
+     * @param {IamApiDeleteIamWorkspacesByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public deleteIamWorkspacesByOwnerByName(requestParameters: IamApiDeleteIamWorkspacesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).deleteIamWorkspacesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Removes an organization and everything named inside it. There is no undo, and every session issued under it stops working.  The built-in admin organization cannot be deleted — losing it would leave the account with no way back in.
      * @summary Removes an organization and everything named inside it.
      * @param {IamApiDeleteOrganizationRequest} requestParameters Request parameters.
@@ -14568,7 +12356,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public deleteOrganization(requestParameters: IamApiDeleteOrganizationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).deleteOrganization(requestParameters.iamDeleteOrganizationInput, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).deleteOrganization(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14580,7 +12368,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public deleteProvider(requestParameters: IamApiDeleteProviderRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).deleteProvider(requestParameters.iamProviderKey, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).deleteProvider(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14592,7 +12380,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public deleteSession(requestParameters: IamApiDeleteSessionRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).deleteSession(requestParameters.iamSessionRef, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).deleteSession(requestParameters.owner, requestParameters.name, requestParameters.application, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14604,7 +12392,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public deleteToken(requestParameters: IamApiDeleteTokenRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).deleteToken(requestParameters.iamTokenKey, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).deleteToken(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14616,7 +12404,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public deleteWebauthnCredential(requestParameters: IamApiDeleteWebauthnCredentialRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).deleteWebauthnCredential(requestParameters.iamWebauthnCredentialKey, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).deleteWebauthnCredential(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14628,18 +12416,6 @@ export class IamApi extends BaseAPI {
      */
     public getIamAccount(options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).getIamAccount(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-     * @summary Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-     * @param {IamApiGetIamApplicationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamApplication(requestParameters: IamApiGetIamApplicationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamApplication(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14657,13 +12433,13 @@ export class IamApi extends BaseAPI {
     /**
      * Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
      * @summary Returns one application: its sign-in methods, its allowed redirect URIs and the client credentials your integration authenticates with.
-     * @param {IamApiGetIamApplicationsGetRequest} requestParameters Request parameters.
+     * @param {IamApiGetIamApplicationsByOwnerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getIamApplicationsGet(requestParameters: IamApiGetIamApplicationsGetRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamApplicationsGet(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getIamApplicationsByOwnerByName(requestParameters: IamApiGetIamApplicationsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamApplicationsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14676,6 +12452,18 @@ export class IamApi extends BaseAPI {
      */
     public getIamAuditLogs(requestParameters: IamApiGetIamAuditLogsRequest = {}, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).getIamAuditLogs(requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
+     * @summary Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
+     * @param {IamApiGetIamAuditLogsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamAuditLogsByOwnerByName(requestParameters: IamApiGetIamAuditLogsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamAuditLogsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14715,6 +12503,18 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Returns one signing certificate — its algorithm, its validity window and its public half. The private key is masked.
+     * @summary Returns one signing certificate — its algorithm, its validity window and its public half.
+     * @param {IamApiGetIamCertsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamCertsByOwnerByName(requestParameters: IamApiGetIamCertsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamCertsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the calling person\'s own privacy and communication choices. Somebody who has never set them gets the defaults rather than nothing, so a consent screen always has something to show — insights on, and training UNANSWERED, which is the state that means the screen still has to ask.
      * @summary Returns the calling person\'s own privacy and communication choices.
      * @param {*} [options] Override http request option.
@@ -14749,227 +12549,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-     * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetApplication(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetApplication(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-     * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetApplications(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetApplications(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-     * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetCert(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetCert(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-     * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetCerts(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetCerts(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-     * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetGlobalUsers(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetGlobalUsers(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-     * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetInvitations(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetInvitations(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.  Both are org-scoped: a non-SuperAdmin may ask about ITS OWN org\'s roster, or about a user whose home org is its own, and nothing else. The bound comes from the verified credential via authz.Scope, so a request parameter can never widen it — a membership row names who may act and spend in an org, so a cross-tenant read is a customer roster leak.
-     * @summary Answers either question about who belongs where: which organizations one person can act in, or who can act in one organization.
-     * @param {IamApiGetIamGetMembershipsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetMemberships(requestParameters: IamApiGetIamGetMembershipsRequest = {}, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetMemberships(requestParameters.user, requestParameters.org, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-     * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetOrganization(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetOrganization(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one organization\'s projects — what a scope switcher lists so somebody can move between them.  You see your own organization and no other, whatever the request asks for.
-     * @summary Returns one organization\'s projects — what a scope switcher lists so somebody can move between them.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetOrganizationProjects(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetOrganizationProjects(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one organization\'s workspaces — what a scope switcher lists so somebody can move between them.  You see your own organization and no other, whatever the request asks for.
-     * @summary Returns one organization\'s workspaces — what a scope switcher lists so somebody can move between them.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetOrganizationWorkspaces(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetOrganizationWorkspaces(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-     * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetOrganizations(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetOrganizations(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-     * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetPermission(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetPermission(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-     * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetPermissions(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetPermissions(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-     * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetProvider(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetProvider(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-     * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetProviders(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetProviders(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-     * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetRecords(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetRecords(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.  Secrets are stripped. Naming a record in another organization does not reach it, however the request spells it.
-     * @summary Reads one record — the older spelling of the single reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetRole(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetRole(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-     * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetRoles(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetRoles(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Reads one person, two ways.  Name them and it is an ordinary read, with secrets stripped. Or hand it a SECRET API key and it answers with the person that key belongs to — how a service of yours turns a credential on an incoming request into an identity.  A publishable key resolves to nobody here, deliberately: it is safe to ship in a browser precisely because it names an organization and never a person.  get-user is handler-authorized (authz.handlerAuthorizedExact) because the key variant carries no owner/name for the Guard to authorize; so the owner/name variant reinstates the SAME read authorization the Guard applies, through the ONE policy function (authz.Can) — identical behavior, a cross-tenant or non-self read still refused 403 — then reuses the generic getHandler verbatim for resolution and redaction. No authz and no CRUD is reimplemented.
-     * @summary Reads one person, two ways.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetUser(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetUser(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.  Secrets are stripped from every row. Send both a page number and a page size to page, and the total comes back alongside; send neither and you get the whole set. You see your own organization and no other, whatever the request asks for.  Scoping note (intentional, fail-closed): iam\'s ownership model is mixed — users/roles/permissions are owned by their tenant org, while organizations/ applications/providers/certs are platform-owned (Owner \"admin\"). A SuperAdmin (Scope → the requested owner, empty = all) therefore lists every entity, which is the console-admin path. A non-super is pinned by Scope to its own org, so it lists its tenant-owned entities correctly and is refused the platform-owned lists at the Guard (owner \"\" or \"admin\" both deny) — a safe 403, never another tenant\'s rows. Non-super, membership-scoped views of the platform-owned entities (e.g. an org console\'s own app list keyed on Application.Organization) are a separate, additive surface, not a silent behavior of this generic lister.
-     * @summary Lists one kind of record in your organization — the older spelling of the collection reads on the REST surface, over the same data and the same permissions.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetUsers(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetUsers(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
      * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
      * @param {IamApiGetIamInvitationsRequest} requestParameters Request parameters.
@@ -14979,6 +12558,18 @@ export class IamApi extends BaseAPI {
      */
     public getIamInvitations(requestParameters: IamApiGetIamInvitationsRequest = {}, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).getIamInvitations(requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
+     * @summary Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
+     * @param {IamApiGetIamInvitationsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamInvitationsByOwnerByName(requestParameters: IamApiGetIamInvitationsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamInvitationsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14996,13 +12587,35 @@ export class IamApi extends BaseAPI {
     /**
      * Returns one API key: what it is called, what it may reach, and when it was issued.
      * @summary Returns one API key: what it is called, what it may reach, and when it was issued.
-     * @param {IamApiGetIamKeysGetRequest} requestParameters Request parameters.
+     * @param {IamApiGetIamKeysByOwnerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getIamKeysGet(requestParameters: IamApiGetIamKeysGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamKeysGet(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getIamKeysByOwnerByName(requestParameters: IamApiGetIamKeysByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamKeysByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate door from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
+     * @summary Resolve a PUBLISHABLE key to the organization that owns it
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamKeysOrg(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamKeysOrg(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-door from unknown, so the holder can be told which one cure applies.
+     * @summary Resolve a SECRET key to the principal it authenticates
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamKeysPrincipal(options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamKeysPrincipal(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15051,7 +12664,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out, which is worth stating because the endpoint spent a release not doing it: the whole body computed a redirect and answered {\"status\":\"ok\"} unconditionally — no session ended, no token revoked. A logout that reports success while leaving the session live is worse than no logout at all, because the person on the shared machine believes it worked. Three things happen here now, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
      * @summary Ends a sign-in and sends the browser somewhere sensible.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -15087,13 +12700,13 @@ export class IamApi extends BaseAPI {
     /**
      * Returns one permission: who it grants to, what it allows, and the resources it covers.
      * @summary Returns one permission: who it grants to, what it allows, and the resources it covers.
-     * @param {IamApiGetIamPermissionsGetRequest} requestParameters Request parameters.
+     * @param {IamApiGetIamPermissionsByOwnerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getIamPermissionsGet(requestParameters: IamApiGetIamPermissionsGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamPermissionsGet(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public getIamPermissionsByOwnerByName(requestParameters: IamApiGetIamPermissionsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamPermissionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15106,6 +12719,18 @@ export class IamApi extends BaseAPI {
      */
     public getIamProjects(requestParameters: IamApiGetIamProjectsRequest = {}, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).getIamProjects(requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one project: what it is called and how it is set up.
+     * @summary Returns one project: what it is called and how it is set up.
+     * @param {IamApiGetIamProjectsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamProjectsByOwnerByName(requestParameters: IamApiGetIamProjectsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamProjectsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15131,17 +12756,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Answers which organization a PUBLISHABLE key belongs to — what a service of yours calls to attribute a request that arrived carrying a key shipped in a browser.  It names an organization and never a person: no path through it can load or return a user, so a key you put in client code cannot become a way to learn who anyone is. A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence, and with a `code` saying which of those it was. Only a confidential service that already proved it may resolve keys at all ever reads that code — there is no anonymous caller here to probe for which keys exist — and telling it apart is what lets the holder be told to re-mint an expired key instead of hunting a configuration error.
-     * @summary Answers which organization a PUBLISHABLE key belongs to — what a service of yours calls to attribute a request that arrived carrying a key shipped in a browser.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamResolveKey(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamResolveKey(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.  You see your own organization\'s roles and no one else\'s; which organization that is comes from your credentials, not from the request.
      * @summary Returns your organization\'s roles, newest first — each a named group of people that permissions are granted to.
      * @param {IamApiGetIamRolesRequest} requestParameters Request parameters.
@@ -15151,6 +12765,18 @@ export class IamApi extends BaseAPI {
      */
     public getIamRoles(requestParameters: IamApiGetIamRolesRequest = {}, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).getIamRoles(requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one role: who is in it, and the roles it includes.
+     * @summary Returns one role: who is in it, and the roles it includes.
+     * @param {IamApiGetIamRolesByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamRolesByOwnerByName(requestParameters: IamApiGetIamRolesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamRolesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15254,19 +12880,19 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public getIamUsers(requestParameters: IamApiGetIamUsersRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamUsers(requestParameters.owner, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).getIamUsers(requestParameters.owner, requestParameters.email, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Returns one person in your organization, addressed by their username or by their email address. Passwords, API secrets and MFA material are stripped from the response.  An address that names two accounts names none: the read refuses rather than picking one, and says so instead of reporting \"no such user\". Handing back an arbitrary one of two rows is how somebody gets added to a team under a colleague\'s identity.
      * @summary Returns one person in your organization, addressed by their username or by their email address.
-     * @param {IamApiGetIamUsersGetRequest} requestParameters Request parameters.
+     * @param {IamApiGetIamUsersByOwnerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getIamUsersGet(requestParameters: IamApiGetIamUsersGetRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamUsersGet(requestParameters.owner, requestParameters.name, requestParameters.email, options).then((request) => request(this.axios, this.basePath));
+    public getIamUsersByOwnerByName(requestParameters: IamApiGetIamUsersByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamUsersByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.email, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15359,6 +12985,18 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Returns one workspace: what it is called and how it is set up.
+     * @summary Returns one workspace: what it is called and how it is set up.
+     * @param {IamApiGetIamWorkspacesByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public getIamWorkspacesByOwnerByName(requestParameters: IamApiGetIamWorkspacesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).getIamWorkspacesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
      * @summary Returns one organization: its display, its defaults and the sign-in rules everyone in it inherits.
      * @param {IamApiGetOrganizationRequest} requestParameters Request parameters.
@@ -15366,7 +13004,7 @@ export class IamApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public getOrganization(requestParameters: IamApiGetOrganizationRequest = {}, options?: RawAxiosRequestConfig) {
+    public getOrganization(requestParameters: IamApiGetOrganizationRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).getOrganization(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -15379,7 +13017,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public getProvider(requestParameters: IamApiGetProviderRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getProvider(requestParameters.iamProviderKey, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).getProvider(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15391,7 +13029,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public getSession(requestParameters: IamApiGetSessionRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getSession(requestParameters.iamSessionRef, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).getSession(requestParameters.owner, requestParameters.name, requestParameters.application, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15403,7 +13041,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public getToken(requestParameters: IamApiGetTokenRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getToken(requestParameters.iamTokenKey, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).getToken(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15415,19 +13053,19 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public getWebauthnCredential(requestParameters: IamApiGetWebauthnCredentialRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getWebauthnCredential(requestParameters.iamWebauthnCredentialKey, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).getWebauthnCredential(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Returns the organizations you can see, newest first. Narrow it to one parent account, and set a limit and offset to page through the rest.
-     * @summary Returns the organizations you can see, newest first.
+     * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every door. The Guard refuses a bearerless request before this runs, but the agent door carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
+     * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
      * @param {IamApiListOrganizationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
     public listOrganizations(requestParameters: IamApiListOrganizationsRequest = {}, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).listOrganizations(requestParameters.owner, requestParameters.limit, requestParameters.offset, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).listOrganizations(requestParameters.xForwardedFor, requestParameters.q, requestParameters.limit, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15451,7 +13089,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public listSessions(requestParameters: IamApiListSessionsRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).listSessions(requestParameters.iamListSessionsIn, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).listSessions(requestParameters.owner, requestParameters.name, requestParameters.application, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15467,7 +13105,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list. It used to scope to the ORG, which handed an org admin every member\'s credential rows in one answer, and a SuperAdmin every tenant\'s; a plain member meanwhile could not read even their own, because an unnamed target fails the Guard\'s tenant rule. One scope fixes both halves: the answer is a person\'s, and the caller is the person unless they say otherwise and may.
+     * Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.  Yours by default. Name somebody else and you get them only if you already administer their account, which is the same authority that governs reading their user record — so this list can never show more people than the surface beside it already does.  There is no organization-wide list, by design. Scoping to the ORG would hand an org admin every member\'s credential rows in one answer and a SuperAdmin every tenant\'s, while a plain member could not read even their own (an unnamed target fails the Guard\'s tenant rule). One scope answers both halves cleanly: the answer is a person\'s, and the caller is that person unless they say otherwise and may.
      * @summary Returns the passkeys and security keys registered to one person, newest first — which device each lives on and when it was registered.
      * @param {IamApiListWebauthnCredentialsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -15491,101 +13129,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.  The older spelling of POST /v1/iam/application. A name already used in the organization is refused rather than overwritten.
-     * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-     * @param {IamApiPostIamAddApplicationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAddApplication(requestParameters: IamApiPostIamAddApplicationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAddApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Lets a person or an application act in an organization. It is the grant behind \"add someone to the team\", and it is safe to repeat — granting a membership that already exists changes nothing. Granting membership IS the org\'s authority to give, so it takes the same gate a write to that org\'s own registry row takes: a SuperAdmin, an admin of the org itself, or an org-admin-capable confidential client. One rule, one place (internal/authz).
-     * @summary Lets a person or an application act in an organization.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAddMembership(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAddMembership(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates an organization — the account everything else in your directory hangs from. Users, applications, roles, projects and workspaces are all named inside one organization, so this is the first write in a new tenant.  The older spelling of POST /v1/iam/organizations. Both reach the same create, so a name already taken is refused here too.
-     * @summary Creates an organization — the account everything else in your directory hangs from.
-     * @param {IamApiPostIamAddOrganizationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAddOrganization(requestParameters: IamApiPostIamAddOrganizationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAddOrganization(requestParameters.iamCreateOrganizationInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.  The older spelling of POST /v1/iam/projects. Creating one takes an administrator of the owning organization.
-     * @summary Creates a project inside your organization — the scope people pick between when their work is separated by product or client rather than by team.
-     * @param {IamApiPostIamAddProjectRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAddProject(requestParameters: IamApiPostIamAddProjectRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAddProject(requestParameters.iamInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.  A provider is configured once here and then switched on per application, so several applications can share one set of credentials.  The older spelling of POST /v1/iam/providers.
-     * @summary Adds an identity provider your people can sign in with, or a service your applications send through — a social or enterprise login, an email or SMS sender, a storage or payment connector.
-     * @param {IamApiPostIamAddProviderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAddProvider(requestParameters: IamApiPostIamAddProviderRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAddProvider(requestParameters.iamProvider, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do.  The older spelling of POST /v1/iam/roles.
-     * @summary Creates a role — a named group of people that permissions are granted to.
-     * @param {IamApiPostIamAddRoleRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAddRole(requestParameters: IamApiPostIamAddRoleRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAddRole(requestParameters.iamRolesInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Adds a person to your organization and, if you send a password, sets the one they will sign in with. The password is hashed before it is stored and is never returned to you or to anyone else.  Usernames are checked against one rule wherever an account is created — this verb, password signup, a social sign-in, or SCIM — so a name accepted here is a name accepted everywhere.  The older spelling of POST /v1/iam/users, and it posts the user\'s fields at the top level rather than wrapped in {user, password}.
-     * @summary Adds a person to your organization and, if you send a password, sets the one they will sign in with.
-     * @param {IamApiPostIamAddUserRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAddUser(requestParameters: IamApiPostIamAddUserRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAddUser(requestParameters.iamUserBody, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.  The older spelling of POST /v1/iam/workspaces. Creating one takes an administrator of the owning organization.
-     * @summary Creates a workspace inside your organization — the scope a team works in, alongside projects rather than instead of them.
-     * @param {IamApiPostIamAddWorkspaceRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAddWorkspace(requestParameters: IamApiPostIamAddWorkspaceRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAddWorkspace(requestParameters.iamWorkspacesInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.  It authenticates as your service rather than as a person, which is why the person to provision is named in the request. The setup it performs is identical to self-service onboarding; there is one provisioning path, not two that can drift.
      * @summary Sets up an account on someone\'s behalf — the same onboarding a person gets themselves, driven by one of your own services instead of by them.
      * @param {*} [options] Override http request option.
@@ -15599,18 +13142,6 @@ export class IamApi extends BaseAPI {
     /**
      * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
      * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
-     * @param {IamApiPostIamApplicationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamApplication(requestParameters: IamApiPostIamApplicationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs. A name already used in the organization is refused rather than overwritten.  Exported so the legacy add-application alias reuses this exact path — one create, two spellings.
-     * @summary Registers an application in your organization — one product or site your people sign in to, with its own client credentials, sign-in methods and allowed redirect URIs.
      * @param {IamApiPostIamApplicationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -15618,30 +13149,6 @@ export class IamApi extends BaseAPI {
      */
     public postIamApplications(requestParameters: IamApiPostIamApplicationsRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamApplications(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Removes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration before deleting it.
-     * @summary Removes an application.
-     * @param {IamApiPostIamApplicationsDeleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamApplicationsDelete(requestParameters: IamApiPostIamApplicationsDeleteRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamApplicationsDelete(requestParameters.iamApplicationRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
-     * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
-     * @param {IamApiPostIamApplicationsUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamApplicationsUpdate(requestParameters: IamApiPostIamApplicationsUpdateRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamApplicationsUpdate(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15665,48 +13172,12 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public postIamAuditLogs(requestParameters: IamApiPostIamAuditLogsRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAuditLogs(requestParameters.iamAuditlogsInput, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).postIamAuditLogs(requestParameters.iamInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Removes an audit entry. Retention policy is normally what should expire a trail; deleting by hand leaves a gap a reviewer will notice.
-     * @summary Removes an audit entry.
-     * @param {IamApiPostIamAuditLogsDeleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAuditLogsDelete(requestParameters: IamApiPostIamAuditLogsDeleteRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAuditLogsDelete(requestParameters.iamRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
-     * @summary Returns one audit entry in full: the action, the person or key behind it, and the request it came in on.
-     * @param {IamApiPostIamAuditLogsGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAuditLogsGet(requestParameters: IamApiPostIamAuditLogsGetRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAuditLogsGet(requestParameters.iamRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Corrects an audit entry. The trail is append-only in normal operation and nothing in the Hanzo Cloud rewrites it — this exists for an administrator to correct an entry their own systems recorded wrongly.
-     * @summary Corrects an audit entry.
-     * @param {IamApiPostIamAuditLogsUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamAuditLogsUpdate(requestParameters: IamApiPostIamAuditLogsUpdateRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamAuditLogsUpdate(requestParameters.iamAuditlogsInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Adds a signing certificate your applications can verify tokens against — the call you make to bring your own key, or to stage the next one before a rotation. A name already used in your organization is refused.
-     * @summary Adds a signing certificate your applications can verify tokens against — the call you make to bring your own key, or to stage the next one before a rotation.
+     * Adds a signing certificate your applications can verify tokens against — the call you make to stage the next one before a rotation. A name already used in your organization is refused.  It registers the certificate\'s IDENTITY: its name (which is the JWKS `kid`), its algorithm, its expiry. Key material does not travel this way and cannot: the private key is not part of the Cert\'s JSON, so it is neither served here nor accepted here. It is supplied to the process by the deployment, under the name registered here (internal/keyring). Staging a rotation is therefore two halves — this call names the key, and the deployment provides it.
+     * @summary Adds a signing certificate your applications can verify tokens against — the call you make to stage the next one before a rotation.
      * @param {IamApiPostIamCertsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -15714,54 +13185,6 @@ export class IamApi extends BaseAPI {
      */
     public postIamCerts(requestParameters: IamApiPostIamCertsRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamCerts(requestParameters.iamCert, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Removes a signing certificate. Tokens signed with it can no longer be verified, so retire it only once nothing is still presenting them.
-     * @summary Removes a signing certificate.
-     * @param {IamApiPostIamCertsDeleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamCertsDelete(requestParameters: IamApiPostIamCertsDeleteRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamCertsDelete(requestParameters.iamCertsRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one signing certificate — its algorithm, its validity window and its public half. The private key is masked.
-     * @summary Returns one signing certificate — its algorithm, its validity window and its public half.
-     * @param {IamApiPostIamCertsGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamCertsGet(requestParameters: IamApiPostIamCertsGetRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamCertsGet(requestParameters.iamCertsRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Changes a signing certificate\'s settings. What it is called does not change, and neither does when it was added.
-     * @summary Changes a signing certificate\'s settings.
-     * @param {IamApiPostIamCertsUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamCertsUpdate(requestParameters: IamApiPostIamCertsUpdateRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamCertsUpdate(requestParameters.iamCert, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Deletes an application. Anyone mid-sign-in through it is turned away and its client credentials stop working, so retire the integration first.  The older spelling of DELETE /v1/iam/application.
-     * @summary Deletes an application.
-     * @param {IamApiPostIamDeleteApplicationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamDeleteApplication(requestParameters: IamApiPostIamDeleteApplicationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamDeleteApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15787,78 +13210,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces. There is no undo, and every session issued under it stops working.  The older spelling of POST /v1/iam/organizations/delete.
-     * @summary Deletes an organization and everything named inside it — its users, applications, roles, projects and workspaces.
-     * @param {IamApiPostIamDeleteOrganizationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamDeleteOrganization(requestParameters: IamApiPostIamDeleteOrganizationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamDeleteOrganization(requestParameters.iamDeleteOrganizationInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Deletes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so anything addressed by it must move first.  The older spelling of POST /v1/iam/projects/delete.
-     * @summary Deletes a project.
-     * @param {IamApiPostIamDeleteProjectRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamDeleteProject(requestParameters: IamApiPostIamDeleteProjectRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamDeleteProject(requestParameters.iamProjectsRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Removes a provider. Sign-in through it stops for every application that used it, so detach those applications first if they have no other method.  The older spelling of POST /v1/iam/providers/delete.
-     * @summary Removes a provider.
-     * @param {IamApiPostIamDeleteProviderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamDeleteProvider(requestParameters: IamApiPostIamDeleteProviderRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamDeleteProvider(requestParameters.iamProvider, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Deletes a role. Everyone in it loses the access it carried; their accounts and any other roles they hold are untouched.  The older spelling of POST /v1/iam/roles/delete.
-     * @summary Deletes a role.
-     * @param {IamApiPostIamDeleteRoleRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamDeleteRole(requestParameters: IamApiPostIamDeleteRoleRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamDeleteRole(requestParameters.iamRolesRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Removes a person from your organization. Their sessions stop working and the account is gone, not suspended — to keep the record and only stop sign-in, update the user instead.  The older spelling of POST /v1/iam/users/delete.
-     * @summary Removes a person from your organization.
-     * @param {IamApiPostIamDeleteUserRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamDeleteUser(requestParameters: IamApiPostIamDeleteUserRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamDeleteUser(requestParameters.iamUserBody, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Deletes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.  The older spelling of POST /v1/iam/workspaces/delete.
-     * @summary Deletes a workspace.
-     * @param {IamApiPostIamDeleteWorkspaceRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamDeleteWorkspace(requestParameters: IamApiPostIamDeleteWorkspaceRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamDeleteWorkspace(requestParameters.iamWorkspacesRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working. A name already used in the organization is refused.
      * @summary Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working.
      * @param {IamApiPostIamInvitationsRequest} requestParameters Request parameters.
@@ -15868,42 +13219,6 @@ export class IamApi extends BaseAPI {
      */
     public postIamInvitations(requestParameters: IamApiPostIamInvitationsRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamInvitations(requestParameters.iamInvitationsInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Withdraws an invitation. It stops being redeemable at once; anyone who already joined through it keeps their account.
-     * @summary Withdraws an invitation.
-     * @param {IamApiPostIamInvitationsDeleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamInvitationsDelete(requestParameters: IamApiPostIamInvitationsDeleteRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamInvitationsDelete(requestParameters.iamInvitationsRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
-     * @summary Returns one invitation: who it is for, what it grants on acceptance, and when it expires.
-     * @param {IamApiPostIamInvitationsGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamInvitationsGet(requestParameters: IamApiPostIamInvitationsGetRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamInvitationsGet(requestParameters.iamInvitationsRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires. What it is called does not change.
-     * @summary Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires.
-     * @param {IamApiPostIamInvitationsUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamInvitationsUpdate(requestParameters: IamApiPostIamInvitationsUpdateRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamInvitationsUpdate(requestParameters.iamInvitationsInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15927,52 +13242,6 @@ export class IamApi extends BaseAPI {
      */
     public postIamKeys(requestParameters: IamApiPostIamKeysRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamKeys(requestParameters.iamKey, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Revokes an API key. Anything still presenting it stops being authorized at once, so roll the replacement out before you revoke.
-     * @summary Revokes an API key.
-     * @param {IamApiPostIamKeysDeleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamKeysDelete(requestParameters: IamApiPostIamKeysDeleteRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamKeysDelete(requestParameters.iamKeysRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
-     * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamKeysMint(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamKeysMint(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
-     * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamKeysRevoke(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamKeysRevoke(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
-     * @summary Changes what a key is called or what it may reach.
-     * @param {IamApiPostIamKeysUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamKeysUpdate(requestParameters: IamApiPostIamKeysUpdateRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamKeysUpdate(requestParameters.iamKey, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16009,17 +13278,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
-     * @summary Turns a factor off, so sign-in stops asking for it.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamMfaDisable(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamMfaDisable(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
      * @summary Picks which second factor an account is asked for first when it has more than one.
      * @param {*} [options] Override http request option.
@@ -16031,7 +13289,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  It used to write on the strength of a `secret` field alone. A client that skipped the verify step, scanned the QR into the wrong app, or was simply buggy switched on a factor no code would ever satisfy, and the account was then locked out with no self-service way back: the gate holds the sign-in before minting, so the person cannot obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
+     * Finishes the enrolment: from here the account\'s sign-ins ask for this factor. It requires the proof initiate handed out — a passcode from the authenticator, or the code that was sent — and verifies it BEFORE writing anything.  Verifying BEFORE writing is what keeps a client that never completed the proof — a skipped verify step, a QR scanned into the wrong app, a bug — from switching on a factor no code can satisfy. That would lock the account out with no self-service way back: the gate holds the sign-in before minting, so the person could not obtain the bearer that disable requires.  The recovery codes are minted here and returned ONCE, on the first factor the account adds. Answering with them is the way back in when no factor can be produced, so they are the same value the row\'s digests were made from — by construction, not by a client echoing them back.
      * @summary Finishes the enrolment: from here the account\'s sign-ins ask for this factor.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -16086,7 +13344,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names the wrong one defeats the control it implements. It used to render the portal\'s own app name — a constant, `hanzo-console` for every code — so a device code minted by `hanzo-cli` was approved under a screen naming a different application entirely. The client is a property of the CODE, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
+     * Answers \"what am I approving?\" for a pending device code.  The approval page exists to tell a human WHICH application they are authorizing; a page that names any other one defeats the control it implements. The client is a property of the CODE, not of the page or of whatever app the browser happens to be signed in to, so it is read from the code\'s row here and nowhere else.  Requires a signed-in session, and answers with the same ONE opaque refusal approveDevice uses. That is deliberate: the user_code is only 40 bits and is the one secret in this flow, so an unauthenticated lookup — or one that distinguished unknown from expired from already-approved — would be an oracle for hunting live codes. Gated and opaque, it reveals strictly less than the approval the same caller could already attempt.
      * @summary Answers \"what am I approving?\" for a pending device code.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -16119,7 +13377,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out, which is worth stating because the endpoint spent a release not doing it: the whole body computed a redirect and answered {\"status\":\"ok\"} unconditionally — no session ended, no token revoked. A logout that reports success while leaving the session live is worse than no logout at all, because the person on the shared machine believes it worked. Three things happen here now, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
+     * Ends a sign-in and sends the browser somewhere sensible. Accepts GET or POST, so it works as a plain link.  It ACTUALLY signs you out — worth stating, because a logout that computes a redirect and answers {\"status\":\"ok\"} while ending no session and revoking no token is worse than none: the person on the shared machine believes it worked. Three things happen here, in this order:   1. The browser session dies — sid revoked server-side AND the cookie expired     (sessions.Clear). Server-side revocation is the load-bearing half: a copy     of the cookie taken before logout must not still resolve.  2. The relying party\'s tokens are revoked when an id_token_hint names it, so     the refresh token cannot mint a fresh access token after the human left.     Revocation state is authoritative — a JWT\'s `exp` still reads valid for     days, so expiry is necessary but never sufficient.  3. Only then is a redirect considered, and only to a REGISTERED uri.  The open-redirect guard is unchanged: a redirect happens only when a VERIFIED id_token_hint identifies the application and that application has registered the target. Anything else refuses to redirect — nobody can turn your logout link into a redirect to a site of their choosing.
      * @summary Ends a sign-in and sends the browser somewhere sensible.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -16130,7 +13388,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. hanzo-cli is a public PKCE client holding a 30-day rotating refresh token, so a confidential-only revocation endpoint made `hanzo auth logout` a LOCAL DELETE — the credential it dropped stayed spendable at hanzo.id for the rest of the month, with nothing able to kill it. Measured 2026-08-01: revoke answered 401 invalid_client and the refresh token went on minting access tokens.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
+     * Retires a token before it expires — what you call when someone signs out or a credential may have leaked.  Revoking an access token kills that token. Revoking a REFRESH token kills the whole chain it belongs to, so no further access tokens can be minted from it and every token already minted from it dies with it.  A token that is not yours, or that never existed, answers success and does nothing — so the endpoint cannot be used to discover which tokens are real.  PUBLIC clients revoke too, and must: sign-out is the only control a long-lived refresh token has. A native app or CLI is a public PKCE client and holds no secret, so requiring one here would leave signing out as a local delete — forgetting a credential that stays spendable for the rest of its lifetime.  Widening authentication does not widen authority. The caller must still POSSESS the token — and possession already permits USE, of which revocation is the strict opposite — and the row must belong to the client that presents it, so a public client_id buys the ability to destroy exactly what its holder could otherwise spend. RFC 6749 §3.2.1 is the same reading: a client with no credentials identifies itself with client_id.
      * @summary Retires a token before it expires — what you call when someone signs out or a credential may have leaked.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -16186,30 +13444,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Revokes a permission. Everyone who held access only through it loses that access immediately; grants they hold by another route are untouched.
-     * @summary Revokes a permission.
-     * @param {IamApiPostIamPermissionsDeleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamPermissionsDelete(requestParameters: IamApiPostIamPermissionsDeleteRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamPermissionsDelete(requestParameters.iamPermissionRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Changes who a permission grants to, what it allows, or the resources it covers. Access changes as soon as the write lands. What the permission is called does not change, and neither does when it was created.
-     * @summary Changes who a permission grants to, what it allows, or the resources it covers.
-     * @param {IamApiPostIamPermissionsUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamPermissionsUpdate(requestParameters: IamApiPostIamPermissionsUpdateRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamPermissionsUpdate(requestParameters.iamPermission, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
      * @summary Saves the calling person\'s own settings and returns the full set afterwards.
      * @param {*} [options] Override http request option.
@@ -16229,43 +13463,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public postIamProjects(requestParameters: IamApiPostIamProjectsRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamProjects(requestParameters.iamInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Removes a project. The people and roles in your organization are unchanged; what goes is the scope itself, so move anything addressed by it first.
-     * @summary Removes a project.
-     * @param {IamApiPostIamProjectsDeleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamProjectsDelete(requestParameters: IamApiPostIamProjectsDeleteRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamProjectsDelete(requestParameters.iamProjectsRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one project: what it is called and how it is set up.
-     * @summary Returns one project: what it is called and how it is set up.
-     * @param {IamApiPostIamProjectsGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamProjectsGet(requestParameters: IamApiPostIamProjectsGetRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamProjectsGet(requestParameters.iamProjectsRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Changes a project\'s settings. What it is called does not change, and neither does when it was created.
-     * @summary Changes a project\'s settings.
-     * @param {IamApiPostIamProjectsUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamProjectsUpdate(requestParameters: IamApiPostIamProjectsUpdateRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamProjectsUpdate(requestParameters.iamInput, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).postIamProjects(requestParameters.iamProjectsInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16312,42 +13510,6 @@ export class IamApi extends BaseAPI {
      */
     public postIamRoles(requestParameters: IamApiPostIamRolesRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamRoles(requestParameters.iamRolesInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Removes a role. Everyone in it loses the access it carried; their accounts, and any other role they hold, are untouched.
-     * @summary Removes a role.
-     * @param {IamApiPostIamRolesDeleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamRolesDelete(requestParameters: IamApiPostIamRolesDeleteRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamRolesDelete(requestParameters.iamRolesRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one role: who is in it, and the roles it includes.
-     * @summary Returns one role: who is in it, and the roles it includes.
-     * @param {IamApiPostIamRolesGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamRolesGet(requestParameters: IamApiPostIamRolesGetRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamRolesGet(requestParameters.iamRolesRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
-     * @summary Changes who is in a role, or which roles it includes.
-     * @param {IamApiPostIamRolesUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamRolesUpdate(requestParameters: IamApiPostIamRolesUpdateRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamRolesUpdate(requestParameters.iamRolesInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16451,30 +13613,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to. Which organization and name the application has are fixed when it is created and are not editable here.  A redirect URI you add becomes an allowed sign-in origin, so this is the call that makes login work from a new host.  The older spelling of PUT /v1/iam/application.
-     * @summary Updates one of your applications — its display, its sign-in methods and the redirect URIs it is allowed to return to.
-     * @param {IamApiPostIamUpdateApplicationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamUpdateApplication(requestParameters: IamApiPostIamUpdateApplicationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamUpdateApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.  The older spelling of POST /v1/iam/organizations/update.
-     * @summary Updates your organization — its display, its default settings and the sign-in rules everyone in it inherits.
-     * @param {IamApiPostIamUpdateOrganizationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamUpdateOrganization(requestParameters: IamApiPostIamUpdateOrganizationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamUpdateOrganization(requestParameters.iamUpdateOrganizationInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
      * @summary Saves the calling person\'s own settings and returns the full set afterwards.
      * @param {*} [options] Override http request option.
@@ -16483,42 +13621,6 @@ export class IamApi extends BaseAPI {
      */
     public postIamUpdatePreferences(options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamUpdatePreferences(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Updates a provider\'s settings or rotates the credentials it holds. The change takes effect on the next sign-in through it — sessions already issued are unaffected.  The older spelling of POST /v1/iam/providers/update.
-     * @summary Updates a provider\'s settings or rotates the credentials it holds.
-     * @param {IamApiPostIamUpdateProviderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamUpdateProvider(requestParameters: IamApiPostIamUpdateProviderRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamUpdateProvider(requestParameters.iamProvider, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Updates a role\'s members or the roles it includes. Access changes for everyone in it as soon as the write lands.  The older spelling of POST /v1/iam/roles/update.
-     * @summary Updates a role\'s members or the roles it includes.
-     * @param {IamApiPostIamUpdateRoleRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamUpdateRole(requestParameters: IamApiPostIamUpdateRoleRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamUpdateRole(requestParameters.iamRolesInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Updates one of your users\' profile, roles or credentials. Send a password to reset it; leave it out and the current one stands.  The older spelling of POST /v1/iam/users/update, with the user\'s fields at the top level rather than wrapped in {user, password}.
-     * @summary Updates one of your users\' profile, roles or credentials.
-     * @param {IamApiPostIamUpdateUserRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamUpdateUser(requestParameters: IamApiPostIamUpdateUserRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamUpdateUser(requestParameters.iamUserBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16534,27 +13636,15 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Removes a person from your organization. Their sessions stop working immediately and the account is gone rather than suspended — to keep the record and only stop sign-in, update the user instead.
-     * @summary Removes a person from your organization.
-     * @param {IamApiPostIamUsersDeleteRequest} requestParameters Request parameters.
+     * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
+     * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
+     * @param {IamApiPostIamUsersByOwnerByNameKeysRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public postIamUsersDelete(requestParameters: IamApiPostIamUsersDeleteRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamUsersDelete(requestParameters.iamUsersRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
-     * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
-     * @param {IamApiPostIamUsersUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamUsersUpdate(requestParameters: IamApiPostIamUsersUpdateRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamUsersUpdate(requestParameters.iamUpdateInput, options).then((request) => request(this.axios, this.basePath));
+    public postIamUsersByOwnerByNameKeys(requestParameters: IamApiPostIamUsersByOwnerByNameKeysRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).postIamUsersByOwnerByNameKeys(requestParameters.owner, requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16614,42 +13704,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Removes a workspace. The people and roles in your organization are unchanged; what goes is the scope itself.
-     * @summary Removes a workspace.
-     * @param {IamApiPostIamWorkspacesDeleteRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamWorkspacesDelete(requestParameters: IamApiPostIamWorkspacesDeleteRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamWorkspacesDelete(requestParameters.iamWorkspacesRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns one workspace: what it is called and how it is set up.
-     * @summary Returns one workspace: what it is called and how it is set up.
-     * @param {IamApiPostIamWorkspacesGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamWorkspacesGet(requestParameters: IamApiPostIamWorkspacesGetRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamWorkspacesGet(requestParameters.iamWorkspacesRef, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Changes a workspace\'s settings. What it is called does not change, and neither does when it was created.
-     * @summary Changes a workspace\'s settings.
-     * @param {IamApiPostIamWorkspacesUpdateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamWorkspacesUpdate(requestParameters: IamApiPostIamWorkspacesUpdateRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamWorkspacesUpdate(requestParameters.iamWorkspacesInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.  Only their own: the request names nobody, so it cannot reach another account. Send only what you are changing; a field you leave out keeps the value it had, and a field you send empty is cleared.  A picture is an https link or an inline image up to 96 KiB, the same value an organization\'s mark is (schema.AvatarRef) — one rule for how a subject appears, whether the subject is a person or an organization.
      * @summary Saves the calling person\'s own profile — the name they are shown by, their picture, a line about themselves and a link.
      * @param {IamApiPutIamAccountRequest} requestParameters Request parameters.
@@ -16664,13 +13718,37 @@ export class IamApi extends BaseAPI {
     /**
      * Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host. Which organization it belongs to and what it is named are fixed when it is created and are not editable here.  Exported so the legacy update-application alias reuses this exact path — one update, two spellings.
      * @summary Changes an application\'s display, its sign-in methods and the redirect URIs it may return to — the call that makes login work from a new host.
-     * @param {IamApiPutIamApplicationRequest} requestParameters Request parameters.
+     * @param {IamApiPutIamApplicationsByOwnerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public putIamApplication(requestParameters: IamApiPutIamApplicationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).putIamApplication(requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
+    public putIamApplicationsByOwnerByName(requestParameters: IamApiPutIamApplicationsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamApplicationsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamApplication, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Corrects an audit entry. The trail is append-only in normal operation and nothing in the Hanzo Cloud rewrites it — this exists for an administrator to correct an entry their own systems recorded wrongly.
+     * @summary Corrects an audit entry.
+     * @param {IamApiPutIamAuditLogsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamAuditLogsByOwnerByName(requestParameters: IamApiPutIamAuditLogsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamAuditLogsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamInput, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes a signing certificate\'s settings. What it is called does not change, and neither does when it was added.  A PUT here is a METADATA edit — display name, expiry, provider. It overlays only the fields the request actually SET onto the loaded row: a field the JSON omits (or leaves at its zero value) keeps what the row holds, rather than blanking it. That is load-bearing, not a nicety. A read serves the public Certificate (Mask hides only PrivateKey and AccessSecret), so a client that reads a cert, changes one field, and writes it back sends the masked halves empty and every other field it did not touch at its zero value — and the old full-struct overlay wrote all of those blanks back. Blanking CryptoAlgorithm alone drops the cert from the JWKS (oidc.Publishes turns false), so every token under its `kid` stops verifying; blanking Provider/Account/ExpireTime breaks ACME renewal and expiry — all from a request that only meant to rename it. Absent-or-zero means \"unchanged\", so the deployment (key) and a rotation (cert) remain the only way key or published material changes; the metadata API cannot clear it.  The overlay is generic — it copies every set field, so a field nobody has added yet is carried without a line here — and leaves three things the request may not move: the bound Model (id, createdAt, key, snapshot), the natural key (owner/name address the row, they do not mutate it), and the creation stamp.
+     * @summary Changes a signing certificate\'s settings.
+     * @param {IamApiPutIamCertsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamCertsByOwnerByName(requestParameters: IamApiPutIamCertsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamCertsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamCert, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16682,6 +13760,30 @@ export class IamApi extends BaseAPI {
      */
     public putIamConsent(options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).putIamConsent(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires. What it is called does not change.
+     * @summary Changes an invitation\'s terms — the role it grants, how many may redeem it, or when it expires.
+     * @param {IamApiPutIamInvitationsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamInvitationsByOwnerByName(requestParameters: IamApiPutIamInvitationsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamInvitationsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamInvitationsInput, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes what a key is called or what it may reach. The credential itself is not reissued — the key in your deployment keeps working.
+     * @summary Changes what a key is called or what it may reach.
+     * @param {IamApiPutIamKeysByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamKeysByOwnerByName(requestParameters: IamApiPutIamKeysByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamKeysByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamKey, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16697,6 +13799,42 @@ export class IamApi extends BaseAPI {
     }
 
     /**
+     * Changes who a permission grants to, what it allows, or the resources it covers. Access changes as soon as the write lands. What the permission is called does not change, and neither does when it was created.
+     * @summary Changes who a permission grants to, what it allows, or the resources it covers.
+     * @param {IamApiPutIamPermissionsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamPermissionsByOwnerByName(requestParameters: IamApiPutIamPermissionsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamPermissionsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamPermission, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes a project\'s settings. What it is called does not change, and neither does when it was created.
+     * @summary Changes a project\'s settings.
+     * @param {IamApiPutIamProjectsByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamProjectsByOwnerByName(requestParameters: IamApiPutIamProjectsByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamProjectsByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamProjectsInput, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes who is in a role, or which roles it includes. Access changes for everyone in it as soon as the write lands. What the role is called does not change, and neither does when it was created.
+     * @summary Changes who is in a role, or which roles it includes.
+     * @param {IamApiPutIamRolesByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamRolesByOwnerByName(requestParameters: IamApiPutIamRolesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamRolesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamRolesInput, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Overwrites a person\'s SCIM attributes with what your identity provider sends — how a change made there lands here.  Only the attributes SCIM describes are replaced. Anything the standard does not cover — their multi-factor enrolment above all — survives untouched, so a routine sync from your IdP can never quietly strip someone\'s second factor or bring a deleted account back.
      * @summary Overwrites a person\'s SCIM attributes with what your identity provider sends — how a change made there lands here.
      * @param {IamApiPutIamScimV2UsersByOwnerByNameRequest} requestParameters Request parameters.
@@ -16709,15 +13847,27 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.
-     * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
-     * @param {IamApiSearchOrganizationsRequest} requestParameters Request parameters.
+     * Changes a person\'s profile, their roles, or the credentials they sign in with. Send a password to reset it; leave it out and their current one keeps working.  Who they are does not change: their organization, username and the identifier their existing sessions are keyed on all survive the write, so an update never signs anyone out.
+     * @summary Changes a person\'s profile, their roles, or the credentials they sign in with.
+     * @param {IamApiPutIamUsersByOwnerByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IamApi
      */
-    public searchOrganizations(requestParameters: IamApiSearchOrganizationsRequest = {}, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).searchOrganizations(requestParameters.xForwardedFor, requestParameters.q, requestParameters.limit, requestParameters.cursor, options).then((request) => request(this.axios, this.basePath));
+    public putIamUsersByOwnerByName(requestParameters: IamApiPutIamUsersByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamUsersByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamUpdateInput, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes a workspace\'s settings. What it is called does not change, and neither does when it was created.
+     * @summary Changes a workspace\'s settings.
+     * @param {IamApiPutIamWorkspacesByOwnerByNameRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IamApi
+     */
+    public putIamWorkspacesByOwnerByName(requestParameters: IamApiPutIamWorkspacesByOwnerByNameRequest, options?: RawAxiosRequestConfig) {
+        return IamApiFp(this.configuration).putIamWorkspacesByOwnerByName(requestParameters.owner, requestParameters.name, requestParameters.iamWorkspacesInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16741,7 +13891,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public updateOrganization(requestParameters: IamApiUpdateOrganizationRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).updateOrganization(requestParameters.iamUpdateOrganizationInput, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).updateOrganization(requestParameters.owner, requestParameters.name, requestParameters.iamUpdateOrganizationInput, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16753,7 +13903,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public updateProvider(requestParameters: IamApiUpdateProviderRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).updateProvider(requestParameters.iamProvider, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).updateProvider(requestParameters.owner, requestParameters.name, requestParameters.iamProvider, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16765,7 +13915,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public updateSession(requestParameters: IamApiUpdateSessionRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).updateSession(requestParameters.iamUpdateSessionIn, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).updateSession(requestParameters.owner, requestParameters.name, requestParameters.application, requestParameters.iamUpdateSessionIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16777,7 +13927,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public updateToken(requestParameters: IamApiUpdateTokenRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).updateToken(requestParameters.iamToken, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).updateToken(requestParameters.owner, requestParameters.name, requestParameters.iamToken, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16789,7 +13939,7 @@ export class IamApi extends BaseAPI {
      * @memberof IamApi
      */
     public updateWebauthnCredential(requestParameters: IamApiUpdateWebauthnCredentialRequest, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).updateWebauthnCredential(requestParameters.iamWebauthnCredential, options).then((request) => request(this.axios, this.basePath));
+        return IamApiFp(this.configuration).updateWebauthnCredential(requestParameters.owner, requestParameters.name, requestParameters.iamWebauthnCredential, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -16805,7 +13955,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out.
+     * Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.  It DESCRIBES an account it meets and GRANTS only to one it creates: org-admin is never raised on a row that already exists, and a machine identity is answered by name rather than adopted. Both are properties of the update itself, so a steady-state reconcile — which changes neither — is unaffected.  Passwords are hashed before they are stored. Leave the password out and their current one is kept, so a redeploy never locks somebody out; send the same one again and it is kept too, so a steady-state re-run is not a rotation.
      * @summary Creates a person or updates them in place, so a deployment can declare the accounts it needs and re-run that declaration safely.
      * @param {IamApiUpsertUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

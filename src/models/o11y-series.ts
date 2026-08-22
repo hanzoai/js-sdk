@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -22,33 +22,21 @@
 export interface O11ySeries {
     /**
      * 
-     * @type {number}
+     * @type {{ [key: string]: string; }}
      * @memberof O11ySeries
      */
-    'costCents'?: number;
+    'labels'?: { [key: string]: string; };
     /**
      * 
-     * @type {number}
+     * @type {Array<{ [key: string]: string; }>}
      * @memberof O11ySeries
      */
-    'errors'?: number;
+    'labelsArray'?: Array<{ [key: string]: string; }>;
     /**
      * 
-     * @type {number}
+     * @type {Array<any>}
      * @memberof O11ySeries
      */
-    'requests'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof O11ySeries
-     */
-    'tokens'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof O11ySeries
-     */
-    'ts'?: string;
+    'values'?: Array<any>;
 }
 

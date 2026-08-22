@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -172,6 +172,10 @@ import type { O11yO11yDeprecatedUserUpdate } from '../models';
 // @ts-ignore
 import type { O11yO11yDeprecatedUsersOut } from '../models';
 // @ts-ignore
+import type { O11yO11yDiscoverIn } from '../models';
+// @ts-ignore
+import type { O11yO11yDiscoverOut } from '../models';
+// @ts-ignore
 import type { O11yO11yDisk } from '../models';
 // @ts-ignore
 import type { O11yO11yDomainsIn } from '../models';
@@ -337,6 +341,8 @@ import type { O11yO11yLogPromotePath } from '../models';
 import type { O11yO11yLogPromotedOut } from '../models';
 // @ts-ignore
 import type { O11yO11yLogRecordsOut } from '../models';
+// @ts-ignore
+import type { O11yO11yLogsOut } from '../models';
 // @ts-ignore
 import type { O11yO11yMessage } from '../models';
 // @ts-ignore
@@ -518,6 +524,18 @@ import type { O11yO11ySavedViewOut } from '../models';
 // @ts-ignore
 import type { O11yO11ySavedViewUpdateIn } from '../models';
 // @ts-ignore
+import type { O11yO11ySentryEventOut } from '../models';
+// @ts-ignore
+import type { O11yO11ySentryIssueEventsOut } from '../models';
+// @ts-ignore
+import type { O11yO11ySentryPostableProject } from '../models';
+// @ts-ignore
+import type { O11yO11ySentryProjectOut } from '../models';
+// @ts-ignore
+import type { O11yO11ySentryProjectsOut } from '../models';
+// @ts-ignore
+import type { O11yO11ySentryUpdateIssueIn } from '../models';
+// @ts-ignore
 import type { O11yO11yServiceAccountCreateIn } from '../models';
 // @ts-ignore
 import type { O11yO11yServiceAccountCreateOut } from '../models';
@@ -566,6 +584,8 @@ import type { O11yO11ySpanPercentileOut } from '../models';
 // @ts-ignore
 import type { O11yO11yStatefulSetListOut } from '../models';
 // @ts-ignore
+import type { O11yO11yStatsOut } from '../models';
+// @ts-ignore
 import type { O11yO11ySubstituteVarsOut } from '../models';
 // @ts-ignore
 import type { O11yO11yTestNotificationOut } from '../models';
@@ -584,11 +604,15 @@ import type { O11yO11yTraceFlamegraphIn } from '../models';
 // @ts-ignore
 import type { O11yO11yTraceFlamegraphOut } from '../models';
 // @ts-ignore
+import type { O11yO11yTraceOut } from '../models';
+// @ts-ignore
 import type { O11yO11yTraceSpanWindow } from '../models';
 // @ts-ignore
 import type { O11yO11yTraceWaterfallIn } from '../models';
 // @ts-ignore
 import type { O11yO11yTraceWaterfallOut } from '../models';
+// @ts-ignore
+import type { O11yO11yTracesOut } from '../models';
 // @ts-ignore
 import type { O11yO11yTransaction } from '../models';
 // @ts-ignore
@@ -667,6 +691,8 @@ import type { O11ySavedView } from '../models';
 import type { O11yStatefulSetListRequest } from '../models';
 // @ts-ignore
 import type { O11yStatusResult } from '../models';
+// @ts-ignore
+import type { O11yStatusSummary } from '../models';
 // @ts-ignore
 import type { O11yTracesOut } from '../models';
 // @ts-ignore
@@ -2380,6 +2406,44 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteO11yReviewsById', 'id', id)
             const localVarPath = `/v1/o11y/reviews/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deletes one Sentry project of the caller\'s org. Its DSN stops resolving immediately, so ingest for that id fails closed exactly as an unknown project does; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Deletes one Sentry project of the caller\'s org.
+         * @param {string} id ID is the project id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteO11ySentinelProjectsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteO11ySentinelProjectsById', 'id', id)
+            const localVarPath = `/v1/o11y/sentinel/projects/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7419,7 +7483,7 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Reports how far a submitted query has got — rows scanned, bytes read, elapsed — and HOLDS the connection until the next update rather than answering immediately.  The long poll is the whole point, and the reason this cannot be a typed operation: an answer that arrived only when the query finished would report progress on nothing. The websocket form of the same read is /ws/query_progress.  A validated, org-scoped principal is required; a query id belonging to another tenant is simply not found.
+         * Reports how far a submitted query has got — rows scanned, bytes read, elapsed — and HOLDS the connection until the next update rather than answering immediately.  ONE ADDRESS, TWO PROTOCOLS. Send an Upgrade and this is a websocket carrying the same progress; send an ordinary GET and it is a long poll. The Upgrade is a property of the request, not of the address, so the read that used to answer at /ws/query_progress answers here.  The long poll is the whole point, and the reason this cannot be a typed operation: an answer that arrived only when the query finished would report progress on nothing, and an upgraded connection has no JSON response to declare.  A validated, org-scoped principal is required; a query id belonging to another tenant is simply not found.
          * @summary Watch one running query\'s progress
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7680,6 +7744,498 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (limit !== undefined) {
                 localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one captured error event of a project, by its id.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one captured error event of a project, by its id.
+         * @param {string} id ID is the event id.
+         * @param {string} project Project is the project the event belongs to, by its id. Required.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelEventsById: async (id: string, project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getO11ySentinelEventsById', 'id', id)
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('getO11ySentinelEventsById', 'project', project)
+            const localVarPath = `/v1/o11y/sentinel/events/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (project !== undefined) {
+                localVarQueryParameter['project'] = project;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the caller\'s org\'s grouped error issues, optionally narrowed to one project and one time window, and filtered by status, level, environment, service, a free-text query and a sort.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists the caller\'s org\'s grouped error issues, optionally narrowed to one project and one time window, and filtered by status, level, environment, service, a free-text query and a sort.
+         * @param {string} [status] Status narrows to one lifecycle state: unresolved, resolved or ignored.
+         * @param {string} [level] Level narrows to one severity, e.g. error, warning, info.
+         * @param {string} [environment] Environment narrows to one deployment environment.
+         * @param {string} [serviceName] ServiceName narrows to one reporting service.
+         * @param {string} [query] Query narrows to issues whose text contains it.
+         * @param {string} [sort] Sort orders the page, e.g. lastSeen, firstSeen, count.
+         * @param {number} [offset] Offset is how many issues to skip. Zero starts at the first.
+         * @param {number} [limit] Limit caps how many issues come back. Zero means the default.
+         * @param {string} [project] Project narrows the org\&#39;s issues to one project, by its id.
+         * @param {string} [period] Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelIssues: async (status?: string, level?: string, environment?: string, serviceName?: string, query?: string, sort?: string, offset?: number, limit?: number, project?: string, period?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/o11y/sentinel/issues`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (level !== undefined) {
+                localVarQueryParameter['level'] = level;
+            }
+
+            if (environment !== undefined) {
+                localVarQueryParameter['environment'] = environment;
+            }
+
+            if (serviceName !== undefined) {
+                localVarQueryParameter['serviceName'] = serviceName;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (project !== undefined) {
+                localVarQueryParameter['project'] = project;
+            }
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one grouped issue of the caller\'s org with its latest occurrence sample.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one grouped issue of the caller\'s org with its latest occurrence sample.
+         * @param {string} id ID is the issue id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelIssuesById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getO11ySentinelIssuesById', 'id', id)
+            const localVarPath = `/v1/o11y/sentinel/issues/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.
+         * @param {string} id ID is the issue id.
+         * @param {string} project Project is the project whose occurrences to read, by its id. Required.
+         * @param {number} [limit] Limit caps how many occurrences come back. Zero means the default.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelIssuesByIdEvents: async (id: string, project: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getO11ySentinelIssuesByIdEvents', 'id', id)
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('getO11ySentinelIssuesByIdEvents', 'project', project)
+            const localVarPath = `/v1/o11y/sentinel/issues/{id}/events`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (project !== undefined) {
+                localVarQueryParameter['project'] = project;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists a project\'s captured error events, newest first, optionally narrowed to those whose message or exception text contains a search string.
+         * @summary Lists a project\'s captured error events, newest first, optionally narrowed to those whose message or exception text contains a search string.
+         * @param {string} project Project is the project to read, as its id. Required.
+         * @param {string} [query] Query narrows the page to events whose text contains it.
+         * @param {string} [period] Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+         * @param {number} [limit] Limit caps how many events come back.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelLogs: async (project: string, query?: string, period?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('getO11ySentinelLogs', 'project', project)
+            const localVarPath = `/v1/o11y/sentinel/logs`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (project !== undefined) {
+                localVarQueryParameter['project'] = project;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelProjects: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/o11y/sentinel/projects`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one Sentry project of the caller\'s org, DSN included.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one Sentry project of the caller\'s org, DSN included.
+         * @param {string} id ID is the project id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelProjectsById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getO11ySentinelProjectsById', 'id', id)
+            const localVarPath = `/v1/o11y/sentinel/projects/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a project\'s event-rate timeseries: one bucket per interval over the requested period, counting the events in it.
+         * @summary Returns a project\'s event-rate timeseries: one bucket per interval over the requested period, counting the events in it.
+         * @param {string} project Project is the project to read, as its id. Required.
+         * @param {string} [field] Field is the dimension to count over. Empty counts all events.
+         * @param {string} [period] Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelStats: async (project: string, field?: string, period?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('getO11ySentinelStats', 'project', project)
+            const localVarPath = `/v1/o11y/sentinel/stats`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (project !== undefined) {
+                localVarQueryParameter['project'] = project;
+            }
+
+            if (field !== undefined) {
+                localVarQueryParameter['field'] = field;
+            }
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Lists the traces a project\'s captured errors reference, each with how many errors landed on it, when they started and stopped, and the latest message seen — the entry point for \"which requests are failing\".
+         * @summary Lists the traces a project\'s captured errors reference, each with how many errors landed on it, when they started and stopped, and the latest message seen — the entry point for \"which requests are failing\".
+         * @param {string} project Project is the project to read, as its id. Required.
+         * @param {string} [period] Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+         * @param {number} [limit] Limit caps how many traces come back.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelTraces: async (project: string, period?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('getO11ySentinelTraces', 'project', project)
+            const localVarPath = `/v1/o11y/sentinel/traces`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (project !== undefined) {
+                localVarQueryParameter['project'] = project;
+            }
+
+            if (period !== undefined) {
+                localVarQueryParameter['period'] = period;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
+         * @summary Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
+         * @param {string} id ID is the trace id.
+         * @param {string} project Project is the project the trace\&#39;s errors belong to. Required.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelTracesById: async (id: string, project: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getO11ySentinelTracesById', 'id', id)
+            // verify required parameter 'project' is not null or undefined
+            assertParamExists('getO11ySentinelTracesById', 'project', project)
+            const localVarPath = `/v1/o11y/sentinel/traces/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (project !== undefined) {
+                localVarQueryParameter['project'] = project;
             }
 
 
@@ -8033,6 +8589,40 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             if (product !== undefined) {
                 localVarQueryParameter['product'] = product;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reports whether the platform is up. It returns the public status document: the incidents currently open against Hanzo\'s own services, derived from the fleet health probes, plus the address of the human status page. No authentication is required and no tenant data is involved — the answer is the same for every caller.  A service that fails its health probe becomes one incident naming that service. When the availability source itself cannot be read the endpoint answers 503 rather than an empty incident list, because \"we cannot tell\" and \"everything is fine\" are different answers and only one of them is true.
+         * @summary Reports whether the platform is up.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySummary: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/o11y/summary`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -11676,7 +12266,7 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/sentinel/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
+         * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/event/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
          * @summary Receive a Sentry envelope on the SDK\'s own DSN path
          * @param {string} projectId 
          * @param {*} [options] Override http request option.
@@ -13908,6 +14498,124 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Aggregates a project\'s captured errors into a table — the caller names the filters, the groupings and the aggregations, and gets back the columns and rows they asked for.  The project is mandatory and is checked against the caller\'s own org before it scopes anything, so a project id belonging to someone else reads as absent rather than as data.
+         * @summary Aggregates a project\'s captured errors into a table — the caller names the filters, the groupings and the aggregations, and gets back the columns and rows they asked for.
+         * @param {O11yO11yDiscoverIn} o11yO11yDiscoverIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postO11ySentinelDiscover: async (o11yO11yDiscoverIn: O11yO11yDiscoverIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'o11yO11yDiscoverIn' is not null or undefined
+            assertParamExists('postO11ySentinelDiscover', 'o11yO11yDiscoverIn', o11yO11yDiscoverIn)
+            const localVarPath = `/v1/o11y/sentinel/discover`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11yDiscoverIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a Sentry project under the caller\'s org and returns it, DSN included. Only the name, and optionally a slug and platform, are the caller\'s to set; the org, id and key are server-assigned.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Creates a Sentry project under the caller\'s org and returns it, DSN included.
+         * @param {O11yO11ySentryPostableProject} o11yO11ySentryPostableProject 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postO11ySentinelProjects: async (o11yO11ySentryPostableProject: O11yO11ySentryPostableProject, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'o11yO11ySentryPostableProject' is not null or undefined
+            assertParamExists('postO11ySentinelProjects', 'o11yO11ySentryPostableProject', o11yO11ySentryPostableProject)
+            const localVarPath = `/v1/o11y/sentinel/projects`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11ySentryPostableProject, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.
+         * @param {string} id ID is the project id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postO11ySentinelProjectsByIdKeysRotate: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('postO11ySentinelProjectsByIdKeysRotate', 'id', id)
+            const localVarPath = `/v1/o11y/sentinel/projects/{id}/keys/rotate`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns one service\'s entry-point operations with the same latency and error profile topOperations reports.
          * @summary Returns one service\'s entry-point operations with the same latency and error profile topOperations reports.
          * @param {O11yO11yOperationsIn} o11yO11yOperationsIn 
@@ -14505,6 +15213,50 @@ export const O11yApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(o11yO11ySavedViewUpdateIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue. Fields left unset are left unchanged.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue.
+         * @param {string} id ID is the issue id.
+         * @param {O11yO11ySentryUpdateIssueIn} o11yO11ySentryUpdateIssueIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putO11ySentinelIssuesById: async (id: string, o11yO11ySentryUpdateIssueIn: O11yO11ySentryUpdateIssueIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('putO11ySentinelIssuesById', 'id', id)
+            // verify required parameter 'o11yO11ySentryUpdateIssueIn' is not null or undefined
+            assertParamExists('putO11ySentinelIssuesById', 'o11yO11ySentryUpdateIssueIn', o11yO11ySentryUpdateIssueIn)
+            const localVarPath = `/v1/o11y/sentinel/issues/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(o11yO11ySentryUpdateIssueIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -17196,6 +17948,19 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Deletes one Sentry project of the caller\'s org. Its DSN stops resolving immediately, so ingest for that id fails closed exactly as an unknown project does; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Deletes one Sentry project of the caller\'s org.
+         * @param {string} id ID is the project id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteO11ySentinelProjectsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteO11ySentinelProjectsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.deleteO11ySentinelProjectsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Deletes the public-sharing config and disables public sharing of a dashboard.  Callers need the admin role; the runtime\'s own gate enforces it.
          * @summary Deletes the public-sharing config and disables public sharing of a dashboard.
          * @param {string} id ID is the resource id from the path.
@@ -18754,7 +19519,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reports how far a submitted query has got — rows scanned, bytes read, elapsed — and HOLDS the connection until the next update rather than answering immediately.  The long poll is the whole point, and the reason this cannot be a typed operation: an answer that arrived only when the query finished would report progress on nothing. The websocket form of the same read is /ws/query_progress.  A validated, org-scoped principal is required; a query id belonging to another tenant is simply not found.
+         * Reports how far a submitted query has got — rows scanned, bytes read, elapsed — and HOLDS the connection until the next update rather than answering immediately.  ONE ADDRESS, TWO PROTOCOLS. Send an Upgrade and this is a websocket carrying the same progress; send an ordinary GET and it is a long poll. The Upgrade is a property of the request, not of the address, so the read that used to answer at /ws/query_progress answers here.  The long poll is the whole point, and the reason this cannot be a typed operation: an answer that arrived only when the query finished would report progress on nothing, and an upgraded connection has no JSON response to declare.  A validated, org-scoped principal is required; a query id belonging to another tenant is simply not found.
          * @summary Watch one running query\'s progress
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18836,6 +19601,155 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getO11yReviewsByIdItems(id, status, page, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11yReviewsByIdItems']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one captured error event of a project, by its id.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one captured error event of a project, by its id.
+         * @param {string} id ID is the event id.
+         * @param {string} project Project is the project the event belongs to, by its id. Required.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getO11ySentinelEventsById(id: string, project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryEventOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11ySentinelEventsById(id, project, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11ySentinelEventsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the caller\'s org\'s grouped error issues, optionally narrowed to one project and one time window, and filtered by status, level, environment, service, a free-text query and a sort.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists the caller\'s org\'s grouped error issues, optionally narrowed to one project and one time window, and filtered by status, level, environment, service, a free-text query and a sort.
+         * @param {string} [status] Status narrows to one lifecycle state: unresolved, resolved or ignored.
+         * @param {string} [level] Level narrows to one severity, e.g. error, warning, info.
+         * @param {string} [environment] Environment narrows to one deployment environment.
+         * @param {string} [serviceName] ServiceName narrows to one reporting service.
+         * @param {string} [query] Query narrows to issues whose text contains it.
+         * @param {string} [sort] Sort orders the page, e.g. lastSeen, firstSeen, count.
+         * @param {number} [offset] Offset is how many issues to skip. Zero starts at the first.
+         * @param {number} [limit] Limit caps how many issues come back. Zero means the default.
+         * @param {string} [project] Project narrows the org\&#39;s issues to one project, by its id.
+         * @param {string} [period] Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getO11ySentinelIssues(status?: string, level?: string, environment?: string, serviceName?: string, query?: string, sort?: string, offset?: number, limit?: number, project?: string, period?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorIssuesOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11ySentinelIssues(status, level, environment, serviceName, query, sort, offset, limit, project, period, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11ySentinelIssues']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one grouped issue of the caller\'s org with its latest occurrence sample.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one grouped issue of the caller\'s org with its latest occurrence sample.
+         * @param {string} id ID is the issue id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getO11ySentinelIssuesById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorGettableIssueOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11ySentinelIssuesById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11ySentinelIssuesById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.
+         * @param {string} id ID is the issue id.
+         * @param {string} project Project is the project whose occurrences to read, by its id. Required.
+         * @param {number} [limit] Limit caps how many occurrences come back. Zero means the default.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getO11ySentinelIssuesByIdEvents(id: string, project: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryIssueEventsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11ySentinelIssuesByIdEvents(id, project, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11ySentinelIssuesByIdEvents']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists a project\'s captured error events, newest first, optionally narrowed to those whose message or exception text contains a search string.
+         * @summary Lists a project\'s captured error events, newest first, optionally narrowed to those whose message or exception text contains a search string.
+         * @param {string} project Project is the project to read, as its id. Required.
+         * @param {string} [query] Query narrows the page to events whose text contains it.
+         * @param {string} [period] Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+         * @param {number} [limit] Limit caps how many events come back.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getO11ySentinelLogs(project: string, query?: string, period?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yLogsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11ySentinelLogs(project, query, period, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11ySentinelLogs']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getO11ySentinelProjects(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryProjectsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11ySentinelProjects(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11ySentinelProjects']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one Sentry project of the caller\'s org, DSN included.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one Sentry project of the caller\'s org, DSN included.
+         * @param {string} id ID is the project id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getO11ySentinelProjectsById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryProjectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11ySentinelProjectsById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11ySentinelProjectsById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns a project\'s event-rate timeseries: one bucket per interval over the requested period, counting the events in it.
+         * @summary Returns a project\'s event-rate timeseries: one bucket per interval over the requested period, counting the events in it.
+         * @param {string} project Project is the project to read, as its id. Required.
+         * @param {string} [field] Field is the dimension to count over. Empty counts all events.
+         * @param {string} [period] Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getO11ySentinelStats(project: string, field?: string, period?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yStatsOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11ySentinelStats(project, field, period, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11ySentinelStats']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Lists the traces a project\'s captured errors reference, each with how many errors landed on it, when they started and stopped, and the latest message seen — the entry point for \"which requests are failing\".
+         * @summary Lists the traces a project\'s captured errors reference, each with how many errors landed on it, when they started and stopped, and the latest message seen — the entry point for \"which requests are failing\".
+         * @param {string} project Project is the project to read, as its id. Required.
+         * @param {string} [period] Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+         * @param {number} [limit] Limit caps how many traces come back.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getO11ySentinelTraces(project: string, period?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yTracesOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11ySentinelTraces(project, period, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11ySentinelTraces']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
+         * @summary Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
+         * @param {string} id ID is the trace id.
+         * @param {string} project Project is the project the trace\&#39;s errors belong to. Required.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getO11ySentinelTracesById(id: string, project: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yTraceOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11ySentinelTracesById(id, project, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11ySentinelTracesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -18948,6 +19862,18 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getO11yStatus(product, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11yStatus']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reports whether the platform is up. It returns the public status document: the incidents currently open against Hanzo\'s own services, derived from the fleet health probes, plus the address of the human status page. No authentication is required and no tenant data is involved — the answer is the same for every caller.  A service that fails its health probe becomes one incident naming that service. When the availability source itself cannot be read the endpoint answers 503 rather than an empty incident list, because \"we cannot tell\" and \"everything is fine\" are different answers and only one of them is true.
+         * @summary Reports whether the platform is up.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getO11ySummary(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yStatusSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getO11ySummary(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.getO11ySummary']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -20104,7 +21030,7 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/sentinel/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
+         * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/event/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
          * @summary Receive a Sentry envelope on the SDK\'s own DSN path
          * @param {string} projectId 
          * @param {*} [options] Override http request option.
@@ -20832,6 +21758,45 @@ export const O11yApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Aggregates a project\'s captured errors into a table — the caller names the filters, the groupings and the aggregations, and gets back the columns and rows they asked for.  The project is mandatory and is checked against the caller\'s own org before it scopes anything, so a project id belonging to someone else reads as absent rather than as data.
+         * @summary Aggregates a project\'s captured errors into a table — the caller names the filters, the groupings and the aggregations, and gets back the columns and rows they asked for.
+         * @param {O11yO11yDiscoverIn} o11yO11yDiscoverIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postO11ySentinelDiscover(o11yO11yDiscoverIn: O11yO11yDiscoverIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yDiscoverOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postO11ySentinelDiscover(o11yO11yDiscoverIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.postO11ySentinelDiscover']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates a Sentry project under the caller\'s org and returns it, DSN included. Only the name, and optionally a slug and platform, are the caller\'s to set; the org, id and key are server-assigned.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Creates a Sentry project under the caller\'s org and returns it, DSN included.
+         * @param {O11yO11ySentryPostableProject} o11yO11ySentryPostableProject 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postO11ySentinelProjects(o11yO11ySentryPostableProject: O11yO11ySentryPostableProject, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryProjectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postO11ySentinelProjects(o11yO11ySentryPostableProject, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.postO11ySentinelProjects']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.
+         * @param {string} id ID is the project id.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postO11ySentinelProjectsByIdKeysRotate(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11ySentryProjectOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postO11ySentinelProjectsByIdKeysRotate(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.postO11ySentinelProjectsByIdKeysRotate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns one service\'s entry-point operations with the same latency and error profile topOperations reports.
          * @summary Returns one service\'s entry-point operations with the same latency and error profile topOperations reports.
          * @param {O11yO11yOperationsIn} o11yO11yOperationsIn 
@@ -21025,6 +21990,20 @@ export const O11yApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putO11yExplorerViewsByViewid(viewId, o11yO11ySavedViewUpdateIn, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['O11yApi.putO11yExplorerViewsByViewid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue. Fields left unset are left unchanged.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue.
+         * @param {string} id ID is the issue id.
+         * @param {O11yO11ySentryUpdateIssueIn} o11yO11ySentryUpdateIssueIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putO11ySentinelIssuesById(id: string, o11yO11ySentryUpdateIssueIn: O11yO11ySentryUpdateIssueIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<O11yO11yErrorIssueOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putO11ySentinelIssuesById(id, o11yO11ySentryUpdateIssueIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['O11yApi.putO11ySentinelIssuesById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -22143,6 +23122,16 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.deleteO11yReviewsById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Deletes one Sentry project of the caller\'s org. Its DSN stops resolving immediately, so ingest for that id fails closed exactly as an unknown project does; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Deletes one Sentry project of the caller\'s org.
+         * @param {O11yApiDeleteO11ySentinelProjectsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteO11ySentinelProjectsById(requestParameters: O11yApiDeleteO11ySentinelProjectsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteO11ySentinelProjectsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Deletes the public-sharing config and disables public sharing of a dashboard.  Callers need the admin role; the runtime\'s own gate enforces it.
          * @summary Deletes the public-sharing config and disables public sharing of a dashboard.
          * @param {O11yApiDeletePublicDashboardRequest} requestParameters Request parameters.
@@ -23186,7 +24175,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getO11yQuery(requestParameters.query, requestParameters.time, requestParameters.stats, requestParameters.timeout, options).then((request) => request(axios, basePath));
         },
         /**
-         * Reports how far a submitted query has got — rows scanned, bytes read, elapsed — and HOLDS the connection until the next update rather than answering immediately.  The long poll is the whole point, and the reason this cannot be a typed operation: an answer that arrived only when the query finished would report progress on nothing. The websocket form of the same read is /ws/query_progress.  A validated, org-scoped principal is required; a query id belonging to another tenant is simply not found.
+         * Reports how far a submitted query has got — rows scanned, bytes read, elapsed — and HOLDS the connection until the next update rather than answering immediately.  ONE ADDRESS, TWO PROTOCOLS. Send an Upgrade and this is a websocket carrying the same progress; send an ordinary GET and it is a long poll. The Upgrade is a property of the request, not of the address, so the read that used to answer at /ws/query_progress answers here.  The long poll is the whole point, and the reason this cannot be a typed operation: an answer that arrived only when the query finished would report progress on nothing, and an upgraded connection has no JSON response to declare.  A validated, org-scoped principal is required; a query id belonging to another tenant is simply not found.
          * @summary Watch one running query\'s progress
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -23242,6 +24231,105 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         getO11yReviewsByIdItems(requestParameters: O11yApiGetO11yReviewsByIdItemsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yAnnItemList> {
             return localVarFp.getO11yReviewsByIdItems(requestParameters.id, requestParameters.status, requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one captured error event of a project, by its id.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one captured error event of a project, by its id.
+         * @param {O11yApiGetO11ySentinelEventsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelEventsById(requestParameters: O11yApiGetO11ySentinelEventsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryEventOut> {
+            return localVarFp.getO11ySentinelEventsById(requestParameters.id, requestParameters.project, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the caller\'s org\'s grouped error issues, optionally narrowed to one project and one time window, and filtered by status, level, environment, service, a free-text query and a sort.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists the caller\'s org\'s grouped error issues, optionally narrowed to one project and one time window, and filtered by status, level, environment, service, a free-text query and a sort.
+         * @param {O11yApiGetO11ySentinelIssuesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelIssues(requestParameters: O11yApiGetO11ySentinelIssuesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorIssuesOut> {
+            return localVarFp.getO11ySentinelIssues(requestParameters.status, requestParameters.level, requestParameters.environment, requestParameters.serviceName, requestParameters.query, requestParameters.sort, requestParameters.offset, requestParameters.limit, requestParameters.project, requestParameters.period, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one grouped issue of the caller\'s org with its latest occurrence sample.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one grouped issue of the caller\'s org with its latest occurrence sample.
+         * @param {O11yApiGetO11ySentinelIssuesByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelIssuesById(requestParameters: O11yApiGetO11ySentinelIssuesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorGettableIssueOut> {
+            return localVarFp.getO11ySentinelIssuesById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.
+         * @param {O11yApiGetO11ySentinelIssuesByIdEventsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelIssuesByIdEvents(requestParameters: O11yApiGetO11ySentinelIssuesByIdEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryIssueEventsOut> {
+            return localVarFp.getO11ySentinelIssuesByIdEvents(requestParameters.id, requestParameters.project, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists a project\'s captured error events, newest first, optionally narrowed to those whose message or exception text contains a search string.
+         * @summary Lists a project\'s captured error events, newest first, optionally narrowed to those whose message or exception text contains a search string.
+         * @param {O11yApiGetO11ySentinelLogsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelLogs(requestParameters: O11yApiGetO11ySentinelLogsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yLogsOut> {
+            return localVarFp.getO11ySentinelLogs(requestParameters.project, requestParameters.query, requestParameters.period, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelProjects(options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryProjectsOut> {
+            return localVarFp.getO11ySentinelProjects(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one Sentry project of the caller\'s org, DSN included.  Callers need the viewer role; the runtime\'s own gate enforces it.
+         * @summary Returns one Sentry project of the caller\'s org, DSN included.
+         * @param {O11yApiGetO11ySentinelProjectsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelProjectsById(requestParameters: O11yApiGetO11ySentinelProjectsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryProjectOut> {
+            return localVarFp.getO11ySentinelProjectsById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns a project\'s event-rate timeseries: one bucket per interval over the requested period, counting the events in it.
+         * @summary Returns a project\'s event-rate timeseries: one bucket per interval over the requested period, counting the events in it.
+         * @param {O11yApiGetO11ySentinelStatsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelStats(requestParameters: O11yApiGetO11ySentinelStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yStatsOut> {
+            return localVarFp.getO11ySentinelStats(requestParameters.project, requestParameters.field, requestParameters.period, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Lists the traces a project\'s captured errors reference, each with how many errors landed on it, when they started and stopped, and the latest message seen — the entry point for \"which requests are failing\".
+         * @summary Lists the traces a project\'s captured errors reference, each with how many errors landed on it, when they started and stopped, and the latest message seen — the entry point for \"which requests are failing\".
+         * @param {O11yApiGetO11ySentinelTracesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelTraces(requestParameters: O11yApiGetO11ySentinelTracesRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yTracesOut> {
+            return localVarFp.getO11ySentinelTraces(requestParameters.project, requestParameters.period, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
+         * @summary Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
+         * @param {O11yApiGetO11ySentinelTracesByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySentinelTracesById(requestParameters: O11yApiGetO11ySentinelTracesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yTraceOut> {
+            return localVarFp.getO11ySentinelTracesById(requestParameters.id, requestParameters.project, options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the name of every service the trace store holds, with no window applied — the complete catalog, for pickers and autocomplete.
@@ -23318,6 +24406,15 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         getO11yStatus(requestParameters: O11yApiGetO11yStatusRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<O11yStatusResult> {
             return localVarFp.getO11yStatus(requestParameters.product, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reports whether the platform is up. It returns the public status document: the incidents currently open against Hanzo\'s own services, derived from the fleet health probes, plus the address of the human status page. No authentication is required and no tenant data is involved — the answer is the same for every caller.  A service that fails its health probe becomes one incident naming that service. When the availability source itself cannot be read the endpoint answers 503 rather than an empty incident list, because \"we cannot tell\" and \"everything is fine\" are different answers and only one of them is true.
+         * @summary Reports whether the platform is up.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getO11ySummary(options?: RawAxiosRequestConfig): AxiosPromise<O11yStatusSummary> {
+            return localVarFp.getO11ySummary(options).then((request) => request(axios, basePath));
         },
         /**
          * Lists the caller org\'s recent traces — one row per trace with its span count and wall-clock duration, most recently active first. This is the trace SEARCH: it is where a trace id comes from, and the spans behind any row are then read from GET /v1/o11y/traces/{traceId}. Every row belongs to the caller\'s own org — the tenant is the validated principal, never an input, and there is no administrator widening, because a trace list is a tenant\'s records rather than a rollup over them. An unreachable telemetry store answers 503 rather than an empty page, because \"no traces\" and \"cannot see the traces\" are different facts and only one of them is about the caller\'s system.
@@ -24116,7 +25213,7 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.postO11yAlertsByReceiver(requestParameters.receiver, options).then((request) => request(axios, basePath));
         },
         /**
-         * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/sentinel/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
+         * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/event/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
          * @summary Receive a Sentry envelope on the SDK\'s own DSN path
          * @param {O11yApiPostO11yApiByProjectIdEnvelopeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -24674,6 +25771,36 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.postO11yReviewsByIdItems(requestParameters.id, requestParameters.o11yAddItemsIn, options).then((request) => request(axios, basePath));
         },
         /**
+         * Aggregates a project\'s captured errors into a table — the caller names the filters, the groupings and the aggregations, and gets back the columns and rows they asked for.  The project is mandatory and is checked against the caller\'s own org before it scopes anything, so a project id belonging to someone else reads as absent rather than as data.
+         * @summary Aggregates a project\'s captured errors into a table — the caller names the filters, the groupings and the aggregations, and gets back the columns and rows they asked for.
+         * @param {O11yApiPostO11ySentinelDiscoverRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postO11ySentinelDiscover(requestParameters: O11yApiPostO11ySentinelDiscoverRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yDiscoverOut> {
+            return localVarFp.postO11ySentinelDiscover(requestParameters.o11yO11yDiscoverIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a Sentry project under the caller\'s org and returns it, DSN included. Only the name, and optionally a slug and platform, are the caller\'s to set; the org, id and key are server-assigned.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Creates a Sentry project under the caller\'s org and returns it, DSN included.
+         * @param {O11yApiPostO11ySentinelProjectsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postO11ySentinelProjects(requestParameters: O11yApiPostO11ySentinelProjectsRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryProjectOut> {
+            return localVarFp.postO11ySentinelProjects(requestParameters.o11yO11ySentryPostableProject, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.
+         * @param {O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postO11ySentinelProjectsByIdKeysRotate(requestParameters: O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySentryProjectOut> {
+            return localVarFp.postO11ySentinelProjectsByIdKeysRotate(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns one service\'s entry-point operations with the same latency and error profile topOperations reports.
          * @summary Returns one service\'s entry-point operations with the same latency and error profile topOperations reports.
          * @param {O11yApiPostO11yServiceEntryPointOperationsRequest} requestParameters Request parameters.
@@ -24822,6 +25949,16 @@ export const O11yApiFactory = function (configuration?: Configuration, basePath?
          */
         putO11yExplorerViewsByViewid(requestParameters: O11yApiPutO11yExplorerViewsByViewidRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11ySavedViewOut> {
             return localVarFp.putO11yExplorerViewsByViewid(requestParameters.viewId, requestParameters.o11yO11ySavedViewUpdateIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue. Fields left unset are left unchanged.  Callers need the editor role; the runtime\'s own gate enforces it.
+         * @summary Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue.
+         * @param {O11yApiPutO11ySentinelIssuesByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putO11ySentinelIssuesById(requestParameters: O11yApiPutO11ySentinelIssuesByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<O11yO11yErrorIssueOut> {
+            return localVarFp.putO11ySentinelIssuesById(requestParameters.id, requestParameters.o11yO11ySentryUpdateIssueIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Records the deployment\'s profile in Zeus — how the team uses observability today and what they plan — overwriting any prior one. Admin gate.
@@ -25970,6 +27107,20 @@ export interface O11yApiDeleteO11yReviewsByIdRequest {
      * ID is the annotation queue to act on, from the path.
      * @type {string}
      * @memberof O11yApiDeleteO11yReviewsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for deleteO11ySentinelProjectsById operation in O11yApi.
+ * @export
+ * @interface O11yApiDeleteO11ySentinelProjectsByIdRequest
+ */
+export interface O11yApiDeleteO11ySentinelProjectsByIdRequest {
+    /**
+     * ID is the project id.
+     * @type {string}
+     * @memberof O11yApiDeleteO11ySentinelProjectsById
      */
     readonly id: string
 }
@@ -28569,6 +29720,272 @@ export interface O11yApiGetO11yReviewsByIdItemsRequest {
      * @memberof O11yApiGetO11yReviewsByIdItems
      */
     readonly limit?: number
+}
+
+/**
+ * Request parameters for getO11ySentinelEventsById operation in O11yApi.
+ * @export
+ * @interface O11yApiGetO11ySentinelEventsByIdRequest
+ */
+export interface O11yApiGetO11ySentinelEventsByIdRequest {
+    /**
+     * ID is the event id.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelEventsById
+     */
+    readonly id: string
+
+    /**
+     * Project is the project the event belongs to, by its id. Required.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelEventsById
+     */
+    readonly project: string
+}
+
+/**
+ * Request parameters for getO11ySentinelIssues operation in O11yApi.
+ * @export
+ * @interface O11yApiGetO11ySentinelIssuesRequest
+ */
+export interface O11yApiGetO11ySentinelIssuesRequest {
+    /**
+     * Status narrows to one lifecycle state: unresolved, resolved or ignored.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelIssues
+     */
+    readonly status?: string
+
+    /**
+     * Level narrows to one severity, e.g. error, warning, info.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelIssues
+     */
+    readonly level?: string
+
+    /**
+     * Environment narrows to one deployment environment.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelIssues
+     */
+    readonly environment?: string
+
+    /**
+     * ServiceName narrows to one reporting service.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelIssues
+     */
+    readonly serviceName?: string
+
+    /**
+     * Query narrows to issues whose text contains it.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelIssues
+     */
+    readonly query?: string
+
+    /**
+     * Sort orders the page, e.g. lastSeen, firstSeen, count.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelIssues
+     */
+    readonly sort?: string
+
+    /**
+     * Offset is how many issues to skip. Zero starts at the first.
+     * @type {number}
+     * @memberof O11yApiGetO11ySentinelIssues
+     */
+    readonly offset?: number
+
+    /**
+     * Limit caps how many issues come back. Zero means the default.
+     * @type {number}
+     * @memberof O11yApiGetO11ySentinelIssues
+     */
+    readonly limit?: number
+
+    /**
+     * Project narrows the org\&#39;s issues to one project, by its id.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelIssues
+     */
+    readonly project?: string
+
+    /**
+     * Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelIssues
+     */
+    readonly period?: string
+}
+
+/**
+ * Request parameters for getO11ySentinelIssuesById operation in O11yApi.
+ * @export
+ * @interface O11yApiGetO11ySentinelIssuesByIdRequest
+ */
+export interface O11yApiGetO11ySentinelIssuesByIdRequest {
+    /**
+     * ID is the issue id.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelIssuesById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getO11ySentinelIssuesByIdEvents operation in O11yApi.
+ * @export
+ * @interface O11yApiGetO11ySentinelIssuesByIdEventsRequest
+ */
+export interface O11yApiGetO11ySentinelIssuesByIdEventsRequest {
+    /**
+     * ID is the issue id.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelIssuesByIdEvents
+     */
+    readonly id: string
+
+    /**
+     * Project is the project whose occurrences to read, by its id. Required.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelIssuesByIdEvents
+     */
+    readonly project: string
+
+    /**
+     * Limit caps how many occurrences come back. Zero means the default.
+     * @type {number}
+     * @memberof O11yApiGetO11ySentinelIssuesByIdEvents
+     */
+    readonly limit?: number
+}
+
+/**
+ * Request parameters for getO11ySentinelLogs operation in O11yApi.
+ * @export
+ * @interface O11yApiGetO11ySentinelLogsRequest
+ */
+export interface O11yApiGetO11ySentinelLogsRequest {
+    /**
+     * Project is the project to read, as its id. Required.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelLogs
+     */
+    readonly project: string
+
+    /**
+     * Query narrows the page to events whose text contains it.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelLogs
+     */
+    readonly query?: string
+
+    /**
+     * Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelLogs
+     */
+    readonly period?: string
+
+    /**
+     * Limit caps how many events come back.
+     * @type {number}
+     * @memberof O11yApiGetO11ySentinelLogs
+     */
+    readonly limit?: number
+}
+
+/**
+ * Request parameters for getO11ySentinelProjectsById operation in O11yApi.
+ * @export
+ * @interface O11yApiGetO11ySentinelProjectsByIdRequest
+ */
+export interface O11yApiGetO11ySentinelProjectsByIdRequest {
+    /**
+     * ID is the project id.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelProjectsById
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getO11ySentinelStats operation in O11yApi.
+ * @export
+ * @interface O11yApiGetO11ySentinelStatsRequest
+ */
+export interface O11yApiGetO11ySentinelStatsRequest {
+    /**
+     * Project is the project to read, as its id. Required.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelStats
+     */
+    readonly project: string
+
+    /**
+     * Field is the dimension to count over. Empty counts all events.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelStats
+     */
+    readonly field?: string
+
+    /**
+     * Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelStats
+     */
+    readonly period?: string
+}
+
+/**
+ * Request parameters for getO11ySentinelTraces operation in O11yApi.
+ * @export
+ * @interface O11yApiGetO11ySentinelTracesRequest
+ */
+export interface O11yApiGetO11ySentinelTracesRequest {
+    /**
+     * Project is the project to read, as its id. Required.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelTraces
+     */
+    readonly project: string
+
+    /**
+     * Period is the window to read, relative to now — 1h, 24h, 7d, 14d, 30d.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelTraces
+     */
+    readonly period?: string
+
+    /**
+     * Limit caps how many traces come back.
+     * @type {number}
+     * @memberof O11yApiGetO11ySentinelTraces
+     */
+    readonly limit?: number
+}
+
+/**
+ * Request parameters for getO11ySentinelTracesById operation in O11yApi.
+ * @export
+ * @interface O11yApiGetO11ySentinelTracesByIdRequest
+ */
+export interface O11yApiGetO11ySentinelTracesByIdRequest {
+    /**
+     * ID is the trace id.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelTracesById
+     */
+    readonly id: string
+
+    /**
+     * Project is the project the trace\&#39;s errors belong to. Required.
+     * @type {string}
+     * @memberof O11yApiGetO11ySentinelTracesById
+     */
+    readonly project: string
 }
 
 /**
@@ -31218,6 +32635,48 @@ export interface O11yApiPostO11yReviewsByIdItemsRequest {
 }
 
 /**
+ * Request parameters for postO11ySentinelDiscover operation in O11yApi.
+ * @export
+ * @interface O11yApiPostO11ySentinelDiscoverRequest
+ */
+export interface O11yApiPostO11ySentinelDiscoverRequest {
+    /**
+     * 
+     * @type {O11yO11yDiscoverIn}
+     * @memberof O11yApiPostO11ySentinelDiscover
+     */
+    readonly o11yO11yDiscoverIn: O11yO11yDiscoverIn
+}
+
+/**
+ * Request parameters for postO11ySentinelProjects operation in O11yApi.
+ * @export
+ * @interface O11yApiPostO11ySentinelProjectsRequest
+ */
+export interface O11yApiPostO11ySentinelProjectsRequest {
+    /**
+     * 
+     * @type {O11yO11ySentryPostableProject}
+     * @memberof O11yApiPostO11ySentinelProjects
+     */
+    readonly o11yO11ySentryPostableProject: O11yO11ySentryPostableProject
+}
+
+/**
+ * Request parameters for postO11ySentinelProjectsByIdKeysRotate operation in O11yApi.
+ * @export
+ * @interface O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest
+ */
+export interface O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest {
+    /**
+     * ID is the project id.
+     * @type {string}
+     * @memberof O11yApiPostO11ySentinelProjectsByIdKeysRotate
+     */
+    readonly id: string
+}
+
+/**
  * Request parameters for postO11yServiceEntryPointOperations operation in O11yApi.
  * @export
  * @interface O11yApiPostO11yServiceEntryPointOperationsRequest
@@ -31432,6 +32891,27 @@ export interface O11yApiPutO11yExplorerViewsByViewidRequest {
      * @memberof O11yApiPutO11yExplorerViewsByViewid
      */
     readonly o11yO11ySavedViewUpdateIn: O11yO11ySavedViewUpdateIn
+}
+
+/**
+ * Request parameters for putO11ySentinelIssuesById operation in O11yApi.
+ * @export
+ * @interface O11yApiPutO11ySentinelIssuesByIdRequest
+ */
+export interface O11yApiPutO11ySentinelIssuesByIdRequest {
+    /**
+     * ID is the issue id.
+     * @type {string}
+     * @memberof O11yApiPutO11ySentinelIssuesById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {O11yO11ySentryUpdateIssueIn}
+     * @memberof O11yApiPutO11ySentinelIssuesById
+     */
+    readonly o11yO11ySentryUpdateIssueIn: O11yO11ySentryUpdateIssueIn
 }
 
 /**
@@ -32910,6 +34390,18 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
+     * Deletes one Sentry project of the caller\'s org. Its DSN stops resolving immediately, so ingest for that id fails closed exactly as an unknown project does; retained events are not touched. Answers 204.  Callers need the editor role; the runtime\'s own gate enforces it.
+     * @summary Deletes one Sentry project of the caller\'s org.
+     * @param {O11yApiDeleteO11ySentinelProjectsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public deleteO11ySentinelProjectsById(requestParameters: O11yApiDeleteO11ySentinelProjectsByIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).deleteO11ySentinelProjectsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Deletes the public-sharing config and disables public sharing of a dashboard.  Callers need the admin role; the runtime\'s own gate enforces it.
      * @summary Deletes the public-sharing config and disables public sharing of a dashboard.
      * @param {O11yApiDeletePublicDashboardRequest} requestParameters Request parameters.
@@ -34167,7 +35659,7 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Reports how far a submitted query has got — rows scanned, bytes read, elapsed — and HOLDS the connection until the next update rather than answering immediately.  The long poll is the whole point, and the reason this cannot be a typed operation: an answer that arrived only when the query finished would report progress on nothing. The websocket form of the same read is /ws/query_progress.  A validated, org-scoped principal is required; a query id belonging to another tenant is simply not found.
+     * Reports how far a submitted query has got — rows scanned, bytes read, elapsed — and HOLDS the connection until the next update rather than answering immediately.  ONE ADDRESS, TWO PROTOCOLS. Send an Upgrade and this is a websocket carrying the same progress; send an ordinary GET and it is a long poll. The Upgrade is a property of the request, not of the address, so the read that used to answer at /ws/query_progress answers here.  The long poll is the whole point, and the reason this cannot be a typed operation: an answer that arrived only when the query finished would report progress on nothing, and an upgraded connection has no JSON response to declare.  A validated, org-scoped principal is required; a query id belonging to another tenant is simply not found.
      * @summary Watch one running query\'s progress
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -34234,6 +35726,125 @@ export class O11yApi extends BaseAPI {
      */
     public getO11yReviewsByIdItems(requestParameters: O11yApiGetO11yReviewsByIdItemsRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).getO11yReviewsByIdItems(requestParameters.id, requestParameters.status, requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one captured error event of a project, by its id.  Callers need the viewer role; the runtime\'s own gate enforces it.
+     * @summary Returns one captured error event of a project, by its id.
+     * @param {O11yApiGetO11ySentinelEventsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public getO11ySentinelEventsById(requestParameters: O11yApiGetO11ySentinelEventsByIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11ySentinelEventsById(requestParameters.id, requestParameters.project, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the caller\'s org\'s grouped error issues, optionally narrowed to one project and one time window, and filtered by status, level, environment, service, a free-text query and a sort.  Callers need the viewer role; the runtime\'s own gate enforces it.
+     * @summary Lists the caller\'s org\'s grouped error issues, optionally narrowed to one project and one time window, and filtered by status, level, environment, service, a free-text query and a sort.
+     * @param {O11yApiGetO11ySentinelIssuesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public getO11ySentinelIssues(requestParameters: O11yApiGetO11ySentinelIssuesRequest = {}, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11ySentinelIssues(requestParameters.status, requestParameters.level, requestParameters.environment, requestParameters.serviceName, requestParameters.query, requestParameters.sort, requestParameters.offset, requestParameters.limit, requestParameters.project, requestParameters.period, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one grouped issue of the caller\'s org with its latest occurrence sample.  Callers need the viewer role; the runtime\'s own gate enforces it.
+     * @summary Returns one grouped issue of the caller\'s org with its latest occurrence sample.
+     * @param {O11yApiGetO11ySentinelIssuesByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public getO11ySentinelIssuesById(requestParameters: O11yApiGetO11ySentinelIssuesByIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11ySentinelIssuesById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.  Callers need the viewer role; the runtime\'s own gate enforces it.
+     * @summary Lists one issue\'s captured occurrences, scoped to a project — a project is an isolation unit, so the caller declares which project\'s occurrences to read.
+     * @param {O11yApiGetO11ySentinelIssuesByIdEventsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public getO11ySentinelIssuesByIdEvents(requestParameters: O11yApiGetO11ySentinelIssuesByIdEventsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11ySentinelIssuesByIdEvents(requestParameters.id, requestParameters.project, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists a project\'s captured error events, newest first, optionally narrowed to those whose message or exception text contains a search string.
+     * @summary Lists a project\'s captured error events, newest first, optionally narrowed to those whose message or exception text contains a search string.
+     * @param {O11yApiGetO11ySentinelLogsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public getO11ySentinelLogs(requestParameters: O11yApiGetO11ySentinelLogsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11ySentinelLogs(requestParameters.project, requestParameters.query, requestParameters.period, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.  Callers need the viewer role; the runtime\'s own gate enforces it.
+     * @summary Lists the caller\'s org\'s Sentry projects, each with its freshly-derived DSN.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public getO11ySentinelProjects(options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11ySentinelProjects(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one Sentry project of the caller\'s org, DSN included.  Callers need the viewer role; the runtime\'s own gate enforces it.
+     * @summary Returns one Sentry project of the caller\'s org, DSN included.
+     * @param {O11yApiGetO11ySentinelProjectsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public getO11ySentinelProjectsById(requestParameters: O11yApiGetO11ySentinelProjectsByIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11ySentinelProjectsById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a project\'s event-rate timeseries: one bucket per interval over the requested period, counting the events in it.
+     * @summary Returns a project\'s event-rate timeseries: one bucket per interval over the requested period, counting the events in it.
+     * @param {O11yApiGetO11ySentinelStatsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public getO11ySentinelStats(requestParameters: O11yApiGetO11ySentinelStatsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11ySentinelStats(requestParameters.project, requestParameters.field, requestParameters.period, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lists the traces a project\'s captured errors reference, each with how many errors landed on it, when they started and stopped, and the latest message seen — the entry point for \"which requests are failing\".
+     * @summary Lists the traces a project\'s captured errors reference, each with how many errors landed on it, when they started and stopped, and the latest message seen — the entry point for \"which requests are failing\".
+     * @param {O11yApiGetO11ySentinelTracesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public getO11ySentinelTraces(requestParameters: O11yApiGetO11ySentinelTracesRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11ySentinelTraces(requestParameters.project, requestParameters.period, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
+     * @summary Returns one trace\'s captured errors for a project — every error event that carried the trace id, in the order the events plane holds them.
+     * @param {O11yApiGetO11ySentinelTracesByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public getO11ySentinelTracesById(requestParameters: O11yApiGetO11ySentinelTracesByIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11ySentinelTracesById(requestParameters.id, requestParameters.project, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -34326,6 +35937,17 @@ export class O11yApi extends BaseAPI {
      */
     public getO11yStatus(requestParameters: O11yApiGetO11yStatusRequest = {}, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).getO11yStatus(requestParameters.product, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reports whether the platform is up. It returns the public status document: the incidents currently open against Hanzo\'s own services, derived from the fleet health probes, plus the address of the human status page. No authentication is required and no tenant data is involved — the answer is the same for every caller.  A service that fails its health probe becomes one incident naming that service. When the availability source itself cannot be read the endpoint answers 503 rather than an empty incident list, because \"we cannot tell\" and \"everything is fine\" are different answers and only one of them is true.
+     * @summary Reports whether the platform is up.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public getO11ySummary(options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).getO11ySummary(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -35287,7 +36909,7 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
-     * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/sentinel/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
+     * Accepts an application/x-sentry-envelope frame from a Sentry SDK — the batched wire format carrying events, sessions and attachments — and ingests it against the project named in the path.  THE /api/ SEGMENT IS NOT OURS TO NAME. An SDK appends its own fixed /api/<project>/envelope/ suffix to whatever DSN it is given, so this address is the SDK\'s, received verbatim. We receive this shape; we do not publish it. The clean spelling of the same wire is /v1/event/{project}/envelope/.  AUTHENTICATED BY THE DSN PUBLIC KEY, never a Hanzo session, and therefore exempt from the principal gate: the ingest verifier checks the key in constant time, fails closed, and derives the org from it. A keyless submission is a 401 from that verifier — not a 403 from the gate, and not a 404 — which is how you tell the hops apart. The exemption is matched by method plus prefix plus suffix, never a bare prefix, so no read is reachable through it.
      * @summary Receive a Sentry envelope on the SDK\'s own DSN path
      * @param {O11yApiPostO11yApiByProjectIdEnvelopeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -35957,6 +37579,42 @@ export class O11yApi extends BaseAPI {
     }
 
     /**
+     * Aggregates a project\'s captured errors into a table — the caller names the filters, the groupings and the aggregations, and gets back the columns and rows they asked for.  The project is mandatory and is checked against the caller\'s own org before it scopes anything, so a project id belonging to someone else reads as absent rather than as data.
+     * @summary Aggregates a project\'s captured errors into a table — the caller names the filters, the groupings and the aggregations, and gets back the columns and rows they asked for.
+     * @param {O11yApiPostO11ySentinelDiscoverRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public postO11ySentinelDiscover(requestParameters: O11yApiPostO11ySentinelDiscoverRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).postO11ySentinelDiscover(requestParameters.o11yO11yDiscoverIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a Sentry project under the caller\'s org and returns it, DSN included. Only the name, and optionally a slug and platform, are the caller\'s to set; the org, id and key are server-assigned.  Callers need the editor role; the runtime\'s own gate enforces it.
+     * @summary Creates a Sentry project under the caller\'s org and returns it, DSN included.
+     * @param {O11yApiPostO11ySentinelProjectsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public postO11ySentinelProjects(requestParameters: O11yApiPostO11ySentinelProjectsRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).postO11ySentinelProjects(requestParameters.o11yO11ySentryPostableProject, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.  Callers need the editor role; the runtime\'s own gate enforces it.
+     * @summary Rotates a project\'s DSN key — bumping its rotation watermark so keys below it stop verifying — and returns the project with its new DSN.
+     * @param {O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public postO11ySentinelProjectsByIdKeysRotate(requestParameters: O11yApiPostO11ySentinelProjectsByIdKeysRotateRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).postO11ySentinelProjectsByIdKeysRotate(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns one service\'s entry-point operations with the same latency and error profile topOperations reports.
      * @summary Returns one service\'s entry-point operations with the same latency and error profile topOperations reports.
      * @param {O11yApiPostO11yServiceEntryPointOperationsRequest} requestParameters Request parameters.
@@ -36134,6 +37792,18 @@ export class O11yApi extends BaseAPI {
      */
     public putO11yExplorerViewsByViewid(requestParameters: O11yApiPutO11yExplorerViewsByViewidRequest, options?: RawAxiosRequestConfig) {
         return O11yApiFp(this.configuration).putO11yExplorerViewsByViewid(requestParameters.viewId, requestParameters.o11yO11ySavedViewUpdateIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue. Fields left unset are left unchanged.  Callers need the editor role; the runtime\'s own gate enforces it.
+     * @summary Changes an issue\'s lifecycle — resolve, ignore, reopen or assign — and returns the updated issue.
+     * @param {O11yApiPutO11ySentinelIssuesByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof O11yApi
+     */
+    public putO11ySentinelIssuesById(requestParameters: O11yApiPutO11ySentinelIssuesByIdRequest, options?: RawAxiosRequestConfig) {
+        return O11yApiFp(this.configuration).putO11ySentinelIssuesById(requestParameters.id, requestParameters.o11yO11ySentryUpdateIssueIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

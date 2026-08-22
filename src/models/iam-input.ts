@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -25,37 +25,49 @@ export interface IamInput {
      * @type {string}
      * @memberof IamInput
      */
+    'action'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamInput
+     */
+    'clientIp'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamInput
+     */
     'createdTime'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof IamInput
-     */
-    'description'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof IamInput
-     */
-    'displayName'?: string;
     /**
      * 
      * @type {boolean}
      * @memberof IamInput
      */
-    'isDefault'?: boolean;
+    'isTriggered'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof IamInput
      */
-    'metadata'?: string;
+    'language'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamInput
+     */
+    'method'?: string;
     /**
      * 
      * @type {string}
      * @memberof IamInput
      */
     'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamInput
+     */
+    'object'?: string;
     /**
      * 
      * @type {string}
@@ -70,15 +82,27 @@ export interface IamInput {
     'owner'?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {string}
      * @memberof IamInput
      */
-    'tags'?: Array<string>;
+    'requestUri'?: string;
     /**
      * 
      * @type {string}
      * @memberof IamInput
      */
-    'workspace'?: string;
+    'response'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof IamInput
+     */
+    'statusCode'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IamInput
+     */
+    'user'?: string;
 }
 

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -24,7 +24,7 @@ import type { RpcError } from './rpc-error';
  */
 export interface RpcOut {
     /**
-     * 
+     * Error is the JSON-RPC error object, present instead of Result. Its presence is the ONLY way a failure shows up here: the HTTP status stays 200, because that is what a standard JSON-RPC client parses.
      * @type {RpcError}
      * @memberof RpcOut
      */
@@ -36,7 +36,7 @@ export interface RpcOut {
      */
     'id'?: any;
     /**
-     * 
+     * JSONRPC is always \"2.0\". An upstream that omits it has it filled in, so a client never has to cope with a response that is missing the one field telling it which protocol it is reading.
      * @type {string}
      * @memberof RpcOut
      */

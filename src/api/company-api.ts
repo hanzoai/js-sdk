@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -29,6 +29,10 @@ import type { BeginIn } from '../models';
 import type { DecisionIn } from '../models';
 // @ts-ignore
 import type { DeckOut } from '../models';
+// @ts-ignore
+import type { EIN } from '../models';
+// @ts-ignore
+import type { EinIn } from '../models';
 // @ts-ignore
 import type { EsignCompleteIn } from '../models';
 // @ts-ignore
@@ -65,6 +69,10 @@ import type { SafeIn } from '../models';
 import type { SafeOut } from '../models';
 // @ts-ignore
 import type { StructureIn } from '../models';
+// @ts-ignore
+import type { Tariff } from '../models';
+// @ts-ignore
+import type { TariffIn } from '../models';
 /**
  * CompanyApi - axios parameter creator
  * @export
@@ -340,6 +348,46 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Opens the EIN application and answers what it owes.  The answer states whether it can be filed ONLINE, because that is the fact deciding whether the customer waits a sitting or several weeks — and it names each form with what that form is for, so nobody has to already know what an SS-4 is to understand why they are signing one.
+         * @summary Opens the EIN application and answers what it owes.
+         * @param {EinIn} einIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCompanyEin: async (einIn: EinIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'einIn' is not null or undefined
+            assertParamExists('postCompanyEin', 'einIn', einIn)
+            const localVarPath = `/v1/company/ein`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(einIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -801,8 +849,8 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Bills the caller\'s own org the one-time Hanzo Company formation fee — $999 unless the deployment sets another — and answers with the formation record carrying its paid flag and the charge reference. Takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A refused charge answers the fleet-wide billing contract, not a formation error — 402 when the org cannot pay, 503 when metering is unavailable — which is exactly why this route is not a typed op.
-         * @summary Charge the one-time formation fee and mark the formation paid
+         * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.
+         * @summary Charges the caller\'s own org the one-time Hanzo Company formation fee.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -862,6 +910,46 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Itemises what a formation costs before anyone commits to it.  It answers what is due now and what recurs, as separate figures, and marks the state\'s filing fee as money we collect and remit rather than keep. A caller can therefore show a payer the whole bill — which is the point of quoting at all, and was impossible while the fee was one number in an error string.  A jurisdiction whose filing fee this deployment has not been told REFUSES, naming the setting that fixes it. Quoting our half as though it were the total is the one answer that would be worse than no answer.
+         * @summary Itemises what a formation costs before anyone commits to it.
+         * @param {TariffIn} tariffIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCompanyTariff: async (tariffIn: TariffIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'tariffIn' is not null or undefined
+            assertParamExists('postCompanyTariff', 'tariffIn', tariffIn)
+            const localVarPath = `/v1/company/tariff`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(tariffIn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1007,6 +1095,19 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyDocuments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyDocuments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Opens the EIN application and answers what it owes.  The answer states whether it can be filed ONLINE, because that is the fact deciding whether the customer waits a sitting or several weeks — and it names each form with what that form is for, so nobody has to already know what an SS-4 is to understand why they are signing one.
+         * @summary Opens the EIN application and answers what it owes.
+         * @param {EinIn} einIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCompanyEin(einIn: EinIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EIN>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyEin(einIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyEin']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1162,8 +1263,8 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Bills the caller\'s own org the one-time Hanzo Company formation fee — $999 unless the deployment sets another — and answers with the formation record carrying its paid flag and the charge reference. Takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A refused charge answers the fleet-wide billing contract, not a formation error — 402 when the org cannot pay, 503 when metering is unavailable — which is exactly why this route is not a typed op.
-         * @summary Charge the one-time formation fee and mark the formation paid
+         * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.
+         * @summary Charges the caller\'s own org the one-time Hanzo Company formation fee.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1183,6 +1284,19 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanySkip(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanySkip']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Itemises what a formation costs before anyone commits to it.  It answers what is due now and what recurs, as separate figures, and marks the state\'s filing fee as money we collect and remit rather than keep. A caller can therefore show a payer the whole bill — which is the point of quoting at all, and was impossible while the fee was one number in an error string.  A jurisdiction whose filing fee this deployment has not been told REFUSES, naming the setting that fixes it. Quoting our half as though it were the total is the one answer that would be worse than no answer.
+         * @summary Itemises what a formation costs before anyone commits to it.
+         * @param {TariffIn} tariffIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCompanyTariff(tariffIn: TariffIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Tariff>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCompanyTariff(tariffIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CompanyApi.postCompanyTariff']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1274,6 +1388,16 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          */
         postCompanyDocuments(options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
             return localVarFp.postCompanyDocuments(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Opens the EIN application and answers what it owes.  The answer states whether it can be filed ONLINE, because that is the fact deciding whether the customer waits a sitting or several weeks — and it names each form with what that form is for, so nobody has to already know what an SS-4 is to understand why they are signing one.
+         * @summary Opens the EIN application and answers what it owes.
+         * @param {CompanyApiPostCompanyEinRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCompanyEin(requestParameters: CompanyApiPostCompanyEinRequest, options?: RawAxiosRequestConfig): AxiosPromise<EIN> {
+            return localVarFp.postCompanyEin(requestParameters.einIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Sends the generated formation documents for signature by every founder and records the provider\'s reference on the formation. Available only at the esign stage.
@@ -1392,8 +1516,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyKycRefresh(options).then((request) => request(axios, basePath));
         },
         /**
-         * Bills the caller\'s own org the one-time Hanzo Company formation fee — $999 unless the deployment sets another — and answers with the formation record carrying its paid flag and the charge reference. Takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A refused charge answers the fleet-wide billing contract, not a formation error — 402 when the org cannot pay, 503 when metering is unavailable — which is exactly why this route is not a typed op.
-         * @summary Charge the one-time formation fee and mark the formation paid
+         * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.
+         * @summary Charges the caller\'s own org the one-time Hanzo Company formation fee.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1408,6 +1532,16 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
          */
         postCompanySkip(options?: RawAxiosRequestConfig): AxiosPromise<FormationView> {
             return localVarFp.postCompanySkip(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Itemises what a formation costs before anyone commits to it.  It answers what is due now and what recurs, as separate figures, and marks the state\'s filing fee as money we collect and remit rather than keep. A caller can therefore show a payer the whole bill — which is the point of quoting at all, and was impossible while the fee was one number in an error string.  A jurisdiction whose filing fee this deployment has not been told REFUSES, naming the setting that fixes it. Quoting our half as though it were the total is the one answer that would be worse than no answer.
+         * @summary Itemises what a formation costs before anyone commits to it.
+         * @param {CompanyApiPostCompanyTariffRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCompanyTariff(requestParameters: CompanyApiPostCompanyTariffRequest, options?: RawAxiosRequestConfig): AxiosPromise<Tariff> {
+            return localVarFp.postCompanyTariff(requestParameters.tariffIn, options).then((request) => request(axios, basePath));
         },
         /**
          * Records the entity kind, the state of formation and the proposed name. Available only at the structure stage; an unknown structure or jurisdiction, or an empty name, is refused with 400.
@@ -1497,6 +1631,20 @@ export interface CompanyApiPostCompanyAdvanceRequest {
      * @memberof CompanyApiPostCompanyAdvance
      */
     readonly advanceIn: AdvanceIn
+}
+
+/**
+ * Request parameters for postCompanyEin operation in CompanyApi.
+ * @export
+ * @interface CompanyApiPostCompanyEinRequest
+ */
+export interface CompanyApiPostCompanyEinRequest {
+    /**
+     * 
+     * @type {EinIn}
+     * @memberof CompanyApiPostCompanyEin
+     */
+    readonly einIn: EinIn
 }
 
 /**
@@ -1612,6 +1760,20 @@ export interface CompanyApiPostCompanyKycDecisionRequest {
 }
 
 /**
+ * Request parameters for postCompanyTariff operation in CompanyApi.
+ * @export
+ * @interface CompanyApiPostCompanyTariffRequest
+ */
+export interface CompanyApiPostCompanyTariffRequest {
+    /**
+     * 
+     * @type {TariffIn}
+     * @memberof CompanyApiPostCompanyTariff
+     */
+    readonly tariffIn: TariffIn
+}
+
+/**
  * Request parameters for putCompanyStructure operation in CompanyApi.
  * @export
  * @interface CompanyApiPutCompanyStructureRequest
@@ -1711,6 +1873,18 @@ export class CompanyApi extends BaseAPI {
      */
     public postCompanyDocuments(options?: RawAxiosRequestConfig) {
         return CompanyApiFp(this.configuration).postCompanyDocuments(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Opens the EIN application and answers what it owes.  The answer states whether it can be filed ONLINE, because that is the fact deciding whether the customer waits a sitting or several weeks — and it names each form with what that form is for, so nobody has to already know what an SS-4 is to understand why they are signing one.
+     * @summary Opens the EIN application and answers what it owes.
+     * @param {CompanyApiPostCompanyEinRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CompanyApi
+     */
+    public postCompanyEin(requestParameters: CompanyApiPostCompanyEinRequest, options?: RawAxiosRequestConfig) {
+        return CompanyApiFp(this.configuration).postCompanyEin(requestParameters.einIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1854,8 +2028,8 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Bills the caller\'s own org the one-time Hanzo Company formation fee — $999 unless the deployment sets another — and answers with the formation record carrying its paid flag and the charge reference. Takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A refused charge answers the fleet-wide billing contract, not a formation error — 402 when the org cannot pay, 503 when metering is unavailable — which is exactly why this route is not a typed op.
-     * @summary Charge the one-time formation fee and mark the formation paid
+     * Charges the caller\'s own org the one-time Hanzo Company formation fee.  It is $999 unless the deployment sets another, and the answer is the formation record carrying its paid flag and the charge reference. It takes no body: the org is the validated tenant and the amount is the platform\'s, never the caller\'s to assert.  IDEMPOTENT on the formation rather than on the request: an already-paid formation answers 200 with the same record and is not charged again, so a retry or a double-clicked button costs nothing. Available only at the `payment` stage (409 anywhere else) and only for an org that has begun a formation (404 otherwise).  A denial answers the fleet-wide billing contract — 402 insufficient_balance, 402 spend_cap_exceeded, 503 balance_unavailable — carried by cloud.Denied, which is the money wire\'s own {\"error\":{\"code\",\"message\"}} body rather than a second vocabulary invented for this surface.  The gate is the LAST thing it does, after the stage check and the paid short-circuit, so a caller the machine is about to refuse is never charged. That ordering is why the gate cannot lift into middleware, where it would run first. Both facts are pinned: TestPaymentDenialWire, TestPaymentChargesLast.
+     * @summary Charges the caller\'s own org the one-time Hanzo Company formation fee.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompanyApi
@@ -1873,6 +2047,18 @@ export class CompanyApi extends BaseAPI {
      */
     public postCompanySkip(options?: RawAxiosRequestConfig) {
         return CompanyApiFp(this.configuration).postCompanySkip(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Itemises what a formation costs before anyone commits to it.  It answers what is due now and what recurs, as separate figures, and marks the state\'s filing fee as money we collect and remit rather than keep. A caller can therefore show a payer the whole bill — which is the point of quoting at all, and was impossible while the fee was one number in an error string.  A jurisdiction whose filing fee this deployment has not been told REFUSES, naming the setting that fixes it. Quoting our half as though it were the total is the one answer that would be worse than no answer.
+     * @summary Itemises what a formation costs before anyone commits to it.
+     * @param {CompanyApiPostCompanyTariffRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CompanyApi
+     */
+    public postCompanyTariff(requestParameters: CompanyApiPostCompanyTariffRequest, options?: RawAxiosRequestConfig) {
+        return CompanyApiFp(this.configuration).postCompanyTariff(requestParameters.tariffIn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

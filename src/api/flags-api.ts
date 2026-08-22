@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -33,8 +33,6 @@ import type { DeletedOut } from '../models';
 import type { EvaluateIn } from '../models';
 // @ts-ignore
 import type { HealthOut } from '../models';
-// @ts-ignore
-import type { WaitlistModeView } from '../models';
 /**
  * FlagsApi - axios parameter creator
  * @export
@@ -212,45 +210,6 @@ export const FlagsApiAxiosParamCreator = function (configuration?: Configuration
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Reports whether ONE host is currently gated by the launch waitlist. It resolves the host to the service that governs it and reads that service\'s waitlist switch, so a guard sitting in front of a hosted surface can decide in one call whether to show the waitlist or the product. It answers for the ONE host asked about and never enumerates the registry, which is why it needs no credential. It FAILS OPEN: an unregistered host, an unmounted registry and a store fault all answer known=false with mode=false, so a request is never gated pre-boot or on a registry fault.
-         * @summary Reports whether ONE host is currently gated by the launch waitlist.
-         * @param {string} [host] Host is the host to resolve, e.g. \&quot;chat.hanzo.ai\&quot;. Defaults to the request\&#39;s own Host header when omitted, which is what lets a guard running on the governed host ask about itself with no argument.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getFlagsWaitlist: async (host?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/flags/waitlist`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (host !== undefined) {
-                localVarQueryParameter['host'] = host;
-            }
 
 
     
@@ -461,19 +420,6 @@ export const FlagsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reports whether ONE host is currently gated by the launch waitlist. It resolves the host to the service that governs it and reads that service\'s waitlist switch, so a guard sitting in front of a hosted surface can decide in one call whether to show the waitlist or the product. It answers for the ONE host asked about and never enumerates the registry, which is why it needs no credential. It FAILS OPEN: an unregistered host, an unmounted registry and a store fault all answer known=false with mode=false, so a request is never gated pre-boot or on a registry fault.
-         * @summary Reports whether ONE host is currently gated by the launch waitlist.
-         * @param {string} [host] Host is the host to resolve, e.g. \&quot;chat.hanzo.ai\&quot;. Defaults to the request\&#39;s own Host header when omitted, which is what lets a guard running on the governed host ask about itself with no argument.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getFlagsWaitlist(host?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WaitlistModeView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFlagsWaitlist(host, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FlagsApi.getFlagsWaitlist']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
          * @summary Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
          * @param {EvaluateIn} evaluateIn 
@@ -572,16 +518,6 @@ export const FlagsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getFlagsHealth(options).then((request) => request(axios, basePath));
         },
         /**
-         * Reports whether ONE host is currently gated by the launch waitlist. It resolves the host to the service that governs it and reads that service\'s waitlist switch, so a guard sitting in front of a hosted surface can decide in one call whether to show the waitlist or the product. It answers for the ONE host asked about and never enumerates the registry, which is why it needs no credential. It FAILS OPEN: an unregistered host, an unmounted registry and a store fault all answer known=false with mode=false, so a request is never gated pre-boot or on a registry fault.
-         * @summary Reports whether ONE host is currently gated by the launch waitlist.
-         * @param {FlagsApiGetFlagsWaitlistRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getFlagsWaitlist(requestParameters: FlagsApiGetFlagsWaitlistRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<WaitlistModeView> {
-            return localVarFp.getFlagsWaitlist(requestParameters.host, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute. Evaluation is in-process over the caller\'s own (org, project) definitions — no network hop, no shared KV — so a tenant can only ever evaluate its own flags.
          * @summary Evaluate runs the caller\'s flag definitions for one identity and returns the flag verdict: which flags are on (or which variant), their payloads, and whether any definition failed to compute.
          * @param {FlagsApiPostFlagsRequest} requestParameters Request parameters.
@@ -654,20 +590,6 @@ export interface FlagsApiGetFlagsDefsByKeyRequest {
      * @memberof FlagsApiGetFlagsDefsByKey
      */
     readonly key: string
-}
-
-/**
- * Request parameters for getFlagsWaitlist operation in FlagsApi.
- * @export
- * @interface FlagsApiGetFlagsWaitlistRequest
- */
-export interface FlagsApiGetFlagsWaitlistRequest {
-    /**
-     * Host is the host to resolve, e.g. \&quot;chat.hanzo.ai\&quot;. Defaults to the request\&#39;s own Host header when omitted, which is what lets a guard running on the governed host ask about itself with no argument.
-     * @type {string}
-     * @memberof FlagsApiGetFlagsWaitlist
-     */
-    readonly host?: string
 }
 
 /**
@@ -782,18 +704,6 @@ export class FlagsApi extends BaseAPI {
      */
     public getFlagsHealth(options?: RawAxiosRequestConfig) {
         return FlagsApiFp(this.configuration).getFlagsHealth(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Reports whether ONE host is currently gated by the launch waitlist. It resolves the host to the service that governs it and reads that service\'s waitlist switch, so a guard sitting in front of a hosted surface can decide in one call whether to show the waitlist or the product. It answers for the ONE host asked about and never enumerates the registry, which is why it needs no credential. It FAILS OPEN: an unregistered host, an unmounted registry and a store fault all answer known=false with mode=false, so a request is never gated pre-boot or on a registry fault.
-     * @summary Reports whether ONE host is currently gated by the launch waitlist.
-     * @param {FlagsApiGetFlagsWaitlistRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FlagsApi
-     */
-    public getFlagsWaitlist(requestParameters: FlagsApiGetFlagsWaitlistRequest = {}, options?: RawAxiosRequestConfig) {
-        return FlagsApiFp(this.configuration).getFlagsWaitlist(requestParameters.host, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

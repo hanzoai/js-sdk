@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -21,6 +21,20 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { Cart } from '../models';
+// @ts-ignore
+import type { CartItemSet } from '../models';
+// @ts-ignore
+import type { CartOpen } from '../models';
+// @ts-ignore
+import type { Liveness } from '../models';
+// @ts-ignore
+import type { PaymentIn } from '../models';
+// @ts-ignore
+import type { PaymentOut } from '../models';
+// @ts-ignore
+import type { PaymentRecord } from '../models';
 /**
  * CommerceApi - axios parameter creator
  * @export
@@ -218,6 +232,44 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Deletes the addressed plan and answers 204. It removes the plan from the catalog buyers choose from; it does not touch subscriptions already sold against it, which keep their stored plan id. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404.
+         * @summary Remove a plan from the authority
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCommercePlansEntriesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('deleteCommercePlansEntriesBySlug', 'slug', slug)
+            const localVarPath = `/v1/commerce/plans/entries/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteProduct.
          * @summary Delete a product, keeping a recoverable copy
          * @param {string} productid 
@@ -229,6 +281,44 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('deleteCommerceProductByProductid', 'productid', productid)
             const localVarPath = `/v1/commerce/product/{productid}`
                 .replace(`{${"productid"}}`, encodeURIComponent(String(productid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Deletes the row. ARCHIVING is usually what is wanted instead — a deleted rate cannot price a historical charge, so a past invoice that has to re-resolve its rate finds nothing to read. Reach for status=archived unless the rate never priced anything. SuperAdmin only.
+         * @summary Remove a rate outright
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCommerceRatesEntriesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('deleteCommerceRatesEntriesBySlug', 'slug', slug)
+            const localVarPath = `/v1/commerce/rates/entries/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -343,6 +433,86 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('deleteCommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
             const localVarPath = `/v1/commerce/stocklocation/{stocklocationid}`
                 .replace(`{${"stocklocationid"}}`, encodeURIComponent(String(stocklocationid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes the addressed store and answers 204 with no body. Before the live row goes, the entity is written once more under a tombstone kind, so the deletion leaves a recoverable copy rather than destroying the record outright; the store\'s listing overrides live inside that row and go with it. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin or store-write token.
+         * @summary Delete a storefront, keeping a recoverable copy
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCommerceStoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('deleteCommerceStoreByStoreid', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Drops the key from the store\'s listing map and re-saves the store, answering 204 with no body. It UN-OVERRIDES rather than deletes: the product, variant or bundle itself is untouched and simply reverts to its catalog values on this storefront. A key that is not present is 404, and so is a store id outside the caller org\'s namespace. Admin-gated.
+         * @summary Remove a listing override
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCommerceStoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('deleteCommerceStoreByStoreidListingByKey', 'storeid', storeid)
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('deleteCommerceStoreByStoreidListingByKey', 'key', key)
+            const localVarPath = `/v1/commerce/store/{storeid}/listing/{key}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -674,6 +844,82 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Discards a cart the shopper abandoned, and answers it in its final state.  A discarded cart is CLOSED, not deleted: the row stays, so abandoned-basket reporting and any follow-up that keys on it still have something to read. It stops being a cart anything will check out, which is the point — it is how a storefront says \"this basket is over\" without destroying the evidence that it existed.  Discarding is idempotent: a cart already discarded answers its stored state rather than failing, so a retry is safe.  The cart is resolved inside the caller\'s own org namespace, so another tenant\'s id answers 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Discard a cart the shopper abandoned
+         * @param {string} id ID is the cart\&#39;s id, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        discardCart: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('discardCart', 'id', id)
+            const localVarPath = `/v1/commerce/cart/{id}/discard`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads one cart: its lines, its status and what it comes to.  This is what a storefront calls to render the basket, and what a support agent calls to see what a shopper is looking at. The totals are the cart\'s STORED tally — shipping and tax stay zero until checkout resolves a shipping option and a tax region, so a cart total before checkout is the merchandise total and is meant to be.  The org scopes the read by construction: the store is namespaced to it, so a cart id belonging to another tenant is simply not found rather than found and then filtered, and answers 404 rather than 403 so the id space cannot be probed.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Read one cart with its lines and totals
+         * @param {string} id ID is the cart\&#39;s id, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCart: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getCart', 'id', id)
+            const localVarPath = `/v1/commerce/cart/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Returns the brand-scoped catalog carrying the administrative economics the public projection withholds — upstream cost and margin percentage — for the margin surface the platform console administrates. The brand comes from the query and defaults to hanzo. PLATFORM admin only, enforced by the handler on top of the route\'s IAM gate: an ORG-level admin is refused 403 precisely so upstream cost and margin never reach a tenant.
          * @summary The catalog projection with cost and margin included
          * @param {*} [options] Override http request option.
@@ -715,6 +961,40 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          */
         getCommerceCatalog: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/catalog`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns every catalog row as stored — the admin view, which unlike the public projection includes entries that are not published. It is cross-tenant platform data, so the gate is a PLATFORM admin: an org-level admin is refused 403 no matter how privileged they are inside their own org, enforced by the handler itself and not only by the route\'s token middleware.
+         * @summary The raw catalog entries, including the unpublished ones
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceCatalogEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/catalog/entries`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -821,6 +1101,40 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
          */
         getCommerceCurrencies: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/commerce/currencies`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reports whether the deposit watcher is running, its poll interval, and one row per armed asset: chain, token, contract, pooled address and the last block that asset\'s cursor reached. That last block is the only way to see a watcher that is up but no longer advancing, which is what a stalled deposit rail looks like from outside. SuperAdmin only — the reserved admin org\'s owner claim; an authenticated caller without it is refused 403 and an anonymous one 401. It is READ-ONLY by design: arming an asset stays a CRYPTO_DEPOSIT_* deployment act and is deliberately not a button here, so there is nothing on this surface that can start crediting a customer\'s balance. The asset\'s RPC endpoint is reduced to scheme://host before it is returned, because a managed node URL carries its API key in the path or query and echoing it verbatim would publish that credential to every reader of this status.
+         * @summary Read the crypto deposit watcher\'s runtime state, asset by asset
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceDeposits: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/deposits`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -965,6 +1279,40 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('getCommerceDiscountByDiscountid', 'discountid', discountid)
             const localVarPath = `/v1/commerce/discount/{discountid}`
                 .replace(`{${"discountid"}}`, encodeURIComponent(String(discountid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers ok whenever the commerce subsystem is mounted. It is registered before the module embed boots, so it keeps answering even when the embed failed and every business route serves the fail-closed 503 — which is the point: it reports that the process is reachable, never that the money plane is healthy. Unauthenticated: a probe that needs a credential is a probe that reports the credential.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers ok whenever the commerce subsystem is mounted.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/health`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1170,6 +1518,40 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Returns every plan row as stored — the administrative view behind the public plan catalog. The plan authority is cross-tenant pricing data, so the gate is a PLATFORM admin enforced by the handler itself: an org-level admin is refused 403 no matter what they may do inside their own org.
+         * @summary The raw plan authority rows
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommercePlansEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/plans/entries`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the slug and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or the Product list scope.
          * @summary List your org\'s products, as a page
          * @param {*} [options] Override http request option.
@@ -1215,6 +1597,40 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('getCommerceProductByProductid', 'productid', productid)
             const localVarPath = `/v1/commerce/product/{productid}`
                 .replace(`{${"productid"}}`, encodeURIComponent(String(productid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the rate authority\'s rows — the prices every metered charge resolves against. Narrow with ?product= to show one surface at a time rather than every rate at once. SuperAdmin only: a rate is cross-tenant money, so the handler asks for the reserved admin org\'s owner claim itself rather than trusting the bundle\'s token gate.
+         * @summary List what one unit of each metered thing costs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceRatesEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/rates/entries`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1431,6 +1847,352 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('getCommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
             const localVarPath = `/v1/commerce/stocklocation/{stocklocationid}`
                 .replace(`{${"stocklocationid"}}`, encodeURIComponent(String(stocklocationid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers a pagination envelope — page, display, the rows, and a total count — read from the caller org\'s OWN namespaced database, so one tenant can never list another\'s stores. Sorting defaults to the store slug and is overridable with sort; display is the page size and page applies only alongside it, and either one that is not a positive integer is refused rather than silently ignored. The limit query overrides the reported COUNT only and never the rows returned. A request that resolves no org namespace is served an empty page, never an unscoped scan. Readable with an admin token, a store-scoped token, or the anonymous published storefront key.
+         * @summary List your org\'s storefronts as a page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStore: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/store/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers allowed, the store id, and a status of trial, active, payment_required, store_required or unavailable — the entitlement check a merchant surface gates on. The rule that surprises people is that entitlement is PER STORE, not per org: the store needs its own current subscription on the entry plan, either trialing with a trial end still ahead or active with a period end still ahead, so an org-wide balance or a sibling store\'s plan unlocks nothing here. The store comes from the X-Store-Id header and otherwise falls back to the org\'s first store; neither resolving is store_required with allowed false, and a backing-store failure is 503 with status unavailable — a retry signal, not a denial.
+         * @summary Whether a store is entitled to trade, and why
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreAccess: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/store/access`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Reads the addressed store from the caller org\'s own namespaced database, so an id belonging to another tenant is simply absent there and answers 404 rather than leaking its existence. The body is the stored entity including its embedded listing override map. Readable with an admin or store-read token and also with the anonymous published storefront key, which is what lets a logged-out storefront resolve the store it is rendering.
+         * @summary Fetch one storefront
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('getCommerceStoreByStoreid', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the stored bundle with the store\'s listing for it laid over the top — every non-empty listing field wins, and the currency is forced to the store\'s own — so the caller reads what this storefront actually sells rather than the catalog-wide record. The overlay is keyed by the item\'s ID: a listing filed only under a slug or SKU does not reach it, unlike the listing reads, which do fall back to those. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch a bundle as this storefront sells it
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreidBundleByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('getCommerceStoreByStoreidBundleByKey', 'storeid', storeid)
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('getCommerceStoreByStoreidBundleByKey', 'key', key)
+            const localVarPath = `/v1/commerce/store/{storeid}/bundle/{key}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns every override this store applies to catalog items — name, price, list price, media, availability and the hidden flag — keyed by product or variant id, in one read. A listing is an OVERRIDE, not a product: the catalog item exists independently and this map only says how this storefront presents it. Read from the caller org\'s own namespaced database, so a store id belonging to another tenant is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary The storefront\'s whole listing override map
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreidListing: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('getCommerceStoreByStoreidListing', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}/listing`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Looks the key up in the store\'s listing map first and, failing that, matches it against each listing\'s slug and then its SKU — so a storefront holding only a product\'s URL slug can still resolve the override. That fallback is unique to the listing reads; the item overlay routes match by id alone. A key matching none of the three is 404, as is a store id outside the caller org\'s namespace. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch one listing override, by item id or by its slug or SKU
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('getCommerceStoreByStoreidListingByKey', 'storeid', storeid)
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('getCommerceStoreByStoreidListingByKey', 'key', key)
+            const localVarPath = `/v1/commerce/store/{storeid}/listing/{key}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the stored product with the store\'s listing for it laid over the top — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what lets two storefronts sell the same catalog product at their own price, name and media. The overlay is keyed by the product\'s ID, so a listing filed only under a slug or SKU does not apply here. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch a product as this storefront sells it
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreidProductByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('getCommerceStoreByStoreidProductByKey', 'storeid', storeid)
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('getCommerceStoreByStoreidProductByKey', 'key', key)
+            const localVarPath = `/v1/commerce/store/{storeid}/product/{key}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the stored variant with the store\'s listing for it overlaid — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what makes per-storefront pricing of a shared variant possible. The overlay is keyed by the variant\'s ID, never by its slug or SKU. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch a variant as this storefront sells it
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreidVariantByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('getCommerceStoreByStoreidVariantByKey', 'storeid', storeid)
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('getCommerceStoreByStoreidVariantByKey', 'key', key)
+            const localVarPath = `/v1/commerce/store/{storeid}/variant/{key}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns the caller org\'s store resolved FROM THE AUTHENTICATED ORG rather than from a path id — which is how an admin dashboard or a storefront edge learns the store id it should then read and write against. An X-Store-Id header selects a specific store, resolved only inside the caller\'s own namespace, so a foreign id cannot cross the tenant boundary and answers 404 instead. With no header the org\'s first store is returned, and an org that has none yet has its canonical default provisioned lazily and idempotently, carrying no payment credentials. Only when there is no org in context, or provisioning fails, does it fall back to a placeholder store literally named default, which a storefront edge should treat as unconfigured.
+         * @summary Resolve your org\'s active storefront without naming an id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreCurrent: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/store/current`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2034,6 +2796,84 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Reads one settled payment out of the caller\'s org ledger.  The org scopes the read by construction — the ledger is namespaced to it — so an id belonging to another tenant is simply not found rather than found and then filtered. A ledger row that is not a payment is likewise not found, so this cannot be used to walk the org\'s usage debits.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Read one settled payment by its id
+         * @param {string} id ID is the ledger transaction id a payment returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPayment: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getPayment', 'id', id)
+            const localVarPath = `/v1/commerce/payments/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Opens an empty cart for a shopper to fill, and answers it with its new id.  This is the first step of a sale: hold the id, add items to it with setCartItem, then hand it to checkout. Every field of the request is optional — an empty body opens a perfectly good anonymous cart — and the fields exist only to pre-fill what is already known about the shopper.  The STORE defaults to the org\'s own default storefront, so a merchant selling through one storefront never has to name it. The CURRENCY defaults to usd; note that checkout overrides it with the store\'s own currency when the sale is authorized, so a currency set here is a hint rather than a commitment.  The cart is created in the CALLER\'S OWN org namespace, taken from the validated principal and never from the body, so a cart can never be opened on another tenant\'s books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Open a cart for a shopper to fill
+         * @param {CartOpen} cartOpen 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        openCart: async (cartOpen: CartOpen, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cartOpen' is not null or undefined
+            assertParamExists('openCart', 'cartOpen', cartOpen)
+            const localVarPath = `/v1/commerce/cart`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cartOpen, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
          * @summary Change part of a collection
          * @param {string} collectionid 
@@ -2376,6 +3216,86 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Loads the stored store and decodes the body over it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged entity. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin token, or one holding both store read and store write.
+         * @summary Change part of a storefront
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchCommerceStoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('patchCommerceStoreByStoreid', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Requires the key to already be present — an absent one is 404 — and answers the store\'s listing map at 200. Read the behaviour before relying on it: the decoded body is applied to a COPY taken out of the map and is never assigned back, so the stored listing is unchanged and the map returned is exactly the map that was already there. An actual edit to an existing listing has to go through the upsert, which does write its result back into the store. A body that fails to decode is still 400. Admin-gated and namespaced to the caller\'s org.
+         * @summary Confirm a listing override exists and re-save the store
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchCommerceStoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('patchCommerceStoreByStoreidListingByKey', 'storeid', storeid)
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('patchCommerceStoreByStoreidListingByKey', 'key', key)
+            const localVarPath = `/v1/commerce/store/{storeid}/listing/{key}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a submission
          * @param {string} submissionid 
@@ -2661,6 +3581,142 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a catalog row from the body and answers it at 201. The slug is required and is the globally-unique catalog key, so a second entry claiming a slug already in use is refused 409 rather than shadowing the first. PLATFORM admin only — this is cross-tenant pricing and packaging data, and an org-level admin is refused 403.
+         * @summary Add a catalog entry
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceCatalogEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/catalog/entries`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Takes a batch of model rows and upserts each one\'s upstream COST and machine-observable facts, answering what was created and changed. It deliberately touches nothing a human owns — not the retail price, not the markup, not the entitlement tier — so a sync can never overwrite an administrator\'s pricing decision. The gate is a PLATFORM principal rather than a platform ADMIN, because the caller is normally a scheduled job holding the internal service token, which carries platform scope but no admin claim.
+         * @summary Land a syncer\'s view of the model catalog: upstream costs and machine facts
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceCatalogModels: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/catalog/models`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Pulls the upstream model list and lands it through the same upsert the push door uses, so the rule that a sync owns cost and an administrator owns price holds no matter which door a row came through. It takes no body — the upstream is READ rather than told. If that upstream cannot be read the call answers 502 and writes NOTHING: a sync that cannot see its source must never conclude the source is empty, because that conclusion would withdraw every model on sale. The gate is a PLATFORM principal so the scheduled job\'s service token qualifies.
+         * @summary Refresh the model catalog by reading the upstream provider
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceCatalogModelsRefresh: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/catalog/models/refresh`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Upserts the shipped catalog seed and answers how many entries it created. It is idempotent and non-destructive — an entry an administrator has since edited is left alone — so it is safe to run against a live catalog to fill in what is missing. PLATFORM admin only; an org-level admin is refused 403.
+         * @summary Seed the embedded catalog, without disturbing edits already made
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceCatalogSeed: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/catalog/seed`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3040,6 +4096,74 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Creates a plan from the body and answers it at 201. The slug is required and globally unique — a duplicate is 409 — and the row is marked authoritative on creation, so the corrective seed will leave it alone. Price, annual price and the contact-sales flag are stored exactly as sent, never coerced, so the difference between a free plan and a quote-only plan survives. PLATFORM admin only.
+         * @summary Add a subscription plan
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommercePlansEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/plans/entries`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Upserts the shipped plan rows and answers how many were created and how many corrected. It is idempotent and non-destructive — a row an administrator authored or edited is left as it stands — so it is safe against a live authority and fills only what is missing or has drifted. PLATFORM admin only, and a deployment with no seed source wired answers 500 rather than quietly seeding nothing.
+         * @summary Seed the embedded plan catalog, without overwriting administrative edits
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommercePlansSeed: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/plans/seed`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteProduct.
          * @summary Create a product
          * @param {*} [options] Override http request option.
@@ -3085,6 +4209,74 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('postCommerceProductByProductid', 'productid', productid)
             const localVarPath = `/v1/commerce/product/{productid}`
                 .replace(`{${"productid"}}`, encodeURIComponent(String(productid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates one rate. Product AND meter are both required, because together they are the identity: a rate keyed on the metered thing alone would let one product\'s price overwrite another\'s under the same name. A slug that already exists is refused rather than silently replaced. SuperAdmin only.
+         * @summary Add a rate
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceRatesEntries: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/rates/entries`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Takes an array of rates and seeds the authority from it. This is the seed, driven from admin rather than compiled in, because 506 published prices in an embed made a price change wait for a build. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
+         * @summary Load the published price document, reconciling rather than replacing
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceRatesImport: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/rates/import`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3301,6 +4493,756 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('postCommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
             const localVarPath = `/v1/commerce/stocklocation/{stocklocationid}`
                 .replace(`{${"stocklocationid"}}`, encodeURIComponent(String(stocklocationid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a store from the body inside the caller org\'s own namespaced database, so the row is physically isolated to that tenant from its first write, and answers it at 201 with a Location header naming its id. Requires an admin or store-write token: the anonymous published storefront key may READ stores but never create one. A body that fails to decode is 400.
+         * @summary Create a storefront
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStore: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/store/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header, the header winning when both are present. Only PUT, PATCH and DELETE are accepted; anything else resolves to 405. The trap is the default: naming NO override at all is treated as a partial update, never as a create. Authorization is whatever the underlying operation requires, since the real handler runs.
+         * @summary Method-override tunnel for clients that cannot send PUT, PATCH or DELETE
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreid', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Tallies a new order for the addressed store from the user, payment and order body, reserves its items, runs the processor authorization and answers the saved order with a Location header pointing at it. The gate is a token carrying admin or published scope, so a published storefront key is enough; no token is 401 and a token with neither bit is 403. The store is loaded BEFORE any payment work and its currency OVERRIDES whatever the body asked for, so a store that will not load ends the call with 500 and nothing is charged. On any authorization failure the reservations are released and the order and payment are persisted as cancelled, so a failed attempt still leaves a durable record. Capture is a separate call.
+         * @summary Authorize a new order against a storefront, holding the funds without settling them
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidAuthorize: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidAuthorize', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}/authorize`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Continues the order named in the path rather than minting a new one, holding funds for it. The order is loaded from the caller org\'s own store, so an id belonging to another tenant is a 404. The rule most callers get wrong is that the body\'s order object is MERGED onto the loaded order before the tally — this is not a read-only reference, and a field sent here overwrites what is stored. The gate, the store resolution and the currency override behave exactly as on the bodiless-id sibling, and settling is still the capture call\'s job.
+         * @summary Authorize an order that already exists, holding the funds without settling them
+         * @param {string} storeid 
+         * @param {string} orderid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidAuthorizeByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidAuthorizeByOrderid', 'storeid', storeid)
+            // verify required parameter 'orderid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidAuthorizeByOrderid', 'orderid', orderid)
+            const localVarPath = `/v1/commerce/store/{storeid}/authorize/{orderid}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Settles the order named in the path — the second half of the two-step flow — and answers the updated order with a Location header. Dispatch follows the order\'s STORED payment type, and a successful capture is the moment the rest of the system learns about the sale: order and payment rows are updated, coupon redemptions, referral, cart and stats are written, the confirmation email goes out, and the paid and completed events are emitted. A capture failure releases the order\'s inventory reservations and answers 400, so a failed settlement never leaves items held.
+         * @summary Capture a previously authorized order and settle the payment
+         * @param {string} storeid 
+         * @param {string} orderid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCaptureByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCaptureByOrderid', 'storeid', storeid)
+            // verify required parameter 'orderid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCaptureByOrderid', 'orderid', orderid)
+            const localVarPath = `/v1/commerce/store/{storeid}/capture/{orderid}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Runs authorization and capture back to back against a freshly created order — the one-step flow for callers with no reason to hold funds. It takes the authorize body and inherits every authorize rule: the store\'s currency wins over the body, the items are reserved before the processor is called, and the amount bounds the processor enforces still apply. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects — confirmation email, redemptions, stats, the paid and completed events — run only when both halves succeed.
+         * @summary Authorize and capture a new order in one call
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCharge: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCharge', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}/charge`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Authorizes a new order for the addressed store and holds the funds, answering the saved order with a Location header. It binds the identical handler as the shorter authorize address, so the two are ONE operation at two spellings and not two behaviours; the checkout prefix is the newer one. Every rule carries over: admin or published scope on the token, the store loaded first with its currency overriding the body, items reserved before the processor call, and reservations released with the order persisted cancelled on failure. Nothing is settled here.
+         * @summary Authorize a new order against a storefront, holding the funds — the checkout spelling
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutAuthorize: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCheckoutAuthorize', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}/checkout/authorize`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Continues the order named in the path rather than minting one, and shares its handler byte for byte with the unprefixed authorize-by-id address. The order is loaded from the caller org\'s own store, so another tenant\'s id is a 404, and the body\'s order object is merged onto the loaded row before the tally — a field sent here overwrites what is stored. Store resolution, the token gate and the currency override behave as on every other authorize address; settle with the capture address and the same order id.
+         * @summary Authorize an existing order, holding the funds — the checkout spelling
+         * @param {string} storeid 
+         * @param {string} orderid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutAuthorizeByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCheckoutAuthorizeByOrderid', 'storeid', storeid)
+            // verify required parameter 'orderid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCheckoutAuthorizeByOrderid', 'orderid', orderid)
+            const localVarPath = `/v1/commerce/store/{storeid}/checkout/authorize/{orderid}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Settles the authorized order named in the path and answers the updated order with a Location header, running the same handler as the unprefixed capture address. Dispatch follows the order\'s stored payment type. Success is what triggers the downstream work — order and payment updates, redemptions, referral, cart and stats, the confirmation email, and the paid and completed events — while a failure releases the order\'s inventory reservations and answers 400.
+         * @summary Capture a previously authorized order and settle it — the checkout spelling
+         * @param {string} storeid 
+         * @param {string} orderid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutCaptureByOrderid: async (storeid: string, orderid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCheckoutCaptureByOrderid', 'storeid', storeid)
+            // verify required parameter 'orderid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCheckoutCaptureByOrderid', 'orderid', orderid)
+            const localVarPath = `/v1/commerce/store/{storeid}/checkout/capture/{orderid}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"orderid"}}`, encodeURIComponent(String(orderid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Performs authorization and capture back to back against a newly created order for the addressed store, on the same handler as the unprefixed charge address. It takes the authorize body and inherits every authorize rule, including the store\'s currency winning over the body and the items being reserved before the processor is called. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects run only when both succeed.
+         * @summary Authorize and capture a new order in one call — the checkout spelling
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutCharge: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCheckoutCharge', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}/checkout/charge`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Meant to void the payments carrying the given pay key, stamp them cancelled and cancel the order, but the shared checkout handler resolves its order from an ORDER ID path parameter this route does not carry. The result is an untyped order and a cancel dispatch that refuses with 400 before the pay key lookup ever runs. Token gate, namespacing and store resolution happen first, so a missing token is still 401 and an unloadable store still 500. It is the same handler as the unprefixed cancel address, with the same outcome.
+         * @summary PayPal cancel by pay key — refuses, exactly as the unprefixed address does
+         * @param {string} storeid 
+         * @param {string} payKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutPaypalCancelByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCheckoutPaypalCancelByPaykey', 'storeid', storeid)
+            // verify required parameter 'payKey' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCheckoutPaypalCancelByPaykey', 'payKey', payKey)
+            const localVarPath = `/v1/commerce/store/{storeid}/checkout/paypal/cancel/{payKey}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"payKey"}}`, encodeURIComponent(String(payKey)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Meant to mark the payments carrying the given pay key as paid and set the order to paid, it cannot reach that work from this address: the shared checkout handler takes its order from an ORDER ID path parameter this route does not carry, so the order is always fresh and untyped and the confirm dispatch refuses with 400 before the pay key is queried. The token gate, the namespace middleware and the store lookup all run ahead of that, so authentication and store failures surface first. Behaviour is identical to the unprefixed confirm address; the checkout prefix changes nothing here.
+         * @summary PayPal confirm by pay key — refuses, exactly as the unprefixed address does
+         * @param {string} storeid 
+         * @param {string} payKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey', 'storeid', storeid)
+            // verify required parameter 'payKey' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey', 'payKey', payKey)
+            const localVarPath = `/v1/commerce/store/{storeid}/checkout/paypal/confirm/{payKey}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"payKey"}}`, encodeURIComponent(String(payKey)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Begins a PayPal authorization by running the ordinary store authorize flow, since the route binds that exact handler — body, store resolution, tally, reservations and failure behaviour are the authorize address\'s, unchanged. The processor is chosen from the body\'s payment type, so this path reaches PayPal only when that type says so. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. Build against the plain authorize address instead.
+         * @summary Start a PayPal authorization for a new order — the checkout spelling
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutPaypalPay: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidCheckoutPaypalPay', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}/checkout/paypal/pay`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates the override and answers the store\'s ENTIRE listing map at 201 with a Location header — not just the entry that was added. A key already present is refused 400: creation never silently overwrites, so changing an existing listing has to be an explicit replace. The stored listing has its currency stamped from the store\'s own, which the replace path does not do. The key is matched exactly here, with none of the slug or SKU fallback the read allows. Admin-gated and resolved inside the caller org\'s namespace.
+         * @summary Add a listing override under a new key
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidListingByKey', 'storeid', storeid)
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidListingByKey', 'key', key)
+            const localVarPath = `/v1/commerce/store/{storeid}/listing/{key}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Intended to void the payments carrying the given pay key, stamp them cancelled and cancel the order, it never reaches that work: the shared checkout handler reads its order from an ORDER ID path parameter this route does not carry, leaving an untyped order that the cancel dispatch refuses with 400 before the pay key lookup runs. Authentication, namespacing and store resolution happen ahead of the refusal, so a missing token is 401 and an unloadable store 500. Cancelling a real PayPal authorization needs an address that carries the order id.
+         * @summary PayPal cancel by pay key — refuses, because a pay key alone does not identify the order
+         * @param {string} storeid 
+         * @param {string} payKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidPaypalCancelByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidPaypalCancelByPaykey', 'storeid', storeid)
+            // verify required parameter 'payKey' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidPaypalCancelByPaykey', 'payKey', payKey)
+            const localVarPath = `/v1/commerce/store/{storeid}/paypal/cancel/{payKey}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"payKey"}}`, encodeURIComponent(String(payKey)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Intended to mark every payment carrying the given pay key as paid and flip the order to paid, it cannot do that from this address and does not pretend to: the shared checkout handler resolves its order from an ORDER ID path parameter that this route does not carry, so it always works against a fresh untyped order and the confirm dispatch refuses it with 400 before the pay key is ever queried. The token gate, the namespace and the store lookup all run ahead of that, so a missing token is still 401 and an unloadable store still 500. Drive a PayPal return through an address that carries the order id.
+         * @summary PayPal confirm by pay key — refuses, because a pay key alone does not identify the order
+         * @param {string} storeid 
+         * @param {string} payKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidPaypalConfirmByPaykey: async (storeid: string, payKey: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidPaypalConfirmByPaykey', 'storeid', storeid)
+            // verify required parameter 'payKey' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidPaypalConfirmByPaykey', 'payKey', payKey)
+            const localVarPath = `/v1/commerce/store/{storeid}/paypal/confirm/{payKey}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"payKey"}}`, encodeURIComponent(String(payKey)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Runs the ordinary store authorize flow — the route binds that very handler, so the body, the store resolution, the tally, the reservations and the failure behaviour are the authorize address\'s, unchanged. It reaches PayPal only when the body\'s payment type says so; nothing about this path forces the processor, so a card-typed payment posted here authorizes on the card processor instead. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. It is the older entry point; the plain authorize address is the one to build against.
+         * @summary Start a PayPal authorization for a new order
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidPaypalPay: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidPaypalPay', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}/paypal/pay`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates a trialing subscription for the addressed store on the entry plan and grants that plan\'s trial credit, answering 201 when this call actually started one and 200 with a reason otherwise — not_new when the store already has billing history, trial_not_configured when no entry plan is wired. The window is always the SEVEN-DAY no-card trial, because this address never presents a card; the longer card-present window is reached only by adding a card afterwards. Entitlement is per store while the billing subject is the org, so every store an org owns takes its own trial. Admin-gated and namespaced to the caller\'s org: no resolvable store is 404 with store_required, and a backing-store failure is 503.
+         * @summary Start this store\'s no-card trial on the entry plan
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidTrial: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('postCommerceStoreByStoreidTrial', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}/trial`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers a freshly minted token carrying ONLY the published-read permission — enough for a logged-out shopper\'s storefront to read your published catalog and nothing more, with no write and no admin scope. It is org-bound, signed with the org\'s own secret and subject to the org id, so unlike a shared service token it can never act on another tenant. Minting ROTATES rather than accumulates: the previous storefront token is dropped first and is invalid immediately, so re-minting is how you revoke. Admin is enforced by the handler as well as the route, because the route\'s token gate does not apply on the identity path and a plain member must not be able to mint their org\'s key.
+         * @summary Mint your org\'s least-privilege storefront read key
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/commerce/store/token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3904,6 +5846,44 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
+         * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
+         * @param {string} provider 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceWebhooksByProvider: async (provider: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'provider' is not null or undefined
+            assertParamExists('postCommerceWebhooksByProvider', 'provider', provider)
+            const localVarPath = `/v1/commerce/webhooks/{provider}`
+                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
          * @summary Replace a collection outright
          * @param {string} collectionid 
@@ -4094,6 +6074,44 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
+         * Loads the addressed plan, applies the body over it and answers the stored result, so a partial edit never silently zeroes a price or the contact-sales flag. The slug is IMMUTABLE: a body naming a different slug is rejected outright before anything is written, because a rename would orphan every subscription that stored the old id — deprecate and create instead. An admin edit marks the row authoritative so the seed stops correcting it. PLATFORM admin only; an unknown slug is 404.
+         * @summary Edit a plan, leaving the fields you omit alone
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putCommercePlansEntriesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('putCommercePlansEntriesBySlug', 'slug', slug)
+            const localVarPath = `/v1/commerce/plans/entries/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadProduct and WriteProduct together.
          * @summary Replace a product outright
          * @param {string} productid 
@@ -4105,6 +6123,44 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('putCommerceProductByProductid', 'productid', productid)
             const localVarPath = `/v1/commerce/product/{productid}`
                 .replace(`{${"productid"}}`, encodeURIComponent(String(productid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Edits one rate and MARKS it edited, which is the whole contract with the importer: an operator\'s price outranks the document it came from, so a later import leaves this row alone. Without that mark a price set here would apply, work, and silently revert on the next import. Only the editable fields move; identity and bookkeeping are not writable from the body. SuperAdmin only.
+         * @summary Edit a rate, and mark it as operator-set
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putCommerceRatesEntriesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('putCommerceRatesEntriesBySlug', 'slug', slug)
+            const localVarPath = `/v1/commerce/rates/entries/{slug}`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4219,6 +6275,86 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('putCommerceStocklocationByStocklocationid', 'stocklocationid', stocklocationid)
             const localVarPath = `/v1/commerce/stocklocation/{stocklocationid}`
                 .replace(`{${"stocklocationid"}}`, encodeURIComponent(String(stocklocationid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * This is a true REPLACEMENT, not a merge: the stored key is preserved but the body is decoded onto a fresh entity, so every field the body omits is written back as its zero value. Use the partial update when you mean to change part of a store. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is a 404 before anything is written. Requires an admin token, or one holding both store read and store write.
+         * @summary Replace a storefront outright
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putCommerceStoreByStoreid: async (storeid: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('putCommerceStoreByStoreid', 'storeid', storeid)
+            const localVarPath = `/v1/commerce/store/{storeid}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Decodes the body over the existing listing when the key is present, so fields it omits keep their stored values, and builds the listing from the body alone when the key is new. Answers 200 when it replaced something and 201 with a Location header when it created it; either way the body is the store\'s entire listing map, not the single entry. Unlike creation, this path does NOT restamp the listing\'s currency from the store. Admin-gated, with the store resolved inside the caller org\'s namespace.
+         * @summary Upsert a listing override
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putCommerceStoreByStoreidListingByKey: async (storeid: string, key: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeid' is not null or undefined
+            assertParamExists('putCommerceStoreByStoreidListingByKey', 'storeid', storeid)
+            // verify required parameter 'key' is not null or undefined
+            assertParamExists('putCommerceStoreByStoreidListingByKey', 'key', key)
+            const localVarPath = `/v1/commerce/store/{storeid}/listing/{key}`
+                .replace(`{${"storeid"}}`, encodeURIComponent(String(storeid)))
+                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4549,6 +6685,90 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Sets how many of one item a cart holds, and answers the whole updated cart.  This is the ONE way a cart\'s contents change. The quantity is the RESULT, not a delta: sending 3 leaves 3 however many were there before, so a retry is safe and a double-submit cannot double an order. ZERO REMOVES the line — there is deliberately no separate delete, because removal is the same act at the boundary value and a second spelling would be a second set of edge cases.  Name the item with EITHER product OR variant, never both. Prefer variant for anything sold in sizes, colours or tiers: the price and the stock belong to the variant, so a product-level line on a varianted product prices the wrong thing. Either may be given as an id or as the human key — a product\'s URL slug, a variant\'s SKU — which is what lets a storefront add to cart straight from a product page URL without a lookup first.  The item\'s price and name are CACHED onto the line as it is added, so the cart keeps the price the shopper was shown even if the catalog moves underneath it.  An item that resolves to nothing in the catalog is refused 400 and the cart is left exactly as it was; nothing is partially applied.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Set one item\'s quantity in a cart; zero removes it
+         * @param {string} id ID is the cart to amend, from the path.
+         * @param {CartItemSet} cartItemSet 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setCartItem: async (id: string, cartItemSet: CartItemSet, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('setCartItem', 'id', id)
+            // verify required parameter 'cartItemSet' is not null or undefined
+            assertParamExists('setCartItem', 'cartItemSet', cartItemSet)
+            const localVarPath = `/v1/commerce/cart/{id}/item`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cartItemSet, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Takes a payment: charges a single-use card token and credits the caller\'s org balance, exactly once.  This is the operation behind \"collect money from a customer\". It runs the SAME core the console\'s card top-up runs (commerce billing.TakePayment), so the server-side amount bounds, the idempotency guard and the ledger credit are shared rather than reimplemented — a second charge path would eventually double-charge somebody.  The ORG is the caller\'s, taken from the validated principal and never from the input, so a payment can only ever credit the account of whoever made the call.  A payment is RISK-SCREENED before the card is charged, so this can be refused without any money moving: 403 means the screen did not authorise it, and 503 means the screen could not reach a decision — that one is worth retrying, and no charge was attempted either way.  Send an idempotencyKey. An agent retries by construction, and the key is what turns a retry into a replay of the first receipt instead of a second charge.  The answer states whether it settled in SANDBOX or live mode (`test`), and carries the processor\'s own reference (`processorRef`) so the charge can be reconciled against the processor rather than taken on trust.  A named builder, not a closure, so zipdoc can lift this prose into the registry.  It BUILDS the handler rather than being it, because the screen has to sit inside the value every projection of this op dispatches to — see exposePayments. `charge` is the money move, `take` is the screened door onto it, and the only registrable one is the second.
+         * @summary Take a card payment and credit the org\'s balance
+         * @param {PaymentIn} paymentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        takePayment: async (paymentIn: PaymentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'paymentIn' is not null or undefined
+            assertParamExists('takePayment', 'paymentIn', paymentIn)
+            const localVarPath = `/v1/commerce/payments`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(paymentIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4625,6 +6845,19 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Deletes the addressed plan and answers 204. It removes the plan from the catalog buyers choose from; it does not touch subscriptions already sold against it, which keep their stored plan id. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404.
+         * @summary Remove a plan from the authority
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteCommercePlansEntriesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommercePlansEntriesBySlug(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommercePlansEntriesBySlug']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteProduct.
          * @summary Delete a product, keeping a recoverable copy
          * @param {string} productid 
@@ -4635,6 +6868,19 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceProductByProductid(productid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Deletes the row. ARCHIVING is usually what is wanted instead — a deleted rate cannot price a historical charge, so a past invoice that has to re-resolve its rate finds nothing to read. Reach for status=archived unless the rate never priced anything. SuperAdmin only.
+         * @summary Remove a rate outright
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteCommerceRatesEntriesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceRatesEntriesBySlug(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceRatesEntriesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4674,6 +6920,33 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceStocklocationByStocklocationid(stocklocationid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes the addressed store and answers 204 with no body. Before the live row goes, the entity is written once more under a tombstone kind, so the deletion leaves a recoverable copy rather than destroying the record outright; the store\'s listing overrides live inside that row and go with it. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin or store-write token.
+         * @summary Delete a storefront, keeping a recoverable copy
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteCommerceStoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceStoreByStoreid(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceStoreByStoreid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Drops the key from the store\'s listing map and re-saves the store, answering 204 with no body. It UN-OVERRIDES rather than deletes: the product, variant or bundle itself is untouched and simply reverts to its catalog values on this storefront. A key that is not present is 404, and so is a store id outside the caller org\'s namespace. Admin-gated.
+         * @summary Remove a listing override
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteCommerceStoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceStoreByStoreidListingByKey(storeid, key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceStoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4781,6 +7054,32 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Discards a cart the shopper abandoned, and answers it in its final state.  A discarded cart is CLOSED, not deleted: the row stays, so abandoned-basket reporting and any follow-up that keys on it still have something to read. It stops being a cart anything will check out, which is the point — it is how a storefront says \"this basket is over\" without destroying the evidence that it existed.  Discarding is idempotent: a cart already discarded answers its stored state rather than failing, so a retry is safe.  The cart is resolved inside the caller\'s own org namespace, so another tenant\'s id answers 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Discard a cart the shopper abandoned
+         * @param {string} id ID is the cart\&#39;s id, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async discardCart(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Cart>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.discardCart(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.discardCart']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads one cart: its lines, its status and what it comes to.  This is what a storefront calls to render the basket, and what a support agent calls to see what a shopper is looking at. The totals are the cart\'s STORED tally — shipping and tax stay zero until checkout resolves a shipping option and a tax region, so a cart total before checkout is the merchandise total and is meant to be.  The org scopes the read by construction: the store is namespaced to it, so a cart id belonging to another tenant is simply not found rather than found and then filtered, and answers 404 rather than 403 so the id space cannot be probed.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Read one cart with its lines and totals
+         * @param {string} id ID is the cart\&#39;s id, as the open call answered it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCart(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Cart>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCart(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCart']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the brand-scoped catalog carrying the administrative economics the public projection withholds — upstream cost and margin percentage — for the margin surface the platform console administrates. The brand comes from the query and defaults to hanzo. PLATFORM admin only, enforced by the handler on top of the route\'s IAM gate: an ORG-level admin is refused 403 precisely so upstream cost and margin never reach a tenant.
          * @summary The catalog projection with cost and margin included
          * @param {*} [options] Override http request option.
@@ -4802,6 +7101,18 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceCatalog(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceCatalog']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns every catalog row as stored — the admin view, which unlike the public projection includes entries that are not published. It is cross-tenant platform data, so the gate is a PLATFORM admin: an org-level admin is refused 403 no matter how privileged they are inside their own org, enforced by the handler itself and not only by the route\'s token middleware.
+         * @summary The raw catalog entries, including the unpublished ones
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceCatalogEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceCatalogEntries(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceCatalogEntries']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4839,6 +7150,18 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceCurrencies(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceCurrencies']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reports whether the deposit watcher is running, its poll interval, and one row per armed asset: chain, token, contract, pooled address and the last block that asset\'s cursor reached. That last block is the only way to see a watcher that is up but no longer advancing, which is what a stalled deposit rail looks like from outside. SuperAdmin only — the reserved admin org\'s owner claim; an authenticated caller without it is refused 403 and an anonymous one 401. It is READ-ONLY by design: arming an asset stays a CRYPTO_DEPOSIT_* deployment act and is deliberately not a button here, so there is nothing on this surface that can start crediting a customer\'s balance. The asset\'s RPC endpoint is reduced to scheme://host before it is returned, because a managed node URL carries its API key in the path or query and echoing it verbatim would publish that credential to every reader of this status.
+         * @summary Read the crypto deposit watcher\'s runtime state, asset by asset
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceDeposits(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceDeposits(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceDeposits']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4889,6 +7212,18 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceDiscountByDiscountid(discountid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceDiscountByDiscountid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers ok whenever the commerce subsystem is mounted. It is registered before the module embed boots, so it keeps answering even when the embed failed and every business route serves the fail-closed 503 — which is the point: it reports that the process is reachable, never that the money plane is healthy. Unauthenticated: a probe that needs a credential is a probe that reports the credential.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers ok whenever the commerce subsystem is mounted.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Liveness>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceHealth(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceHealth']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4954,6 +7289,18 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns every plan row as stored — the administrative view behind the public plan catalog. The plan authority is cross-tenant pricing data, so the gate is a PLATFORM admin enforced by the handler itself: an org-level admin is refused 403 no matter what they may do inside their own org.
+         * @summary The raw plan authority rows
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommercePlansEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommercePlansEntries(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommercePlansEntries']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the slug and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or the Product list scope.
          * @summary List your org\'s products, as a page
          * @param {*} [options] Override http request option.
@@ -4976,6 +7323,18 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceProductByProductid(productid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the rate authority\'s rows — the prices every metered charge resolves against. Narrow with ?product= to show one surface at a time rather than every rate at once. SuperAdmin only: a rate is cross-tenant money, so the handler asks for the reserved admin org\'s owner claim itself rather than trusting the bundle\'s token gate.
+         * @summary List what one unit of each metered thing costs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceRatesEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceRatesEntries(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceRatesEntries']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5051,6 +7410,124 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStocklocationByStocklocationid(stocklocationid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers a pagination envelope — page, display, the rows, and a total count — read from the caller org\'s OWN namespaced database, so one tenant can never list another\'s stores. Sorting defaults to the store slug and is overridable with sort; display is the page size and page applies only alongside it, and either one that is not a positive integer is refused rather than silently ignored. The limit query overrides the reported COUNT only and never the rows returned. A request that resolves no org namespace is served an empty page, never an unscoped scan. Readable with an admin token, a store-scoped token, or the anonymous published storefront key.
+         * @summary List your org\'s storefronts as a page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceStore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStore(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStore']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers allowed, the store id, and a status of trial, active, payment_required, store_required or unavailable — the entitlement check a merchant surface gates on. The rule that surprises people is that entitlement is PER STORE, not per org: the store needs its own current subscription on the entry plan, either trialing with a trial end still ahead or active with a period end still ahead, so an org-wide balance or a sibling store\'s plan unlocks nothing here. The store comes from the X-Store-Id header and otherwise falls back to the org\'s first store; neither resolving is store_required with allowed false, and a backing-store failure is 503 with status unavailable — a retry signal, not a denial.
+         * @summary Whether a store is entitled to trade, and why
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceStoreAccess(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStoreAccess(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStoreAccess']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Reads the addressed store from the caller org\'s own namespaced database, so an id belonging to another tenant is simply absent there and answers 404 rather than leaking its existence. The body is the stored entity including its embedded listing override map. Readable with an admin or store-read token and also with the anonymous published storefront key, which is what lets a logged-out storefront resolve the store it is rendering.
+         * @summary Fetch one storefront
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceStoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStoreByStoreid(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStoreByStoreid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the stored bundle with the store\'s listing for it laid over the top — every non-empty listing field wins, and the currency is forced to the store\'s own — so the caller reads what this storefront actually sells rather than the catalog-wide record. The overlay is keyed by the item\'s ID: a listing filed only under a slug or SKU does not reach it, unlike the listing reads, which do fall back to those. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch a bundle as this storefront sells it
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceStoreByStoreidBundleByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStoreByStoreidBundleByKey(storeid, key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStoreByStoreidBundleByKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns every override this store applies to catalog items — name, price, list price, media, availability and the hidden flag — keyed by product or variant id, in one read. A listing is an OVERRIDE, not a product: the catalog item exists independently and this map only says how this storefront presents it. Read from the caller org\'s own namespaced database, so a store id belonging to another tenant is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary The storefront\'s whole listing override map
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceStoreByStoreidListing(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStoreByStoreidListing(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStoreByStoreidListing']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Looks the key up in the store\'s listing map first and, failing that, matches it against each listing\'s slug and then its SKU — so a storefront holding only a product\'s URL slug can still resolve the override. That fallback is unique to the listing reads; the item overlay routes match by id alone. A key matching none of the three is 404, as is a store id outside the caller org\'s namespace. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch one listing override, by item id or by its slug or SKU
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceStoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStoreByStoreidListingByKey(storeid, key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the stored product with the store\'s listing for it laid over the top — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what lets two storefronts sell the same catalog product at their own price, name and media. The overlay is keyed by the product\'s ID, so a listing filed only under a slug or SKU does not apply here. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch a product as this storefront sells it
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceStoreByStoreidProductByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStoreByStoreidProductByKey(storeid, key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStoreByStoreidProductByKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the stored variant with the store\'s listing for it overlaid — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what makes per-storefront pricing of a shared variant possible. The overlay is keyed by the variant\'s ID, never by its slug or SKU. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch a variant as this storefront sells it
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceStoreByStoreidVariantByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStoreByStoreidVariantByKey(storeid, key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStoreByStoreidVariantByKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Returns the caller org\'s store resolved FROM THE AUTHENTICATED ORG rather than from a path id — which is how an admin dashboard or a storefront edge learns the store id it should then read and write against. An X-Store-Id header selects a specific store, resolved only inside the caller\'s own namespace, so a foreign id cannot cross the tenant boundary and answers 404 instead. With no header the org\'s first store is returned, and an org that has none yet has its canonical default provisioned lazily and idempotently, carrying no payment credentials. Only when there is no org in context, or provisioning fails, does it fall back to a placeholder store literally named default, which a storefront edge should treat as unconfigured.
+         * @summary Resolve your org\'s active storefront without naming an id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCommerceStoreCurrent(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceStoreCurrent(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceStoreCurrent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5254,6 +7731,32 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Reads one settled payment out of the caller\'s org ledger.  The org scopes the read by construction — the ledger is namespaced to it — so an id belonging to another tenant is simply not found rather than found and then filtered. A ledger row that is not a payment is likewise not found, so this cannot be used to walk the org\'s usage debits.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Read one settled payment by its id
+         * @param {string} id ID is the ledger transaction id a payment returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPayment(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRecord>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPayment(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getPayment']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Opens an empty cart for a shopper to fill, and answers it with its new id.  This is the first step of a sale: hold the id, add items to it with setCartItem, then hand it to checkout. Every field of the request is optional — an empty body opens a perfectly good anonymous cart — and the fields exist only to pre-fill what is already known about the shopper.  The STORE defaults to the org\'s own default storefront, so a merchant selling through one storefront never has to name it. The CURRENCY defaults to usd; note that checkout overrides it with the store\'s own currency when the sale is authorized, so a currency set here is a hint rather than a commitment.  The cart is created in the CALLER\'S OWN org namespace, taken from the validated principal and never from the body, so a cart can never be opened on another tenant\'s books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Open a cart for a shopper to fill
+         * @param {CartOpen} cartOpen 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async openCart(cartOpen: CartOpen, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Cart>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.openCart(cartOpen, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.openCart']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
          * @summary Change part of a collection
          * @param {string} collectionid 
@@ -5371,6 +7874,33 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Loads the stored store and decodes the body over it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged entity. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin token, or one holding both store read and store write.
+         * @summary Change part of a storefront
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchCommerceStoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceStoreByStoreid(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceStoreByStoreid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Requires the key to already be present — an absent one is 404 — and answers the store\'s listing map at 200. Read the behaviour before relying on it: the decoded body is applied to a COPY taken out of the map and is never assigned back, so the stored listing is unchanged and the map returned is exactly the map that was already there. An actual edit to an existing listing has to go through the upsert, which does write its result back into the store. A body that fails to decode is still 400. Admin-gated and namespaced to the caller\'s org.
+         * @summary Confirm a listing override exists and re-save the store
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchCommerceStoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceStoreByStoreidListingByKey(storeid, key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceStoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a submission
          * @param {string} submissionid 
@@ -5472,6 +8002,54 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchCommerceWebhookByWebhookid(webhookid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.patchCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates a catalog row from the body and answers it at 201. The slug is required and is the globally-unique catalog key, so a second entry claiming a slug already in use is refused 409 rather than shadowing the first. PLATFORM admin only — this is cross-tenant pricing and packaging data, and an org-level admin is refused 403.
+         * @summary Add a catalog entry
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceCatalogEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceCatalogEntries(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceCatalogEntries']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes a batch of model rows and upserts each one\'s upstream COST and machine-observable facts, answering what was created and changed. It deliberately touches nothing a human owns — not the retail price, not the markup, not the entitlement tier — so a sync can never overwrite an administrator\'s pricing decision. The gate is a PLATFORM principal rather than a platform ADMIN, because the caller is normally a scheduled job holding the internal service token, which carries platform scope but no admin claim.
+         * @summary Land a syncer\'s view of the model catalog: upstream costs and machine facts
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceCatalogModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceCatalogModels(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceCatalogModels']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Pulls the upstream model list and lands it through the same upsert the push door uses, so the rule that a sync owns cost and an administrator owns price holds no matter which door a row came through. It takes no body — the upstream is READ rather than told. If that upstream cannot be read the call answers 502 and writes NOTHING: a sync that cannot see its source must never conclude the source is empty, because that conclusion would withdraw every model on sale. The gate is a PLATFORM principal so the scheduled job\'s service token qualifies.
+         * @summary Refresh the model catalog by reading the upstream provider
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceCatalogModelsRefresh(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceCatalogModelsRefresh(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceCatalogModelsRefresh']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Upserts the shipped catalog seed and answers how many entries it created. It is idempotent and non-destructive — an entry an administrator has since edited is left alone — so it is safe to run against a live catalog to fill in what is missing. PLATFORM admin only; an org-level admin is refused 403.
+         * @summary Seed the embedded catalog, without disturbing edits already made
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceCatalogSeed(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceCatalogSeed(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceCatalogSeed']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5600,6 +8178,30 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Creates a plan from the body and answers it at 201. The slug is required and globally unique — a duplicate is 409 — and the row is marked authoritative on creation, so the corrective seed will leave it alone. Price, annual price and the contact-sales flag are stored exactly as sent, never coerced, so the difference between a free plan and a quote-only plan survives. PLATFORM admin only.
+         * @summary Add a subscription plan
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommercePlansEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommercePlansEntries(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommercePlansEntries']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Upserts the shipped plan rows and answers how many were created and how many corrected. It is idempotent and non-destructive — a row an administrator authored or edited is left as it stands — so it is safe against a live authority and fills only what is missing or has drifted. PLATFORM admin only, and a deployment with no seed source wired answers 500 rather than quietly seeding nothing.
+         * @summary Seed the embedded plan catalog, without overwriting administrative edits
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommercePlansSeed(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommercePlansSeed(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommercePlansSeed']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteProduct.
          * @summary Create a product
          * @param {*} [options] Override http request option.
@@ -5622,6 +8224,30 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceProductByProductid(productid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates one rate. Product AND meter are both required, because together they are the identity: a rate keyed on the metered thing alone would let one product\'s price overwrite another\'s under the same name. A slug that already exists is refused rather than silently replaced. SuperAdmin only.
+         * @summary Add a rate
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceRatesEntries(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceRatesEntries(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceRatesEntries']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes an array of rates and seeds the authority from it. This is the seed, driven from admin rather than compiled in, because 506 published prices in an embed made a price change wait for a build. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
+         * @summary Load the published price document, reconciling rather than replacing
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceRatesImport(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceRatesImport(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceRatesImport']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5697,6 +8323,260 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStocklocationByStocklocationid(stocklocationid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates a store from the body inside the caller org\'s own namespaced database, so the row is physically isolated to that tenant from its first write, and answers it at 201 with a Location header naming its id. Requires an admin or store-write token: the anonymous published storefront key may READ stores but never create one. A body that fails to decode is 400.
+         * @summary Create a storefront
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStore(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStore(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStore']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header, the header winning when both are present. Only PUT, PATCH and DELETE are accepted; anything else resolves to 405. The trap is the default: naming NO override at all is treated as a partial update, never as a create. Authorization is whatever the underlying operation requires, since the real handler runs.
+         * @summary Method-override tunnel for clients that cannot send PUT, PATCH or DELETE
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreid(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Tallies a new order for the addressed store from the user, payment and order body, reserves its items, runs the processor authorization and answers the saved order with a Location header pointing at it. The gate is a token carrying admin or published scope, so a published storefront key is enough; no token is 401 and a token with neither bit is 403. The store is loaded BEFORE any payment work and its currency OVERRIDES whatever the body asked for, so a store that will not load ends the call with 500 and nothing is charged. On any authorization failure the reservations are released and the order and payment are persisted as cancelled, so a failed attempt still leaves a durable record. Capture is a separate call.
+         * @summary Authorize a new order against a storefront, holding the funds without settling them
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidAuthorize(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidAuthorize(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidAuthorize']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Continues the order named in the path rather than minting a new one, holding funds for it. The order is loaded from the caller org\'s own store, so an id belonging to another tenant is a 404. The rule most callers get wrong is that the body\'s order object is MERGED onto the loaded order before the tally — this is not a read-only reference, and a field sent here overwrites what is stored. The gate, the store resolution and the currency override behave exactly as on the bodiless-id sibling, and settling is still the capture call\'s job.
+         * @summary Authorize an order that already exists, holding the funds without settling them
+         * @param {string} storeid 
+         * @param {string} orderid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidAuthorizeByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidAuthorizeByOrderid(storeid, orderid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidAuthorizeByOrderid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Settles the order named in the path — the second half of the two-step flow — and answers the updated order with a Location header. Dispatch follows the order\'s STORED payment type, and a successful capture is the moment the rest of the system learns about the sale: order and payment rows are updated, coupon redemptions, referral, cart and stats are written, the confirmation email goes out, and the paid and completed events are emitted. A capture failure releases the order\'s inventory reservations and answers 400, so a failed settlement never leaves items held.
+         * @summary Capture a previously authorized order and settle the payment
+         * @param {string} storeid 
+         * @param {string} orderid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidCaptureByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidCaptureByOrderid(storeid, orderid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidCaptureByOrderid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Runs authorization and capture back to back against a freshly created order — the one-step flow for callers with no reason to hold funds. It takes the authorize body and inherits every authorize rule: the store\'s currency wins over the body, the items are reserved before the processor is called, and the amount bounds the processor enforces still apply. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects — confirmation email, redemptions, stats, the paid and completed events — run only when both halves succeed.
+         * @summary Authorize and capture a new order in one call
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidCharge(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidCharge(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidCharge']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Authorizes a new order for the addressed store and holds the funds, answering the saved order with a Location header. It binds the identical handler as the shorter authorize address, so the two are ONE operation at two spellings and not two behaviours; the checkout prefix is the newer one. Every rule carries over: admin or published scope on the token, the store loaded first with its currency overriding the body, items reserved before the processor call, and reservations released with the order persisted cancelled on failure. Nothing is settled here.
+         * @summary Authorize a new order against a storefront, holding the funds — the checkout spelling
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidCheckoutAuthorize(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidCheckoutAuthorize(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidCheckoutAuthorize']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Continues the order named in the path rather than minting one, and shares its handler byte for byte with the unprefixed authorize-by-id address. The order is loaded from the caller org\'s own store, so another tenant\'s id is a 404, and the body\'s order object is merged onto the loaded row before the tally — a field sent here overwrites what is stored. Store resolution, the token gate and the currency override behave as on every other authorize address; settle with the capture address and the same order id.
+         * @summary Authorize an existing order, holding the funds — the checkout spelling
+         * @param {string} storeid 
+         * @param {string} orderid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidCheckoutAuthorizeByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidCheckoutAuthorizeByOrderid(storeid, orderid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidCheckoutAuthorizeByOrderid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Settles the authorized order named in the path and answers the updated order with a Location header, running the same handler as the unprefixed capture address. Dispatch follows the order\'s stored payment type. Success is what triggers the downstream work — order and payment updates, redemptions, referral, cart and stats, the confirmation email, and the paid and completed events — while a failure releases the order\'s inventory reservations and answers 400.
+         * @summary Capture a previously authorized order and settle it — the checkout spelling
+         * @param {string} storeid 
+         * @param {string} orderid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidCheckoutCaptureByOrderid(storeid: string, orderid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidCheckoutCaptureByOrderid(storeid, orderid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidCheckoutCaptureByOrderid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Performs authorization and capture back to back against a newly created order for the addressed store, on the same handler as the unprefixed charge address. It takes the authorize body and inherits every authorize rule, including the store\'s currency winning over the body and the items being reserved before the processor is called. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects run only when both succeed.
+         * @summary Authorize and capture a new order in one call — the checkout spelling
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidCheckoutCharge(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidCheckoutCharge(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidCheckoutCharge']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Meant to void the payments carrying the given pay key, stamp them cancelled and cancel the order, but the shared checkout handler resolves its order from an ORDER ID path parameter this route does not carry. The result is an untyped order and a cancel dispatch that refuses with 400 before the pay key lookup ever runs. Token gate, namespacing and store resolution happen first, so a missing token is still 401 and an unloadable store still 500. It is the same handler as the unprefixed cancel address, with the same outcome.
+         * @summary PayPal cancel by pay key — refuses, exactly as the unprefixed address does
+         * @param {string} storeid 
+         * @param {string} payKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidCheckoutPaypalCancelByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidCheckoutPaypalCancelByPaykey(storeid, payKey, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidCheckoutPaypalCancelByPaykey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Meant to mark the payments carrying the given pay key as paid and set the order to paid, it cannot reach that work from this address: the shared checkout handler takes its order from an ORDER ID path parameter this route does not carry, so the order is always fresh and untyped and the confirm dispatch refuses with 400 before the pay key is queried. The token gate, the namespace middleware and the store lookup all run ahead of that, so authentication and store failures surface first. Behaviour is identical to the unprefixed confirm address; the checkout prefix changes nothing here.
+         * @summary PayPal confirm by pay key — refuses, exactly as the unprefixed address does
+         * @param {string} storeid 
+         * @param {string} payKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey(storeid, payKey, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Begins a PayPal authorization by running the ordinary store authorize flow, since the route binds that exact handler — body, store resolution, tally, reservations and failure behaviour are the authorize address\'s, unchanged. The processor is chosen from the body\'s payment type, so this path reaches PayPal only when that type says so. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. Build against the plain authorize address instead.
+         * @summary Start a PayPal authorization for a new order — the checkout spelling
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidCheckoutPaypalPay(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidCheckoutPaypalPay(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidCheckoutPaypalPay']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates the override and answers the store\'s ENTIRE listing map at 201 with a Location header — not just the entry that was added. A key already present is refused 400: creation never silently overwrites, so changing an existing listing has to be an explicit replace. The stored listing has its currency stamped from the store\'s own, which the replace path does not do. The key is matched exactly here, with none of the slug or SKU fallback the read allows. Admin-gated and resolved inside the caller org\'s namespace.
+         * @summary Add a listing override under a new key
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidListingByKey(storeid, key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Intended to void the payments carrying the given pay key, stamp them cancelled and cancel the order, it never reaches that work: the shared checkout handler reads its order from an ORDER ID path parameter this route does not carry, leaving an untyped order that the cancel dispatch refuses with 400 before the pay key lookup runs. Authentication, namespacing and store resolution happen ahead of the refusal, so a missing token is 401 and an unloadable store 500. Cancelling a real PayPal authorization needs an address that carries the order id.
+         * @summary PayPal cancel by pay key — refuses, because a pay key alone does not identify the order
+         * @param {string} storeid 
+         * @param {string} payKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidPaypalCancelByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidPaypalCancelByPaykey(storeid, payKey, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidPaypalCancelByPaykey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Intended to mark every payment carrying the given pay key as paid and flip the order to paid, it cannot do that from this address and does not pretend to: the shared checkout handler resolves its order from an ORDER ID path parameter that this route does not carry, so it always works against a fresh untyped order and the confirm dispatch refuses it with 400 before the pay key is ever queried. The token gate, the namespace and the store lookup all run ahead of that, so a missing token is still 401 and an unloadable store still 500. Drive a PayPal return through an address that carries the order id.
+         * @summary PayPal confirm by pay key — refuses, because a pay key alone does not identify the order
+         * @param {string} storeid 
+         * @param {string} payKey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidPaypalConfirmByPaykey(storeid: string, payKey: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidPaypalConfirmByPaykey(storeid, payKey, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidPaypalConfirmByPaykey']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Runs the ordinary store authorize flow — the route binds that very handler, so the body, the store resolution, the tally, the reservations and the failure behaviour are the authorize address\'s, unchanged. It reaches PayPal only when the body\'s payment type says so; nothing about this path forces the processor, so a card-typed payment posted here authorizes on the card processor instead. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. It is the older entry point; the plain authorize address is the one to build against.
+         * @summary Start a PayPal authorization for a new order
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidPaypalPay(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidPaypalPay(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidPaypalPay']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Creates a trialing subscription for the addressed store on the entry plan and grants that plan\'s trial credit, answering 201 when this call actually started one and 200 with a reason otherwise — not_new when the store already has billing history, trial_not_configured when no entry plan is wired. The window is always the SEVEN-DAY no-card trial, because this address never presents a card; the longer card-present window is reached only by adding a card afterwards. Entitlement is per store while the billing subject is the org, so every store an org owns takes its own trial. Admin-gated and namespaced to the caller\'s org: no resolvable store is 404 with store_required, and a backing-store failure is 503.
+         * @summary Start this store\'s no-card trial on the entry plan
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreByStoreidTrial(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreByStoreidTrial(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreByStoreidTrial']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Answers a freshly minted token carrying ONLY the published-read permission — enough for a logged-out shopper\'s storefront to read your published catalog and nothing more, with no write and no admin scope. It is org-bound, signed with the org\'s own secret and subject to the org id, so unlike a shared service token it can never act on another tenant. Minting ROTATES rather than accumulates: the previous storefront token is dropped first and is invalid immediately, so re-minting is how you revoke. Admin is enforced by the handler as well as the route, because the route\'s token gate does not apply on the identity path and a plain member must not be able to mint their org\'s key.
+         * @summary Mint your org\'s least-privilege storefront read key
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceStoreToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceStoreToken(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceStoreToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5900,6 +8780,19 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
+         * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
+         * @param {string} provider 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postCommerceWebhooksByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCommerceWebhooksByProvider(provider, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.postCommerceWebhooksByProvider']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
          * @summary Replace a collection outright
          * @param {string} collectionid 
@@ -5965,6 +8858,19 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Loads the addressed plan, applies the body over it and answers the stored result, so a partial edit never silently zeroes a price or the contact-sales flag. The slug is IMMUTABLE: a body naming a different slug is rejected outright before anything is written, because a rename would orphan every subscription that stored the old id — deprecate and create instead. An admin edit marks the row authoritative so the seed stops correcting it. PLATFORM admin only; an unknown slug is 404.
+         * @summary Edit a plan, leaving the fields you omit alone
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putCommercePlansEntriesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommercePlansEntriesBySlug(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommercePlansEntriesBySlug']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadProduct and WriteProduct together.
          * @summary Replace a product outright
          * @param {string} productid 
@@ -5975,6 +8881,19 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceProductByProductid(productid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceProductByProductid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Edits one rate and MARKS it edited, which is the whole contract with the importer: an operator\'s price outranks the document it came from, so a later import leaves this row alone. Without that mark a price set here would apply, work, and silently revert on the next import. Only the editable fields move; identity and bookkeeping are not writable from the body. SuperAdmin only.
+         * @summary Edit a rate, and mark it as operator-set
+         * @param {string} slug 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putCommerceRatesEntriesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceRatesEntriesBySlug(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceRatesEntriesBySlug']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -6014,6 +8933,33 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceStocklocationByStocklocationid(stocklocationid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceStocklocationByStocklocationid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * This is a true REPLACEMENT, not a merge: the stored key is preserved but the body is decoded onto a fresh entity, so every field the body omits is written back as its zero value. Use the partial update when you mean to change part of a store. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is a 404 before anything is written. Requires an admin token, or one holding both store read and store write.
+         * @summary Replace a storefront outright
+         * @param {string} storeid 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putCommerceStoreByStoreid(storeid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceStoreByStoreid(storeid, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceStoreByStoreid']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Decodes the body over the existing listing when the key is present, so fields it omits keep their stored values, and builds the listing from the body alone when the key is new. Answers 200 when it replaced something and 201 with a Location header when it created it; either way the body is the store\'s entire listing map, not the single entry. Unlike creation, this path does NOT restamp the listing\'s currency from the store. Admin-gated, with the store resolved inside the caller org\'s namespace.
+         * @summary Upsert a listing override
+         * @param {string} storeid 
+         * @param {string} key 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putCommerceStoreByStoreidListingByKey(storeid: string, key: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceStoreByStoreidListingByKey(storeid, key, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceStoreByStoreidListingByKey']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -6120,6 +9066,33 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Sets how many of one item a cart holds, and answers the whole updated cart.  This is the ONE way a cart\'s contents change. The quantity is the RESULT, not a delta: sending 3 leaves 3 however many were there before, so a retry is safe and a double-submit cannot double an order. ZERO REMOVES the line — there is deliberately no separate delete, because removal is the same act at the boundary value and a second spelling would be a second set of edge cases.  Name the item with EITHER product OR variant, never both. Prefer variant for anything sold in sizes, colours or tiers: the price and the stock belong to the variant, so a product-level line on a varianted product prices the wrong thing. Either may be given as an id or as the human key — a product\'s URL slug, a variant\'s SKU — which is what lets a storefront add to cart straight from a product page URL without a lookup first.  The item\'s price and name are CACHED onto the line as it is added, so the cart keeps the price the shopper was shown even if the catalog moves underneath it.  An item that resolves to nothing in the catalog is refused 400 and the cart is left exactly as it was; nothing is partially applied.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Set one item\'s quantity in a cart; zero removes it
+         * @param {string} id ID is the cart to amend, from the path.
+         * @param {CartItemSet} cartItemSet 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async setCartItem(id: string, cartItemSet: CartItemSet, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Cart>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setCartItem(id, cartItemSet, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.setCartItem']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Takes a payment: charges a single-use card token and credits the caller\'s org balance, exactly once.  This is the operation behind \"collect money from a customer\". It runs the SAME core the console\'s card top-up runs (commerce billing.TakePayment), so the server-side amount bounds, the idempotency guard and the ledger credit are shared rather than reimplemented — a second charge path would eventually double-charge somebody.  The ORG is the caller\'s, taken from the validated principal and never from the input, so a payment can only ever credit the account of whoever made the call.  A payment is RISK-SCREENED before the card is charged, so this can be refused without any money moving: 403 means the screen did not authorise it, and 503 means the screen could not reach a decision — that one is worth retrying, and no charge was attempted either way.  Send an idempotencyKey. An agent retries by construction, and the key is what turns a retry into a replay of the first receipt instead of a second charge.  The answer states whether it settled in SANDBOX or live mode (`test`), and carries the processor\'s own reference (`processorRef`) so the charge can be reconciled against the processor rather than taken on trust.  A named builder, not a closure, so zipdoc can lift this prose into the registry.  It BUILDS the handler rather than being it, because the screen has to sit inside the value every projection of this op dispatches to — see exposePayments. `charge` is the money move, `take` is the screened door onto it, and the only registrable one is the second.
+         * @summary Take a card payment and credit the org\'s balance
+         * @param {PaymentIn} paymentIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async takePayment(paymentIn: PaymentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.takePayment(paymentIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.takePayment']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -6181,6 +9154,16 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deleteCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
         },
         /**
+         * Deletes the addressed plan and answers 204. It removes the plan from the catalog buyers choose from; it does not touch subscriptions already sold against it, which keep their stored plan id. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404.
+         * @summary Remove a plan from the authority
+         * @param {CommerceApiDeleteCommercePlansEntriesBySlugRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCommercePlansEntriesBySlug(requestParameters: CommerceApiDeleteCommercePlansEntriesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommercePlansEntriesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteProduct.
          * @summary Delete a product, keeping a recoverable copy
          * @param {CommerceApiDeleteCommerceProductByProductidRequest} requestParameters Request parameters.
@@ -6189,6 +9172,16 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         deleteCommerceProductByProductid(requestParameters: CommerceApiDeleteCommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteCommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Deletes the row. ARCHIVING is usually what is wanted instead — a deleted rate cannot price a historical charge, so a past invoice that has to re-resolve its rate finds nothing to read. Reach for status=archived unless the rate never priced anything. SuperAdmin only.
+         * @summary Remove a rate outright
+         * @param {CommerceApiDeleteCommerceRatesEntriesBySlugRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCommerceRatesEntriesBySlug(requestParameters: CommerceApiDeleteCommerceRatesEntriesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceRatesEntriesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The token must also carry Admin or WriteReturn.
@@ -6219,6 +9212,26 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         deleteCommerceStocklocationByStocklocationid(requestParameters: CommerceApiDeleteCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes the addressed store and answers 204 with no body. Before the live row goes, the entity is written once more under a tombstone kind, so the deletion leaves a recoverable copy rather than destroying the record outright; the store\'s listing overrides live inside that row and go with it. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin or store-write token.
+         * @summary Delete a storefront, keeping a recoverable copy
+         * @param {CommerceApiDeleteCommerceStoreByStoreidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCommerceStoreByStoreid(requestParameters: CommerceApiDeleteCommerceStoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceStoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Drops the key from the store\'s listing map and re-saves the store, answering 204 with no body. It UN-OVERRIDES rather than deletes: the product, variant or bundle itself is untouched and simply reverts to its catalog values on this storefront. A key that is not present is 404, and so is a store id outside the caller org\'s namespace. Admin-gated.
+         * @summary Remove a listing override
+         * @param {CommerceApiDeleteCommerceStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCommerceStoreByStoreidListingByKey(requestParameters: CommerceApiDeleteCommerceStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6301,6 +9314,26 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deleteCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
         /**
+         * Discards a cart the shopper abandoned, and answers it in its final state.  A discarded cart is CLOSED, not deleted: the row stays, so abandoned-basket reporting and any follow-up that keys on it still have something to read. It stops being a cart anything will check out, which is the point — it is how a storefront says \"this basket is over\" without destroying the evidence that it existed.  Discarding is idempotent: a cart already discarded answers its stored state rather than failing, so a retry is safe.  The cart is resolved inside the caller\'s own org namespace, so another tenant\'s id answers 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Discard a cart the shopper abandoned
+         * @param {CommerceApiDiscardCartRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        discardCart(requestParameters: CommerceApiDiscardCartRequest, options?: RawAxiosRequestConfig): AxiosPromise<Cart> {
+            return localVarFp.discardCart(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads one cart: its lines, its status and what it comes to.  This is what a storefront calls to render the basket, and what a support agent calls to see what a shopper is looking at. The totals are the cart\'s STORED tally — shipping and tax stay zero until checkout resolves a shipping option and a tax region, so a cart total before checkout is the merchandise total and is meant to be.  The org scopes the read by construction: the store is namespaced to it, so a cart id belonging to another tenant is simply not found rather than found and then filtered, and answers 404 rather than 403 so the id space cannot be probed.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Read one cart with its lines and totals
+         * @param {CommerceApiGetCartRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCart(requestParameters: CommerceApiGetCartRequest, options?: RawAxiosRequestConfig): AxiosPromise<Cart> {
+            return localVarFp.getCart(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the brand-scoped catalog carrying the administrative economics the public projection withholds — upstream cost and margin percentage — for the margin surface the platform console administrates. The brand comes from the query and defaults to hanzo. PLATFORM admin only, enforced by the handler on top of the route\'s IAM gate: an ORG-level admin is refused 403 precisely so upstream cost and margin never reach a tenant.
          * @summary The catalog projection with cost and margin included
          * @param {*} [options] Override http request option.
@@ -6317,6 +9350,15 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         getCommerceCatalog(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getCommerceCatalog(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns every catalog row as stored — the admin view, which unlike the public projection includes entries that are not published. It is cross-tenant platform data, so the gate is a PLATFORM admin: an org-level admin is refused 403 no matter how privileged they are inside their own org, enforced by the handler itself and not only by the route\'s token middleware.
+         * @summary The raw catalog entries, including the unpublished ones
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceCatalogEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceCatalogEntries(options).then((request) => request(axios, basePath));
         },
         /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the slug and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or the Collection list scope.
@@ -6345,6 +9387,15 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         getCommerceCurrencies(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getCommerceCurrencies(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reports whether the deposit watcher is running, its poll interval, and one row per armed asset: chain, token, contract, pooled address and the last block that asset\'s cursor reached. That last block is the only way to see a watcher that is up but no longer advancing, which is what a stalled deposit rail looks like from outside. SuperAdmin only — the reserved admin org\'s owner claim; an authenticated caller without it is refused 403 and an anonymous one 401. It is READ-ONLY by design: arming an asset stays a CRYPTO_DEPOSIT_* deployment act and is deliberately not a button here, so there is nothing on this surface that can start crediting a customer\'s balance. The asset\'s RPC endpoint is reduced to scheme://host before it is returned, because a managed node URL carries its API key in the path or query and echoing it verbatim would publish that credential to every reader of this status.
+         * @summary Read the crypto deposit watcher\'s runtime state, asset by asset
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceDeposits(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceDeposits(options).then((request) => request(axios, basePath));
         },
         /**
          * A disclosure is a published-document record — a publication body, a content hash, a type and a named receiver. The hash LOOKS like a field you set and is in fact derived, but only on update: a freshly created disclosure keeps whatever hash the caller sent until the first replace or patch recomputes it, so a new row\'s hash attests to nothing. This kind lives in commerce\'s demo tree — a live writable resource in your tenant\'s real store that nothing else in commerce reads. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The per-kind permission table has no entry for disclosure, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6383,6 +9434,15 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         getCommerceDiscountByDiscountid(requestParameters: CommerceApiGetCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers ok whenever the commerce subsystem is mounted. It is registered before the module embed boots, so it keeps answering even when the embed failed and every business route serves the fail-closed 503 — which is the point: it reports that the process is reachable, never that the money plane is healthy. Unauthenticated: a probe that needs a credential is a probe that reports the credential.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Answers ok whenever the commerce subsystem is mounted.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceHealth(options?: RawAxiosRequestConfig): AxiosPromise<Liveness> {
+            return localVarFp.getCommerceHealth(options).then((request) => request(axios, basePath));
         },
         /**
          * A movie is a film catalog record — a slug plus EIDR and IMDB ids, all three required, with title and synopsis copy, artwork, screenshots, trailers, cast and crew, and available and hidden flags. It carries NO price: the money for a film lives on the product that sells it. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the slug and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The per-kind permission table has no entry for movie, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6432,6 +9492,15 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCommerceOrg(options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns every plan row as stored — the administrative view behind the public plan catalog. The plan authority is cross-tenant pricing data, so the gate is a PLATFORM admin enforced by the handler itself: an org-level admin is refused 403 no matter what they may do inside their own org.
+         * @summary The raw plan authority rows
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommercePlansEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommercePlansEntries(options).then((request) => request(axios, basePath));
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the slug and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or the Product list scope.
          * @summary List your org\'s products, as a page
          * @param {*} [options] Override http request option.
@@ -6449,6 +9518,15 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         getCommerceProductByProductid(requestParameters: CommerceApiGetCommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getCommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the rate authority\'s rows — the prices every metered charge resolves against. Narrow with ?product= to show one surface at a time rather than every rate at once. SuperAdmin only: a rate is cross-tenant money, so the handler asks for the reserved admin org\'s owner claim itself rather than trusting the bundle\'s token gate.
+         * @summary List what one unit of each metered thing costs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceRatesEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceRatesEntries(options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The token must also carry Admin or the Return list scope.
@@ -6506,6 +9584,93 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         getCommerceStocklocationByStocklocationid(requestParameters: CommerceApiGetCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers a pagination envelope — page, display, the rows, and a total count — read from the caller org\'s OWN namespaced database, so one tenant can never list another\'s stores. Sorting defaults to the store slug and is overridable with sort; display is the page size and page applies only alongside it, and either one that is not a positive integer is refused rather than silently ignored. The limit query overrides the reported COUNT only and never the rows returned. A request that resolves no org namespace is served an empty page, never an unscoped scan. Readable with an admin token, a store-scoped token, or the anonymous published storefront key.
+         * @summary List your org\'s storefronts as a page
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStore(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceStore(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers allowed, the store id, and a status of trial, active, payment_required, store_required or unavailable — the entitlement check a merchant surface gates on. The rule that surprises people is that entitlement is PER STORE, not per org: the store needs its own current subscription on the entry plan, either trialing with a trial end still ahead or active with a period end still ahead, so an org-wide balance or a sibling store\'s plan unlocks nothing here. The store comes from the X-Store-Id header and otherwise falls back to the org\'s first store; neither resolving is store_required with allowed false, and a backing-store failure is 503 with status unavailable — a retry signal, not a denial.
+         * @summary Whether a store is entitled to trade, and why
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreAccess(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceStoreAccess(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Reads the addressed store from the caller org\'s own namespaced database, so an id belonging to another tenant is simply absent there and answers 404 rather than leaking its existence. The body is the stored entity including its embedded listing override map. Readable with an admin or store-read token and also with the anonymous published storefront key, which is what lets a logged-out storefront resolve the store it is rendering.
+         * @summary Fetch one storefront
+         * @param {CommerceApiGetCommerceStoreByStoreidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreid(requestParameters: CommerceApiGetCommerceStoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceStoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the stored bundle with the store\'s listing for it laid over the top — every non-empty listing field wins, and the currency is forced to the store\'s own — so the caller reads what this storefront actually sells rather than the catalog-wide record. The overlay is keyed by the item\'s ID: a listing filed only under a slug or SKU does not reach it, unlike the listing reads, which do fall back to those. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch a bundle as this storefront sells it
+         * @param {CommerceApiGetCommerceStoreByStoreidBundleByKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreidBundleByKey(requestParameters: CommerceApiGetCommerceStoreByStoreidBundleByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceStoreByStoreidBundleByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns every override this store applies to catalog items — name, price, list price, media, availability and the hidden flag — keyed by product or variant id, in one read. A listing is an OVERRIDE, not a product: the catalog item exists independently and this map only says how this storefront presents it. Read from the caller org\'s own namespaced database, so a store id belonging to another tenant is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary The storefront\'s whole listing override map
+         * @param {CommerceApiGetCommerceStoreByStoreidListingRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreidListing(requestParameters: CommerceApiGetCommerceStoreByStoreidListingRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceStoreByStoreidListing(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Looks the key up in the store\'s listing map first and, failing that, matches it against each listing\'s slug and then its SKU — so a storefront holding only a product\'s URL slug can still resolve the override. That fallback is unique to the listing reads; the item overlay routes match by id alone. A key matching none of the three is 404, as is a store id outside the caller org\'s namespace. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch one listing override, by item id or by its slug or SKU
+         * @param {CommerceApiGetCommerceStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreidListingByKey(requestParameters: CommerceApiGetCommerceStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the stored product with the store\'s listing for it laid over the top — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what lets two storefronts sell the same catalog product at their own price, name and media. The overlay is keyed by the product\'s ID, so a listing filed only under a slug or SKU does not apply here. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch a product as this storefront sells it
+         * @param {CommerceApiGetCommerceStoreByStoreidProductByKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreidProductByKey(requestParameters: CommerceApiGetCommerceStoreByStoreidProductByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceStoreByStoreidProductByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the stored variant with the store\'s listing for it overlaid — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what makes per-storefront pricing of a shared variant possible. The overlay is keyed by the variant\'s ID, never by its slug or SKU. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+         * @summary Fetch a variant as this storefront sells it
+         * @param {CommerceApiGetCommerceStoreByStoreidVariantByKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreByStoreidVariantByKey(requestParameters: CommerceApiGetCommerceStoreByStoreidVariantByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceStoreByStoreidVariantByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Returns the caller org\'s store resolved FROM THE AUTHENTICATED ORG rather than from a path id — which is how an admin dashboard or a storefront edge learns the store id it should then read and write against. An X-Store-Id header selects a specific store, resolved only inside the caller\'s own namespace, so a foreign id cannot cross the tenant boundary and answers 404 instead. With no header the org\'s first store is returned, and an org that has none yet has its canonical default provisioned lazily and idempotently, carrying no payment credentials. Only when there is no org in context, or provisioning fails, does it fall back to a placeholder store literally named default, which a storefront edge should treat as unconfigured.
+         * @summary Resolve your org\'s active storefront without naming an id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCommerceStoreCurrent(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCommerceStoreCurrent(options).then((request) => request(axios, basePath));
         },
         /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the last-updated time and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -6660,6 +9825,26 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
         /**
+         * Reads one settled payment out of the caller\'s org ledger.  The org scopes the read by construction — the ledger is namespaced to it — so an id belonging to another tenant is simply not found rather than found and then filtered. A ledger row that is not a payment is likewise not found, so this cannot be used to walk the org\'s usage debits.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Read one settled payment by its id
+         * @param {CommerceApiGetPaymentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPayment(requestParameters: CommerceApiGetPaymentRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaymentRecord> {
+            return localVarFp.getPayment(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Opens an empty cart for a shopper to fill, and answers it with its new id.  This is the first step of a sale: hold the id, add items to it with setCartItem, then hand it to checkout. Every field of the request is optional — an empty body opens a perfectly good anonymous cart — and the fields exist only to pre-fill what is already known about the shopper.  The STORE defaults to the org\'s own default storefront, so a merchant selling through one storefront never has to name it. The CURRENCY defaults to usd; note that checkout overrides it with the store\'s own currency when the sale is authorized, so a currency set here is a hint rather than a commitment.  The cart is created in the CALLER\'S OWN org namespace, taken from the validated principal and never from the body, so a cart can never be opened on another tenant\'s books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Open a cart for a shopper to fill
+         * @param {CommerceApiOpenCartRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        openCart(requestParameters: CommerceApiOpenCartRequest, options?: RawAxiosRequestConfig): AxiosPromise<Cart> {
+            return localVarFp.openCart(requestParameters.cartOpen, options).then((request) => request(axios, basePath));
+        },
+        /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
          * @summary Change part of a collection
          * @param {CommerceApiPatchCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
@@ -6750,6 +9935,26 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.patchCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
         },
         /**
+         * Loads the stored store and decodes the body over it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged entity. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin token, or one holding both store read and store write.
+         * @summary Change part of a storefront
+         * @param {CommerceApiPatchCommerceStoreByStoreidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchCommerceStoreByStoreid(requestParameters: CommerceApiPatchCommerceStoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceStoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Requires the key to already be present — an absent one is 404 — and answers the store\'s listing map at 200. Read the behaviour before relying on it: the decoded body is applied to a COPY taken out of the map and is never assigned back, so the stored listing is unchanged and the map returned is exactly the map that was already there. An actual edit to an existing listing has to go through the upsert, which does write its result back into the store. A body that fails to decode is still 400. Admin-gated and namespaced to the caller\'s org.
+         * @summary Confirm a listing override exists and re-save the store
+         * @param {CommerceApiPatchCommerceStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchCommerceStoreByStoreidListingByKey(requestParameters: CommerceApiPatchCommerceStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.patchCommerceStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
          * @summary Change part of a submission
          * @param {CommerceApiPatchCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
@@ -6828,6 +10033,42 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         patchCommerceWebhookByWebhookid(requestParameters: CommerceApiPatchCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.patchCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a catalog row from the body and answers it at 201. The slug is required and is the globally-unique catalog key, so a second entry claiming a slug already in use is refused 409 rather than shadowing the first. PLATFORM admin only — this is cross-tenant pricing and packaging data, and an org-level admin is refused 403.
+         * @summary Add a catalog entry
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceCatalogEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceCatalogEntries(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes a batch of model rows and upserts each one\'s upstream COST and machine-observable facts, answering what was created and changed. It deliberately touches nothing a human owns — not the retail price, not the markup, not the entitlement tier — so a sync can never overwrite an administrator\'s pricing decision. The gate is a PLATFORM principal rather than a platform ADMIN, because the caller is normally a scheduled job holding the internal service token, which carries platform scope but no admin claim.
+         * @summary Land a syncer\'s view of the model catalog: upstream costs and machine facts
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceCatalogModels(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceCatalogModels(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Pulls the upstream model list and lands it through the same upsert the push door uses, so the rule that a sync owns cost and an administrator owns price holds no matter which door a row came through. It takes no body — the upstream is READ rather than told. If that upstream cannot be read the call answers 502 and writes NOTHING: a sync that cannot see its source must never conclude the source is empty, because that conclusion would withdraw every model on sale. The gate is a PLATFORM principal so the scheduled job\'s service token qualifies.
+         * @summary Refresh the model catalog by reading the upstream provider
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceCatalogModelsRefresh(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceCatalogModelsRefresh(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Upserts the shipped catalog seed and answers how many entries it created. It is idempotent and non-destructive — an entry an administrator has since edited is left alone — so it is safe to run against a live catalog to fill in what is missing. PLATFORM admin only; an org-level admin is refused 403.
+         * @summary Seed the embedded catalog, without disturbing edits already made
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceCatalogSeed(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceCatalogSeed(options).then((request) => request(axios, basePath));
         },
         /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteCollection.
@@ -6925,6 +10166,24 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
         },
         /**
+         * Creates a plan from the body and answers it at 201. The slug is required and globally unique — a duplicate is 409 — and the row is marked authoritative on creation, so the corrective seed will leave it alone. Price, annual price and the contact-sales flag are stored exactly as sent, never coerced, so the difference between a free plan and a quote-only plan survives. PLATFORM admin only.
+         * @summary Add a subscription plan
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommercePlansEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommercePlansEntries(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Upserts the shipped plan rows and answers how many were created and how many corrected. It is idempotent and non-destructive — a row an administrator authored or edited is left as it stands — so it is safe against a live authority and fills only what is missing or has drifted. PLATFORM admin only, and a deployment with no seed source wired answers 500 rather than quietly seeding nothing.
+         * @summary Seed the embedded plan catalog, without overwriting administrative edits
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommercePlansSeed(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommercePlansSeed(options).then((request) => request(axios, basePath));
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteProduct.
          * @summary Create a product
          * @param {*} [options] Override http request option.
@@ -6942,6 +10201,24 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         postCommerceProductByProductid(requestParameters: CommerceApiPostCommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postCommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates one rate. Product AND meter are both required, because together they are the identity: a rate keyed on the metered thing alone would let one product\'s price overwrite another\'s under the same name. A slug that already exists is refused rather than silently replaced. SuperAdmin only.
+         * @summary Add a rate
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceRatesEntries(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceRatesEntries(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes an array of rates and seeds the authority from it. This is the seed, driven from admin rather than compiled in, because 506 published prices in an embed made a price change wait for a build. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
+         * @summary Load the published price document, reconciling rather than replacing
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceRatesImport(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceRatesImport(options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The token must also carry Admin or WriteReturn.
@@ -6999,6 +10276,194 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         postCommerceStocklocationByStocklocationid(requestParameters: CommerceApiPostCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a store from the body inside the caller org\'s own namespaced database, so the row is physically isolated to that tenant from its first write, and answers it at 201 with a Location header naming its id. Requires an admin or store-write token: the anonymous published storefront key may READ stores but never create one. A body that fails to decode is 400.
+         * @summary Create a storefront
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStore(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStore(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header, the header winning when both are present. Only PUT, PATCH and DELETE are accepted; anything else resolves to 405. The trap is the default: naming NO override at all is treated as a partial update, never as a create. Authorization is whatever the underlying operation requires, since the real handler runs.
+         * @summary Method-override tunnel for clients that cannot send PUT, PATCH or DELETE
+         * @param {CommerceApiPostCommerceStoreByStoreidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreid(requestParameters: CommerceApiPostCommerceStoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Tallies a new order for the addressed store from the user, payment and order body, reserves its items, runs the processor authorization and answers the saved order with a Location header pointing at it. The gate is a token carrying admin or published scope, so a published storefront key is enough; no token is 401 and a token with neither bit is 403. The store is loaded BEFORE any payment work and its currency OVERRIDES whatever the body asked for, so a store that will not load ends the call with 500 and nothing is charged. On any authorization failure the reservations are released and the order and payment are persisted as cancelled, so a failed attempt still leaves a durable record. Capture is a separate call.
+         * @summary Authorize a new order against a storefront, holding the funds without settling them
+         * @param {CommerceApiPostCommerceStoreByStoreidAuthorizeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidAuthorize(requestParameters: CommerceApiPostCommerceStoreByStoreidAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidAuthorize(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Continues the order named in the path rather than minting a new one, holding funds for it. The order is loaded from the caller org\'s own store, so an id belonging to another tenant is a 404. The rule most callers get wrong is that the body\'s order object is MERGED onto the loaded order before the tally — this is not a read-only reference, and a field sent here overwrites what is stored. The gate, the store resolution and the currency override behave exactly as on the bodiless-id sibling, and settling is still the capture call\'s job.
+         * @summary Authorize an order that already exists, holding the funds without settling them
+         * @param {CommerceApiPostCommerceStoreByStoreidAuthorizeByOrderidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidAuthorizeByOrderid(requestParameters: CommerceApiPostCommerceStoreByStoreidAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Settles the order named in the path — the second half of the two-step flow — and answers the updated order with a Location header. Dispatch follows the order\'s STORED payment type, and a successful capture is the moment the rest of the system learns about the sale: order and payment rows are updated, coupon redemptions, referral, cart and stats are written, the confirmation email goes out, and the paid and completed events are emitted. A capture failure releases the order\'s inventory reservations and answers 400, so a failed settlement never leaves items held.
+         * @summary Capture a previously authorized order and settle the payment
+         * @param {CommerceApiPostCommerceStoreByStoreidCaptureByOrderidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCaptureByOrderid(requestParameters: CommerceApiPostCommerceStoreByStoreidCaptureByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Runs authorization and capture back to back against a freshly created order — the one-step flow for callers with no reason to hold funds. It takes the authorize body and inherits every authorize rule: the store\'s currency wins over the body, the items are reserved before the processor is called, and the amount bounds the processor enforces still apply. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects — confirmation email, redemptions, stats, the paid and completed events — run only when both halves succeed.
+         * @summary Authorize and capture a new order in one call
+         * @param {CommerceApiPostCommerceStoreByStoreidChargeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCharge(requestParameters: CommerceApiPostCommerceStoreByStoreidChargeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidCharge(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Authorizes a new order for the addressed store and holds the funds, answering the saved order with a Location header. It binds the identical handler as the shorter authorize address, so the two are ONE operation at two spellings and not two behaviours; the checkout prefix is the newer one. Every rule carries over: admin or published scope on the token, the store loaded first with its currency overriding the body, items reserved before the processor call, and reservations released with the order persisted cancelled on failure. Nothing is settled here.
+         * @summary Authorize a new order against a storefront, holding the funds — the checkout spelling
+         * @param {CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutAuthorize(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidCheckoutAuthorize(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Continues the order named in the path rather than minting one, and shares its handler byte for byte with the unprefixed authorize-by-id address. The order is loaded from the caller org\'s own store, so another tenant\'s id is a 404, and the body\'s order object is merged onto the loaded row before the tally — a field sent here overwrites what is stored. Store resolution, the token gate and the currency override behave as on every other authorize address; settle with the capture address and the same order id.
+         * @summary Authorize an existing order, holding the funds — the checkout spelling
+         * @param {CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeByOrderidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutAuthorizeByOrderid(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidCheckoutAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Settles the authorized order named in the path and answers the updated order with a Location header, running the same handler as the unprefixed capture address. Dispatch follows the order\'s stored payment type. Success is what triggers the downstream work — order and payment updates, redemptions, referral, cart and stats, the confirmation email, and the paid and completed events — while a failure releases the order\'s inventory reservations and answers 400.
+         * @summary Capture a previously authorized order and settle it — the checkout spelling
+         * @param {CommerceApiPostCommerceStoreByStoreidCheckoutCaptureByOrderidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutCaptureByOrderid(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutCaptureByOrderidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidCheckoutCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Performs authorization and capture back to back against a newly created order for the addressed store, on the same handler as the unprefixed charge address. It takes the authorize body and inherits every authorize rule, including the store\'s currency winning over the body and the items being reserved before the processor is called. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects run only when both succeed.
+         * @summary Authorize and capture a new order in one call — the checkout spelling
+         * @param {CommerceApiPostCommerceStoreByStoreidCheckoutChargeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutCharge(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutChargeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidCheckoutCharge(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Meant to void the payments carrying the given pay key, stamp them cancelled and cancel the order, but the shared checkout handler resolves its order from an ORDER ID path parameter this route does not carry. The result is an untyped order and a cancel dispatch that refuses with 400 before the pay key lookup ever runs. Token gate, namespacing and store resolution happen first, so a missing token is still 401 and an unloadable store still 500. It is the same handler as the unprefixed cancel address, with the same outcome.
+         * @summary PayPal cancel by pay key — refuses, exactly as the unprefixed address does
+         * @param {CommerceApiPostCommerceStoreByStoreidCheckoutPaypalCancelByPaykeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Meant to mark the payments carrying the given pay key as paid and set the order to paid, it cannot reach that work from this address: the shared checkout handler takes its order from an ORDER ID path parameter this route does not carry, so the order is always fresh and untyped and the confirm dispatch refuses with 400 before the pay key is queried. The token gate, the namespace middleware and the store lookup all run ahead of that, so authentication and store failures surface first. Behaviour is identical to the unprefixed confirm address; the checkout prefix changes nothing here.
+         * @summary PayPal confirm by pay key — refuses, exactly as the unprefixed address does
+         * @param {CommerceApiPostCommerceStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Begins a PayPal authorization by running the ordinary store authorize flow, since the route binds that exact handler — body, store resolution, tally, reservations and failure behaviour are the authorize address\'s, unchanged. The processor is chosen from the body\'s payment type, so this path reaches PayPal only when that type says so. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. Build against the plain authorize address instead.
+         * @summary Start a PayPal authorization for a new order — the checkout spelling
+         * @param {CommerceApiPostCommerceStoreByStoreidCheckoutPaypalPayRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidCheckoutPaypalPay(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutPaypalPayRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidCheckoutPaypalPay(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates the override and answers the store\'s ENTIRE listing map at 201 with a Location header — not just the entry that was added. A key already present is refused 400: creation never silently overwrites, so changing an existing listing has to be an explicit replace. The stored listing has its currency stamped from the store\'s own, which the replace path does not do. The key is matched exactly here, with none of the slug or SKU fallback the read allows. Admin-gated and resolved inside the caller org\'s namespace.
+         * @summary Add a listing override under a new key
+         * @param {CommerceApiPostCommerceStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidListingByKey(requestParameters: CommerceApiPostCommerceStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Intended to void the payments carrying the given pay key, stamp them cancelled and cancel the order, it never reaches that work: the shared checkout handler reads its order from an ORDER ID path parameter this route does not carry, leaving an untyped order that the cancel dispatch refuses with 400 before the pay key lookup runs. Authentication, namespacing and store resolution happen ahead of the refusal, so a missing token is 401 and an unloadable store 500. Cancelling a real PayPal authorization needs an address that carries the order id.
+         * @summary PayPal cancel by pay key — refuses, because a pay key alone does not identify the order
+         * @param {CommerceApiPostCommerceStoreByStoreidPaypalCancelByPaykeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidPaypalCancelByPaykey(requestParameters: CommerceApiPostCommerceStoreByStoreidPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Intended to mark every payment carrying the given pay key as paid and flip the order to paid, it cannot do that from this address and does not pretend to: the shared checkout handler resolves its order from an ORDER ID path parameter that this route does not carry, so it always works against a fresh untyped order and the confirm dispatch refuses it with 400 before the pay key is ever queried. The token gate, the namespace and the store lookup all run ahead of that, so a missing token is still 401 and an unloadable store still 500. Drive a PayPal return through an address that carries the order id.
+         * @summary PayPal confirm by pay key — refuses, because a pay key alone does not identify the order
+         * @param {CommerceApiPostCommerceStoreByStoreidPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidPaypalConfirmByPaykey(requestParameters: CommerceApiPostCommerceStoreByStoreidPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Runs the ordinary store authorize flow — the route binds that very handler, so the body, the store resolution, the tally, the reservations and the failure behaviour are the authorize address\'s, unchanged. It reaches PayPal only when the body\'s payment type says so; nothing about this path forces the processor, so a card-typed payment posted here authorizes on the card processor instead. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. It is the older entry point; the plain authorize address is the one to build against.
+         * @summary Start a PayPal authorization for a new order
+         * @param {CommerceApiPostCommerceStoreByStoreidPaypalPayRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidPaypalPay(requestParameters: CommerceApiPostCommerceStoreByStoreidPaypalPayRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidPaypalPay(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates a trialing subscription for the addressed store on the entry plan and grants that plan\'s trial credit, answering 201 when this call actually started one and 200 with a reason otherwise — not_new when the store already has billing history, trial_not_configured when no entry plan is wired. The window is always the SEVEN-DAY no-card trial, because this address never presents a card; the longer card-present window is reached only by adding a card afterwards. Entitlement is per store while the billing subject is the org, so every store an org owns takes its own trial. Admin-gated and namespaced to the caller\'s org: no resolvable store is 404 with store_required, and a backing-store failure is 503.
+         * @summary Start this store\'s no-card trial on the entry plan
+         * @param {CommerceApiPostCommerceStoreByStoreidTrialRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreByStoreidTrial(requestParameters: CommerceApiPostCommerceStoreByStoreidTrialRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreByStoreidTrial(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Answers a freshly minted token carrying ONLY the published-read permission — enough for a logged-out shopper\'s storefront to read your published catalog and nothing more, with no write and no admin scope. It is org-bound, signed with the org\'s own secret and subject to the org id, so unlike a shared service token it can never act on another tenant. Minting ROTATES rather than accumulates: the previous storefront token is dropped first and is invalid immediately, so re-minting is how you revoke. Admin is enforced by the handler as well as the route, because the route\'s token gate does not apply on the identity path and a plain member must not be able to mint their org\'s key.
+         * @summary Mint your org\'s least-privilege storefront read key
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceStoreToken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceStoreToken(options).then((request) => request(axios, basePath));
         },
         /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -7153,6 +10618,16 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
         /**
+         * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
+         * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
+         * @param {CommerceApiPostCommerceWebhooksByProviderRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postCommerceWebhooksByProvider(requestParameters: CommerceApiPostCommerceWebhooksByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCommerceWebhooksByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
+        },
+        /**
          * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
          * @summary Replace a collection outright
          * @param {CommerceApiPutCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
@@ -7203,6 +10678,16 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.putCommerceNoteByNoteid(requestParameters.noteid, options).then((request) => request(axios, basePath));
         },
         /**
+         * Loads the addressed plan, applies the body over it and answers the stored result, so a partial edit never silently zeroes a price or the contact-sales flag. The slug is IMMUTABLE: a body naming a different slug is rejected outright before anything is written, because a rename would orphan every subscription that stored the old id — deprecate and create instead. An admin edit marks the row authoritative so the seed stops correcting it. PLATFORM admin only; an unknown slug is 404.
+         * @summary Edit a plan, leaving the fields you omit alone
+         * @param {CommerceApiPutCommercePlansEntriesBySlugRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putCommercePlansEntriesBySlug(requestParameters: CommerceApiPutCommercePlansEntriesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommercePlansEntriesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
+        /**
          * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadProduct and WriteProduct together.
          * @summary Replace a product outright
          * @param {CommerceApiPutCommerceProductByProductidRequest} requestParameters Request parameters.
@@ -7211,6 +10696,16 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         putCommerceProductByProductid(requestParameters: CommerceApiPutCommerceProductByProductidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.putCommerceProductByProductid(requestParameters.productid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Edits one rate and MARKS it edited, which is the whole contract with the importer: an operator\'s price outranks the document it came from, so a later import leaves this row alone. Without that mark a price set here would apply, work, and silently revert on the next import. Only the editable fields move; identity and bookkeeping are not writable from the body. SuperAdmin only.
+         * @summary Edit a rate, and mark it as operator-set
+         * @param {CommerceApiPutCommerceRatesEntriesBySlugRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putCommerceRatesEntriesBySlug(requestParameters: CommerceApiPutCommerceRatesEntriesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceRatesEntriesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The token must also carry Admin, or ReadReturn and WriteReturn together.
@@ -7241,6 +10736,26 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         putCommerceStocklocationByStocklocationid(requestParameters: CommerceApiPutCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.putCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This is a true REPLACEMENT, not a merge: the stored key is preserved but the body is decoded onto a fresh entity, so every field the body omits is written back as its zero value. Use the partial update when you mean to change part of a store. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is a 404 before anything is written. Requires an admin token, or one holding both store read and store write.
+         * @summary Replace a storefront outright
+         * @param {CommerceApiPutCommerceStoreByStoreidRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putCommerceStoreByStoreid(requestParameters: CommerceApiPutCommerceStoreByStoreidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceStoreByStoreid(requestParameters.storeid, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Decodes the body over the existing listing when the key is present, so fields it omits keep their stored values, and builds the listing from the body alone when the key is new. Answers 200 when it replaced something and 201 with a Location header when it created it; either way the body is the store\'s entire listing map, not the single entry. Unlike creation, this path does NOT restamp the listing\'s currency from the store. Admin-gated, with the store resolved inside the caller org\'s namespace.
+         * @summary Upsert a listing override
+         * @param {CommerceApiPutCommerceStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putCommerceStoreByStoreidListingByKey(requestParameters: CommerceApiPutCommerceStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
          * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
@@ -7322,6 +10837,26 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
         putCommerceWebhookByWebhookid(requestParameters: CommerceApiPutCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.putCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Sets how many of one item a cart holds, and answers the whole updated cart.  This is the ONE way a cart\'s contents change. The quantity is the RESULT, not a delta: sending 3 leaves 3 however many were there before, so a retry is safe and a double-submit cannot double an order. ZERO REMOVES the line — there is deliberately no separate delete, because removal is the same act at the boundary value and a second spelling would be a second set of edge cases.  Name the item with EITHER product OR variant, never both. Prefer variant for anything sold in sizes, colours or tiers: the price and the stock belong to the variant, so a product-level line on a varianted product prices the wrong thing. Either may be given as an id or as the human key — a product\'s URL slug, a variant\'s SKU — which is what lets a storefront add to cart straight from a product page URL without a lookup first.  The item\'s price and name are CACHED onto the line as it is added, so the cart keeps the price the shopper was shown even if the catalog moves underneath it.  An item that resolves to nothing in the catalog is refused 400 and the cart is left exactly as it was; nothing is partially applied.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+         * @summary Set one item\'s quantity in a cart; zero removes it
+         * @param {CommerceApiSetCartItemRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setCartItem(requestParameters: CommerceApiSetCartItemRequest, options?: RawAxiosRequestConfig): AxiosPromise<Cart> {
+            return localVarFp.setCartItem(requestParameters.id, requestParameters.cartItemSet, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes a payment: charges a single-use card token and credits the caller\'s org balance, exactly once.  This is the operation behind \"collect money from a customer\". It runs the SAME core the console\'s card top-up runs (commerce billing.TakePayment), so the server-side amount bounds, the idempotency guard and the ledger credit are shared rather than reimplemented — a second charge path would eventually double-charge somebody.  The ORG is the caller\'s, taken from the validated principal and never from the input, so a payment can only ever credit the account of whoever made the call.  A payment is RISK-SCREENED before the card is charged, so this can be refused without any money moving: 403 means the screen did not authorise it, and 503 means the screen could not reach a decision — that one is worth retrying, and no charge was attempted either way.  Send an idempotencyKey. An agent retries by construction, and the key is what turns a retry into a replay of the first receipt instead of a second charge.  The answer states whether it settled in SANDBOX or live mode (`test`), and carries the processor\'s own reference (`processorRef`) so the charge can be reconciled against the processor rather than taken on trust.  A named builder, not a closure, so zipdoc can lift this prose into the registry.  It BUILDS the handler rather than being it, because the screen has to sit inside the value every projection of this op dispatches to — see exposePayments. `charge` is the money move, `take` is the screened door onto it, and the only registrable one is the second.
+         * @summary Take a card payment and credit the org\'s balance
+         * @param {CommerceApiTakePaymentRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        takePayment(requestParameters: CommerceApiTakePaymentRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaymentOut> {
+            return localVarFp.takePayment(requestParameters.paymentIn, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -7396,6 +10931,20 @@ export interface CommerceApiDeleteCommerceNoteByNoteidRequest {
 }
 
 /**
+ * Request parameters for deleteCommercePlansEntriesBySlug operation in CommerceApi.
+ * @export
+ * @interface CommerceApiDeleteCommercePlansEntriesBySlugRequest
+ */
+export interface CommerceApiDeleteCommercePlansEntriesBySlugRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiDeleteCommercePlansEntriesBySlug
+     */
+    readonly slug: string
+}
+
+/**
  * Request parameters for deleteCommerceProductByProductid operation in CommerceApi.
  * @export
  * @interface CommerceApiDeleteCommerceProductByProductidRequest
@@ -7407,6 +10956,20 @@ export interface CommerceApiDeleteCommerceProductByProductidRequest {
      * @memberof CommerceApiDeleteCommerceProductByProductid
      */
     readonly productid: string
+}
+
+/**
+ * Request parameters for deleteCommerceRatesEntriesBySlug operation in CommerceApi.
+ * @export
+ * @interface CommerceApiDeleteCommerceRatesEntriesBySlugRequest
+ */
+export interface CommerceApiDeleteCommerceRatesEntriesBySlugRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiDeleteCommerceRatesEntriesBySlug
+     */
+    readonly slug: string
 }
 
 /**
@@ -7449,6 +11012,41 @@ export interface CommerceApiDeleteCommerceStocklocationByStocklocationidRequest 
      * @memberof CommerceApiDeleteCommerceStocklocationByStocklocationid
      */
     readonly stocklocationid: string
+}
+
+/**
+ * Request parameters for deleteCommerceStoreByStoreid operation in CommerceApi.
+ * @export
+ * @interface CommerceApiDeleteCommerceStoreByStoreidRequest
+ */
+export interface CommerceApiDeleteCommerceStoreByStoreidRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiDeleteCommerceStoreByStoreid
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for deleteCommerceStoreByStoreidListingByKey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiDeleteCommerceStoreByStoreidListingByKeyRequest
+ */
+export interface CommerceApiDeleteCommerceStoreByStoreidListingByKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiDeleteCommerceStoreByStoreidListingByKey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiDeleteCommerceStoreByStoreidListingByKey
+     */
+    readonly key: string
 }
 
 /**
@@ -7561,6 +11159,34 @@ export interface CommerceApiDeleteCommerceWebhookByWebhookidRequest {
      * @memberof CommerceApiDeleteCommerceWebhookByWebhookid
      */
     readonly webhookid: string
+}
+
+/**
+ * Request parameters for discardCart operation in CommerceApi.
+ * @export
+ * @interface CommerceApiDiscardCartRequest
+ */
+export interface CommerceApiDiscardCartRequest {
+    /**
+     * ID is the cart\&#39;s id, as the open call answered it.
+     * @type {string}
+     * @memberof CommerceApiDiscardCart
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getCart operation in CommerceApi.
+ * @export
+ * @interface CommerceApiGetCartRequest
+ */
+export interface CommerceApiGetCartRequest {
+    /**
+     * ID is the cart\&#39;s id, as the open call answered it.
+     * @type {string}
+     * @memberof CommerceApiGetCart
+     */
+    readonly id: string
 }
 
 /**
@@ -7690,6 +11316,118 @@ export interface CommerceApiGetCommerceStocklocationByStocklocationidRequest {
 }
 
 /**
+ * Request parameters for getCommerceStoreByStoreid operation in CommerceApi.
+ * @export
+ * @interface CommerceApiGetCommerceStoreByStoreidRequest
+ */
+export interface CommerceApiGetCommerceStoreByStoreidRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiGetCommerceStoreByStoreid
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for getCommerceStoreByStoreidBundleByKey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiGetCommerceStoreByStoreidBundleByKeyRequest
+ */
+export interface CommerceApiGetCommerceStoreByStoreidBundleByKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiGetCommerceStoreByStoreidBundleByKey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiGetCommerceStoreByStoreidBundleByKey
+     */
+    readonly key: string
+}
+
+/**
+ * Request parameters for getCommerceStoreByStoreidListing operation in CommerceApi.
+ * @export
+ * @interface CommerceApiGetCommerceStoreByStoreidListingRequest
+ */
+export interface CommerceApiGetCommerceStoreByStoreidListingRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiGetCommerceStoreByStoreidListing
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for getCommerceStoreByStoreidListingByKey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiGetCommerceStoreByStoreidListingByKeyRequest
+ */
+export interface CommerceApiGetCommerceStoreByStoreidListingByKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiGetCommerceStoreByStoreidListingByKey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiGetCommerceStoreByStoreidListingByKey
+     */
+    readonly key: string
+}
+
+/**
+ * Request parameters for getCommerceStoreByStoreidProductByKey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiGetCommerceStoreByStoreidProductByKeyRequest
+ */
+export interface CommerceApiGetCommerceStoreByStoreidProductByKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiGetCommerceStoreByStoreidProductByKey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiGetCommerceStoreByStoreidProductByKey
+     */
+    readonly key: string
+}
+
+/**
+ * Request parameters for getCommerceStoreByStoreidVariantByKey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiGetCommerceStoreByStoreidVariantByKeyRequest
+ */
+export interface CommerceApiGetCommerceStoreByStoreidVariantByKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiGetCommerceStoreByStoreidVariantByKey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiGetCommerceStoreByStoreidVariantByKey
+     */
+    readonly key: string
+}
+
+/**
  * Request parameters for getCommerceSubmissionBySubmissionid operation in CommerceApi.
  * @export
  * @interface CommerceApiGetCommerceSubmissionBySubmissionidRequest
@@ -7799,6 +11537,34 @@ export interface CommerceApiGetCommerceWebhookByWebhookidRequest {
      * @memberof CommerceApiGetCommerceWebhookByWebhookid
      */
     readonly webhookid: string
+}
+
+/**
+ * Request parameters for getPayment operation in CommerceApi.
+ * @export
+ * @interface CommerceApiGetPaymentRequest
+ */
+export interface CommerceApiGetPaymentRequest {
+    /**
+     * ID is the ledger transaction id a payment returned.
+     * @type {string}
+     * @memberof CommerceApiGetPayment
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for openCart operation in CommerceApi.
+ * @export
+ * @interface CommerceApiOpenCartRequest
+ */
+export interface CommerceApiOpenCartRequest {
+    /**
+     * 
+     * @type {CartOpen}
+     * @memberof CommerceApiOpenCart
+     */
+    readonly cartOpen: CartOpen
 }
 
 /**
@@ -7925,6 +11691,41 @@ export interface CommerceApiPatchCommerceStocklocationByStocklocationidRequest {
      * @memberof CommerceApiPatchCommerceStocklocationByStocklocationid
      */
     readonly stocklocationid: string
+}
+
+/**
+ * Request parameters for patchCommerceStoreByStoreid operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPatchCommerceStoreByStoreidRequest
+ */
+export interface CommerceApiPatchCommerceStoreByStoreidRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPatchCommerceStoreByStoreid
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for patchCommerceStoreByStoreidListingByKey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPatchCommerceStoreByStoreidListingByKeyRequest
+ */
+export interface CommerceApiPatchCommerceStoreByStoreidListingByKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPatchCommerceStoreByStoreidListingByKey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPatchCommerceStoreByStoreidListingByKey
+     */
+    readonly key: string
 }
 
 /**
@@ -8166,6 +11967,307 @@ export interface CommerceApiPostCommerceStocklocationByStocklocationidRequest {
 }
 
 /**
+ * Request parameters for postCommerceStoreByStoreid operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreid
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidAuthorize operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidAuthorizeRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidAuthorizeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidAuthorize
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidAuthorizeByOrderid operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidAuthorizeByOrderidRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidAuthorizeByOrderidRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidAuthorizeByOrderid
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidAuthorizeByOrderid
+     */
+    readonly orderid: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidCaptureByOrderid operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidCaptureByOrderidRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidCaptureByOrderidRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCaptureByOrderid
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCaptureByOrderid
+     */
+    readonly orderid: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidCharge operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidChargeRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidChargeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCharge
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidCheckoutAuthorize operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCheckoutAuthorize
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidCheckoutAuthorizeByOrderid operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeByOrderidRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeByOrderidRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeByOrderid
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeByOrderid
+     */
+    readonly orderid: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidCheckoutCaptureByOrderid operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidCheckoutCaptureByOrderidRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidCheckoutCaptureByOrderidRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCheckoutCaptureByOrderid
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCheckoutCaptureByOrderid
+     */
+    readonly orderid: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidCheckoutCharge operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidCheckoutChargeRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidCheckoutChargeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCheckoutCharge
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidCheckoutPaypalCancelByPaykey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidCheckoutPaypalCancelByPaykeyRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidCheckoutPaypalCancelByPaykeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCheckoutPaypalCancelByPaykey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCheckoutPaypalCancelByPaykey
+     */
+    readonly payKey: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey
+     */
+    readonly payKey: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidCheckoutPaypalPay operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidCheckoutPaypalPayRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidCheckoutPaypalPayRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidCheckoutPaypalPay
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidListingByKey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidListingByKeyRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidListingByKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidListingByKey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidListingByKey
+     */
+    readonly key: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidPaypalCancelByPaykey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidPaypalCancelByPaykeyRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidPaypalCancelByPaykeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidPaypalCancelByPaykey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidPaypalCancelByPaykey
+     */
+    readonly payKey: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidPaypalConfirmByPaykey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidPaypalConfirmByPaykeyRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidPaypalConfirmByPaykeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidPaypalConfirmByPaykey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidPaypalConfirmByPaykey
+     */
+    readonly payKey: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidPaypalPay operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidPaypalPayRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidPaypalPayRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidPaypalPay
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for postCommerceStoreByStoreidTrial operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceStoreByStoreidTrialRequest
+ */
+export interface CommerceApiPostCommerceStoreByStoreidTrialRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceStoreByStoreidTrial
+     */
+    readonly storeid: string
+}
+
+/**
  * Request parameters for postCommerceSubmissionBySubmissionid operation in CommerceApi.
  * @export
  * @interface CommerceApiPostCommerceSubmissionBySubmissionidRequest
@@ -8278,6 +12380,20 @@ export interface CommerceApiPostCommerceWebhookByWebhookidRequest {
 }
 
 /**
+ * Request parameters for postCommerceWebhooksByProvider operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPostCommerceWebhooksByProviderRequest
+ */
+export interface CommerceApiPostCommerceWebhooksByProviderRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPostCommerceWebhooksByProvider
+     */
+    readonly provider: string
+}
+
+/**
  * Request parameters for putCommerceCollectionByCollectionid operation in CommerceApi.
  * @export
  * @interface CommerceApiPutCommerceCollectionByCollectionidRequest
@@ -8348,6 +12464,20 @@ export interface CommerceApiPutCommerceNoteByNoteidRequest {
 }
 
 /**
+ * Request parameters for putCommercePlansEntriesBySlug operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPutCommercePlansEntriesBySlugRequest
+ */
+export interface CommerceApiPutCommercePlansEntriesBySlugRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPutCommercePlansEntriesBySlug
+     */
+    readonly slug: string
+}
+
+/**
  * Request parameters for putCommerceProductByProductid operation in CommerceApi.
  * @export
  * @interface CommerceApiPutCommerceProductByProductidRequest
@@ -8359,6 +12489,20 @@ export interface CommerceApiPutCommerceProductByProductidRequest {
      * @memberof CommerceApiPutCommerceProductByProductid
      */
     readonly productid: string
+}
+
+/**
+ * Request parameters for putCommerceRatesEntriesBySlug operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPutCommerceRatesEntriesBySlugRequest
+ */
+export interface CommerceApiPutCommerceRatesEntriesBySlugRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPutCommerceRatesEntriesBySlug
+     */
+    readonly slug: string
 }
 
 /**
@@ -8401,6 +12545,41 @@ export interface CommerceApiPutCommerceStocklocationByStocklocationidRequest {
      * @memberof CommerceApiPutCommerceStocklocationByStocklocationid
      */
     readonly stocklocationid: string
+}
+
+/**
+ * Request parameters for putCommerceStoreByStoreid operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPutCommerceStoreByStoreidRequest
+ */
+export interface CommerceApiPutCommerceStoreByStoreidRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPutCommerceStoreByStoreid
+     */
+    readonly storeid: string
+}
+
+/**
+ * Request parameters for putCommerceStoreByStoreidListingByKey operation in CommerceApi.
+ * @export
+ * @interface CommerceApiPutCommerceStoreByStoreidListingByKeyRequest
+ */
+export interface CommerceApiPutCommerceStoreByStoreidListingByKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPutCommerceStoreByStoreidListingByKey
+     */
+    readonly storeid: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPutCommerceStoreByStoreidListingByKey
+     */
+    readonly key: string
 }
 
 /**
@@ -8516,6 +12695,41 @@ export interface CommerceApiPutCommerceWebhookByWebhookidRequest {
 }
 
 /**
+ * Request parameters for setCartItem operation in CommerceApi.
+ * @export
+ * @interface CommerceApiSetCartItemRequest
+ */
+export interface CommerceApiSetCartItemRequest {
+    /**
+     * ID is the cart to amend, from the path.
+     * @type {string}
+     * @memberof CommerceApiSetCartItem
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {CartItemSet}
+     * @memberof CommerceApiSetCartItem
+     */
+    readonly cartItemSet: CartItemSet
+}
+
+/**
+ * Request parameters for takePayment operation in CommerceApi.
+ * @export
+ * @interface CommerceApiTakePaymentRequest
+ */
+export interface CommerceApiTakePaymentRequest {
+    /**
+     * 
+     * @type {PaymentIn}
+     * @memberof CommerceApiTakePayment
+     */
+    readonly paymentIn: PaymentIn
+}
+
+/**
  * CommerceApi - object-oriented interface
  * @export
  * @class CommerceApi
@@ -8583,6 +12797,18 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
+     * Deletes the addressed plan and answers 204. It removes the plan from the catalog buyers choose from; it does not touch subscriptions already sold against it, which keep their stored plan id. PLATFORM admin only — an org-level admin is refused 403 — and an unknown slug is 404.
+     * @summary Remove a plan from the authority
+     * @param {CommerceApiDeleteCommercePlansEntriesBySlugRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public deleteCommercePlansEntriesBySlug(requestParameters: CommerceApiDeleteCommercePlansEntriesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommercePlansEntriesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteProduct.
      * @summary Delete a product, keeping a recoverable copy
      * @param {CommerceApiDeleteCommerceProductByProductidRequest} requestParameters Request parameters.
@@ -8592,6 +12818,18 @@ export class CommerceApi extends BaseAPI {
      */
     public deleteCommerceProductByProductid(requestParameters: CommerceApiDeleteCommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).deleteCommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Deletes the row. ARCHIVING is usually what is wanted instead — a deleted rate cannot price a historical charge, so a past invoice that has to re-resolve its rate finds nothing to read. Reach for status=archived unless the rate never priced anything. SuperAdmin only.
+     * @summary Remove a rate outright
+     * @param {CommerceApiDeleteCommerceRatesEntriesBySlugRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public deleteCommerceRatesEntriesBySlug(requestParameters: CommerceApiDeleteCommerceRatesEntriesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceRatesEntriesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8628,6 +12866,30 @@ export class CommerceApi extends BaseAPI {
      */
     public deleteCommerceStocklocationByStocklocationid(requestParameters: CommerceApiDeleteCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).deleteCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes the addressed store and answers 204 with no body. Before the live row goes, the entity is written once more under a tombstone kind, so the deletion leaves a recoverable copy rather than destroying the record outright; the store\'s listing overrides live inside that row and go with it. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin or store-write token.
+     * @summary Delete a storefront, keeping a recoverable copy
+     * @param {CommerceApiDeleteCommerceStoreByStoreidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public deleteCommerceStoreByStoreid(requestParameters: CommerceApiDeleteCommerceStoreByStoreidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceStoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Drops the key from the store\'s listing map and re-saves the store, answering 204 with no body. It UN-OVERRIDES rather than deletes: the product, variant or bundle itself is untouched and simply reverts to its catalog values on this storefront. A key that is not present is 404, and so is a store id outside the caller org\'s namespace. Admin-gated.
+     * @summary Remove a listing override
+     * @param {CommerceApiDeleteCommerceStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public deleteCommerceStoreByStoreidListingByKey(requestParameters: CommerceApiDeleteCommerceStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8727,6 +12989,30 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
+     * Discards a cart the shopper abandoned, and answers it in its final state.  A discarded cart is CLOSED, not deleted: the row stays, so abandoned-basket reporting and any follow-up that keys on it still have something to read. It stops being a cart anything will check out, which is the point — it is how a storefront says \"this basket is over\" without destroying the evidence that it existed.  Discarding is idempotent: a cart already discarded answers its stored state rather than failing, so a retry is safe.  The cart is resolved inside the caller\'s own org namespace, so another tenant\'s id answers 404.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Discard a cart the shopper abandoned
+     * @param {CommerceApiDiscardCartRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public discardCart(requestParameters: CommerceApiDiscardCartRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).discardCart(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads one cart: its lines, its status and what it comes to.  This is what a storefront calls to render the basket, and what a support agent calls to see what a shopper is looking at. The totals are the cart\'s STORED tally — shipping and tax stay zero until checkout resolves a shipping option and a tax region, so a cart total before checkout is the merchandise total and is meant to be.  The org scopes the read by construction: the store is namespaced to it, so a cart id belonging to another tenant is simply not found rather than found and then filtered, and answers 404 rather than 403 so the id space cannot be probed.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Read one cart with its lines and totals
+     * @param {CommerceApiGetCartRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCart(requestParameters: CommerceApiGetCartRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCart(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Returns the brand-scoped catalog carrying the administrative economics the public projection withholds — upstream cost and margin percentage — for the margin surface the platform console administrates. The brand comes from the query and defaults to hanzo. PLATFORM admin only, enforced by the handler on top of the route\'s IAM gate: an ORG-level admin is refused 403 precisely so upstream cost and margin never reach a tenant.
      * @summary The catalog projection with cost and margin included
      * @param {*} [options] Override http request option.
@@ -8746,6 +13032,17 @@ export class CommerceApi extends BaseAPI {
      */
     public getCommerceCatalog(options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).getCommerceCatalog(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns every catalog row as stored — the admin view, which unlike the public projection includes entries that are not published. It is cross-tenant platform data, so the gate is a PLATFORM admin: an org-level admin is refused 403 no matter how privileged they are inside their own org, enforced by the handler itself and not only by the route\'s token middleware.
+     * @summary The raw catalog entries, including the unpublished ones
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceCatalogEntries(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceCatalogEntries(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8780,6 +13077,17 @@ export class CommerceApi extends BaseAPI {
      */
     public getCommerceCurrencies(options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).getCommerceCurrencies(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reports whether the deposit watcher is running, its poll interval, and one row per armed asset: chain, token, contract, pooled address and the last block that asset\'s cursor reached. That last block is the only way to see a watcher that is up but no longer advancing, which is what a stalled deposit rail looks like from outside. SuperAdmin only — the reserved admin org\'s owner claim; an authenticated caller without it is refused 403 and an anonymous one 401. It is READ-ONLY by design: arming an asset stays a CRYPTO_DEPOSIT_* deployment act and is deliberately not a button here, so there is nothing on this surface that can start crediting a customer\'s balance. The asset\'s RPC endpoint is reduced to scheme://host before it is returned, because a managed node URL carries its API key in the path or query and echoing it verbatim would publish that credential to every reader of this status.
+     * @summary Read the crypto deposit watcher\'s runtime state, asset by asset
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceDeposits(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceDeposits(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8826,6 +13134,17 @@ export class CommerceApi extends BaseAPI {
      */
     public getCommerceDiscountByDiscountid(requestParameters: CommerceApiGetCommerceDiscountByDiscountidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).getCommerceDiscountByDiscountid(requestParameters.discountid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers ok whenever the commerce subsystem is mounted. It is registered before the module embed boots, so it keeps answering even when the embed failed and every business route serves the fail-closed 503 — which is the point: it reports that the process is reachable, never that the money plane is healthy. Unauthenticated: a probe that needs a credential is a probe that reports the credential.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Answers ok whenever the commerce subsystem is mounted.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceHealth(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceHealth(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8886,6 +13205,17 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
+     * Returns every plan row as stored — the administrative view behind the public plan catalog. The plan authority is cross-tenant pricing data, so the gate is a PLATFORM admin enforced by the handler itself: an org-level admin is refused 403 no matter what they may do inside their own org.
+     * @summary The raw plan authority rows
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommercePlansEntries(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommercePlansEntries(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Answers a pagination envelope — the page and display echoed back, the rows under models, a total count and a facets array — read from the caller org\'s own namespaced store, so one tenant can never list another\'s. Sorting defaults to the slug and is overridable with sort. display is the page size and page applies only alongside it; either one that is not a positive integer is refused with 500 rather than silently ignored, and the limit query overrides the reported COUNT only, never the rows returned. No search backend is wired, so the datastore is the one and only list path and facets is always empty. A request resolving no org namespace is served an EMPTY page rather than an unscoped scan: the namespace IS the tenant filter, so without one there is nothing safe to return. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or the Product list scope.
      * @summary List your org\'s products, as a page
      * @param {*} [options] Override http request option.
@@ -8906,6 +13236,17 @@ export class CommerceApi extends BaseAPI {
      */
     public getCommerceProductByProductid(requestParameters: CommerceApiGetCommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).getCommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the rate authority\'s rows — the prices every metered charge resolves against. Narrow with ?product= to show one surface at a time rather than every rate at once. SuperAdmin only: a rate is cross-tenant money, so the handler asks for the reserved admin org\'s owner claim itself rather than trusting the bundle\'s token gate.
+     * @summary List what one unit of each metered thing costs
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceRatesEntries(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceRatesEntries(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8975,6 +13316,111 @@ export class CommerceApi extends BaseAPI {
      */
     public getCommerceStocklocationByStocklocationid(requestParameters: CommerceApiGetCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).getCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers a pagination envelope — page, display, the rows, and a total count — read from the caller org\'s OWN namespaced database, so one tenant can never list another\'s stores. Sorting defaults to the store slug and is overridable with sort; display is the page size and page applies only alongside it, and either one that is not a positive integer is refused rather than silently ignored. The limit query overrides the reported COUNT only and never the rows returned. A request that resolves no org namespace is served an empty page, never an unscoped scan. Readable with an admin token, a store-scoped token, or the anonymous published storefront key.
+     * @summary List your org\'s storefronts as a page
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceStore(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceStore(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers allowed, the store id, and a status of trial, active, payment_required, store_required or unavailable — the entitlement check a merchant surface gates on. The rule that surprises people is that entitlement is PER STORE, not per org: the store needs its own current subscription on the entry plan, either trialing with a trial end still ahead or active with a period end still ahead, so an org-wide balance or a sibling store\'s plan unlocks nothing here. The store comes from the X-Store-Id header and otherwise falls back to the org\'s first store; neither resolving is store_required with allowed false, and a backing-store failure is 503 with status unavailable — a retry signal, not a denial.
+     * @summary Whether a store is entitled to trade, and why
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceStoreAccess(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceStoreAccess(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Reads the addressed store from the caller org\'s own namespaced database, so an id belonging to another tenant is simply absent there and answers 404 rather than leaking its existence. The body is the stored entity including its embedded listing override map. Readable with an admin or store-read token and also with the anonymous published storefront key, which is what lets a logged-out storefront resolve the store it is rendering.
+     * @summary Fetch one storefront
+     * @param {CommerceApiGetCommerceStoreByStoreidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceStoreByStoreid(requestParameters: CommerceApiGetCommerceStoreByStoreidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceStoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the stored bundle with the store\'s listing for it laid over the top — every non-empty listing field wins, and the currency is forced to the store\'s own — so the caller reads what this storefront actually sells rather than the catalog-wide record. The overlay is keyed by the item\'s ID: a listing filed only under a slug or SKU does not reach it, unlike the listing reads, which do fall back to those. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+     * @summary Fetch a bundle as this storefront sells it
+     * @param {CommerceApiGetCommerceStoreByStoreidBundleByKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceStoreByStoreidBundleByKey(requestParameters: CommerceApiGetCommerceStoreByStoreidBundleByKeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceStoreByStoreidBundleByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns every override this store applies to catalog items — name, price, list price, media, availability and the hidden flag — keyed by product or variant id, in one read. A listing is an OVERRIDE, not a product: the catalog item exists independently and this map only says how this storefront presents it. Read from the caller org\'s own namespaced database, so a store id belonging to another tenant is 404. Readable with an admin token or the anonymous published storefront key.
+     * @summary The storefront\'s whole listing override map
+     * @param {CommerceApiGetCommerceStoreByStoreidListingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceStoreByStoreidListing(requestParameters: CommerceApiGetCommerceStoreByStoreidListingRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceStoreByStoreidListing(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Looks the key up in the store\'s listing map first and, failing that, matches it against each listing\'s slug and then its SKU — so a storefront holding only a product\'s URL slug can still resolve the override. That fallback is unique to the listing reads; the item overlay routes match by id alone. A key matching none of the three is 404, as is a store id outside the caller org\'s namespace. Readable with an admin token or the anonymous published storefront key.
+     * @summary Fetch one listing override, by item id or by its slug or SKU
+     * @param {CommerceApiGetCommerceStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceStoreByStoreidListingByKey(requestParameters: CommerceApiGetCommerceStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the stored product with the store\'s listing for it laid over the top — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what lets two storefronts sell the same catalog product at their own price, name and media. The overlay is keyed by the product\'s ID, so a listing filed only under a slug or SKU does not apply here. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+     * @summary Fetch a product as this storefront sells it
+     * @param {CommerceApiGetCommerceStoreByStoreidProductByKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceStoreByStoreidProductByKey(requestParameters: CommerceApiGetCommerceStoreByStoreidProductByKeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceStoreByStoreidProductByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the stored variant with the store\'s listing for it overlaid — non-empty listing fields replace the catalog values and the currency is forced to the store\'s own — which is what makes per-storefront pricing of a shared variant possible. The overlay is keyed by the variant\'s ID, never by its slug or SKU. An unknown store or key is 404. Readable with an admin token or the anonymous published storefront key.
+     * @summary Fetch a variant as this storefront sells it
+     * @param {CommerceApiGetCommerceStoreByStoreidVariantByKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceStoreByStoreidVariantByKey(requestParameters: CommerceApiGetCommerceStoreByStoreidVariantByKeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceStoreByStoreidVariantByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns the caller org\'s store resolved FROM THE AUTHENTICATED ORG rather than from a path id — which is how an admin dashboard or a storefront edge learns the store id it should then read and write against. An X-Store-Id header selects a specific store, resolved only inside the caller\'s own namespace, so a foreign id cannot cross the tenant boundary and answers 404 instead. With no header the org\'s first store is returned, and an org that has none yet has its canonical default provisioned lazily and idempotently, carrying no payment credentials. Only when there is no org in context, or provisioning fails, does it fall back to a placeholder store literally named default, which a storefront edge should treat as unconfigured.
+     * @summary Resolve your org\'s active storefront without naming an id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getCommerceStoreCurrent(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getCommerceStoreCurrent(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9162,6 +13608,30 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
+     * Reads one settled payment out of the caller\'s org ledger.  The org scopes the read by construction — the ledger is namespaced to it — so an id belonging to another tenant is simply not found rather than found and then filtered. A ledger row that is not a payment is likewise not found, so this cannot be used to walk the org\'s usage debits.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Read one settled payment by its id
+     * @param {CommerceApiGetPaymentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public getPayment(requestParameters: CommerceApiGetPaymentRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).getPayment(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Opens an empty cart for a shopper to fill, and answers it with its new id.  This is the first step of a sale: hold the id, add items to it with setCartItem, then hand it to checkout. Every field of the request is optional — an empty body opens a perfectly good anonymous cart — and the fields exist only to pre-fill what is already known about the shopper.  The STORE defaults to the org\'s own default storefront, so a merchant selling through one storefront never has to name it. The CURRENCY defaults to usd; note that checkout overrides it with the store\'s own currency when the sale is authorized, so a currency set here is a hint rather than a commitment.  The cart is created in the CALLER\'S OWN org namespace, taken from the validated principal and never from the body, so a cart can never be opened on another tenant\'s books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Open a cart for a shopper to fill
+     * @param {CommerceApiOpenCartRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public openCart(requestParameters: CommerceApiOpenCartRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).openCart(requestParameters.cartOpen, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
      * @summary Change part of a collection
      * @param {CommerceApiPatchCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
@@ -9270,6 +13740,30 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
+     * Loads the stored store and decodes the body over it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged entity. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is 404. Requires an admin token, or one holding both store read and store write.
+     * @summary Change part of a storefront
+     * @param {CommerceApiPatchCommerceStoreByStoreidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public patchCommerceStoreByStoreid(requestParameters: CommerceApiPatchCommerceStoreByStoreidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceStoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Requires the key to already be present — an absent one is 404 — and answers the store\'s listing map at 200. Read the behaviour before relying on it: the decoded body is applied to a COPY taken out of the map and is never assigned back, so the stored listing is unchanged and the map returned is exactly the map that was already there. An actual edit to an existing listing has to go through the upsert, which does write its result back into the store. A body that fails to decode is still 400. Admin-gated and namespaced to the caller\'s org.
+     * @summary Confirm a listing override exists and re-save the store
+     * @param {CommerceApiPatchCommerceStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public patchCommerceStoreByStoreidListingByKey(requestParameters: CommerceApiPatchCommerceStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).patchCommerceStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * A submission is one filled-in form from a site visitor — an email, an optional user id, the client details the server observed (user agent, referer, geography) and the form\'s own fields as free metadata. It carries no form id, so the link back to the form that produced it is not stored on the row. Loads the stored row and decodes the body OVER it, so only the fields the body names change and everything else keeps its stored value — the difference from the full replace, which clears what it is not told. Answers the merged row. An id absent from the caller org\'s namespace is 404 and a body that fails to decode is 400. Any valid access token reaches it. The per-kind permission table has no entry for submission, so the scaffold skips that second check with a warning and the gate above is the whole authorization story.
      * @summary Change part of a submission
      * @param {CommerceApiPatchCommerceSubmissionBySubmissionidRequest} requestParameters Request parameters.
@@ -9363,6 +13857,50 @@ export class CommerceApi extends BaseAPI {
      */
     public patchCommerceWebhookByWebhookid(requestParameters: CommerceApiPatchCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).patchCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a catalog row from the body and answers it at 201. The slug is required and is the globally-unique catalog key, so a second entry claiming a slug already in use is refused 409 rather than shadowing the first. PLATFORM admin only — this is cross-tenant pricing and packaging data, and an org-level admin is refused 403.
+     * @summary Add a catalog entry
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceCatalogEntries(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceCatalogEntries(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes a batch of model rows and upserts each one\'s upstream COST and machine-observable facts, answering what was created and changed. It deliberately touches nothing a human owns — not the retail price, not the markup, not the entitlement tier — so a sync can never overwrite an administrator\'s pricing decision. The gate is a PLATFORM principal rather than a platform ADMIN, because the caller is normally a scheduled job holding the internal service token, which carries platform scope but no admin claim.
+     * @summary Land a syncer\'s view of the model catalog: upstream costs and machine facts
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceCatalogModels(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceCatalogModels(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Pulls the upstream model list and lands it through the same upsert the push door uses, so the rule that a sync owns cost and an administrator owns price holds no matter which door a row came through. It takes no body — the upstream is READ rather than told. If that upstream cannot be read the call answers 502 and writes NOTHING: a sync that cannot see its source must never conclude the source is empty, because that conclusion would withdraw every model on sale. The gate is a PLATFORM principal so the scheduled job\'s service token qualifies.
+     * @summary Refresh the model catalog by reading the upstream provider
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceCatalogModelsRefresh(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceCatalogModelsRefresh(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Upserts the shipped catalog seed and answers how many entries it created. It is idempotent and non-destructive — an entry an administrator has since edited is left alone — so it is safe to run against a live catalog to fill in what is missing. PLATFORM admin only; an org-level admin is refused 403.
+     * @summary Seed the embedded catalog, without disturbing edits already made
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceCatalogSeed(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceCatalogSeed(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9481,6 +14019,28 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
+     * Creates a plan from the body and answers it at 201. The slug is required and globally unique — a duplicate is 409 — and the row is marked authoritative on creation, so the corrective seed will leave it alone. Price, annual price and the contact-sales flag are stored exactly as sent, never coerced, so the difference between a free plan and a quote-only plan survives. PLATFORM admin only.
+     * @summary Add a subscription plan
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommercePlansEntries(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommercePlansEntries(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Upserts the shipped plan rows and answers how many were created and how many corrected. It is idempotent and non-destructive — a row an administrator authored or edited is left as it stands — so it is safe against a live authority and fills only what is missing or has drifted. PLATFORM admin only, and a deployment with no seed source wired answers 500 rather than quietly seeding nothing.
+     * @summary Seed the embedded plan catalog, without overwriting administrative edits
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommercePlansSeed(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommercePlansSeed(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. Decodes the body into a new row in the caller org\'s own namespaced store — isolated to that tenant from its first write — and answers the stored row at 201 with a Location header naming its id. The id is assigned by the store, not taken from the body. A body that fails to decode is 400 and a store that refuses the write is 500. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin or WriteProduct.
      * @summary Create a product
      * @param {*} [options] Override http request option.
@@ -9501,6 +14061,28 @@ export class CommerceApi extends BaseAPI {
      */
     public postCommerceProductByProductid(requestParameters: CommerceApiPostCommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).postCommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates one rate. Product AND meter are both required, because together they are the identity: a rate keyed on the metered thing alone would let one product\'s price overwrite another\'s under the same name. A slug that already exists is refused rather than silently replaced. SuperAdmin only.
+     * @summary Add a rate
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceRatesEntries(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceRatesEntries(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes an array of rates and seeds the authority from it. This is the seed, driven from admin rather than compiled in, because 506 published prices in an embed made a price change wait for a build. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
+     * @summary Load the published price document, reconciling rather than replacing
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceRatesImport(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceRatesImport(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9570,6 +14152,232 @@ export class CommerceApi extends BaseAPI {
      */
     public postCommerceStocklocationByStocklocationid(requestParameters: CommerceApiPostCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).postCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a store from the body inside the caller org\'s own namespaced database, so the row is physically isolated to that tenant from its first write, and answers it at 201 with a Location header naming its id. Requires an admin or store-write token: the anonymous published storefront key may READ stores but never create one. A body that fails to decode is 400.
+     * @summary Create a storefront
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStore(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStore(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Re-dispatches the request into the handler the intended verb would have reached, taking that verb from a _method form value or query parameter and then from the X-HTTP-Method-Override header, the header winning when both are present. Only PUT, PATCH and DELETE are accepted; anything else resolves to 405. The trap is the default: naming NO override at all is treated as a partial update, never as a create. Authorization is whatever the underlying operation requires, since the real handler runs.
+     * @summary Method-override tunnel for clients that cannot send PUT, PATCH or DELETE
+     * @param {CommerceApiPostCommerceStoreByStoreidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreid(requestParameters: CommerceApiPostCommerceStoreByStoreidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Tallies a new order for the addressed store from the user, payment and order body, reserves its items, runs the processor authorization and answers the saved order with a Location header pointing at it. The gate is a token carrying admin or published scope, so a published storefront key is enough; no token is 401 and a token with neither bit is 403. The store is loaded BEFORE any payment work and its currency OVERRIDES whatever the body asked for, so a store that will not load ends the call with 500 and nothing is charged. On any authorization failure the reservations are released and the order and payment are persisted as cancelled, so a failed attempt still leaves a durable record. Capture is a separate call.
+     * @summary Authorize a new order against a storefront, holding the funds without settling them
+     * @param {CommerceApiPostCommerceStoreByStoreidAuthorizeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidAuthorize(requestParameters: CommerceApiPostCommerceStoreByStoreidAuthorizeRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidAuthorize(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Continues the order named in the path rather than minting a new one, holding funds for it. The order is loaded from the caller org\'s own store, so an id belonging to another tenant is a 404. The rule most callers get wrong is that the body\'s order object is MERGED onto the loaded order before the tally — this is not a read-only reference, and a field sent here overwrites what is stored. The gate, the store resolution and the currency override behave exactly as on the bodiless-id sibling, and settling is still the capture call\'s job.
+     * @summary Authorize an order that already exists, holding the funds without settling them
+     * @param {CommerceApiPostCommerceStoreByStoreidAuthorizeByOrderidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidAuthorizeByOrderid(requestParameters: CommerceApiPostCommerceStoreByStoreidAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Settles the order named in the path — the second half of the two-step flow — and answers the updated order with a Location header. Dispatch follows the order\'s STORED payment type, and a successful capture is the moment the rest of the system learns about the sale: order and payment rows are updated, coupon redemptions, referral, cart and stats are written, the confirmation email goes out, and the paid and completed events are emitted. A capture failure releases the order\'s inventory reservations and answers 400, so a failed settlement never leaves items held.
+     * @summary Capture a previously authorized order and settle the payment
+     * @param {CommerceApiPostCommerceStoreByStoreidCaptureByOrderidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidCaptureByOrderid(requestParameters: CommerceApiPostCommerceStoreByStoreidCaptureByOrderidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Runs authorization and capture back to back against a freshly created order — the one-step flow for callers with no reason to hold funds. It takes the authorize body and inherits every authorize rule: the store\'s currency wins over the body, the items are reserved before the processor is called, and the amount bounds the processor enforces still apply. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects — confirmation email, redemptions, stats, the paid and completed events — run only when both halves succeed.
+     * @summary Authorize and capture a new order in one call
+     * @param {CommerceApiPostCommerceStoreByStoreidChargeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidCharge(requestParameters: CommerceApiPostCommerceStoreByStoreidChargeRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidCharge(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Authorizes a new order for the addressed store and holds the funds, answering the saved order with a Location header. It binds the identical handler as the shorter authorize address, so the two are ONE operation at two spellings and not two behaviours; the checkout prefix is the newer one. Every rule carries over: admin or published scope on the token, the store loaded first with its currency overriding the body, items reserved before the processor call, and reservations released with the order persisted cancelled on failure. Nothing is settled here.
+     * @summary Authorize a new order against a storefront, holding the funds — the checkout spelling
+     * @param {CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidCheckoutAuthorize(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidCheckoutAuthorize(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Continues the order named in the path rather than minting one, and shares its handler byte for byte with the unprefixed authorize-by-id address. The order is loaded from the caller org\'s own store, so another tenant\'s id is a 404, and the body\'s order object is merged onto the loaded row before the tally — a field sent here overwrites what is stored. Store resolution, the token gate and the currency override behave as on every other authorize address; settle with the capture address and the same order id.
+     * @summary Authorize an existing order, holding the funds — the checkout spelling
+     * @param {CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeByOrderidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidCheckoutAuthorizeByOrderid(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutAuthorizeByOrderidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidCheckoutAuthorizeByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Settles the authorized order named in the path and answers the updated order with a Location header, running the same handler as the unprefixed capture address. Dispatch follows the order\'s stored payment type. Success is what triggers the downstream work — order and payment updates, redemptions, referral, cart and stats, the confirmation email, and the paid and completed events — while a failure releases the order\'s inventory reservations and answers 400.
+     * @summary Capture a previously authorized order and settle it — the checkout spelling
+     * @param {CommerceApiPostCommerceStoreByStoreidCheckoutCaptureByOrderidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidCheckoutCaptureByOrderid(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutCaptureByOrderidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidCheckoutCaptureByOrderid(requestParameters.storeid, requestParameters.orderid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Performs authorization and capture back to back against a newly created order for the addressed store, on the same handler as the unprefixed charge address. It takes the authorize body and inherits every authorize rule, including the store\'s currency winning over the body and the items being reserved before the processor is called. There is no order id on this address, so it can never continue an existing order. Either half failing answers 400, and the capture side effects run only when both succeed.
+     * @summary Authorize and capture a new order in one call — the checkout spelling
+     * @param {CommerceApiPostCommerceStoreByStoreidCheckoutChargeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidCheckoutCharge(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutChargeRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidCheckoutCharge(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Meant to void the payments carrying the given pay key, stamp them cancelled and cancel the order, but the shared checkout handler resolves its order from an ORDER ID path parameter this route does not carry. The result is an untyped order and a cancel dispatch that refuses with 400 before the pay key lookup ever runs. Token gate, namespacing and store resolution happen first, so a missing token is still 401 and an unloadable store still 500. It is the same handler as the unprefixed cancel address, with the same outcome.
+     * @summary PayPal cancel by pay key — refuses, exactly as the unprefixed address does
+     * @param {CommerceApiPostCommerceStoreByStoreidCheckoutPaypalCancelByPaykeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidCheckoutPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Meant to mark the payments carrying the given pay key as paid and set the order to paid, it cannot reach that work from this address: the shared checkout handler takes its order from an ORDER ID path parameter this route does not carry, so the order is always fresh and untyped and the confirm dispatch refuses with 400 before the pay key is queried. The token gate, the namespace middleware and the store lookup all run ahead of that, so authentication and store failures surface first. Behaviour is identical to the unprefixed confirm address; the checkout prefix changes nothing here.
+     * @summary PayPal confirm by pay key — refuses, exactly as the unprefixed address does
+     * @param {CommerceApiPostCommerceStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidCheckoutPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Begins a PayPal authorization by running the ordinary store authorize flow, since the route binds that exact handler — body, store resolution, tally, reservations and failure behaviour are the authorize address\'s, unchanged. The processor is chosen from the body\'s payment type, so this path reaches PayPal only when that type says so. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. Build against the plain authorize address instead.
+     * @summary Start a PayPal authorization for a new order — the checkout spelling
+     * @param {CommerceApiPostCommerceStoreByStoreidCheckoutPaypalPayRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidCheckoutPaypalPay(requestParameters: CommerceApiPostCommerceStoreByStoreidCheckoutPaypalPayRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidCheckoutPaypalPay(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates the override and answers the store\'s ENTIRE listing map at 201 with a Location header — not just the entry that was added. A key already present is refused 400: creation never silently overwrites, so changing an existing listing has to be an explicit replace. The stored listing has its currency stamped from the store\'s own, which the replace path does not do. The key is matched exactly here, with none of the slug or SKU fallback the read allows. Admin-gated and resolved inside the caller org\'s namespace.
+     * @summary Add a listing override under a new key
+     * @param {CommerceApiPostCommerceStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidListingByKey(requestParameters: CommerceApiPostCommerceStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Intended to void the payments carrying the given pay key, stamp them cancelled and cancel the order, it never reaches that work: the shared checkout handler reads its order from an ORDER ID path parameter this route does not carry, leaving an untyped order that the cancel dispatch refuses with 400 before the pay key lookup runs. Authentication, namespacing and store resolution happen ahead of the refusal, so a missing token is 401 and an unloadable store 500. Cancelling a real PayPal authorization needs an address that carries the order id.
+     * @summary PayPal cancel by pay key — refuses, because a pay key alone does not identify the order
+     * @param {CommerceApiPostCommerceStoreByStoreidPaypalCancelByPaykeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidPaypalCancelByPaykey(requestParameters: CommerceApiPostCommerceStoreByStoreidPaypalCancelByPaykeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidPaypalCancelByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Intended to mark every payment carrying the given pay key as paid and flip the order to paid, it cannot do that from this address and does not pretend to: the shared checkout handler resolves its order from an ORDER ID path parameter that this route does not carry, so it always works against a fresh untyped order and the confirm dispatch refuses it with 400 before the pay key is ever queried. The token gate, the namespace and the store lookup all run ahead of that, so a missing token is still 401 and an unloadable store still 500. Drive a PayPal return through an address that carries the order id.
+     * @summary PayPal confirm by pay key — refuses, because a pay key alone does not identify the order
+     * @param {CommerceApiPostCommerceStoreByStoreidPaypalConfirmByPaykeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidPaypalConfirmByPaykey(requestParameters: CommerceApiPostCommerceStoreByStoreidPaypalConfirmByPaykeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidPaypalConfirmByPaykey(requestParameters.storeid, requestParameters.payKey, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Runs the ordinary store authorize flow — the route binds that very handler, so the body, the store resolution, the tally, the reservations and the failure behaviour are the authorize address\'s, unchanged. It reaches PayPal only when the body\'s payment type says so; nothing about this path forces the processor, so a card-typed payment posted here authorizes on the card processor instead. A successful PayPal authorization stamps a pay key onto the payment, which is the key the confirm and cancel addresses filter on. It is the older entry point; the plain authorize address is the one to build against.
+     * @summary Start a PayPal authorization for a new order
+     * @param {CommerceApiPostCommerceStoreByStoreidPaypalPayRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidPaypalPay(requestParameters: CommerceApiPostCommerceStoreByStoreidPaypalPayRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidPaypalPay(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates a trialing subscription for the addressed store on the entry plan and grants that plan\'s trial credit, answering 201 when this call actually started one and 200 with a reason otherwise — not_new when the store already has billing history, trial_not_configured when no entry plan is wired. The window is always the SEVEN-DAY no-card trial, because this address never presents a card; the longer card-present window is reached only by adding a card afterwards. Entitlement is per store while the billing subject is the org, so every store an org owns takes its own trial. Admin-gated and namespaced to the caller\'s org: no resolvable store is 404 with store_required, and a backing-store failure is 503.
+     * @summary Start this store\'s no-card trial on the entry plan
+     * @param {CommerceApiPostCommerceStoreByStoreidTrialRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreByStoreidTrial(requestParameters: CommerceApiPostCommerceStoreByStoreidTrialRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreByStoreidTrial(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers a freshly minted token carrying ONLY the published-read permission — enough for a logged-out shopper\'s storefront to read your published catalog and nothing more, with no write and no admin scope. It is org-bound, signed with the org\'s own secret and subject to the org id, so unlike a shared service token it can never act on another tenant. Minting ROTATES rather than accumulates: the previous storefront token is dropped first and is invalid immediately, so re-minting is how you revoke. Admin is enforced by the handler as well as the route, because the route\'s token gate does not apply on the identity path and a plain member must not be able to mint their org\'s key.
+     * @summary Mint your org\'s least-privilege storefront read key
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceStoreToken(options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceStoreToken(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9757,6 +14565,18 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
+     * Accepts a payment provider\'s event, verifies it, records it for audit, and applies subscription lifecycle changes to the matching local row. There is no bearer here and there cannot be: the provider\'s SIGNATURE over the body IS the authentication, so a request with no recognized signature header is 400 and one whose signature does not verify is 401. The provider path segment is only a hint for dashboard configuration — verification picks the processor regardless of what the URL says. Redelivery is safe: an event id already recorded is acknowledged as a duplicate without re-applying any side effect, which matters because providers retry for days until they see a 2xx.
+     * @summary Payment-provider webhook intake for settlement and subscription lifecycle events
+     * @param {CommerceApiPostCommerceWebhooksByProviderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public postCommerceWebhooksByProvider(requestParameters: CommerceApiPostCommerceWebhooksByProviderRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).postCommerceWebhooksByProvider(requestParameters.provider, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * A collection is a merchandising group a storefront renders — a slug and name, copy and media, flat lists of the product and variant ids it holds, published, preorder and out-of-stock flags, and an availability window. Membership lives on the collection as those id lists rather than as a join, so putting a product into a collection is a write here and not on the product. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadCollection and WriteCollection together.
      * @summary Replace a collection outright
      * @param {CommerceApiPutCommerceCollectionByCollectionidRequest} requestParameters Request parameters.
@@ -9817,6 +14637,18 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
+     * Loads the addressed plan, applies the body over it and answers the stored result, so a partial edit never silently zeroes a price or the contact-sales flag. The slug is IMMUTABLE: a body naming a different slug is rejected outright before anything is written, because a rename would orphan every subscription that stored the old id — deprecate and create instead. An admin edit marks the row authoritative so the seed stops correcting it. PLATFORM admin only; an unknown slug is 404.
+     * @summary Edit a plan, leaving the fields you omit alone
+     * @param {CommerceApiPutCommercePlansEntriesBySlugRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public putCommercePlansEntriesBySlug(requestParameters: CommerceApiPutCommercePlansEntriesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommercePlansEntriesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * A product is a sellable catalog item: slug, SKU and UPC, name and copy, media, availability and preorder flags, a reservation block, and its money — currency, price, MSRP, list price and inventory cost in minor units, inventory count, taxability, and the subscription interval when it is subscribeable. Its variants and options are carried as a denormalized JSON snapshot inside the product, separate from the standalone variant rows, and nothing keeps the two in step for you. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The org must also be entitled to the commerce admin: the paywall answers 402 subscription_required unless the org holds an active or trialing pro subscription, a live trial credit or a redeemed invite, and 503 when that entitlement cannot be read rather than admitting on an unknown. The internal service token and a platform superadmin pass straight through. The token must also carry Admin, or ReadProduct and WriteProduct together.
      * @summary Replace a product outright
      * @param {CommerceApiPutCommerceProductByProductidRequest} requestParameters Request parameters.
@@ -9826,6 +14658,18 @@ export class CommerceApi extends BaseAPI {
      */
     public putCommerceProductByProductid(requestParameters: CommerceApiPutCommerceProductByProductidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).putCommerceProductByProductid(requestParameters.productid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Edits one rate and MARKS it edited, which is the whole contract with the importer: an operator\'s price outranks the document it came from, so a later import leaves this row alone. Without that mark a price set here would apply, work, and silently revert on the next import. Only the editable fields move; identity and bookkeeping are not writable from the body. SuperAdmin only.
+     * @summary Edit a rate, and mark it as operator-set
+     * @param {CommerceApiPutCommerceRatesEntriesBySlugRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public putCommerceRatesEntriesBySlug(requestParameters: CommerceApiPutCommerceRatesEntriesBySlugRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceRatesEntriesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9862,6 +14706,30 @@ export class CommerceApi extends BaseAPI {
      */
     public putCommerceStocklocationByStocklocationid(requestParameters: CommerceApiPutCommerceStocklocationByStocklocationidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).putCommerceStocklocationByStocklocationid(requestParameters.stocklocationid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This is a true REPLACEMENT, not a merge: the stored key is preserved but the body is decoded onto a fresh entity, so every field the body omits is written back as its zero value. Use the partial update when you mean to change part of a store. The id is resolved inside the caller org\'s own namespace, so an unknown or foreign id is a 404 before anything is written. Requires an admin token, or one holding both store read and store write.
+     * @summary Replace a storefront outright
+     * @param {CommerceApiPutCommerceStoreByStoreidRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public putCommerceStoreByStoreid(requestParameters: CommerceApiPutCommerceStoreByStoreidRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceStoreByStoreid(requestParameters.storeid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Decodes the body over the existing listing when the key is present, so fields it omits keep their stored values, and builds the listing from the body alone when the key is new. Answers 200 when it replaced something and 201 with a Location header when it created it; either way the body is the store\'s entire listing map, not the single entry. Unlike creation, this path does NOT restamp the listing\'s currency from the store. Admin-gated, with the store resolved inside the caller org\'s namespace.
+     * @summary Upsert a listing override
+     * @param {CommerceApiPutCommerceStoreByStoreidListingByKeyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public putCommerceStoreByStoreidListingByKey(requestParameters: CommerceApiPutCommerceStoreByStoreidListingByKeyRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceStoreByStoreidListingByKey(requestParameters.storeid, requestParameters.key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9958,6 +14826,30 @@ export class CommerceApi extends BaseAPI {
      */
     public putCommerceWebhookByWebhookid(requestParameters: CommerceApiPutCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).putCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sets how many of one item a cart holds, and answers the whole updated cart.  This is the ONE way a cart\'s contents change. The quantity is the RESULT, not a delta: sending 3 leaves 3 however many were there before, so a retry is safe and a double-submit cannot double an order. ZERO REMOVES the line — there is deliberately no separate delete, because removal is the same act at the boundary value and a second spelling would be a second set of edge cases.  Name the item with EITHER product OR variant, never both. Prefer variant for anything sold in sizes, colours or tiers: the price and the stock belong to the variant, so a product-level line on a varianted product prices the wrong thing. Either may be given as an id or as the human key — a product\'s URL slug, a variant\'s SKU — which is what lets a storefront add to cart straight from a product page URL without a lookup first.  The item\'s price and name are CACHED onto the line as it is added, so the cart keeps the price the shopper was shown even if the catalog moves underneath it.  An item that resolves to nothing in the catalog is refused 400 and the cart is left exactly as it was; nothing is partially applied.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
+     * @summary Set one item\'s quantity in a cart; zero removes it
+     * @param {CommerceApiSetCartItemRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public setCartItem(requestParameters: CommerceApiSetCartItemRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).setCartItem(requestParameters.id, requestParameters.cartItemSet, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes a payment: charges a single-use card token and credits the caller\'s org balance, exactly once.  This is the operation behind \"collect money from a customer\". It runs the SAME core the console\'s card top-up runs (commerce billing.TakePayment), so the server-side amount bounds, the idempotency guard and the ledger credit are shared rather than reimplemented — a second charge path would eventually double-charge somebody.  The ORG is the caller\'s, taken from the validated principal and never from the input, so a payment can only ever credit the account of whoever made the call.  A payment is RISK-SCREENED before the card is charged, so this can be refused without any money moving: 403 means the screen did not authorise it, and 503 means the screen could not reach a decision — that one is worth retrying, and no charge was attempted either way.  Send an idempotencyKey. An agent retries by construction, and the key is what turns a retry into a replay of the first receipt instead of a second charge.  The answer states whether it settled in SANDBOX or live mode (`test`), and carries the processor\'s own reference (`processorRef`) so the charge can be reconciled against the processor rather than taken on trust.  A named builder, not a closure, so zipdoc can lift this prose into the registry.  It BUILDS the handler rather than being it, because the screen has to sit inside the value every projection of this op dispatches to — see exposePayments. `charge` is the money move, `take` is the screened door onto it, and the only registrable one is the second.
+     * @summary Take a card payment and credit the org\'s balance
+     * @param {CommerceApiTakePaymentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommerceApi
+     */
+    public takePayment(requestParameters: CommerceApiTakePaymentRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).takePayment(requestParameters.paymentIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

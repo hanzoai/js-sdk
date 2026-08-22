@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * Composed from each subsystem\'s own projection of its router, in the fleet\'s mount order — every operation below is a route the subsystem that publishes it registered. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -903,44 +903,6 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Runs a Workers AI model — the model id is the rest of the path, e.g. `@cf/meta/llama-3.1-8b-instruct` — on the org\'s OWN Cloudflare account and relays the model\'s output. The request body is whatever the chosen model takes (a prompt, chat messages, a base64 audio clip) and is forwarded unchanged; the response is the model\'s own, which for an image or audio model is BYTES under Cloudflare\'s content type rather than JSON. Both halves are why this is not a typed op.  It is the ONE PRICED route on this plane, because a run is inference rather than passthrough. The org\'s own token already paid Cloudflare for the compute, so Hanzo debits only the thin BYO routing fee — never the full inference cost — and meters it on the SAME `ai` product axis and per-project caps as every other model call, so Workers AI spend sums with LLM spend. The fee has a floor, so every run leaves a usage row even for a modality that reports no tokens, and it emits one gen_ai span with `gen_ai.system = cloudflare`.  Gated by BALANCE, not by the admin bit that guards the destructive verbs here: a validated org is enough, and a frozen, broke or over-cap org is refused with the fleet-wide 402/503 billing contract BEFORE any byte reaches Cloudflare — no run, and no account discovery either. An empty or oversized body is 400, as is a model id that is not a plain Cloudflare model path; 503 if the org has never connected a Cloudflare token.
-         * @summary Run a Cloudflare Workers AI model and get its output back
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCloudflareAiRunByWildcard1: async (wildcard1: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'wildcard1' is not null or undefined
-            assertParamExists('postCloudflareAiRunByWildcard1', 'wildcard1', wildcard1)
-            const localVarPath = `/v1/cloudflare/ai/run/{wildcard1}`
-                .replace(`{${"wildcard1"}}`, encodeURIComponent(String(wildcard1)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Creates a D1 database on the org\'s Cloudflare account. Requires org admin.
          * @summary Creates a D1 database on the org\'s Cloudflare account.
          * @param {DatabaseCreateIn} databaseCreateIn 
@@ -1733,19 +1695,6 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs a Workers AI model — the model id is the rest of the path, e.g. `@cf/meta/llama-3.1-8b-instruct` — on the org\'s OWN Cloudflare account and relays the model\'s output. The request body is whatever the chosen model takes (a prompt, chat messages, a base64 audio clip) and is forwarded unchanged; the response is the model\'s own, which for an image or audio model is BYTES under Cloudflare\'s content type rather than JSON. Both halves are why this is not a typed op.  It is the ONE PRICED route on this plane, because a run is inference rather than passthrough. The org\'s own token already paid Cloudflare for the compute, so Hanzo debits only the thin BYO routing fee — never the full inference cost — and meters it on the SAME `ai` product axis and per-project caps as every other model call, so Workers AI spend sums with LLM spend. The fee has a floor, so every run leaves a usage row even for a modality that reports no tokens, and it emits one gen_ai span with `gen_ai.system = cloudflare`.  Gated by BALANCE, not by the admin bit that guards the destructive verbs here: a validated org is enough, and a frozen, broke or over-cap org is refused with the fleet-wide 402/503 billing contract BEFORE any byte reaches Cloudflare — no run, and no account discovery either. An empty or oversized body is 400, as is a model id that is not a plain Cloudflare model path; 503 if the org has never connected a Cloudflare token.
-         * @summary Run a Cloudflare Workers AI model and get its output back
-         * @param {string} wildcard1 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postCloudflareAiRunByWildcard1(wildcard1: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareAiRunByWildcard1(wildcard1, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflareAiRunByWildcard1']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Creates a D1 database on the org\'s Cloudflare account. Requires org admin.
          * @summary Creates a D1 database on the org\'s Cloudflare account.
          * @param {DatabaseCreateIn} databaseCreateIn 
@@ -2115,16 +2064,6 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
          */
         getCloudflareZonesByZoneAnalytics(requestParameters: CloudflareApiGetCloudflareZonesByZoneAnalyticsRequest, options?: RawAxiosRequestConfig): AxiosPromise<any> {
             return localVarFp.getCloudflareZonesByZoneAnalytics(requestParameters.zone, requestParameters.since, requestParameters.until, requestParameters.continuous, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Runs a Workers AI model — the model id is the rest of the path, e.g. `@cf/meta/llama-3.1-8b-instruct` — on the org\'s OWN Cloudflare account and relays the model\'s output. The request body is whatever the chosen model takes (a prompt, chat messages, a base64 audio clip) and is forwarded unchanged; the response is the model\'s own, which for an image or audio model is BYTES under Cloudflare\'s content type rather than JSON. Both halves are why this is not a typed op.  It is the ONE PRICED route on this plane, because a run is inference rather than passthrough. The org\'s own token already paid Cloudflare for the compute, so Hanzo debits only the thin BYO routing fee — never the full inference cost — and meters it on the SAME `ai` product axis and per-project caps as every other model call, so Workers AI spend sums with LLM spend. The fee has a floor, so every run leaves a usage row even for a modality that reports no tokens, and it emits one gen_ai span with `gen_ai.system = cloudflare`.  Gated by BALANCE, not by the admin bit that guards the destructive verbs here: a validated org is enough, and a frozen, broke or over-cap org is refused with the fleet-wide 402/503 billing contract BEFORE any byte reaches Cloudflare — no run, and no account discovery either. An empty or oversized body is 400, as is a model id that is not a plain Cloudflare model path; 503 if the org has never connected a Cloudflare token.
-         * @summary Run a Cloudflare Workers AI model and get its output back
-         * @param {CloudflareApiPostCloudflareAiRunByWildcard1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postCloudflareAiRunByWildcard1(requestParameters: CloudflareApiPostCloudflareAiRunByWildcard1Request, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postCloudflareAiRunByWildcard1(requestParameters.wildcard1, options).then((request) => request(axios, basePath));
         },
         /**
          * Creates a D1 database on the org\'s Cloudflare account. Requires org admin.
@@ -2635,20 +2574,6 @@ export interface CloudflareApiGetCloudflareZonesByZoneAnalyticsRequest {
 }
 
 /**
- * Request parameters for postCloudflareAiRunByWildcard1 operation in CloudflareApi.
- * @export
- * @interface CloudflareApiPostCloudflareAiRunByWildcard1Request
- */
-export interface CloudflareApiPostCloudflareAiRunByWildcard1Request {
-    /**
-     * 
-     * @type {string}
-     * @memberof CloudflareApiPostCloudflareAiRunByWildcard1
-     */
-    readonly wildcard1: string
-}
-
-/**
  * Request parameters for postCloudflareD1Databases operation in CloudflareApi.
  * @export
  * @interface CloudflareApiPostCloudflareD1DatabasesRequest
@@ -3114,18 +3039,6 @@ export class CloudflareApi extends BaseAPI {
      */
     public getCloudflareZonesByZoneAnalytics(requestParameters: CloudflareApiGetCloudflareZonesByZoneAnalyticsRequest, options?: RawAxiosRequestConfig) {
         return CloudflareApiFp(this.configuration).getCloudflareZonesByZoneAnalytics(requestParameters.zone, requestParameters.since, requestParameters.until, requestParameters.continuous, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Runs a Workers AI model — the model id is the rest of the path, e.g. `@cf/meta/llama-3.1-8b-instruct` — on the org\'s OWN Cloudflare account and relays the model\'s output. The request body is whatever the chosen model takes (a prompt, chat messages, a base64 audio clip) and is forwarded unchanged; the response is the model\'s own, which for an image or audio model is BYTES under Cloudflare\'s content type rather than JSON. Both halves are why this is not a typed op.  It is the ONE PRICED route on this plane, because a run is inference rather than passthrough. The org\'s own token already paid Cloudflare for the compute, so Hanzo debits only the thin BYO routing fee — never the full inference cost — and meters it on the SAME `ai` product axis and per-project caps as every other model call, so Workers AI spend sums with LLM spend. The fee has a floor, so every run leaves a usage row even for a modality that reports no tokens, and it emits one gen_ai span with `gen_ai.system = cloudflare`.  Gated by BALANCE, not by the admin bit that guards the destructive verbs here: a validated org is enough, and a frozen, broke or over-cap org is refused with the fleet-wide 402/503 billing contract BEFORE any byte reaches Cloudflare — no run, and no account discovery either. An empty or oversized body is 400, as is a model id that is not a plain Cloudflare model path; 503 if the org has never connected a Cloudflare token.
-     * @summary Run a Cloudflare Workers AI model and get its output back
-     * @param {CloudflareApiPostCloudflareAiRunByWildcard1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CloudflareApi
-     */
-    public postCloudflareAiRunByWildcard1(requestParameters: CloudflareApiPostCloudflareAiRunByWildcard1Request, options?: RawAxiosRequestConfig) {
-        return CloudflareApiFp(this.configuration).postCloudflareAiRunByWildcard1(requestParameters.wildcard1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
