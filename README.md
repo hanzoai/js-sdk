@@ -10,7 +10,7 @@ an address the server does not serve.
 ## Install
 
 ```bash
-npm i hanzoai@2.2.10
+npm i hanzoai
 ```
 
 Types are included. `axios` is the only dependency.
