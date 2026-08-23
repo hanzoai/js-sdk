@@ -13,24 +13,21 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { CDApp } from './cdapp';
 
 /**
  * 
  * @export
- * @interface Listing
+ * @interface CdResp
  */
-export interface Listing {
+export interface CdResp {
     /**
      * 
-     * @type {string}
-     * @memberof Listing
+     * @type {Array<CDApp>}
+     * @memberof CdResp
      */
-    'lastModified'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Listing
-     */
-    'name'?: string;
+    'applications'?: Array<CDApp>;
 }
 

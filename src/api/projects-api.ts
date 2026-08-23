@@ -56,6 +56,8 @@ import type { ProjectsSite } from '../models';
 // @ts-ignore
 import type { ProjectsSiteDeploy } from '../models';
 // @ts-ignore
+import type { ProjectsStar } from '../models';
+// @ts-ignore
 import type { ProjectsUpdate } from '../models';
 // @ts-ignore
 import type { TagConfig } from '../models';
@@ -119,6 +121,44 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/v1/projects/{slug}/domains/{host}`
                 .replace(`{${"slug"}}`, encodeURIComponent(String(slug)))
                 .replace(`{${"host"}}`, encodeURIComponent(String(host)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes the caller\'s own bookmark from a project, and answers whether it is starred afterwards.  It removes only YOUR star — the same one star wrote — so a project other people have starred stays on their lists. Unstarring one you had not starred is not an error; it leaves it unstarred.
+         * @summary Removes the caller\'s own bookmark from a project, and answers whether it is starred afterwards.
+         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteProjectsBySlugStar: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('deleteProjectsBySlugStar', 'slug', slug)
+            const localVarPath = `/v1/projects/{slug}/star`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1143,6 +1183,44 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Bookmarks a project for the person calling, and answers whether it is starred afterwards.  The star is YOURS: it is keyed by you as well as by the project, so two people see two answers for the same one and starring it says nothing about anybody else\'s list. Starring a project you have already starred leaves it starred.
+         * @summary Bookmarks a project for the person calling, and answers whether it is starred afterwards.
+         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putProjectsBySlugStar: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'slug' is not null or undefined
+            assertParamExists('putProjectsBySlugStar', 'slug', slug)
+            const localVarPath = `/v1/projects/{slug}/star`
+                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1178,6 +1256,19 @@ export const ProjectsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteProjectsBySlugDomainsByHost(slug, host, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProjectsApi.deleteProjectsBySlugDomainsByHost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes the caller\'s own bookmark from a project, and answers whether it is starred afterwards.  It removes only YOUR star — the same one star wrote — so a project other people have starred stays on their lists. Unstarring one you had not starred is not an error; it leaves it unstarred.
+         * @summary Removes the caller\'s own bookmark from a project, and answers whether it is starred afterwards.
+         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteProjectsBySlugStar(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsStar>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteProjectsBySlugStar(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.deleteProjectsBySlugStar']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1512,6 +1603,19 @@ export const ProjectsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['ProjectsApi.postProjectsSitesDeploy']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * Bookmarks a project for the person calling, and answers whether it is starred afterwards.  The star is YOURS: it is keyed by you as well as by the project, so two people see two answers for the same one and starring it says nothing about anybody else\'s list. Starring a project you have already starred leaves it starred.
+         * @summary Bookmarks a project for the person calling, and answers whether it is starred afterwards.
+         * @param {string} slug Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putProjectsBySlugStar(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectsStar>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putProjectsBySlugStar(slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProjectsApi.putProjectsBySlugStar']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -1541,6 +1645,16 @@ export const ProjectsApiFactory = function (configuration?: Configuration, baseP
          */
         deleteProjectsBySlugDomainsByHost(requestParameters: ProjectsApiDeleteProjectsBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteProjectsBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes the caller\'s own bookmark from a project, and answers whether it is starred afterwards.  It removes only YOUR star — the same one star wrote — so a project other people have starred stays on their lists. Unstarring one you had not starred is not an error; it leaves it unstarred.
+         * @summary Removes the caller\'s own bookmark from a project, and answers whether it is starred afterwards.
+         * @param {ProjectsApiDeleteProjectsBySlugStarRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteProjectsBySlugStar(requestParameters: ProjectsApiDeleteProjectsBySlugStarRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsStar> {
+            return localVarFp.deleteProjectsBySlugStar(requestParameters.slug, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns every project your org owns.  Each row carries the slug, name, framework, visibility, status and live URL — the same rows console and the builder render, because there is only one store behind both. It requires a validated principal (403 without one) and is keyed by that principal\'s org, so it never contains another tenant\'s project.
@@ -1788,6 +1902,16 @@ export const ProjectsApiFactory = function (configuration?: Configuration, baseP
         postProjectsSitesDeploy(requestParameters: ProjectsApiPostProjectsSitesDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsSiteDeploy> {
             return localVarFp.postProjectsSitesDeploy(requestParameters.projectsDeploySite, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Bookmarks a project for the person calling, and answers whether it is starred afterwards.  The star is YOURS: it is keyed by you as well as by the project, so two people see two answers for the same one and starring it says nothing about anybody else\'s list. Starring a project you have already starred leaves it starred.
+         * @summary Bookmarks a project for the person calling, and answers whether it is starred afterwards.
+         * @param {ProjectsApiPutProjectsBySlugStarRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putProjectsBySlugStar(requestParameters: ProjectsApiPutProjectsBySlugStarRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProjectsStar> {
+            return localVarFp.putProjectsBySlugStar(requestParameters.slug, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -1824,6 +1948,20 @@ export interface ProjectsApiDeleteProjectsBySlugDomainsByHostRequest {
      * @memberof ProjectsApiDeleteProjectsBySlugDomainsByHost
      */
     readonly host: string
+}
+
+/**
+ * Request parameters for deleteProjectsBySlugStar operation in ProjectsApi.
+ * @export
+ * @interface ProjectsApiDeleteProjectsBySlugStarRequest
+ */
+export interface ProjectsApiDeleteProjectsBySlugStarRequest {
+    /**
+     * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
+     * @type {string}
+     * @memberof ProjectsApiDeleteProjectsBySlugStar
+     */
+    readonly slug: string
 }
 
 /**
@@ -2198,6 +2336,20 @@ export interface ProjectsApiPostProjectsSitesDeployRequest {
 }
 
 /**
+ * Request parameters for putProjectsBySlugStar operation in ProjectsApi.
+ * @export
+ * @interface ProjectsApiPutProjectsBySlugStarRequest
+ */
+export interface ProjectsApiPutProjectsBySlugStarRequest {
+    /**
+     * Slug is the project to act on, from the path. It is unique within the caller\&#39;s org and nowhere else, so another tenant\&#39;s slug is a 404.
+     * @type {string}
+     * @memberof ProjectsApiPutProjectsBySlugStar
+     */
+    readonly slug: string
+}
+
+/**
  * ProjectsApi - object-oriented interface
  * @export
  * @class ProjectsApi
@@ -2226,6 +2378,18 @@ export class ProjectsApi extends BaseAPI {
      */
     public deleteProjectsBySlugDomainsByHost(requestParameters: ProjectsApiDeleteProjectsBySlugDomainsByHostRequest, options?: RawAxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).deleteProjectsBySlugDomainsByHost(requestParameters.slug, requestParameters.host, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes the caller\'s own bookmark from a project, and answers whether it is starred afterwards.  It removes only YOUR star — the same one star wrote — so a project other people have starred stays on their lists. Unstarring one you had not starred is not an error; it leaves it unstarred.
+     * @summary Removes the caller\'s own bookmark from a project, and answers whether it is starred afterwards.
+     * @param {ProjectsApiDeleteProjectsBySlugStarRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectsApi
+     */
+    public deleteProjectsBySlugStar(requestParameters: ProjectsApiDeleteProjectsBySlugStarRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).deleteProjectsBySlugStar(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2522,6 +2686,18 @@ export class ProjectsApi extends BaseAPI {
      */
     public postProjectsSitesDeploy(requestParameters: ProjectsApiPostProjectsSitesDeployRequest, options?: RawAxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).postProjectsSitesDeploy(requestParameters.projectsDeploySite, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Bookmarks a project for the person calling, and answers whether it is starred afterwards.  The star is YOURS: it is keyed by you as well as by the project, so two people see two answers for the same one and starring it says nothing about anybody else\'s list. Starring a project you have already starred leaves it starred.
+     * @summary Bookmarks a project for the person calling, and answers whether it is starred afterwards.
+     * @param {ProjectsApiPutProjectsBySlugStarRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectsApi
+     */
+    public putProjectsBySlugStar(requestParameters: ProjectsApiPutProjectsBySlugStarRequest, options?: RawAxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).putProjectsBySlugStar(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

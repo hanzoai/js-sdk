@@ -228,6 +228,7 @@ src/models/bank-question.ts
 src/models/bank-tally.ts
 src/models/bank-txn-row.ts
 src/models/base-health.ts
+src/models/base-view.ts
 src/models/begin-in.ts
 src/models/benchmark-catalog.ts
 src/models/benchmark.ts
@@ -352,6 +353,8 @@ src/models/catalog.ts
 src/models/category-in.ts
 src/models/category-spend.ts
 src/models/category.ts
+src/models/cd-resp.ts
+src/models/cdapp.ts
 src/models/centre.ts
 src/models/chain-list.ts
 src/models/chain-status.ts
@@ -365,6 +368,7 @@ src/models/channel-spec.ts
 src/models/channel-view.ts
 src/models/channel.ts
 src/models/charge.ts
+src/models/charged.ts
 src/models/chat-channels.ts
 src/models/chat-request.ts
 src/models/chat-response.ts
@@ -434,7 +438,9 @@ src/models/context-bundle.ts
 src/models/context-in.ts
 src/models/control-command-view.ts
 src/models/control-drain.ts
+src/models/control-in.ts
 src/models/control-list.ts
+src/models/control-result.ts
 src/models/cookie-ack.ts
 src/models/corpus-view.ts
 src/models/cost-line.ts
@@ -482,6 +488,7 @@ src/models/dataroom-link-one.ts
 src/models/dataroom-link-stats.ts
 src/models/dataroom-link.ts
 src/models/dataroom-links.ts
+src/models/dataroom-liveness.ts
 src/models/dataroom-member.ts
 src/models/dataroom-membership.ts
 src/models/dataroom-page-stat.ts
@@ -497,6 +504,10 @@ src/models/dataset-view.ts
 src/models/decide-body.ts
 src/models/decision-in.ts
 src/models/deck-out.ts
+src/models/declaration.ts
+src/models/declare-env.ts
+src/models/declared-resp.ts
+src/models/declared.ts
 src/models/def-row.ts
 src/models/definition.ts
 src/models/defs-out.ts
@@ -505,6 +516,7 @@ src/models/deleted.ts
 src/models/delivery-list.ts
 src/models/delivery-row.ts
 src/models/delivery.ts
+src/models/deploy-health.ts
 src/models/deploy-logs.ts
 src/models/deploy-record.ts
 src/models/deploy-req.ts
@@ -515,6 +527,7 @@ src/models/destination-field.ts
 src/models/destination-list.ts
 src/models/destination-status.ts
 src/models/destination-test.ts
+src/models/detachment.ts
 src/models/device-poll-out.ts
 src/models/device-start-in.ts
 src/models/device-start-out.ts
@@ -593,6 +606,7 @@ src/models/evaluate-in.ts
 src/models/evaluator-list.ts
 src/models/evaluator-req.ts
 src/models/evaluator-view.ts
+src/models/event-in.ts
 src/models/event-list.ts
 src/models/event-view.ts
 src/models/event.ts
@@ -1911,6 +1925,7 @@ src/models/projects-release.ts
 src/models/projects-repo.ts
 src/models/projects-site-deploy.ts
 src/models/projects-site.ts
+src/models/projects-star.ts
 src/models/projects-update-repo.ts
 src/models/projects-update.ts
 src/models/projects-upload-grant.ts
@@ -1965,6 +1980,8 @@ src/models/reading-req.ts
 src/models/reading-view.ts
 src/models/readme-json.ts
 src/models/receipt.ts
+src/models/recharge.ts
+src/models/recharged.ts
 src/models/record-list.ts
 src/models/record.ts
 src/models/redeem-input.ts
@@ -2305,6 +2322,7 @@ src/models/tool.ts
 src/models/top-models.ts
 src/models/top-products.ts
 src/models/top.ts
+src/models/topup-in.ts
 src/models/total-view.ts
 src/models/trace-list.ts
 src/models/trace-view.ts
@@ -2345,6 +2363,7 @@ src/models/trust-refused.ts
 src/models/trust-settings.ts
 src/models/trust-tally.ts
 src/models/txn.ts
+src/models/unreadable.ts
 src/models/unreconciled-out.ts
 src/models/unsubscribed.ts
 src/models/update-agent-in.ts

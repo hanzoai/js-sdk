@@ -28,7 +28,15 @@ import type { AppView } from '../models';
 // @ts-ignore
 import type { BuildBoard } from '../models';
 // @ts-ignore
+import type { CDApp } from '../models';
+// @ts-ignore
+import type { CdResp } from '../models';
+// @ts-ignore
 import type { CreateAppReq } from '../models';
+// @ts-ignore
+import type { Declaration } from '../models';
+// @ts-ignore
+import type { DeclaredResp } from '../models';
 // @ts-ignore
 import type { DeployLogs } from '../models';
 // @ts-ignore
@@ -170,12 +178,13 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Returns the declarations in the caller\'s own org directory, each joined with the Hanzo CD Application reconciling it — sync verdict, health, the universe commit last applied. `cd` is null for a declaration the delivery plane has no Application for, which is the normal state of one that exists only on a branch.  If the delivery plane cannot be read, the declarations are still returned and `cdUnavailable` says why. An unreadable plane never renders as \"nothing has been reconciled\".
-         * @summary What this organization has declared, and what CD did with it
+         * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation.
+         * @summary Answers what this organisation has declared, joined with what the delivery plane has done about it.
+         * @param {string} [org] Org names the organisation whose declarations to read, defaulting to the caller\&#39;s own. Only a SuperAdmin may name one that is not theirs; anyone else naming a foreign org is refused, so this widens nothing by itself.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformApps: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformApps: async (org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/platform/apps`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -192,6 +201,10 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -204,13 +217,14 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * The values file for one app as git declares it: image repository and tag, hosts, replicas, and whether CD is automated on it. 404 when this organization declares no such app.
-         * @summary One declaration
-         * @param {string} app 
+         * Answers ONE declaration — what git says this app is, before the delivery plane has had any say in it.
+         * @summary Answers ONE declaration — what git says this app is, before the delivery plane has had any say in it.
+         * @param {string} app App is the DNS-1123 label of the declaration. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which app is read whatever else is sent.
+         * @param {string} [org] Org names the organisation the declaration lives in, defaulting to the caller\&#39;s own and subject to the same SuperAdmin rule as the listing.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformAppsByApp: async (app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformAppsByApp: async (app: string, org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'app' is not null or undefined
             assertParamExists('getPlatformAppsByApp', 'app', app)
             const localVarPath = `/v1/platform/apps/{app}`
@@ -230,6 +244,10 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -242,13 +260,14 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * The Hanzo CD Application for one declaration, on its own — the poll a deploy view makes while it waits, without re-reading the whole inventory. 404 while the declaration exists only on a branch, because the generator reads main.
-         * @summary One app\'s reconciliation
-         * @param {string} app 
+         * Answers ONE app\'s reconciliation alone — the poll a deploy console makes while it waits, without re-reading the whole inventory each time.
+         * @summary Answers ONE app\'s reconciliation alone — the poll a deploy console makes while it waits, without re-reading the whole inventory each time.
+         * @param {string} app App is the DNS-1123 label of the declaration. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which app is read whatever else is sent.
+         * @param {string} [org] Org names the organisation the declaration lives in, defaulting to the caller\&#39;s own and subject to the same SuperAdmin rule as the listing.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformAppsByAppCd: async (app: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPlatformAppsByAppCd: async (app: string, org?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'app' is not null or undefined
             assertParamExists('getPlatformAppsByAppCd', 'app', app)
             const localVarPath = `/v1/platform/apps/{app}/cd`
@@ -267,6 +286,10 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (org !== undefined) {
+                localVarQueryParameter['org'] = org;
+            }
 
 
     
@@ -314,8 +337,8 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Every Hanzo CD Application this caller may observe, with its sync verdict, health, the universe revision last applied, and whether automation and self-heal are on. A SuperAdmin sees the fleet; an org admin sees only Applications whose destination namespace IS its own organization, and never a reserved one.  A cluster with no CD installed answers an empty plane. A plane that cannot be READ answers 503 and says why — the two are opposite facts and never share a shape.
-         * @summary The delivery plane
+         * Answers every Application the delivery plane holds.  Scoped to the namespaces the caller\'s own validated org owns: the ROLE opens the door and the tenant boundary is applied inside, so an admin of one org never observes another\'s.
+         * @summary Answers every Application the delivery plane holds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1021,7 +1044,7 @@ export const PlatformApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two seams a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both seams answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
+         * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two clients a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both clients answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
          * @summary Receive a push from the forge and trigger its build
          * @param {Push} [push] 
          * @param {*} [options] Override http request option.
@@ -1640,39 +1663,42 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the declarations in the caller\'s own org directory, each joined with the Hanzo CD Application reconciling it — sync verdict, health, the universe commit last applied. `cd` is null for a declaration the delivery plane has no Application for, which is the normal state of one that exists only on a branch.  If the delivery plane cannot be read, the declarations are still returned and `cdUnavailable` says why. An unreadable plane never renders as \"nothing has been reconciled\".
-         * @summary What this organization has declared, and what CD did with it
+         * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation.
+         * @summary Answers what this organisation has declared, joined with what the delivery plane has done about it.
+         * @param {string} [org] Org names the organisation whose declarations to read, defaulting to the caller\&#39;s own. Only a SuperAdmin may name one that is not theirs; anyone else naming a foreign org is refused, so this widens nothing by itself.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformApps(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformApps(options);
+        async getPlatformApps(org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclaredResp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformApps(org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformApps']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The values file for one app as git declares it: image repository and tag, hosts, replicas, and whether CD is automated on it. 404 when this organization declares no such app.
-         * @summary One declaration
-         * @param {string} app 
+         * Answers ONE declaration — what git says this app is, before the delivery plane has had any say in it.
+         * @summary Answers ONE declaration — what git says this app is, before the delivery plane has had any say in it.
+         * @param {string} app App is the DNS-1123 label of the declaration. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which app is read whatever else is sent.
+         * @param {string} [org] Org names the organisation the declaration lives in, defaulting to the caller\&#39;s own and subject to the same SuperAdmin rule as the listing.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformAppsByApp(app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformAppsByApp(app, options);
+        async getPlatformAppsByApp(app: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Declaration>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformAppsByApp(app, org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformAppsByApp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The Hanzo CD Application for one declaration, on its own — the poll a deploy view makes while it waits, without re-reading the whole inventory. 404 while the declaration exists only on a branch, because the generator reads main.
-         * @summary One app\'s reconciliation
-         * @param {string} app 
+         * Answers ONE app\'s reconciliation alone — the poll a deploy console makes while it waits, without re-reading the whole inventory each time.
+         * @summary Answers ONE app\'s reconciliation alone — the poll a deploy console makes while it waits, without re-reading the whole inventory each time.
+         * @param {string} app App is the DNS-1123 label of the declaration. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which app is read whatever else is sent.
+         * @param {string} [org] Org names the organisation the declaration lives in, defaulting to the caller\&#39;s own and subject to the same SuperAdmin rule as the listing.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformAppsByAppCd(app: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformAppsByAppCd(app, options);
+        async getPlatformAppsByAppCd(app: string, org?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CDApp>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformAppsByAppCd(app, org, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformAppsByAppCd']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1690,12 +1716,12 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Every Hanzo CD Application this caller may observe, with its sync verdict, health, the universe revision last applied, and whether automation and self-heal are on. A SuperAdmin sees the fleet; an org admin sees only Applications whose destination namespace IS its own organization, and never a reserved one.  A cluster with no CD installed answers an empty plane. A plane that cannot be READ answers 503 and says why — the two are opposite facts and never share a shape.
-         * @summary The delivery plane
+         * Answers every Application the delivery plane holds.  Scoped to the namespaces the caller\'s own validated org owns: the ROLE opens the door and the tenant boundary is applied inside, so an admin of one org never observes another\'s.
+         * @summary Answers every Application the delivery plane holds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlatformCd(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getPlatformCd(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CdResp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlatformCd(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PlatformApi.getPlatformCd']?.[localVarOperationServerIndex]?.url;
@@ -1928,7 +1954,7 @@ export const PlatformApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two seams a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both seams answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
+         * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two clients a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both clients answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
          * @summary Receive a push from the forge and trigger its build
          * @param {Push} [push] 
          * @param {*} [options] Override http request option.
@@ -2144,33 +2170,34 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.deletePlatformProjectsByProjectAppsByAppDomainsByHost(requestParameters.project, requestParameters.app, requestParameters.host, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the declarations in the caller\'s own org directory, each joined with the Hanzo CD Application reconciling it — sync verdict, health, the universe commit last applied. `cd` is null for a declaration the delivery plane has no Application for, which is the normal state of one that exists only on a branch.  If the delivery plane cannot be read, the declarations are still returned and `cdUnavailable` says why. An unreadable plane never renders as \"nothing has been reconciled\".
-         * @summary What this organization has declared, and what CD did with it
+         * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation.
+         * @summary Answers what this organisation has declared, joined with what the delivery plane has done about it.
+         * @param {PlatformApiGetPlatformAppsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformApps(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getPlatformApps(options).then((request) => request(axios, basePath));
+        getPlatformApps(requestParameters: PlatformApiGetPlatformAppsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<DeclaredResp> {
+            return localVarFp.getPlatformApps(requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
-         * The values file for one app as git declares it: image repository and tag, hosts, replicas, and whether CD is automated on it. 404 when this organization declares no such app.
-         * @summary One declaration
+         * Answers ONE declaration — what git says this app is, before the delivery plane has had any say in it.
+         * @summary Answers ONE declaration — what git says this app is, before the delivery plane has had any say in it.
          * @param {PlatformApiGetPlatformAppsByAppRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformAppsByApp(requestParameters: PlatformApiGetPlatformAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getPlatformAppsByApp(requestParameters.app, options).then((request) => request(axios, basePath));
+        getPlatformAppsByApp(requestParameters: PlatformApiGetPlatformAppsByAppRequest, options?: RawAxiosRequestConfig): AxiosPromise<Declaration> {
+            return localVarFp.getPlatformAppsByApp(requestParameters.app, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
-         * The Hanzo CD Application for one declaration, on its own — the poll a deploy view makes while it waits, without re-reading the whole inventory. 404 while the declaration exists only on a branch, because the generator reads main.
-         * @summary One app\'s reconciliation
+         * Answers ONE app\'s reconciliation alone — the poll a deploy console makes while it waits, without re-reading the whole inventory each time.
+         * @summary Answers ONE app\'s reconciliation alone — the poll a deploy console makes while it waits, without re-reading the whole inventory each time.
          * @param {PlatformApiGetPlatformAppsByAppCdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformAppsByAppCd(requestParameters: PlatformApiGetPlatformAppsByAppCdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getPlatformAppsByAppCd(requestParameters.app, options).then((request) => request(axios, basePath));
+        getPlatformAppsByAppCd(requestParameters: PlatformApiGetPlatformAppsByAppCdRequest, options?: RawAxiosRequestConfig): AxiosPromise<CDApp> {
+            return localVarFp.getPlatformAppsByAppCd(requestParameters.app, requestParameters.org, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns real build records for your org.  It lists the org\'s BuildKit build records — the git build step behind a deploy — each with the repo it built, the short commit, its status, when it started and how long it took. These are real records or an honest empty list; a build appears here because one ran, never because a page needed a row. Builds are created only by /deploy and the push-to-deploy hook. Requires a validated principal; 403 without one.
@@ -2182,12 +2209,12 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getPlatformBuilds(options).then((request) => request(axios, basePath));
         },
         /**
-         * Every Hanzo CD Application this caller may observe, with its sync verdict, health, the universe revision last applied, and whether automation and self-heal are on. A SuperAdmin sees the fleet; an org admin sees only Applications whose destination namespace IS its own organization, and never a reserved one.  A cluster with no CD installed answers an empty plane. A plane that cannot be READ answers 503 and says why — the two are opposite facts and never share a shape.
-         * @summary The delivery plane
+         * Answers every Application the delivery plane holds.  Scoped to the namespaces the caller\'s own validated org owns: the ROLE opens the door and the tenant boundary is applied inside, so an admin of one org never observes another\'s.
+         * @summary Answers every Application the delivery plane holds.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlatformCd(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getPlatformCd(options?: RawAxiosRequestConfig): AxiosPromise<CdResp> {
             return localVarFp.getPlatformCd(options).then((request) => request(axios, basePath));
         },
         /**
@@ -2354,7 +2381,7 @@ export const PlatformApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postPlatformFleetByAppDeploy(requestParameters.app, requestParameters.restartRef, options).then((request) => request(axios, basePath));
         },
         /**
-         * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two seams a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both seams answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
+         * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two clients a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both clients answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
          * @summary Receive a push from the forge and trigger its build
          * @param {PlatformApiPostPlatformHookRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2536,17 +2563,38 @@ export interface PlatformApiDeletePlatformProjectsByProjectAppsByAppDomainsByHos
 }
 
 /**
+ * Request parameters for getPlatformApps operation in PlatformApi.
+ * @export
+ * @interface PlatformApiGetPlatformAppsRequest
+ */
+export interface PlatformApiGetPlatformAppsRequest {
+    /**
+     * Org names the organisation whose declarations to read, defaulting to the caller\&#39;s own. Only a SuperAdmin may name one that is not theirs; anyone else naming a foreign org is refused, so this widens nothing by itself.
+     * @type {string}
+     * @memberof PlatformApiGetPlatformApps
+     */
+    readonly org?: string
+}
+
+/**
  * Request parameters for getPlatformAppsByApp operation in PlatformApi.
  * @export
  * @interface PlatformApiGetPlatformAppsByAppRequest
  */
 export interface PlatformApiGetPlatformAppsByAppRequest {
     /**
-     * 
+     * App is the DNS-1123 label of the declaration. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which app is read whatever else is sent.
      * @type {string}
      * @memberof PlatformApiGetPlatformAppsByApp
      */
     readonly app: string
+
+    /**
+     * Org names the organisation the declaration lives in, defaulting to the caller\&#39;s own and subject to the same SuperAdmin rule as the listing.
+     * @type {string}
+     * @memberof PlatformApiGetPlatformAppsByApp
+     */
+    readonly org?: string
 }
 
 /**
@@ -2556,11 +2604,18 @@ export interface PlatformApiGetPlatformAppsByAppRequest {
  */
 export interface PlatformApiGetPlatformAppsByAppCdRequest {
     /**
-     * 
+     * App is the DNS-1123 label of the declaration. The URL is the addressing authority — a path segment binds after the body and after the query — so the address decides which app is read whatever else is sent.
      * @type {string}
      * @memberof PlatformApiGetPlatformAppsByAppCd
      */
     readonly app: string
+
+    /**
+     * Org names the organisation the declaration lives in, defaulting to the caller\&#39;s own and subject to the same SuperAdmin rule as the listing.
+     * @type {string}
+     * @memberof PlatformApiGetPlatformAppsByAppCd
+     */
+    readonly org?: string
 }
 
 /**
@@ -3120,38 +3175,39 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Returns the declarations in the caller\'s own org directory, each joined with the Hanzo CD Application reconciling it — sync verdict, health, the universe commit last applied. `cd` is null for a declaration the delivery plane has no Application for, which is the normal state of one that exists only on a branch.  If the delivery plane cannot be read, the declarations are still returned and `cdUnavailable` says why. An unreadable plane never renders as \"nothing has been reconciled\".
-     * @summary What this organization has declared, and what CD did with it
+     * Answers what this organisation has declared, joined with what the delivery plane has done about it.  The join is best-effort BY DESIGN and says so when it is missing: the declarations ARE the answer to \"what have I deployed\", so refusing the whole board because the cluster is unreadable would lose the half that is readable. What must never happen is a silent null — an unreadable plane is reported as `cd.unavailable` carrying the reason, never as an app with no reconciliation.
+     * @summary Answers what this organisation has declared, joined with what the delivery plane has done about it.
+     * @param {PlatformApiGetPlatformAppsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
-    public getPlatformApps(options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformApps(options).then((request) => request(this.axios, this.basePath));
+    public getPlatformApps(requestParameters: PlatformApiGetPlatformAppsRequest = {}, options?: RawAxiosRequestConfig) {
+        return PlatformApiFp(this.configuration).getPlatformApps(requestParameters.org, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * The values file for one app as git declares it: image repository and tag, hosts, replicas, and whether CD is automated on it. 404 when this organization declares no such app.
-     * @summary One declaration
+     * Answers ONE declaration — what git says this app is, before the delivery plane has had any say in it.
+     * @summary Answers ONE declaration — what git says this app is, before the delivery plane has had any say in it.
      * @param {PlatformApiGetPlatformAppsByAppRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
     public getPlatformAppsByApp(requestParameters: PlatformApiGetPlatformAppsByAppRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformAppsByApp(requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+        return PlatformApiFp(this.configuration).getPlatformAppsByApp(requestParameters.app, requestParameters.org, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * The Hanzo CD Application for one declaration, on its own — the poll a deploy view makes while it waits, without re-reading the whole inventory. 404 while the declaration exists only on a branch, because the generator reads main.
-     * @summary One app\'s reconciliation
+     * Answers ONE app\'s reconciliation alone — the poll a deploy console makes while it waits, without re-reading the whole inventory each time.
+     * @summary Answers ONE app\'s reconciliation alone — the poll a deploy console makes while it waits, without re-reading the whole inventory each time.
      * @param {PlatformApiGetPlatformAppsByAppCdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
      */
     public getPlatformAppsByAppCd(requestParameters: PlatformApiGetPlatformAppsByAppCdRequest, options?: RawAxiosRequestConfig) {
-        return PlatformApiFp(this.configuration).getPlatformAppsByAppCd(requestParameters.app, options).then((request) => request(this.axios, this.basePath));
+        return PlatformApiFp(this.configuration).getPlatformAppsByAppCd(requestParameters.app, requestParameters.org, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3166,8 +3222,8 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * Every Hanzo CD Application this caller may observe, with its sync verdict, health, the universe revision last applied, and whether automation and self-heal are on. A SuperAdmin sees the fleet; an org admin sees only Applications whose destination namespace IS its own organization, and never a reserved one.  A cluster with no CD installed answers an empty plane. A plane that cannot be READ answers 503 and says why — the two are opposite facts and never share a shape.
-     * @summary The delivery plane
+     * Answers every Application the delivery plane holds.  Scoped to the namespaces the caller\'s own validated org owns: the ROLE opens the door and the tenant boundary is applied inside, so an admin of one org never observes another\'s.
+     * @summary Answers every Application the delivery plane holds.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlatformApi
@@ -3374,7 +3430,7 @@ export class PlatformApi extends BaseAPI {
     }
 
     /**
-     * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two seams a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both seams answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
+     * The forge\'s push-to-deploy door. git.hanzo.ai runs as a separate server, so its pushes never reach this fleet\'s own receive-pack; without this a push to the host we call canonical builds nothing. A verified push is handed to the SAME two clients a native push travels — the single-registrant deploy trigger, and the many-subscriber lifecycle stream that notifies and indexes — and the build decision itself stays downstream in the one place that knows what a push means.  PUBLIC at the JWT layer, because the forge carries no Hanzo session: AUTHENTICATION IS THE SIGNATURE. The HMAC covers the raw bytes and is verified BEFORE the payload is parsed, so an unauthenticated body is never decoded. The secret is read from KMS; a deployment that cannot read it answers 503 and processes nothing, rather than trusting a delivery it could not check. The body is read UNCOMPRESSED — a request declaring a Content-Encoding is refused 415 before it is touched, because decoding one is unbounded work bought with a few bytes and no credential. A bad signature is 401, a payload over 8 MiB is 413, and a malformed one 400.  A verified push that reaches both clients answers 200 with fired true and the NUMBER OF BUILDS it launched — zero is ordinary, since most pushes track no application, and it is the answer \'fired\' cannot give. A push that could not be dispatched answers 500: the delivery page shows it red, and the Replay that prompts reaches a fresh attempt rather than being declined as already landed.  The deliveries deliberately ignored answer 200 with a reason and nothing else: a payload that is not a push, a ref DELETE (a zero `after` has no commit to build), a BOT-authored push (release automation pushes as the forge\'s own Actions user, and a release must never rebuild itself), a push from a forge namespace that maps to no org, and a redelivery of a push already fired. Branches and tags both reach the build trigger, because releases are cut by tag and filtering here would silently stop publishing.
      * @summary Receive a push from the forge and trigger its build
      * @param {PlatformApiPostPlatformHookRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

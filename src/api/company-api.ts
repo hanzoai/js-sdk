@@ -321,8 +321,8 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing seam.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
-         * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing seam.
+         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
+         * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -815,7 +815,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider seam — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider client — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
          * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1086,8 +1086,8 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing seam.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
-         * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing seam.
+         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
+         * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1251,7 +1251,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider seam — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider client — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
          * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1381,8 +1381,8 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyAdvance(requestParameters.advanceIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing seam.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
-         * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing seam.
+         * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
+         * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1507,7 +1507,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyKycDecision(requestParameters.decisionIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider seam — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider client — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
          * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1865,8 +1865,8 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing seam.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
-     * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing seam.
+     * Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.  With no filing partner wired the filing is recorded honestly as \"manual\" — no filing id is fabricated. Available only at the documents stage.
+     * @summary Renders the formation documents for the chosen structure and jurisdiction, ingests each into the org\'s data room, and submits the state filing through the filing client.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompanyApi
@@ -2017,7 +2017,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider seam — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+     * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider client — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
      * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

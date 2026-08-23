@@ -186,7 +186,7 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 seam settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
+         * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 client settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
          * @summary Publish offers one tool on the marketplace, optionally monetized.
          * @param {PublishReq} publishReq 
          * @param {*} [options] Override http request option.
@@ -326,7 +326,7 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 seam settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
+         * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 client settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
          * @summary Publish offers one tool on the marketplace, optionally monetized.
          * @param {PublishReq} publishReq 
          * @param {*} [options] Override http request option.
@@ -400,7 +400,7 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
             return localVarFp.postMarketplaceInstall(requestParameters.installReq, options).then((request) => request(axios, basePath));
         },
         /**
-         * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 seam settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
+         * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 client settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
          * @summary Publish offers one tool on the marketplace, optionally monetized.
          * @param {MarketplaceApiPostMarketplaceListingsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -532,7 +532,7 @@ export class MarketplaceApi extends BaseAPI {
     }
 
     /**
-     * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 seam settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
+     * Publish offers one tool on the marketplace, optionally monetized. The tool must already resolve in the publisher\'s own scope, so a listing can never advertise a capability that does not exist; a listing with a price must name the payout wallet the x402 client settles to, so a monetized offer is never unpayable. The price is exact to 18 decimal places, so a per-call price below a cent is a real price and not a rounded-away zero. The listing is owned by the publishing org, paid into a wallet of that same org, and answers 201 with the created row.
      * @summary Publish offers one tool on the marketplace, optionally monetized.
      * @param {MarketplaceApiPostMarketplaceListingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

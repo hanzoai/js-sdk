@@ -525,9 +525,9 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Moves one step of the caller org\'s journey to done and answers the whole refreshed journey, which is what unblocks everything downstream of it.  Dependency-GATED like start: finishing a step whose prerequisites are themselves unfinished is 409 carrying `{error, step, blockedBy}` naming what is in the way, not a silent success. A step id the org\'s active journey does not contain is 404. Skipping is the ungated alternative — a founder declaring a step does not apply — and it lives at /skip.  Requires a validated org; 403 without one. The mark is recorded as `manual`, and /reset returns the step to todo.
-         * @summary Mark a step of your org\'s journey finished
-         * @param {string} id 
+         * Marks one step of the caller org\'s journey complete and returns the refreshed journey.  Dependency-GATED, exactly as start is: a step whose prerequisites are unfinished is refused 409 carrying {error, step, blockedBy} naming what is in the way.
+         * @summary Marks one step of the caller org\'s journey complete and returns the refreshed journey.
+         * @param {string} id ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -639,9 +639,9 @@ export const GuideApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Moves one step of the caller org\'s journey to in-progress and answers the whole refreshed journey, so a console needs no second read.  The transition is dependency-GATED, and that is why the answer set is wider than a success: a step whose prerequisites are unfinished is 409 carrying `{error, step, blockedBy}`, where `blockedBy` names the exact steps in the way — enough to render the blockage rather than merely report it. A step id the org\'s active journey does not contain is 404.  Requires a validated org; 403 without one, and the journey read and written is that org\'s alone. The mark is recorded as `manual`, and the journey is reconciled against the auto-detectors on every read, so a step the org has demonstrably completed elsewhere can still be moved to done underneath it.
-         * @summary Mark a step of your org\'s journey started
-         * @param {string} id 
+         * Marks one step of the caller org\'s journey in progress and returns the refreshed journey.  Dependency-GATED: a step whose prerequisites are unfinished is refused 409 carrying {error, step, blockedBy}, where blockedBy names the exact steps in the way — enough to render the reason without asking again.
+         * @summary Marks one step of the caller org\'s journey in progress and returns the refreshed journey.
+         * @param {string} id ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -918,13 +918,13 @@ export const GuideApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Moves one step of the caller org\'s journey to done and answers the whole refreshed journey, which is what unblocks everything downstream of it.  Dependency-GATED like start: finishing a step whose prerequisites are themselves unfinished is 409 carrying `{error, step, blockedBy}` naming what is in the way, not a silent success. A step id the org\'s active journey does not contain is 404. Skipping is the ungated alternative — a founder declaring a step does not apply — and it lives at /skip.  Requires a validated org; 403 without one. The mark is recorded as `manual`, and /reset returns the step to todo.
-         * @summary Mark a step of your org\'s journey finished
-         * @param {string} id 
+         * Marks one step of the caller org\'s journey complete and returns the refreshed journey.  Dependency-GATED, exactly as start is: a step whose prerequisites are unfinished is refused 409 carrying {error, step, blockedBy} naming what is in the way.
+         * @summary Marks one step of the caller org\'s journey complete and returns the refreshed journey.
+         * @param {string} id ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGuideStepsByIdDone(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postGuideStepsByIdDone(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideStepsByIdDone(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideStepsByIdDone']?.[localVarOperationServerIndex]?.url;
@@ -957,13 +957,13 @@ export const GuideApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Moves one step of the caller org\'s journey to in-progress and answers the whole refreshed journey, so a console needs no second read.  The transition is dependency-GATED, and that is why the answer set is wider than a success: a step whose prerequisites are unfinished is 409 carrying `{error, step, blockedBy}`, where `blockedBy` names the exact steps in the way — enough to render the blockage rather than merely report it. A step id the org\'s active journey does not contain is 404.  Requires a validated org; 403 without one, and the journey read and written is that org\'s alone. The mark is recorded as `manual`, and the journey is reconciled against the auto-detectors on every read, so a step the org has demonstrably completed elsewhere can still be moved to done underneath it.
-         * @summary Mark a step of your org\'s journey started
-         * @param {string} id 
+         * Marks one step of the caller org\'s journey in progress and returns the refreshed journey.  Dependency-GATED: a step whose prerequisites are unfinished is refused 409 carrying {error, step, blockedBy}, where blockedBy names the exact steps in the way — enough to render the reason without asking again.
+         * @summary Marks one step of the caller org\'s journey in progress and returns the refreshed journey.
+         * @param {string} id ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postGuideStepsByIdStart(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postGuideStepsByIdStart(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OverviewView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postGuideStepsByIdStart(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['GuideApi.postGuideStepsByIdStart']?.[localVarOperationServerIndex]?.url;
@@ -1125,13 +1125,13 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.postGuideStepsByIdDo(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Moves one step of the caller org\'s journey to done and answers the whole refreshed journey, which is what unblocks everything downstream of it.  Dependency-GATED like start: finishing a step whose prerequisites are themselves unfinished is 409 carrying `{error, step, blockedBy}` naming what is in the way, not a silent success. A step id the org\'s active journey does not contain is 404. Skipping is the ungated alternative — a founder declaring a step does not apply — and it lives at /skip.  Requires a validated org; 403 without one. The mark is recorded as `manual`, and /reset returns the step to todo.
-         * @summary Mark a step of your org\'s journey finished
+         * Marks one step of the caller org\'s journey complete and returns the refreshed journey.  Dependency-GATED, exactly as start is: a step whose prerequisites are unfinished is refused 409 carrying {error, step, blockedBy} naming what is in the way.
+         * @summary Marks one step of the caller org\'s journey complete and returns the refreshed journey.
          * @param {GuideApiPostGuideStepsByIdDoneRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGuideStepsByIdDone(requestParameters: GuideApiPostGuideStepsByIdDoneRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postGuideStepsByIdDone(requestParameters: GuideApiPostGuideStepsByIdDoneRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
             return localVarFp.postGuideStepsByIdDone(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1155,13 +1155,13 @@ export const GuideApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.postGuideStepsByIdSkip(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Moves one step of the caller org\'s journey to in-progress and answers the whole refreshed journey, so a console needs no second read.  The transition is dependency-GATED, and that is why the answer set is wider than a success: a step whose prerequisites are unfinished is 409 carrying `{error, step, blockedBy}`, where `blockedBy` names the exact steps in the way — enough to render the blockage rather than merely report it. A step id the org\'s active journey does not contain is 404.  Requires a validated org; 403 without one, and the journey read and written is that org\'s alone. The mark is recorded as `manual`, and the journey is reconciled against the auto-detectors on every read, so a step the org has demonstrably completed elsewhere can still be moved to done underneath it.
-         * @summary Mark a step of your org\'s journey started
+         * Marks one step of the caller org\'s journey in progress and returns the refreshed journey.  Dependency-GATED: a step whose prerequisites are unfinished is refused 409 carrying {error, step, blockedBy}, where blockedBy names the exact steps in the way — enough to render the reason without asking again.
+         * @summary Marks one step of the caller org\'s journey in progress and returns the refreshed journey.
          * @param {GuideApiPostGuideStepsByIdStartRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postGuideStepsByIdStart(requestParameters: GuideApiPostGuideStepsByIdStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postGuideStepsByIdStart(requestParameters: GuideApiPostGuideStepsByIdStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<OverviewView> {
             return localVarFp.postGuideStepsByIdStart(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1269,7 +1269,7 @@ export interface GuideApiPostGuideStepsByIdDoRequest {
  */
 export interface GuideApiPostGuideStepsByIdDoneRequest {
     /**
-     * 
+     * ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
      * @type {string}
      * @memberof GuideApiPostGuideStepsByIdDone
      */
@@ -1311,7 +1311,7 @@ export interface GuideApiPostGuideStepsByIdSkipRequest {
  */
 export interface GuideApiPostGuideStepsByIdStartRequest {
     /**
-     * 
+     * ID is the step\&#39;s id, as it appears in the journey (e.g. \&quot;gsuite\&quot;).
      * @type {string}
      * @memberof GuideApiPostGuideStepsByIdStart
      */
@@ -1473,8 +1473,8 @@ export class GuideApi extends BaseAPI {
     }
 
     /**
-     * Moves one step of the caller org\'s journey to done and answers the whole refreshed journey, which is what unblocks everything downstream of it.  Dependency-GATED like start: finishing a step whose prerequisites are themselves unfinished is 409 carrying `{error, step, blockedBy}` naming what is in the way, not a silent success. A step id the org\'s active journey does not contain is 404. Skipping is the ungated alternative — a founder declaring a step does not apply — and it lives at /skip.  Requires a validated org; 403 without one. The mark is recorded as `manual`, and /reset returns the step to todo.
-     * @summary Mark a step of your org\'s journey finished
+     * Marks one step of the caller org\'s journey complete and returns the refreshed journey.  Dependency-GATED, exactly as start is: a step whose prerequisites are unfinished is refused 409 carrying {error, step, blockedBy} naming what is in the way.
+     * @summary Marks one step of the caller org\'s journey complete and returns the refreshed journey.
      * @param {GuideApiPostGuideStepsByIdDoneRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1509,8 +1509,8 @@ export class GuideApi extends BaseAPI {
     }
 
     /**
-     * Moves one step of the caller org\'s journey to in-progress and answers the whole refreshed journey, so a console needs no second read.  The transition is dependency-GATED, and that is why the answer set is wider than a success: a step whose prerequisites are unfinished is 409 carrying `{error, step, blockedBy}`, where `blockedBy` names the exact steps in the way — enough to render the blockage rather than merely report it. A step id the org\'s active journey does not contain is 404.  Requires a validated org; 403 without one, and the journey read and written is that org\'s alone. The mark is recorded as `manual`, and the journey is reconciled against the auto-detectors on every read, so a step the org has demonstrably completed elsewhere can still be moved to done underneath it.
-     * @summary Mark a step of your org\'s journey started
+     * Marks one step of the caller org\'s journey in progress and returns the refreshed journey.  Dependency-GATED: a step whose prerequisites are unfinished is refused 409 carrying {error, step, blockedBy}, where blockedBy names the exact steps in the way — enough to render the reason without asking again.
+     * @summary Marks one step of the caller org\'s journey in progress and returns the refreshed journey.
      * @param {GuideApiPostGuideStepsByIdStartRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

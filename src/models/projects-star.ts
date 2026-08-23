@@ -17,20 +17,14 @@
 /**
  * 
  * @export
- * @interface Listing
+ * @interface ProjectsStar
  */
-export interface Listing {
+export interface ProjectsStar {
     /**
-     * 
-     * @type {string}
-     * @memberof Listing
+     * Starred is whether THIS caller has starred the project after the toggle — their own bookmark, not a property the project carries, so two people see two answers for one project.
+     * @type {boolean}
+     * @memberof ProjectsStar
      */
-    'lastModified'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Listing
-     */
-    'name'?: string;
+    'starred'?: boolean;
 }
 

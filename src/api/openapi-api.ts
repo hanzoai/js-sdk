@@ -130,7 +130,7 @@ export const OpenapiApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
+         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the composed document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
          * @summary The API description this SDK was generated from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -245,7 +245,7 @@ export const OpenapiApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
+         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the composed document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
          * @summary The API description this SDK was generated from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -308,7 +308,7 @@ export const OpenapiApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getOpenapiCommands(options).then((request) => request(axios, basePath));
         },
         /**
-         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
+         * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the composed document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
          * @summary The API description this SDK was generated from
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -399,7 +399,7 @@ export class OpenapiApi extends BaseAPI {
     }
 
     /**
-     * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the woven document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
+     * Serves the OpenAPI document for the routes this process actually answers — generated from the live router at request time, not from a checked-in file that can disagree with it.  On an app it is that app\'s own surface; on the fleet\'s front door it is the composed document for every mounted app. Unauthenticated by design: a client has to be able to read the contract before it holds a credential, and the document grants nothing.  Rendered once and served as bytes thereafter, so the route table\'s immutability is what makes a repeat request a memcpy rather than a re-encode of a megabyte document.
      * @summary The API description this SDK was generated from
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

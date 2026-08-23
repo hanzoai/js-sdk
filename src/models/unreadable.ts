@@ -17,20 +17,14 @@
 /**
  * 
  * @export
- * @interface Listing
+ * @interface Unreadable
  */
-export interface Listing {
+export interface Unreadable {
     /**
      * 
      * @type {string}
-     * @memberof Listing
+     * @memberof Unreadable
      */
-    'lastModified'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Listing
-     */
-    'name'?: string;
+    'reason'?: string;
 }
 

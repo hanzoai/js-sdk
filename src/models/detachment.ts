@@ -17,20 +17,20 @@
 /**
  * 
  * @export
- * @interface Listing
+ * @interface Detachment
  */
-export interface Listing {
+export interface Detachment {
     /**
-     * 
-     * @type {string}
-     * @memberof Listing
+     * Deleted is whether the method was actually removed. False with no error means it was already gone, which is a successful detach rather than a failure — a retry must not be an error.
+     * @type {boolean}
+     * @memberof Detachment
      */
-    'lastModified'?: string;
+    'deleted'?: boolean;
     /**
-     * 
+     * ID is the method that was detached, echoed so a caller batching several can tell the answers apart.
      * @type {string}
-     * @memberof Listing
+     * @memberof Detachment
      */
-    'name'?: string;
+    'id'?: string;
 }
 

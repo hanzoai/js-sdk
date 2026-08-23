@@ -310,15 +310,19 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Deletes the row. ARCHIVING is usually what is wanted instead — a deleted rate cannot price a historical charge, so a past invoice that has to re-resolve its rate finds nothing to read. Reach for status=archived unless the rate never priced anything. SuperAdmin only.
          * @summary Remove a rate outright
-         * @param {string} slug 
+         * @param {string} product 
+         * @param {string} meter 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCommerceRatesEntriesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('deleteCommerceRatesEntriesBySlug', 'slug', slug)
-            const localVarPath = `/v1/commerce/rates/entries/{slug}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+        deleteCommerceRatesEntriesByProductByMeter: async (product: string, meter: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'product' is not null or undefined
+            assertParamExists('deleteCommerceRatesEntriesByProductByMeter', 'product', product)
+            // verify required parameter 'meter' is not null or undefined
+            assertParamExists('deleteCommerceRatesEntriesByProductByMeter', 'meter', meter)
+            const localVarPath = `/v1/commerce/rates/entries/{product}/{meter}`
+                .replace(`{${"product"}}`, encodeURIComponent(String(product)))
+                .replace(`{${"meter"}}`, encodeURIComponent(String(meter)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4270,7 +4274,7 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Takes an array of rates and seeds the authority from it. This is the seed, driven from admin rather than compiled in, because 506 published prices in an embed made a price change wait for a build. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
+         * Takes an array of rates and seeds the authority from it — the same reconcile the boot catalog runs, driven from admin instead. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
          * @summary Load the published price document, reconciling rather than replacing
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6152,15 +6156,19 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Edits one rate and MARKS it edited, which is the whole contract with the importer: an operator\'s price outranks the document it came from, so a later import leaves this row alone. Without that mark a price set here would apply, work, and silently revert on the next import. Only the editable fields move; identity and bookkeeping are not writable from the body. SuperAdmin only.
          * @summary Edit a rate, and mark it as operator-set
-         * @param {string} slug 
+         * @param {string} product 
+         * @param {string} meter 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putCommerceRatesEntriesBySlug: async (slug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'slug' is not null or undefined
-            assertParamExists('putCommerceRatesEntriesBySlug', 'slug', slug)
-            const localVarPath = `/v1/commerce/rates/entries/{slug}`
-                .replace(`{${"slug"}}`, encodeURIComponent(String(slug)));
+        putCommerceRatesEntriesByProductByMeter: async (product: string, meter: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'product' is not null or undefined
+            assertParamExists('putCommerceRatesEntriesByProductByMeter', 'product', product)
+            // verify required parameter 'meter' is not null or undefined
+            assertParamExists('putCommerceRatesEntriesByProductByMeter', 'meter', meter)
+            const localVarPath = `/v1/commerce/rates/entries/{product}/{meter}`
+                .replace(`{${"product"}}`, encodeURIComponent(String(product)))
+                .replace(`{${"meter"}}`, encodeURIComponent(String(meter)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -6873,14 +6881,15 @@ export const CommerceApiFp = function(configuration?: Configuration) {
         /**
          * Deletes the row. ARCHIVING is usually what is wanted instead — a deleted rate cannot price a historical charge, so a past invoice that has to re-resolve its rate finds nothing to read. Reach for status=archived unless the rate never priced anything. SuperAdmin only.
          * @summary Remove a rate outright
-         * @param {string} slug 
+         * @param {string} product 
+         * @param {string} meter 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCommerceRatesEntriesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceRatesEntriesBySlug(slug, options);
+        async deleteCommerceRatesEntriesByProductByMeter(product: string, meter: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCommerceRatesEntriesByProductByMeter(product, meter, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceRatesEntriesBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.deleteCommerceRatesEntriesByProductByMeter']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8239,7 +8248,7 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Takes an array of rates and seeds the authority from it. This is the seed, driven from admin rather than compiled in, because 506 published prices in an embed made a price change wait for a build. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
+         * Takes an array of rates and seeds the authority from it — the same reconcile the boot catalog runs, driven from admin instead. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
          * @summary Load the published price document, reconciling rather than replacing
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8886,14 +8895,15 @@ export const CommerceApiFp = function(configuration?: Configuration) {
         /**
          * Edits one rate and MARKS it edited, which is the whole contract with the importer: an operator\'s price outranks the document it came from, so a later import leaves this row alone. Without that mark a price set here would apply, work, and silently revert on the next import. Only the editable fields move; identity and bookkeeping are not writable from the body. SuperAdmin only.
          * @summary Edit a rate, and mark it as operator-set
-         * @param {string} slug 
+         * @param {string} product 
+         * @param {string} meter 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putCommerceRatesEntriesBySlug(slug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceRatesEntriesBySlug(slug, options);
+        async putCommerceRatesEntriesByProductByMeter(product: string, meter: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putCommerceRatesEntriesByProductByMeter(product, meter, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceRatesEntriesBySlug']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CommerceApi.putCommerceRatesEntriesByProductByMeter']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -9176,12 +9186,12 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
         /**
          * Deletes the row. ARCHIVING is usually what is wanted instead — a deleted rate cannot price a historical charge, so a past invoice that has to re-resolve its rate finds nothing to read. Reach for status=archived unless the rate never priced anything. SuperAdmin only.
          * @summary Remove a rate outright
-         * @param {CommerceApiDeleteCommerceRatesEntriesBySlugRequest} requestParameters Request parameters.
+         * @param {CommerceApiDeleteCommerceRatesEntriesByProductByMeterRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCommerceRatesEntriesBySlug(requestParameters: CommerceApiDeleteCommerceRatesEntriesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteCommerceRatesEntriesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        deleteCommerceRatesEntriesByProductByMeter(requestParameters: CommerceApiDeleteCommerceRatesEntriesByProductByMeterRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteCommerceRatesEntriesByProductByMeter(requestParameters.product, requestParameters.meter, options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. Removes the addressed row and answers 204 with no body. Before the live row goes it is written once more under a deleted tombstone kind, so a deletion leaves a recoverable copy rather than destroying the record outright — and a tombstone that cannot be written fails the call with 500 before anything is removed. The id is resolved inside the caller org\'s own namespace, so an absent or foreign id is 404. Any valid access token reaches it. The token must also carry Admin or WriteReturn.
@@ -10212,7 +10222,7 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postCommerceRatesEntries(options).then((request) => request(axios, basePath));
         },
         /**
-         * Takes an array of rates and seeds the authority from it. This is the seed, driven from admin rather than compiled in, because 506 published prices in an embed made a price change wait for a build. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
+         * Takes an array of rates and seeds the authority from it — the same reconcile the boot catalog runs, driven from admin instead. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
          * @summary Load the published price document, reconciling rather than replacing
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -10700,12 +10710,12 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
         /**
          * Edits one rate and MARKS it edited, which is the whole contract with the importer: an operator\'s price outranks the document it came from, so a later import leaves this row alone. Without that mark a price set here would apply, work, and silently revert on the next import. Only the editable fields move; identity and bookkeeping are not writable from the body. SuperAdmin only.
          * @summary Edit a rate, and mark it as operator-set
-         * @param {CommerceApiPutCommerceRatesEntriesBySlugRequest} requestParameters Request parameters.
+         * @param {CommerceApiPutCommerceRatesEntriesByProductByMeterRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putCommerceRatesEntriesBySlug(requestParameters: CommerceApiPutCommerceRatesEntriesBySlugRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putCommerceRatesEntriesBySlug(requestParameters.slug, options).then((request) => request(axios, basePath));
+        putCommerceRatesEntriesByProductByMeter(requestParameters: CommerceApiPutCommerceRatesEntriesByProductByMeterRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putCommerceRatesEntriesByProductByMeter(requestParameters.product, requestParameters.meter, options).then((request) => request(axios, basePath));
         },
         /**
          * A return is an RMA — the store, user and order it belongs to, the line items coming back, a fulfillment block carrying its own type, status and pricing, a summary, and eight lifecycle timestamps from submitted through delivered and processed. Its status is a FREE STRING with no enumeration behind it, and there is no refund amount on the return itself: the money sits inside the line items and the fulfillment pricing. This is a true REPLACEMENT, not a merge: the stored row\'s key is preserved, but the body is decoded onto a FRESH entity, so every field the body omits is written back as its ZERO value. Patch is the verb for changing part of a row. The id is resolved inside the caller org\'s own namespace and an absent one is 404 before anything is written; a body that fails to decode is 400. Answers the stored result. Any valid access token reaches it. The token must also carry Admin, or ReadReturn and WriteReturn together.
@@ -10959,17 +10969,24 @@ export interface CommerceApiDeleteCommerceProductByProductidRequest {
 }
 
 /**
- * Request parameters for deleteCommerceRatesEntriesBySlug operation in CommerceApi.
+ * Request parameters for deleteCommerceRatesEntriesByProductByMeter operation in CommerceApi.
  * @export
- * @interface CommerceApiDeleteCommerceRatesEntriesBySlugRequest
+ * @interface CommerceApiDeleteCommerceRatesEntriesByProductByMeterRequest
  */
-export interface CommerceApiDeleteCommerceRatesEntriesBySlugRequest {
+export interface CommerceApiDeleteCommerceRatesEntriesByProductByMeterRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiDeleteCommerceRatesEntriesBySlug
+     * @memberof CommerceApiDeleteCommerceRatesEntriesByProductByMeter
      */
-    readonly slug: string
+    readonly product: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiDeleteCommerceRatesEntriesByProductByMeter
+     */
+    readonly meter: string
 }
 
 /**
@@ -12492,17 +12509,24 @@ export interface CommerceApiPutCommerceProductByProductidRequest {
 }
 
 /**
- * Request parameters for putCommerceRatesEntriesBySlug operation in CommerceApi.
+ * Request parameters for putCommerceRatesEntriesByProductByMeter operation in CommerceApi.
  * @export
- * @interface CommerceApiPutCommerceRatesEntriesBySlugRequest
+ * @interface CommerceApiPutCommerceRatesEntriesByProductByMeterRequest
  */
-export interface CommerceApiPutCommerceRatesEntriesBySlugRequest {
+export interface CommerceApiPutCommerceRatesEntriesByProductByMeterRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommerceApiPutCommerceRatesEntriesBySlug
+     * @memberof CommerceApiPutCommerceRatesEntriesByProductByMeter
      */
-    readonly slug: string
+    readonly product: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof CommerceApiPutCommerceRatesEntriesByProductByMeter
+     */
+    readonly meter: string
 }
 
 /**
@@ -12823,13 +12847,13 @@ export class CommerceApi extends BaseAPI {
     /**
      * Deletes the row. ARCHIVING is usually what is wanted instead — a deleted rate cannot price a historical charge, so a past invoice that has to re-resolve its rate finds nothing to read. Reach for status=archived unless the rate never priced anything. SuperAdmin only.
      * @summary Remove a rate outright
-     * @param {CommerceApiDeleteCommerceRatesEntriesBySlugRequest} requestParameters Request parameters.
+     * @param {CommerceApiDeleteCommerceRatesEntriesByProductByMeterRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public deleteCommerceRatesEntriesBySlug(requestParameters: CommerceApiDeleteCommerceRatesEntriesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).deleteCommerceRatesEntriesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public deleteCommerceRatesEntriesByProductByMeter(requestParameters: CommerceApiDeleteCommerceRatesEntriesByProductByMeterRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).deleteCommerceRatesEntriesByProductByMeter(requestParameters.product, requestParameters.meter, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14075,7 +14099,7 @@ export class CommerceApi extends BaseAPI {
     }
 
     /**
-     * Takes an array of rates and seeds the authority from it. This is the seed, driven from admin rather than compiled in, because 506 published prices in an embed made a price change wait for a build. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
+     * Takes an array of rates and seeds the authority from it — the same reconcile the boot catalog runs, driven from admin instead. It RECONCILES: a row that matches is left alone, a row that has drifted is corrected, and a row an operator edited is skipped — so importing the same document twice is a no-op and importing a corrected one moves exactly the rows that changed. Answers what it received, created, corrected and left unchanged, so an import that changes nothing reads as nothing to do rather than as a failure. An empty array is refused 400. SuperAdmin only.
      * @summary Load the published price document, reconciling rather than replacing
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -14663,13 +14687,13 @@ export class CommerceApi extends BaseAPI {
     /**
      * Edits one rate and MARKS it edited, which is the whole contract with the importer: an operator\'s price outranks the document it came from, so a later import leaves this row alone. Without that mark a price set here would apply, work, and silently revert on the next import. Only the editable fields move; identity and bookkeeping are not writable from the body. SuperAdmin only.
      * @summary Edit a rate, and mark it as operator-set
-     * @param {CommerceApiPutCommerceRatesEntriesBySlugRequest} requestParameters Request parameters.
+     * @param {CommerceApiPutCommerceRatesEntriesByProductByMeterRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CommerceApi
      */
-    public putCommerceRatesEntriesBySlug(requestParameters: CommerceApiPutCommerceRatesEntriesBySlugRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).putCommerceRatesEntriesBySlug(requestParameters.slug, options).then((request) => request(this.axios, this.basePath));
+    public putCommerceRatesEntriesByProductByMeter(requestParameters: CommerceApiPutCommerceRatesEntriesByProductByMeterRequest, options?: RawAxiosRequestConfig) {
+        return CommerceApiFp(this.configuration).putCommerceRatesEntriesByProductByMeter(requestParameters.product, requestParameters.meter, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

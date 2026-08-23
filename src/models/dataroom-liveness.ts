@@ -17,20 +17,20 @@
 /**
  * 
  * @export
- * @interface Listing
+ * @interface DataroomLiveness
  */
-export interface Listing {
+export interface DataroomLiveness {
     /**
-     * 
+     * Service names the subsystem answering, so a probe response is attributable when several are collected together.
      * @type {string}
-     * @memberof Listing
+     * @memberof DataroomLiveness
      */
-    'lastModified'?: string;
+    'service'?: string;
     /**
-     * 
+     * Status is `ok`. This probe has no degraded answer by design: it reports process liveness and nothing that could be false while the process serves.
      * @type {string}
-     * @memberof Listing
+     * @memberof DataroomLiveness
      */
-    'name'?: string;
+    'status'?: string;
 }
 
