@@ -1014,7 +1014,7 @@ export const MarketingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Publishes a post NOW, synchronously, whatever its schedule. No social connector is wired today, so every channel answers an honest 501 naming the seam a real one would plug into, and the post is recorded failed with that exact reason — never a faked \"published\".
+         * Publishes a post NOW, synchronously, whatever its schedule. No social connector is wired today, so every channel answers an honest 501 naming the client a real one would plug into, and the post is recorded failed with that exact reason — never a faked \"published\".
          * @summary Publishes a post NOW, synchronously, whatever its schedule.
          * @param {string} id ID is the post id from the path, as returned by create.
          * @param {*} [options] Override http request option.
@@ -1840,7 +1840,7 @@ export const MarketingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Publishes a post NOW, synchronously, whatever its schedule. No social connector is wired today, so every channel answers an honest 501 naming the seam a real one would plug into, and the post is recorded failed with that exact reason — never a faked \"published\".
+         * Publishes a post NOW, synchronously, whatever its schedule. No social connector is wired today, so every channel answers an honest 501 naming the client a real one would plug into, and the post is recorded failed with that exact reason — never a faked \"published\".
          * @summary Publishes a post NOW, synchronously, whatever its schedule.
          * @param {string} id ID is the post id from the path, as returned by create.
          * @param {*} [options] Override http request option.
@@ -2242,7 +2242,7 @@ export const MarketingApiFactory = function (configuration?: Configuration, base
             return localVarFp.postMarketingCalendar(requestParameters.calendarPost, options).then((request) => request(axios, basePath));
         },
         /**
-         * Publishes a post NOW, synchronously, whatever its schedule. No social connector is wired today, so every channel answers an honest 501 naming the seam a real one would plug into, and the post is recorded failed with that exact reason — never a faked \"published\".
+         * Publishes a post NOW, synchronously, whatever its schedule. No social connector is wired today, so every channel answers an honest 501 naming the client a real one would plug into, and the post is recorded failed with that exact reason — never a faked \"published\".
          * @summary Publishes a post NOW, synchronously, whatever its schedule.
          * @param {MarketingApiPostMarketingCalendarByIdPublishRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3241,7 +3241,7 @@ export class MarketingApi extends BaseAPI {
     }
 
     /**
-     * Publishes a post NOW, synchronously, whatever its schedule. No social connector is wired today, so every channel answers an honest 501 naming the seam a real one would plug into, and the post is recorded failed with that exact reason — never a faked \"published\".
+     * Publishes a post NOW, synchronously, whatever its schedule. No social connector is wired today, so every channel answers an honest 501 naming the client a real one would plug into, and the post is recorded failed with that exact reason — never a faked \"published\".
      * @summary Publishes a post NOW, synchronously, whatever its schedule.
      * @param {MarketingApiPostMarketingCalendarByIdPublishRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

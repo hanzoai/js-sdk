@@ -13,24 +13,36 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Declared } from './declared';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Unreadable } from './unreadable';
 
 /**
  * 
  * @export
- * @interface Listing
+ * @interface DeclaredResp
  */
-export interface Listing {
+export interface DeclaredResp {
     /**
      * 
-     * @type {string}
-     * @memberof Listing
+     * @type {Array<Declared>}
+     * @memberof DeclaredResp
      */
-    'lastModified'?: string;
+    'apps'?: Array<Declared>;
     /**
      * 
-     * @type {string}
-     * @memberof Listing
+     * @type {Unreadable}
+     * @memberof DeclaredResp
      */
-    'name'?: string;
+    'cdUnavailable'?: Unreadable;
+    /**
+     * Org is the directory read — the caller\'s own, or another when a SuperAdmin asked to act as it.
+     * @type {string}
+     * @memberof DeclaredResp
+     */
+    'org'?: string;
 }
 

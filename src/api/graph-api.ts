@@ -227,6 +227,60 @@ export const GraphApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Finds assertions by their text where read finds them by their keys.  It is the READ with one more term, not a second way to leave the store: same order, same ceiling, same tenancy, and searching composes with narrowing by relation and by instant because all of them are terms of one filter.  It resolves nothing. What matches is what was asserted, including claims that were later corrected — which is the honest answer to \"where is this mentioned\" and the reason the caller then asks resolve about what it found.
+         * @summary Find assertions by their text rather than by an entity key
+         * @param {string} [q] Q is what to look for: words, matched as prefixes, all of them required. Punctuation is text here rather than syntax, so an entity key searches as itself.
+         * @param {string} [relation] Relation narrows to one relation. Absent matches every relation.
+         * @param {string} [asOf] AsOf bounds the search to what was knowable at an instant, RFC 3339. Absent searches everything this plane holds.
+         * @param {number} [limit] Limit caps how many assertions come back. Absent, zero, or anything above the walk ceiling is the ceiling.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphSearch: async (q?: string, relation?: string, asOf?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/graph/search`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (q !== undefined) {
+                localVarQueryParameter['q'] = q;
+            }
+
+            if (relation !== undefined) {
+                localVarQueryParameter['relation'] = relation;
+            }
+
+            if (asOf !== undefined) {
+                localVarQueryParameter['as_of'] = asOf;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary The relations in use, and the rule that resolves a conflict
          * @param {*} [options] Override http request option.
@@ -365,6 +419,22 @@ export const GraphApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Finds assertions by their text where read finds them by their keys.  It is the READ with one more term, not a second way to leave the store: same order, same ceiling, same tenancy, and searching composes with narrowing by relation and by instant because all of them are terms of one filter.  It resolves nothing. What matches is what was asserted, including claims that were later corrected — which is the honest answer to \"where is this mentioned\" and the reason the caller then asks resolve about what it found.
+         * @summary Find assertions by their text rather than by an entity key
+         * @param {string} [q] Q is what to look for: words, matched as prefixes, all of them required. Punctuation is text here rather than syntax, so an entity key searches as itself.
+         * @param {string} [relation] Relation narrows to one relation. Absent matches every relation.
+         * @param {string} [asOf] AsOf bounds the search to what was knowable at an instant, RFC 3339. Absent searches everything this plane holds.
+         * @param {number} [limit] Limit caps how many assertions come back. Absent, zero, or anything above the walk ceiling is the ceiling.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async graphSearch(q?: string, relation?: string, asOf?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphReadOut>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.graphSearch(q, relation, asOf, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GraphApi.graphSearch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary The relations in use, and the rule that resolves a conflict
          * @param {*} [options] Override http request option.
@@ -438,6 +508,16 @@ export const GraphApiFactory = function (configuration?: Configuration, basePath
          */
         graphResolve(requestParameters: GraphApiGraphResolveRequest, options?: RawAxiosRequestConfig): AxiosPromise<GraphResolveOut> {
             return localVarFp.graphResolve(requestParameters.graphResolveIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Finds assertions by their text where read finds them by their keys.  It is the READ with one more term, not a second way to leave the store: same order, same ceiling, same tenancy, and searching composes with narrowing by relation and by instant because all of them are terms of one filter.  It resolves nothing. What matches is what was asserted, including claims that were later corrected — which is the honest answer to \"where is this mentioned\" and the reason the caller then asks resolve about what it found.
+         * @summary Find assertions by their text rather than by an entity key
+         * @param {GraphApiGraphSearchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        graphSearch(requestParameters: GraphApiGraphSearchRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<GraphReadOut> {
+            return localVarFp.graphSearch(requestParameters.q, requestParameters.relation, requestParameters.asOf, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -546,6 +626,41 @@ export interface GraphApiGraphResolveRequest {
 }
 
 /**
+ * Request parameters for graphSearch operation in GraphApi.
+ * @export
+ * @interface GraphApiGraphSearchRequest
+ */
+export interface GraphApiGraphSearchRequest {
+    /**
+     * Q is what to look for: words, matched as prefixes, all of them required. Punctuation is text here rather than syntax, so an entity key searches as itself.
+     * @type {string}
+     * @memberof GraphApiGraphSearch
+     */
+    readonly q?: string
+
+    /**
+     * Relation narrows to one relation. Absent matches every relation.
+     * @type {string}
+     * @memberof GraphApiGraphSearch
+     */
+    readonly relation?: string
+
+    /**
+     * AsOf bounds the search to what was knowable at an instant, RFC 3339. Absent searches everything this plane holds.
+     * @type {string}
+     * @memberof GraphApiGraphSearch
+     */
+    readonly asOf?: string
+
+    /**
+     * Limit caps how many assertions come back. Absent, zero, or anything above the walk ceiling is the ceiling.
+     * @type {number}
+     * @memberof GraphApiGraphSearch
+     */
+    readonly limit?: number
+}
+
+/**
  * Request parameters for postGraphGraphql operation in GraphApi.
  * @export
  * @interface GraphApiPostGraphGraphqlRequest
@@ -612,6 +727,18 @@ export class GraphApi extends BaseAPI {
      */
     public graphResolve(requestParameters: GraphApiGraphResolveRequest, options?: RawAxiosRequestConfig) {
         return GraphApiFp(this.configuration).graphResolve(requestParameters.graphResolveIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Finds assertions by their text where read finds them by their keys.  It is the READ with one more term, not a second way to leave the store: same order, same ceiling, same tenancy, and searching composes with narrowing by relation and by instant because all of them are terms of one filter.  It resolves nothing. What matches is what was asserted, including claims that were later corrected — which is the honest answer to \"where is this mentioned\" and the reason the caller then asks resolve about what it found.
+     * @summary Find assertions by their text rather than by an entity key
+     * @param {GraphApiGraphSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof GraphApi
+     */
+    public graphSearch(requestParameters: GraphApiGraphSearchRequest = {}, options?: RawAxiosRequestConfig) {
+        return GraphApiFp(this.configuration).graphSearch(requestParameters.q, requestParameters.relation, requestParameters.asOf, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

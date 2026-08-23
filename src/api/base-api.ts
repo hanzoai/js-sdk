@@ -23,12 +23,86 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
 import type { BaseHealth } from '../models';
+// @ts-ignore
+import type { BaseView } from '../models';
 /**
  * BaseApi - axios parameter creator
  * @export
  */
 export const BaseApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Lists every Base the caller can reach, one per org their token carries.  The orgs come from IAM\'s signed membership set, so the list is exactly the orgs the caller is a member of and cannot be widened by asking. It is the account-wide view: a Base is per org, so this is one entry per org and there is nothing to page.  A caller with no membership set — a machine credential, an API key — reaches no Base and receives an empty list rather than a refusal, because holding no membership is an answer and not a failure.
+         * @summary Lists every Base the caller can reach, one per org their token carries.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBaseBases: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/base/bases`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Describes ONE org\'s Base — whether its store exists, and what it occupies.  The org must be one the caller\'s token carries; any other is not found, so this cannot be used to learn which orgs exist. That check is the same membership set the listing is built from, which is why the two can never disagree about what a caller may see.
+         * @summary Describes ONE org\'s Base — whether its store exists, and what it occupies.
+         * @param {string} org Org is the org whose Base to describe, from the path. An org the caller\&#39;s token does not carry is not found — the same answer a nonexistent one gets, so the listing cannot be used to discover which orgs exist.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBaseBasesByOrg: async (org: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'org' is not null or undefined
+            assertParamExists('getBaseBasesByOrg', 'org', org)
+            const localVarPath = `/v1/base/bases/{org}`
+                .replace(`{${"org"}}`, encodeURIComponent(String(org)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Reports that the base subsystem is serving.  It is deliberately INDEPENDENT of whether this deployment actually embeds the Base engine: the route answers before the CLOUD_BASE_EMBED gate and before the /v1/base/_* wildcard, so a liveness probe measures the process rather than an optional feature, and the wildcard can never shadow it. It reads no tenant, so a prober that sends no principal is answered rather than refused.
          * @summary Reports that the base subsystem is serving.
@@ -74,6 +148,31 @@ export const BaseApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BaseApiAxiosParamCreator(configuration)
     return {
         /**
+         * Lists every Base the caller can reach, one per org their token carries.  The orgs come from IAM\'s signed membership set, so the list is exactly the orgs the caller is a member of and cannot be widened by asking. It is the account-wide view: a Base is per org, so this is one entry per org and there is nothing to page.  A caller with no membership set — a machine credential, an API key — reaches no Base and receives an empty list rather than a refusal, because holding no membership is an answer and not a failure.
+         * @summary Lists every Base the caller can reach, one per org their token carries.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBaseBases(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BaseView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBaseBases(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BaseApi.getBaseBases']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Describes ONE org\'s Base — whether its store exists, and what it occupies.  The org must be one the caller\'s token carries; any other is not found, so this cannot be used to learn which orgs exist. That check is the same membership set the listing is built from, which is why the two can never disagree about what a caller may see.
+         * @summary Describes ONE org\'s Base — whether its store exists, and what it occupies.
+         * @param {string} org Org is the org whose Base to describe, from the path. An org the caller\&#39;s token does not carry is not found — the same answer a nonexistent one gets, so the listing cannot be used to discover which orgs exist.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBaseBasesByOrg(org: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBaseBasesByOrg(org, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BaseApi.getBaseBasesByOrg']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Reports that the base subsystem is serving.  It is deliberately INDEPENDENT of whether this deployment actually embeds the Base engine: the route answers before the CLOUD_BASE_EMBED gate and before the /v1/base/_* wildcard, so a liveness probe measures the process rather than an optional feature, and the wildcard can never shadow it. It reads no tenant, so a prober that sends no principal is answered rather than refused.
          * @summary Reports that the base subsystem is serving.
          * @param {*} [options] Override http request option.
@@ -96,6 +195,25 @@ export const BaseApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = BaseApiFp(configuration)
     return {
         /**
+         * Lists every Base the caller can reach, one per org their token carries.  The orgs come from IAM\'s signed membership set, so the list is exactly the orgs the caller is a member of and cannot be widened by asking. It is the account-wide view: a Base is per org, so this is one entry per org and there is nothing to page.  A caller with no membership set — a machine credential, an API key — reaches no Base and receives an empty list rather than a refusal, because holding no membership is an answer and not a failure.
+         * @summary Lists every Base the caller can reach, one per org their token carries.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBaseBases(options?: RawAxiosRequestConfig): AxiosPromise<Array<BaseView>> {
+            return localVarFp.getBaseBases(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Describes ONE org\'s Base — whether its store exists, and what it occupies.  The org must be one the caller\'s token carries; any other is not found, so this cannot be used to learn which orgs exist. That check is the same membership set the listing is built from, which is why the two can never disagree about what a caller may see.
+         * @summary Describes ONE org\'s Base — whether its store exists, and what it occupies.
+         * @param {BaseApiGetBaseBasesByOrgRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBaseBasesByOrg(requestParameters: BaseApiGetBaseBasesByOrgRequest, options?: RawAxiosRequestConfig): AxiosPromise<BaseView> {
+            return localVarFp.getBaseBasesByOrg(requestParameters.org, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Reports that the base subsystem is serving.  It is deliberately INDEPENDENT of whether this deployment actually embeds the Base engine: the route answers before the CLOUD_BASE_EMBED gate and before the /v1/base/_* wildcard, so a liveness probe measures the process rather than an optional feature, and the wildcard can never shadow it. It reads no tenant, so a prober that sends no principal is answered rather than refused.
          * @summary Reports that the base subsystem is serving.
          * @param {*} [options] Override http request option.
@@ -108,12 +226,49 @@ export const BaseApiFactory = function (configuration?: Configuration, basePath?
 };
 
 /**
+ * Request parameters for getBaseBasesByOrg operation in BaseApi.
+ * @export
+ * @interface BaseApiGetBaseBasesByOrgRequest
+ */
+export interface BaseApiGetBaseBasesByOrgRequest {
+    /**
+     * Org is the org whose Base to describe, from the path. An org the caller\&#39;s token does not carry is not found — the same answer a nonexistent one gets, so the listing cannot be used to discover which orgs exist.
+     * @type {string}
+     * @memberof BaseApiGetBaseBasesByOrg
+     */
+    readonly org: string
+}
+
+/**
  * BaseApi - object-oriented interface
  * @export
  * @class BaseApi
  * @extends {BaseAPI}
  */
 export class BaseApi extends BaseAPI {
+    /**
+     * Lists every Base the caller can reach, one per org their token carries.  The orgs come from IAM\'s signed membership set, so the list is exactly the orgs the caller is a member of and cannot be widened by asking. It is the account-wide view: a Base is per org, so this is one entry per org and there is nothing to page.  A caller with no membership set — a machine credential, an API key — reaches no Base and receives an empty list rather than a refusal, because holding no membership is an answer and not a failure.
+     * @summary Lists every Base the caller can reach, one per org their token carries.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BaseApi
+     */
+    public getBaseBases(options?: RawAxiosRequestConfig) {
+        return BaseApiFp(this.configuration).getBaseBases(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Describes ONE org\'s Base — whether its store exists, and what it occupies.  The org must be one the caller\'s token carries; any other is not found, so this cannot be used to learn which orgs exist. That check is the same membership set the listing is built from, which is why the two can never disagree about what a caller may see.
+     * @summary Describes ONE org\'s Base — whether its store exists, and what it occupies.
+     * @param {BaseApiGetBaseBasesByOrgRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BaseApi
+     */
+    public getBaseBasesByOrg(requestParameters: BaseApiGetBaseBasesByOrgRequest, options?: RawAxiosRequestConfig) {
+        return BaseApiFp(this.configuration).getBaseBasesByOrg(requestParameters.org, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Reports that the base subsystem is serving.  It is deliberately INDEPENDENT of whether this deployment actually embeds the Base engine: the route answers before the CLOUD_BASE_EMBED gate and before the /v1/base/_* wildcard, so a liveness probe measures the process rather than an optional feature, and the wildcard can never shadow it. It reads no tenant, so a prober that sends no principal is answered rather than refused.
      * @summary Reports that the base subsystem is serving.

@@ -25,6 +25,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 import type { CodeResult } from '../models';
 // @ts-ignore
 import type { CodeRun } from '../models';
+// @ts-ignore
+import type { Listing } from '../models';
 /**
  * ExecApi - axios parameter creator
  * @export
@@ -32,9 +34,9 @@ import type { CodeRun } from '../models';
 export const ExecApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Lists what a session\'s sandbox holds — the uploads a run can read and the artifacts it produced — each then fetched from /v1/exec/download.  It answers a BARE JSON ARRAY of {name, lastModified}, where `name` is the same {session_id}/{fileId} identifier download takes, because that is what the client matches on. An object wrapper would be a wire change, which is why this is not a typed operation.
-         * @summary List the files in an execution session
-         * @param {string} sid 
+         * Files lists what a session holds.  One recursive `find`, the same traversal the artifact sweep makes. It used to be `ls -1A` — top level only — while the sweep collected with `find`, so a run that wrote a nested artifact reported it in its reply and then omitted it here, and the client\'s prefix match read the file as expired. Two traversals of one directory is two answers about what a session holds; there is one now.
+         * @summary Files lists what a session holds.
+         * @param {string} sid SID is the session identifier — the sandbox this listing is of. The URL is the addressing authority: a path segment binds after the body and after the query, so the address decides which session is read whatever else is sent.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -188,13 +190,13 @@ export const ExecApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ExecApiAxiosParamCreator(configuration)
     return {
         /**
-         * Lists what a session\'s sandbox holds — the uploads a run can read and the artifacts it produced — each then fetched from /v1/exec/download.  It answers a BARE JSON ARRAY of {name, lastModified}, where `name` is the same {session_id}/{fileId} identifier download takes, because that is what the client matches on. An object wrapper would be a wire change, which is why this is not a typed operation.
-         * @summary List the files in an execution session
-         * @param {string} sid 
+         * Files lists what a session holds.  One recursive `find`, the same traversal the artifact sweep makes. It used to be `ls -1A` — top level only — while the sweep collected with `find`, so a run that wrote a nested artifact reported it in its reply and then omitted it here, and the client\'s prefix match read the file as expired. Two traversals of one directory is two answers about what a session holds; there is one now.
+         * @summary Files lists what a session holds.
+         * @param {string} sid SID is the session identifier — the sandbox this listing is of. The URL is the addressing authority: a path segment binds after the body and after the query, so the address decides which session is read whatever else is sent.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExecFilesBySid(sid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getExecFilesBySid(sid: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Listing>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExecFilesBySid(sid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ExecApi.getExecFilesBySid']?.[localVarOperationServerIndex]?.url;
@@ -248,13 +250,13 @@ export const ExecApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = ExecApiFp(configuration)
     return {
         /**
-         * Lists what a session\'s sandbox holds — the uploads a run can read and the artifacts it produced — each then fetched from /v1/exec/download.  It answers a BARE JSON ARRAY of {name, lastModified}, where `name` is the same {session_id}/{fileId} identifier download takes, because that is what the client matches on. An object wrapper would be a wire change, which is why this is not a typed operation.
-         * @summary List the files in an execution session
+         * Files lists what a session holds.  One recursive `find`, the same traversal the artifact sweep makes. It used to be `ls -1A` — top level only — while the sweep collected with `find`, so a run that wrote a nested artifact reported it in its reply and then omitted it here, and the client\'s prefix match read the file as expired. Two traversals of one directory is two answers about what a session holds; there is one now.
+         * @summary Files lists what a session holds.
          * @param {ExecApiGetExecFilesBySidRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExecFilesBySid(requestParameters: ExecApiGetExecFilesBySidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getExecFilesBySid(requestParameters: ExecApiGetExecFilesBySidRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<Listing>> {
             return localVarFp.getExecFilesBySid(requestParameters.sid, options).then((request) => request(axios, basePath));
         },
         /**
@@ -295,7 +297,7 @@ export const ExecApiFactory = function (configuration?: Configuration, basePath?
  */
 export interface ExecApiGetExecFilesBySidRequest {
     /**
-     * 
+     * SID is the session identifier — the sandbox this listing is of. The URL is the addressing authority: a path segment binds after the body and after the query, so the address decides which session is read whatever else is sent.
      * @type {string}
      * @memberof ExecApiGetExecFilesBySid
      */
@@ -324,8 +326,8 @@ export interface ExecApiPostExecRequest {
  */
 export class ExecApi extends BaseAPI {
     /**
-     * Lists what a session\'s sandbox holds — the uploads a run can read and the artifacts it produced — each then fetched from /v1/exec/download.  It answers a BARE JSON ARRAY of {name, lastModified}, where `name` is the same {session_id}/{fileId} identifier download takes, because that is what the client matches on. An object wrapper would be a wire change, which is why this is not a typed operation.
-     * @summary List the files in an execution session
+     * Files lists what a session holds.  One recursive `find`, the same traversal the artifact sweep makes. It used to be `ls -1A` — top level only — while the sweep collected with `find`, so a run that wrote a nested artifact reported it in its reply and then omitted it here, and the client\'s prefix match read the file as expired. Two traversals of one directory is two answers about what a session holds; there is one now.
+     * @summary Files lists what a session holds.
      * @param {ExecApiGetExecFilesBySidRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

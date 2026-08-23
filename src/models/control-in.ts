@@ -17,20 +17,26 @@
 /**
  * 
  * @export
- * @interface Listing
+ * @interface ControlIn
  */
-export interface Listing {
+export interface ControlIn {
+    /**
+     * ID is the session to steer, from the path.
+     * @type {string}
+     * @memberof ControlIn
+     */
+    'id'?: string;
+    /**
+     * Message is free text for the running agent, up to 16 KiB. On a stop it is recorded as the cancellation reason.
+     * @type {string}
+     * @memberof ControlIn
+     */
+    'message'?: string;
     /**
      * 
-     * @type {string}
-     * @memberof Listing
+     * @type {any}
+     * @memberof ControlIn
      */
-    'lastModified'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Listing
-     */
-    'name'?: string;
+    'payload'?: any;
 }
 

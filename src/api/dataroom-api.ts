@@ -38,6 +38,8 @@ import type { DataroomLinkStats } from '../models';
 // @ts-ignore
 import type { DataroomLinks } from '../models';
 // @ts-ignore
+import type { DataroomLiveness } from '../models';
+// @ts-ignore
 import type { DataroomMembership } from '../models';
 // @ts-ignore
 import type { DataroomRoomDetailOne } from '../models';
@@ -334,8 +336,8 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Answers {service, status} unconditionally — no principal, no tenant. It is registered BEFORE the bundle, the link index and the object-storage seam are wired, so it keeps answering when any of those fail and the subsystem degrades to health-only. That is the point, and the limit: a 200 here says the process is alive, never that a data room can be read or written.
-         * @summary Liveness of the dataroom subsystem
+         * Health reports that the data room subsystem is up.  It answers before the bundle loads, holds no state and touches no store, so it stays true in exactly the situation an operator is probing for. It says nothing about whether a room can be OPENED — that is what the room operations answer — because a liveness probe that fails on a dependency takes a working process out of rotation.
+         * @summary Health reports that the data room subsystem is up.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -724,7 +726,7 @@ export const DataroomApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage seam, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
+         * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage client, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
          * @summary Upload a document\'s bytes and record it
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1185,12 +1187,12 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers {service, status} unconditionally — no principal, no tenant. It is registered BEFORE the bundle, the link index and the object-storage seam are wired, so it keeps answering when any of those fail and the subsystem degrades to health-only. That is the point, and the limit: a 200 here says the process is alive, never that a data room can be read or written.
-         * @summary Liveness of the dataroom subsystem
+         * Health reports that the data room subsystem is up.  It answers before the bundle loads, holds no state and touches no store, so it stays true in exactly the situation an operator is probing for. It says nothing about whether a room can be OPENED — that is what the room operations answer — because a liveness probe that fails on a dependency takes a working process out of rotation.
+         * @summary Health reports that the data room subsystem is up.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDataroomHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getDataroomHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataroomLiveness>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDataroomHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DataroomApi.getDataroomHealth']?.[localVarOperationServerIndex]?.url;
@@ -1316,7 +1318,7 @@ export const DataroomApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage seam, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
+         * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage client, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
          * @summary Upload a document\'s bytes and record it
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1513,12 +1515,12 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.getDataroomDocumentsByIdFile(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers {service, status} unconditionally — no principal, no tenant. It is registered BEFORE the bundle, the link index and the object-storage seam are wired, so it keeps answering when any of those fail and the subsystem degrades to health-only. That is the point, and the limit: a 200 here says the process is alive, never that a data room can be read or written.
-         * @summary Liveness of the dataroom subsystem
+         * Health reports that the data room subsystem is up.  It answers before the bundle loads, holds no state and touches no store, so it stays true in exactly the situation an operator is probing for. It says nothing about whether a room can be OPENED — that is what the room operations answer — because a liveness probe that fails on a dependency takes a working process out of rotation.
+         * @summary Health reports that the data room subsystem is up.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDataroomHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getDataroomHealth(options?: RawAxiosRequestConfig): AxiosPromise<DataroomLiveness> {
             return localVarFp.getDataroomHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1610,7 +1612,7 @@ export const DataroomApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.postDataroomDataroomsByIdDocuments(requestParameters.id, requestParameters.dataroomAddDocument, options).then((request) => request(axios, basePath));
         },
         /**
-         * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage seam, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
+         * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage client, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
          * @summary Upload a document\'s bytes and record it
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2120,8 +2122,8 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * Answers {service, status} unconditionally — no principal, no tenant. It is registered BEFORE the bundle, the link index and the object-storage seam are wired, so it keeps answering when any of those fail and the subsystem degrades to health-only. That is the point, and the limit: a 200 here says the process is alive, never that a data room can be read or written.
-     * @summary Liveness of the dataroom subsystem
+     * Health reports that the data room subsystem is up.  It answers before the bundle loads, holds no state and touches no store, so it stays true in exactly the situation an operator is probing for. It says nothing about whether a room can be OPENED — that is what the room operations answer — because a liveness probe that fails on a dependency takes a working process out of rotation.
+     * @summary Health reports that the data room subsystem is up.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataroomApi
@@ -2237,7 +2239,7 @@ export class DataroomApi extends BaseAPI {
     }
 
     /**
-     * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage seam, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
+     * Takes the file ITSELF as the raw request body — not a JSON envelope, not multipart — stores it on the object-storage client, and records the metadata row, answering with the new document. `?name=` names it (default \"document\"), the request\'s Content-Type becomes the recorded mime type, and `?numPages=` is optional.  Requires a validated principal; 403 without one. An empty body is 400 and anything over 64 MiB is 413 — a data room holds decks and PDFs, not a media library.  The storage key is 128 random bits under the tenant\'s own key prefix, minted before the bytes are written: if the system\'s randomness is unavailable the upload fails 500 rather than fall back to a predictable key that could overwrite another document\'s bytes. A storage write that fails is 502 and no metadata row is recorded, so a document never exists without its file.
      * @summary Upload a document\'s bytes and record it
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

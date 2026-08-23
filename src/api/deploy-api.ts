@@ -38,6 +38,8 @@ import type { ArgoTree } from '../models';
 // @ts-ignore
 import type { ConsoleSettings } from '../models';
 // @ts-ignore
+import type { DeployHealth } from '../models';
+// @ts-ignore
 import type { GitOpsPlane } from '../models';
 // @ts-ignore
 import type { SessionUser } from '../models';
@@ -342,8 +344,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Reports the plane\'s real reachability: 200 only when the Kubernetes API server answers AND the App CRD is served, 503 with the same body shape otherwise, so a caller reads the same `k8s` and `crd` booleans either way rather than parsing an error envelope. It is a genuine dependency probe, not a process liveness ping — a running plane with no cluster behind it reports degraded.  This is the ONE unauthenticated route that reports state, because liveness must be probe-able without a JWT. It therefore discloses booleans only: the underlying failure — the API server address, an RBAC refusal — is logged server-side and never put on the wire.
-         * @summary Whether this control plane can actually reach the cluster it deploys to
+         * Health reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
+         * @summary Health reports whether this deployment can observe the delivery plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -618,7 +620,7 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release seam, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
+         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
          * @summary The console\'s rollback control — today it requests a reconcile, nothing more
          * @param {string} name 
          * @param {*} [options] Override http request option.
@@ -873,12 +875,12 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Reports the plane\'s real reachability: 200 only when the Kubernetes API server answers AND the App CRD is served, 503 with the same body shape otherwise, so a caller reads the same `k8s` and `crd` booleans either way rather than parsing an error envelope. It is a genuine dependency probe, not a process liveness ping — a running plane with no cluster behind it reports degraded.  This is the ONE unauthenticated route that reports state, because liveness must be probe-able without a JWT. It therefore discloses booleans only: the underlying failure — the API server address, an RBAC refusal — is logged server-side and never put on the wire.
-         * @summary Whether this control plane can actually reach the cluster it deploys to
+         * Health reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
+         * @summary Health reports whether this deployment can observe the delivery plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDeployHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getDeployHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeployHealth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeployHealth(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.getDeployHealth']?.[localVarOperationServerIndex]?.url;
@@ -970,7 +972,7 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release seam, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
+         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
          * @summary The console\'s rollback control — today it requests a reconcile, nothing more
          * @param {string} name 
          * @param {*} [options] Override http request option.
@@ -1106,12 +1108,12 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getDeployGitops(options).then((request) => request(axios, basePath));
         },
         /**
-         * Reports the plane\'s real reachability: 200 only when the Kubernetes API server answers AND the App CRD is served, 503 with the same body shape otherwise, so a caller reads the same `k8s` and `crd` booleans either way rather than parsing an error envelope. It is a genuine dependency probe, not a process liveness ping — a running plane with no cluster behind it reports degraded.  This is the ONE unauthenticated route that reports state, because liveness must be probe-able without a JWT. It therefore discloses booleans only: the underlying failure — the API server address, an RBAC refusal — is logged server-side and never put on the wire.
-         * @summary Whether this control plane can actually reach the cluster it deploys to
+         * Health reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
+         * @summary Health reports whether this deployment can observe the delivery plane.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeployHealth(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getDeployHealth(options?: RawAxiosRequestConfig): AxiosPromise<DeployHealth> {
             return localVarFp.getDeployHealth(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1179,7 +1181,7 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getDeployVersion(options).then((request) => request(axios, basePath));
         },
         /**
-         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release seam, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
+         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
          * @summary The console\'s rollback control — today it requests a reconcile, nothing more
          * @param {DeployApiPostDeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1424,8 +1426,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * Reports the plane\'s real reachability: 200 only when the Kubernetes API server answers AND the App CRD is served, 503 with the same body shape otherwise, so a caller reads the same `k8s` and `crd` booleans either way rather than parsing an error envelope. It is a genuine dependency probe, not a process liveness ping — a running plane with no cluster behind it reports degraded.  This is the ONE unauthenticated route that reports state, because liveness must be probe-able without a JWT. It therefore discloses booleans only: the underlying failure — the API server address, an RBAC refusal — is logged server-side and never put on the wire.
-     * @summary Whether this control plane can actually reach the cluster it deploys to
+     * Health reports whether this deployment can observe the delivery plane.  200 only when the Kubernetes API answers AND the App custom resource is served; 503 with the same shape otherwise, naming which half failed. It reports BOOLEANS and never the underlying error, because the route is unauthenticated — liveness must be probe-able without a token — and a raw client error can disclose the apiserver address or an RBAC detail. That detail is logged server-side instead.
+     * @summary Health reports whether this deployment can observe the delivery plane.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
@@ -1513,7 +1515,7 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release seam, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
+     * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
      * @summary The console\'s rollback control — today it requests a reconcile, nothing more
      * @param {DeployApiPostDeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

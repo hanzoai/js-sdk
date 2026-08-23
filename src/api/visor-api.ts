@@ -645,8 +645,8 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Lists the launch regions the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one — because the catalog is what backs the launch drawer, not public marketing copy.
-         * @summary The regions a machine or GPU can be launched into
+         * Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
+         * @summary Regions lists the regions a machine can be launched in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -679,8 +679,8 @@ export const VisorApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Lists the instance sizes the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. These are the values `size` accepts on a launch. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one.
-         * @summary The machine and GPU sizes that can be launched
+         * Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
+         * @summary Sizes lists the machine sizes available to launch, with their specifications.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1579,24 +1579,24 @@ export const VisorApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists the launch regions the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one — because the catalog is what backs the launch drawer, not public marketing copy.
-         * @summary The regions a machine or GPU can be launched into
+         * Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
+         * @summary Regions lists the regions a machine can be launched in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getVisorComputeRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getVisorComputeRegions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getVisorComputeRegions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['VisorApi.getVisorComputeRegions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Lists the instance sizes the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. These are the values `size` accepts on a launch. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one.
-         * @summary The machine and GPU sizes that can be launched
+         * Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
+         * @summary Sizes lists the machine sizes available to launch, with their specifications.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getVisorComputeSizes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getVisorComputeSizes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getVisorComputeSizes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['VisorApi.getVisorComputeSizes']?.[localVarOperationServerIndex]?.url;
@@ -1981,21 +1981,21 @@ export const VisorApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getMachineAgent(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists the launch regions the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one — because the catalog is what backs the launch drawer, not public marketing copy.
-         * @summary The regions a machine or GPU can be launched into
+         * Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
+         * @summary Regions lists the regions a machine can be launched in.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVisorComputeRegions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getVisorComputeRegions(options?: RawAxiosRequestConfig): AxiosPromise<any> {
             return localVarFp.getVisorComputeRegions(options).then((request) => request(axios, basePath));
         },
         /**
-         * Lists the instance sizes the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. These are the values `size` accepts on a launch. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one.
-         * @summary The machine and GPU sizes that can be launched
+         * Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
+         * @summary Sizes lists the machine sizes available to launch, with their specifications.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVisorComputeSizes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getVisorComputeSizes(options?: RawAxiosRequestConfig): AxiosPromise<any> {
             return localVarFp.getVisorComputeSizes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -2702,8 +2702,8 @@ export class VisorApi extends BaseAPI {
     }
 
     /**
-     * Lists the launch regions the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one — because the catalog is what backs the launch drawer, not public marketing copy.
-     * @summary The regions a machine or GPU can be launched into
+     * Regions lists the regions a machine can be launched in.  The catalog is GLOBAL — identical for every tenant — so no owner is forwarded upstream. It is still org-gated, because a catalog is a map of what this deployment can spend money in and an anonymous caller has no business reading it.
+     * @summary Regions lists the regions a machine can be launched in.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VisorApi
@@ -2713,8 +2713,8 @@ export class VisorApi extends BaseAPI {
     }
 
     /**
-     * Lists the instance sizes the compute catalog offers, passed through verbatim from the provider so the shape stays the provider\'s single source of truth. These are the values `size` accepts on a launch. The catalog is GLOBAL, not per-tenant: no owner is forwarded and every org sees the same list. It is still gated — a validated principal is required, 403 without one.
-     * @summary The machine and GPU sizes that can be launched
+     * Sizes lists the machine sizes available to launch, with their specifications.  Global and org-gated, exactly as the region catalog is, and for the same reasons.
+     * @summary Sizes lists the machine sizes available to launch, with their specifications.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VisorApi
