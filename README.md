@@ -2,10 +2,8 @@
 
 # hanzoai
 
-TypeScript client for the [Hanzo API](https://api.hanzo.ai). Generated from the
-API's own OpenAPI document — the one each subsystem's router emits — so it
-carries every `/v1` route and cannot name
-an address the server does not serve.
+TypeScript client for the [Hanzo API](https://api.hanzo.ai), generated from the
+API's own OpenAPI document.
 
 ## Install
 
@@ -51,17 +49,8 @@ One scheme: a bearer token — an IAM access token or a Cloud API key. The serve
 derives your org from the token's `owner` claim, so no route takes an org
 argument.
 
-**It goes in `accessToken`.** The document declares one `securityScheme`
-(`bearer`, http/bearer) and applies it at the top level, so every operation that
-does not opt out with `security: []` generates
-`await setBearerAuthToObject(header, configuration)` — 2498 call sites across
-191 of the 192 api classes — and that helper reads this field and writes
-`Authorization: Bearer <token>`.
-
-Four operations opt out and take no credential: `GET /v1/models`,
-`GET /v1/models/providers`, `GET /v1/commands`, `GET /v1/openapi.json`. For
-those, construct a `Configuration` with no `accessToken` and the client sends no
-header at all.
+**It goes in `accessToken`.** Every operation that does not opt out sends
+`Authorization: Bearer <token>` from that field.
 
 ```ts
 import { Configuration, ChatApi } from 'hanzoai';
@@ -83,6 +72,11 @@ async function main() {
 
 main();
 ```
+
+Four operations opt out and take no credential: `GET /v1/models`,
+`GET /v1/models/providers`, `GET /v1/commands`, `GET /v1/openapi.json`. For
+those, construct a `Configuration` with no `accessToken` and the client sends no
+header at all.
 
 The client reads no environment variable of its own — `HANZO_API_KEY` above is
 just where the examples keep theirs.
@@ -114,8 +108,7 @@ complete program:
 | [`agent`](examples/agent) | create + run + read | `POST /v1/agents`, `POST /v1/agents/{ref}/run`, `GET /v1/agents/{ref}/runs` |
 | [`tools`](examples/tools) | tool catalog | `GET /v1/tools` |
 
-`models` runs with nothing exported — one command, against the live API, before
-you have any credential:
+`models` runs with nothing exported:
 
 ```bash
 npm ci && npm run build && npx tsx examples/models/index.ts
@@ -148,22 +141,20 @@ hello from https://api.hanzo.ai
   issued by https://hanzo.id
 ```
 
-Hand it a token the server refuses and you get the other half of the proof —
-`HTTP 401: {"error":"invalid_token","error_description":"the access token is
-invalid or revoked"}` — which is the header being sent and evaluated, not
-silently dropped.
+A token the server refuses answers `HTTP 401:
+{"error":"invalid_token","error_description":"the access token is invalid or
+revoked"}`.
 
 `npm run examples` type-checks all seven against the client, and `hanzo.yml`
-makes that a CI gate — which is what keeps them from rotting into pseudocode.
+makes that a CI gate.
 
 ## The API surface
 
-One class per product — the first path segment after `/v1/`. 191 of them:
-`ChatApi`, `ModelsApi`, `IamApi`, `BillingApi`, `KvApi`, `AgentsApi`,
-`ToolsApi`, `McpApi`, `CommerceApi`, `O11yApi`, and one per product. `DefaultApi`
-holds the routes the document leaves untagged — `/` and the `/.well-known/*`
-family. Each takes a `Configuration`; each method takes one
-request object.
+One class per product — the first path segment after `/v1/`: `ChatApi`,
+`ModelsApi`, `IamApi`, `BillingApi`, `KvApi`, `AgentsApi`, `ToolsApi`, `McpApi`,
+`CommerceApi`, `O11yApi`, and so on. `DefaultApi` holds the routes the document
+leaves untagged — `/` and the `/.well-known/*` family. Each takes a
+`Configuration`; each method takes one request object.
 
 ```ts
 import { Configuration, BillingApi } from 'hanzoai';
@@ -177,8 +168,7 @@ is `getBillingBalance`, and a path parameter reads as `by`:
 `GET /v1/kv/{name}` is `getKvByName({ name })`.
 
 Some operations declare a route but not a response shape, so their `data`
-arrives untyped and wants a cast. That is a gap in the document, not in the client; it closes as the
-subsystems describe their own replies.
+arrives untyped and wants a cast.
 
 Full reference: [docs.hanzo.ai](https://docs.hanzo.ai).
 
@@ -195,10 +185,8 @@ export SPEC=~/work/hanzo/cloud/openapi.yaml   # the document, by value
 ```
 
 Drop `SPEC` and the driver fetches the ref `.spec-lock` names, which needs a
-forge token; passing the document by value is the offline route. The script is a
-call site and nothing more — every knob lives once, in that repo's `generate.py`
-and `sdks.yaml`. `.spec-lock` names the document this tree projects, by repo,
-ref and sha256.
+forge token; passing the document by value is the offline route. Every generator
+knob lives once, in that repo's `generate.py` and `sdks.yaml`.
 
 Requires java 17+ and [uv](https://docs.astral.sh/uv/).
 
