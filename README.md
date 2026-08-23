@@ -4,7 +4,7 @@
 
 TypeScript client for the [Hanzo API](https://api.hanzo.ai). Generated from the
 API's own OpenAPI document — the one each subsystem's router emits — so it
-carries every `/v1` route, <!--counts-->2,259 operations over 1,620 paths, grouped into 117 services<!--/counts--> across 191 products, and cannot name
+carries every `/v1` route and cannot name
 an address the server does not serve.
 
 ## Install
@@ -160,9 +160,9 @@ makes that a CI gate — which is what keeps them from rotting into pseudocode.
 
 One class per product — the first path segment after `/v1/`. 191 of them:
 `ChatApi`, `ModelsApi`, `IamApi`, `BillingApi`, `KvApi`, `AgentsApi`,
-`ToolsApi`, `McpApi`, `CommerceApi`, `O11yApi`, and 181 more. A 192nd class,
-`DefaultApi`, holds the 50 routes the document leaves untagged — `/` and the
-`/.well-known/*` family. Each takes a `Configuration`; each method takes one
+`ToolsApi`, `McpApi`, `CommerceApi`, `O11yApi`, and one per product. `DefaultApi`
+holds the routes the document leaves untagged — `/` and the `/.well-known/*`
+family. Each takes a `Configuration`; each method takes one
 request object.
 
 ```ts
@@ -176,9 +176,8 @@ Method names are the document's operation ids in camelCase — `get_billing_bala
 is `getBillingBalance`, and a path parameter reads as `by`:
 `GET /v1/kv/{name}` is `getKvByName({ name })`.
 
-836 of the <!--counts-->2,259 operations over 1,620 paths, grouped into 117 services<!--/counts--> declare a route but not a
-response shape — 719 declare no `responses` at all and another 117 a 2xx with no
-content — so their `data` arrives untyped and wants a cast. That is a gap in the document, not in the client; it closes as the
+Some operations declare a route but not a response shape, so their `data`
+arrives untyped and wants a cast. That is a gap in the document, not in the client; it closes as the
 subsystems describe their own replies.
 
 Full reference: [docs.hanzo.ai](https://docs.hanzo.ai).
