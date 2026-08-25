@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -66,8 +66,8 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
-         * @summary Reserved address for launching a bot run — not implemented, always 501
+         * Answers 501 to every call: launching a bot run is not implemented.  The bot runtime exposes no launch operation, so nothing here can start a sandbox. This address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. No run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it. 501 is the truth, and the truth is cheaper than a plausible lie.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots — a runtime-side launch operation first (TS, cross-repo), with the entitlement gate and the meter beside it.
+         * @summary Answers 501 to every call: launching a bot run is not implemented.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -102,7 +102,7 @@ export const BotApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
          * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
-         * @param {string} runId 
+         * @param {string} runId RunID is the run to stop, as the bot runtime named it. It is read from the URL — the &#x60;{runId}&#x60; segment the router matched on — and a body carrying a different id cannot redirect the stop.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -160,8 +160,8 @@ export const BotApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
-         * @summary Reserved address for launching a bot run — not implemented, always 501
+         * Answers 501 to every call: launching a bot run is not implemented.  The bot runtime exposes no launch operation, so nothing here can start a sandbox. This address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. No run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it. 501 is the truth, and the truth is cheaper than a plausible lie.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots — a runtime-side launch operation first (TS, cross-repo), with the entitlement gate and the meter beside it.
+         * @summary Answers 501 to every call: launching a bot run is not implemented.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -174,7 +174,7 @@ export const BotApiFp = function(configuration?: Configuration) {
         /**
          * Stop terminates one of the caller org\'s own bot runs and reports its terminal state.  The own-key guard is the org: it is the caller\'s validated org, never theirs to choose, and the runtime resolves the run id UNDER it. A run belonging to another tenant is not among this org\'s runs, so it answers absent — the same 404 a nonexistent id gets, which is what keeps this from being an oracle.  Absence is honoured ONLY when the runtime answers it. A runtime that does not serve stop reports nothing about the run, and reporting \"stopped\" on that basis would be a stop that cannot fail — so it is a 502.
          * @summary Stop terminates one of the caller org\'s own bot runs and reports its terminal state.
-         * @param {string} runId 
+         * @param {string} runId RunID is the run to stop, as the bot runtime named it. It is read from the URL — the &#x60;{runId}&#x60; segment the router matched on — and a body carrying a different id cannot redirect the stop.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -204,8 +204,8 @@ export const BotApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getBotRuns(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
-         * @summary Reserved address for launching a bot run — not implemented, always 501
+         * Answers 501 to every call: launching a bot run is not implemented.  The bot runtime exposes no launch operation, so nothing here can start a sandbox. This address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. No run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it. 501 is the truth, and the truth is cheaper than a plausible lie.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots — a runtime-side launch operation first (TS, cross-repo), with the entitlement gate and the meter beside it.
+         * @summary Answers 501 to every call: launching a bot run is not implemented.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -232,7 +232,7 @@ export const BotApiFactory = function (configuration?: Configuration, basePath?:
  */
 export interface BotApiPostBotRunsByRunidStopRequest {
     /**
-     * 
+     * RunID is the run to stop, as the bot runtime named it. It is read from the URL — the &#x60;{runId}&#x60; segment the router matched on — and a body carrying a different id cannot redirect the stop.
      * @type {string}
      * @memberof BotApiPostBotRunsByRunidStop
      */
@@ -258,8 +258,8 @@ export class BotApi extends BaseAPI {
     }
 
     /**
-     * Answers 501 to every call. The bot runtime exposes no launch operation, so nothing here can start a sandbox, and this address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. The handler never reads the body, so any bytes at all — malformed JSON included — get the same 501; no run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots.
-     * @summary Reserved address for launching a bot run — not implemented, always 501
+     * Answers 501 to every call: launching a bot run is not implemented.  The bot runtime exposes no launch operation, so nothing here can start a sandbox. This address is published rather than dropped because it is the collection every run is created in: GET lists them, POST would launch one.  The refusal is total and takes no input. No run id is minted, no session URL is handed back, and no per-run fee is charged. That is the point: the earlier version minted an id the runtime had never heard of, pointed it at a VNC node that did not exist, and took real money for it. 501 is the truth, and the truth is cheaper than a plausible lie.  Listing and stopping runs are live and org-scoped. Only the launch is missing, and it returns in the same change that can prove a bot boots — a runtime-side launch operation first (TS, cross-repo), with the entitlement gate and the meter beside it.
+     * @summary Answers 501 to every call: launching a bot run is not implemented.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BotApi

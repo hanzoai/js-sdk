@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -1566,7 +1566,7 @@ export const BillingApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token door; the only difference is which card, so a caller topping up from a saved method never re-enters one.
+         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {TopupIn} topupIn 
          * @param {string} [xIdempotencyKey] 
@@ -2290,7 +2290,7 @@ export const BillingApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token door; the only difference is which card, so a caller topping up from a saved method never re-enters one.
+         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {TopupIn} topupIn 
          * @param {string} [xIdempotencyKey] 
@@ -2745,7 +2745,7 @@ export const BillingApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postBillingSubscribeCard(options).then((request) => request(axios, basePath));
         },
         /**
-         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token door; the only difference is which card, so a caller topping up from a saved method never re-enters one.
+         * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.
          * @summary Charges a card the caller already saved and credits the balance.
          * @param {BillingApiPostBillingTopupRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3640,7 +3640,7 @@ export class BillingApi extends BaseAPI {
     }
 
     /**
-     * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token door; the only difference is which card, so a caller topping up from a saved method never re-enters one.
+     * Charges a card the caller already saved and credits the balance. Same receipt and the same retry safety as the token endpoint; the only difference is which card, so a caller topping up from a saved method never re-enters one.
      * @summary Charges a card the caller already saved and credits the balance.
      * @param {BillingApiPostBillingTopupRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

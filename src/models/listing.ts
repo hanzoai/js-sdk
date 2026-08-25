@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -21,13 +21,13 @@
  */
 export interface Listing {
     /**
-     * 
+     * LastModified is when the BYTES last changed, as RFC 3339 in UTC to the second — `2026-01-02T03:04:05Z`, the sandbox\'s own `date -u -r` on the file. It is an mtime and not a creation time, so a file a later run overwrote carries that run\'s clock. Never empty: a row exists only because `find` stat-ed the file.
      * @type {string}
      * @memberof Listing
      */
     'lastModified'?: string;
     /**
-     * 
+     * Name is the file\'s IDENTIFIER, `{session_id}/{fileId}` whole — never the bare filename, and never URL-escaped. It is exactly what GET /v1/exec/download takes after its prefix, and hanzo.chat matches it as a PREFIX (`name.startsWith(session + \"/\")`) to decide which rows belong to a session it is holding. `fileId` is the path RELATIVE to the session\'s artifact directory, so it carries `/` for anything the run wrote in a sub-directory.
      * @type {string}
      * @memberof Listing
      */

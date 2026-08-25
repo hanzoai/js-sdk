@@ -6,7 +6,7 @@
 //
 // This flow has moved twice, both times for the same reason, and the rule is
 // worth stating once: it calls a route the DOCUMENT declares. POST /v1/mcp is
-// the fleet's JSON-RPC MCP door and is live, but it is not in the document, and
+// the fleet's JSON-RPC MCP endpoint and is live, but it is not in the document, and
 // hand-rolling an HTTP request inside a generated client is the drift these SDKs
 // exist to prevent. /v1/tools is declared and typed, so the flow sits here.
 import { ToolsApi } from 'hanzoai';

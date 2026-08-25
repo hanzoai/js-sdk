@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -23,6 +23,10 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
 import type { MeetHealth } from '../models';
+// @ts-ignore
+import type { RecordIn } from '../models';
+// @ts-ignore
+import type { Recording } from '../models';
 /**
  * MeetApi - axios parameter creator
  * @export
@@ -85,6 +89,128 @@ export const MeetApiAxiosParamCreator = function (configuration?: Configuration)
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers what is being recorded in a room, and where the file went.  It reports the recording that is RUNNING, and once none is, the most recent one the media server still holds — with its final status and its object. That second case is the one that matters for finding a file: the answer to a start is the only other place the location appears, and a client that lost it, or a colleague who was not the one to press record, has nowhere else to look.  It is behind the same check as starting one: where a recording of a private conversation is kept is a fact about that conversation, so it is told to the people the room admits and to nobody else.
+         * @summary What is being recorded in a room, and where the file goes
+         * @param {string} room Room is the LiveKit room, named the way the office client names one (&#x60;&lt;workspace&gt;_&lt;name&gt;_&lt;id&gt;&#x60;). Its leading segment is what binds the room to a tenant, and it is the segment the caller\&#39;s membership is checked against.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        meetRecordRead: async (room: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'room' is not null or undefined
+            assertParamExists('meetRecordRead', 'room', room)
+            const localVarPath = `/v1/meet/record`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (room !== undefined) {
+                localVarQueryParameter['room'] = room;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Begins recording a room, or hands back the recording already running.  A recording is a durable artifact of a conversation, so only someone this room would admit may make one: the caller is authorized by the SAME decision /v1/meet/getToken makes about the same room, and refused with the same 401.  A SECOND START RETURNS THE FIRST rather than refusing it. There is at most one recording per room and this operation\'s job is to establish that there is one — which is already true when a colleague, or the caller\'s own double-click, started it a moment ago. The answer is the same shape either way, naming the recording that is actually running, so a client never has to tell the two cases apart to find the id.  A deployment with no media server address or no object store answers 503 naming which, because a recording that silently does not happen is worse than one that is refused. The reason reaches only a caller this room already admits.
+         * @summary Start recording a room, or return the recording already running
+         * @param {RecordIn} recordIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        meetRecordStart: async (recordIn: RecordIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'recordIn' is not null or undefined
+            assertParamExists('meetRecordStart', 'recordIn', recordIn)
+            const localVarPath = `/v1/meet/record`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(recordIn, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Ends a room\'s recording — EVERY one of them.  Whoever the room admits may stop it, including someone who did not start it: a person being recorded has to be able to end it, and a rule that only the starter may stop would deny exactly that. Stopping is free — a caller made to pay to stop being recorded would be paying for the wrong thing.  200 MEANS THE ROOM IS NOT BEING RECORDED, and that is why this ends all of them rather than the first. \"At most one per room\" is an invariant this surface wants and cannot impose: reading the list and starting are two calls, and two replicas racing through that window both start. When the list comes back holding two, two is the truth — and ending one while answering 200 tells the person withdrawing consent that it stopped while a second worker keeps writing. A stop that cannot finish the job says so instead.  Stopping a room that is not being recorded is not an error. The answer names the room with no recording on it, which is the state the caller asked for.
+         * @summary Stop a room\'s recording
+         * @param {string} room Room is the LiveKit room, named the way the office client names one (&#x60;&lt;workspace&gt;_&lt;name&gt;_&lt;id&gt;&#x60;). Its leading segment is what binds the room to a tenant, and it is the segment the caller\&#39;s membership is checked against.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        meetRecordStop: async (room: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'room' is not null or undefined
+            assertParamExists('meetRecordStop', 'room', room)
+            const localVarPath = `/v1/meet/record`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (room !== undefined) {
+                localVarQueryParameter['room'] = room;
+            }
 
 
     
@@ -166,6 +292,45 @@ export const MeetApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers what is being recorded in a room, and where the file went.  It reports the recording that is RUNNING, and once none is, the most recent one the media server still holds — with its final status and its object. That second case is the one that matters for finding a file: the answer to a start is the only other place the location appears, and a client that lost it, or a colleague who was not the one to press record, has nowhere else to look.  It is behind the same check as starting one: where a recording of a private conversation is kept is a fact about that conversation, so it is told to the people the room admits and to nobody else.
+         * @summary What is being recorded in a room, and where the file goes
+         * @param {string} room Room is the LiveKit room, named the way the office client names one (&#x60;&lt;workspace&gt;_&lt;name&gt;_&lt;id&gt;&#x60;). Its leading segment is what binds the room to a tenant, and it is the segment the caller\&#39;s membership is checked against.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async meetRecordRead(room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Recording>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.meetRecordRead(room, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MeetApi.meetRecordRead']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Begins recording a room, or hands back the recording already running.  A recording is a durable artifact of a conversation, so only someone this room would admit may make one: the caller is authorized by the SAME decision /v1/meet/getToken makes about the same room, and refused with the same 401.  A SECOND START RETURNS THE FIRST rather than refusing it. There is at most one recording per room and this operation\'s job is to establish that there is one — which is already true when a colleague, or the caller\'s own double-click, started it a moment ago. The answer is the same shape either way, naming the recording that is actually running, so a client never has to tell the two cases apart to find the id.  A deployment with no media server address or no object store answers 503 naming which, because a recording that silently does not happen is worse than one that is refused. The reason reaches only a caller this room already admits.
+         * @summary Start recording a room, or return the recording already running
+         * @param {RecordIn} recordIn 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async meetRecordStart(recordIn: RecordIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Recording>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.meetRecordStart(recordIn, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MeetApi.meetRecordStart']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Ends a room\'s recording — EVERY one of them.  Whoever the room admits may stop it, including someone who did not start it: a person being recorded has to be able to end it, and a rule that only the starter may stop would deny exactly that. Stopping is free — a caller made to pay to stop being recorded would be paying for the wrong thing.  200 MEANS THE ROOM IS NOT BEING RECORDED, and that is why this ends all of them rather than the first. \"At most one per room\" is an invariant this surface wants and cannot impose: reading the list and starting are two calls, and two replicas racing through that window both start. When the list comes back holding two, two is the truth — and ending one while answering 200 tells the person withdrawing consent that it stopped while a second worker keeps writing. A stop that cannot finish the job says so instead.  Stopping a room that is not being recorded is not an error. The answer names the room with no recording on it, which is the state the caller asked for.
+         * @summary Stop a room\'s recording
+         * @param {string} room Room is the LiveKit room, named the way the office client names one (&#x60;&lt;workspace&gt;_&lt;name&gt;_&lt;id&gt;&#x60;). Its leading segment is what binds the room to a tenant, and it is the segment the caller\&#39;s membership is checked against.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async meetRecordStop(room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Recording>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.meetRecordStop(room, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MeetApi.meetRecordStop']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Answers with a LiveKit join token for exactly the room named in the body. The body is the RAW token as text/plain — one opaque string, not JSON and not wrapped in an envelope, which is what the office client reads.  The caller presents its workspace session as a Bearer. Every clause is a refusal: the session must verify, its SIGNED workspace claim must equal the room\'s leading name segment — rooms are named `<workspace>_<room>_<id>`, and that prefix is the only thing binding a room to a tenant — and the session must carry a privileged workspace role, so a guest is refused rather than seated.  The participant identity is the SESSION\'S, never the body\'s. `_id` is accepted for compatibility with the published client bundle and deliberately ignored: LiveKit treats the identity as unique and ejects a duplicate, so honouring a caller-chosen one would let anyone in a workspace kick out a colleague and impersonate them. `participantName` is a display name only.  An unconfigured deployment answers 503 under its own name rather than 404, and the refusal states only that the office is unconfigured — the reason names key material and stays in the boot log.
          * @summary Mint a join token for one video room
          * @param {*} [options] Override http request option.
@@ -206,6 +371,36 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getMeetSession(options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers what is being recorded in a room, and where the file went.  It reports the recording that is RUNNING, and once none is, the most recent one the media server still holds — with its final status and its object. That second case is the one that matters for finding a file: the answer to a start is the only other place the location appears, and a client that lost it, or a colleague who was not the one to press record, has nowhere else to look.  It is behind the same check as starting one: where a recording of a private conversation is kept is a fact about that conversation, so it is told to the people the room admits and to nobody else.
+         * @summary What is being recorded in a room, and where the file goes
+         * @param {MeetApiMeetRecordReadRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        meetRecordRead(requestParameters: MeetApiMeetRecordReadRequest, options?: RawAxiosRequestConfig): AxiosPromise<Recording> {
+            return localVarFp.meetRecordRead(requestParameters.room, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Begins recording a room, or hands back the recording already running.  A recording is a durable artifact of a conversation, so only someone this room would admit may make one: the caller is authorized by the SAME decision /v1/meet/getToken makes about the same room, and refused with the same 401.  A SECOND START RETURNS THE FIRST rather than refusing it. There is at most one recording per room and this operation\'s job is to establish that there is one — which is already true when a colleague, or the caller\'s own double-click, started it a moment ago. The answer is the same shape either way, naming the recording that is actually running, so a client never has to tell the two cases apart to find the id.  A deployment with no media server address or no object store answers 503 naming which, because a recording that silently does not happen is worse than one that is refused. The reason reaches only a caller this room already admits.
+         * @summary Start recording a room, or return the recording already running
+         * @param {MeetApiMeetRecordStartRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        meetRecordStart(requestParameters: MeetApiMeetRecordStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<Recording> {
+            return localVarFp.meetRecordStart(requestParameters.recordIn, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Ends a room\'s recording — EVERY one of them.  Whoever the room admits may stop it, including someone who did not start it: a person being recorded has to be able to end it, and a rule that only the starter may stop would deny exactly that. Stopping is free — a caller made to pay to stop being recorded would be paying for the wrong thing.  200 MEANS THE ROOM IS NOT BEING RECORDED, and that is why this ends all of them rather than the first. \"At most one per room\" is an invariant this surface wants and cannot impose: reading the list and starting are two calls, and two replicas racing through that window both start. When the list comes back holding two, two is the truth — and ending one while answering 200 tells the person withdrawing consent that it stopped while a second worker keeps writing. A stop that cannot finish the job says so instead.  Stopping a room that is not being recorded is not an error. The answer names the room with no recording on it, which is the state the caller asked for.
+         * @summary Stop a room\'s recording
+         * @param {MeetApiMeetRecordStopRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        meetRecordStop(requestParameters: MeetApiMeetRecordStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<Recording> {
+            return localVarFp.meetRecordStop(requestParameters.room, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Answers with a LiveKit join token for exactly the room named in the body. The body is the RAW token as text/plain — one opaque string, not JSON and not wrapped in an envelope, which is what the office client reads.  The caller presents its workspace session as a Bearer. Every clause is a refusal: the session must verify, its SIGNED workspace claim must equal the room\'s leading name segment — rooms are named `<workspace>_<room>_<id>`, and that prefix is the only thing binding a room to a tenant — and the session must carry a privileged workspace role, so a guest is refused rather than seated.  The participant identity is the SESSION\'S, never the body\'s. `_id` is accepted for compatibility with the published client bundle and deliberately ignored: LiveKit treats the identity as unique and ejects a duplicate, so honouring a caller-chosen one would let anyone in a workspace kick out a colleague and impersonate them. `participantName` is a display name only.  An unconfigured deployment answers 503 under its own name rather than 404, and the refusal states only that the office is unconfigured — the reason names key material and stays in the boot log.
          * @summary Mint a join token for one video room
          * @param {*} [options] Override http request option.
@@ -216,6 +411,48 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
         },
     };
 };
+
+/**
+ * Request parameters for meetRecordRead operation in MeetApi.
+ * @export
+ * @interface MeetApiMeetRecordReadRequest
+ */
+export interface MeetApiMeetRecordReadRequest {
+    /**
+     * Room is the LiveKit room, named the way the office client names one (&#x60;&lt;workspace&gt;_&lt;name&gt;_&lt;id&gt;&#x60;). Its leading segment is what binds the room to a tenant, and it is the segment the caller\&#39;s membership is checked against.
+     * @type {string}
+     * @memberof MeetApiMeetRecordRead
+     */
+    readonly room: string
+}
+
+/**
+ * Request parameters for meetRecordStart operation in MeetApi.
+ * @export
+ * @interface MeetApiMeetRecordStartRequest
+ */
+export interface MeetApiMeetRecordStartRequest {
+    /**
+     * 
+     * @type {RecordIn}
+     * @memberof MeetApiMeetRecordStart
+     */
+    readonly recordIn: RecordIn
+}
+
+/**
+ * Request parameters for meetRecordStop operation in MeetApi.
+ * @export
+ * @interface MeetApiMeetRecordStopRequest
+ */
+export interface MeetApiMeetRecordStopRequest {
+    /**
+     * Room is the LiveKit room, named the way the office client names one (&#x60;&lt;workspace&gt;_&lt;name&gt;_&lt;id&gt;&#x60;). Its leading segment is what binds the room to a tenant, and it is the segment the caller\&#39;s membership is checked against.
+     * @type {string}
+     * @memberof MeetApiMeetRecordStop
+     */
+    readonly room: string
+}
 
 /**
  * MeetApi - object-oriented interface
@@ -244,6 +481,42 @@ export class MeetApi extends BaseAPI {
      */
     public getMeetSession(options?: RawAxiosRequestConfig) {
         return MeetApiFp(this.configuration).getMeetSession(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers what is being recorded in a room, and where the file went.  It reports the recording that is RUNNING, and once none is, the most recent one the media server still holds — with its final status and its object. That second case is the one that matters for finding a file: the answer to a start is the only other place the location appears, and a client that lost it, or a colleague who was not the one to press record, has nowhere else to look.  It is behind the same check as starting one: where a recording of a private conversation is kept is a fact about that conversation, so it is told to the people the room admits and to nobody else.
+     * @summary What is being recorded in a room, and where the file goes
+     * @param {MeetApiMeetRecordReadRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeetApi
+     */
+    public meetRecordRead(requestParameters: MeetApiMeetRecordReadRequest, options?: RawAxiosRequestConfig) {
+        return MeetApiFp(this.configuration).meetRecordRead(requestParameters.room, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Begins recording a room, or hands back the recording already running.  A recording is a durable artifact of a conversation, so only someone this room would admit may make one: the caller is authorized by the SAME decision /v1/meet/getToken makes about the same room, and refused with the same 401.  A SECOND START RETURNS THE FIRST rather than refusing it. There is at most one recording per room and this operation\'s job is to establish that there is one — which is already true when a colleague, or the caller\'s own double-click, started it a moment ago. The answer is the same shape either way, naming the recording that is actually running, so a client never has to tell the two cases apart to find the id.  A deployment with no media server address or no object store answers 503 naming which, because a recording that silently does not happen is worse than one that is refused. The reason reaches only a caller this room already admits.
+     * @summary Start recording a room, or return the recording already running
+     * @param {MeetApiMeetRecordStartRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeetApi
+     */
+    public meetRecordStart(requestParameters: MeetApiMeetRecordStartRequest, options?: RawAxiosRequestConfig) {
+        return MeetApiFp(this.configuration).meetRecordStart(requestParameters.recordIn, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Ends a room\'s recording — EVERY one of them.  Whoever the room admits may stop it, including someone who did not start it: a person being recorded has to be able to end it, and a rule that only the starter may stop would deny exactly that. Stopping is free — a caller made to pay to stop being recorded would be paying for the wrong thing.  200 MEANS THE ROOM IS NOT BEING RECORDED, and that is why this ends all of them rather than the first. \"At most one per room\" is an invariant this surface wants and cannot impose: reading the list and starting are two calls, and two replicas racing through that window both start. When the list comes back holding two, two is the truth — and ending one while answering 200 tells the person withdrawing consent that it stopped while a second worker keeps writing. A stop that cannot finish the job says so instead.  Stopping a room that is not being recorded is not an error. The answer names the room with no recording on it, which is the state the caller asked for.
+     * @summary Stop a room\'s recording
+     * @param {MeetApiMeetRecordStopRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeetApi
+     */
+    public meetRecordStop(requestParameters: MeetApiMeetRecordStopRequest, options?: RawAxiosRequestConfig) {
+        return MeetApiFp(this.configuration).meetRecordStop(requestParameters.room, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

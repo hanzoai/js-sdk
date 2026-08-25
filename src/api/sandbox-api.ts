@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -577,7 +577,7 @@ export const SandboxApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Mints a short-lived grant to open the screen of a desktop sandbox. Same properties as the terminal ticket, for the other door.
+         * Mints a short-lived grant to open the screen of a desktop sandbox. Same properties as the terminal ticket, for the other endpoint.
          * @summary Mints a short-lived grant to open the screen of a desktop sandbox.
          * @param {string} id ID is the sandbox to address, from the path.
          * @param {*} [options] Override http request option.
@@ -995,7 +995,7 @@ export const SandboxApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Mints a short-lived grant to open the screen of a desktop sandbox. Same properties as the terminal ticket, for the other door.
+         * Mints a short-lived grant to open the screen of a desktop sandbox. Same properties as the terminal ticket, for the other endpoint.
          * @summary Mints a short-lived grant to open the screen of a desktop sandbox.
          * @param {string} id ID is the sandbox to address, from the path.
          * @param {*} [options] Override http request option.
@@ -1213,7 +1213,7 @@ export const SandboxApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postSandboxByIdFs(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Mints a short-lived grant to open the screen of a desktop sandbox. Same properties as the terminal ticket, for the other door.
+         * Mints a short-lived grant to open the screen of a desktop sandbox. Same properties as the terminal ticket, for the other endpoint.
          * @summary Mints a short-lived grant to open the screen of a desktop sandbox.
          * @param {SandboxApiPostSandboxByIdScreenTicketRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1726,7 +1726,7 @@ export class SandboxApi extends BaseAPI {
     }
 
     /**
-     * Mints a short-lived grant to open the screen of a desktop sandbox. Same properties as the terminal ticket, for the other door.
+     * Mints a short-lived grant to open the screen of a desktop sandbox. Same properties as the terminal ticket, for the other endpoint.
      * @summary Mints a short-lived grant to open the screen of a desktop sandbox.
      * @param {SandboxApiPostSandboxByIdScreenTicketRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

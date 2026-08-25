@@ -132,7 +132,7 @@ Two things type-check while being wrong on the wire, and both have bitten:
 - **A model id is a string.** `zen4` compiled fine and answered 400 *not in this
   gateway's catalog*. `zen5` is served; `GET /v1/models` is the only authority.
 - **A route can be live and undeclared.** `POST /v1/mcp` is the fleet's JSON-RPC
-  MCP door and is not in the document, so `tools` calls `GET /v1/tools` instead.
+  MCP endpoint and is not in the document, so `tools` calls `GET /v1/tools` instead.
   Reaching for an undeclared route means hand-rolling HTTP inside a generated
   client, which is the drift these SDKs exist to prevent.
 
@@ -208,5 +208,5 @@ so patching the emitted tree is not available and should not be invented.
 
 `packages/mcp-server` is deleted, not pending. It declared 128 addresses, 121 of
 them absent from the document, 33 of those pass-throughs to a competing AI
-stack. It was never published, so nothing depended on it. The one MCP door is
+stack. It was never published, so nothing depended on it. The one MCP server is
 hanzoai/cloud's. This repo is client-side only.

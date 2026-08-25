@@ -8,8 +8,8 @@
 // gets published, and this is where they show up.
 //
 // `require('hanzoai')` and not a path: the package self-reference resolves
-// through package.json `exports`, which is the same door `npm i hanzoai` opens.
-// A build that only works when you reach past that door is a build that works
+// through package.json `exports`, which is the same entry point `npm i hanzoai` opens.
+// A build that only works when you reach past that entry point is a build that works
 // for nobody.
 //
 // The expected surface is READ FROM THE SOURCE, never listed here. A product

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -112,10 +112,10 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * Lists the secrets your org holds, without their values.  Returns the METADATA of the caller\'s own secrets: each one\'s name, path, environment and sealing scheme. No value and no ciphertext is included — this operation exists to enumerate what is held, and reading a value is a separate, per-secret call.  Scoped to the caller\'s own org and nothing else, structurally: there is no org in the path, the store root is derived from the validated org claim, and a caller therefore has no way to name another tenant\'s namespace. `path` narrows to a subpath and `env` selects the environment; both are also accepted under the operator\'s spellings, `secretPath` and `environment`. An omitted `env` means every environment and an omitted `path` means the whole org, because a default here reported a populated store as empty.  Admission is fail-closed and in order: a validated member, an org that is a DNS-1123 label, and a store holding a master key — 403, 400 and 503 respectively, all decided before any record is touched.
          * @summary Lists the secrets your org holds, without their values.
-         * @param {string} [env] 
-         * @param {string} [environment] 
-         * @param {string} [path] 
-         * @param {string} [secretPath] 
+         * @param {string} [env] Env selects the environment, which is part of a secret\&#39;s storage key. OMITTED means EVERY environment — this is the enumeration surface, so it must be able to answer \&quot;what is in here\&quot; without being told where to look.
+         * @param {string} [environment] Environment is the KMS operator\&#39;s spelling of Env, accepted so one caller need not learn the other\&#39;s vocabulary. Env wins when both are sent.
+         * @param {string} [path] Path narrows the listing to one subtree beneath the caller\&#39;s org root, as a &#x60;/&#x60;-separated path such as &#x60;/ci&#x60;. OMITTED means the whole org.
+         * @param {string} [secretPath] SecretPath is the KMS operator\&#39;s spelling of Path. Path wins when both are sent.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -164,7 +164,7 @@ export const KmsApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped at the same door.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
+         * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped in the same place.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
          * @summary Exchanges a machine credential for an IAM bearer token.
          * @param {KmsLogin} kmsLogin 
          * @param {*} [options] Override http request option.
@@ -280,10 +280,10 @@ export const KmsApiFp = function(configuration?: Configuration) {
         /**
          * Lists the secrets your org holds, without their values.  Returns the METADATA of the caller\'s own secrets: each one\'s name, path, environment and sealing scheme. No value and no ciphertext is included — this operation exists to enumerate what is held, and reading a value is a separate, per-secret call.  Scoped to the caller\'s own org and nothing else, structurally: there is no org in the path, the store root is derived from the validated org claim, and a caller therefore has no way to name another tenant\'s namespace. `path` narrows to a subpath and `env` selects the environment; both are also accepted under the operator\'s spellings, `secretPath` and `environment`. An omitted `env` means every environment and an omitted `path` means the whole org, because a default here reported a populated store as empty.  Admission is fail-closed and in order: a validated member, an org that is a DNS-1123 label, and a store holding a master key — 403, 400 and 503 respectively, all decided before any record is touched.
          * @summary Lists the secrets your org holds, without their values.
-         * @param {string} [env] 
-         * @param {string} [environment] 
-         * @param {string} [path] 
-         * @param {string} [secretPath] 
+         * @param {string} [env] Env selects the environment, which is part of a secret\&#39;s storage key. OMITTED means EVERY environment — this is the enumeration surface, so it must be able to answer \&quot;what is in here\&quot; without being told where to look.
+         * @param {string} [environment] Environment is the KMS operator\&#39;s spelling of Env, accepted so one caller need not learn the other\&#39;s vocabulary. Env wins when both are sent.
+         * @param {string} [path] Path narrows the listing to one subtree beneath the caller\&#39;s org root, as a &#x60;/&#x60;-separated path such as &#x60;/ci&#x60;. OMITTED means the whole org.
+         * @param {string} [secretPath] SecretPath is the KMS operator\&#39;s spelling of Path. Path wins when both are sent.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -294,7 +294,7 @@ export const KmsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped at the same door.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
+         * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped in the same place.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
          * @summary Exchanges a machine credential for an IAM bearer token.
          * @param {KmsLogin} kmsLogin 
          * @param {*} [options] Override http request option.
@@ -358,7 +358,7 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getKmsSecrets(requestParameters.env, requestParameters.environment, requestParameters.path, requestParameters.secretPath, options).then((request) => request(axios, basePath));
         },
         /**
-         * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped at the same door.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
+         * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped in the same place.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
          * @summary Exchanges a machine credential for an IAM bearer token.
          * @param {KmsApiPostKmsAuthLoginRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -387,28 +387,28 @@ export const KmsApiFactory = function (configuration?: Configuration, basePath?:
  */
 export interface KmsApiGetKmsSecretsRequest {
     /**
-     * 
+     * Env selects the environment, which is part of a secret\&#39;s storage key. OMITTED means EVERY environment — this is the enumeration surface, so it must be able to answer \&quot;what is in here\&quot; without being told where to look.
      * @type {string}
      * @memberof KmsApiGetKmsSecrets
      */
     readonly env?: string
 
     /**
-     * 
+     * Environment is the KMS operator\&#39;s spelling of Env, accepted so one caller need not learn the other\&#39;s vocabulary. Env wins when both are sent.
      * @type {string}
      * @memberof KmsApiGetKmsSecrets
      */
     readonly environment?: string
 
     /**
-     * 
+     * Path narrows the listing to one subtree beneath the caller\&#39;s org root, as a &#x60;/&#x60;-separated path such as &#x60;/ci&#x60;. OMITTED means the whole org.
      * @type {string}
      * @memberof KmsApiGetKmsSecrets
      */
     readonly path?: string
 
     /**
-     * 
+     * SecretPath is the KMS operator\&#39;s spelling of Path. Path wins when both are sent.
      * @type {string}
      * @memberof KmsApiGetKmsSecrets
      */
@@ -485,7 +485,7 @@ export class KmsApi extends BaseAPI {
     }
 
     /**
-     * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped at the same door.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
+     * Exchanges a machine credential for an IAM bearer token.  Takes a tenant\'s machine credential — a client id and client secret — and returns an owner-scoped IAM access token with its lifetime, which is the bearer the caller then carries on the org-scoped secret operations.  It is deliberately public and unauthenticated, because it IS the credential exchange and runs before any principal exists. That makes it the one route in this subsystem rate-limited PER SOURCE IP, keyed on the real TCP peer rather than on any caller-supplied header, and body-capped in the same place.  The submitted secret is never logged and never echoed, and failures collapse to one clean status with no upstream detail: 401 when the credential does not authenticate, 502 when the identity provider is unreachable, 503 when no issuer is configured. That is on purpose — a richer error would be a validity oracle for guessed credentials.
      * @summary Exchanges a machine credential for an IAM bearer token.
      * @param {KmsApiPostKmsAuthLoginRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

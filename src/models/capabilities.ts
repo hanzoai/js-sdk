@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -27,7 +27,7 @@ export interface Capabilities {
      */
     'actions'?: boolean;
     /**
-     * DM is whether the transport carries a DIRECT message at all. True for slack, teams and telegram. False for discord, honestly: that ingress is guild-scoped slash commands — an interaction without a guild id is refused at the door — so nothing ever arrives classified as a DM, no reply route is ever learned for one, and a send addressed at a Discord DM is refused 409.
+     * DM is whether the transport carries a DIRECT message at all. True for slack, teams and telegram. False for discord, honestly: that ingress is guild-scoped slash commands — an interaction without a guild id is refused at the endpoint — so nothing ever arrives classified as a DM, no reply route is ever learned for one, and a send addressed at a Discord DM is refused 409.
      * @type {boolean}
      * @memberof Capabilities
      */
@@ -45,7 +45,7 @@ export interface Capabilities {
      */
     'media'?: boolean;
     /**
-     * Thread is whether a reply can be threaded UNDER a specific message. True for slack alone: it is the only transport whose ingress reports a thread (thread_ts, published as the envelope\'s replyTo) and whose door posts back into it. Discord\'s replyTo makes an inline reply rather than a thread, Telegram\'s answers one message id, and Teams carries no reply target at all — a replyTo sent to it is ignored.
+     * Thread is whether a reply can be threaded UNDER a specific message. True for slack alone: it is the only transport whose ingress reports a thread (thread_ts, published as the envelope\'s replyTo) and whose send posts back into it. Discord\'s replyTo makes an inline reply rather than a thread, Telegram\'s answers one message id, and Teams carries no reply target at all — a replyTo sent to it is ignored.
      * @type {boolean}
      * @memberof Capabilities
      */

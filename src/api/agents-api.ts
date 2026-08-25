@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -1115,7 +1115,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {CodingStartIn} codingStartIn 
          * @param {*} [options] Override http request option.
@@ -1239,8 +1239,8 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Sends a steering message to a running session — the door a human or another agent interrupts through. It requires a `message` or a `payload`; the other three commands do not.
-         * @summary Sends a steering message to a running session — the door a human or another agent interrupts through.
+         * Sends a steering message to a running session — the endpoint a human or another agent interrupts through. It requires a `message` or a `payload`; the other three commands do not.
+         * @summary Sends a steering message to a running session — the endpoint a human or another agent interrupts through.
          * @param {string} id ID is the session to steer, from the path.
          * @param {ControlIn} controlIn 
          * @param {*} [options] Override http request option.
@@ -1931,7 +1931,7 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {CodingStartIn} codingStartIn 
          * @param {*} [options] Override http request option.
@@ -1971,8 +1971,8 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Sends a steering message to a running session — the door a human or another agent interrupts through. It requires a `message` or a `payload`; the other three commands do not.
-         * @summary Sends a steering message to a running session — the door a human or another agent interrupts through.
+         * Sends a steering message to a running session — the endpoint a human or another agent interrupts through. It requires a `message` or a `payload`; the other three commands do not.
+         * @summary Sends a steering message to a running session — the endpoint a human or another agent interrupts through.
          * @param {string} id ID is the session to steer, from the path.
          * @param {ControlIn} controlIn 
          * @param {*} [options] Override http request option.
@@ -2344,7 +2344,7 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.postAgentsChat(options).then((request) => request(axios, basePath));
         },
         /**
-         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+         * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
          * @summary Start one autonomous coding run against a repo in the caller\'s org
          * @param {AgentsApiPostAgentsCodingRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2374,8 +2374,8 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.postAgentsSessionsByIdEvents(requestParameters.id, requestParameters.eventIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Sends a steering message to a running session — the door a human or another agent interrupts through. It requires a `message` or a `payload`; the other three commands do not.
-         * @summary Sends a steering message to a running session — the door a human or another agent interrupts through.
+         * Sends a steering message to a running session — the endpoint a human or another agent interrupts through. It requires a `message` or a `payload`; the other three commands do not.
+         * @summary Sends a steering message to a running session — the endpoint a human or another agent interrupts through.
          * @param {AgentsApiPostAgentsSessionsByIdMessageRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3315,7 +3315,7 @@ export class AgentsApi extends BaseAPI {
     }
 
     /**
-     * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this door does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
+     * Runs a coding task on a repository: clones it into a sandbox, lets a model read and edit the code, run the tests, and push the work to a branch. Say the thing you want done — \"fix the failing auth test in hanzoai/cloud\" — and the run infers the repo, the branch and the plan. No prefix, no ceremony.  It answers 202 with the run\'s handle the moment the run is ADMITTED — not when it finishes. A coding run takes minutes; holding a request open for one would tie a connection to a model loop and give the caller nothing it cannot get better from the session stream.  The handle is a session id, and that is deliberate: the session is already the run\'s durable record and its live stream (/v1/agents/sessions/{id}/stream), so this op does not grow a progress endpoint, a status endpoint or a cancel endpoint of its own. One way to watch a run, whoever started it.  It is also how work CONTINUES. Pass an earlier run\'s session as `after` and this one starts from where that one stopped, so \"now add tests for it\" builds on the branch already pushed instead of a fresh clone. The follow-up still gets its own branch and its own session — one run, one branch, always reviewable on its own.
      * @summary Start one autonomous coding run against a repo in the caller\'s org
      * @param {AgentsApiPostAgentsCodingRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3351,8 +3351,8 @@ export class AgentsApi extends BaseAPI {
     }
 
     /**
-     * Sends a steering message to a running session — the door a human or another agent interrupts through. It requires a `message` or a `payload`; the other three commands do not.
-     * @summary Sends a steering message to a running session — the door a human or another agent interrupts through.
+     * Sends a steering message to a running session — the endpoint a human or another agent interrupts through. It requires a `message` or a `payload`; the other three commands do not.
+     * @summary Sends a steering message to a running session — the endpoint a human or another agent interrupts through.
      * @param {AgentsApiPostAgentsSessionsByIdMessageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

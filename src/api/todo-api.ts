@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -40,7 +40,7 @@ import type { TodoProject } from '../models';
 export const TodoApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {string} key 
          * @param {*} [options] Override http request option.
@@ -403,7 +403,7 @@ export const TodoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {string} key 
          * @param {*} [options] Override http request option.
@@ -489,7 +489,7 @@ export const TodoApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -619,7 +619,7 @@ export const TodoApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TodoApiAxiosParamCreator(configuration)
     return {
         /**
-         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {string} key 
          * @param {*} [options] Override http request option.
@@ -729,7 +729,7 @@ export const TodoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {string} key 
          * @param {*} [options] Override http request option.
@@ -757,7 +757,7 @@ export const TodoApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -807,7 +807,7 @@ export const TodoApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = TodoApiFp(configuration)
     return {
         /**
-         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {TodoApiDeleteTodoProjectsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -876,7 +876,7 @@ export const TodoApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTodoProjectsByKeyIssuesByNum(requestParameters.key, requestParameters.num, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {TodoApiPatchTodoProjectsByKeyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -896,7 +896,7 @@ export const TodoApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.patchTodoProjectsByKeyIssuesByNum(requestParameters.key, requestParameters.num, requestParameters.issueEdit, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+         * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
          * @summary Refused — a board is a repository on the forge
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1243,7 +1243,7 @@ export interface TodoApiPostTodoProjectsByKeyIssuesByNumClaimRequest {
  */
 export class TodoApi extends BaseAPI {
     /**
-     * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+     * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
      * @summary Refused — a board is a repository on the forge
      * @param {TodoApiDeleteTodoProjectsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1326,7 +1326,7 @@ export class TodoApi extends BaseAPI {
     }
 
     /**
-     * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+     * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
      * @summary Refused — a board is a repository on the forge
      * @param {TodoApiPatchTodoProjectsByKeyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1350,7 +1350,7 @@ export class TodoApi extends BaseAPI {
     }
 
     /**
-     * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second door on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
+     * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
      * @summary Refused — a board is a repository on the forge
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
