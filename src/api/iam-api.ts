@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -1550,84 +1550,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns the signed-in person\'s own account and the organization they belong to — what a console reads to draw the account menu.  Passwords, API secrets and MFA material are stripped. It answers for a session cookie or a bearer token alike.
-         * @summary Returns the signed-in person\'s own account and the organization they belong to — what a console reads to draw the account menu.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetAccount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-account`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
-         * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
-         * @param {string} [clientId] ClientId is the application\&#39;s OAuth client id — the one field that selects which login screen this is.
-         * @param {string} [responseType] ResponseType is the OAuth response type the screen will ask for. Only \&quot;code\&quot; is served; anything else is refused here rather than at the authorize leg, where the person has already typed a password.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetAppLogin: async (clientId?: string, responseType?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/get-app-login`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (clientId !== undefined) {
-                localVarQueryParameter['clientId'] = clientId;
-            }
-
-            if (responseType !== undefined) {
-                localVarQueryParameter['responseType'] = responseType;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
          * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
          * @param {string} [owner] 
@@ -1790,7 +1712,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate door from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
+         * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate endpoint from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
          * @summary Resolve a PUBLISHABLE key to the organization that owns it
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1824,7 +1746,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-door from unknown, so the holder can be told which one cure applies.
+         * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-endpoint from unknown, so the holder can be told which one cure applies.
          * @summary Resolve a SECRET key to the principal it authenticates
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3322,7 +3244,7 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every door. The Guard refuses a bearerless request before this runs, but the agent door carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
+         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every endpoint. The Guard refuses a bearerless request before this runs, but the MCP server carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
          * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
          * @param {string} [xForwardedFor] 
          * @param {string} [q] 
@@ -3826,40 +3748,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
-         * @summary Turns a factor off, so sign-in stops asking for it.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteMfa: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/delete-mfa`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working. A name already used in the organization is refused.
          * @summary Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working.
          * @param {IamInvitationsInput} iamInvitationsInput 
@@ -3893,40 +3781,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(iamInvitationsInput, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client. The token\'s subject + owner are the TARGET USER\'s, so a resource server scopes on the validated owner claim to the user\'s tenant — indistinguishable from a token the user obtained directly. Response is the camelCase `{accessToken, expiresIn}` body identity.ts consumes. Equivalent to the RFC 8693 token-exchange grant, minus the subject_token proof (the console has the user\'s id, not a token) — the reason this compat shim exists.
-         * @summary Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamIssueUserToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/issue-user-token`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4151,40 +4005,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          */
         postIamMfaSetupInitiate: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/mfa/setup/initiate`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
-         * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamMintUserKeys: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/mint-user-keys`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4748,40 +4568,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
-         * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamRevokeUserKeys: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/revoke-user-keys`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Makes a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do. A name already used in your organization is refused.
          * @summary Makes a role — a named group of people that permissions are granted to.
          * @param {IamRolesInput} iamRolesInput 
@@ -4856,40 +4642,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-         * @summary Validates the request and asks otp to get a code to the person.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamSendVerificationCode: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/send-verification-code`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Makes a service account — an identity for a program rather than a person, for a script, a bot or a deployment that has to authenticate on its own.  It comes back with its first key, and the secret half is shown ONCE, here. There is no way to read it again; if you lose it, rotate.
          * @summary Makes a service account — an identity for a program rather than a person, for a script, a bot or a deployment that has to authenticate on its own.
          * @param {*} [options] Override http request option.
@@ -4935,40 +4687,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
             assertParamExists('postIamServiceAccountsByNameKeys', 'name', name)
             const localVarPath = `/v1/iam/service-accounts/{name}/keys`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
-         * @summary Picks which second factor an account is asked for first when it has more than one.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamSetPreferredMfa: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/set-preferred-mfa`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5105,40 +4823,6 @@ export const IamApiAxiosParamCreator = function (configuration?: Configuration) 
          */
         postIamUnlink: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/iam/unlink`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
-         * @summary Saves the calling person\'s own settings and returns the full set afterwards.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdatePreferences: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/iam/update-preferences`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -6919,32 +6603,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the signed-in person\'s own account and the organization they belong to — what a console reads to draw the account menu.  Passwords, API secrets and MFA material are stripped. It answers for a session cookie or a bearer token alike.
-         * @summary Returns the signed-in person\'s own account and the organization they belong to — what a console reads to draw the account menu.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetAccount(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetAccount']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
-         * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
-         * @param {string} [clientId] ClientId is the application\&#39;s OAuth client id — the one field that selects which login screen this is.
-         * @param {string} [responseType] ResponseType is the OAuth response type the screen will ask for. Only \&quot;code\&quot; is served; anything else is refused here rather than at the authorize leg, where the person has already typed a password.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getIamGetAppLogin(clientId?: string, responseType?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IamAnswer>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getIamGetAppLogin(clientId, responseType, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.getIamGetAppLogin']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
          * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
          * @param {string} [owner] 
@@ -6999,7 +6657,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate door from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
+         * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate endpoint from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
          * @summary Resolve a PUBLISHABLE key to the organization that owns it
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7011,7 +6669,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-door from unknown, so the holder can be told which one cure applies.
+         * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-endpoint from unknown, so the holder can be told which one cure applies.
          * @summary Resolve a SECRET key to the principal it authenticates
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7518,7 +7176,7 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every door. The Guard refuses a bearerless request before this runs, but the agent door carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
+         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every endpoint. The Guard refuses a bearerless request before this runs, but the MCP server carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
          * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
          * @param {string} [xForwardedFor] 
          * @param {string} [q] 
@@ -7681,18 +7339,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
-         * @summary Turns a factor off, so sign-in stops asking for it.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamDeleteMfa(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamDeleteMfa(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamDeleteMfa']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working. A name already used in the organization is refused.
          * @summary Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working.
          * @param {IamInvitationsInput} iamInvitationsInput 
@@ -7703,18 +7349,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamInvitations(iamInvitationsInput, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamInvitations']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client. The token\'s subject + owner are the TARGET USER\'s, so a resource server scopes on the validated owner claim to the user\'s tenant — indistinguishable from a token the user obtained directly. Response is the camelCase `{accessToken, expiresIn}` body identity.ts consumes. Equivalent to the RFC 8693 token-exchange grant, minus the subject_token proof (the console has the user\'s id, not a token) — the reason this compat shim exists.
-         * @summary Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamIssueUserToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamIssueUserToken(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamIssueUserToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -7800,18 +7434,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamMfaSetupInitiate(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamMfaSetupInitiate']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
-         * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamMintUserKeys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamMintUserKeys(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamMintUserKeys']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8000,18 +7622,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
-         * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamRevokeUserKeys(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamRevokeUserKeys(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamRevokeUserKeys']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Makes a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do. A name already used in your organization is refused.
          * @summary Makes a role — a named group of people that permissions are granted to.
          * @param {IamRolesInput} iamRolesInput 
@@ -8037,18 +7647,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-         * @summary Validates the request and asks otp to get a code to the person.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamSendVerificationCode(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamSendVerificationCode(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamSendVerificationCode']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Makes a service account — an identity for a program rather than a person, for a script, a bot or a deployment that has to authenticate on its own.  It comes back with its first key, and the secret half is shown ONCE, here. There is no way to read it again; if you lose it, rotate.
          * @summary Makes a service account — an identity for a program rather than a person, for a script, a bot or a deployment that has to authenticate on its own.
          * @param {*} [options] Override http request option.
@@ -8071,18 +7669,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamServiceAccountsByNameKeys(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamServiceAccountsByNameKeys']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
-         * @summary Picks which second factor an account is asked for first when it has more than one.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamSetPreferredMfa(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamSetPreferredMfa(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamSetPreferredMfa']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8131,18 +7717,6 @@ export const IamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUnlink(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IamApi.postIamUnlink']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
-         * @summary Saves the calling person\'s own settings and returns the full set afterwards.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postIamUpdatePreferences(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIamUpdatePreferences(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['IamApi.postIamUpdatePreferences']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8904,25 +8478,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamConsent(options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the signed-in person\'s own account and the organization they belong to — what a console reads to draw the account menu.  Passwords, API secrets and MFA material are stripped. It answers for a session cookie or a bearer token alike.
-         * @summary Returns the signed-in person\'s own account and the organization they belong to — what a console reads to draw the account menu.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetAccount(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getIamGetAccount(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
-         * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
-         * @param {IamApiGetIamGetAppLoginRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getIamGetAppLogin(requestParameters: IamApiGetIamGetAppLoginRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IamAnswer> {
-            return localVarFp.getIamGetAppLogin(requestParameters.clientId, requestParameters.responseType, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
          * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
          * @param {IamApiGetIamInvitationsRequest} requestParameters Request parameters.
@@ -8963,7 +8518,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamKeysByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate door from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
+         * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate endpoint from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
          * @summary Resolve a PUBLISHABLE key to the organization that owns it
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8972,7 +8527,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getIamKeysOrg(options).then((request) => request(axios, basePath));
         },
         /**
-         * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-door from unknown, so the holder can be told which one cure applies.
+         * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-endpoint from unknown, so the holder can be told which one cure applies.
          * @summary Resolve a SECRET key to the principal it authenticates
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9343,7 +8898,7 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getWebauthnCredential(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every door. The Guard refuses a bearerless request before this runs, but the agent door carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
+         * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every endpoint. The Guard refuses a bearerless request before this runs, but the MCP server carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
          * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
          * @param {IamApiListOrganizationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -9461,15 +9016,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamDeleteMembership(options).then((request) => request(axios, basePath));
         },
         /**
-         * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
-         * @summary Turns a factor off, so sign-in stops asking for it.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamDeleteMfa(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIamDeleteMfa(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working. A name already used in the organization is refused.
          * @summary Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working.
          * @param {IamApiPostIamInvitationsRequest} requestParameters Request parameters.
@@ -9478,15 +9024,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         postIamInvitations(requestParameters: IamApiPostIamInvitationsRequest, options?: RawAxiosRequestConfig): AxiosPromise<IamInvitation> {
             return localVarFp.postIamInvitations(requestParameters.iamInvitationsInput, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client. The token\'s subject + owner are the TARGET USER\'s, so a resource server scopes on the validated owner claim to the user\'s tenant — indistinguishable from a token the user obtained directly. Response is the camelCase `{accessToken, expiresIn}` body identity.ts consumes. Equivalent to the RFC 8693 token-exchange grant, minus the subject_token proof (the console has the user\'s id, not a token) — the reason this compat shim exists.
-         * @summary Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamIssueUserToken(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIamIssueUserToken(options).then((request) => request(axios, basePath));
         },
         /**
          * Issues an API key. A standard key comes back as a publishable half you may ship in client code and a secret half you must not — the secret is shown once, at creation, and cannot be retrieved afterwards. A publish-scoped key is issued with the publishable half only, so there is no secret to leak.  A name already used in your organization is refused rather than reissued, so creating twice never silently invalidates a key that is in production.
@@ -9551,15 +9088,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         postIamMfaSetupInitiate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postIamMfaSetupInitiate(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
-         * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamMintUserKeys(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIamMintUserKeys(options).then((request) => request(axios, basePath));
         },
         /**
          * Starts a sign-in — the address you send a browser to, and the beginning of every OAuth and OpenID Connect flow.  If the person is ALREADY signed in here, it does not ask them again: it returns them to the application with a one-time code and they never see this page. Otherwise it shows the right way to sign in for the application they are signing in to, or hands off to another identity provider if that is what they pick.  A client can say what it wants with `prompt`: `none` means answer without any screen at all — with the code if a session exists, with an error if not, but never with a page; `login` means ask for the password again even if a session exists; `select_account` means let the person choose which identity to use.  It returns only to an address the application has registered. That check happens before anything else, so a request naming an unregistered address is refused where the person can see it rather than being bounced onwards.
@@ -9700,15 +9228,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamRelease(requestParameters.iamAssumeBody, requestParameters.authorization, requestParameters.xForwardedFor, options).then((request) => request(axios, basePath));
         },
         /**
-         * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
-         * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamRevokeUserKeys(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIamRevokeUserKeys(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Makes a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do. A name already used in your organization is refused.
          * @summary Makes a role — a named group of people that permissions are granted to.
          * @param {IamApiPostIamRolesRequest} requestParameters Request parameters.
@@ -9728,15 +9247,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.postIamScimV2Users(options).then((request) => request(axios, basePath));
         },
         /**
-         * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-         * @summary Validates the request and asks otp to get a code to the person.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamSendVerificationCode(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIamSendVerificationCode(options).then((request) => request(axios, basePath));
-        },
-        /**
          * Makes a service account — an identity for a program rather than a person, for a script, a bot or a deployment that has to authenticate on its own.  It comes back with its first key, and the secret half is shown ONCE, here. There is no way to read it again; if you lose it, rotate.
          * @summary Makes a service account — an identity for a program rather than a person, for a script, a bot or a deployment that has to authenticate on its own.
          * @param {*} [options] Override http request option.
@@ -9754,15 +9264,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         postIamServiceAccountsByNameKeys(requestParameters: IamApiPostIamServiceAccountsByNameKeysRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postIamServiceAccountsByNameKeys(requestParameters.name, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
-         * @summary Picks which second factor an account is asked for first when it has more than one.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamSetPreferredMfa(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIamSetPreferredMfa(options).then((request) => request(axios, basePath));
         },
         /**
          * Completes a sign-in: it exchanges the one-time code your application was handed at the end of the login flow for a live session, and returns the signed-in account.  The code works once. This is the call that turns a finished login into something your application can act on.
@@ -9799,15 +9300,6 @@ export const IamApiFactory = function (configuration?: Configuration, basePath?:
          */
         postIamUnlink(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postIamUnlink(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
-         * @summary Saves the calling person\'s own settings and returns the full set afterwards.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postIamUpdatePreferences(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postIamUpdatePreferences(options).then((request) => request(axios, basePath));
         },
         /**
          * Adds a person to your organization. Send a password and it becomes the one they sign in with; it is hashed before it is stored and never comes back in any response.  The username is checked against the same rule every account in the Hanzo Cloud is held to, whichever way it was created — this call, password signup, a social sign-in, or SCIM — so a name accepted here works everywhere.  A name already taken in your organization is refused rather than overwritten.
@@ -10683,27 +10175,6 @@ export interface IamApiGetIamCertsByOwnerByNameRequest {
      * @memberof IamApiGetIamCertsByOwnerByName
      */
     readonly name: string
-}
-
-/**
- * Request parameters for getIamGetAppLogin operation in IamApi.
- * @export
- * @interface IamApiGetIamGetAppLoginRequest
- */
-export interface IamApiGetIamGetAppLoginRequest {
-    /**
-     * ClientId is the application\&#39;s OAuth client id — the one field that selects which login screen this is.
-     * @type {string}
-     * @memberof IamApiGetIamGetAppLogin
-     */
-    readonly clientId?: string
-
-    /**
-     * ResponseType is the OAuth response type the screen will ask for. Only \&quot;code\&quot; is served; anything else is refused here rather than at the authorize leg, where the person has already typed a password.
-     * @type {string}
-     * @memberof IamApiGetIamGetAppLogin
-     */
-    readonly responseType?: string
 }
 
 /**
@@ -12526,29 +11997,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns the signed-in person\'s own account and the organization they belong to — what a console reads to draw the account menu.  Passwords, API secrets and MFA material are stripped. It answers for a session cookie or a bearer token alike.
-     * @summary Returns the signed-in person\'s own account and the organization they belong to — what a console reads to draw the account menu.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetAccount(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetAccount(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.  The client secret is masked. Read before anyone has signed in, so it carries only what is safe for a browser to see.
-     * @summary Returns everything a login screen needs to draw itself for one application: its branding, and each sign-in method it offers with the provider details that method needs.
-     * @param {IamApiGetIamGetAppLoginRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public getIamGetAppLogin(requestParameters: IamApiGetIamGetAppLoginRequest = {}, options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).getIamGetAppLogin(requestParameters.clientId, requestParameters.responseType, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.  You see your own organization\'s invitations and no one else\'s; which organization that is comes from your credentials, not from the request.
      * @summary Returns your organization\'s invitations, newest first — who has been asked to join, on what terms, and how many seats each invitation still has left.
      * @param {IamApiGetIamInvitationsRequest} requestParameters Request parameters.
@@ -12597,7 +12045,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate door from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
+     * Answers which organization a publishable key belongs to — what a service calls to attribute a request that arrived carrying a key shipped in a browser. This is the noun spelling of `/v1/iam/resolve-key`, the same handler at the address that replaces it; both answer while callers migrate.  It names an ORGANIZATION and never a person. No path through it loads or returns a user, so a key placed in client code cannot become a way to learn who anyone is — which is the whole reason this is a separate endpoint from the one below.  A key that is expired, secret rather than publishable, or simply unknown all answer with the same sentence and a `code` saying which it was. Only a confidential service that has already proved it may resolve keys reads that code — there is no anonymous caller here to probe which keys exist — and telling those apart is what lets a holder be told to re-mint an expired key instead of hunting a configuration error.
      * @summary Resolve a PUBLISHABLE key to the organization that owns it
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -12608,7 +12056,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-door from unknown, so the holder can be told which one cure applies.
+     * Answers who a secret key belongs to — the owner and name a gateway needs to attribute and bill a request that arrived carrying an `sk-`. This is the noun spelling of `/v1/iam/get-user?accessKey=`, the same handler at the address that replaces it; both answer while callers migrate.  It resolves a KEY and nothing else. The verb it replaces also reads a user by `?id=`, and carrying that here would make this a second address for the user read — the exact thing being retired. Ask for a person by name at the user read; ask here only what a credential resolves to.  Requires a confidential caller: the resolver authenticates as an app, so a request without that credential resolves nothing rather than falling back to an anonymous lookup. An unresolvable key answers with a `code` distinguishing expired from wrong-endpoint from unknown, so the holder can be told which one cure applies.
      * @summary Resolve a SECRET key to the principal it authenticates
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -13057,7 +12505,7 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every door. The Guard refuses a bearerless request before this runs, but the agent door carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
+     * Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.  Platform operators see every organization; everyone else sees their own. Pass the cursor from the previous page to continue; an empty cursor in the answer means there is nothing more.  THE SCOPE IS THE HANDLER\'S OWN, so it holds at every endpoint. The Guard refuses a bearerless request before this runs, but the MCP server carries a typed op to its handler with no middleware in front of it — a handler that read no principal would answer such a caller with the whole registry. Reading the principal here is what makes the answer the same one over both.
      * @summary Returns the organizations you can act in, the ones you belong to first and the rest after, newest first, narrowed by an optional query against the name or the display name.
      * @param {IamApiListOrganizationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -13199,17 +12647,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Turns a factor off, so sign-in stops asking for it. Naming no factor turns off ALL of them — the reset path. People may do this for themselves; doing it for somebody else takes an administrator, which is what makes it the way back in when a phone is lost.  The recovery codes go with the last factor: they are the way past a challenge, so keeping them alive for an account with nothing to challenge would leave a standing credential behind.
-     * @summary Turns a factor off, so sign-in stops asking for it.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamDeleteMfa(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamDeleteMfa(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working. A name already used in the organization is refused.
      * @summary Issues an invitation to join your organization — the code or link a new member redeems, with the role they arrive holding and the date it stops working.
      * @param {IamApiPostIamInvitationsRequest} requestParameters Request parameters.
@@ -13219,17 +12656,6 @@ export class IamApi extends BaseAPI {
      */
     public postIamInvitations(requestParameters: IamApiPostIamInvitationsRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamInvitations(requestParameters.iamInvitationsInput, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client. The token\'s subject + owner are the TARGET USER\'s, so a resource server scopes on the validated owner claim to the user\'s tenant — indistinguishable from a token the user obtained directly. Response is the camelCase `{accessToken, expiresIn}` body identity.ts consumes. Equivalent to the RFC 8693 token-exchange grant, minus the subject_token proof (the console has the user\'s id, not a token) — the reason this compat shim exists.
-     * @summary Mints an access token for the `?id=<owner>/<name>` target user (optional `?aud=` resource, RFC 8707), issued by the authenticated + allow-listed confidential client.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamIssueUserToken(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamIssueUserToken(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13308,17 +12734,6 @@ export class IamApi extends BaseAPI {
      */
     public postIamMfaSetupInitiate(options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamMfaSetupInitiate(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam. `?type=secret` (the default) yields the confidential sk-; `?type=publishable` yields the pk- that is safe to ship in client JS and resolves to an org, never a principal.  It writes the schema.Key row that the resolvers actually read. schema.User.AccessKey is not a credential and nothing resolves it, so a key stamped there would authenticate nobody.
-     * @summary (re)generates the target user\'s key of the requested TYPE and returns it once, over the shared authorizeMinter + mintTarget seam.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamMintUserKeys(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamMintUserKeys(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13490,17 +12905,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Clears the target user\'s key of the requested TYPE (immediate revoke). Scoped by the same `?type` field mint takes, so revoking the browser key leaves the server key working. A secret key\'s stored value is the sk- in its schema.Key row.
-     * @summary Clears the target user\'s key of the requested TYPE (immediate revoke).
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamRevokeUserKeys(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamRevokeUserKeys(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Makes a role — a named group of people that permissions are granted to. Granting to a role rather than to each person is what keeps access correct as your team changes: add someone to the role and they inherit everything it can do. A name already used in your organization is refused.
      * @summary Makes a role — a named group of people that permissions are granted to.
      * @param {IamApiPostIamRolesRequest} requestParameters Request parameters.
@@ -13524,17 +12928,6 @@ export class IamApi extends BaseAPI {
     }
 
     /**
-     * Validates the request and asks otp to get a code to the person. The request fields are read via fiber\'s FormValue — the escape hatch zip exposes for form bodies (multipart or urlencoded) — since the typed JSON Bind does not apply here. v1 also accepts countryCode/method/checkUser/captchaType; iam ignores them (the captcha/forget/MFA flows those drive are not ported), and CAPTCHA verification is likewise not enforced — iam models no captcha provider — so the code is issued once the destination and application validate.
-     * @summary Validates the request and asks otp to get a code to the person.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamSendVerificationCode(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamSendVerificationCode(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Makes a service account — an identity for a program rather than a person, for a script, a bot or a deployment that has to authenticate on its own.  It comes back with its first key, and the secret half is shown ONCE, here. There is no way to read it again; if you lose it, rotate.
      * @summary Makes a service account — an identity for a program rather than a person, for a script, a bot or a deployment that has to authenticate on its own.
      * @param {*} [options] Override http request option.
@@ -13555,17 +12948,6 @@ export class IamApi extends BaseAPI {
      */
     public postIamServiceAccountsByNameKeys(requestParameters: IamApiPostIamServiceAccountsByNameKeysRequest, options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamServiceAccountsByNameKeys(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Picks which second factor an account is asked for first when it has more than one. Only a factor the account actually holds: storing an unheld one told the login gate \"MFA is on\" — factor.Enabled reads that column — while leaving it nothing to ask for, so the sign-in required the password alone.
-     * @summary Picks which second factor an account is asked for first when it has more than one.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamSetPreferredMfa(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamSetPreferredMfa(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13610,17 +12992,6 @@ export class IamApi extends BaseAPI {
      */
     public postIamUnlink(options?: RawAxiosRequestConfig) {
         return IamApiFp(this.configuration).postIamUnlink(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Saves the calling person\'s own settings and returns the full set afterwards. Send only the settings you are changing — the rest are kept, so two screens can save at once without one undoing the other.
-     * @summary Saves the calling person\'s own settings and returns the full set afterwards.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IamApi
-     */
-    public postIamUpdatePreferences(options?: RawAxiosRequestConfig) {
-        return IamApiFp(this.configuration).postIamUpdatePreferences(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -125,7 +125,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second door here.
+         * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second endpoint here.
          * @summary Start a sign-in at hanzo.id
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -201,7 +201,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns the identity providers this deployment starts a login with. It is always exactly one — hanzo.id. Which identities that door accepts (Google, GitHub, passkey, password) is IAM\'s question, answered on IAM\'s own page next to the identity check and the training-data consent that must precede a first session; listing them here would be a second place holding that answer, and the two drift the moment IAM gains or drops one.
+         * Returns the identity providers this deployment starts a login with. It is always exactly one — hanzo.id. Which identities that provider accepts (Google, GitHub, passkey, password) is IAM\'s question, answered on IAM\'s own page next to the identity check and the training-data consent that must precede a first session; listing them here would be a second place holding that answer, and the two drift the moment IAM gains or drops one.
          * @summary Returns the identity providers this deployment starts a login with.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -529,7 +529,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the door being shut is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
+         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
          * @summary Read the caller\'s account and switch workspace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -644,10 +644,11 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
          * Stores one file in a workspace\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or workspace token AND be a member of the workspace; an unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the workspace, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
          * @summary Upload a file into a workspace
          * @param {string} workspace 
+         * @param {File} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTeamFilesByWorkspace: async (workspace: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postTeamFilesByWorkspace: async (workspace: string, body?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'workspace' is not null or undefined
             assertParamExists('postTeamFilesByWorkspace', 'workspace', workspace)
             const localVarPath = `/v1/team/files/{workspace}`
@@ -669,9 +670,12 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/octet-stream';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -679,7 +683,7 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Writes the team session token into the HttpOnly `account-token` cookie — Secure, SameSite=Lax, whole-origin scope, thirty days — and answers {\"result\": true}. This is how the client turns the token it caught off the OAuth bounce into a credential page JS can no longer read, which IS the security property: script that cannot see the cookie cannot exfiltrate it, and every later call on the files, billing and collaborator planes authenticates from it when no bearer is sent.  The token is VERIFIED — signature and expiry, against this service\'s own signing secret — BEFORE it is stored. Anything this service did not sign is 401 and nothing is written; persisting a caller-supplied value unchecked would be a session-fixation door, where an attacker pins a cookie the victim\'s browser then presents as its own.  The token may arrive as `token` in the JSON body or, when the body is absent or unparseable, from the Authorization bearer — an unreadable body is NOT an error here. The sibling DELETE clears this same cookie and signs the browser out of team only: the IAM cookie set alongside it is a different credential with its own lifetime and is left alone.
+         * Writes the team session token into the HttpOnly `account-token` cookie — Secure, SameSite=Lax, whole-origin scope, thirty days — and answers {\"result\": true}. This is how the client turns the token it caught off the OAuth bounce into a credential page JS can no longer read, which IS the security property: script that cannot see the cookie cannot exfiltrate it, and every later call on the files, billing and collaborator planes authenticates from it when no bearer is sent.  The token is VERIFIED — signature and expiry, against this service\'s own signing secret — BEFORE it is stored. Anything this service did not sign is 401 and nothing is written; persisting a caller-supplied value unchecked would be a session-fixation hole, where an attacker pins a cookie the victim\'s browser then presents as its own.  The token may arrive as `token` in the JSON body or, when the body is absent or unparseable, from the Authorization bearer — an unreadable body is NOT an error here. The sibling DELETE clears this same cookie and signs the browser out of team only: the IAM cookie set alongside it is a different credential with its own lifetime and is left alone.
          * @summary Store the session token as this browser\'s cookie
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -750,7 +754,7 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second door here.
+         * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second endpoint here.
          * @summary Start a sign-in at hanzo.id
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -776,7 +780,7 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns the identity providers this deployment starts a login with. It is always exactly one — hanzo.id. Which identities that door accepts (Google, GitHub, passkey, password) is IAM\'s question, answered on IAM\'s own page next to the identity check and the training-data consent that must precede a first session; listing them here would be a second place holding that answer, and the two drift the moment IAM gains or drops one.
+         * Returns the identity providers this deployment starts a login with. It is always exactly one — hanzo.id. Which identities that provider accepts (Google, GitHub, passkey, password) is IAM\'s question, answered on IAM\'s own page next to the identity check and the training-data consent that must precede a first session; listing them here would be a second place holding that answer, and the two drift the moment IAM gains or drops one.
          * @summary Returns the identity providers this deployment starts a login with.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -805,7 +809,7 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTeamBillingUi(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getTeamBillingUi(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamBillingUi(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamBillingUi']?.[localVarOperationServerIndex]?.url;
@@ -843,7 +847,7 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTeamFilesByWorkspaceByFilename(workspace: string, filename: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getTeamFilesByWorkspaceByFilename(workspace: string, filename: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamFilesByWorkspaceByFilename(workspace, filename, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamFilesByWorkspaceByFilename']?.[localVarOperationServerIndex]?.url;
@@ -889,7 +893,7 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the door being shut is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
+         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
          * @summary Read the caller\'s account and switch workspace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -930,22 +934,23 @@ export const TeamApiFp = function(configuration?: Configuration) {
          * Stores one file in a workspace\'s blob store and answers the blob id it is addressable by, as plain text — the front discards that body, it is there for a caller driving this by hand.  The body is a multipart form with a `file` part, and THAT PART\'S FILENAME IS THE BLOB ID: the client mints it (a uuid v4) and the server stores under it, so a part whose filename is not a uuid is refused rather than assigned one. A file over 100 MiB is 413 and an empty one is 400.  The caller must hold a verified session or workspace token AND be a member of the workspace; an unknown workspace, another tenant\'s workspace and a workspace the caller is not in all answer the same 404, so a probe learns nothing about what exists. The stored key embeds the verified org and the workspace, so an upload cannot land in another tenant\'s box whatever id it names. A storage backend that is unavailable fails closed with 502 rather than reporting a write it never made.
          * @summary Upload a file into a workspace
          * @param {string} workspace 
+         * @param {File} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postTeamFilesByWorkspace(workspace: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamFilesByWorkspace(workspace, options);
+        async postTeamFilesByWorkspace(workspace: string, body?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postTeamFilesByWorkspace(workspace, body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.postTeamFilesByWorkspace']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Writes the team session token into the HttpOnly `account-token` cookie — Secure, SameSite=Lax, whole-origin scope, thirty days — and answers {\"result\": true}. This is how the client turns the token it caught off the OAuth bounce into a credential page JS can no longer read, which IS the security property: script that cannot see the cookie cannot exfiltrate it, and every later call on the files, billing and collaborator planes authenticates from it when no bearer is sent.  The token is VERIFIED — signature and expiry, against this service\'s own signing secret — BEFORE it is stored. Anything this service did not sign is 401 and nothing is written; persisting a caller-supplied value unchecked would be a session-fixation door, where an attacker pins a cookie the victim\'s browser then presents as its own.  The token may arrive as `token` in the JSON body or, when the body is absent or unparseable, from the Authorization bearer — an unreadable body is NOT an error here. The sibling DELETE clears this same cookie and signs the browser out of team only: the IAM cookie set alongside it is a different credential with its own lifetime and is left alone.
+         * Writes the team session token into the HttpOnly `account-token` cookie — Secure, SameSite=Lax, whole-origin scope, thirty days — and answers {\"result\": true}. This is how the client turns the token it caught off the OAuth bounce into a credential page JS can no longer read, which IS the security property: script that cannot see the cookie cannot exfiltrate it, and every later call on the files, billing and collaborator planes authenticates from it when no bearer is sent.  The token is VERIFIED — signature and expiry, against this service\'s own signing secret — BEFORE it is stored. Anything this service did not sign is 401 and nothing is written; persisting a caller-supplied value unchecked would be a session-fixation hole, where an attacker pins a cookie the victim\'s browser then presents as its own.  The token may arrive as `token` in the JSON body or, when the body is absent or unparseable, from the Authorization bearer — an unreadable body is NOT an error here. The sibling DELETE clears this same cookie and signs the browser out of team only: the IAM cookie set alongside it is a different credential with its own lifetime and is left alone.
          * @summary Store the session token as this browser\'s cookie
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putTeamAccountCookie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putTeamAccountCookie(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CookieAck>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putTeamAccountCookie(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.putTeamAccountCookie']?.[localVarOperationServerIndex]?.url;
@@ -981,7 +986,7 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.deleteTeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, requestParameters.file, options).then((request) => request(axios, basePath));
         },
         /**
-         * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second door here.
+         * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second endpoint here.
          * @summary Start a sign-in at hanzo.id
          * @param {TeamApiGetTeamAccountAuthByProviderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1001,7 +1006,7 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamAccountAuthByProviderCallback(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns the identity providers this deployment starts a login with. It is always exactly one — hanzo.id. Which identities that door accepts (Google, GitHub, passkey, password) is IAM\'s question, answered on IAM\'s own page next to the identity check and the training-data consent that must precede a first session; listing them here would be a second place holding that answer, and the two drift the moment IAM gains or drops one.
+         * Returns the identity providers this deployment starts a login with. It is always exactly one — hanzo.id. Which identities that provider accepts (Google, GitHub, passkey, password) is IAM\'s question, answered on IAM\'s own page next to the identity check and the training-data consent that must precede a first session; listing them here would be a second place holding that answer, and the two drift the moment IAM gains or drops one.
          * @summary Returns the identity providers this deployment starts a login with.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1024,7 +1029,7 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamBillingUi(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getTeamBillingUi(options?: RawAxiosRequestConfig): AxiosPromise<File> {
             return localVarFp.getTeamBillingUi(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1052,7 +1057,7 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamFilesByWorkspaceByFilename(requestParameters: TeamApiGetTeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getTeamFilesByWorkspaceByFilename(requestParameters: TeamApiGetTeamFilesByWorkspaceByFilenameRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
             return localVarFp.getTeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1086,7 +1091,7 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamTransactorStatistics(requestParameters.token, options).then((request) => request(axios, basePath));
         },
         /**
-         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the door being shut is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
+         * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
          * @summary Read the caller\'s account and switch workspace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1120,16 +1125,16 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postTeamFilesByWorkspace(requestParameters: TeamApiPostTeamFilesByWorkspaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postTeamFilesByWorkspace(requestParameters.workspace, options).then((request) => request(axios, basePath));
+        postTeamFilesByWorkspace(requestParameters: TeamApiPostTeamFilesByWorkspaceRequest, options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.postTeamFilesByWorkspace(requestParameters.workspace, requestParameters.body, options).then((request) => request(axios, basePath));
         },
         /**
-         * Writes the team session token into the HttpOnly `account-token` cookie — Secure, SameSite=Lax, whole-origin scope, thirty days — and answers {\"result\": true}. This is how the client turns the token it caught off the OAuth bounce into a credential page JS can no longer read, which IS the security property: script that cannot see the cookie cannot exfiltrate it, and every later call on the files, billing and collaborator planes authenticates from it when no bearer is sent.  The token is VERIFIED — signature and expiry, against this service\'s own signing secret — BEFORE it is stored. Anything this service did not sign is 401 and nothing is written; persisting a caller-supplied value unchecked would be a session-fixation door, where an attacker pins a cookie the victim\'s browser then presents as its own.  The token may arrive as `token` in the JSON body or, when the body is absent or unparseable, from the Authorization bearer — an unreadable body is NOT an error here. The sibling DELETE clears this same cookie and signs the browser out of team only: the IAM cookie set alongside it is a different credential with its own lifetime and is left alone.
+         * Writes the team session token into the HttpOnly `account-token` cookie — Secure, SameSite=Lax, whole-origin scope, thirty days — and answers {\"result\": true}. This is how the client turns the token it caught off the OAuth bounce into a credential page JS can no longer read, which IS the security property: script that cannot see the cookie cannot exfiltrate it, and every later call on the files, billing and collaborator planes authenticates from it when no bearer is sent.  The token is VERIFIED — signature and expiry, against this service\'s own signing secret — BEFORE it is stored. Anything this service did not sign is 401 and nothing is written; persisting a caller-supplied value unchecked would be a session-fixation hole, where an attacker pins a cookie the victim\'s browser then presents as its own.  The token may arrive as `token` in the JSON body or, when the body is absent or unparseable, from the Authorization bearer — an unreadable body is NOT an error here. The sibling DELETE clears this same cookie and signs the browser out of team only: the IAM cookie set alongside it is a different credential with its own lifetime and is left alone.
          * @summary Store the session token as this browser\'s cookie
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putTeamAccountCookie(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putTeamAccountCookie(options?: RawAxiosRequestConfig): AxiosPromise<CookieAck> {
             return localVarFp.putTeamAccountCookie(options).then((request) => request(axios, basePath));
         },
     };
@@ -1287,6 +1292,13 @@ export interface TeamApiPostTeamFilesByWorkspaceRequest {
      * @memberof TeamApiPostTeamFilesByWorkspace
      */
     readonly workspace: string
+
+    /**
+     * 
+     * @type {File}
+     * @memberof TeamApiPostTeamFilesByWorkspace
+     */
+    readonly body?: File
 }
 
 /**
@@ -1320,7 +1332,7 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second door here.
+     * STARTS the OAuth hop: answers 302 to hanzo.id\'s authorize endpoint and sets the short-lived HttpOnly state cookie that binds the flow to this browser. NO TOKEN COMES BACK FROM THIS CALL — the session is minted by the callback below, and a client that expects JSON here gets a redirect with no body.  A browser is the intended caller. Anything else must follow the Location AND keep the Set-Cookie, because the callback refuses a flow whose state it cannot match. That cookie carries the random nonce plus the client\'s navigateUrl, so the round trip needs no second channel, and it lives ten minutes — the whole budget for the hop.  The provider segment only picks a hint: the redirect_uri is ALWAYS the canonical openid callback, the one IAM has registered. Measured end to end, hanzo.id strips that hint today, so /auth/google and /auth/openid land on the same Hanzo sign-in page — the federation shortcut is an upstream fix, not a second endpoint here.
      * @summary Start a sign-in at hanzo.id
      * @param {TeamApiGetTeamAccountAuthByProviderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1344,7 +1356,7 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * Returns the identity providers this deployment starts a login with. It is always exactly one — hanzo.id. Which identities that door accepts (Google, GitHub, passkey, password) is IAM\'s question, answered on IAM\'s own page next to the identity check and the training-data consent that must precede a first session; listing them here would be a second place holding that answer, and the two drift the moment IAM gains or drops one.
+     * Returns the identity providers this deployment starts a login with. It is always exactly one — hanzo.id. Which identities that provider accepts (Google, GitHub, passkey, password) is IAM\'s question, answered on IAM\'s own page next to the identity check and the training-data consent that must precede a first session; listing them here would be a second place holding that answer, and the two drift the moment IAM gains or drops one.
      * @summary Returns the identity providers this deployment starts a login with.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1447,7 +1459,7 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
-     * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the door being shut is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
+     * The account control plane the Team client speaks: one POST carries a `method` verb and its `params`, and answers {\"result\": …}. The verbs are the session\'s own reads and the workspace switch — getLoginInfoByToken, getUserWorkspaces, selectWorkspace, getWorkspaceInfo, getMemberships, getPerson, getSocialIds, getRegionInfo, isReadOnlyGuest — plus sendInvite, which adds a member to a workspace and is refused for a caller who is not its owner or admin.  A REFUSAL IS HTTP 200 carrying {\"error\": {severity, code, params}} — the platform Status the client translates — not a 4xx. An unreadable body, an unauthorized session and an unknown verb all arrive that way, so a caller that reads only the status code reads every failure here as a success.  NO CREDENTIAL IS EVER HANDLED HERE. login, signUp, the OTP verbs, password change and reset, join and the guest-token exchange each answer Unauthorized with \"sign in at hanzo.id\" — a stated policy, not an unknown method, so the refusal is a fact a test can pin. Sessions come from the OAuth pair under /account/auth.  Auth is the team session token: Authorization: Bearer, else the HttpOnly account-token cookie. The tenant is that token\'s SIGNED org claim, never a header, and selectWorkspace resolves only among the orgs the token proves membership of. It also demands an explicit workspaceUrl — it never falls back to a first workspace, and a slug that resolves in two of the caller\'s orgs answers Ambiguous rather than picking one.
      * @summary Read the caller\'s account and switch workspace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1489,11 +1501,11 @@ export class TeamApi extends BaseAPI {
      * @memberof TeamApi
      */
     public postTeamFilesByWorkspace(requestParameters: TeamApiPostTeamFilesByWorkspaceRequest, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).postTeamFilesByWorkspace(requestParameters.workspace, options).then((request) => request(this.axios, this.basePath));
+        return TeamApiFp(this.configuration).postTeamFilesByWorkspace(requestParameters.workspace, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Writes the team session token into the HttpOnly `account-token` cookie — Secure, SameSite=Lax, whole-origin scope, thirty days — and answers {\"result\": true}. This is how the client turns the token it caught off the OAuth bounce into a credential page JS can no longer read, which IS the security property: script that cannot see the cookie cannot exfiltrate it, and every later call on the files, billing and collaborator planes authenticates from it when no bearer is sent.  The token is VERIFIED — signature and expiry, against this service\'s own signing secret — BEFORE it is stored. Anything this service did not sign is 401 and nothing is written; persisting a caller-supplied value unchecked would be a session-fixation door, where an attacker pins a cookie the victim\'s browser then presents as its own.  The token may arrive as `token` in the JSON body or, when the body is absent or unparseable, from the Authorization bearer — an unreadable body is NOT an error here. The sibling DELETE clears this same cookie and signs the browser out of team only: the IAM cookie set alongside it is a different credential with its own lifetime and is left alone.
+     * Writes the team session token into the HttpOnly `account-token` cookie — Secure, SameSite=Lax, whole-origin scope, thirty days — and answers {\"result\": true}. This is how the client turns the token it caught off the OAuth bounce into a credential page JS can no longer read, which IS the security property: script that cannot see the cookie cannot exfiltrate it, and every later call on the files, billing and collaborator planes authenticates from it when no bearer is sent.  The token is VERIFIED — signature and expiry, against this service\'s own signing secret — BEFORE it is stored. Anything this service did not sign is 401 and nothing is written; persisting a caller-supplied value unchecked would be a session-fixation hole, where an attacker pins a cookie the victim\'s browser then presents as its own.  The token may arrive as `token` in the JSON body or, when the body is absent or unparseable, from the Authorization bearer — an unreadable body is NOT an error here. The sibling DELETE clears this same cookie and signs the browser out of team only: the IAM cookie set alongside it is a different credential with its own lifetime and is left alone.
      * @summary Store the session token as this browser\'s cookie
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

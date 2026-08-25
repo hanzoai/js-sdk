@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -943,16 +943,18 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Executes a statement on one D1 database on the org\'s OWN Cloudflare account and relays D1\'s result set. `sql` is required and `params` carries the bound values in placeholder order — use them rather than interpolating values into the statement.  The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here; the declared schema is open for that reason. That verbatim forward is why this is not a typed op — decoding and re-encoding the body would drop `params`, where the query\'s bound values live. Requires ORG ADMIN (403 otherwise); a malformed body or missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
-         * @summary Run a SQL statement against a D1 database
+         * Runs one SQL statement against a D1 database. It executes on the org\'s OWN Cloudflare account and relays D1\'s result set. The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here.  Requires ORG ADMIN — a statement may INSERT, UPDATE or DROP, so a query takes the write gate rather than the read one — and a caller who is only an org member is refused 403. A missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Runs one SQL statement against a D1 database.
          * @param {string} database 
-         * @param {D1Query} [d1Query] 
+         * @param {D1Query} d1Query 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCloudflareD1DatabasesByDatabaseQuery: async (database: string, d1Query?: D1Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postCloudflareD1DatabasesByDatabaseQuery: async (database: string, d1Query: D1Query, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'database' is not null or undefined
             assertParamExists('postCloudflareD1DatabasesByDatabaseQuery', 'database', database)
+            // verify required parameter 'd1Query' is not null or undefined
+            assertParamExists('postCloudflareD1DatabasesByDatabaseQuery', 'd1Query', d1Query)
             const localVarPath = `/v1/cloudflare/d1/databases/{database}/query`
                 .replace(`{${"database"}}`, encodeURIComponent(String(database)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1365,16 +1367,18 @@ export const CloudflareApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Publishes a module Worker to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. `script` carries the module SOURCE; the optional compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects.  The path names the script and the body field named `script` is its source — two different things that share a name, which is exactly why this cannot be a typed op: a binder that gives the URL the last word would overwrite the source with the script\'s name. Requires ORG ADMIN (403 otherwise); an unparseable body or empty source is 400; 503 if the org has never connected a Cloudflare token.
-         * @summary Upload or replace a module Worker script
-         * @param {string} script 
-         * @param {WorkerScriptPut} [workerScriptPut] 
+         * Uploads or replaces a module Worker script. It publishes to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. The compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects, beside the module source.  Requires ORG ADMIN — a Worker is arbitrary code on the org\'s own account and domains — so a caller who is only an org member is refused 403. An empty source is 400, as is a `mainModule` that is not a plain file name; 503 if the org has never connected a Cloudflare token.
+         * @summary Uploads or replaces a module Worker script.
+         * @param {string} script Script means two things on this route, and the document says so in both places it appears: the PATH segment names the Worker to publish, and the BODY field carries that Worker\&#39;s ES-module source — the code itself, never a name or a URL. A blank or absent source is refused; there is no empty Worker.
+         * @param {WorkerScriptPut} workerScriptPut 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putCloudflareWorkersScriptsByScript: async (script: string, workerScriptPut?: WorkerScriptPut, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putCloudflareWorkersScriptsByScript: async (script: string, workerScriptPut: WorkerScriptPut, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'script' is not null or undefined
             assertParamExists('putCloudflareWorkersScriptsByScript', 'script', script)
+            // verify required parameter 'workerScriptPut' is not null or undefined
+            assertParamExists('putCloudflareWorkersScriptsByScript', 'workerScriptPut', workerScriptPut)
             const localVarPath = `/v1/cloudflare/workers/scripts/{script}`
                 .replace(`{${"script"}}`, encodeURIComponent(String(script)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1708,14 +1712,14 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Executes a statement on one D1 database on the org\'s OWN Cloudflare account and relays D1\'s result set. `sql` is required and `params` carries the bound values in placeholder order — use them rather than interpolating values into the statement.  The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here; the declared schema is open for that reason. That verbatim forward is why this is not a typed op — decoding and re-encoding the body would drop `params`, where the query\'s bound values live. Requires ORG ADMIN (403 otherwise); a malformed body or missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
-         * @summary Run a SQL statement against a D1 database
+         * Runs one SQL statement against a D1 database. It executes on the org\'s OWN Cloudflare account and relays D1\'s result set. The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here.  Requires ORG ADMIN — a statement may INSERT, UPDATE or DROP, so a query takes the write gate rather than the read one — and a caller who is only an org member is refused 403. A missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Runs one SQL statement against a D1 database.
          * @param {string} database 
-         * @param {D1Query} [d1Query] 
+         * @param {D1Query} d1Query 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCloudflareD1DatabasesByDatabaseQuery(database: string, d1Query?: D1Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async postCloudflareD1DatabasesByDatabaseQuery(database: string, d1Query: D1Query, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCloudflareD1DatabasesByDatabaseQuery(database, d1Query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.postCloudflareD1DatabasesByDatabaseQuery']?.[localVarOperationServerIndex]?.url;
@@ -1845,14 +1849,14 @@ export const CloudflareApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Publishes a module Worker to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. `script` carries the module SOURCE; the optional compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects.  The path names the script and the body field named `script` is its source — two different things that share a name, which is exactly why this cannot be a typed op: a binder that gives the URL the last word would overwrite the source with the script\'s name. Requires ORG ADMIN (403 otherwise); an unparseable body or empty source is 400; 503 if the org has never connected a Cloudflare token.
-         * @summary Upload or replace a module Worker script
-         * @param {string} script 
-         * @param {WorkerScriptPut} [workerScriptPut] 
+         * Uploads or replaces a module Worker script. It publishes to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. The compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects, beside the module source.  Requires ORG ADMIN — a Worker is arbitrary code on the org\'s own account and domains — so a caller who is only an org member is refused 403. An empty source is 400, as is a `mainModule` that is not a plain file name; 503 if the org has never connected a Cloudflare token.
+         * @summary Uploads or replaces a module Worker script.
+         * @param {string} script Script means two things on this route, and the document says so in both places it appears: the PATH segment names the Worker to publish, and the BODY field carries that Worker\&#39;s ES-module source — the code itself, never a name or a URL. A blank or absent source is refused; there is no empty Worker.
+         * @param {WorkerScriptPut} workerScriptPut 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putCloudflareWorkersScriptsByScript(script: string, workerScriptPut?: WorkerScriptPut, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+        async putCloudflareWorkersScriptsByScript(script: string, workerScriptPut: WorkerScriptPut, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putCloudflareWorkersScriptsByScript(script, workerScriptPut, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CloudflareApi.putCloudflareWorkersScriptsByScript']?.[localVarOperationServerIndex]?.url;
@@ -2076,8 +2080,8 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.postCloudflareD1Databases(requestParameters.databaseCreateIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Executes a statement on one D1 database on the org\'s OWN Cloudflare account and relays D1\'s result set. `sql` is required and `params` carries the bound values in placeholder order — use them rather than interpolating values into the statement.  The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here; the declared schema is open for that reason. That verbatim forward is why this is not a typed op — decoding and re-encoding the body would drop `params`, where the query\'s bound values live. Requires ORG ADMIN (403 otherwise); a malformed body or missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
-         * @summary Run a SQL statement against a D1 database
+         * Runs one SQL statement against a D1 database. It executes on the org\'s OWN Cloudflare account and relays D1\'s result set. The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here.  Requires ORG ADMIN — a statement may INSERT, UPDATE or DROP, so a query takes the write gate rather than the read one — and a caller who is only an org member is refused 403. A missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
+         * @summary Runs one SQL statement against a D1 database.
          * @param {CloudflareApiPostCloudflareD1DatabasesByDatabaseQueryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2176,8 +2180,8 @@ export const CloudflareApiFactory = function (configuration?: Configuration, bas
             return localVarFp.putCloudflareKvNamespacesByNamespaceValuesByKey(requestParameters.namespace, requestParameters.key, options).then((request) => request(axios, basePath));
         },
         /**
-         * Publishes a module Worker to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. `script` carries the module SOURCE; the optional compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects.  The path names the script and the body field named `script` is its source — two different things that share a name, which is exactly why this cannot be a typed op: a binder that gives the URL the last word would overwrite the source with the script\'s name. Requires ORG ADMIN (403 otherwise); an unparseable body or empty source is 400; 503 if the org has never connected a Cloudflare token.
-         * @summary Upload or replace a module Worker script
+         * Uploads or replaces a module Worker script. It publishes to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. The compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects, beside the module source.  Requires ORG ADMIN — a Worker is arbitrary code on the org\'s own account and domains — so a caller who is only an org member is refused 403. An empty source is 400, as is a `mainModule` that is not a plain file name; 503 if the org has never connected a Cloudflare token.
+         * @summary Uploads or replaces a module Worker script.
          * @param {CloudflareApiPutCloudflareWorkersScriptsByScriptRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2605,7 +2609,7 @@ export interface CloudflareApiPostCloudflareD1DatabasesByDatabaseQueryRequest {
      * @type {D1Query}
      * @memberof CloudflareApiPostCloudflareD1DatabasesByDatabaseQuery
      */
-    readonly d1Query?: D1Query
+    readonly d1Query: D1Query
 }
 
 /**
@@ -2783,7 +2787,7 @@ export interface CloudflareApiPutCloudflareKvNamespacesByNamespaceValuesByKeyReq
  */
 export interface CloudflareApiPutCloudflareWorkersScriptsByScriptRequest {
     /**
-     * 
+     * Script means two things on this route, and the document says so in both places it appears: the PATH segment names the Worker to publish, and the BODY field carries that Worker\&#39;s ES-module source — the code itself, never a name or a URL. A blank or absent source is refused; there is no empty Worker.
      * @type {string}
      * @memberof CloudflareApiPutCloudflareWorkersScriptsByScript
      */
@@ -2794,7 +2798,7 @@ export interface CloudflareApiPutCloudflareWorkersScriptsByScriptRequest {
      * @type {WorkerScriptPut}
      * @memberof CloudflareApiPutCloudflareWorkersScriptsByScript
      */
-    readonly workerScriptPut?: WorkerScriptPut
+    readonly workerScriptPut: WorkerScriptPut
 }
 
 /**
@@ -3054,8 +3058,8 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
-     * Executes a statement on one D1 database on the org\'s OWN Cloudflare account and relays D1\'s result set. `sql` is required and `params` carries the bound values in placeholder order — use them rather than interpolating values into the statement.  The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here; the declared schema is open for that reason. That verbatim forward is why this is not a typed op — decoding and re-encoding the body would drop `params`, where the query\'s bound values live. Requires ORG ADMIN (403 otherwise); a malformed body or missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
-     * @summary Run a SQL statement against a D1 database
+     * Runs one SQL statement against a D1 database. It executes on the org\'s OWN Cloudflare account and relays D1\'s result set. The body is checked for a non-empty `sql` and then forwarded VERBATIM, so every field D1 accepts reaches D1 even though only two are named here.  Requires ORG ADMIN — a statement may INSERT, UPDATE or DROP, so a query takes the write gate rather than the read one — and a caller who is only an org member is refused 403. A missing `sql` is 400; 503 if the org has never connected a Cloudflare token.
+     * @summary Runs one SQL statement against a D1 database.
      * @param {CloudflareApiPostCloudflareD1DatabasesByDatabaseQueryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3174,8 +3178,8 @@ export class CloudflareApi extends BaseAPI {
     }
 
     /**
-     * Publishes a module Worker to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. `script` carries the module SOURCE; the optional compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects.  The path names the script and the body field named `script` is its source — two different things that share a name, which is exactly why this cannot be a typed op: a binder that gives the URL the last word would overwrite the source with the script\'s name. Requires ORG ADMIN (403 otherwise); an unparseable body or empty source is 400; 503 if the org has never connected a Cloudflare token.
-     * @summary Upload or replace a module Worker script
+     * Uploads or replaces a module Worker script. It publishes to the org\'s OWN Cloudflare account under the name in the path, replacing whatever was there, and relays Cloudflare\'s result. The compatibility date, compatibility flags and bindings are packed into the multipart upload Cloudflare expects, beside the module source.  Requires ORG ADMIN — a Worker is arbitrary code on the org\'s own account and domains — so a caller who is only an org member is refused 403. An empty source is 400, as is a `mainModule` that is not a plain file name; 503 if the org has never connected a Cloudflare token.
+     * @summary Uploads or replaces a module Worker script.
      * @param {CloudflareApiPutCloudflareWorkersScriptsByScriptRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

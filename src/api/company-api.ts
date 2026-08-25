@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -281,7 +281,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Advance runs the ONE guarded transition of the formation machine. It is the only door between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+         * Advance runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
          * @summary Advance runs the ONE guarded transition of the formation machine.
          * @param {AdvanceIn} advanceIn 
          * @param {*} [options] Override http request option.
@@ -815,7 +815,7 @@ export const CompanyApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider client — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
          * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1073,7 +1073,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Advance runs the ONE guarded transition of the formation machine. It is the only door between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+         * Advance runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
          * @summary Advance runs the ONE guarded transition of the formation machine.
          * @param {AdvanceIn} advanceIn 
          * @param {*} [options] Override http request option.
@@ -1251,7 +1251,7 @@ export const CompanyApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider client — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
          * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1371,7 +1371,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompany(requestParameters.beginIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * Advance runs the ONE guarded transition of the formation machine. It is the only door between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+         * Advance runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
          * @summary Advance runs the ONE guarded transition of the formation machine.
          * @param {CompanyApiPostCompanyAdvanceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1507,7 +1507,7 @@ export const CompanyApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.postCompanyKycDecision(requestParameters.decisionIn, options).then((request) => request(axios, basePath));
         },
         /**
-         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider client — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+         * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
          * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1853,7 +1853,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * Advance runs the ONE guarded transition of the formation machine. It is the only door between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
+     * Advance runs the ONE guarded transition of the formation machine. It is the only endpoint between stages: the actions populate data, this decides ordering.  An edge the machine does not define answers 409; an edge whose guard is not yet satisfied answers 422 naming what is missing. Reaching the terminal `company` stage also records the incorporation on the canonical cap table, and that must succeed before the transition is persisted.
      * @summary Advance runs the ONE guarded transition of the formation machine.
      * @param {CompanyApiPostCompanyAdvanceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2017,7 +2017,7 @@ export class CompanyApi extends BaseAPI {
     }
 
     /**
-     * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the provider client — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
+     * RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status. For the manual provider the check stays pending; for a real provider it reflects the settled decision, ATTRIBUTED to the provider.  It NEVER trusts a client-asserted status — the status comes from the PROVIDER — so a client cannot force a pass here, and an already-passing founder (e.g. a reviewer confirmation) is left untouched.
      * @summary RefreshKYC reconciles each pending founder\'s KYC with the WIRED provider — the PULL path to a provider-reported terminal status.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

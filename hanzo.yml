@@ -18,7 +18,7 @@ test:
     # that type-checks the whole generated tree.
     #
     # `smoke` LOADS the built package by name, through package.json exports —
-    # the door `npm i hanzoai` opens. build and examples both read source; a
+    # the entry point `npm i hanzoai` opens. build and examples both read source; a
     # broken module graph or an entry point that does not resolve is a fact
     # about the published artifact that neither of them can see.
     #

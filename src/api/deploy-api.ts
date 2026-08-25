@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Hanzo Cloud API
- * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay doors, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
+ * The Hanzo Cloud API as a customer calls it: every operation under /v1/ except the operator\'s admin product, relay routes, legacy spellings and capabilities still reached by flag. Tagged by product: the first path segment after /v1/.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -41,6 +41,10 @@ import type { ConsoleSettings } from '../models';
 import type { DeployHealth } from '../models';
 // @ts-ignore
 import type { GitOpsPlane } from '../models';
+// @ts-ignore
+import type { ReconcileReport } from '../models';
+// @ts-ignore
+import type { SessionEnded } from '../models';
 // @ts-ignore
 import type { SessionUser } from '../models';
 // @ts-ignore
@@ -620,9 +624,9 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
-         * @summary The console\'s rollback control — today it requests a reconcile, nothing more
-         * @param {string} name 
+         * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
+         * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
+         * @param {string} name Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -658,9 +662,9 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Requests an immediate reconcile of one application by stamping a sync-requested timestamp onto its App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator performs the reconcile on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does. The CR is the desired source today, so this is a nudge; when git becomes the source the same address becomes apply-from-git.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or patched, and the write surface stays admin-only while the tenant surface is read-only reflection. It reads no request body. An unknown application name is a 404; no cluster client configured is a 503.
-         * @summary Ask the operator to reconcile one application now
-         * @param {string} name 
+         * Asks the operator to reconcile ONE application now.  It stamps a sync-requested timestamp onto the application\'s App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator reconciles on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does.  SuperAdmin-only and fail-closed, and the gate is INSIDE the op rather than in middleware wrapped around the route. That is a correctness requirement, not a preference: this op is also reached by POST /mcp and by the by-name call plane, neither of which runs route middleware, so a gate that only the REST projection runs would publish an unguarded alias of a fleet-mutating write. It reads no request body — the URL names the application and nothing else does. An unknown name is a 404 (never a 403, which would confirm the application exists), a name that is not a DNS-1123 label is a 400, and no cluster client is a 503.
+         * @summary Asks the operator to reconcile ONE application now.
+         * @param {string} name Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -696,8 +700,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it changes state. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie.
-         * @summary End the console session on this host
+         * Ends the console session on this host.  It clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it CHANGES STATE. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie. It reads no request body and takes no argument: the session it ends is the one the request already carries.
+         * @summary Ends the console session on this host.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -730,8 +734,8 @@ export const DeployApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or touched. The git source is read AS THE CALLER, so the source plane scopes the answer itself rather than trusting this one to have scoped it. It reads no request body; the source is configuration, not a parameter. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
-         * @summary Render the configured git source and apply it to the cluster, once
+         * Renders the configured git source and applies it to the cluster, once.  It runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed, with the gate INSIDE the op because a typed op is also reached by POST /mcp and by the by-name call plane, where no route middleware runs. The git source is read AS THE PLATFORM, not as the caller: the coordinate is this deployment\'s own configuration and never a parameter, which is why the op reads no request body at all. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
+         * @summary Renders the configured git source and applies it to the cluster, once.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -972,50 +976,50 @@ export const DeployApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
-         * @summary The console\'s rollback control — today it requests a reconcile, nothing more
-         * @param {string} name 
+         * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
+         * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
+         * @param {string} name Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDeployApplicationsByNameRollback(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postDeployApplicationsByNameRollback(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoApp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployApplicationsByNameRollback(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployApplicationsByNameRollback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Requests an immediate reconcile of one application by stamping a sync-requested timestamp onto its App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator performs the reconcile on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does. The CR is the desired source today, so this is a nudge; when git becomes the source the same address becomes apply-from-git.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or patched, and the write surface stays admin-only while the tenant surface is read-only reflection. It reads no request body. An unknown application name is a 404; no cluster client configured is a 503.
-         * @summary Ask the operator to reconcile one application now
-         * @param {string} name 
+         * Asks the operator to reconcile ONE application now.  It stamps a sync-requested timestamp onto the application\'s App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator reconciles on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does.  SuperAdmin-only and fail-closed, and the gate is INSIDE the op rather than in middleware wrapped around the route. That is a correctness requirement, not a preference: this op is also reached by POST /mcp and by the by-name call plane, neither of which runs route middleware, so a gate that only the REST projection runs would publish an unguarded alias of a fleet-mutating write. It reads no request body — the URL names the application and nothing else does. An unknown name is a 404 (never a 403, which would confirm the application exists), a name that is not a DNS-1123 label is a 400, and no cluster client is a 503.
+         * @summary Asks the operator to reconcile ONE application now.
+         * @param {string} name Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDeployApplicationsByNameSync(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postDeployApplicationsByNameSync(name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArgoApp>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployApplicationsByNameSync(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployApplicationsByNameSync']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it changes state. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie.
-         * @summary End the console session on this host
+         * Ends the console session on this host.  It clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it CHANGES STATE. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie. It reads no request body and takes no argument: the session it ends is the one the request already carries.
+         * @summary Ends the console session on this host.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDeployLogout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postDeployLogout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionEnded>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployLogout(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployLogout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or touched. The git source is read AS THE CALLER, so the source plane scopes the answer itself rather than trusting this one to have scoped it. It reads no request body; the source is configuration, not a parameter. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
-         * @summary Render the configured git source and apply it to the cluster, once
+         * Renders the configured git source and applies it to the cluster, once.  It runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed, with the gate INSIDE the op because a typed op is also reached by POST /mcp and by the by-name call plane, where no route middleware runs. The git source is read AS THE PLATFORM, not as the caller: the coordinate is this deployment\'s own configuration and never a parameter, which is why the op reads no request body at all. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
+         * @summary Renders the configured git source and applies it to the cluster, once.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDeployReconcile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postDeployReconcile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReconcileReport>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postDeployReconcile(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DeployApi.postDeployReconcile']?.[localVarOperationServerIndex]?.url;
@@ -1181,41 +1185,41 @@ export const DeployApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getDeployVersion(options).then((request) => request(axios, basePath));
         },
         /**
-         * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
-         * @summary The console\'s rollback control — today it requests a reconcile, nothing more
+         * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
+         * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
          * @param {DeployApiPostDeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDeployApplicationsByNameRollback(requestParameters: DeployApiPostDeployApplicationsByNameRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postDeployApplicationsByNameRollback(requestParameters: DeployApiPostDeployApplicationsByNameRollbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoApp> {
             return localVarFp.postDeployApplicationsByNameRollback(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Requests an immediate reconcile of one application by stamping a sync-requested timestamp onto its App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator performs the reconcile on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does. The CR is the desired source today, so this is a nudge; when git becomes the source the same address becomes apply-from-git.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or patched, and the write surface stays admin-only while the tenant surface is read-only reflection. It reads no request body. An unknown application name is a 404; no cluster client configured is a 503.
-         * @summary Ask the operator to reconcile one application now
+         * Asks the operator to reconcile ONE application now.  It stamps a sync-requested timestamp onto the application\'s App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator reconciles on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does.  SuperAdmin-only and fail-closed, and the gate is INSIDE the op rather than in middleware wrapped around the route. That is a correctness requirement, not a preference: this op is also reached by POST /mcp and by the by-name call plane, neither of which runs route middleware, so a gate that only the REST projection runs would publish an unguarded alias of a fleet-mutating write. It reads no request body — the URL names the application and nothing else does. An unknown name is a 404 (never a 403, which would confirm the application exists), a name that is not a DNS-1123 label is a 400, and no cluster client is a 503.
+         * @summary Asks the operator to reconcile ONE application now.
          * @param {DeployApiPostDeployApplicationsByNameSyncRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDeployApplicationsByNameSync(requestParameters: DeployApiPostDeployApplicationsByNameSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postDeployApplicationsByNameSync(requestParameters: DeployApiPostDeployApplicationsByNameSyncRequest, options?: RawAxiosRequestConfig): AxiosPromise<ArgoApp> {
             return localVarFp.postDeployApplicationsByNameSync(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it changes state. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie.
-         * @summary End the console session on this host
+         * Ends the console session on this host.  It clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it CHANGES STATE. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie. It reads no request body and takes no argument: the session it ends is the one the request already carries.
+         * @summary Ends the console session on this host.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDeployLogout(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postDeployLogout(options?: RawAxiosRequestConfig): AxiosPromise<SessionEnded> {
             return localVarFp.postDeployLogout(options).then((request) => request(axios, basePath));
         },
         /**
-         * Runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or touched. The git source is read AS THE CALLER, so the source plane scopes the answer itself rather than trusting this one to have scoped it. It reads no request body; the source is configuration, not a parameter. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
-         * @summary Render the configured git source and apply it to the cluster, once
+         * Renders the configured git source and applies it to the cluster, once.  It runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed, with the gate INSIDE the op because a typed op is also reached by POST /mcp and by the by-name call plane, where no route middleware runs. The git source is read AS THE PLATFORM, not as the caller: the coordinate is this deployment\'s own configuration and never a parameter, which is why the op reads no request body at all. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
+         * @summary Renders the configured git source and applies it to the cluster, once.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDeployReconcile(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postDeployReconcile(options?: RawAxiosRequestConfig): AxiosPromise<ReconcileReport> {
             return localVarFp.postDeployReconcile(options).then((request) => request(axios, basePath));
         },
     };
@@ -1305,7 +1309,7 @@ export interface DeployApiGetDeployStreamApplicationsByNameResourceTreeRequest {
  */
 export interface DeployApiPostDeployApplicationsByNameRollbackRequest {
     /**
-     * 
+     * Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
      * @type {string}
      * @memberof DeployApiPostDeployApplicationsByNameRollback
      */
@@ -1319,7 +1323,7 @@ export interface DeployApiPostDeployApplicationsByNameRollbackRequest {
  */
 export interface DeployApiPostDeployApplicationsByNameSyncRequest {
     /**
-     * 
+     * Name is the application to read, from the path. It must be a DNS-1123 label (lowercase alphanumerics and hyphens, starting and ending alphanumeric) — every operator App CR\&#39;s metadata.name satisfies that, and anything else is a 400 rather than a lookup.
      * @type {string}
      * @memberof DeployApiPostDeployApplicationsByNameSync
      */
@@ -1515,8 +1519,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * Performs exactly what the sync action performs: it stamps the sync-requested timestamp onto the application\'s App CR and answers the application re-projected. It does NOT select, pin or revert to a prior image tag, and that is the one thing to know before wiring anything to it — the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  SuperAdmin-only and fail-closed, reading no request body, with an unknown application name a 404 and no cluster client a 503 — the same gate and the same failures as the sync it shares a handler with.
-     * @summary The console\'s rollback control — today it requests a reconcile, nothing more
+     * Serves the console\'s rollback control, and today it requests a reconcile and nothing more.  The opening verb is not style. zipdoc drops a leading CamelCase symbol only when a plain verb follows it and never before a copula (internal/zipdoc/ extract.go:811-824, \"CompleteDeployment IS the CI completion hook\" would otherwise become \"Is the CI completion hook\") — so \"RollbackDeployApplication is …\" would publish a Go symbol no caller can see into the summary an SDK docstring, an MCP tool list and a CLI help line all show.  It performs exactly what the sync action performs — the same stamp on the same App CR, the same application re-projected — and it does NOT select, pin or revert to a prior image tag. That is the one thing to know before wiring anything to it: the name is the console\'s, the behaviour is the sync. Pinning a previous release rides the release client, which this address does not call yet.  Same gate, same refusals and the same absent request body as the sync it shares a core with.
+     * @summary Serves the console\'s rollback control, and today it requests a reconcile and nothing more.
      * @param {DeployApiPostDeployApplicationsByNameRollbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1527,8 +1531,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * Requests an immediate reconcile of one application by stamping a sync-requested timestamp onto its App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator performs the reconcile on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does. The CR is the desired source today, so this is a nudge; when git becomes the source the same address becomes apply-from-git.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or patched, and the write surface stays admin-only while the tenant surface is read-only reflection. It reads no request body. An unknown application name is a 404; no cluster client configured is a 503.
-     * @summary Ask the operator to reconcile one application now
+     * Asks the operator to reconcile ONE application now.  It stamps a sync-requested timestamp onto the application\'s App CR, which the operator\'s watch observes, and answers the application re-projected. It ASKS, it does not apply: the operator reconciles on its own clock, so a 200 means the request landed, not that the rollout finished — the returned row\'s running version still lags until it does.  SuperAdmin-only and fail-closed, and the gate is INSIDE the op rather than in middleware wrapped around the route. That is a correctness requirement, not a preference: this op is also reached by POST /mcp and by the by-name call plane, neither of which runs route middleware, so a gate that only the REST projection runs would publish an unguarded alias of a fleet-mutating write. It reads no request body — the URL names the application and nothing else does. An unknown name is a 404 (never a 403, which would confirm the application exists), a name that is not a DNS-1123 label is a 400, and no cluster client is a 503.
+     * @summary Asks the operator to reconcile ONE application now.
      * @param {DeployApiPostDeployApplicationsByNameSyncRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1539,8 +1543,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * Clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it changes state. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie.
-     * @summary End the console session on this host
+     * Ends the console session on this host.  It clears this console\'s session cookie and answers the signed-out state with the sign-in URL to start again. IAM\'s own session is untouched — this ends the console session only, so signing back in may not prompt for credentials.  It is a POST because it CHANGES STATE. As a GET it was reachable by a cross-site top-level navigation, which a SameSite=Lax cookie still rides, so any page could sign a SuperAdmin out; a POST is not carried cross-site by that cookie. It reads no request body and takes no argument: the session it ends is the one the request already carries.
+     * @summary Ends the console session on this host.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
@@ -1550,8 +1554,8 @@ export class DeployApi extends BaseAPI {
     }
 
     /**
-     * Runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed — a non-SuperAdmin is refused before any cluster object is read or touched. The git source is read AS THE CALLER, so the source plane scopes the answer itself rather than trusting this one to have scoped it. It reads no request body; the source is configuration, not a parameter. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
-     * @summary Render the configured git source and apply it to the cluster, once
+     * Renders the configured git source and applies it to the cluster, once.  It runs one full GitOps sync through the embedded engine — render the configured repo, ref and path, then three-way server-side apply with scoped prune — and answers the revision it applied, the source it came from, the declared/synced/pruned/failed counts and a per-resource result. This is the WRITE half of the plane: it mutates live cluster objects and, with prune enabled, deletes objects the source no longer declares.  SuperAdmin-only and fail-closed, with the gate INSIDE the op because a typed op is also reached by POST /mcp and by the by-name call plane, where no route middleware runs. The git source is read AS THE PLATFORM, not as the caller: the coordinate is this deployment\'s own configuration and never a parameter, which is why the op reads no request body at all. A deployment with the engine switched off, or with no usable cluster config, answers 503; a failure to start, render or sync is a 502.
+     * @summary Renders the configured git source and applies it to the cluster, once.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeployApi
