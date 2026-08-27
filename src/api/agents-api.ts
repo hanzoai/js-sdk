@@ -593,11 +593,12 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {string} [parent] Parent scopes the page to the direct children of one session. Ignored when root is set; with neither, only ROOT sessions come back.
          * @param {string} [status] Status filters to running, paused, done or error.
          * @param {string} [project] Project filters to the sessions tagged with one product slug.
+         * @param {string} [room] Room filters to the sessions started in one collaborative room — the query a workspace view runs to show what has been run in it.
          * @param {number} [limit] Limit caps the page. Absent, zero or over 500 reads as 100.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAgentsSessions: async (root?: string, parent?: string, status?: string, project?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAgentsSessions: async (root?: string, parent?: string, status?: string, project?: string, room?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/agents/sessions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -628,6 +629,10 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
 
             if (project !== undefined) {
                 localVarQueryParameter['project'] = project;
+            }
+
+            if (room !== undefined) {
+                localVarQueryParameter['room'] = room;
             }
 
             if (limit !== undefined) {
@@ -1763,12 +1768,13 @@ export const AgentsApiFp = function(configuration?: Configuration) {
          * @param {string} [parent] Parent scopes the page to the direct children of one session. Ignored when root is set; with neither, only ROOT sessions come back.
          * @param {string} [status] Status filters to running, paused, done or error.
          * @param {string} [project] Project filters to the sessions tagged with one product slug.
+         * @param {string} [room] Room filters to the sessions started in one collaborative room — the query a workspace view runs to show what has been run in it.
          * @param {number} [limit] Limit caps the page. Absent, zero or over 500 reads as 100.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAgentsSessions(root?: string, parent?: string, status?: string, project?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsSessions(root, parent, status, project, limit, options);
+        async getAgentsSessions(root?: string, parent?: string, status?: string, project?: string, room?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsSessions(root, parent, status, project, room, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsSessions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2224,7 +2230,7 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
          * @throws {RequiredError}
          */
         getAgentsSessions(requestParameters: AgentsApiGetAgentsSessionsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<SessionList> {
-            return localVarFp.getAgentsSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.getAgentsSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.room, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns one session with its direct child sessions and its 50 most recent events, oldest of those first.
@@ -2636,6 +2642,13 @@ export interface AgentsApiGetAgentsSessionsRequest {
      * @memberof AgentsApiGetAgentsSessions
      */
     readonly project?: string
+
+    /**
+     * Room filters to the sessions started in one collaborative room — the query a workspace view runs to show what has been run in it.
+     * @type {string}
+     * @memberof AgentsApiGetAgentsSessions
+     */
+    readonly room?: string
 
     /**
      * Limit caps the page. Absent, zero or over 500 reads as 100.
@@ -3170,7 +3183,7 @@ export class AgentsApi extends BaseAPI {
      * @memberof AgentsApi
      */
     public getAgentsSessions(requestParameters: AgentsApiGetAgentsSessionsRequest = {}, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).getAgentsSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return AgentsApiFp(this.configuration).getAgentsSessions(requestParameters.root, requestParameters.parent, requestParameters.status, requestParameters.project, requestParameters.room, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

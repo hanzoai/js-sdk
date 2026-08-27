@@ -32,6 +32,8 @@ import type { IssueView } from '../models';
 // @ts-ignore
 import type { NewIssue } from '../models';
 // @ts-ignore
+import type { RoomWork } from '../models';
+// @ts-ignore
 import type { TodoProject } from '../models';
 /**
  * TodoApi - axios parameter creator
@@ -154,13 +156,14 @@ export const TodoApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {string} [status] Status keeps one board column: backlog, todo, in_progress, done, canceled.
          * @param {string} [kind] Kind keeps one shape: issue, pr, epic.
          * @param {string} [repo] Repo keeps issues bound to one git repository.
+         * @param {string} [room] Room keeps issues bound to one collaboration room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its todo list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
          * @param {string} [source] Source keeps one origin: team, git, crm, helpdesk, cms, agent. \&quot;git\&quot; is how you ask for the mirrored GitHub issues specifically.
          * @param {string} [assignee] Assignee keeps issues held by one person. Pass \&quot;me\&quot; for yourself.
          * @param {number} [limit] Limit caps the answer; 0 means the default, and anything above the ceiling is clamped rather than refused — a search that errors on being too broad teaches people to guess.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTodoIssues: async (q?: string, project?: string, status?: string, kind?: string, repo?: string, source?: string, assignee?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getTodoIssues: async (q?: string, project?: string, status?: string, kind?: string, repo?: string, room?: string, source?: string, assignee?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/todo/issues`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -195,6 +198,10 @@ export const TodoApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (repo !== undefined) {
                 localVarQueryParameter['repo'] = repo;
+            }
+
+            if (room !== undefined) {
+                localVarQueryParameter['room'] = room;
             }
 
             if (source !== undefined) {
@@ -376,6 +383,44 @@ export const TodoApiAxiosParamCreator = function (configuration?: Configuration)
             const localVarPath = `/v1/todo/projects/{key}/issues/{num}`
                 .replace(`{${"key"}}`, encodeURIComponent(String(key)))
                 .replace(`{${"num"}}`, encodeURIComponent(String(num)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
+         * @summary Summarises one room\'s work.
+         * @param {string} room Room is the room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTodoRoomsByRoom: async (room: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'room' is not null or undefined
+            assertParamExists('getTodoRoomsByRoom', 'room', room)
+            const localVarPath = `/v1/todo/rooms/{room}`
+                .replace(`{${"room"}}`, encodeURIComponent(String(room)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -658,14 +703,15 @@ export const TodoApiFp = function(configuration?: Configuration) {
          * @param {string} [status] Status keeps one board column: backlog, todo, in_progress, done, canceled.
          * @param {string} [kind] Kind keeps one shape: issue, pr, epic.
          * @param {string} [repo] Repo keeps issues bound to one git repository.
+         * @param {string} [room] Room keeps issues bound to one collaboration room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its todo list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
          * @param {string} [source] Source keeps one origin: team, git, crm, helpdesk, cms, agent. \&quot;git\&quot; is how you ask for the mirrored GitHub issues specifically.
          * @param {string} [assignee] Assignee keeps issues held by one person. Pass \&quot;me\&quot; for yourself.
          * @param {number} [limit] Limit caps the answer; 0 means the default, and anything above the ceiling is clamped rather than refused — a search that errors on being too broad teaches people to guess.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTodoIssues(q?: string, project?: string, status?: string, kind?: string, repo?: string, source?: string, assignee?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IssueHits>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTodoIssues(q, project, status, kind, repo, source, assignee, limit, options);
+        async getTodoIssues(q?: string, project?: string, status?: string, kind?: string, repo?: string, room?: string, source?: string, assignee?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IssueHits>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTodoIssues(q, project, status, kind, repo, room, source, assignee, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TodoApi.getTodoIssues']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -726,6 +772,19 @@ export const TodoApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTodoProjectsByKeyIssuesByNum(key, num, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TodoApi.getTodoProjectsByKeyIssuesByNum']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
+         * @summary Summarises one room\'s work.
+         * @param {string} room Room is the room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTodoRoomsByRoom(room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomWork>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTodoRoomsByRoom(room, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TodoApi.getTodoRoomsByRoom']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -834,7 +893,7 @@ export const TodoApiFactory = function (configuration?: Configuration, basePath?
          * @throws {RequiredError}
          */
         getTodoIssues(requestParameters: TodoApiGetTodoIssuesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<IssueHits> {
-            return localVarFp.getTodoIssues(requestParameters.q, requestParameters.project, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.source, requestParameters.assignee, requestParameters.limit, options).then((request) => request(axios, basePath));
+            return localVarFp.getTodoIssues(requestParameters.q, requestParameters.project, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.room, requestParameters.source, requestParameters.assignee, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns the boards of your org — the places your work actually is. The key addresses the board\'s issues.  A BOARD IS A PLACE WORK IS, not an object somebody provisioned. So the list is assembled from the work itself: the repositories your org has filed issues on, plus the boards the index holds. A repository with nothing on it is not in the list and is still perfectly addressable — GET /projects/<name> reads it and a create files into it — so nothing is lost by leaving it out.  Measured, which is why: reading the forge\'s whole repository inventory put 745 boards here, of which all but a handful were vendored forks and mirrors (.github, .profile, DOMPurify, BoatAttack) that will never carry this org\'s work. A list that long is not a list — the estate\'s real roadmap was in it somewhere and no one could see it.  The forge half is the FORGE\'s answer for your own account, so two people in one org can legitimately see different boards.
@@ -874,6 +933,16 @@ export const TodoApiFactory = function (configuration?: Configuration, basePath?
          */
         getTodoProjectsByKeyIssuesByNum(requestParameters: TodoApiGetTodoProjectsByKeyIssuesByNumRequest, options?: RawAxiosRequestConfig): AxiosPromise<IssueView> {
             return localVarFp.getTodoProjectsByKeyIssuesByNum(requestParameters.key, requestParameters.num, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
+         * @summary Summarises one room\'s work.
+         * @param {TodoApiGetTodoRoomsByRoomRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTodoRoomsByRoom(requestParameters: TodoApiGetTodoRoomsByRoomRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoomWork> {
+            return localVarFp.getTodoRoomsByRoom(requestParameters.room, options).then((request) => request(axios, basePath));
         },
         /**
          * Answers 405. A todo board IS a repository on this deployment\'s forge, so creating, renaming and deleting one is a FORGE operation carried out with FORGE permissions.  Offering it here would put a second endpoint on the same object, guarded by this surface instead of by the forge — a weaker guard on the same thing. So the route exists and refuses, rather than 404ing: \"not this service\'s job\" and \"no such thing\" are different facts, and the body names the forge so a caller knows where the job IS done.  What this surface DOES own is the work on a board: list the boards you can see, read and file their issues, move a card between columns, and read the schedule a milestone is. Those are the routes beside this one.
@@ -1039,6 +1108,13 @@ export interface TodoApiGetTodoIssuesRequest {
     readonly repo?: string
 
     /**
+     * Room keeps issues bound to one collaboration room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the exact value GET /v1/meet/call answers with, so a channel\&#39;s call and its todo list name the room the same way. This is the read a channel view runs to draw its own list; it spans every board of the org, because the work a channel is about is not confined to one board.
+     * @type {string}
+     * @memberof TodoApiGetTodoIssues
+     */
+    readonly room?: string
+
+    /**
      * Source keeps one origin: team, git, crm, helpdesk, cms, agent. \&quot;git\&quot; is how you ask for the mirrored GitHub issues specifically.
      * @type {string}
      * @memberof TodoApiGetTodoIssues
@@ -1149,6 +1225,20 @@ export interface TodoApiGetTodoProjectsByKeyIssuesByNumRequest {
      * @memberof TodoApiGetTodoProjectsByKeyIssuesByNum
      */
     readonly num: number
+}
+
+/**
+ * Request parameters for getTodoRoomsByRoom operation in TodoApi.
+ * @export
+ * @interface TodoApiGetTodoRoomsByRoomRequest
+ */
+export interface TodoApiGetTodoRoomsByRoomRequest {
+    /**
+     * Room is the room, spelled \&quot;&lt;workspace&gt;_&lt;room&gt;\&quot; — the same value GET /v1/meet/call answers with, so a channel\&#39;s call and its work name the room identically. From the path.
+     * @type {string}
+     * @memberof TodoApiGetTodoRoomsByRoom
+     */
+    readonly room: string
 }
 
 /**
@@ -1275,7 +1365,7 @@ export class TodoApi extends BaseAPI {
      * @memberof TodoApi
      */
     public getTodoIssues(requestParameters: TodoApiGetTodoIssuesRequest = {}, options?: RawAxiosRequestConfig) {
-        return TodoApiFp(this.configuration).getTodoIssues(requestParameters.q, requestParameters.project, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.source, requestParameters.assignee, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+        return TodoApiFp(this.configuration).getTodoIssues(requestParameters.q, requestParameters.project, requestParameters.status, requestParameters.kind, requestParameters.repo, requestParameters.room, requestParameters.source, requestParameters.assignee, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1323,6 +1413,18 @@ export class TodoApi extends BaseAPI {
      */
     public getTodoProjectsByKeyIssuesByNum(requestParameters: TodoApiGetTodoProjectsByKeyIssuesByNumRequest, options?: RawAxiosRequestConfig) {
         return TodoApiFp(this.configuration).getTodoProjectsByKeyIssuesByNum(requestParameters.key, requestParameters.num, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Summarises one room\'s work.  The room is opaque here and is deliberately not resolved: this package cannot say whether a room exists — apps/team owns that document — so an unknown room answers an EMPTY board rather than a 404. That is the honest answer and the useful one: a channel that has never had an item filed in it and a channel id that was mistyped both have no work, and inventing a distinction would require this surface to hold a second copy of the room list (HIP-0523 §2 forbids it, and it would drift the first time a room was renamed).  Tenancy is the validated principal\'s org and nothing else, so a caller cannot read another tenant\'s channel by naming its room.
+     * @summary Summarises one room\'s work.
+     * @param {TodoApiGetTodoRoomsByRoomRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TodoApi
+     */
+    public getTodoRoomsByRoom(requestParameters: TodoApiGetTodoRoomsByRoomRequest, options?: RawAxiosRequestConfig) {
+        return TodoApiFp(this.configuration).getTodoRoomsByRoom(requestParameters.room, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
