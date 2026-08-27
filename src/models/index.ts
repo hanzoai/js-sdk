@@ -2099,6 +2099,7 @@ export * from './series-point';
 export * from './session-detail';
 export * from './session-ended';
 export * from './session-list';
+export * from './session-progress';
 export * from './session-user';
 export * from './session-view';
 export * from './set-env-req';
