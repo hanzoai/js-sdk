@@ -2221,6 +2221,7 @@ src/models/series-point.ts
 src/models/session-detail.ts
 src/models/session-ended.ts
 src/models/session-list.ts
+src/models/session-progress.ts
 src/models/session-user.ts
 src/models/session-view.ts
 src/models/set-env-req.ts

@@ -21,6 +21,9 @@ import type { EventView } from './event-view';
 import type { LastEventView } from './last-event-view';
 // May contain unused imports in some cases
 // @ts-ignore
+import type { SessionProgress } from './session-progress';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { SessionView } from './session-view';
 
 /**
@@ -113,6 +116,12 @@ export interface SessionDetail {
      * @memberof SessionDetail
      */
     'parentSessionId'?: string;
+    /**
+     * 
+     * @type {SessionProgress}
+     * @memberof SessionDetail
+     */
+    'progress'?: SessionProgress;
     /**
      * 
      * @type {string}

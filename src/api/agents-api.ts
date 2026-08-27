@@ -72,6 +72,8 @@ import type { SessionDetail } from '../models';
 // @ts-ignore
 import type { SessionList } from '../models';
 // @ts-ignore
+import type { SessionProgress } from '../models';
+// @ts-ignore
 import type { SessionView } from '../models';
 // @ts-ignore
 import type { TargetDeleted } from '../models';
@@ -719,6 +721,44 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             if (after !== undefined) {
                 localVarQueryParameter['after'] = after;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns how far along one run is: the share of its goal that is done, whether it is running, blocked or finished, and a line saying what it is doing right now.  It is a MODEL ESTIMATE read off the run\'s own transcript, not a measurement — `estimated` says so on every answer, and a run whose progress cannot be told reports phase \"unknown\" with no percentage rather than a zero it does not mean. A session that has already finished answers from its own status instead, and is marked not estimated.  The list and detail reads carry the same value; this address is the one that WAITS. Where the stored estimate has gone stale it is remade before answering, so a human deciding whether to step into a run gets a current reading rather than the last poll\'s — which costs one small completion, charged to the same wallet the session already names, at most once every thirty seconds per run.
+         * @summary Returns how far along one run is: the share of its goal that is done, whether it is running, blocked or finished, and a line saying what it is doing right now.
+         * @param {string} id ID is the session to act on, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentsSessionsByIdProgress: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getAgentsSessionsByIdProgress', 'id', id)
+            const localVarPath = `/v1/agents/sessions/{id}/progress`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -1807,6 +1847,19 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns how far along one run is: the share of its goal that is done, whether it is running, blocked or finished, and a line saying what it is doing right now.  It is a MODEL ESTIMATE read off the run\'s own transcript, not a measurement — `estimated` says so on every answer, and a run whose progress cannot be told reports phase \"unknown\" with no percentage rather than a zero it does not mean. A session that has already finished answers from its own status instead, and is marked not estimated.  The list and detail reads carry the same value; this address is the one that WAITS. Where the stored estimate has gone stale it is remade before answering, so a human deciding whether to step into a run gets a current reading rather than the last poll\'s — which costs one small completion, charged to the same wallet the session already names, at most once every thirty seconds per run.
+         * @summary Returns how far along one run is: the share of its goal that is done, whether it is running, blocked or finished, and a line saying what it is doing right now.
+         * @param {string} id ID is the session to act on, from the path.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgentsSessionsByIdProgress(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionProgress>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentsSessionsByIdProgress(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentsSessionsByIdProgress']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count. One indexed read pulls the whole flow (every node of a flow shares a root id), so the shape is assembled in memory rather than by walking the store per node.
          * @summary Returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count.
          * @param {string} id ID is the session to act on, from the path.
@@ -2253,6 +2306,16 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getAgentsSessionsByIdControl(requestParameters.id, requestParameters.after, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns how far along one run is: the share of its goal that is done, whether it is running, blocked or finished, and a line saying what it is doing right now.  It is a MODEL ESTIMATE read off the run\'s own transcript, not a measurement — `estimated` says so on every answer, and a run whose progress cannot be told reports phase \"unknown\" with no percentage rather than a zero it does not mean. A session that has already finished answers from its own status instead, and is marked not estimated.  The list and detail reads carry the same value; this address is the one that WAITS. Where the stored estimate has gone stale it is remade before answering, so a human deciding whether to step into a run gets a current reading rather than the last poll\'s — which costs one small completion, charged to the same wallet the session already names, at most once every thirty seconds per run.
+         * @summary Returns how far along one run is: the share of its goal that is done, whether it is running, blocked or finished, and a line saying what it is doing right now.
+         * @param {AgentsApiGetAgentsSessionsByIdProgressRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgentsSessionsByIdProgress(requestParameters: AgentsApiGetAgentsSessionsByIdProgressRequest, options?: RawAxiosRequestConfig): AxiosPromise<SessionProgress> {
+            return localVarFp.getAgentsSessionsByIdProgress(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count. One indexed read pulls the whole flow (every node of a flow shares a root id), so the shape is assembled in memory rather than by walking the store per node.
          * @summary Returns the subagent-flow graph rooted at this session: the session, its children, their children, each node carrying its own event count.
          * @param {AgentsApiGetAgentsSessionsByIdTreeRequest} requestParameters Request parameters.
@@ -2691,6 +2754,20 @@ export interface AgentsApiGetAgentsSessionsByIdControlRequest {
      * @memberof AgentsApiGetAgentsSessionsByIdControl
      */
     readonly after?: number
+}
+
+/**
+ * Request parameters for getAgentsSessionsByIdProgress operation in AgentsApi.
+ * @export
+ * @interface AgentsApiGetAgentsSessionsByIdProgressRequest
+ */
+export interface AgentsApiGetAgentsSessionsByIdProgressRequest {
+    /**
+     * ID is the session to act on, from the path.
+     * @type {string}
+     * @memberof AgentsApiGetAgentsSessionsByIdProgress
+     */
+    readonly id: string
 }
 
 /**
@@ -3208,6 +3285,18 @@ export class AgentsApi extends BaseAPI {
      */
     public getAgentsSessionsByIdControl(requestParameters: AgentsApiGetAgentsSessionsByIdControlRequest, options?: RawAxiosRequestConfig) {
         return AgentsApiFp(this.configuration).getAgentsSessionsByIdControl(requestParameters.id, requestParameters.after, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns how far along one run is: the share of its goal that is done, whether it is running, blocked or finished, and a line saying what it is doing right now.  It is a MODEL ESTIMATE read off the run\'s own transcript, not a measurement — `estimated` says so on every answer, and a run whose progress cannot be told reports phase \"unknown\" with no percentage rather than a zero it does not mean. A session that has already finished answers from its own status instead, and is marked not estimated.  The list and detail reads carry the same value; this address is the one that WAITS. Where the stored estimate has gone stale it is remade before answering, so a human deciding whether to step into a run gets a current reading rather than the last poll\'s — which costs one small completion, charged to the same wallet the session already names, at most once every thirty seconds per run.
+     * @summary Returns how far along one run is: the share of its goal that is done, whether it is running, blocked or finished, and a line saying what it is doing right now.
+     * @param {AgentsApiGetAgentsSessionsByIdProgressRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsApi
+     */
+    public getAgentsSessionsByIdProgress(requestParameters: AgentsApiGetAgentsSessionsByIdProgressRequest, options?: RawAxiosRequestConfig) {
+        return AgentsApiFp(this.configuration).getAgentsSessionsByIdProgress(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

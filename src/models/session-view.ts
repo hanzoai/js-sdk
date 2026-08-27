@@ -16,6 +16,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import type { LastEventView } from './last-event-view';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { SessionProgress } from './session-progress';
 
 /**
  * 
@@ -101,6 +104,12 @@ export interface SessionView {
      * @memberof SessionView
      */
     'parentSessionId'?: string;
+    /**
+     * Progress is how far along this run is — a share of its goal, a phase, and a line saying what it is doing. Always present, so a board never branches on whether it is there; `phase` says \"unknown\" when nothing has estimated it. It is a MODEL ESTIMATE wherever `estimated` is true, and the row\'s own word where it is false. See progress.go.
+     * @type {SessionProgress}
+     * @memberof SessionView
+     */
+    'progress'?: SessionProgress;
     /**
      * The readable build: the product this session built and whether its story is public (provenance.go).
      * @type {string}
