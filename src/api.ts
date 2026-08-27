@@ -47,6 +47,7 @@ export * from './api/dataroom-api';
 export * from './api/dataset-api';
 export * from './api/deploy-api';
 export * from './api/destination-api';
+export * from './api/dns-api';
 export * from './api/domain-api';
 export * from './api/engine-api';
 export * from './api/entitlement-api';

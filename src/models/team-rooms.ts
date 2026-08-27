@@ -15,19 +15,19 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { DataroomDocument } from './dataroom-document';
+import type { TeamRoom } from './team-room';
 
 /**
  * 
  * @export
- * @interface DataroomDocumentOne
+ * @interface TeamRooms
  */
-export interface DataroomDocumentOne {
+export interface TeamRooms {
     /**
-     * Document is the requested document\'s METADATA. Its bytes are a separate read, GET /v1/dataroom/documents/{id}/file.
-     * @type {DataroomDocument}
-     * @memberof DataroomDocumentOne
+     * Rooms is every room of every workspace the caller\'s org owns, each with the work facet it carries.
+     * @type {Array<TeamRoom>}
+     * @memberof TeamRooms
      */
-    'document'?: DataroomDocument;
+    'rooms'?: Array<TeamRoom>;
 }
 

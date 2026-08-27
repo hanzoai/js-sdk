@@ -148,6 +148,12 @@ export interface SessionDetail {
      * @type {string}
      * @memberof SessionDetail
      */
+    'room'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SessionDetail
+     */
     'rootSessionId'?: string;
     /**
      * 

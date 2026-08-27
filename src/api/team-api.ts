@@ -37,6 +37,12 @@ import type { PlanInfo } from '../models';
 import type { ProviderInfo } from '../models';
 // @ts-ignore
 import type { StatsOut } from '../models';
+// @ts-ignore
+import type { TeamRoom } from '../models';
+// @ts-ignore
+import type { TeamRoomBind } from '../models';
+// @ts-ignore
+import type { TeamRooms } from '../models';
 /**
  * TeamApi - axios parameter creator
  * @export
@@ -413,6 +419,40 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
+         * @summary Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamRooms: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/team/rooms`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
          * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
          * @param {string} [token] Token is the workspace token minted by selectWorkspace.
@@ -716,6 +756,50 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open workspace rather than on the next reload.
+         * @summary States what a room is for: its lifecycle intent, and what it is about.
+         * @param {string} id ID is the room to bind, from the path. The URL is the authority; a body carrying another id cannot redirect the write.
+         * @param {TeamRoomBind} teamRoomBind 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putTeamRoomsById: async (id: string, teamRoomBind: TeamRoomBind, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('putTeamRoomsById', 'id', id)
+            // verify required parameter 'teamRoomBind' is not null or undefined
+            assertParamExists('putTeamRoomsById', 'teamRoomBind', teamRoomBind)
+            const localVarPath = `/v1/team/rooms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamRoomBind, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -854,6 +938,18 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
+         * @summary Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTeamRooms(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamRooms>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamRooms(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamRooms']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
          * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
          * @param {string} [token] Token is the workspace token minted by selectWorkspace.
@@ -954,6 +1050,20 @@ export const TeamApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putTeamAccountCookie(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TeamApi.putTeamAccountCookie']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open workspace rather than on the next reload.
+         * @summary States what a room is for: its lifecycle intent, and what it is about.
+         * @param {string} id ID is the room to bind, from the path. The URL is the authority; a body carrying another id cannot redirect the write.
+         * @param {TeamRoomBind} teamRoomBind 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async putTeamRoomsById(id: string, teamRoomBind: TeamRoomBind, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putTeamRoomsById(id, teamRoomBind, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TeamApi.putTeamRoomsById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1061,6 +1171,15 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamFilesByWorkspaceByFilename(requestParameters.workspace, requestParameters.filename, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
+         * @summary Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTeamRooms(options?: RawAxiosRequestConfig): AxiosPromise<TeamRooms> {
+            return localVarFp.getTeamRooms(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
          * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
          * @param {TeamApiGetTeamTransactorApiV1StatisticsRequest} requestParameters Request parameters.
@@ -1136,6 +1255,16 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
          */
         putTeamAccountCookie(options?: RawAxiosRequestConfig): AxiosPromise<CookieAck> {
             return localVarFp.putTeamAccountCookie(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open workspace rather than on the next reload.
+         * @summary States what a room is for: its lifecycle intent, and what it is about.
+         * @param {TeamApiPutTeamRoomsByIdRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        putTeamRoomsById(requestParameters: TeamApiPutTeamRoomsByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<TeamRoom> {
+            return localVarFp.putTeamRoomsById(requestParameters.id, requestParameters.teamRoomBind, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1302,6 +1431,27 @@ export interface TeamApiPostTeamFilesByWorkspaceRequest {
 }
 
 /**
+ * Request parameters for putTeamRoomsById operation in TeamApi.
+ * @export
+ * @interface TeamApiPutTeamRoomsByIdRequest
+ */
+export interface TeamApiPutTeamRoomsByIdRequest {
+    /**
+     * ID is the room to bind, from the path. The URL is the authority; a body carrying another id cannot redirect the write.
+     * @type {string}
+     * @memberof TeamApiPutTeamRoomsById
+     */
+    readonly id: string
+
+    /**
+     * 
+     * @type {TeamRoomBind}
+     * @memberof TeamApiPutTeamRoomsById
+     */
+    readonly teamRoomBind: TeamRoomBind
+}
+
+/**
  * TeamApi - object-oriented interface
  * @export
  * @class TeamApi
@@ -1423,6 +1573,17 @@ export class TeamApi extends BaseAPI {
     }
 
     /**
+     * Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.  It reads the SAME Chunter documents the transactor serves, so a room opened in the Team client appears here with no sync, and a facet written here is read by anything holding the document. Direct messages are included: a room between two people is a room with no name, not a different kind of thing.
+     * @summary Returns every room of the caller\'s org, across the workspaces it owns, with the work facet each carries.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public getTeamRooms(options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).getTeamRooms(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
      * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
      * @param {TeamApiGetTeamTransactorApiV1StatisticsRequest} requestParameters Request parameters.
@@ -1513,6 +1674,18 @@ export class TeamApi extends BaseAPI {
      */
     public putTeamAccountCookie(options?: RawAxiosRequestConfig) {
         return TeamApiFp(this.configuration).putTeamAccountCookie(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * States what a room is for: its lifecycle intent, and what it is about. It answers the room as it now stands.  The write is a platform MIXIN on the room document, applied through the SAME applyTx path the Team client\'s own writes take and broadcast to every connected client — so a room bound here updates live in an open workspace rather than on the next reload.
+     * @summary States what a room is for: its lifecycle intent, and what it is about.
+     * @param {TeamApiPutTeamRoomsByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamApi
+     */
+    public putTeamRoomsById(requestParameters: TeamApiPutTeamRoomsByIdRequest, options?: RawAxiosRequestConfig) {
+        return TeamApiFp(this.configuration).putTeamRoomsById(requestParameters.id, requestParameters.teamRoomBind, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

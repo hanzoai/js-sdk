@@ -165,8 +165,8 @@ export const AccountApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * IssueCSRFToken mints the anti-CSRF token a browser echoes as X-CSRF-Token on every money write (mint/revoke a key, top up, onboard, and the billing/commerce write verbs). The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a write as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a write.
-         * @summary IssueCSRFToken mints the anti-CSRF token a browser echoes as X-CSRF-Token on every money write (mint/revoke a key, top up, onboard, and the billing/commerce write verbs).
+         * IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
+         * @summary IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -476,8 +476,8 @@ export const AccountApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * IssueCSRFToken mints the anti-CSRF token a browser echoes as X-CSRF-Token on every money write (mint/revoke a key, top up, onboard, and the billing/commerce write verbs). The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a write as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a write.
-         * @summary IssueCSRFToken mints the anti-CSRF token a browser echoes as X-CSRF-Token on every money write (mint/revoke a key, top up, onboard, and the billing/commerce write verbs).
+         * IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
+         * @summary IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -603,8 +603,8 @@ export const AccountApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getAccountAvatarByOrgByUserByDigest(requestParameters.org, requestParameters.user, requestParameters.digest, options).then((request) => request(axios, basePath));
         },
         /**
-         * IssueCSRFToken mints the anti-CSRF token a browser echoes as X-CSRF-Token on every money write (mint/revoke a key, top up, onboard, and the billing/commerce write verbs). The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a write as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a write.
-         * @summary IssueCSRFToken mints the anti-CSRF token a browser echoes as X-CSRF-Token on every money write (mint/revoke a key, top up, onboard, and the billing/commerce write verbs).
+         * IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
+         * @summary IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -813,8 +813,8 @@ export class AccountApi extends BaseAPI {
     }
 
     /**
-     * IssueCSRFToken mints the anti-CSRF token a browser echoes as X-CSRF-Token on every money write (mint/revoke a key, top up, onboard, and the billing/commerce write verbs). The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a write as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a write.
-     * @summary IssueCSRFToken mints the anti-CSRF token a browser echoes as X-CSRF-Token on every money write (mint/revoke a key, top up, onboard, and the billing/commerce write verbs).
+     * IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for. The token is bound to the caller\'s validated identity and expires, so one minted for one identity cannot authorize a change as another.  It is answered no-store, so it is never cached by a shared proxy. This is the same-origin endpoint the embedded console reads — the Same-Origin Policy is what stops a cross-site page from reading the response and forging a change.
+     * @summary IssueCSRFToken mints the anti-forgery token a browser echoes as X-CSRF-Token on every change it asks for.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountApi

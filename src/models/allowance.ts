@@ -33,7 +33,7 @@ export interface Allowance {
      */
     'plan'?: string;
     /**
-     * unix seconds; when the count starts again
+     * unix seconds; when THAT window starts again
      * @type {number}
      * @memberof Allowance
      */
@@ -50,5 +50,11 @@ export interface Allowance {
      * @memberof Allowance
      */
     'used'?: number;
+    /**
+     * Window is which ceiling these numbers describe — \"hour\" or \"day\" — because a caller is held to both and only one of them is the answer. It is the window that REFUSED where one did, and otherwise the one with least left, so Limit-Used is always the number that will actually stop them next. Empty where no window bounds the subject at all.
+     * @type {string}
+     * @memberof Allowance
+     */
+    'window'?: string;
 }
 

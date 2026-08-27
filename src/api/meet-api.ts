@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { Call } from '../models';
+// @ts-ignore
 import type { MeetHealth } from '../models';
 // @ts-ignore
 import type { RecordIn } from '../models';
@@ -89,6 +91,54 @@ export const MeetApiAxiosParamCreator = function (configuration?: Configuration)
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Answers where a room\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the room\'s call at the moment it draws one, rather than reading a media room name someone stored on the room. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a workspace-membership oracle for anyone who can guess a room id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
+         * @summary Where a room\'s call happens
+         * @param {string} workspace Workspace is the workspace uuid holding the room, as GET /v1/team/rooms reports it. It is the segment the caller\&#39;s membership is checked against.
+         * @param {string} room Room is the room\&#39;s own id within that workspace, as GET /v1/team/rooms reports it. It is opaque here: meet keeps no rooms and cannot say whether one exists, only whether this caller may be seated in the workspace holding it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        meetCall: async (workspace: string, room: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'workspace' is not null or undefined
+            assertParamExists('meetCall', 'workspace', workspace)
+            // verify required parameter 'room' is not null or undefined
+            assertParamExists('meetCall', 'room', room)
+            const localVarPath = `/v1/meet/call`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (workspace !== undefined) {
+                localVarQueryParameter['workspace'] = workspace;
+            }
+
+            if (room !== undefined) {
+                localVarQueryParameter['room'] = room;
+            }
 
 
     
@@ -292,6 +342,20 @@ export const MeetApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Answers where a room\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the room\'s call at the moment it draws one, rather than reading a media room name someone stored on the room. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a workspace-membership oracle for anyone who can guess a room id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
+         * @summary Where a room\'s call happens
+         * @param {string} workspace Workspace is the workspace uuid holding the room, as GET /v1/team/rooms reports it. It is the segment the caller\&#39;s membership is checked against.
+         * @param {string} room Room is the room\&#39;s own id within that workspace, as GET /v1/team/rooms reports it. It is opaque here: meet keeps no rooms and cannot say whether one exists, only whether this caller may be seated in the workspace holding it.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async meetCall(workspace: string, room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Call>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.meetCall(workspace, room, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MeetApi.meetCall']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Answers what is being recorded in a room, and where the file went.  It reports the recording that is RUNNING, and once none is, the most recent one the media server still holds — with its final status and its object. That second case is the one that matters for finding a file: the answer to a start is the only other place the location appears, and a client that lost it, or a colleague who was not the one to press record, has nowhere else to look.  It is behind the same check as starting one: where a recording of a private conversation is kept is a fact about that conversation, so it is told to the people the room admits and to nobody else.
          * @summary What is being recorded in a room, and where the file goes
          * @param {string} room Room is the LiveKit room, named the way the office client names one (&#x60;&lt;workspace&gt;_&lt;name&gt;_&lt;id&gt;&#x60;). Its leading segment is what binds the room to a tenant, and it is the segment the caller\&#39;s membership is checked against.
@@ -371,6 +435,16 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getMeetSession(options).then((request) => request(axios, basePath));
         },
         /**
+         * Answers where a room\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the room\'s call at the moment it draws one, rather than reading a media room name someone stored on the room. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a workspace-membership oracle for anyone who can guess a room id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
+         * @summary Where a room\'s call happens
+         * @param {MeetApiMeetCallRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        meetCall(requestParameters: MeetApiMeetCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<Call> {
+            return localVarFp.meetCall(requestParameters.workspace, requestParameters.room, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Answers what is being recorded in a room, and where the file went.  It reports the recording that is RUNNING, and once none is, the most recent one the media server still holds — with its final status and its object. That second case is the one that matters for finding a file: the answer to a start is the only other place the location appears, and a client that lost it, or a colleague who was not the one to press record, has nowhere else to look.  It is behind the same check as starting one: where a recording of a private conversation is kept is a fact about that conversation, so it is told to the people the room admits and to nobody else.
          * @summary What is being recorded in a room, and where the file goes
          * @param {MeetApiMeetRecordReadRequest} requestParameters Request parameters.
@@ -411,6 +485,27 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
         },
     };
 };
+
+/**
+ * Request parameters for meetCall operation in MeetApi.
+ * @export
+ * @interface MeetApiMeetCallRequest
+ */
+export interface MeetApiMeetCallRequest {
+    /**
+     * Workspace is the workspace uuid holding the room, as GET /v1/team/rooms reports it. It is the segment the caller\&#39;s membership is checked against.
+     * @type {string}
+     * @memberof MeetApiMeetCall
+     */
+    readonly workspace: string
+
+    /**
+     * Room is the room\&#39;s own id within that workspace, as GET /v1/team/rooms reports it. It is opaque here: meet keeps no rooms and cannot say whether one exists, only whether this caller may be seated in the workspace holding it.
+     * @type {string}
+     * @memberof MeetApiMeetCall
+     */
+    readonly room: string
+}
 
 /**
  * Request parameters for meetRecordRead operation in MeetApi.
@@ -481,6 +576,18 @@ export class MeetApi extends BaseAPI {
      */
     public getMeetSession(options?: RawAxiosRequestConfig) {
         return MeetApiFp(this.configuration).getMeetSession(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Answers where a room\'s call happens, for a caller who may join it.  It is the \"resolved at render\" half of HIP-0523 §12: a surface showing a channel asks for the room\'s call at the moment it draws one, rather than reading a media room name someone stored on the room. Nothing here is persisted and nothing is created — a media room begins existing when the first participant connects and stops when the last leaves, so there is no call to create and none to clean up.  AUTHORIZATION IS THE JOIN DECISION, unchanged and shared. It delegates to state.admits, the same function POST /v1/meet/getToken and all three recording operations admit on, so a caller who is told where a call is, is a caller who could have joined it. Answering the address to someone who cannot join would make this a workspace-membership oracle for anyone who can guess a room id.  It deliberately does NOT report whether a call is in progress. That is a fact the media server holds and this binary would have to ask for it over the network, which is a different decision with a different failure mode — and reporting \"nobody is in this call\" when the question could not be asked would be exactly the unknown-rendered-as-zero this surface refuses elsewhere.
+     * @summary Where a room\'s call happens
+     * @param {MeetApiMeetCallRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeetApi
+     */
+    public meetCall(requestParameters: MeetApiMeetCallRequest, options?: RawAxiosRequestConfig) {
+        return MeetApiFp(this.configuration).meetCall(requestParameters.workspace, requestParameters.room, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
