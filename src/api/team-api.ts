@@ -453,45 +453,6 @@ export const TeamApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-         * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
-         * @param {string} [token] Token is the workspace token minted by selectWorkspace.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTeamTransactorApiV1Statistics: async (token?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/team/transactor/api/v1/statistics`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (token !== undefined) {
-                localVarQueryParameter['token'] = token;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Upgrades to the WebSocket the Team client runs an entire workspace over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the workspace\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the workspace token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a workspace claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another workspace\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the workspace\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as workspace people without a separate sync call.
          * @summary Open the workspace data-plane socket
          * @param {string} token 
@@ -950,19 +911,6 @@ export const TeamApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-         * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
-         * @param {string} [token] Token is the workspace token minted by selectWorkspace.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getTeamTransactorApiV1Statistics(token?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StatsOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamTransactorApiV1Statistics(token, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TeamApi.getTeamTransactorApiV1Statistics']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Upgrades to the WebSocket the Team client runs an entire workspace over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the workspace\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the workspace token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a workspace claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another workspace\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the workspace\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as workspace people without a separate sync call.
          * @summary Open the workspace data-plane socket
          * @param {string} token 
@@ -1180,16 +1128,6 @@ export const TeamApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.getTeamRooms(options).then((request) => request(axios, basePath));
         },
         /**
-         * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-         * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
-         * @param {TeamApiGetTeamTransactorApiV1StatisticsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTeamTransactorApiV1Statistics(requestParameters: TeamApiGetTeamTransactorApiV1StatisticsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<StatsOut> {
-            return localVarFp.getTeamTransactorApiV1Statistics(requestParameters.token, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Upgrades to the WebSocket the Team client runs an entire workspace over: every frame is a ZAP envelope wrapping one JSON-RPC message — findAll/findOne reads against the workspace\'s documents, tx writes that broadcast to the other live sessions, hello negotiating JSON rather than msgpack. The response is a protocol upgrade, so there is no body to read.  THE PATH SEGMENT IS THE CREDENTIAL. It is the workspace token selectWorkspace minted — bearer-equivalent, and sitting in a URL that proxies and access logs record, which is exactly why it expires in twelve hours and is re-minted on demand rather than being long-lived like the session token. It is decoded and verified (signature and expiry) BEFORE the upgrade, so a bad one is a 401 and never a socket that is accepted and then dropped, and it must carry both an account and a workspace claim. Nothing ambient authorizes this socket: a WebSocket is exempt from CORS, so a cookie-borne credential would make the Origin check the only access control on the whole data plane.  The tenant is the token\'s SIGNED org claim and it keys every store path, so no header can name another workspace\'s data. The upgrade ALSO refuses a browser Origin outside the team surfaces with 403 — otherwise any page could open an authenticated socket with a token it lured out of a logged-in browser — while a request with no Origin at all is admitted, because that is what a non-browser client sends.  On connect the workspace\'s system spaces are seeded once and the roster is reconciled every time, so the org\'s human members and its bots are present as workspace people without a separate sync call.
          * @summary Open the workspace data-plane socket
          * @param {TeamApiGetTeamTransactorByTokenRequest} requestParameters Request parameters.
@@ -1344,20 +1282,6 @@ export interface TeamApiGetTeamFilesByWorkspaceByFilenameRequest {
      * @memberof TeamApiGetTeamFilesByWorkspaceByFilename
      */
     readonly filename: string
-}
-
-/**
- * Request parameters for getTeamTransactorApiV1Statistics operation in TeamApi.
- * @export
- * @interface TeamApiGetTeamTransactorApiV1StatisticsRequest
- */
-export interface TeamApiGetTeamTransactorApiV1StatisticsRequest {
-    /**
-     * Token is the workspace token minted by selectWorkspace.
-     * @type {string}
-     * @memberof TeamApiGetTeamTransactorApiV1Statistics
-     */
-    readonly token?: string
 }
 
 /**
@@ -1581,18 +1505,6 @@ export class TeamApi extends BaseAPI {
      */
     public getTeamRooms(options?: RawAxiosRequestConfig) {
         return TeamApiFp(this.configuration).getTeamRooms(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base. `token` carries the same two lanes the socket\'s path segment does: a workspace UUID names the workspace and is authorized against the membership rows, an HS256 workspace token names it in its signed claims. activeSessions carries ONLY that one workspace, never another tenant\'s sessions. An unverifiable credential, or one the caller is no member under, is 401.
-     * @summary Statistics returns the transactor\'s live sessions for the workspace the caller\'s credential names — the endpoint the front\'s workspace switcher and server panel poll on the transactor base.
-     * @param {TeamApiGetTeamTransactorApiV1StatisticsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TeamApi
-     */
-    public getTeamTransactorApiV1Statistics(requestParameters: TeamApiGetTeamTransactorApiV1StatisticsRequest = {}, options?: RawAxiosRequestConfig) {
-        return TeamApiFp(this.configuration).getTeamTransactorApiV1Statistics(requestParameters.token, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
