@@ -23,37 +23,37 @@ import type { Hit } from './hit';
 /**
  * 
  * @export
- * @interface Response
+ * @interface Fusion
  */
-export interface Response {
+export interface Fusion {
     /**
      * Backends is the per-leg report. Always populated.
      * @type {Array<BackendStatus>}
-     * @memberof Response
+     * @memberof Fusion
      */
     'backends'?: Array<BackendStatus>;
     /**
      * Hits is the fused, ranked result set.
      * @type {Array<Hit>}
-     * @memberof Response
+     * @memberof Fusion
      */
     'hits'?: Array<Hit>;
     /**
      * Mode is the mode actually used after `auto` resolution.
      * @type {string}
-     * @memberof Response
+     * @memberof Fusion
      */
     'mode'?: string;
     /**
      * Status is the query\'s overall honesty signal:   ok          every consulted leg answered.   partial     at least one leg failed; Hits holds the survivors\' results.   unavailable every consulted leg failed; Hits is empty AND that is stated.
      * @type {string}
-     * @memberof Response
+     * @memberof Fusion
      */
     'status'?: string;
     /**
      * TookMS is the whole query\'s wall time in milliseconds — every leg it consulted, plus fusion and paging. Each leg\'s own share is in Backends[].TookMS; the legs run in sequence, so this is at least their sum.
      * @type {number}
-     * @memberof Response
+     * @memberof Fusion
      */
     'took_ms'?: number;
 }

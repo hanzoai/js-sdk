@@ -672,6 +672,7 @@ src/models/framework-row.ts
 src/models/function-detail.ts
 src/models/function-view.ts
 src/models/funnel.ts
+src/models/fusion.ts
 src/models/gc-out.ts
 src/models/generate-input.ts
 src/models/generate-request.ts
@@ -975,7 +976,6 @@ src/models/machine-view.ts
 src/models/make-in.ts
 src/models/market-catalog.ts
 src/models/market-item.ts
-src/models/match.ts
 src/models/mcp-catalog-sync.ts
 src/models/mcp-catalog.ts
 src/models/mcp-server-list.ts
@@ -1952,6 +1952,7 @@ src/models/prompt-list.ts
 src/models/prompt-meta.ts
 src/models/prompt-req.ts
 src/models/prop-spec.ts
+src/models/provenance.ts
 src/models/provider-breakdown.ts
 src/models/provider-info.ts
 src/models/provider-row.ts
@@ -2057,7 +2058,6 @@ src/models/request.ts
 src/models/resolve-reference-in.ts
 src/models/resolve-reference-out.ts
 src/models/resource-usage.ts
-src/models/response.ts
 src/models/responsible.ts
 src/models/restart-ref.ts
 src/models/restarted.ts

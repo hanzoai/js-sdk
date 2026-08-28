@@ -22,9 +22,9 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Request } from '../models';
+import type { Fusion } from '../models';
 // @ts-ignore
-import type { Response } from '../models';
+import type { Request } from '../models';
 /**
  * SearchApi - axios parameter creator
  * @export
@@ -88,7 +88,7 @@ export const SearchApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async search(request: Request, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Response>> {
+        async search(request: Request, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Fusion>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.search(request, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SearchApi.search']?.[localVarOperationServerIndex]?.url;
@@ -111,7 +111,7 @@ export const SearchApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        search(requestParameters: SearchApiSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<Response> {
+        search(requestParameters: SearchApiSearchRequest, options?: RawAxiosRequestConfig): AxiosPromise<Fusion> {
             return localVarFp.search(requestParameters.request, options).then((request) => request(axios, basePath));
         },
     };
