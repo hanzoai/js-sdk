@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { ModuleInfo } from './module-info';
+import type { Module } from './module';
 
 /**
  * 
@@ -24,10 +24,10 @@ import type { ModuleInfo } from './module-info';
  */
 export interface ModuleList {
     /**
-     * Data is every module compiled into this binary, with the DocTypes it installs.
-     * @type {Array<ModuleInfo>}
+     * Data is every module compiled into this binary, with the DocTypes it installs and whether the caller\'s org has turned it on.
+     * @type {Array<Module>}
      * @memberof ModuleList
      */
-    'data'?: Array<ModuleInfo>;
+    'data'?: Array<Module>;
 }
 

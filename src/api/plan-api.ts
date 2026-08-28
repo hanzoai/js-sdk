@@ -150,7 +150,7 @@ export const PlanApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same catalog and the same 404 for an id no catalog holds — the read a licensing or quota gate makes.
          * @summary Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it.
-         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;pro\&quot;, \&quot;team\&quot;, \&quot;world-enterprise\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names.
+         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -324,7 +324,7 @@ export const PlanApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id may be the plan\'s id or its slug, and it is resolved against the caller\'s catalog, so a reseller\'s override wins over the canonical record. An id no catalog holds answers 404.
          * @summary Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from.
-         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;pro\&quot;, \&quot;team\&quot;, \&quot;world-enterprise\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names.
+         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -578,7 +578,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
         /**
          * Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it. It is the entitlement half of ResolvePlan, over the same catalog and the same 404 for an id no catalog holds — the read a licensing or quota gate makes.
          * @summary Returns what one plan GRANTS and not what it costs: the canonical namespaced entitlement block and the flat license-feature list derived from it.
-         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;pro\&quot;, \&quot;team\&quot;, \&quot;world-enterprise\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names.
+         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -639,7 +639,7 @@ export const PlanApiFp = function(configuration?: Configuration) {
         /**
          * Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from. The id may be the plan\'s id or its slug, and it is resolved against the caller\'s catalog, so a reseller\'s override wins over the canonical record. An id no catalog holds answers 404.
          * @summary Resolves one plan to everything a consumer of the catalog needs at once: its canonical entitlement block, the flat license-feature list a signed license carries, its billing reference, and the catalog it came from.
-         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;pro\&quot;, \&quot;team\&quot;, \&quot;world-enterprise\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names.
+         * @param {string} id ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -857,7 +857,7 @@ export const PlanApiFactory = function (configuration?: Configuration, basePath?
  */
 export interface PlanApiGetPlanEntitlementsByIdRequest {
     /**
-     * ID is the plan\&#39;s catalog id or slug — \&quot;pro\&quot;, \&quot;team\&quot;, \&quot;world-enterprise\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names.
+     * ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
      * @type {string}
      * @memberof PlanApiGetPlanEntitlementsById
      */
@@ -871,7 +871,7 @@ export interface PlanApiGetPlanEntitlementsByIdRequest {
  */
 export interface PlanApiGetPlanResolveByIdRequest {
     /**
-     * ID is the plan\&#39;s catalog id or slug — \&quot;pro\&quot;, \&quot;team\&quot;, \&quot;world-enterprise\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names.
+     * ID is the plan\&#39;s catalog id or slug — \&quot;dev\&quot;, \&quot;max\&quot;, \&quot;team\&quot;, \&quot;rpc-growth\&quot;. Both are matched, so a slug resolves the plan it names. A withdrawn id still resolves for a renewal, which is why this takes an id rather than a ladder position.
      * @type {string}
      * @memberof PlanApiGetPlanResolveById
      */

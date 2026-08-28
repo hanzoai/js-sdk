@@ -42,7 +42,6 @@ export * from './api/company-api';
 export * from './api/compliance-api';
 export * from './api/content-api';
 export * from './api/crawl-api';
-export * from './api/crm-api';
 export * from './api/dataroom-api';
 export * from './api/dataset-api';
 export * from './api/deploy-api';
