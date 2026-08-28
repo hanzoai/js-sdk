@@ -22,7 +22,173 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AiAnthropicResponse } from '../models';
+// @ts-ignore
 import type { AiMCPSurface } from '../models';
+// @ts-ignore
+import type { AiModelList } from '../models';
+// @ts-ignore
+import type { AiRanking } from '../models';
+// @ts-ignore
+import type { AiResponse } from '../models';
+// @ts-ignore
+import type { AiResponsesResource } from '../models';
+// @ts-ignore
+import type { AiTokenCount } from '../models';
+// @ts-ignore
+import type { AiVideoStatus } from '../models';
+// @ts-ignore
+import type { DocSearchResult } from '../models';
+// @ts-ignore
+import type { Envelope } from '../models';
+// @ts-ignore
+import type { GetAiActivities200Response } from '../models';
+// @ts-ignore
+import type { GetAiArticles200Response } from '../models';
+// @ts-ignore
+import type { GetAiAssets200Response } from '../models';
+// @ts-ignore
+import type { GetAiChats200Response } from '../models';
+// @ts-ignore
+import type { GetAiConnections200Response } from '../models';
+// @ts-ignore
+import type { GetAiConnectionsByProviderAuthorize200Response } from '../models';
+// @ts-ignore
+import type { GetAiConnectionsByProviderUsage200Response } from '../models';
+// @ts-ignore
+import type { GetAiDeployments200Response } from '../models';
+// @ts-ignore
+import type { GetAiFiles200Response } from '../models';
+// @ts-ignore
+import type { GetAiFinetuneHfDatasets200Response } from '../models';
+// @ts-ignore
+import type { GetAiFinetuneHfModels200Response } from '../models';
+// @ts-ignore
+import type { GetAiFinetuneHfRepo200Response } from '../models';
+// @ts-ignore
+import type { GetAiFinetuneJobs200Response } from '../models';
+// @ts-ignore
+import type { GetAiFinetunePresets200Response } from '../models';
+// @ts-ignore
+import type { GetAiForms200Response } from '../models';
+// @ts-ignore
+import type { GetAiGraphs200Response } from '../models';
+// @ts-ignore
+import type { GetAiMemoryFacts200Response } from '../models';
+// @ts-ignore
+import type { GetAiMessages200Response } from '../models';
+// @ts-ignore
+import type { GetAiNodes200Response } from '../models';
+// @ts-ignore
+import type { GetAiProviders200Response } from '../models';
+// @ts-ignore
+import type { GetAiRecords200Response } from '../models';
+// @ts-ignore
+import type { GetAiRemoteConnections200Response } from '../models';
+// @ts-ignore
+import type { GetAiRouterHistory200Response } from '../models';
+// @ts-ignore
+import type { GetAiRouterJudgePanel200Response } from '../models';
+// @ts-ignore
+import type { GetAiRouterStats200Response } from '../models';
+// @ts-ignore
+import type { GetAiRoutes200Response } from '../models';
+// @ts-ignore
+import type { GetAiScales200Response } from '../models';
+// @ts-ignore
+import type { GetAiScans200Response } from '../models';
+// @ts-ignore
+import type { GetAiSigninSessions200Response } from '../models';
+// @ts-ignore
+import type { GetAiStores200Response } from '../models';
+// @ts-ignore
+import type { GetAiTasks200Response } from '../models';
+// @ts-ignore
+import type { GetAiTemplates200Response } from '../models';
+// @ts-ignore
+import type { GetAiTrafficGlobe200Response } from '../models';
+// @ts-ignore
+import type { GetAiUsages200Response } from '../models';
+// @ts-ignore
+import type { GetAiVectors200Response } from '../models';
+// @ts-ignore
+import type { GetAiVideos200Response } from '../models';
+// @ts-ignore
+import type { GetAiWorkflows200Response } from '../models';
+// @ts-ignore
+import type { GetModelsProviders200Response } from '../models';
+// @ts-ignore
+import type { OpenaiAudioResponse } from '../models';
+// @ts-ignore
+import type { OpenaiChatCompletionResponse } from '../models';
+// @ts-ignore
+import type { OpenaiEmbeddingResponse } from '../models';
+// @ts-ignore
+import type { OpenaiImageResponse } from '../models';
+// @ts-ignore
+import type { PostAiArticles200Response } from '../models';
+// @ts-ignore
+import type { PostAiAssets200Response } from '../models';
+// @ts-ignore
+import type { PostAiChats200Response } from '../models';
+// @ts-ignore
+import type { PostAiConnections200Response } from '../models';
+// @ts-ignore
+import type { PostAiDeployments200Response } from '../models';
+// @ts-ignore
+import type { PostAiFeedback200Response } from '../models';
+// @ts-ignore
+import type { PostAiFiles200Response } from '../models';
+// @ts-ignore
+import type { PostAiFinetuneCancel200Response } from '../models';
+// @ts-ignore
+import type { PostAiFinetuneDeploy200Response } from '../models';
+// @ts-ignore
+import type { PostAiForms200Response } from '../models';
+// @ts-ignore
+import type { PostAiGraphs200Response } from '../models';
+// @ts-ignore
+import type { PostAiMemoryDelete200Response } from '../models';
+// @ts-ignore
+import type { PostAiMemoryRemember200Response } from '../models';
+// @ts-ignore
+import type { PostAiMessages200Response } from '../models';
+// @ts-ignore
+import type { PostAiNodes200Response } from '../models';
+// @ts-ignore
+import type { PostAiProviders200Response } from '../models';
+// @ts-ignore
+import type { PostAiRagEmbed200Response } from '../models';
+// @ts-ignore
+import type { PostAiRagIngest200Response } from '../models';
+// @ts-ignore
+import type { PostAiRecords200Response } from '../models';
+// @ts-ignore
+import type { PostAiRemoteConnections200Response } from '../models';
+// @ts-ignore
+import type { PostAiRoutes200Response } from '../models';
+// @ts-ignore
+import type { PostAiScales200Response } from '../models';
+// @ts-ignore
+import type { PostAiScans200Response } from '../models';
+// @ts-ignore
+import type { PostAiSigninSessions200Response } from '../models';
+// @ts-ignore
+import type { PostAiStores200Response } from '../models';
+// @ts-ignore
+import type { PostAiTasks200Response } from '../models';
+// @ts-ignore
+import type { PostAiTemplates200Response } from '../models';
+// @ts-ignore
+import type { PostAiTreeFiles200Response } from '../models';
+// @ts-ignore
+import type { PostAiVectors200Response } from '../models';
+// @ts-ignore
+import type { PostAiVideos200Response } from '../models';
+// @ts-ignore
+import type { PostAiWorkflows200Response } from '../models';
+// @ts-ignore
+import type { PostModelsByModelAccess200Response } from '../models';
 /**
  * AiApi - axios parameter creator
  * @export
@@ -10921,7 +11087,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiArticles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiArticlesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiArticlesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -10935,7 +11101,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiAssets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiAssetsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiAssetsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -10949,7 +11115,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiChats200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiChatsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiChatsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -10962,7 +11128,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiConnectionsByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiConnectionsByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiConnections200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiConnectionsByProvider(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiConnectionsByProvider']?.[localVarOperationServerIndex]?.url;
@@ -10976,7 +11142,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiDeployments200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiDeploymentsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiDeploymentsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -10990,7 +11156,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFiles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiFilesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11004,7 +11170,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiForms200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiFormsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiFormsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11018,7 +11184,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiGraphs200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiGraphsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiGraphsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11032,7 +11198,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiMessages200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiMessagesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiMessagesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11044,7 +11210,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiMessagesWelcome(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiMessagesWelcome(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiMessagesWelcome(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiMessagesWelcome']?.[localVarOperationServerIndex]?.url;
@@ -11058,7 +11224,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiNodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiNodesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiNodesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11070,7 +11236,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiOrgSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiOrgSettings']?.[localVarOperationServerIndex]?.url;
@@ -11082,7 +11248,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiOrgSettingsList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiOrgSettingsList']?.[localVarOperationServerIndex]?.url;
@@ -11096,7 +11262,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiProviders200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiProvidersByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiProvidersByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11110,7 +11276,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRecords200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiRecordsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiRecordsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11124,7 +11290,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRemoteConnections200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiRemoteConnectionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiRemoteConnectionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11136,7 +11302,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiRouterArtifactMeta(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiRouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
@@ -11148,7 +11314,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiRouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiRouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiRouterData(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiRouterData']?.[localVarOperationServerIndex]?.url;
@@ -11160,7 +11326,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiRouterDefaults(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiRouterDefaults']?.[localVarOperationServerIndex]?.url;
@@ -11172,7 +11338,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiRouterLedger(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiRouterLedger']?.[localVarOperationServerIndex]?.url;
@@ -11184,7 +11350,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiRouterPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiRouterPolicy']?.[localVarOperationServerIndex]?.url;
@@ -11196,7 +11362,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiRouterRewards(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiRouterRewards']?.[localVarOperationServerIndex]?.url;
@@ -11210,7 +11376,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRoutes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiRoutesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiRoutesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11224,7 +11390,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiScales200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiScalesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiScalesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11238,7 +11404,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiScans200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiScansByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiScansByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11252,7 +11418,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiSigninSessions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiSigninSessionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiSigninSessionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11266,7 +11432,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiStores200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiStoresByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiStoresByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11280,7 +11446,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTasks200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiTasksByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiTasksByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11294,7 +11460,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTemplates200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiTemplatesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiTemplatesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11308,7 +11474,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiTreeFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiTreeFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTreeFiles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiTreeFilesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiTreeFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11320,7 +11486,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiVectorsAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiVectorsAll(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiVectorsAll(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiVectorsAll']?.[localVarOperationServerIndex]?.url;
@@ -11334,7 +11500,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiVectors200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiVectorsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiVectorsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11348,7 +11514,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiVideos200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiVideosByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiVideosByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11362,7 +11528,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteAiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiWorkflows200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAiWorkflowsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.deleteAiWorkflowsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11374,7 +11540,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiAccount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiAccount(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiAccount']?.[localVarOperationServerIndex]?.url;
@@ -11386,7 +11552,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiActivities(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiActivities(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiActivities200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiActivities(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiActivities']?.[localVarOperationServerIndex]?.url;
@@ -11398,7 +11564,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiAnswer(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiAnswer(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiAnswer(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiAnswer']?.[localVarOperationServerIndex]?.url;
@@ -11410,7 +11576,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiArticles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiArticles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiArticles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiArticles(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiArticles']?.[localVarOperationServerIndex]?.url;
@@ -11424,7 +11590,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiArticles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiArticlesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiArticlesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11436,7 +11602,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiArticlesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiArticlesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiArticles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiArticlesGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiArticlesGlobal']?.[localVarOperationServerIndex]?.url;
@@ -11448,7 +11614,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiAssets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiAssets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiAssets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiAssets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiAssets']?.[localVarOperationServerIndex]?.url;
@@ -11462,7 +11628,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiAssets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiAssetsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiAssetsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11474,7 +11640,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiChats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiChats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiChats200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiChats(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiChats']?.[localVarOperationServerIndex]?.url;
@@ -11488,7 +11654,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiChats200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiChatsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiChatsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11500,7 +11666,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiChatsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiChatsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiChats200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiChatsGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiChatsGlobal']?.[localVarOperationServerIndex]?.url;
@@ -11512,7 +11678,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiConnections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiConnections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiConnections200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiConnections(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiConnections']?.[localVarOperationServerIndex]?.url;
@@ -11525,7 +11691,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiConnectionsByProviderAuthorize(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiConnectionsByProviderAuthorize(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiConnectionsByProviderAuthorize200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiConnectionsByProviderAuthorize(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiConnectionsByProviderAuthorize']?.[localVarOperationServerIndex]?.url;
@@ -11551,7 +11717,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiConnectionsByProviderUsage(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiConnectionsByProviderUsage(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiConnectionsByProviderUsage200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiConnectionsByProviderUsage(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiConnectionsByProviderUsage']?.[localVarOperationServerIndex]?.url;
@@ -11563,7 +11729,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiDashboardsAgents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiDashboardsAgents(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiDashboardsAgents(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiDashboardsAgents']?.[localVarOperationServerIndex]?.url;
@@ -11575,7 +11741,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiDashboardsVm(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiDashboardsVm(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiDashboardsVm(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiDashboardsVm']?.[localVarOperationServerIndex]?.url;
@@ -11587,7 +11753,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiDeployments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiDeployments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiDeployments200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiDeployments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiDeployments']?.[localVarOperationServerIndex]?.url;
@@ -11601,7 +11767,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiDeployments200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiDeploymentsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiDeploymentsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11613,7 +11779,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFiles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFiles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiFiles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFiles(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFiles']?.[localVarOperationServerIndex]?.url;
@@ -11625,7 +11791,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFilesActive(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFilesActive(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFilesActive(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFilesActive']?.[localVarOperationServerIndex]?.url;
@@ -11639,7 +11805,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFiles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFilesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11651,7 +11817,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFilesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFilesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiFiles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFilesGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFilesGlobal']?.[localVarOperationServerIndex]?.url;
@@ -11663,7 +11829,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFinetuneHfDatasets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFinetuneHfDatasets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiFinetuneHfDatasets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFinetuneHfDatasets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFinetuneHfDatasets']?.[localVarOperationServerIndex]?.url;
@@ -11675,7 +11841,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFinetuneHfModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFinetuneHfModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiFinetuneHfModels200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFinetuneHfModels(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFinetuneHfModels']?.[localVarOperationServerIndex]?.url;
@@ -11687,7 +11853,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFinetuneHfRepo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFinetuneHfRepo(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiFinetuneHfRepo200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFinetuneHfRepo(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFinetuneHfRepo']?.[localVarOperationServerIndex]?.url;
@@ -11699,7 +11865,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFinetuneJob(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFinetuneJob(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFinetuneCancel200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFinetuneJob(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFinetuneJob']?.[localVarOperationServerIndex]?.url;
@@ -11711,7 +11877,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFinetuneJobs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFinetuneJobs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiFinetuneJobs200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFinetuneJobs(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFinetuneJobs']?.[localVarOperationServerIndex]?.url;
@@ -11723,7 +11889,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFinetunePresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFinetunePresets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiFinetunePresets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFinetunePresets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFinetunePresets']?.[localVarOperationServerIndex]?.url;
@@ -11735,7 +11901,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiForms(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiForms(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiForms200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiForms(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiForms']?.[localVarOperationServerIndex]?.url;
@@ -11749,7 +11915,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiForms200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFormsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFormsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11761,7 +11927,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFormsData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFormsData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFormsData(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFormsData']?.[localVarOperationServerIndex]?.url;
@@ -11773,7 +11939,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiFormsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiFormsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiForms200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiFormsGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiFormsGlobal']?.[localVarOperationServerIndex]?.url;
@@ -11785,7 +11951,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiGraphs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiGraphs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiGraphs200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiGraphs(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiGraphs']?.[localVarOperationServerIndex]?.url;
@@ -11799,7 +11965,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiGraphs200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiGraphsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiGraphsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11811,7 +11977,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiGraphsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiGraphsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiGraphs200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiGraphsGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiGraphsGlobal']?.[localVarOperationServerIndex]?.url;
@@ -11823,7 +11989,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiK8sStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiK8sStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiK8sStatus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiK8sStatus']?.[localVarOperationServerIndex]?.url;
@@ -11835,7 +12001,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiMemoryFacts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiMemoryFacts(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiMemoryFacts200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiMemoryFacts(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiMemoryFacts']?.[localVarOperationServerIndex]?.url;
@@ -11847,7 +12013,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiMemoryList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiMemoryList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiMemoryFacts200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiMemoryList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiMemoryList']?.[localVarOperationServerIndex]?.url;
@@ -11859,7 +12025,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiMemoryRecall(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiMemoryRecall(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiMemoryFacts200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiMemoryRecall(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiMemoryRecall']?.[localVarOperationServerIndex]?.url;
@@ -11871,7 +12037,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiMemorySearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiMemorySearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiMemoryFacts200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiMemorySearch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiMemorySearch']?.[localVarOperationServerIndex]?.url;
@@ -11883,7 +12049,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiMessages200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiMessages(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiMessages']?.[localVarOperationServerIndex]?.url;
@@ -11897,7 +12063,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiMessages200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiMessagesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiMessagesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11911,7 +12077,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiMessagesByOwnerByNameAnswer(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiMessagesByOwnerByNameAnswer(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiMessagesByOwnerByNameAnswer(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiMessagesByOwnerByNameAnswer']?.[localVarOperationServerIndex]?.url;
@@ -11923,7 +12089,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiMessagesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiMessagesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiMessages200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiMessagesGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiMessagesGlobal']?.[localVarOperationServerIndex]?.url;
@@ -11935,7 +12101,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiNodes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiNodes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiNodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiNodes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiNodes']?.[localVarOperationServerIndex]?.url;
@@ -11949,7 +12115,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiNodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiNodesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiNodesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -11963,7 +12129,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiNodesByOwnerByNameTunnel(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiNodesByOwnerByNameTunnel(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiNodesByOwnerByNameTunnel(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiNodesByOwnerByNameTunnel']?.[localVarOperationServerIndex]?.url;
@@ -11975,7 +12141,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiOrgSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiOrgSettings']?.[localVarOperationServerIndex]?.url;
@@ -11987,7 +12153,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiOrgSettingsList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiOrgSettingsList']?.[localVarOperationServerIndex]?.url;
@@ -11999,7 +12165,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiPrometheus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiPrometheus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiPrometheus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiPrometheus']?.[localVarOperationServerIndex]?.url;
@@ -12011,7 +12177,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiProviders200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiProviders']?.[localVarOperationServerIndex]?.url;
@@ -12025,7 +12191,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiProviders200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiProvidersByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiProvidersByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12037,7 +12203,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiProvidersGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiProvidersGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiProviders200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiProvidersGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiProvidersGlobal']?.[localVarOperationServerIndex]?.url;
@@ -12049,7 +12215,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRagContext(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRagContext(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DocSearchResult>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRagContext(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRagContext']?.[localVarOperationServerIndex]?.url;
@@ -12061,7 +12227,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRecords(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRecords(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiRecords200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRecords(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRecords']?.[localVarOperationServerIndex]?.url;
@@ -12075,7 +12241,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRecords200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRecordsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRecordsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12087,7 +12253,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRecordsQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRecordsQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRecordsQuery(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRecordsQuery']?.[localVarOperationServerIndex]?.url;
@@ -12099,7 +12265,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRecordsQuerySecond(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRecordsQuerySecond(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRecordsQuerySecond(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRecordsQuerySecond']?.[localVarOperationServerIndex]?.url;
@@ -12111,7 +12277,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRemoteConnections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRemoteConnections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiRemoteConnections200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRemoteConnections(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRemoteConnections']?.[localVarOperationServerIndex]?.url;
@@ -12125,7 +12291,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRemoteConnections200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRemoteConnectionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRemoteConnectionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12137,7 +12303,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRouterArtifactMeta(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
@@ -12149,7 +12315,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRouterData(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRouterData(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRouterData']?.[localVarOperationServerIndex]?.url;
@@ -12161,7 +12327,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRouterDefaults(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRouterDefaults']?.[localVarOperationServerIndex]?.url;
@@ -12173,7 +12339,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRouterHistory(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRouterHistory(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiRouterHistory200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRouterHistory(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRouterHistory']?.[localVarOperationServerIndex]?.url;
@@ -12185,7 +12351,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRouterJudgePanel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRouterJudgePanel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiRouterJudgePanel200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRouterJudgePanel(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRouterJudgePanel']?.[localVarOperationServerIndex]?.url;
@@ -12197,7 +12363,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRouterLedger(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRouterLedger']?.[localVarOperationServerIndex]?.url;
@@ -12209,7 +12375,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRouterPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRouterPolicy']?.[localVarOperationServerIndex]?.url;
@@ -12221,7 +12387,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRouterRewards(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRouterRewards']?.[localVarOperationServerIndex]?.url;
@@ -12233,7 +12399,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRouterStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRouterStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiRouterStats200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRouterStats(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRouterStats']?.[localVarOperationServerIndex]?.url;
@@ -12245,7 +12411,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRoutes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRoutes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiRoutes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRoutes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRoutes']?.[localVarOperationServerIndex]?.url;
@@ -12259,7 +12425,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRoutes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiRoutesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiRoutesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12271,7 +12437,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiScales(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiScales(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiScales200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiScales(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiScales']?.[localVarOperationServerIndex]?.url;
@@ -12285,7 +12451,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiScales200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiScalesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiScalesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12297,7 +12463,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiScalesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiScalesGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiScales200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiScalesGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiScalesGlobal']?.[localVarOperationServerIndex]?.url;
@@ -12309,7 +12475,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiScalesPublic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiScalesPublic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiScalesPublic(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiScalesPublic']?.[localVarOperationServerIndex]?.url;
@@ -12321,7 +12487,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiScans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiScans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiScans200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiScans(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiScans']?.[localVarOperationServerIndex]?.url;
@@ -12335,7 +12501,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiScans200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiScansByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiScansByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12347,7 +12513,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiSigninSessions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiSigninSessions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiSigninSessions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiSigninSessions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiSigninSessions']?.[localVarOperationServerIndex]?.url;
@@ -12361,7 +12527,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiSigninSessions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiSigninSessionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiSigninSessionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12373,7 +12539,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiSigninSessionsDuplicated(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiSigninSessionsDuplicated(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiSigninSessionsDuplicated(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiSigninSessionsDuplicated']?.[localVarOperationServerIndex]?.url;
@@ -12385,7 +12551,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiStores(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiStores(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiStores200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiStores(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiStores']?.[localVarOperationServerIndex]?.url;
@@ -12399,7 +12565,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiStores200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiStoresByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiStoresByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12411,7 +12577,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiStoresGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiStoresGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiStores200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiStoresGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiStoresGlobal']?.[localVarOperationServerIndex]?.url;
@@ -12423,7 +12589,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiStoresNames(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiStoresNames(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiStoresNames(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiStoresNames']?.[localVarOperationServerIndex]?.url;
@@ -12435,7 +12601,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiStoresProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiStoresProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiStoresProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiStoresProviders']?.[localVarOperationServerIndex]?.url;
@@ -12447,7 +12613,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiSystem(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiSystem(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiSystem(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiSystem']?.[localVarOperationServerIndex]?.url;
@@ -12459,7 +12625,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiTasks200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiTasks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiTasks']?.[localVarOperationServerIndex]?.url;
@@ -12473,7 +12639,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTasks200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiTasksByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiTasksByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12485,7 +12651,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiTasksGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiTasksGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiTasks200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiTasksGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiTasksGlobal']?.[localVarOperationServerIndex]?.url;
@@ -12497,7 +12663,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiTemplates200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiTemplates(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiTemplates']?.[localVarOperationServerIndex]?.url;
@@ -12511,7 +12677,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTemplates200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiTemplatesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiTemplatesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12523,7 +12689,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiTrafficGlobe(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiTrafficGlobe(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiTrafficGlobe200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiTrafficGlobe(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiTrafficGlobe']?.[localVarOperationServerIndex]?.url;
@@ -12535,7 +12701,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiTrainingContribution(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiTrainingContribution(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiTrainingContribution(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiTrainingContribution']?.[localVarOperationServerIndex]?.url;
@@ -12547,7 +12713,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiUsages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiUsages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiUsages200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiUsages(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiUsages']?.[localVarOperationServerIndex]?.url;
@@ -12559,7 +12725,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiUsagesByUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiUsagesByUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiUsagesByUser(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiUsagesByUser']?.[localVarOperationServerIndex]?.url;
@@ -12571,7 +12737,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiUsagesCloud(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiUsagesCloud(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiUsagesCloud(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiUsagesCloud']?.[localVarOperationServerIndex]?.url;
@@ -12583,7 +12749,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiUsagesRange(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiUsagesRange(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiUsagesRange(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiUsagesRange']?.[localVarOperationServerIndex]?.url;
@@ -12595,7 +12761,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiUsagesUserNames(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiUsagesUserNames(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiUsagesUserNames(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiUsagesUserNames']?.[localVarOperationServerIndex]?.url;
@@ -12607,7 +12773,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiVectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiVectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiVectors200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiVectors(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiVectors']?.[localVarOperationServerIndex]?.url;
@@ -12621,7 +12787,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiVectors200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiVectorsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiVectorsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12633,7 +12799,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiVectorsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiVectorsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiVectors200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiVectorsGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiVectorsGlobal']?.[localVarOperationServerIndex]?.url;
@@ -12645,7 +12811,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiVersion(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiVersion(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiVersion']?.[localVarOperationServerIndex]?.url;
@@ -12657,7 +12823,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiVideos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiVideos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiVideos200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiVideos(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiVideos']?.[localVarOperationServerIndex]?.url;
@@ -12671,7 +12837,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiVideos200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiVideosByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiVideosByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12683,7 +12849,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiVideosGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiVideosGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiVideos200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiVideosGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiVideosGlobal']?.[localVarOperationServerIndex]?.url;
@@ -12695,7 +12861,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiWorkflows(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiWorkflows(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiWorkflows200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiWorkflows(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiWorkflows']?.[localVarOperationServerIndex]?.url;
@@ -12709,7 +12875,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiWorkflows200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiWorkflowsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiWorkflowsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12721,7 +12887,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAiWorkflowsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAiWorkflowsGlobal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiWorkflows200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAiWorkflowsGlobal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getAiWorkflowsGlobal']?.[localVarOperationServerIndex]?.url;
@@ -12733,7 +12899,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getModels(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiModelList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getModels(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getModels']?.[localVarOperationServerIndex]?.url;
@@ -12746,7 +12912,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getModelsByModelAccess(model: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getModelsByModelAccess(model: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiConnectionsByProviderAuthorize200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getModelsByModelAccess(model, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getModelsByModelAccess']?.[localVarOperationServerIndex]?.url;
@@ -12758,7 +12924,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getModelsProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getModelsProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetModelsProviders200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getModelsProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getModelsProviders']?.[localVarOperationServerIndex]?.url;
@@ -12771,7 +12937,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getVideosById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getVideosById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiVideoStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getVideosById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.getVideosById']?.[localVarOperationServerIndex]?.url;
@@ -12798,7 +12964,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiArticles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiArticlesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiArticlesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12812,7 +12978,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiAssets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiAssetsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiAssetsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12826,7 +12992,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiChats200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiChatsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiChatsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12840,7 +13006,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiDeployments200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiDeploymentsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiDeploymentsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12854,7 +13020,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFiles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiFilesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12868,7 +13034,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiForms200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiFormsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiFormsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12882,7 +13048,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiGraphs200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiGraphsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiGraphsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12896,7 +13062,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiMessages200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiMessagesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiMessagesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12910,7 +13076,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiNodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiNodesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiNodesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12922,7 +13088,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiOrgSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiOrgSettings']?.[localVarOperationServerIndex]?.url;
@@ -12934,7 +13100,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiOrgSettingsList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiOrgSettingsList']?.[localVarOperationServerIndex]?.url;
@@ -12946,7 +13112,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiPreferences(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiPreferences(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiPreferences(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiPreferences']?.[localVarOperationServerIndex]?.url;
@@ -12960,7 +13126,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiProviders200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiProvidersByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiProvidersByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12974,7 +13140,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRecords200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiRecordsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiRecordsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -12988,7 +13154,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRemoteConnections200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiRemoteConnectionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiRemoteConnectionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13000,7 +13166,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiRouterArtifactMeta(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiRouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
@@ -13012,7 +13178,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiRouterDefaults(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiRouterDefaults']?.[localVarOperationServerIndex]?.url;
@@ -13024,7 +13190,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiRouterLedger(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiRouterLedger']?.[localVarOperationServerIndex]?.url;
@@ -13036,7 +13202,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiRouterPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiRouterPolicy']?.[localVarOperationServerIndex]?.url;
@@ -13048,7 +13214,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiRouterRewards(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiRouterRewards']?.[localVarOperationServerIndex]?.url;
@@ -13062,7 +13228,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRoutes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiRoutesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiRoutesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13076,7 +13242,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiScales200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiScalesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiScalesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13090,7 +13256,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiScans200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiScansByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiScansByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13104,7 +13270,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiSigninSessions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiSigninSessionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiSigninSessionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13118,7 +13284,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiStores200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiStoresByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiStoresByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13132,7 +13298,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTasks200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiTasksByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiTasksByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13146,7 +13312,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTemplates200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiTemplatesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiTemplatesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13158,7 +13324,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiTrainingContribution(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiTrainingContribution(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiTrainingContribution(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiTrainingContribution']?.[localVarOperationServerIndex]?.url;
@@ -13172,7 +13338,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiTreeFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiTreeFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTreeFiles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiTreeFilesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiTreeFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13186,7 +13352,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiVectors200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiVectorsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiVectorsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13200,7 +13366,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiVideos200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiVideosByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiVideosByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13214,7 +13380,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiWorkflows200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAiWorkflowsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.patchAiWorkflowsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -13226,7 +13392,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiArticles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiArticles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiArticles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiArticles(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiArticles']?.[localVarOperationServerIndex]?.url;
@@ -13238,7 +13404,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiAssets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiAssets(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiAssets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiAssets(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiAssets']?.[localVarOperationServerIndex]?.url;
@@ -13252,7 +13418,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiAssetsByOwnerByNameScan(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiAssetsByOwnerByNameScan(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiAssetsByOwnerByNameScan(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiAssetsByOwnerByNameScan']?.[localVarOperationServerIndex]?.url;
@@ -13264,7 +13430,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiAssetsScan(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiAssetsScan(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiAssetsScan(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiAssetsScan']?.[localVarOperationServerIndex]?.url;
@@ -13276,7 +13442,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiChats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiChats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiChats200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiChats(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiChats']?.[localVarOperationServerIndex]?.url;
@@ -13288,7 +13454,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiConnections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiConnections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiConnections200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiConnections(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiConnections']?.[localVarOperationServerIndex]?.url;
@@ -13301,7 +13467,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiConnectionsByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiConnectionsByProvider(provider: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiConnections200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiConnectionsByProvider(provider, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiConnectionsByProvider']?.[localVarOperationServerIndex]?.url;
@@ -13313,7 +13479,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiDeployments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiDeployments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiDeployments200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiDeployments(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiDeployments']?.[localVarOperationServerIndex]?.url;
@@ -13327,7 +13493,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiDeploymentsByOwnerByNameDeploy(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiDeploymentsByOwnerByNameDeploy(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiDeploymentsByOwnerByNameDeploy(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiDeploymentsByOwnerByNameDeploy']?.[localVarOperationServerIndex]?.url;
@@ -13341,7 +13507,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiDeploymentsByOwnerByNameUndeploy(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiDeploymentsByOwnerByNameUndeploy(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiDeploymentsByOwnerByNameUndeploy(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiDeploymentsByOwnerByNameUndeploy']?.[localVarOperationServerIndex]?.url;
@@ -13353,7 +13519,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiFeedback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiFeedback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFeedback200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiFeedback(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiFeedback']?.[localVarOperationServerIndex]?.url;
@@ -13365,7 +13531,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiFiles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiFiles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFiles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiFiles(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiFiles']?.[localVarOperationServerIndex]?.url;
@@ -13377,7 +13543,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiFilesActivate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiFilesActivate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiFilesActivate(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiFilesActivate']?.[localVarOperationServerIndex]?.url;
@@ -13391,7 +13557,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiFilesByOwnerByNameVectors(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiFilesByOwnerByNameVectors(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiFilesByOwnerByNameVectors(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiFilesByOwnerByNameVectors']?.[localVarOperationServerIndex]?.url;
@@ -13403,7 +13569,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiFilesUpload(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiFilesUpload(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiFilesUpload(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiFilesUpload']?.[localVarOperationServerIndex]?.url;
@@ -13415,7 +13581,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiFinetuneCancel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiFinetuneCancel(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFinetuneCancel200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiFinetuneCancel(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiFinetuneCancel']?.[localVarOperationServerIndex]?.url;
@@ -13427,7 +13593,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiFinetuneDeploy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiFinetuneDeploy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFinetuneDeploy200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiFinetuneDeploy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiFinetuneDeploy']?.[localVarOperationServerIndex]?.url;
@@ -13439,7 +13605,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiFinetuneJobs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiFinetuneJobs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFinetuneCancel200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiFinetuneJobs(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiFinetuneJobs']?.[localVarOperationServerIndex]?.url;
@@ -13451,7 +13617,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiForms(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiForms(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiForms200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiForms(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiForms']?.[localVarOperationServerIndex]?.url;
@@ -13463,7 +13629,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiGraphs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiGraphs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiGraphs200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiGraphs(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiGraphs']?.[localVarOperationServerIndex]?.url;
@@ -13475,7 +13641,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiMemoryDelete(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiMemoryDelete(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiMemoryDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiMemoryDelete(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiMemoryDelete']?.[localVarOperationServerIndex]?.url;
@@ -13487,7 +13653,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiMemoryRemember(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiMemoryRemember(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiMemoryRemember200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiMemoryRemember(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiMemoryRemember']?.[localVarOperationServerIndex]?.url;
@@ -13499,7 +13665,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiMemoryUpdate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiMemoryUpdate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiMemoryDelete200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiMemoryUpdate(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiMemoryUpdate']?.[localVarOperationServerIndex]?.url;
@@ -13511,7 +13677,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiMessages200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiMessages(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiMessages']?.[localVarOperationServerIndex]?.url;
@@ -13523,7 +13689,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiNodes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiNodes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiNodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiNodes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiNodes']?.[localVarOperationServerIndex]?.url;
@@ -13537,7 +13703,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiNodesByOwnerByNameTunnel(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiNodesByOwnerByNameTunnel(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiNodesByOwnerByNameTunnel(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiNodesByOwnerByNameTunnel']?.[localVarOperationServerIndex]?.url;
@@ -13549,7 +13715,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiOrgSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiOrgSettings']?.[localVarOperationServerIndex]?.url;
@@ -13561,7 +13727,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiOrgSettingsList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiOrgSettingsList']?.[localVarOperationServerIndex]?.url;
@@ -13573,7 +13739,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiProviders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiProviders200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiProviders(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiProviders']?.[localVarOperationServerIndex]?.url;
@@ -13585,7 +13751,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiProvidersMcpTools(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiProvidersMcpTools(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiProvidersMcpTools(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiProvidersMcpTools']?.[localVarOperationServerIndex]?.url;
@@ -13597,7 +13763,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRagDelete(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRagDelete(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetAiFinetunePresets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRagDelete(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRagDelete']?.[localVarOperationServerIndex]?.url;
@@ -13609,7 +13775,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRagEmbed(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRagEmbed(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRagEmbed200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRagEmbed(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRagEmbed']?.[localVarOperationServerIndex]?.url;
@@ -13621,7 +13787,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRagIngest(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRagIngest(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRagIngest200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRagIngest(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRagIngest']?.[localVarOperationServerIndex]?.url;
@@ -13633,7 +13799,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRagQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRagQuery(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DocSearchResult>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRagQuery(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRagQuery']?.[localVarOperationServerIndex]?.url;
@@ -13645,7 +13811,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRagQueryMultiple(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRagQueryMultiple(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DocSearchResult>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRagQueryMultiple(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRagQueryMultiple']?.[localVarOperationServerIndex]?.url;
@@ -13657,7 +13823,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRecords(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRecords(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRecords200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRecords(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRecords']?.[localVarOperationServerIndex]?.url;
@@ -13669,7 +13835,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRecordsBatch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRecordsBatch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRecordsBatch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRecordsBatch']?.[localVarOperationServerIndex]?.url;
@@ -13681,7 +13847,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRecordsCommit(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRecordsCommit(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRecordsCommit(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRecordsCommit']?.[localVarOperationServerIndex]?.url;
@@ -13693,7 +13859,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRecordsCommitSecond(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRecordsCommitSecond(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRecordsCommitSecond(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRecordsCommitSecond']?.[localVarOperationServerIndex]?.url;
@@ -13705,7 +13871,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRemoteConnections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRemoteConnections(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRemoteConnections200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRemoteConnections(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRemoteConnections']?.[localVarOperationServerIndex]?.url;
@@ -13719,7 +13885,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRemoteConnectionsByOwnerByNameStart(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRemoteConnectionsByOwnerByNameStart(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRemoteConnectionsByOwnerByNameStart(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRemoteConnectionsByOwnerByNameStart']?.[localVarOperationServerIndex]?.url;
@@ -13733,7 +13899,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRemoteConnectionsByOwnerByNameStop(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRemoteConnectionsByOwnerByNameStop(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRemoteConnectionsByOwnerByNameStop(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRemoteConnectionsByOwnerByNameStop']?.[localVarOperationServerIndex]?.url;
@@ -13745,7 +13911,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRouterArtifactMeta(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
@@ -13757,7 +13923,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRouterDefaults(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRouterDefaults']?.[localVarOperationServerIndex]?.url;
@@ -13769,7 +13935,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRouterLedger(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRouterLedger']?.[localVarOperationServerIndex]?.url;
@@ -13781,7 +13947,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRouterPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRouterPolicy']?.[localVarOperationServerIndex]?.url;
@@ -13793,7 +13959,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRouterRewards(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRouterRewards']?.[localVarOperationServerIndex]?.url;
@@ -13805,7 +13971,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiRoutes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiRoutes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRoutes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiRoutes(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiRoutes']?.[localVarOperationServerIndex]?.url;
@@ -13817,7 +13983,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiScales(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiScales(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiScales200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiScales(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiScales']?.[localVarOperationServerIndex]?.url;
@@ -13829,7 +13995,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiScans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiScans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiScans200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiScans(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiScans']?.[localVarOperationServerIndex]?.url;
@@ -13841,7 +14007,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiSignin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiSignin(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiSignin(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiSignin']?.[localVarOperationServerIndex]?.url;
@@ -13853,7 +14019,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiSigninSessions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiSigninSessions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiSigninSessions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiSigninSessions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiSigninSessions']?.[localVarOperationServerIndex]?.url;
@@ -13865,7 +14031,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiSignout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiSignout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiSignout(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiSignout']?.[localVarOperationServerIndex]?.url;
@@ -13877,7 +14043,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiStores(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiStores(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiStores200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiStores(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiStores']?.[localVarOperationServerIndex]?.url;
@@ -13891,7 +14057,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiStoresByOwnerByNameVectors(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiStoresByOwnerByNameVectors(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiStoresByOwnerByNameVectors(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiStoresByOwnerByNameVectors']?.[localVarOperationServerIndex]?.url;
@@ -13903,7 +14069,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiTasks(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTasks200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiTasks(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiTasks']?.[localVarOperationServerIndex]?.url;
@@ -13917,7 +14083,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiTasksByOwnerByNameAnalyze(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiTasksByOwnerByNameAnalyze(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiTasksByOwnerByNameAnalyze(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiTasksByOwnerByNameAnalyze']?.[localVarOperationServerIndex]?.url;
@@ -13931,7 +14097,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiTasksByOwnerByNameDocument(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiTasksByOwnerByNameDocument(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiTasksByOwnerByNameDocument(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiTasksByOwnerByNameDocument']?.[localVarOperationServerIndex]?.url;
@@ -13943,7 +14109,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiTemplates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTemplates200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiTemplates(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiTemplates']?.[localVarOperationServerIndex]?.url;
@@ -13955,7 +14121,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiTreeFiles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiTreeFiles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTreeFiles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiTreeFiles(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiTreeFiles']?.[localVarOperationServerIndex]?.url;
@@ -13967,7 +14133,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiVectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiVectors(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiVectors200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiVectors(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiVectors']?.[localVarOperationServerIndex]?.url;
@@ -13979,7 +14145,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiVideos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiVideos(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiVideos200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiVideos(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiVideos']?.[localVarOperationServerIndex]?.url;
@@ -13991,7 +14157,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiVideosUpload(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiVideosUpload(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiVideosUpload(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiVideosUpload']?.[localVarOperationServerIndex]?.url;
@@ -14003,7 +14169,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAiWorkflows(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAiWorkflows(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiWorkflows200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAiWorkflows(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAiWorkflows']?.[localVarOperationServerIndex]?.url;
@@ -14051,7 +14217,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAudioTranscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postAudioTranscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiAudioResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postAudioTranscriptions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postAudioTranscriptions']?.[localVarOperationServerIndex]?.url;
@@ -14075,7 +14241,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postChat(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postChat(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postChat(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postChat']?.[localVarOperationServerIndex]?.url;
@@ -14087,7 +14253,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postChatCompletions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postChatCompletions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postChatCompletions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postChatCompletions']?.[localVarOperationServerIndex]?.url;
@@ -14099,7 +14265,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postChatPublic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postChatPublic(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postChatPublic(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postChatPublic']?.[localVarOperationServerIndex]?.url;
@@ -14111,7 +14277,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCompletions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postCompletions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiChatCompletionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postCompletions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postCompletions']?.[localVarOperationServerIndex]?.url;
@@ -14123,7 +14289,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postEmbeddings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postEmbeddings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiEmbeddingResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postEmbeddings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postEmbeddings']?.[localVarOperationServerIndex]?.url;
@@ -14135,7 +14301,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postImagesGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postImagesGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenaiImageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postImagesGenerations(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postImagesGenerations']?.[localVarOperationServerIndex]?.url;
@@ -14147,7 +14313,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postMessages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiAnthropicResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postMessages(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postMessages']?.[localVarOperationServerIndex]?.url;
@@ -14159,7 +14325,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMessagesCountTokens(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postMessagesCountTokens(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiTokenCount>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postMessagesCountTokens(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postMessagesCountTokens']?.[localVarOperationServerIndex]?.url;
@@ -14172,7 +14338,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postModelsByModelAccess(model: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postModelsByModelAccess(model: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostModelsByModelAccess200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postModelsByModelAccess(model, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postModelsByModelAccess']?.[localVarOperationServerIndex]?.url;
@@ -14184,7 +14350,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postRerank(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postRerank(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiRanking>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postRerank(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postRerank']?.[localVarOperationServerIndex]?.url;
@@ -14196,7 +14362,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postResponses(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postResponses(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponsesResource>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postResponses(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postResponses']?.[localVarOperationServerIndex]?.url;
@@ -14208,7 +14374,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postVideosGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postVideosGenerations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiVideoStatus>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postVideosGenerations(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.postVideosGenerations']?.[localVarOperationServerIndex]?.url;
@@ -14222,7 +14388,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiArticlesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiArticles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiArticlesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiArticlesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14236,7 +14402,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiAssetsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiAssets200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiAssetsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiAssetsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14250,7 +14416,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiChatsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiChats200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiChatsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiChatsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14264,7 +14430,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiDeploymentsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiDeployments200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiDeploymentsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiDeploymentsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14278,7 +14444,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiFiles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiFilesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14292,7 +14458,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiFormsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiForms200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiFormsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiFormsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14306,7 +14472,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiGraphsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiGraphs200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiGraphsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiGraphsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14320,7 +14486,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiMessagesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiMessages200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiMessagesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiMessagesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14334,7 +14500,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiNodesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiNodes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiNodesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiNodesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14346,7 +14512,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiOrgSettings(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiOrgSettings(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiOrgSettings']?.[localVarOperationServerIndex]?.url;
@@ -14358,7 +14524,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiOrgSettingsList(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiOrgSettingsList(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiOrgSettingsList']?.[localVarOperationServerIndex]?.url;
@@ -14370,7 +14536,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiPreferences(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiPreferences(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiPreferences(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiPreferences']?.[localVarOperationServerIndex]?.url;
@@ -14384,7 +14550,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiProvidersByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiProviders200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiProvidersByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiProvidersByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14398,7 +14564,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiRecordsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRecords200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiRecordsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiRecordsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14412,7 +14578,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiRemoteConnectionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRemoteConnections200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiRemoteConnectionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiRemoteConnectionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14424,7 +14590,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiRouterArtifactMeta(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiRouterArtifactMeta(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiRouterArtifactMeta']?.[localVarOperationServerIndex]?.url;
@@ -14436,7 +14602,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiRouterDefaults(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiRouterDefaults(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiRouterDefaults']?.[localVarOperationServerIndex]?.url;
@@ -14448,7 +14614,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiRouterLedger(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiRouterLedger(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiRouterLedger']?.[localVarOperationServerIndex]?.url;
@@ -14460,7 +14626,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiRouterPolicy(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiRouterPolicy(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiRouterPolicy']?.[localVarOperationServerIndex]?.url;
@@ -14472,7 +14638,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiRouterRewards(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AiResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiRouterRewards(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiRouterRewards']?.[localVarOperationServerIndex]?.url;
@@ -14486,7 +14652,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiRoutesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiRoutes200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiRoutesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiRoutesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14500,7 +14666,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiScalesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiScales200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiScalesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiScalesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14514,7 +14680,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiScansByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiScans200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiScansByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiScansByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14528,7 +14694,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiSigninSessionsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiSigninSessions200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiSigninSessionsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiSigninSessionsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14542,7 +14708,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiStoresByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiStores200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiStoresByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiStoresByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14556,7 +14722,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiTasksByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTasks200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiTasksByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiTasksByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14570,7 +14736,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiTemplatesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTemplates200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiTemplatesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiTemplatesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14582,7 +14748,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiTrainingContribution(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiTrainingContribution(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Envelope>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiTrainingContribution(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiTrainingContribution']?.[localVarOperationServerIndex]?.url;
@@ -14596,7 +14762,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiTreeFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiTreeFilesByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiTreeFiles200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiTreeFilesByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiTreeFilesByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14610,7 +14776,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiVectorsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiVectors200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiVectorsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiVectorsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14624,7 +14790,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiVideosByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiVideos200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiVideosByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiVideosByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14638,7 +14804,7 @@ export const AiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAiWorkflowsByOwnerByName(owner: string, name: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostAiWorkflows200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAiWorkflowsByOwnerByName(owner, name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AiApi.putAiWorkflowsByOwnerByName']?.[localVarOperationServerIndex]?.url;
@@ -14671,7 +14837,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiArticlesByOwnerByName(requestParameters: AiApiDeleteAiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiArticlesByOwnerByName(requestParameters: AiApiDeleteAiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiArticles200Response> {
             return localVarFp.deleteAiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14681,7 +14847,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiAssetsByOwnerByName(requestParameters: AiApiDeleteAiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiAssetsByOwnerByName(requestParameters: AiApiDeleteAiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiAssets200Response> {
             return localVarFp.deleteAiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14691,7 +14857,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiChatsByOwnerByName(requestParameters: AiApiDeleteAiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiChatsByOwnerByName(requestParameters: AiApiDeleteAiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiChats200Response> {
             return localVarFp.deleteAiChatsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14701,7 +14867,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiConnectionsByProvider(requestParameters: AiApiDeleteAiConnectionsByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiConnectionsByProvider(requestParameters: AiApiDeleteAiConnectionsByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiConnections200Response> {
             return localVarFp.deleteAiConnectionsByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14711,7 +14877,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiDeploymentsByOwnerByName(requestParameters: AiApiDeleteAiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiDeploymentsByOwnerByName(requestParameters: AiApiDeleteAiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiDeployments200Response> {
             return localVarFp.deleteAiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14721,7 +14887,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiFilesByOwnerByName(requestParameters: AiApiDeleteAiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiFilesByOwnerByName(requestParameters: AiApiDeleteAiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiFiles200Response> {
             return localVarFp.deleteAiFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14731,7 +14897,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiFormsByOwnerByName(requestParameters: AiApiDeleteAiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiFormsByOwnerByName(requestParameters: AiApiDeleteAiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiForms200Response> {
             return localVarFp.deleteAiFormsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14741,7 +14907,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiGraphsByOwnerByName(requestParameters: AiApiDeleteAiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiGraphsByOwnerByName(requestParameters: AiApiDeleteAiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiGraphs200Response> {
             return localVarFp.deleteAiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14751,7 +14917,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiMessagesByOwnerByName(requestParameters: AiApiDeleteAiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiMessagesByOwnerByName(requestParameters: AiApiDeleteAiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiMessages200Response> {
             return localVarFp.deleteAiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14760,7 +14926,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiMessagesWelcome(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiMessagesWelcome(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.deleteAiMessagesWelcome(options).then((request) => request(axios, basePath));
         },
         /**
@@ -14770,7 +14936,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiNodesByOwnerByName(requestParameters: AiApiDeleteAiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiNodesByOwnerByName(requestParameters: AiApiDeleteAiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiNodes200Response> {
             return localVarFp.deleteAiNodesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14779,7 +14945,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.deleteAiOrgSettings(options).then((request) => request(axios, basePath));
         },
         /**
@@ -14788,7 +14954,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.deleteAiOrgSettingsList(options).then((request) => request(axios, basePath));
         },
         /**
@@ -14798,7 +14964,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiProvidersByOwnerByName(requestParameters: AiApiDeleteAiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiProvidersByOwnerByName(requestParameters: AiApiDeleteAiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiProviders200Response> {
             return localVarFp.deleteAiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14808,7 +14974,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiRecordsByOwnerByName(requestParameters: AiApiDeleteAiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiRecordsByOwnerByName(requestParameters: AiApiDeleteAiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRecords200Response> {
             return localVarFp.deleteAiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14818,7 +14984,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiRemoteConnectionsByOwnerByName(requestParameters: AiApiDeleteAiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiRemoteConnectionsByOwnerByName(requestParameters: AiApiDeleteAiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRemoteConnections200Response> {
             return localVarFp.deleteAiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14827,7 +14993,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.deleteAiRouterArtifactMeta(options).then((request) => request(axios, basePath));
         },
         /**
@@ -14836,7 +15002,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiRouterData(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiRouterData(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.deleteAiRouterData(options).then((request) => request(axios, basePath));
         },
         /**
@@ -14845,7 +15011,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.deleteAiRouterDefaults(options).then((request) => request(axios, basePath));
         },
         /**
@@ -14854,7 +15020,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.deleteAiRouterLedger(options).then((request) => request(axios, basePath));
         },
         /**
@@ -14863,7 +15029,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.deleteAiRouterPolicy(options).then((request) => request(axios, basePath));
         },
         /**
@@ -14872,7 +15038,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.deleteAiRouterRewards(options).then((request) => request(axios, basePath));
         },
         /**
@@ -14882,7 +15048,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiRoutesByOwnerByName(requestParameters: AiApiDeleteAiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiRoutesByOwnerByName(requestParameters: AiApiDeleteAiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRoutes200Response> {
             return localVarFp.deleteAiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14892,7 +15058,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiScalesByOwnerByName(requestParameters: AiApiDeleteAiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiScalesByOwnerByName(requestParameters: AiApiDeleteAiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiScales200Response> {
             return localVarFp.deleteAiScalesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14902,7 +15068,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiScansByOwnerByName(requestParameters: AiApiDeleteAiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiScansByOwnerByName(requestParameters: AiApiDeleteAiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiScans200Response> {
             return localVarFp.deleteAiScansByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14912,7 +15078,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiSigninSessionsByOwnerByName(requestParameters: AiApiDeleteAiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiSigninSessionsByOwnerByName(requestParameters: AiApiDeleteAiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiSigninSessions200Response> {
             return localVarFp.deleteAiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14922,7 +15088,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiStoresByOwnerByName(requestParameters: AiApiDeleteAiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiStoresByOwnerByName(requestParameters: AiApiDeleteAiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiStores200Response> {
             return localVarFp.deleteAiStoresByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14932,7 +15098,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiTasksByOwnerByName(requestParameters: AiApiDeleteAiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiTasksByOwnerByName(requestParameters: AiApiDeleteAiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiTasks200Response> {
             return localVarFp.deleteAiTasksByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14942,7 +15108,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiTemplatesByOwnerByName(requestParameters: AiApiDeleteAiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiTemplatesByOwnerByName(requestParameters: AiApiDeleteAiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiTemplates200Response> {
             return localVarFp.deleteAiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14952,7 +15118,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiTreeFilesByOwnerByName(requestParameters: AiApiDeleteAiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiTreeFilesByOwnerByName(requestParameters: AiApiDeleteAiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiTreeFiles200Response> {
             return localVarFp.deleteAiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14961,7 +15127,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiVectorsAll(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiVectorsAll(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.deleteAiVectorsAll(options).then((request) => request(axios, basePath));
         },
         /**
@@ -14971,7 +15137,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiVectorsByOwnerByName(requestParameters: AiApiDeleteAiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiVectorsByOwnerByName(requestParameters: AiApiDeleteAiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiVectors200Response> {
             return localVarFp.deleteAiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14981,7 +15147,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiVideosByOwnerByName(requestParameters: AiApiDeleteAiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiVideosByOwnerByName(requestParameters: AiApiDeleteAiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiVideos200Response> {
             return localVarFp.deleteAiVideosByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -14991,7 +15157,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAiWorkflowsByOwnerByName(requestParameters: AiApiDeleteAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteAiWorkflowsByOwnerByName(requestParameters: AiApiDeleteAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiWorkflows200Response> {
             return localVarFp.deleteAiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15000,7 +15166,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiAccount(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiAccount(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiAccount(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15009,7 +15175,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiActivities(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiActivities(options?: RawAxiosRequestConfig): AxiosPromise<GetAiActivities200Response> {
             return localVarFp.getAiActivities(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15018,7 +15184,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiAnswer(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiAnswer(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiAnswer(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15027,7 +15193,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiArticles(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiArticles(options?: RawAxiosRequestConfig): AxiosPromise<GetAiArticles200Response> {
             return localVarFp.getAiArticles(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15037,7 +15203,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiArticlesByOwnerByName(requestParameters: AiApiGetAiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiArticlesByOwnerByName(requestParameters: AiApiGetAiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiArticles200Response> {
             return localVarFp.getAiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15046,7 +15212,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiArticlesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiArticlesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiArticles200Response> {
             return localVarFp.getAiArticlesGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15055,7 +15221,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiAssets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiAssets(options?: RawAxiosRequestConfig): AxiosPromise<GetAiAssets200Response> {
             return localVarFp.getAiAssets(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15065,7 +15231,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiAssetsByOwnerByName(requestParameters: AiApiGetAiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiAssetsByOwnerByName(requestParameters: AiApiGetAiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiAssets200Response> {
             return localVarFp.getAiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15074,7 +15240,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiChats(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiChats(options?: RawAxiosRequestConfig): AxiosPromise<GetAiChats200Response> {
             return localVarFp.getAiChats(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15084,7 +15250,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiChatsByOwnerByName(requestParameters: AiApiGetAiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiChatsByOwnerByName(requestParameters: AiApiGetAiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiChats200Response> {
             return localVarFp.getAiChatsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15093,7 +15259,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiChatsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiChatsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiChats200Response> {
             return localVarFp.getAiChatsGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15102,7 +15268,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiConnections(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiConnections(options?: RawAxiosRequestConfig): AxiosPromise<GetAiConnections200Response> {
             return localVarFp.getAiConnections(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15112,7 +15278,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiConnectionsByProviderAuthorize(requestParameters: AiApiGetAiConnectionsByProviderAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiConnectionsByProviderAuthorize(requestParameters: AiApiGetAiConnectionsByProviderAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetAiConnectionsByProviderAuthorize200Response> {
             return localVarFp.getAiConnectionsByProviderAuthorize(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15132,7 +15298,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiConnectionsByProviderUsage(requestParameters: AiApiGetAiConnectionsByProviderUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiConnectionsByProviderUsage(requestParameters: AiApiGetAiConnectionsByProviderUsageRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetAiConnectionsByProviderUsage200Response> {
             return localVarFp.getAiConnectionsByProviderUsage(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15141,7 +15307,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiDashboardsAgents(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiDashboardsAgents(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiDashboardsAgents(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15150,7 +15316,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiDashboardsVm(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiDashboardsVm(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiDashboardsVm(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15159,7 +15325,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiDeployments(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiDeployments(options?: RawAxiosRequestConfig): AxiosPromise<GetAiDeployments200Response> {
             return localVarFp.getAiDeployments(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15169,7 +15335,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiDeploymentsByOwnerByName(requestParameters: AiApiGetAiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiDeploymentsByOwnerByName(requestParameters: AiApiGetAiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiDeployments200Response> {
             return localVarFp.getAiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15178,7 +15344,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFiles(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFiles(options?: RawAxiosRequestConfig): AxiosPromise<GetAiFiles200Response> {
             return localVarFp.getAiFiles(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15187,7 +15353,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFilesActive(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFilesActive(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiFilesActive(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15197,7 +15363,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFilesByOwnerByName(requestParameters: AiApiGetAiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFilesByOwnerByName(requestParameters: AiApiGetAiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiFiles200Response> {
             return localVarFp.getAiFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15206,7 +15372,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFilesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFilesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiFiles200Response> {
             return localVarFp.getAiFilesGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15215,7 +15381,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFinetuneHfDatasets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFinetuneHfDatasets(options?: RawAxiosRequestConfig): AxiosPromise<GetAiFinetuneHfDatasets200Response> {
             return localVarFp.getAiFinetuneHfDatasets(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15224,7 +15390,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFinetuneHfModels(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFinetuneHfModels(options?: RawAxiosRequestConfig): AxiosPromise<GetAiFinetuneHfModels200Response> {
             return localVarFp.getAiFinetuneHfModels(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15233,7 +15399,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFinetuneHfRepo(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFinetuneHfRepo(options?: RawAxiosRequestConfig): AxiosPromise<GetAiFinetuneHfRepo200Response> {
             return localVarFp.getAiFinetuneHfRepo(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15242,7 +15408,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFinetuneJob(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFinetuneJob(options?: RawAxiosRequestConfig): AxiosPromise<PostAiFinetuneCancel200Response> {
             return localVarFp.getAiFinetuneJob(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15251,7 +15417,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFinetuneJobs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFinetuneJobs(options?: RawAxiosRequestConfig): AxiosPromise<GetAiFinetuneJobs200Response> {
             return localVarFp.getAiFinetuneJobs(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15260,7 +15426,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFinetunePresets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFinetunePresets(options?: RawAxiosRequestConfig): AxiosPromise<GetAiFinetunePresets200Response> {
             return localVarFp.getAiFinetunePresets(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15269,7 +15435,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiForms(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiForms(options?: RawAxiosRequestConfig): AxiosPromise<GetAiForms200Response> {
             return localVarFp.getAiForms(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15279,7 +15445,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFormsByOwnerByName(requestParameters: AiApiGetAiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFormsByOwnerByName(requestParameters: AiApiGetAiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiForms200Response> {
             return localVarFp.getAiFormsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15288,7 +15454,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFormsData(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFormsData(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiFormsData(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15297,7 +15463,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiFormsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiFormsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiForms200Response> {
             return localVarFp.getAiFormsGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15306,7 +15472,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiGraphs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiGraphs(options?: RawAxiosRequestConfig): AxiosPromise<GetAiGraphs200Response> {
             return localVarFp.getAiGraphs(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15316,7 +15482,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiGraphsByOwnerByName(requestParameters: AiApiGetAiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiGraphsByOwnerByName(requestParameters: AiApiGetAiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiGraphs200Response> {
             return localVarFp.getAiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15325,7 +15491,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiGraphsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiGraphsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiGraphs200Response> {
             return localVarFp.getAiGraphsGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15334,7 +15500,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiK8sStatus(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiK8sStatus(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiK8sStatus(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15343,7 +15509,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiMemoryFacts(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiMemoryFacts(options?: RawAxiosRequestConfig): AxiosPromise<GetAiMemoryFacts200Response> {
             return localVarFp.getAiMemoryFacts(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15352,7 +15518,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiMemoryList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiMemoryList(options?: RawAxiosRequestConfig): AxiosPromise<GetAiMemoryFacts200Response> {
             return localVarFp.getAiMemoryList(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15361,7 +15527,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiMemoryRecall(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiMemoryRecall(options?: RawAxiosRequestConfig): AxiosPromise<GetAiMemoryFacts200Response> {
             return localVarFp.getAiMemoryRecall(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15370,7 +15536,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiMemorySearch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiMemorySearch(options?: RawAxiosRequestConfig): AxiosPromise<GetAiMemoryFacts200Response> {
             return localVarFp.getAiMemorySearch(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15379,7 +15545,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiMessages(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiMessages(options?: RawAxiosRequestConfig): AxiosPromise<GetAiMessages200Response> {
             return localVarFp.getAiMessages(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15389,7 +15555,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiMessagesByOwnerByName(requestParameters: AiApiGetAiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiMessagesByOwnerByName(requestParameters: AiApiGetAiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiMessages200Response> {
             return localVarFp.getAiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15399,7 +15565,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiMessagesByOwnerByNameAnswer(requestParameters: AiApiGetAiMessagesByOwnerByNameAnswerRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiMessagesByOwnerByNameAnswer(requestParameters: AiApiGetAiMessagesByOwnerByNameAnswerRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiMessagesByOwnerByNameAnswer(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15408,7 +15574,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiMessagesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiMessagesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiMessages200Response> {
             return localVarFp.getAiMessagesGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15417,7 +15583,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiNodes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiNodes(options?: RawAxiosRequestConfig): AxiosPromise<GetAiNodes200Response> {
             return localVarFp.getAiNodes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15427,7 +15593,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiNodesByOwnerByName(requestParameters: AiApiGetAiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiNodesByOwnerByName(requestParameters: AiApiGetAiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiNodes200Response> {
             return localVarFp.getAiNodesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15437,7 +15603,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiNodesByOwnerByNameTunnel(requestParameters: AiApiGetAiNodesByOwnerByNameTunnelRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiNodesByOwnerByNameTunnel(requestParameters: AiApiGetAiNodesByOwnerByNameTunnelRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiNodesByOwnerByNameTunnel(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15446,7 +15612,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.getAiOrgSettings(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15455,7 +15621,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.getAiOrgSettingsList(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15464,7 +15630,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiPrometheus(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiPrometheus(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiPrometheus(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15473,7 +15639,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiProviders(options?: RawAxiosRequestConfig): AxiosPromise<GetAiProviders200Response> {
             return localVarFp.getAiProviders(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15483,7 +15649,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiProvidersByOwnerByName(requestParameters: AiApiGetAiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiProvidersByOwnerByName(requestParameters: AiApiGetAiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiProviders200Response> {
             return localVarFp.getAiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15492,7 +15658,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiProvidersGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiProvidersGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiProviders200Response> {
             return localVarFp.getAiProvidersGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15501,7 +15667,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRagContext(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRagContext(options?: RawAxiosRequestConfig): AxiosPromise<Array<DocSearchResult>> {
             return localVarFp.getAiRagContext(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15510,7 +15676,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRecords(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRecords(options?: RawAxiosRequestConfig): AxiosPromise<GetAiRecords200Response> {
             return localVarFp.getAiRecords(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15520,7 +15686,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRecordsByOwnerByName(requestParameters: AiApiGetAiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRecordsByOwnerByName(requestParameters: AiApiGetAiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRecords200Response> {
             return localVarFp.getAiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15529,7 +15695,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRecordsQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRecordsQuery(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiRecordsQuery(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15538,7 +15704,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRecordsQuerySecond(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRecordsQuerySecond(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiRecordsQuerySecond(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15547,7 +15713,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRemoteConnections(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRemoteConnections(options?: RawAxiosRequestConfig): AxiosPromise<GetAiRemoteConnections200Response> {
             return localVarFp.getAiRemoteConnections(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15557,7 +15723,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRemoteConnectionsByOwnerByName(requestParameters: AiApiGetAiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRemoteConnectionsByOwnerByName(requestParameters: AiApiGetAiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRemoteConnections200Response> {
             return localVarFp.getAiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15566,7 +15732,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.getAiRouterArtifactMeta(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15575,7 +15741,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRouterData(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRouterData(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiRouterData(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15584,7 +15750,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.getAiRouterDefaults(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15593,7 +15759,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRouterHistory(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRouterHistory(options?: RawAxiosRequestConfig): AxiosPromise<GetAiRouterHistory200Response> {
             return localVarFp.getAiRouterHistory(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15602,7 +15768,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRouterJudgePanel(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRouterJudgePanel(options?: RawAxiosRequestConfig): AxiosPromise<GetAiRouterJudgePanel200Response> {
             return localVarFp.getAiRouterJudgePanel(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15611,7 +15777,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.getAiRouterLedger(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15620,7 +15786,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.getAiRouterPolicy(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15629,7 +15795,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.getAiRouterRewards(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15638,7 +15804,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRouterStats(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRouterStats(options?: RawAxiosRequestConfig): AxiosPromise<GetAiRouterStats200Response> {
             return localVarFp.getAiRouterStats(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15647,7 +15813,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRoutes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRoutes(options?: RawAxiosRequestConfig): AxiosPromise<GetAiRoutes200Response> {
             return localVarFp.getAiRoutes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15657,7 +15823,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiRoutesByOwnerByName(requestParameters: AiApiGetAiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiRoutesByOwnerByName(requestParameters: AiApiGetAiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRoutes200Response> {
             return localVarFp.getAiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15666,7 +15832,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiScales(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiScales(options?: RawAxiosRequestConfig): AxiosPromise<GetAiScales200Response> {
             return localVarFp.getAiScales(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15676,7 +15842,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiScalesByOwnerByName(requestParameters: AiApiGetAiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiScalesByOwnerByName(requestParameters: AiApiGetAiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiScales200Response> {
             return localVarFp.getAiScalesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15685,7 +15851,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiScalesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiScalesGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiScales200Response> {
             return localVarFp.getAiScalesGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15694,7 +15860,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiScalesPublic(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiScalesPublic(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiScalesPublic(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15703,7 +15869,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiScans(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiScans(options?: RawAxiosRequestConfig): AxiosPromise<GetAiScans200Response> {
             return localVarFp.getAiScans(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15713,7 +15879,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiScansByOwnerByName(requestParameters: AiApiGetAiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiScansByOwnerByName(requestParameters: AiApiGetAiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiScans200Response> {
             return localVarFp.getAiScansByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15722,7 +15888,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiSigninSessions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiSigninSessions(options?: RawAxiosRequestConfig): AxiosPromise<GetAiSigninSessions200Response> {
             return localVarFp.getAiSigninSessions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15732,7 +15898,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiSigninSessionsByOwnerByName(requestParameters: AiApiGetAiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiSigninSessionsByOwnerByName(requestParameters: AiApiGetAiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiSigninSessions200Response> {
             return localVarFp.getAiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15741,7 +15907,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiSigninSessionsDuplicated(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiSigninSessionsDuplicated(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiSigninSessionsDuplicated(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15750,7 +15916,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiStores(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiStores(options?: RawAxiosRequestConfig): AxiosPromise<GetAiStores200Response> {
             return localVarFp.getAiStores(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15760,7 +15926,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiStoresByOwnerByName(requestParameters: AiApiGetAiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiStoresByOwnerByName(requestParameters: AiApiGetAiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiStores200Response> {
             return localVarFp.getAiStoresByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15769,7 +15935,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiStoresGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiStoresGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiStores200Response> {
             return localVarFp.getAiStoresGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15778,7 +15944,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiStoresNames(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiStoresNames(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiStoresNames(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15787,7 +15953,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiStoresProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiStoresProviders(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiStoresProviders(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15796,7 +15962,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiSystem(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiSystem(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiSystem(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15805,7 +15971,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiTasks(options?: RawAxiosRequestConfig): AxiosPromise<GetAiTasks200Response> {
             return localVarFp.getAiTasks(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15815,7 +15981,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiTasksByOwnerByName(requestParameters: AiApiGetAiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiTasksByOwnerByName(requestParameters: AiApiGetAiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiTasks200Response> {
             return localVarFp.getAiTasksByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15824,7 +15990,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiTasksGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiTasksGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiTasks200Response> {
             return localVarFp.getAiTasksGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15833,7 +15999,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiTemplates(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiTemplates(options?: RawAxiosRequestConfig): AxiosPromise<GetAiTemplates200Response> {
             return localVarFp.getAiTemplates(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15843,7 +16009,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiTemplatesByOwnerByName(requestParameters: AiApiGetAiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiTemplatesByOwnerByName(requestParameters: AiApiGetAiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiTemplates200Response> {
             return localVarFp.getAiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15852,7 +16018,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiTrafficGlobe(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiTrafficGlobe(options?: RawAxiosRequestConfig): AxiosPromise<GetAiTrafficGlobe200Response> {
             return localVarFp.getAiTrafficGlobe(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15861,7 +16027,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiTrainingContribution(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiTrainingContribution(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiTrainingContribution(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15870,7 +16036,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiUsages(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiUsages(options?: RawAxiosRequestConfig): AxiosPromise<GetAiUsages200Response> {
             return localVarFp.getAiUsages(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15879,7 +16045,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiUsagesByUser(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiUsagesByUser(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiUsagesByUser(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15888,7 +16054,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiUsagesCloud(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiUsagesCloud(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiUsagesCloud(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15897,7 +16063,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiUsagesRange(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiUsagesRange(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiUsagesRange(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15906,7 +16072,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiUsagesUserNames(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiUsagesUserNames(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiUsagesUserNames(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15915,7 +16081,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiVectors(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiVectors(options?: RawAxiosRequestConfig): AxiosPromise<GetAiVectors200Response> {
             return localVarFp.getAiVectors(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15925,7 +16091,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiVectorsByOwnerByName(requestParameters: AiApiGetAiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiVectorsByOwnerByName(requestParameters: AiApiGetAiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiVectors200Response> {
             return localVarFp.getAiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15934,7 +16100,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiVectorsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiVectorsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiVectors200Response> {
             return localVarFp.getAiVectorsGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15943,7 +16109,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiVersion(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiVersion(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.getAiVersion(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15952,7 +16118,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiVideos(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiVideos(options?: RawAxiosRequestConfig): AxiosPromise<GetAiVideos200Response> {
             return localVarFp.getAiVideos(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15962,7 +16128,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiVideosByOwnerByName(requestParameters: AiApiGetAiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiVideosByOwnerByName(requestParameters: AiApiGetAiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiVideos200Response> {
             return localVarFp.getAiVideosByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15971,7 +16137,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiVideosGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiVideosGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiVideos200Response> {
             return localVarFp.getAiVideosGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15980,7 +16146,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiWorkflows(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiWorkflows(options?: RawAxiosRequestConfig): AxiosPromise<GetAiWorkflows200Response> {
             return localVarFp.getAiWorkflows(options).then((request) => request(axios, basePath));
         },
         /**
@@ -15990,7 +16156,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiWorkflowsByOwnerByName(requestParameters: AiApiGetAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiWorkflowsByOwnerByName(requestParameters: AiApiGetAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiWorkflows200Response> {
             return localVarFp.getAiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -15999,7 +16165,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAiWorkflowsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAiWorkflowsGlobal(options?: RawAxiosRequestConfig): AxiosPromise<GetAiWorkflows200Response> {
             return localVarFp.getAiWorkflowsGlobal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16008,7 +16174,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getModels(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getModels(options?: RawAxiosRequestConfig): AxiosPromise<AiModelList> {
             return localVarFp.getModels(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16018,7 +16184,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getModelsByModelAccess(requestParameters: AiApiGetModelsByModelAccessRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getModelsByModelAccess(requestParameters: AiApiGetModelsByModelAccessRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetAiConnectionsByProviderAuthorize200Response> {
             return localVarFp.getModelsByModelAccess(requestParameters.model, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16027,7 +16193,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getModelsProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getModelsProviders(options?: RawAxiosRequestConfig): AxiosPromise<GetModelsProviders200Response> {
             return localVarFp.getModelsProviders(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16037,7 +16203,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVideosById(requestParameters: AiApiGetVideosByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getVideosById(requestParameters: AiApiGetVideosByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<AiVideoStatus> {
             return localVarFp.getVideosById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16057,7 +16223,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiArticlesByOwnerByName(requestParameters: AiApiPatchAiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiArticlesByOwnerByName(requestParameters: AiApiPatchAiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiArticles200Response> {
             return localVarFp.patchAiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16067,7 +16233,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiAssetsByOwnerByName(requestParameters: AiApiPatchAiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiAssetsByOwnerByName(requestParameters: AiApiPatchAiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiAssets200Response> {
             return localVarFp.patchAiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16077,7 +16243,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiChatsByOwnerByName(requestParameters: AiApiPatchAiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiChatsByOwnerByName(requestParameters: AiApiPatchAiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiChats200Response> {
             return localVarFp.patchAiChatsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16087,7 +16253,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiDeploymentsByOwnerByName(requestParameters: AiApiPatchAiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiDeploymentsByOwnerByName(requestParameters: AiApiPatchAiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiDeployments200Response> {
             return localVarFp.patchAiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16097,7 +16263,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiFilesByOwnerByName(requestParameters: AiApiPatchAiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiFilesByOwnerByName(requestParameters: AiApiPatchAiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiFiles200Response> {
             return localVarFp.patchAiFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16107,7 +16273,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiFormsByOwnerByName(requestParameters: AiApiPatchAiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiFormsByOwnerByName(requestParameters: AiApiPatchAiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiForms200Response> {
             return localVarFp.patchAiFormsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16117,7 +16283,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiGraphsByOwnerByName(requestParameters: AiApiPatchAiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiGraphsByOwnerByName(requestParameters: AiApiPatchAiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiGraphs200Response> {
             return localVarFp.patchAiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16127,7 +16293,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiMessagesByOwnerByName(requestParameters: AiApiPatchAiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiMessagesByOwnerByName(requestParameters: AiApiPatchAiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiMessages200Response> {
             return localVarFp.patchAiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16137,7 +16303,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiNodesByOwnerByName(requestParameters: AiApiPatchAiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiNodesByOwnerByName(requestParameters: AiApiPatchAiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiNodes200Response> {
             return localVarFp.patchAiNodesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16146,7 +16312,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.patchAiOrgSettings(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16155,7 +16321,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.patchAiOrgSettingsList(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16164,7 +16330,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiPreferences(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiPreferences(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.patchAiPreferences(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16174,7 +16340,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiProvidersByOwnerByName(requestParameters: AiApiPatchAiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiProvidersByOwnerByName(requestParameters: AiApiPatchAiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiProviders200Response> {
             return localVarFp.patchAiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16184,7 +16350,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiRecordsByOwnerByName(requestParameters: AiApiPatchAiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiRecordsByOwnerByName(requestParameters: AiApiPatchAiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRecords200Response> {
             return localVarFp.patchAiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16194,7 +16360,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiRemoteConnectionsByOwnerByName(requestParameters: AiApiPatchAiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiRemoteConnectionsByOwnerByName(requestParameters: AiApiPatchAiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRemoteConnections200Response> {
             return localVarFp.patchAiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16203,7 +16369,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.patchAiRouterArtifactMeta(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16212,7 +16378,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.patchAiRouterDefaults(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16221,7 +16387,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.patchAiRouterLedger(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16230,7 +16396,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.patchAiRouterPolicy(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16239,7 +16405,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.patchAiRouterRewards(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16249,7 +16415,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiRoutesByOwnerByName(requestParameters: AiApiPatchAiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiRoutesByOwnerByName(requestParameters: AiApiPatchAiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRoutes200Response> {
             return localVarFp.patchAiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16259,7 +16425,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiScalesByOwnerByName(requestParameters: AiApiPatchAiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiScalesByOwnerByName(requestParameters: AiApiPatchAiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiScales200Response> {
             return localVarFp.patchAiScalesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16269,7 +16435,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiScansByOwnerByName(requestParameters: AiApiPatchAiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiScansByOwnerByName(requestParameters: AiApiPatchAiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiScans200Response> {
             return localVarFp.patchAiScansByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16279,7 +16445,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiSigninSessionsByOwnerByName(requestParameters: AiApiPatchAiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiSigninSessionsByOwnerByName(requestParameters: AiApiPatchAiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiSigninSessions200Response> {
             return localVarFp.patchAiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16289,7 +16455,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiStoresByOwnerByName(requestParameters: AiApiPatchAiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiStoresByOwnerByName(requestParameters: AiApiPatchAiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiStores200Response> {
             return localVarFp.patchAiStoresByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16299,7 +16465,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiTasksByOwnerByName(requestParameters: AiApiPatchAiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiTasksByOwnerByName(requestParameters: AiApiPatchAiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiTasks200Response> {
             return localVarFp.patchAiTasksByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16309,7 +16475,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiTemplatesByOwnerByName(requestParameters: AiApiPatchAiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiTemplatesByOwnerByName(requestParameters: AiApiPatchAiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiTemplates200Response> {
             return localVarFp.patchAiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16318,7 +16484,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiTrainingContribution(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiTrainingContribution(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.patchAiTrainingContribution(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16328,7 +16494,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiTreeFilesByOwnerByName(requestParameters: AiApiPatchAiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiTreeFilesByOwnerByName(requestParameters: AiApiPatchAiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiTreeFiles200Response> {
             return localVarFp.patchAiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16338,7 +16504,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiVectorsByOwnerByName(requestParameters: AiApiPatchAiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiVectorsByOwnerByName(requestParameters: AiApiPatchAiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiVectors200Response> {
             return localVarFp.patchAiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16348,7 +16514,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiVideosByOwnerByName(requestParameters: AiApiPatchAiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiVideosByOwnerByName(requestParameters: AiApiPatchAiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiVideos200Response> {
             return localVarFp.patchAiVideosByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16358,7 +16524,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAiWorkflowsByOwnerByName(requestParameters: AiApiPatchAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAiWorkflowsByOwnerByName(requestParameters: AiApiPatchAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiWorkflows200Response> {
             return localVarFp.patchAiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16367,7 +16533,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiArticles(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiArticles(options?: RawAxiosRequestConfig): AxiosPromise<PostAiArticles200Response> {
             return localVarFp.postAiArticles(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16376,7 +16542,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiAssets(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiAssets(options?: RawAxiosRequestConfig): AxiosPromise<PostAiAssets200Response> {
             return localVarFp.postAiAssets(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16386,7 +16552,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiAssetsByOwnerByNameScan(requestParameters: AiApiPostAiAssetsByOwnerByNameScanRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiAssetsByOwnerByNameScan(requestParameters: AiApiPostAiAssetsByOwnerByNameScanRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiAssetsByOwnerByNameScan(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16395,7 +16561,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiAssetsScan(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiAssetsScan(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiAssetsScan(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16404,7 +16570,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiChats(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiChats(options?: RawAxiosRequestConfig): AxiosPromise<PostAiChats200Response> {
             return localVarFp.postAiChats(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16413,7 +16579,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiConnections(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiConnections(options?: RawAxiosRequestConfig): AxiosPromise<PostAiConnections200Response> {
             return localVarFp.postAiConnections(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16423,7 +16589,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiConnectionsByProvider(requestParameters: AiApiPostAiConnectionsByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiConnectionsByProvider(requestParameters: AiApiPostAiConnectionsByProviderRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiConnections200Response> {
             return localVarFp.postAiConnectionsByProvider(requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16432,7 +16598,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiDeployments(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiDeployments(options?: RawAxiosRequestConfig): AxiosPromise<PostAiDeployments200Response> {
             return localVarFp.postAiDeployments(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16442,7 +16608,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiDeploymentsByOwnerByNameDeploy(requestParameters: AiApiPostAiDeploymentsByOwnerByNameDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiDeploymentsByOwnerByNameDeploy(requestParameters: AiApiPostAiDeploymentsByOwnerByNameDeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiDeploymentsByOwnerByNameDeploy(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16452,7 +16618,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiDeploymentsByOwnerByNameUndeploy(requestParameters: AiApiPostAiDeploymentsByOwnerByNameUndeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiDeploymentsByOwnerByNameUndeploy(requestParameters: AiApiPostAiDeploymentsByOwnerByNameUndeployRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiDeploymentsByOwnerByNameUndeploy(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16461,7 +16627,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiFeedback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiFeedback(options?: RawAxiosRequestConfig): AxiosPromise<PostAiFeedback200Response> {
             return localVarFp.postAiFeedback(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16470,7 +16636,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiFiles(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiFiles(options?: RawAxiosRequestConfig): AxiosPromise<PostAiFiles200Response> {
             return localVarFp.postAiFiles(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16479,7 +16645,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiFilesActivate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiFilesActivate(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiFilesActivate(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16489,7 +16655,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiFilesByOwnerByNameVectors(requestParameters: AiApiPostAiFilesByOwnerByNameVectorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiFilesByOwnerByNameVectors(requestParameters: AiApiPostAiFilesByOwnerByNameVectorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiFilesByOwnerByNameVectors(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16498,7 +16664,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiFilesUpload(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiFilesUpload(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiFilesUpload(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16507,7 +16673,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiFinetuneCancel(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiFinetuneCancel(options?: RawAxiosRequestConfig): AxiosPromise<PostAiFinetuneCancel200Response> {
             return localVarFp.postAiFinetuneCancel(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16516,7 +16682,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiFinetuneDeploy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiFinetuneDeploy(options?: RawAxiosRequestConfig): AxiosPromise<PostAiFinetuneDeploy200Response> {
             return localVarFp.postAiFinetuneDeploy(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16525,7 +16691,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiFinetuneJobs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiFinetuneJobs(options?: RawAxiosRequestConfig): AxiosPromise<PostAiFinetuneCancel200Response> {
             return localVarFp.postAiFinetuneJobs(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16534,7 +16700,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiForms(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiForms(options?: RawAxiosRequestConfig): AxiosPromise<PostAiForms200Response> {
             return localVarFp.postAiForms(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16543,7 +16709,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiGraphs(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiGraphs(options?: RawAxiosRequestConfig): AxiosPromise<PostAiGraphs200Response> {
             return localVarFp.postAiGraphs(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16552,7 +16718,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiMemoryDelete(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiMemoryDelete(options?: RawAxiosRequestConfig): AxiosPromise<PostAiMemoryDelete200Response> {
             return localVarFp.postAiMemoryDelete(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16561,7 +16727,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiMemoryRemember(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiMemoryRemember(options?: RawAxiosRequestConfig): AxiosPromise<PostAiMemoryRemember200Response> {
             return localVarFp.postAiMemoryRemember(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16570,7 +16736,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiMemoryUpdate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiMemoryUpdate(options?: RawAxiosRequestConfig): AxiosPromise<PostAiMemoryDelete200Response> {
             return localVarFp.postAiMemoryUpdate(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16579,7 +16745,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiMessages(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiMessages(options?: RawAxiosRequestConfig): AxiosPromise<PostAiMessages200Response> {
             return localVarFp.postAiMessages(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16588,7 +16754,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiNodes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiNodes(options?: RawAxiosRequestConfig): AxiosPromise<PostAiNodes200Response> {
             return localVarFp.postAiNodes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16598,7 +16764,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiNodesByOwnerByNameTunnel(requestParameters: AiApiPostAiNodesByOwnerByNameTunnelRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiNodesByOwnerByNameTunnel(requestParameters: AiApiPostAiNodesByOwnerByNameTunnelRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiNodesByOwnerByNameTunnel(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16607,7 +16773,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.postAiOrgSettings(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16616,7 +16782,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.postAiOrgSettingsList(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16625,7 +16791,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiProviders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiProviders(options?: RawAxiosRequestConfig): AxiosPromise<PostAiProviders200Response> {
             return localVarFp.postAiProviders(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16634,7 +16800,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiProvidersMcpTools(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiProvidersMcpTools(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiProvidersMcpTools(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16643,7 +16809,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRagDelete(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRagDelete(options?: RawAxiosRequestConfig): AxiosPromise<GetAiFinetunePresets200Response> {
             return localVarFp.postAiRagDelete(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16652,7 +16818,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRagEmbed(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRagEmbed(options?: RawAxiosRequestConfig): AxiosPromise<PostAiRagEmbed200Response> {
             return localVarFp.postAiRagEmbed(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16661,7 +16827,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRagIngest(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRagIngest(options?: RawAxiosRequestConfig): AxiosPromise<PostAiRagIngest200Response> {
             return localVarFp.postAiRagIngest(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16670,7 +16836,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRagQuery(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRagQuery(options?: RawAxiosRequestConfig): AxiosPromise<Array<DocSearchResult>> {
             return localVarFp.postAiRagQuery(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16679,7 +16845,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRagQueryMultiple(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRagQueryMultiple(options?: RawAxiosRequestConfig): AxiosPromise<Array<DocSearchResult>> {
             return localVarFp.postAiRagQueryMultiple(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16688,7 +16854,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRecords(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRecords(options?: RawAxiosRequestConfig): AxiosPromise<PostAiRecords200Response> {
             return localVarFp.postAiRecords(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16697,7 +16863,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRecordsBatch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRecordsBatch(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiRecordsBatch(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16706,7 +16872,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRecordsCommit(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRecordsCommit(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiRecordsCommit(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16715,7 +16881,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRecordsCommitSecond(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRecordsCommitSecond(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiRecordsCommitSecond(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16724,7 +16890,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRemoteConnections(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRemoteConnections(options?: RawAxiosRequestConfig): AxiosPromise<PostAiRemoteConnections200Response> {
             return localVarFp.postAiRemoteConnections(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16734,7 +16900,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRemoteConnectionsByOwnerByNameStart(requestParameters: AiApiPostAiRemoteConnectionsByOwnerByNameStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRemoteConnectionsByOwnerByNameStart(requestParameters: AiApiPostAiRemoteConnectionsByOwnerByNameStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiRemoteConnectionsByOwnerByNameStart(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16744,7 +16910,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRemoteConnectionsByOwnerByNameStop(requestParameters: AiApiPostAiRemoteConnectionsByOwnerByNameStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRemoteConnectionsByOwnerByNameStop(requestParameters: AiApiPostAiRemoteConnectionsByOwnerByNameStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiRemoteConnectionsByOwnerByNameStop(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16753,7 +16919,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.postAiRouterArtifactMeta(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16762,7 +16928,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.postAiRouterDefaults(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16771,7 +16937,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.postAiRouterLedger(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16780,7 +16946,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.postAiRouterPolicy(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16789,7 +16955,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.postAiRouterRewards(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16798,7 +16964,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiRoutes(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiRoutes(options?: RawAxiosRequestConfig): AxiosPromise<PostAiRoutes200Response> {
             return localVarFp.postAiRoutes(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16807,7 +16973,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiScales(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiScales(options?: RawAxiosRequestConfig): AxiosPromise<PostAiScales200Response> {
             return localVarFp.postAiScales(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16816,7 +16982,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiScans(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiScans(options?: RawAxiosRequestConfig): AxiosPromise<PostAiScans200Response> {
             return localVarFp.postAiScans(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16825,7 +16991,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiSignin(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiSignin(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiSignin(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16834,7 +17000,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiSigninSessions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiSigninSessions(options?: RawAxiosRequestConfig): AxiosPromise<PostAiSigninSessions200Response> {
             return localVarFp.postAiSigninSessions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16843,7 +17009,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiSignout(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiSignout(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiSignout(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16852,7 +17018,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiStores(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiStores(options?: RawAxiosRequestConfig): AxiosPromise<PostAiStores200Response> {
             return localVarFp.postAiStores(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16862,7 +17028,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiStoresByOwnerByNameVectors(requestParameters: AiApiPostAiStoresByOwnerByNameVectorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiStoresByOwnerByNameVectors(requestParameters: AiApiPostAiStoresByOwnerByNameVectorsRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiStoresByOwnerByNameVectors(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16871,7 +17037,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiTasks(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiTasks(options?: RawAxiosRequestConfig): AxiosPromise<PostAiTasks200Response> {
             return localVarFp.postAiTasks(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16881,7 +17047,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiTasksByOwnerByNameAnalyze(requestParameters: AiApiPostAiTasksByOwnerByNameAnalyzeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiTasksByOwnerByNameAnalyze(requestParameters: AiApiPostAiTasksByOwnerByNameAnalyzeRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiTasksByOwnerByNameAnalyze(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16891,7 +17057,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiTasksByOwnerByNameDocument(requestParameters: AiApiPostAiTasksByOwnerByNameDocumentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiTasksByOwnerByNameDocument(requestParameters: AiApiPostAiTasksByOwnerByNameDocumentRequest, options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiTasksByOwnerByNameDocument(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -16900,7 +17066,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiTemplates(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiTemplates(options?: RawAxiosRequestConfig): AxiosPromise<PostAiTemplates200Response> {
             return localVarFp.postAiTemplates(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16909,7 +17075,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiTreeFiles(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiTreeFiles(options?: RawAxiosRequestConfig): AxiosPromise<PostAiTreeFiles200Response> {
             return localVarFp.postAiTreeFiles(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16918,7 +17084,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiVectors(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiVectors(options?: RawAxiosRequestConfig): AxiosPromise<PostAiVectors200Response> {
             return localVarFp.postAiVectors(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16927,7 +17093,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiVideos(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiVideos(options?: RawAxiosRequestConfig): AxiosPromise<PostAiVideos200Response> {
             return localVarFp.postAiVideos(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16936,7 +17102,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiVideosUpload(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiVideosUpload(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.postAiVideosUpload(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16945,7 +17111,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAiWorkflows(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAiWorkflows(options?: RawAxiosRequestConfig): AxiosPromise<PostAiWorkflows200Response> {
             return localVarFp.postAiWorkflows(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16981,7 +17147,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAudioTranscriptions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postAudioTranscriptions(options?: RawAxiosRequestConfig): AxiosPromise<OpenaiAudioResponse> {
             return localVarFp.postAudioTranscriptions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -16999,7 +17165,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postChat(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postChat(options?: RawAxiosRequestConfig): AxiosPromise<OpenaiChatCompletionResponse> {
             return localVarFp.postChat(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17008,7 +17174,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postChatCompletions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postChatCompletions(options?: RawAxiosRequestConfig): AxiosPromise<OpenaiChatCompletionResponse> {
             return localVarFp.postChatCompletions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17017,7 +17183,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postChatPublic(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postChatPublic(options?: RawAxiosRequestConfig): AxiosPromise<OpenaiChatCompletionResponse> {
             return localVarFp.postChatPublic(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17026,7 +17192,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCompletions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postCompletions(options?: RawAxiosRequestConfig): AxiosPromise<OpenaiChatCompletionResponse> {
             return localVarFp.postCompletions(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17035,7 +17201,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEmbeddings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postEmbeddings(options?: RawAxiosRequestConfig): AxiosPromise<OpenaiEmbeddingResponse> {
             return localVarFp.postEmbeddings(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17044,7 +17210,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postImagesGenerations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postImagesGenerations(options?: RawAxiosRequestConfig): AxiosPromise<OpenaiImageResponse> {
             return localVarFp.postImagesGenerations(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17053,7 +17219,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMessages(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postMessages(options?: RawAxiosRequestConfig): AxiosPromise<AiAnthropicResponse> {
             return localVarFp.postMessages(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17062,7 +17228,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMessagesCountTokens(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postMessagesCountTokens(options?: RawAxiosRequestConfig): AxiosPromise<AiTokenCount> {
             return localVarFp.postMessagesCountTokens(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17072,7 +17238,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postModelsByModelAccess(requestParameters: AiApiPostModelsByModelAccessRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postModelsByModelAccess(requestParameters: AiApiPostModelsByModelAccessRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostModelsByModelAccess200Response> {
             return localVarFp.postModelsByModelAccess(requestParameters.model, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17081,7 +17247,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postRerank(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postRerank(options?: RawAxiosRequestConfig): AxiosPromise<AiRanking> {
             return localVarFp.postRerank(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17090,7 +17256,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postResponses(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postResponses(options?: RawAxiosRequestConfig): AxiosPromise<AiResponsesResource> {
             return localVarFp.postResponses(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17099,7 +17265,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postVideosGenerations(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postVideosGenerations(options?: RawAxiosRequestConfig): AxiosPromise<AiVideoStatus> {
             return localVarFp.postVideosGenerations(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17109,7 +17275,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiArticlesByOwnerByName(requestParameters: AiApiPutAiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiArticlesByOwnerByName(requestParameters: AiApiPutAiArticlesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiArticles200Response> {
             return localVarFp.putAiArticlesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17119,7 +17285,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiAssetsByOwnerByName(requestParameters: AiApiPutAiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiAssetsByOwnerByName(requestParameters: AiApiPutAiAssetsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiAssets200Response> {
             return localVarFp.putAiAssetsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17129,7 +17295,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiChatsByOwnerByName(requestParameters: AiApiPutAiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiChatsByOwnerByName(requestParameters: AiApiPutAiChatsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiChats200Response> {
             return localVarFp.putAiChatsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17139,7 +17305,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiDeploymentsByOwnerByName(requestParameters: AiApiPutAiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiDeploymentsByOwnerByName(requestParameters: AiApiPutAiDeploymentsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiDeployments200Response> {
             return localVarFp.putAiDeploymentsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17149,7 +17315,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiFilesByOwnerByName(requestParameters: AiApiPutAiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiFilesByOwnerByName(requestParameters: AiApiPutAiFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiFiles200Response> {
             return localVarFp.putAiFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17159,7 +17325,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiFormsByOwnerByName(requestParameters: AiApiPutAiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiFormsByOwnerByName(requestParameters: AiApiPutAiFormsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiForms200Response> {
             return localVarFp.putAiFormsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17169,7 +17335,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiGraphsByOwnerByName(requestParameters: AiApiPutAiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiGraphsByOwnerByName(requestParameters: AiApiPutAiGraphsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiGraphs200Response> {
             return localVarFp.putAiGraphsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17179,7 +17345,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiMessagesByOwnerByName(requestParameters: AiApiPutAiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiMessagesByOwnerByName(requestParameters: AiApiPutAiMessagesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiMessages200Response> {
             return localVarFp.putAiMessagesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17189,7 +17355,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiNodesByOwnerByName(requestParameters: AiApiPutAiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiNodesByOwnerByName(requestParameters: AiApiPutAiNodesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiNodes200Response> {
             return localVarFp.putAiNodesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17198,7 +17364,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiOrgSettings(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.putAiOrgSettings(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17207,7 +17373,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiOrgSettingsList(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.putAiOrgSettingsList(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17216,7 +17382,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiPreferences(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiPreferences(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.putAiPreferences(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17226,7 +17392,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiProvidersByOwnerByName(requestParameters: AiApiPutAiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiProvidersByOwnerByName(requestParameters: AiApiPutAiProvidersByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiProviders200Response> {
             return localVarFp.putAiProvidersByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17236,7 +17402,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiRecordsByOwnerByName(requestParameters: AiApiPutAiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiRecordsByOwnerByName(requestParameters: AiApiPutAiRecordsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRecords200Response> {
             return localVarFp.putAiRecordsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17246,7 +17412,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiRemoteConnectionsByOwnerByName(requestParameters: AiApiPutAiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiRemoteConnectionsByOwnerByName(requestParameters: AiApiPutAiRemoteConnectionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRemoteConnections200Response> {
             return localVarFp.putAiRemoteConnectionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17255,7 +17421,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiRouterArtifactMeta(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.putAiRouterArtifactMeta(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17264,7 +17430,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiRouterDefaults(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.putAiRouterDefaults(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17273,7 +17439,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiRouterLedger(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.putAiRouterLedger(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17282,7 +17448,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiRouterPolicy(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.putAiRouterPolicy(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17291,7 +17457,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiRouterRewards(options?: RawAxiosRequestConfig): AxiosPromise<AiResponse> {
             return localVarFp.putAiRouterRewards(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17301,7 +17467,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiRoutesByOwnerByName(requestParameters: AiApiPutAiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiRoutesByOwnerByName(requestParameters: AiApiPutAiRoutesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiRoutes200Response> {
             return localVarFp.putAiRoutesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17311,7 +17477,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiScalesByOwnerByName(requestParameters: AiApiPutAiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiScalesByOwnerByName(requestParameters: AiApiPutAiScalesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiScales200Response> {
             return localVarFp.putAiScalesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17321,7 +17487,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiScansByOwnerByName(requestParameters: AiApiPutAiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiScansByOwnerByName(requestParameters: AiApiPutAiScansByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiScans200Response> {
             return localVarFp.putAiScansByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17331,7 +17497,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiSigninSessionsByOwnerByName(requestParameters: AiApiPutAiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiSigninSessionsByOwnerByName(requestParameters: AiApiPutAiSigninSessionsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiSigninSessions200Response> {
             return localVarFp.putAiSigninSessionsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17341,7 +17507,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiStoresByOwnerByName(requestParameters: AiApiPutAiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiStoresByOwnerByName(requestParameters: AiApiPutAiStoresByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiStores200Response> {
             return localVarFp.putAiStoresByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17351,7 +17517,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiTasksByOwnerByName(requestParameters: AiApiPutAiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiTasksByOwnerByName(requestParameters: AiApiPutAiTasksByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiTasks200Response> {
             return localVarFp.putAiTasksByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17361,7 +17527,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiTemplatesByOwnerByName(requestParameters: AiApiPutAiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiTemplatesByOwnerByName(requestParameters: AiApiPutAiTemplatesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiTemplates200Response> {
             return localVarFp.putAiTemplatesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17370,7 +17536,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiTrainingContribution(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiTrainingContribution(options?: RawAxiosRequestConfig): AxiosPromise<Envelope> {
             return localVarFp.putAiTrainingContribution(options).then((request) => request(axios, basePath));
         },
         /**
@@ -17380,7 +17546,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiTreeFilesByOwnerByName(requestParameters: AiApiPutAiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiTreeFilesByOwnerByName(requestParameters: AiApiPutAiTreeFilesByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiTreeFiles200Response> {
             return localVarFp.putAiTreeFilesByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17390,7 +17556,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiVectorsByOwnerByName(requestParameters: AiApiPutAiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiVectorsByOwnerByName(requestParameters: AiApiPutAiVectorsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiVectors200Response> {
             return localVarFp.putAiVectorsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17400,7 +17566,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiVideosByOwnerByName(requestParameters: AiApiPutAiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiVideosByOwnerByName(requestParameters: AiApiPutAiVideosByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiVideos200Response> {
             return localVarFp.putAiVideosByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
@@ -17410,7 +17576,7 @@ export const AiApiFactory = function (configuration?: Configuration, basePath?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAiWorkflowsByOwnerByName(requestParameters: AiApiPutAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAiWorkflowsByOwnerByName(requestParameters: AiApiPutAiWorkflowsByOwnerByNameRequest, options?: RawAxiosRequestConfig): AxiosPromise<PostAiWorkflows200Response> {
             return localVarFp.putAiWorkflowsByOwnerByName(requestParameters.owner, requestParameters.name, options).then((request) => request(axios, basePath));
         },
     };
