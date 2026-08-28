@@ -47,8 +47,6 @@ import type { IndexTask } from '../models';
 import type { IndexVersion } from '../models';
 // @ts-ignore
 import type { IndexView } from '../models';
-// @ts-ignore
-import type { PostIndexIndexesByUidDocumentsDeleteBatchRequest } from '../models';
 /**
  * IndexApi - axios parameter creator
  * @export
@@ -605,11 +603,11 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
          * Removes every named document from the caller\'s own index. The body is the dialect\'s own: a bare array of primary keys, which may be strings or numbers. A key that is not there is not an error, so a client reconciling its own corpus can send one list rather than checking each key first.  The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header. Without a validated principal the answer is 403 carrying the dialect\'s `invalid_api_key` body.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the documents are already gone when this answers.
          * @summary Delete many documents by primary key in one call
          * @param {string} uid 
-         * @param {Array<string> | Array<number>} [arraystringArraynumber] 
+         * @param {Array<any> | null} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postIndexIndexesByUidDocumentsDeleteBatch: async (uid: string, arraystringArraynumber?: Array<string> | Array<number>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postIndexIndexesByUidDocumentsDeleteBatch: async (uid: string, requestBody?: Array<any> | null, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'uid' is not null or undefined
             assertParamExists('postIndexIndexesByUidDocumentsDeleteBatch', 'uid', uid)
             const localVarPath = `/v1/index/indexes/{uid}/documents/delete-batch`
@@ -636,7 +634,7 @@ export const IndexApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(arraystringArraynumber, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -927,12 +925,12 @@ export const IndexApiFp = function(configuration?: Configuration) {
          * Removes every named document from the caller\'s own index. The body is the dialect\'s own: a bare array of primary keys, which may be strings or numbers. A key that is not there is not an error, so a client reconciling its own corpus can send one list rather than checking each key first.  The tenant is the org minted from the VALIDATED bearer\'s owner claim, never a client-supplied header. Without a validated principal the answer is 403 carrying the dialect\'s `invalid_api_key` body.  The 202 and its `enqueued` task are DIALECT COMPATIBILITY, not a promise of later work: the documents are already gone when this answers.
          * @summary Delete many documents by primary key in one call
          * @param {string} uid 
-         * @param {Array<string> | Array<number>} [arraystringArraynumber] 
+         * @param {Array<any> | null} [requestBody] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postIndexIndexesByUidDocumentsDeleteBatch(uid: string, arraystringArraynumber?: Array<string> | Array<number>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexEnqueued>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postIndexIndexesByUidDocumentsDeleteBatch(uid, arraystringArraynumber, options);
+        async postIndexIndexesByUidDocumentsDeleteBatch(uid: string, requestBody?: Array<any> | null, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IndexEnqueued>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postIndexIndexesByUidDocumentsDeleteBatch(uid, requestBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['IndexApi.postIndexIndexesByUidDocumentsDeleteBatch']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1119,7 +1117,7 @@ export const IndexApiFactory = function (configuration?: Configuration, basePath
          * @throws {RequiredError}
          */
         postIndexIndexesByUidDocumentsDeleteBatch(requestParameters: IndexApiPostIndexIndexesByUidDocumentsDeleteBatchRequest, options?: RawAxiosRequestConfig): AxiosPromise<IndexEnqueued> {
-            return localVarFp.postIndexIndexesByUidDocumentsDeleteBatch(requestParameters.uid, requestParameters.arraystringArraynumber, options).then((request) => request(axios, basePath));
+            return localVarFp.postIndexIndexesByUidDocumentsDeleteBatch(requestParameters.uid, requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
         /**
          * Searches an index, forgiving typos.  Ranks the org\'s documents in one index against `q` and answers the matching documents whole, most relevant first. A prefix matches, so a partial word finds the documents containing it, and `filter` narrows the result to documents whose filterable attributes match — which is how a caller scopes results to one end user within its own org.  `estimatedTotalHits` is the dialect\'s name for the count; every hit is materialised here, so for this page it is exact. An index this org does not hold answers 404 carrying the dialect\'s `index_not_found`.
@@ -1341,10 +1339,10 @@ export interface IndexApiPostIndexIndexesByUidDocumentsDeleteBatchRequest {
 
     /**
      * 
-     * @type {Array<string> | Array<number>}
+     * @type {Array<any>}
      * @memberof IndexApiPostIndexIndexesByUidDocumentsDeleteBatch
      */
-    readonly arraystringArraynumber?: Array<string> | Array<number>
+    readonly requestBody?: Array<any> | null
 }
 
 /**
@@ -1569,7 +1567,7 @@ export class IndexApi extends BaseAPI {
      * @memberof IndexApi
      */
     public postIndexIndexesByUidDocumentsDeleteBatch(requestParameters: IndexApiPostIndexIndexesByUidDocumentsDeleteBatchRequest, options?: RawAxiosRequestConfig) {
-        return IndexApiFp(this.configuration).postIndexIndexesByUidDocumentsDeleteBatch(requestParameters.uid, requestParameters.arraystringArraynumber, options).then((request) => request(this.axios, this.basePath));
+        return IndexApiFp(this.configuration).postIndexIndexesByUidDocumentsDeleteBatch(requestParameters.uid, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
