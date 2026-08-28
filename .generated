@@ -1893,7 +1893,6 @@ src/models/pool-scale.ts
 src/models/populated-flow.ts
 src/models/position.ts
 src/models/post-event-request.ts
-src/models/post-index-indexes-by-uid-documents-delete-batch-request.ts
 src/models/post-list.ts
 src/models/prefs-view.ts
 src/models/preset-accepted.ts
