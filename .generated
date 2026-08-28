@@ -2417,6 +2417,7 @@ src/models/validator-list.ts
 src/models/variant.ts
 src/models/vendor-row.ts
 src/models/vendors-out.ts
+src/models/venue.ts
 src/models/verdict.ts
 src/models/verification-decision.ts
 src/models/verification-req.ts

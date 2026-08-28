@@ -22,13 +22,13 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { Call } from '../models';
-// @ts-ignore
 import type { MeetHealth } from '../models';
 // @ts-ignore
 import type { RecordIn } from '../models';
 // @ts-ignore
 import type { Recording } from '../models';
+// @ts-ignore
+import type { Venue } from '../models';
 /**
  * MeetApi - axios parameter creator
  * @export
@@ -349,7 +349,7 @@ export const MeetApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async meetCall(workspace: string, room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Call>> {
+        async meetCall(workspace: string, room: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Venue>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.meetCall(workspace, room, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MeetApi.meetCall']?.[localVarOperationServerIndex]?.url;
@@ -441,7 +441,7 @@ export const MeetApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        meetCall(requestParameters: MeetApiMeetCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<Call> {
+        meetCall(requestParameters: MeetApiMeetCallRequest, options?: RawAxiosRequestConfig): AxiosPromise<Venue> {
             return localVarFp.meetCall(requestParameters.workspace, requestParameters.room, options).then((request) => request(axios, basePath));
         },
         /**
