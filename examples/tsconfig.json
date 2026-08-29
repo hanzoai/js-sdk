@@ -14,8 +14,8 @@
     // resolution would reject every one of them. Bundler resolution is what the
     // ESM half of the build already uses for the same reason.
     "moduleResolution": "Bundler",
-    "baseUrl": ".",
-    "paths": { "hanzoai": ["../src/index.ts"] },
+    "paths": {
+      "*": ["./*"], "hanzoai": ["../src/index.ts"] },
     "types": ["node"],
     "strict": true
   },
