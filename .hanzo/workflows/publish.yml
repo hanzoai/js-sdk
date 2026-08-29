@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   publish:
-    runs-on: hanzo-build-linux-amd64
+    runs-on: [hanzo-build-linux-amd64]
     env:
       # The repo's own .npmrc sends installs to the fleet mirror, and a
       # project .npmrc outranks anything setup-node writes. One variable
