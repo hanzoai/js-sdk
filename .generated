@@ -20,6 +20,7 @@ src/api/campaign-api.ts
 src/api/captable-api.ts
 src/api/catalog-api.ts
 src/api/channels-api.ts
+src/api/ci-api.ts
 src/api/cloudflare-api.ts
 src/api/code-api.ts
 src/api/commerce-api.ts
@@ -63,6 +64,7 @@ src/api/legal-api.ts
 src/api/licensing-api.ts
 src/api/link-api.ts
 src/api/lsp-api.ts
+src/api/market-api.ts
 src/api/marketing-api.ts
 src/api/marketplace-api.ts
 src/api/meet-api.ts
@@ -95,6 +97,7 @@ src/api/seo-api.ts
 src/api/settings-api.ts
 src/api/share-api.ts
 src/api/social-api.ts
+src/api/space-api.ts
 src/api/standing-api.ts
 src/api/sync-api.ts
 src/api/tasks-api.ts
@@ -252,6 +255,7 @@ src/models/argo-sync-windows.ts
 src/models/argo-tree.ts
 src/models/arm.ts
 src/models/article.ts
+src/models/artifact.ts
 src/models/ask-answer.ts
 src/models/ask-post-in.ts
 src/models/ask-request.ts
@@ -270,6 +274,8 @@ src/models/authored-plugin-list.ts
 src/models/authored-plugin.ts
 src/models/authored-skill-list.ts
 src/models/authorize-out.ts
+src/models/auto-recharge-edit.ts
+src/models/auto-recharge.ts
 src/models/backend-status.ts
 src/models/backend.ts
 src/models/balance-line.ts
@@ -427,6 +433,8 @@ src/models/chain-status.ts
 src/models/chain.ts
 src/models/challenge-view.ts
 src/models/channel-add.ts
+src/models/channel-agents-put.ts
+src/models/channel-agents.ts
 src/models/channel-list.ts
 src/models/channel-metric.ts
 src/models/channel-result.ts
@@ -441,6 +449,7 @@ src/models/chat-response.ts
 src/models/chat.ts
 src/models/check-list.ts
 src/models/check-view.ts
+src/models/check.ts
 src/models/citation.ts
 src/models/claim-key-out.ts
 src/models/claim-request.ts
@@ -565,6 +574,7 @@ src/models/dataroom-stats.ts
 src/models/dataset-list.ts
 src/models/dataset-req.ts
 src/models/dataset-view.ts
+src/models/day.ts
 src/models/decide-body.ts
 src/models/decision-in.ts
 src/models/deck-out.ts
@@ -615,6 +625,9 @@ src/models/domain-view.ts
 src/models/drift-board.ts
 src/models/drift-flag.ts
 src/models/drift-tally.ts
+src/models/drive-in.ts
+src/models/drive-item.ts
+src/models/drive-list.ts
 src/models/dropped.ts
 src/models/durable.ts
 src/models/edge-state.ts
@@ -682,14 +695,19 @@ src/models/example-question.ts
 src/models/exception.ts
 src/models/exec-request.ts
 src/models/exec-result.ts
+src/models/execution.ts
+src/models/executions.ts
 src/models/experiment-list.ts
 src/models/extracted.ts
 src/models/faq-list.ts
 src/models/field.ts
 src/models/figure.ts
+src/models/figures.ts
 src/models/file-content.ts
 src/models/file-input.ts
+src/models/file-item.ts
 src/models/file-json.ts
+src/models/file-list.ts
 src/models/files-json.ts
 src/models/filing-page.ts
 src/models/filing-reply.ts
@@ -845,6 +863,7 @@ src/models/hf-model.ts
 src/models/hf-repo-info.ts
 src/models/hf-sibling.ts
 src/models/history-out.ts
+src/models/history.ts
 src/models/hit.ts
 src/models/holder.ts
 src/models/holding.ts
@@ -918,9 +937,14 @@ src/models/iam-scope-description.ts
 src/models/iam-scope-item.ts
 src/models/iam-session.ts
 src/models/iam-set-avatar-input.ts
+src/models/iam-set-profile-input.ts
 src/models/iam-signin-item.ts
 src/models/iam-signin-method.ts
 src/models/iam-signup-item.ts
+src/models/iam-team.ts
+src/models/iam-teams-delete-output.ts
+src/models/iam-teams-input.ts
+src/models/iam-teams-list-output.ts
 src/models/iam-theme-data.ts
 src/models/iam-toggle.ts
 src/models/iam-token-mutation.ts
@@ -1059,6 +1083,12 @@ src/models/licensing-verify-response.ts
 src/models/limits-block.ts
 src/models/limits-view.ts
 src/models/line-item.ts
+src/models/linear-backfill-in.ts
+src/models/linear-backfill-result.ts
+src/models/linear-claim-in.ts
+src/models/linear-claim-out.ts
+src/models/linear-comment-in.ts
+src/models/linear-comment-out.ts
 src/models/link-list.ts
 src/models/link-mint.ts
 src/models/link-view.ts
@@ -1078,6 +1108,7 @@ src/models/machine-view.ts
 src/models/make-in.ts
 src/models/market-catalog.ts
 src/models/market-item.ts
+src/models/market.ts
 src/models/mcp-catalog-sync.ts
 src/models/mcp-catalog.ts
 src/models/mcp-server-list.ts
@@ -1995,9 +2026,6 @@ src/models/patch-target-in.ts
 src/models/patch.ts
 src/models/path-in.ts
 src/models/payment-config.ts
-src/models/payment-in.ts
-src/models/payment-out.ts
-src/models/payment-record.ts
 src/models/payout.ts
 src/models/period-earning-view.ts
 src/models/pick-out.ts
@@ -2005,6 +2033,8 @@ src/models/pipeline-board.ts
 src/models/pipeline-req.ts
 src/models/pipeline-row.ts
 src/models/pipeline-view.ts
+src/models/pipeline.ts
+src/models/pipelines.ts
 src/models/plan-entitlements.ts
 src/models/plan-health.ts
 src/models/plan-info.ts
@@ -2025,6 +2055,8 @@ src/models/policy-list.ts
 src/models/policy.ts
 src/models/pool-create.ts
 src/models/pool-scale.ts
+src/models/pool.ts
+src/models/pools.ts
 src/models/populated-flow.ts
 src/models/position.ts
 src/models/post-ai-articles200-response.ts
@@ -2061,6 +2093,7 @@ src/models/post-ai-workflows200-response.ts
 src/models/post-event-request.ts
 src/models/post-list.ts
 src/models/post-models-by-model-access200-response.ts
+src/models/precompile.ts
 src/models/prefs-view.ts
 src/models/preset-accepted.ts
 src/models/preset-list.ts
@@ -2157,6 +2190,7 @@ src/models/raise-in.ts
 src/models/ran.ts
 src/models/range.ts
 src/models/rate-card.ts
+src/models/reach.ts
 src/models/reachability.ts
 src/models/read-out.ts
 src/models/readiness.ts
@@ -2289,14 +2323,13 @@ src/models/risk-surface.ts
 src/models/risk-topology.ts
 src/models/risk-trial.ts
 src/models/risk-value.ts
-src/models/role-assignment.ts
-src/models/role-list.ts
 src/models/rollback-req.ts
 src/models/rollup-allotment.ts
 src/models/rollup-balance.ts
 src/models/rollup.ts
 src/models/room-work.ts
 src/models/root.ts
+src/models/roster.ts
 src/models/round-input.ts
 src/models/round-out.ts
 src/models/route-candidate.ts
@@ -2435,6 +2468,10 @@ src/models/source-state.ts
 src/models/source-tool-list.ts
 src/models/source.ts
 src/models/sources.ts
+src/models/space-health.ts
+src/models/space-in.ts
+src/models/space-item.ts
+src/models/space-list.ts
 src/models/span-body.ts
 src/models/span.ts
 src/models/spec.ts
@@ -2485,6 +2522,7 @@ src/models/summary-view.ts
 src/models/summary.ts
 src/models/suppression-list.ts
 src/models/suppression.ts
+src/models/survey.ts
 src/models/sweep.ts
 src/models/symbol.ts
 src/models/sync-list.ts
@@ -2503,7 +2541,11 @@ src/models/task.ts
 src/models/taxon-in.ts
 src/models/taxon.ts
 src/models/taxonomy.ts
+src/models/team-message-write.ts
+src/models/team-message.ts
+src/models/team-messages.ts
 src/models/team-room-bind.ts
+src/models/team-room-new.ts
 src/models/team-room.ts
 src/models/team-rooms.ts
 src/models/template-catalog.ts
@@ -2518,8 +2560,11 @@ src/models/tier-balance.ts
 src/models/tier-limits.ts
 src/models/tier.ts
 src/models/timeseries.ts
+src/models/tip.ts
 src/models/tlsconfig.ts
 src/models/todo-project.ts
+src/models/token.ts
+src/models/tokens.ts
 src/models/tool-call.ts
 src/models/tool-list.ts
 src/models/tool-result.ts
