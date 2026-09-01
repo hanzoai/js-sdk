@@ -39,7 +39,6 @@ export interface RiskDatasetSpec {
      */
     'from'?: string;
     /**
-     * Horizon is how many days a row must have aged before it may be admitted. It is what keeps a fact that was not yet knowable at scoring time out of a training set: a chargeback lands 30 to 120 days after the transaction it condemns, so 120 for the payment lane and 14 for signup abuse. Zero admits the whole window and is honest only where the outcome is immediate.
      * @type {number}
      * @memberof RiskDatasetSpec
      */
@@ -69,7 +68,6 @@ export interface RiskDatasetSpec {
      */
     'seed'?: string;
     /**
-     * To is where the window ends, EXCLUSIVE, so two datasets meeting at one instant share no row. A materialisation reads less than this — the end is pulled back by Horizon, and the lineage reports the window it actually read.
      * @type {string}
      * @memberof RiskDatasetSpec
      */
