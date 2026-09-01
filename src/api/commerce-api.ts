@@ -29,12 +29,6 @@ import type { CartItemSet } from '../models';
 import type { CartOpen } from '../models';
 // @ts-ignore
 import type { Liveness } from '../models';
-// @ts-ignore
-import type { PaymentIn } from '../models';
-// @ts-ignore
-import type { PaymentOut } from '../models';
-// @ts-ignore
-import type { PaymentRecord } from '../models';
 /**
  * CommerceApi - axios parameter creator
  * @export
@@ -2773,44 +2767,6 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('getCommerceWebhookByWebhookid', 'webhookid', webhookid)
             const localVarPath = `/v1/commerce/webhook/{webhookid}`
                 .replace(`{${"webhookid"}}`, encodeURIComponent(String(webhookid)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Reads one settled payment out of the caller\'s org ledger.  The org scopes the read by construction — the ledger is namespaced to it — so an id belonging to another tenant is simply not found rather than found and then filtered. A ledger row that is not a payment is likewise not found, so this cannot be used to walk the org\'s usage debits.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Read one settled payment by its id
-         * @param {string} id ID is the ledger transaction id a payment returned.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPayment: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getPayment', 'id', id)
-            const localVarPath = `/v1/commerce/payments/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -6737,46 +6693,6 @@ export const CommerceApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Takes a payment: charges a single-use card token and credits the caller\'s org balance, exactly once.  This is the operation behind \"collect money from a customer\". It runs the SAME core the console\'s card top-up runs (commerce billing.TakePayment), so the server-side amount bounds, the idempotency guard and the ledger credit are shared rather than reimplemented — a second charge path would eventually double-charge somebody.  The ORG is the caller\'s, taken from the validated principal and never from the input, so a payment can only ever credit the account of whoever made the call.  A payment is RISK-SCREENED before the card is charged, so this can be refused without any money moving: 403 means the screen did not authorise it, and 503 means the screen could not reach a decision — that one is worth retrying, and no charge was attempted either way.  Send an idempotencyKey. An agent retries by construction, and the key is what turns a retry into a replay of the first receipt instead of a second charge.  The answer states whether it settled in SANDBOX or live mode (`test`), and carries the processor\'s own reference (`processorRef`) so the charge can be reconciled against the processor rather than taken on trust.  A named builder, not a closure, so zipdoc can lift this prose into the registry.  It BUILDS the handler rather than being it, because the screen has to sit inside the value every projection of this op dispatches to — see exposePayments. `charge` is the money move, `take` is the screened entry point onto it, and the only registrable one is the second.
-         * @summary Take a card payment and credit the org\'s balance
-         * @param {PaymentIn} paymentIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        takePayment: async (paymentIn: PaymentIn, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'paymentIn' is not null or undefined
-            assertParamExists('takePayment', 'paymentIn', paymentIn)
-            const localVarPath = `/v1/commerce/payments`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(paymentIn, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -7737,19 +7653,6 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCommerceWebhookByWebhookid(webhookid, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.getCommerceWebhookByWebhookid']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Reads one settled payment out of the caller\'s org ledger.  The org scopes the read by construction — the ledger is namespaced to it — so an id belonging to another tenant is simply not found rather than found and then filtered. A ledger row that is not a payment is likewise not found, so this cannot be used to walk the org\'s usage debits.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Read one settled payment by its id
-         * @param {string} id ID is the ledger transaction id a payment returned.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getPayment(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentRecord>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPayment(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.getPayment']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -9090,19 +8993,6 @@ export const CommerceApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['CommerceApi.setCartItem']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * Takes a payment: charges a single-use card token and credits the caller\'s org balance, exactly once.  This is the operation behind \"collect money from a customer\". It runs the SAME core the console\'s card top-up runs (commerce billing.TakePayment), so the server-side amount bounds, the idempotency guard and the ledger credit are shared rather than reimplemented — a second charge path would eventually double-charge somebody.  The ORG is the caller\'s, taken from the validated principal and never from the input, so a payment can only ever credit the account of whoever made the call.  A payment is RISK-SCREENED before the card is charged, so this can be refused without any money moving: 403 means the screen did not authorise it, and 503 means the screen could not reach a decision — that one is worth retrying, and no charge was attempted either way.  Send an idempotencyKey. An agent retries by construction, and the key is what turns a retry into a replay of the first receipt instead of a second charge.  The answer states whether it settled in SANDBOX or live mode (`test`), and carries the processor\'s own reference (`processorRef`) so the charge can be reconciled against the processor rather than taken on trust.  A named builder, not a closure, so zipdoc can lift this prose into the registry.  It BUILDS the handler rather than being it, because the screen has to sit inside the value every projection of this op dispatches to — see exposePayments. `charge` is the money move, `take` is the screened entry point onto it, and the only registrable one is the second.
-         * @summary Take a card payment and credit the org\'s balance
-         * @param {PaymentIn} paymentIn 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async takePayment(paymentIn: PaymentIn, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentOut>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.takePayment(paymentIn, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CommerceApi.takePayment']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -9833,16 +9723,6 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
          */
         getCommerceWebhookByWebhookid(requestParameters: CommerceApiGetCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Reads one settled payment out of the caller\'s org ledger.  The org scopes the read by construction — the ledger is namespaced to it — so an id belonging to another tenant is simply not found rather than found and then filtered. A ledger row that is not a payment is likewise not found, so this cannot be used to walk the org\'s usage debits.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-         * @summary Read one settled payment by its id
-         * @param {CommerceApiGetPaymentRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPayment(requestParameters: CommerceApiGetPaymentRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaymentRecord> {
-            return localVarFp.getPayment(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Opens an empty cart for a shopper to fill, and answers it with its new id.  This is the first step of a sale: hold the id, add items to it with setCartItem, then hand it to checkout. Every field of the request is optional — an empty body opens a perfectly good anonymous cart — and the fields exist only to pre-fill what is already known about the shopper.  The STORE defaults to the org\'s own default storefront, so a merchant selling through one storefront never has to name it. The CURRENCY defaults to usd; note that checkout overrides it with the store\'s own currency when the sale is authorized, so a currency set here is a hint rather than a commitment.  The cart is created in the CALLER\'S OWN org namespace, taken from the validated principal and never from the body, so a cart can never be opened on another tenant\'s books.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
@@ -10857,16 +10737,6 @@ export const CommerceApiFactory = function (configuration?: Configuration, baseP
         setCartItem(requestParameters: CommerceApiSetCartItemRequest, options?: RawAxiosRequestConfig): AxiosPromise<Cart> {
             return localVarFp.setCartItem(requestParameters.id, requestParameters.cartItemSet, options).then((request) => request(axios, basePath));
         },
-        /**
-         * Takes a payment: charges a single-use card token and credits the caller\'s org balance, exactly once.  This is the operation behind \"collect money from a customer\". It runs the SAME core the console\'s card top-up runs (commerce billing.TakePayment), so the server-side amount bounds, the idempotency guard and the ledger credit are shared rather than reimplemented — a second charge path would eventually double-charge somebody.  The ORG is the caller\'s, taken from the validated principal and never from the input, so a payment can only ever credit the account of whoever made the call.  A payment is RISK-SCREENED before the card is charged, so this can be refused without any money moving: 403 means the screen did not authorise it, and 503 means the screen could not reach a decision — that one is worth retrying, and no charge was attempted either way.  Send an idempotencyKey. An agent retries by construction, and the key is what turns a retry into a replay of the first receipt instead of a second charge.  The answer states whether it settled in SANDBOX or live mode (`test`), and carries the processor\'s own reference (`processorRef`) so the charge can be reconciled against the processor rather than taken on trust.  A named builder, not a closure, so zipdoc can lift this prose into the registry.  It BUILDS the handler rather than being it, because the screen has to sit inside the value every projection of this op dispatches to — see exposePayments. `charge` is the money move, `take` is the screened entry point onto it, and the only registrable one is the second.
-         * @summary Take a card payment and credit the org\'s balance
-         * @param {CommerceApiTakePaymentRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        takePayment(requestParameters: CommerceApiTakePaymentRequest, options?: RawAxiosRequestConfig): AxiosPromise<PaymentOut> {
-            return localVarFp.takePayment(requestParameters.paymentIn, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -11554,20 +11424,6 @@ export interface CommerceApiGetCommerceWebhookByWebhookidRequest {
      * @memberof CommerceApiGetCommerceWebhookByWebhookid
      */
     readonly webhookid: string
-}
-
-/**
- * Request parameters for getPayment operation in CommerceApi.
- * @export
- * @interface CommerceApiGetPaymentRequest
- */
-export interface CommerceApiGetPaymentRequest {
-    /**
-     * ID is the ledger transaction id a payment returned.
-     * @type {string}
-     * @memberof CommerceApiGetPayment
-     */
-    readonly id: string
 }
 
 /**
@@ -12740,20 +12596,6 @@ export interface CommerceApiSetCartItemRequest {
 }
 
 /**
- * Request parameters for takePayment operation in CommerceApi.
- * @export
- * @interface CommerceApiTakePaymentRequest
- */
-export interface CommerceApiTakePaymentRequest {
-    /**
-     * 
-     * @type {PaymentIn}
-     * @memberof CommerceApiTakePayment
-     */
-    readonly paymentIn: PaymentIn
-}
-
-/**
  * CommerceApi - object-oriented interface
  * @export
  * @class CommerceApi
@@ -13629,18 +13471,6 @@ export class CommerceApi extends BaseAPI {
      */
     public getCommerceWebhookByWebhookid(requestParameters: CommerceApiGetCommerceWebhookByWebhookidRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).getCommerceWebhookByWebhookid(requestParameters.webhookid, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Reads one settled payment out of the caller\'s org ledger.  The org scopes the read by construction — the ledger is namespaced to it — so an id belonging to another tenant is simply not found rather than found and then filtered. A ledger row that is not a payment is likewise not found, so this cannot be used to walk the org\'s usage debits.  A named handler, not a closure, so zipdoc can lift this prose into the registry.
-     * @summary Read one settled payment by its id
-     * @param {CommerceApiGetPaymentRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommerceApi
-     */
-    public getPayment(requestParameters: CommerceApiGetPaymentRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).getPayment(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -14862,18 +14692,6 @@ export class CommerceApi extends BaseAPI {
      */
     public setCartItem(requestParameters: CommerceApiSetCartItemRequest, options?: RawAxiosRequestConfig) {
         return CommerceApiFp(this.configuration).setCartItem(requestParameters.id, requestParameters.cartItemSet, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Takes a payment: charges a single-use card token and credits the caller\'s org balance, exactly once.  This is the operation behind \"collect money from a customer\". It runs the SAME core the console\'s card top-up runs (commerce billing.TakePayment), so the server-side amount bounds, the idempotency guard and the ledger credit are shared rather than reimplemented — a second charge path would eventually double-charge somebody.  The ORG is the caller\'s, taken from the validated principal and never from the input, so a payment can only ever credit the account of whoever made the call.  A payment is RISK-SCREENED before the card is charged, so this can be refused without any money moving: 403 means the screen did not authorise it, and 503 means the screen could not reach a decision — that one is worth retrying, and no charge was attempted either way.  Send an idempotencyKey. An agent retries by construction, and the key is what turns a retry into a replay of the first receipt instead of a second charge.  The answer states whether it settled in SANDBOX or live mode (`test`), and carries the processor\'s own reference (`processorRef`) so the charge can be reconciled against the processor rather than taken on trust.  A named builder, not a closure, so zipdoc can lift this prose into the registry.  It BUILDS the handler rather than being it, because the screen has to sit inside the value every projection of this op dispatches to — see exposePayments. `charge` is the money move, `take` is the screened entry point onto it, and the only registrable one is the second.
-     * @summary Take a card payment and credit the org\'s balance
-     * @param {CommerceApiTakePaymentRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommerceApi
-     */
-    public takePayment(requestParameters: CommerceApiTakePaymentRequest, options?: RawAxiosRequestConfig) {
-        return CommerceApiFp(this.configuration).takePayment(requestParameters.paymentIn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

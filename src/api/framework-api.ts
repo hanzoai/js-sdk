@@ -34,10 +34,6 @@ import type { ModuleList } from '../models';
 // @ts-ignore
 import type { ModuleState } from '../models';
 // @ts-ignore
-import type { RoleAssignment } from '../models';
-// @ts-ignore
-import type { RoleList } from '../models';
-// @ts-ignore
 import type { SummaryView } from '../models';
 /**
  * FrameworkApi - axios parameter creator
@@ -48,7 +44,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Removes one document, after its on_trash hooks agree. A SUBMITTED document cannot be deleted — cancel it first. Answers 204.
          * @summary Removes one document, after its on_trash hooks agree.
-         * @param {string} doctype DocType is the document\&#39;s DocType, from the path.
+         * @param {string} doctype DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
          * @param {string} name Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -90,7 +86,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Removes a DocType and every document stored under it. The definition and its data go together — a document with no schema can be neither validated nor read back — so there is no undo. Manager-only. Answers 204.
          * @summary Removes a DocType and every document stored under it.
-         * @param {string} name Name is the DocType\&#39;s name, from the path. A name containing a space (\&quot;Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
+         * @param {string} name Name is the DocType\&#39;s ADDRESS — \&quot;module.name\&quot;, e.g. \&quot;kb.page\&quot;. A name containing a space (\&quot;erp.Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -126,51 +122,9 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Removes one (user, role) grant in the caller\'s org. Manager-only. Answers 204; a grant that does not exist is not found.
-         * @summary Removes one (user, role) grant in the caller\'s org.
-         * @param {string} user User is the assignee whose grant is being revoked, from the path.
-         * @param {string} role Role is the role to revoke, from the path. A role name containing a space (\&quot;System Manager\&quot;) arrives percent-encoded and is decoded before it is matched against the stored assignment.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteFrameworkRolesByUserByRole: async (user: string, role: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'user' is not null or undefined
-            assertParamExists('deleteFrameworkRolesByUserByRole', 'user', user)
-            // verify required parameter 'role' is not null or undefined
-            assertParamExists('deleteFrameworkRolesByUserByRole', 'role', role)
-            const localVarPath = `/v1/framework/roles/{user}/{role}`
-                .replace(`{${"user"}}`, encodeURIComponent(String(user)))
-                .replace(`{${"role"}}`, encodeURIComponent(String(role)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query. The DocType is resolved FIRST — through the same permission gate the list itself uses — because the query is validated against its schema: a filter, sort or field name the DocType does not declare is refused rather than reaching the store.
          * @summary Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query.
-         * @param {string} doctype DocType is the DocType to list, from the path.
+         * @param {string} doctype DocType is the DocType to list, by ADDRESS — \&quot;module.name\&quot;, from the path.
          * @param {string} [filters] Filters is a JSON object of equality matches, e.g. {\&quot;priority\&quot;:\&quot;High\&quot;}. Every key must be a field the DocType declares (or the managed name / docstatus); an undeclared one is refused rather than silently ignored.
          * @param {string} [fields] Fields projects the response to a subset — a JSON array [\&quot;a\&quot;,\&quot;b\&quot;] or a comma list \&quot;a,b\&quot;. The envelope keys are always returned.
          * @param {string} [orderBy] OrderBy is \&quot;&lt;field&gt; [asc|desc]\&quot;. Empty means most-recently-updated first.
@@ -228,7 +182,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Returns one document by name, with Password fields redacted.
          * @summary Returns one document by name, with Password fields redacted.
-         * @param {string} doctype DocType is the document\&#39;s DocType, from the path.
+         * @param {string} doctype DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
          * @param {string} name Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -304,7 +258,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Returns one DocType definition — its fields, naming rule, permissions and lifecycle flags. Scoped to the caller\'s org, so another tenant\'s DocType of the same name is simply not found.
          * @summary Returns one DocType definition — its fields, naming rule, permissions and lifecycle flags.
-         * @param {string} name Name is the DocType\&#39;s name, from the path. A name containing a space (\&quot;Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
+         * @param {string} name Name is the DocType\&#39;s ADDRESS — \&quot;module.name\&quot;, e.g. \&quot;kb.page\&quot;. A name containing a space (\&quot;erp.Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -412,40 +366,6 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Returns every (user, role) assignment in the caller\'s org. Roles are what DocType permissions are written against, so this is the grant table the permission calculus resolves a member\'s rights from.
-         * @summary Returns every (user, role) assignment in the caller\'s org.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getFrameworkRoles: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/framework/roles`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Reports how much of the DocType surface the caller\'s org uses: how many DocTypes it has defined, and how many documents exist across them.
          * @summary Reports how much of the DocType surface the caller\'s org uses: how many DocTypes it has defined, and how many documents exist across them.
          * @param {*} [options] Override http request option.
@@ -520,7 +440,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Moves a submitted document to cancelled (docstatus 1 → 2) after its on_cancel hooks agree. Cancelling is terminal — a cancelled document cannot be re-submitted — but it CAN then be deleted.
          * @summary Moves a submitted document to cancelled (docstatus 1 → 2) after its on_cancel hooks agree.
-         * @param {string} doctype DocType is the document\&#39;s DocType, from the path.
+         * @param {string} doctype DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
          * @param {string} name Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -562,7 +482,7 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Moves a draft to submitted (docstatus 0 → 1) after its on_submit hooks agree. A submitted document is IMMUTABLE: further writes and deletes are refused until it is cancelled. Only a submittable DocType has this lifecycle; any other docstatus is an illegal transition.
          * @summary Moves a draft to submitted (docstatus 0 → 1) after its on_submit hooks agree.
-         * @param {string} doctype DocType is the document\&#39;s DocType, from the path.
+         * @param {string} doctype DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
          * @param {string} name Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -680,46 +600,6 @@ export const FrameworkApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users. Manager-only. Answers 201.
-         * @summary Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users.
-         * @param {RoleAssignment} roleAssignment 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postFrameworkRoles: async (roleAssignment: RoleAssignment, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'roleAssignment' is not null or undefined
-            assertParamExists('postFrameworkRoles', 'roleAssignment', roleAssignment)
-            const localVarPath = `/v1/framework/roles`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(roleAssignment, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * PUT semantics: the stored field data BECOMES the body, so a field the body omits is not left at its previous value. The body is the document\'s own field data — the same metadata-defined open object the create takes, and the same reason this operation publishes no request schema.  Only a DRAFT can be edited. A document that has been submitted or cancelled is immutable and the write is refused as a conflict, so the submit lifecycle cannot be bypassed by a plain update — cancel it first, and note that a cancelled document can be deleted but never re-submitted or re-edited. The engine validates the new data against the DocType, runs before_save (which may reject), writes, then runs the after hooks, and answers 200 with the stored document plus its managed envelope, Password fields redacted.  The document name in the path is percent-decoded before it is matched, so a name containing a space is addressed as it is stored. An unknown DocType or document is not found, and the same answer covers a document that exists in another tenant: the org comes from the validated principal and is part of the store key, so a caller cannot learn that another org\'s document exists. Write rights on the DocType are required, decided by the engine\'s permission calculus.  For a Single DocType the path name is ignored — there is one instance per org and this writes it.
          * @summary Replace a draft document\'s field data wholesale.
          * @param {string} doctype 
@@ -818,7 +698,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
         /**
          * Removes one document, after its on_trash hooks agree. A SUBMITTED document cannot be deleted — cancel it first. Answers 204.
          * @summary Removes one document, after its on_trash hooks agree.
-         * @param {string} doctype DocType is the document\&#39;s DocType, from the path.
+         * @param {string} doctype DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
          * @param {string} name Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -832,7 +712,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
         /**
          * Removes a DocType and every document stored under it. The definition and its data go together — a document with no schema can be neither validated nor read back — so there is no undo. Manager-only. Answers 204.
          * @summary Removes a DocType and every document stored under it.
-         * @param {string} name Name is the DocType\&#39;s name, from the path. A name containing a space (\&quot;Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
+         * @param {string} name Name is the DocType\&#39;s ADDRESS — \&quot;module.name\&quot;, e.g. \&quot;kb.page\&quot;. A name containing a space (\&quot;erp.Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -843,23 +723,9 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Removes one (user, role) grant in the caller\'s org. Manager-only. Answers 204; a grant that does not exist is not found.
-         * @summary Removes one (user, role) grant in the caller\'s org.
-         * @param {string} user User is the assignee whose grant is being revoked, from the path.
-         * @param {string} role Role is the role to revoke, from the path. A role name containing a space (\&quot;System Manager\&quot;) arrives percent-encoded and is decoded before it is matched against the stored assignment.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteFrameworkRolesByUserByRole(user: string, role: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFrameworkRolesByUserByRole(user, role, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.deleteFrameworkRolesByUserByRole']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query. The DocType is resolved FIRST — through the same permission gate the list itself uses — because the query is validated against its schema: a filter, sort or field name the DocType does not declare is refused rather than reaching the store.
          * @summary Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query.
-         * @param {string} doctype DocType is the DocType to list, from the path.
+         * @param {string} doctype DocType is the DocType to list, by ADDRESS — \&quot;module.name\&quot;, from the path.
          * @param {string} [filters] Filters is a JSON object of equality matches, e.g. {\&quot;priority\&quot;:\&quot;High\&quot;}. Every key must be a field the DocType declares (or the managed name / docstatus); an undeclared one is refused rather than silently ignored.
          * @param {string} [fields] Fields projects the response to a subset — a JSON array [\&quot;a\&quot;,\&quot;b\&quot;] or a comma list \&quot;a,b\&quot;. The envelope keys are always returned.
          * @param {string} [orderBy] OrderBy is \&quot;&lt;field&gt; [asc|desc]\&quot;. Empty means most-recently-updated first.
@@ -876,7 +742,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
         /**
          * Returns one document by name, with Password fields redacted.
          * @summary Returns one document by name, with Password fields redacted.
-         * @param {string} doctype DocType is the document\&#39;s DocType, from the path.
+         * @param {string} doctype DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
          * @param {string} name Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -902,7 +768,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
         /**
          * Returns one DocType definition — its fields, naming rule, permissions and lifecycle flags. Scoped to the caller\'s org, so another tenant\'s DocType of the same name is simply not found.
          * @summary Returns one DocType definition — its fields, naming rule, permissions and lifecycle flags.
-         * @param {string} name Name is the DocType\&#39;s name, from the path. A name containing a space (\&quot;Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
+         * @param {string} name Name is the DocType\&#39;s ADDRESS — \&quot;module.name\&quot;, e.g. \&quot;kb.page\&quot;. A name containing a space (\&quot;erp.Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -938,18 +804,6 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns every (user, role) assignment in the caller\'s org. Roles are what DocType permissions are written against, so this is the grant table the permission calculus resolves a member\'s rights from.
-         * @summary Returns every (user, role) assignment in the caller\'s org.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getFrameworkRoles(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFrameworkRoles(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.getFrameworkRoles']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
          * Reports how much of the DocType surface the caller\'s org uses: how many DocTypes it has defined, and how many documents exist across them.
          * @summary Reports how much of the DocType surface the caller\'s org uses: how many DocTypes it has defined, and how many documents exist across them.
          * @param {*} [options] Override http request option.
@@ -977,7 +831,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
         /**
          * Moves a submitted document to cancelled (docstatus 1 → 2) after its on_cancel hooks agree. Cancelling is terminal — a cancelled document cannot be re-submitted — but it CAN then be deleted.
          * @summary Moves a submitted document to cancelled (docstatus 1 → 2) after its on_cancel hooks agree.
-         * @param {string} doctype DocType is the document\&#39;s DocType, from the path.
+         * @param {string} doctype DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
          * @param {string} name Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -991,7 +845,7 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
         /**
          * Moves a draft to submitted (docstatus 0 → 1) after its on_submit hooks agree. A submitted document is IMMUTABLE: further writes and deletes are refused until it is cancelled. Only a submittable DocType has this lifecycle; any other docstatus is an illegal transition.
          * @summary Moves a draft to submitted (docstatus 0 → 1) after its on_submit hooks agree.
-         * @param {string} doctype DocType is the document\&#39;s DocType, from the path.
+         * @param {string} doctype DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
          * @param {string} name Name is the document\&#39;s name — its key within the DocType — from the path. A name containing a space arrives percent-encoded and is decoded before it is matched against the stored one.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1026,19 +880,6 @@ export const FrameworkApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkModulesByModuleInstall(module, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkModulesByModuleInstall']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users. Manager-only. Answers 201.
-         * @summary Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users.
-         * @param {RoleAssignment} roleAssignment 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postFrameworkRoles(roleAssignment: RoleAssignment, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleAssignment>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postFrameworkRoles(roleAssignment, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['FrameworkApi.postFrameworkRoles']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1100,16 +941,6 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
             return localVarFp.deleteFrameworkDoctypesByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
-         * Removes one (user, role) grant in the caller\'s org. Manager-only. Answers 204; a grant that does not exist is not found.
-         * @summary Removes one (user, role) grant in the caller\'s org.
-         * @param {FrameworkApiDeleteFrameworkRolesByUserByRoleRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteFrameworkRolesByUserByRole(requestParameters: FrameworkApiDeleteFrameworkRolesByUserByRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteFrameworkRolesByUserByRole(requestParameters.user, requestParameters.role, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query. The DocType is resolved FIRST — through the same permission gate the list itself uses — because the query is validated against its schema: a filter, sort or field name the DocType does not declare is refused rather than reaching the store.
          * @summary Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query.
          * @param {FrameworkApiGetFrameworkByDoctypeRequest} requestParameters Request parameters.
@@ -1166,15 +997,6 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
          */
         getFrameworkModulesByModule(requestParameters: FrameworkApiGetFrameworkModulesByModuleRequest, options?: RawAxiosRequestConfig): AxiosPromise<ModuleState> {
             return localVarFp.getFrameworkModulesByModule(requestParameters.module, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Returns every (user, role) assignment in the caller\'s org. Roles are what DocType permissions are written against, so this is the grant table the permission calculus resolves a member\'s rights from.
-         * @summary Returns every (user, role) assignment in the caller\'s org.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getFrameworkRoles(options?: RawAxiosRequestConfig): AxiosPromise<RoleList> {
-            return localVarFp.getFrameworkRoles(options).then((request) => request(axios, basePath));
         },
         /**
          * Reports how much of the DocType surface the caller\'s org uses: how many DocTypes it has defined, and how many documents exist across them.
@@ -1236,16 +1058,6 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
             return localVarFp.postFrameworkModulesByModuleInstall(requestParameters.module, options).then((request) => request(axios, basePath));
         },
         /**
-         * Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users. Manager-only. Answers 201.
-         * @summary Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users.
-         * @param {FrameworkApiPostFrameworkRolesRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postFrameworkRoles(requestParameters: FrameworkApiPostFrameworkRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<RoleAssignment> {
-            return localVarFp.postFrameworkRoles(requestParameters.roleAssignment, options).then((request) => request(axios, basePath));
-        },
-        /**
          * PUT semantics: the stored field data BECOMES the body, so a field the body omits is not left at its previous value. The body is the document\'s own field data — the same metadata-defined open object the create takes, and the same reason this operation publishes no request schema.  Only a DRAFT can be edited. A document that has been submitted or cancelled is immutable and the write is refused as a conflict, so the submit lifecycle cannot be bypassed by a plain update — cancel it first, and note that a cancelled document can be deleted but never re-submitted or re-edited. The engine validates the new data against the DocType, runs before_save (which may reject), writes, then runs the after hooks, and answers 200 with the stored document plus its managed envelope, Password fields redacted.  The document name in the path is percent-decoded before it is matched, so a name containing a space is addressed as it is stored. An unknown DocType or document is not found, and the same answer covers a document that exists in another tenant: the org comes from the validated principal and is part of the store key, so a caller cannot learn that another org\'s document exists. Write rights on the DocType are required, decided by the engine\'s permission calculus.  For a Single DocType the path name is ignored — there is one instance per org and this writes it.
          * @summary Replace a draft document\'s field data wholesale.
          * @param {FrameworkApiPutFrameworkByDoctypeByNameRequest} requestParameters Request parameters.
@@ -1275,7 +1087,7 @@ export const FrameworkApiFactory = function (configuration?: Configuration, base
  */
 export interface FrameworkApiDeleteFrameworkByDoctypeByNameRequest {
     /**
-     * DocType is the document\&#39;s DocType, from the path.
+     * DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
      * @type {string}
      * @memberof FrameworkApiDeleteFrameworkByDoctypeByName
      */
@@ -1296,32 +1108,11 @@ export interface FrameworkApiDeleteFrameworkByDoctypeByNameRequest {
  */
 export interface FrameworkApiDeleteFrameworkDoctypesByNameRequest {
     /**
-     * Name is the DocType\&#39;s name, from the path. A name containing a space (\&quot;Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
+     * Name is the DocType\&#39;s ADDRESS — \&quot;module.name\&quot;, e.g. \&quot;kb.page\&quot;. A name containing a space (\&quot;erp.Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
      * @type {string}
      * @memberof FrameworkApiDeleteFrameworkDoctypesByName
      */
     readonly name: string
-}
-
-/**
- * Request parameters for deleteFrameworkRolesByUserByRole operation in FrameworkApi.
- * @export
- * @interface FrameworkApiDeleteFrameworkRolesByUserByRoleRequest
- */
-export interface FrameworkApiDeleteFrameworkRolesByUserByRoleRequest {
-    /**
-     * User is the assignee whose grant is being revoked, from the path.
-     * @type {string}
-     * @memberof FrameworkApiDeleteFrameworkRolesByUserByRole
-     */
-    readonly user: string
-
-    /**
-     * Role is the role to revoke, from the path. A role name containing a space (\&quot;System Manager\&quot;) arrives percent-encoded and is decoded before it is matched against the stored assignment.
-     * @type {string}
-     * @memberof FrameworkApiDeleteFrameworkRolesByUserByRole
-     */
-    readonly role: string
 }
 
 /**
@@ -1331,7 +1122,7 @@ export interface FrameworkApiDeleteFrameworkRolesByUserByRoleRequest {
  */
 export interface FrameworkApiGetFrameworkByDoctypeRequest {
     /**
-     * DocType is the DocType to list, from the path.
+     * DocType is the DocType to list, by ADDRESS — \&quot;module.name\&quot;, from the path.
      * @type {string}
      * @memberof FrameworkApiGetFrameworkByDoctype
      */
@@ -1373,7 +1164,7 @@ export interface FrameworkApiGetFrameworkByDoctypeRequest {
  */
 export interface FrameworkApiGetFrameworkByDoctypeByNameRequest {
     /**
-     * DocType is the document\&#39;s DocType, from the path.
+     * DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
      * @type {string}
      * @memberof FrameworkApiGetFrameworkByDoctypeByName
      */
@@ -1394,7 +1185,7 @@ export interface FrameworkApiGetFrameworkByDoctypeByNameRequest {
  */
 export interface FrameworkApiGetFrameworkDoctypesByNameRequest {
     /**
-     * Name is the DocType\&#39;s name, from the path. A name containing a space (\&quot;Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
+     * Name is the DocType\&#39;s ADDRESS — \&quot;module.name\&quot;, e.g. \&quot;kb.page\&quot;. A name containing a space (\&quot;erp.Sales Invoice\&quot;) arrives percent-encoded and is decoded before it is matched against the stored one.
      * @type {string}
      * @memberof FrameworkApiGetFrameworkDoctypesByName
      */
@@ -1436,7 +1227,7 @@ export interface FrameworkApiPostFrameworkByDoctypeRequest {
  */
 export interface FrameworkApiPostFrameworkByDoctypeByNameCancelRequest {
     /**
-     * DocType is the document\&#39;s DocType, from the path.
+     * DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
      * @type {string}
      * @memberof FrameworkApiPostFrameworkByDoctypeByNameCancel
      */
@@ -1457,7 +1248,7 @@ export interface FrameworkApiPostFrameworkByDoctypeByNameCancelRequest {
  */
 export interface FrameworkApiPostFrameworkByDoctypeByNameSubmitRequest {
     /**
-     * DocType is the document\&#39;s DocType, from the path.
+     * DocType is the document\&#39;s DocType, by ADDRESS — \&quot;module.name\&quot;, from the path.
      * @type {string}
      * @memberof FrameworkApiPostFrameworkByDoctypeByNameSubmit
      */
@@ -1497,20 +1288,6 @@ export interface FrameworkApiPostFrameworkModulesByModuleInstallRequest {
      * @memberof FrameworkApiPostFrameworkModulesByModuleInstall
      */
     readonly module: string
-}
-
-/**
- * Request parameters for postFrameworkRoles operation in FrameworkApi.
- * @export
- * @interface FrameworkApiPostFrameworkRolesRequest
- */
-export interface FrameworkApiPostFrameworkRolesRequest {
-    /**
-     * 
-     * @type {RoleAssignment}
-     * @memberof FrameworkApiPostFrameworkRoles
-     */
-    readonly roleAssignment: RoleAssignment
 }
 
 /**
@@ -1587,18 +1364,6 @@ export class FrameworkApi extends BaseAPI {
     }
 
     /**
-     * Removes one (user, role) grant in the caller\'s org. Manager-only. Answers 204; a grant that does not exist is not found.
-     * @summary Removes one (user, role) grant in the caller\'s org.
-     * @param {FrameworkApiDeleteFrameworkRolesByUserByRoleRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FrameworkApi
-     */
-    public deleteFrameworkRolesByUserByRole(requestParameters: FrameworkApiDeleteFrameworkRolesByUserByRoleRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).deleteFrameworkRolesByUserByRole(requestParameters.user, requestParameters.role, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query. The DocType is resolved FIRST — through the same permission gate the list itself uses — because the query is validated against its schema: a filter, sort or field name the DocType does not declare is refused rather than reaching the store.
      * @summary Returns the caller org\'s documents of one DocType, filtered, ordered and projected by the query.
      * @param {FrameworkApiGetFrameworkByDoctypeRequest} requestParameters Request parameters.
@@ -1666,17 +1431,6 @@ export class FrameworkApi extends BaseAPI {
      */
     public getFrameworkModulesByModule(requestParameters: FrameworkApiGetFrameworkModulesByModuleRequest, options?: RawAxiosRequestConfig) {
         return FrameworkApiFp(this.configuration).getFrameworkModulesByModule(requestParameters.module, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns every (user, role) assignment in the caller\'s org. Roles are what DocType permissions are written against, so this is the grant table the permission calculus resolves a member\'s rights from.
-     * @summary Returns every (user, role) assignment in the caller\'s org.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FrameworkApi
-     */
-    public getFrameworkRoles(options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).getFrameworkRoles(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1748,18 +1502,6 @@ export class FrameworkApi extends BaseAPI {
      */
     public postFrameworkModulesByModuleInstall(requestParameters: FrameworkApiPostFrameworkModulesByModuleInstallRequest, options?: RawAxiosRequestConfig) {
         return FrameworkApiFp(this.configuration).postFrameworkModulesByModuleInstall(requestParameters.module, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users. Manager-only. Answers 201.
-     * @summary Grants one user one role in the caller\'s org — how a member gains rights on a DocType, since permissions name roles and never users.
-     * @param {FrameworkApiPostFrameworkRolesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FrameworkApi
-     */
-    public postFrameworkRoles(requestParameters: FrameworkApiPostFrameworkRolesRequest, options?: RawAxiosRequestConfig) {
-        return FrameworkApiFp(this.configuration).postFrameworkRoles(requestParameters.roleAssignment, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

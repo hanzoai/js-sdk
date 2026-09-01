@@ -28,6 +28,12 @@ export interface AgentDetail {
      * @type {string}
      * @memberof AgentDetail
      */
+    'avatar'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentDetail
+     */
     'computeRef'?: string;
     /**
      * 
@@ -41,6 +47,12 @@ export interface AgentDetail {
      * @memberof AgentDetail
      */
     'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentDetail
+     */
+    'emoji'?: string;
     /**
      * 
      * @type {string}
